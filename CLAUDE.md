@@ -1,5 +1,3 @@
-Replace the entire contents of CLAUDE.md with exactly this text. Do not commit it.
-
 # Scholarship Guide
 
 An Arabic-first guide for Saudi high school students on the government external scholarship path.
