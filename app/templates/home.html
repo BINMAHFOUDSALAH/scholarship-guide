@@ -1,17 +1,75 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
 
+{% set status_labels = {
+  "open": "مفتوح الآن",
+  "closed": "مغلق حتى إشعار آخر",
+  "not_open": "لم يفتح بعد",
+  "invitation": "بالترشيح والدعوة"
+} %}
+
 {% block content %}
-<h1>{{ site.tagline }}</h1>
-<p>دليل مجاني لطلاب الثانوية في السعودية: المسارات المتاحة بعد التخرج، متطلباتها، وخطوتك القادمة.</p>
+<section class="hero">
+  <h1>{{ site.tagline }}</h1>
+  <p class="lead">دليل مجاني لطلاب الثانوية في السعودية: المسارات المتاحة بعد التخرج، متطلباتها، وخطوتك القادمة. كل الأدلة مفتوحة بدون تسجيل.</p>
+</section>
 
-<h2>كيف يساعدك واضح؟</h2>
-{{ c.path_steps([
-  {"title": "اعرف أين أنت", "text": "ابدأ من صفك الدراسي: ما الذي يهمك هذه السنة تحديدًا."},
-  {"title": "افهم المسارات", "text": "شرح مبسّط لكل مسار: لمن هو، ما متطلباته، ومتى يفتح التقديم."},
-  {"title": "تحقق بنفسك", "text": "كل معلومة رسمية معها رابط مصدرها وتاريخ آخر تحقق."},
-  {"title": "اعرف خطوتك القادمة", "text": "في نهاية كل صفحة: ماذا تفعل الآن بالضبط."}
-]) }}
+<section aria-labelledby="paths-title">
+  <h2 id="paths-title">المسارات بنظرة سريعة</h2>
+  <p class="section-intro">أشهر برامج الابتعاث لخريجي الثانوية، وحالة التقديم في كل منها.</p>
 
-{{ c.next_step("الأقسام الأولى قيد الإعداد. ابدأ بالتعرف على طريقة عملنا.", "كيف نتحقق من المعلومات", url_for('about')) }}
+  <div class="path-list">
+    {% for path in paths %}
+    <article class="path-item">
+      <header class="path-item-header">
+        <h3 class="path-item-name">{{ path.name_ar }}</h3>
+        {% if not path.verified %}{{ c.unverified_stamp() }}{% endif %}
+      </header>
+      <p class="path-item-en" lang="en" dir="ltr">{{ path.name_en }}</p>
+      <p>{{ path.summary_ar }}</p>
+
+      <ul class="track-list">
+        {% for track in path.tracks %}
+        <li class="track">
+          <div class="track-main">
+            <span class="track-name">{{ track.name_ar }}</span>
+            <span class="track-note">{{ track.note_ar }}</span>
+          </div>
+          <div class="track-state">
+            <span class="track-status track-status--{{ track.status }}">{{ status_labels[track.status] }}</span>
+            {% if not track.status_source %}{{ c.unverified_stamp() }}{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <a class="path-item-link" href="{{ path.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="tests-title">
+  <h2 id="tests-title">اختبارات ستسمع عنها كثيرًا</h2>
+  <dl class="term-list">
+    {% for test in tests %}
+    <div class="term">
+      <dt>{{ test.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ test.name_en }}</span></dt>
+      <dd>{{ test.what_ar }} <a href="{{ test.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a></dd>
+    </div>
+    {% endfor %}
+  </dl>
+</section>
+{% endblock %}
+
+{% block after_content %}
+{% if quote %}{% include "partials/tuwaiq.html" %}{% endif %}
+
+<div class="container">
+  <section aria-labelledby="verify-title">
+    <h2 id="verify-title">كيف نتحقق من المعلومات؟</h2>
+    <p>كل معلومة رسمية معها رابط مصدرها وتاريخ آخر تحقق، وما لم نتحقق منه بعد نضع بجانبه {{ c.unverified_stamp() }}.</p>
+    {{ c.next_step("قبل أي قرار، افتح رابط المصدر الرسمي وتأكد من آخر التحديثات.", "اقرأ كيف نعمل", url_for('about')) }}
+  </section>
+</div>
 {% endblock %}

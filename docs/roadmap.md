@@ -16,13 +16,13 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] **Step 2:** `.venv` + FastAPI, Uvicorn, Jinja2 in `requirements.txt`
 - [x] **Step 3:** First FastAPI routes (`/`, `/about`)
 - [x] **Step 4:** RTL base template, home/about pages, mobile-first CSS, shared `.container`
-- [ ] **Step 4b:** Brand + design foundation
+- [x] **Step 4b:** Brand + design foundation
   - [x] 4b.1 `data/site.json` (name, descriptor, tagline) as Jinja globals + self-hosted fonts
   - [x] 4b.2 Design tokens + light/dark mode (toggle: system → light → dark, saved in `localStorage`, no flash on load)
   - [x] 4b.3 Header/footer identity: wordmark + Tuwaiq cliff logo (decision 012) + favicon, theme toggle, footer
   - [x] 4b.4 Jinja macros in `app/templates/components.html`: `path_steps`, `source_stamp`, `unverified_stamp`, `next_step`
-  - [ ] 4b.5 Homepage structure + Tuwaiq section (`data/featured_quote.json`, shown only when `status: verified` or `WADIH_SHOW_DRAFTS=1`)
-  - [ ] 4b.6 Remaining docs
+  - [x] 4b.5 Homepage structure (paths at a glance from `data/paths.json`, tests from `data/tests.json`, how we verify) + Tuwaiq section (`data/featured_quote.json`, shown only when `status: verified` or `WADIH_SHOW_DRAFTS=1`)
+  - [x] 4b.6 Remaining docs (handoff rule in CLAUDE.md)
 - [ ] **Step 5:** Markdown content: 3 grade pages ("what to do this year") + scholarship path overview, `status: draft`. Homepage hero "في أي صف أنت؟" ("Which grade are you in?") links to them. Needs `markdown`, `python-frontmatter` (ask before installing).
 - [ ] **Step 6:** pytest tests: pages load, RTL, theme toggle present, Tuwaiq hidden when draft, 404. Needs `pytest`, `httpx` (ask first).
 - [ ] **Step 7:** Deploy to Render free tier. The owner creates the account and commits/pushes.

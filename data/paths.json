@@ -1,0 +1,63 @@
+[
+  {
+    "id": "custodian-scholarship",
+    "name_ar": "برنامج خادم الحرمين الشريفين للابتعاث",
+    "name_en": "Custodian of the Two Holy Mosques Scholarship Program",
+    "provider_ar": "وزارة التعليم",
+    "summary_ar": "ابتعاث حكومي للدراسة في جامعات عالمية مختارة. تحتاج قبولًا نهائيًا غير مشروط من جامعة ضمن قائمة المسار، ويكون التقديم عبر منصة سفير.",
+    "official_url": "https://sites.moe.gov.sa/scholarship-program/",
+    "verified": false,
+    "tracks": [
+      {
+        "name_ar": "مسار الرواد",
+        "note_ar": "أفضل 30 جامعة في العالم",
+        "status": "open",
+        "status_source": null,
+        "last_checked": "2026-10-09"
+      },
+      {
+        "name_ar": "مسار إمداد",
+        "note_ar": "أفضل 200 جامعة، في تخصصات يحتاجها سوق العمل",
+        "status": "closed",
+        "status_source": null,
+        "last_checked": "2026-10-09"
+      }
+    ]
+  },
+  {
+    "id": "aramco-cdpne",
+    "name_ar": "أرامكو السعودية",
+    "name_en": "College Degree Program (CDPNE)",
+    "provider_ar": "أرامكو السعودية",
+    "summary_ar": "تتقدم على أرامكو نفسها، ثم سنة تحضيرية في الظهران، ثم ابتعاث في تخصص تحدده أرامكو، مع وظيفة مستهدفة بعد التخرج.",
+    "official_url": "https://aramco.com/en/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne",
+    "verified": false,
+    "tracks": [
+      {
+        "name_ar": "التسجيل",
+        "note_ar": "يُعلن موعده لاحقًا",
+        "status": "not_open",
+        "status_source": "https://aramco.com/en/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne",
+        "last_checked": "2026-10-09"
+      }
+    ]
+  },
+  {
+    "id": "kaust-kgsp",
+    "name_ar": "كاوست",
+    "name_en": "KAUST Gifted Student Program (KGSP)",
+    "provider_ar": "جامعة الملك عبدالله للعلوم والتقنية",
+    "summary_ar": "منحة لدراسة البكالوريوس في تخصصات العلوم والتقنية في جامعات أمريكية، والاختيار بالترشيح والدعوة.",
+    "official_url": "https://kgsp.kaust.edu.sa/",
+    "verified": false,
+    "tracks": [
+      {
+        "name_ar": "الاختيار",
+        "note_ar": "عبر جهات ترشيح أو نموذج إبداء اهتمام",
+        "status": "invitation",
+        "status_source": "https://kgsp.kaust.edu.sa/about-kgsp/scholarship-details",
+        "last_checked": "2026-10-09"
+      }
+    ]
+  }
+]

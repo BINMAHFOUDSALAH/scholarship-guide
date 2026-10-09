@@ -30,12 +30,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - After each step, keep the report short: **what I did** (a few bullets), **how to verify**, and **anything off** (errors, risks, things not checked). Add a key concept only when it's new and important. Then stop and wait.
 - Ask before installing packages, downloading files, or spending money. Never commit or push unless I ask.
 - Record every design choice (with the alternatives) in `docs/decisions.md`, and tick progress in `docs/roadmap.md`.
+- **Handoff rule:** after any fundamental change (new rule, decision, architecture, or plan change), update `CLAUDE.md` / `docs/roadmap.md` / `docs/decisions.md` in the same step. These repo docs are the source of truth; Claude's local memory is only a backup. When I say a session is ending, make sure the roadmap's next step is accurate.
 
 ## Commands (Windows PowerShell, from the repo root)
 ```powershell
 .venv\Scripts\Activate.ps1          # enter the virtual environment
 pip install -r requirements.txt     # install dependencies
 uvicorn app.main:app --reload       # run locally at http://127.0.0.1:8000
+$env:WADIH_SHOW_DRAFTS="1"; uvicorn app.main:app --reload   # same, but also show unverified drafts (e.g. the Tuwaiq section)
 ```
 Tests (pytest) arrive in Stage 1, Step 6.
 
@@ -43,5 +45,6 @@ Tests (pytest) arrive in Stage 1, Step 6.
 - `app/main.py`: the FastAPI app. Loads `data/site.json` once at startup and exposes it to every template as the Jinja global `site`. Routes return server-rendered Jinja2 templates (no frontend framework).
 - `app/templates/`: `base.html` is the shared layout (`<html lang="ar" dir="rtl">`, header, footer). Pages `{% extends "base.html" %}`. Header, main, and footer all use the `.container` class so their edges line up.
 - `app/static/`: `style.css` (mobile-first; use logical properties like `padding-inline`, never left/right), `fonts.css` + `fonts/` (self-hosted IBM Plex Sans Arabic for body, Noto Naskh Arabic for headings, OFL).
-- `data/`: settings and facts as JSON. `content/` (planned): Markdown pages with frontmatter (`title`, `status: draft|verified`, `sources`, `last_checked`).
+- `data/`: settings and facts as JSON (`site.json`, `paths.json`, `tests.json`, `featured_quote.json`), loaded once at startup by `load_json()` in `app/main.py`. Anything with `verified: false` / `status_source: null` / `status: draft` renders with the "غير مؤكد" stamp or stays hidden. `featured_quote.json` renders only when `status` is `verified` or `WADIH_SHOW_DRAFTS=1`. Data changes need a server restart.
+- Full-width bands (e.g. `partials/tuwaiq.html`) go in `{% block after_content %}`. Normal page content goes in `{% block content %}`, inside the reading column. `content/` (planned): Markdown pages with frontmatter (`title`, `status: draft|verified`, `sources`, `last_checked`).
 - After CSS changes, browsers may serve a cached copy: hard-refresh with Ctrl+Shift+R.
