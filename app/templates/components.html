@@ -1,0 +1,42 @@
+{#
+  Reusable page pieces (Jinja macros). Import in a page with:
+    {% import "components.html" as c %}
+  then call, e.g. {{ c.next_step("...") }}
+#}
+
+{# Numbered steps joined by the path line. steps = [{"title": "...", "text": "..."}, ...] #}
+{% macro path_steps(steps) %}
+<ol class="path-steps">
+  {% for step in steps %}
+  <li class="path-step">
+    <h3 class="path-step-title">{{ step.title }}</h3>
+    {% if step.text %}<p>{{ step.text }}</p>{% endif %}
+  </li>
+  {% endfor %}
+</ol>
+{% endmacro %}
+
+{# Footnote-style stamp under a fact: where it comes from and when it was last checked. #}
+{% macro source_stamp(source, url, last_checked) %}
+<p class="source-stamp">
+  <span class="source-stamp-label">المصدر:</span>
+  <a href="{{ url }}" target="_blank" rel="noopener">{{ source }}</a>
+  <span aria-hidden="true">·</span>
+  <span class="source-stamp-label">آخر تحقق:</span>
+  <time>{{ last_checked }}</time>
+</p>
+{% endmacro %}
+
+{# Shown next to anything not yet checked against an official source. #}
+{% macro unverified_stamp() %}
+<span class="unverified-stamp" title="لم نتحقق من هذه المعلومة بعد من مصدر رسمي">غير مؤكد</span>
+{% endmacro %}
+
+{# The one place lime is used: what the student should do next. #}
+{% macro next_step(text, link_text=None, link_url=None) %}
+<aside class="next-step" aria-label="الخطوة التالية">
+  <p class="next-step-label">الخطوة التالية</p>
+  <p class="next-step-text">{{ text }}</p>
+  {% if link_url %}<a class="next-step-link" href="{{ link_url }}">{{ link_text }} ←</a>{% endif %}
+</aside>
+{% endmacro %}
