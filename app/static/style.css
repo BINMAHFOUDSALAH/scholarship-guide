@@ -1,22 +1,78 @@
-/* Mobile-first: these rules are for phones. Wider screens are adjusted at the bottom. */
+/*
+  واضح design system.
+  Mobile-first: the main rules are for phones; wider screens are adjusted at the bottom.
+  Use logical properties (padding-inline, margin-inline-start…), never left/right, so RTL just works.
+*/
 
+/* ---------- Design tokens ---------- */
+
+/* Light theme (the main look): warm ivory paper, forest-green ink. */
 :root {
-  --bg: #ffffff;
-  --text: #1f2933;
-  --muted: #5f6b7a;
-  --accent: #0b6e4f;
-  --border: #e3e7eb;
+  color-scheme: light;
+
+  --paper: #f6f1e6;
+  --paper-raised: #fbf8f1;
+  --ink: #16302a;
+  --ink-muted: #4e605a;
+  --green: #1e5a46;
+  --line: #ddd5c4;
+  --lime: #d5ec6b;       /* only as a highlight background, behind --on-lime text */
+  --on-lime: #16302a;
+  --logo-deep: #16302a;  /* mountain body in the logo */
+
+  --font-body: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+  --font-display: "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
+
+  --step-0: 1.0625rem;   /* body text */
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: 2.1rem;      /* page titles */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+
+  --measure: 720px;      /* max width of the reading column */
 }
 
+/*
+  Dark theme: designed separately, not inverted. Deep green-black paper,
+  soft ivory text (pure white glares at night), lighter green and lime.
+  The same values appear twice: once for "follow the system setting",
+  once for "the user picked dark". Keep both blocks in sync.
+*/
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #12161b;
-    --text: #e6e9ec;
-    --muted: #9aa5b1;
-    --accent: #4cc39a;
-    --border: #2a3139;
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0f1915;
+    --paper-raised: #16231e;
+    --ink: #ece5d6;
+    --ink-muted: #a7b2ab;
+    --green: #7cc9a4;
+    --line: #263731;
+    --lime: #c9e35a;
+    --on-lime: #0f1915;
+    --logo-deep: #2f6b55;
   }
 }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0f1915;
+  --paper-raised: #16231e;
+  --ink: #ece5d6;
+  --ink-muted: #a7b2ab;
+  --green: #7cc9a4;
+  --line: #263731;
+  --lime: #c9e35a;
+  --on-lime: #0f1915;
+  --logo-deep: #2f6b55;
+}
+
+/* ---------- Base ---------- */
 
 * {
   box-sizing: border-box;
@@ -24,27 +80,74 @@
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  /* Self-hosted fonts (fonts.css); system fonts are the fallback while they load. */
-  font-family: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
-  font-size: 1.0625rem;
-  line-height: 1.8;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.85;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.45;
+  text-wrap: balance; /* spread lines evenly instead of leaving one word alone */
+  /* Never add letter-spacing to Arabic: it breaks the joins between letters. */
+}
+
+h1 {
+  font-size: var(--step-3);
+  margin-block: 0 var(--space-4);
+}
+
+h2 {
+  font-size: var(--step-2);
+  margin-block: var(--space-6) var(--space-3);
+}
+
+h3 {
+  font-size: var(--step-1);
+}
+
+p {
+  margin-block: 0 var(--space-3);
 }
 
 a {
-  color: var(--accent);
+  color: var(--green);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
 }
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* A clear outline for keyboard users, in both themes. */
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--on-lime);
+}
+
+/* ---------- Layout ---------- */
 
 /* One shared width for header, page, and footer, so their edges line up. */
 .container {
-  max-width: 720px;
+  max-width: var(--measure);
   margin-inline: auto;
-  padding-inline: 16px;
+  padding-inline: var(--space-3);
 }
 
 .site-header {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .header-inner {
@@ -52,47 +155,123 @@ a {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding-block: 12px;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
 }
 
-h1,
-h2,
-.site-name {
-  font-family: "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
-}
-
-.site-name {
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--text);
+/* Brand: Tuwaiq mark + wordmark + descriptor */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--green);
   text-decoration: none;
 }
 
-nav a {
-  margin-inline-start: 16px;
+.brand-mark {
+  width: 51px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--ink);
+}
+
+.brand-descriptor {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.site-nav a {
   text-decoration: none;
 }
 
 main {
-  padding-block: 24px;
-}
-
-h1 {
-  font-size: 1.6rem;
-  line-height: 1.4;
+  padding-block: var(--space-5);
 }
 
 .site-footer {
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.9rem;
-  text-align: center;
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  padding-block: var(--space-4);
 }
 
-/* Tablets and computers */
+.footer-inner p {
+  margin-block: 0 var(--space-1);
+}
+
+.footer-promise {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* ---------- Theme toggle ---------- */
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--ink-muted);
+}
+
+.theme-toggle svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* ---------- Very narrow phones (e.g. 320px) ---------- */
+
+@media (max-width: 359px) {
+  .brand-mark {
+    width: 42px;
+    height: 26px;
+  }
+
+  .site-nav {
+    gap: var(--space-2);
+  }
+}
+
+/* ---------- Wider screens ---------- */
+
 @media (min-width: 768px) {
-  h1 {
-    font-size: 2rem;
+  :root {
+    --step-3: 2.6rem;
+  }
+
+  main {
+    padding-block: var(--space-6);
   }
 }

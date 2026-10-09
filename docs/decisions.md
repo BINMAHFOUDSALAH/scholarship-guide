@@ -71,3 +71,21 @@ Newest entries go at the bottom. When a decision changes, add a new entry instea
 **Decision:** A homepage section below the main resources with a Mount Tuwaiq photo, the Arabic quote, and a play button that **links out** to the original video. Its data lives in `data/featured_quote.json` and it renders only when `status` is `verified`.
 **Alternatives:** An embedded YouTube player; a photo of the Crown Prince; quoting from memory.
 **Why:** An embed loads third-party trackers. A portrait on an unofficial site could suggest government endorsement. Famous quotes are often misquoted, so the exact wording, date, and video come from an official source checked by the owner. The photo must be freely licensed and credited.
+
+## 012 — Logo: the Mount Tuwaiq cliff
+**Date:** 2026-10-09
+**Decision:** The logo is a long ramp rising to a sharp cliff face, Mount Tuwaiq's escarpment, with the cliff in lime and two thin rock-layer lines. It is drawn as inline SVG in the header, with a simplified version as `app/static/favicon.svg`. This is the one allowed use of lime outside "الخطوة التالية" (the next step): the lit cliff is "the side you climb."
+**Alternatives:** A generic pointed peak (closer to the first AI concept image, but a very common logo shape); the earlier abstract path-line mark; a cliff combined with a path line.
+**Why:** The Tuwaiq shape is distinctive and true to the real mountain, it links the brand to the Tuwaiq section without flags, and SVG keeps it sharp, theme-aware, and under 1 KB. The AI concept image was only a reference and is not used directly.
+
+## 013 — Content workflow: research → verify → publish
+**Date:** 2026-10-09
+**Decision:** Claude may research official facts (requirements, dates, programs), but only from official sources, with a link for each fact, recorded in `docs/research/`. Everything stays `draft` / "غير مؤكد" until the owner checks the source and marks it verified. Conflicting sources are recorded, never averaged or guessed.
+**Alternatives:** The owner researches everything alone (too slow for 5 h/week); Claude writes facts directly onto pages (risk of confident mistakes).
+**Why:** It splits the work: Claude does the searching and organizing, and the owner, who has been through the process, does the judging. Third-party sites already disagree (e.g. a minimum GPA of 85% vs 90% vs 95% for Arruaad), which shows why only official sources count.
+
+## 014 — Accounts for the guided start (guides stay open)
+**Date:** 2026-10-09
+**Decision:** All guides and path pages stay readable without an account. The **guided start** (questions → recommended paths → personal plan with progress) **requires an account**. Accounts store the minimum: login details plus the guided-start answers (grade, school track, goal, interests). Never national ID, GPA, test scores, or passport. Shipped in two launches: Launch 1 = public guides (no accounts); Launch 2 = accounts + guided start.
+**Alternatives:** Progress saved on the device only, no accounts (recommended by Claude: zero personal data, keeps the "no account" promise); optional accounts only for saving; accounts for the whole site.
+**Why:** The owner wants saved progress per student and to learn real backend skills (database, authentication, security). Trade-offs accepted: the footer promise changes to "guides need no signup"; most users are minors, so a privacy policy, data deletion, and a review of Saudi PDPL obligations (including consent for under-18s) are required before Launch 2; a login wall in front of the guided start is what competitors do, so the guides must stay genuinely useful without it.

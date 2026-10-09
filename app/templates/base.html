@@ -4,17 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ site.name }} | {{ site.tagline }}{% endblock %}</title>
+  <meta name="theme-color" content="#f6f1e6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1915" media="(prefers-color-scheme: dark)">
+  <script>
+    // Runs before the page is drawn, so a saved dark theme never flashes white.
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <link rel="icon" href="{{ url_for('static', path='favicon.svg') }}" type="image/svg+xml">
   <link rel="preload" href="{{ url_for('static', path='fonts/ibm-plex-sans-arabic-arabic-400.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ url_for('static', path='fonts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+  <script src="{{ url_for('static', path='theme.js') }}" defer></script>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="site-name" href="{{ url_for('home') }}">{{ site.name }}</a>
-      <nav>
-        <a href="{{ url_for('home') }}">الرئيسية</a>
+      <a class="brand" href="{{ url_for('home') }}" aria-label="{{ site.name }}: الصفحة الرئيسية">
+        <svg class="brand-mark" viewBox="0 0 64 40" aria-hidden="true">
+          <!-- Mount Tuwaiq: a long ramp rising to a cliff face (lime) with rock layers -->
+          <path d="M1 38 L30 25 L36 24 L47 13 L54 11 L58 15 L63 38 Z" fill="var(--logo-deep)"/>
+          <path d="M53 12 L58 15 L63 38 L50 38 Z" fill="var(--lime)"/>
+          <path d="M51.5 22 L60 22 M50.8 30 L61.6 30" stroke="var(--logo-deep)" stroke-width="1.6"/>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-name">{{ site.name }}</span>
+          <span class="brand-descriptor">{{ site.descriptor }}</span>
+        </span>
+      </a>
+      <nav class="site-nav">
         <a href="{{ url_for('about') }}">عن الدليل</a>
+        <button class="theme-toggle" type="button" hidden>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg>
+          <span class="theme-toggle-label">تلقائي</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -24,8 +49,10 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>هذا دليل طلابي مستقل. ليس وزارة التعليم وليس منصة سفير.</p>
+    <div class="container footer-inner">
+      <p class="footer-promise">كل الأدلة مفتوحة للجميع، بدون تسجيل.</p>
+      <p>{{ site.name }} دليل طلابي مستقل. ليس وزارة التعليم ولا منصة سفير، ولا يتبع أرامكو السعودية أو كاوست.</p>
+      <p>المعلومات الرسمية مأخوذة من مصادرها، ويُذكر مع كل معلومة مصدرها وتاريخ آخر تحقق. <a href="{{ url_for('about') }}">كيف نتحقق؟</a></p>
     </div>
   </footer>
 </body>
