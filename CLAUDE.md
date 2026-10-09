@@ -1,17 +1,47 @@
-# Scholarship Guide
+# CLAUDE.md
 
-An Arabic-first guide for Saudi high school students on the government external scholarship path.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+**واضح (Wadih, "clear")**: a free, Arabic-first website that helps Saudi high school students go from confusion to action about their future. Tagline: "مستقبلك بعد الثانوية، بوضوح" ("your future after high school, clearly").
+
+- Organized around **paths** (مسارات), the programs a student can aim for: the government external scholarship, Aramco, KAUST, more later. Each path has requirements, steps, documents, and official sources. **Resources** (IELTS, SAT, Calculus, Khan Academy…) are shared and linked from many paths.
+- **Help first, ask nothing.** No accounts, email gates, memberships, or consultations. A student should solve a real problem and leave knowing their next step.
+- Launch (~2026-12-09) ships only the government scholarship path, fully verified. Other paths come after launch, one at a time.
+- Later: a chatbot and agents that answer only from verified content and always show sources.
+
+**Before starting work, read [docs/roadmap.md](docs/roadmap.md) (current step) and [docs/decisions.md](docs/decisions.md) (why things are the way they are).** Before adding a new kind of project file (spec, skill, settings…), check [docs/project-files-guide.md](docs/project-files-guide.md).
 
 ## Rules
-- This is a student guide. It is NOT the Ministry of Education and NOT Safeer.
-- Never invent official lists, deadlines, requirements, or scores.
+- This is a student guide. It is NOT the Ministry of Education, NOT Safeer, and not affiliated with Aramco or KAUST.
+- Never invent official lists, deadlines, requirements, scores, or quotes. Claude may draft general explanations only. Official facts come from the owner, with a source and a check date.
 - If something is not confirmed, label it "غير مؤكد" instead of guessing.
 - Every important page shows a source and a last-updated date.
-- Do not collect sensitive data (no national ID, GPA, test scores, passport).
+- Do not collect sensitive data (no national ID, GPA, test scores, passport). No third-party requests: fonts are self-hosted, no embeds or trackers.
 - Never read, edit, or print the .env file.
-- Arabic first, right-to-left, mobile first.
+- Arabic first, right-to-left, mobile first. One Arabic site with English names inline (universities, tests, majors). No separate English site.
+- Design: ivory-first editorial look, forest green, lime only for "الخطوة التالية" (next step), a separately designed dark mode. No gradients, card grids, stock photos, flags, or decorative animation.
+- Nothing official is hard-coded into templates. Names and settings live in `data/`, page text in content files.
 
 ## How to work with me
-- I am a beginner. Work in small steps.
-- Explain each change in plain words.
-- Stop after each step and wait for me.
+- I am a beginner learning applied AI engineering. Work in small steps and explain in plain words.
+- Claude writes the code and runs/verifies it. Don't give me homework or tasks.
+- After each step, report in three parts: **What I did**, **What you need to know** (key concepts), **How to verify**. Then stop and wait.
+- Ask before installing packages, downloading files, or spending money. Never commit or push unless I ask.
+- Record every design choice (with the alternatives) in `docs/decisions.md`, and tick progress in `docs/roadmap.md`.
+
+## Commands (Windows PowerShell, from the repo root)
+```powershell
+.venv\Scripts\Activate.ps1          # enter the virtual environment
+pip install -r requirements.txt     # install dependencies
+uvicorn app.main:app --reload       # run locally at http://127.0.0.1:8000
+```
+Tests (pytest) arrive in Stage 1, Step 6.
+
+## Architecture
+- `app/main.py`: the FastAPI app. Loads `data/site.json` once at startup and exposes it to every template as the Jinja global `site`. Routes return server-rendered Jinja2 templates (no frontend framework).
+- `app/templates/`: `base.html` is the shared layout (`<html lang="ar" dir="rtl">`, header, footer). Pages `{% extends "base.html" %}`. Header, main, and footer all use the `.container` class so their edges line up.
+- `app/static/`: `style.css` (mobile-first; use logical properties like `padding-inline`, never left/right), `fonts.css` + `fonts/` (self-hosted IBM Plex Sans Arabic for body, Noto Naskh Arabic for headings, OFL).
+- `data/`: settings and facts as JSON. `content/` (planned): Markdown pages with frontmatter (`title`, `status: draft|verified`, `sources`, `last_checked`).
+- After CSS changes, browsers may serve a cached copy: hard-refresh with Ctrl+Shift+R.

@@ -1,0 +1,98 @@
+/* Mobile-first: these rules are for phones. Wider screens are adjusted at the bottom. */
+
+:root {
+  --bg: #ffffff;
+  --text: #1f2933;
+  --muted: #5f6b7a;
+  --accent: #0b6e4f;
+  --border: #e3e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12161b;
+    --text: #e6e9ec;
+    --muted: #9aa5b1;
+    --accent: #4cc39a;
+    --border: #2a3139;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  /* Self-hosted fonts (fonts.css); system fonts are the fallback while they load. */
+  font-family: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+a {
+  color: var(--accent);
+}
+
+/* One shared width for header, page, and footer, so their edges line up. */
+.container {
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-block: 12px;
+}
+
+h1,
+h2,
+.site-name {
+  font-family: "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
+}
+
+.site-name {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+nav a {
+  margin-inline-start: 16px;
+  text-decoration: none;
+}
+
+main {
+  padding-block: 24px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Tablets and computers */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
