@@ -23,6 +23,32 @@
   </nav>
 </section>
 
+{% if news %}
+{% set news_labels = {"opening": "فتح التقديم", "closing": "إغلاق", "deadline": "موعد نهائي", "announcement": "إعلان"} %}
+<section class="news" aria-labelledby="news-title">
+  <h2 id="news-title">آخر المستجدات</h2>
+  <ol class="news-list">
+    {% for item in news %}
+    <li class="news-item news-item--{{ item.type }}">
+      <p class="news-meta">
+        <time datetime="{{ item.date }}">{{ item.date | arabic_date }}</time>
+        <span aria-hidden="true">·</span>
+        <span class="news-type">{{ news_labels[item.type] }}</span>
+      </p>
+      <p class="news-meta">{{ path_names[item.path_id] }}</p>
+      <p class="news-title">
+        {% if item.source_url %}
+        <a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
+        {% else %}
+        {{ item.title_ar }} {{ c.unverified_stamp() }}
+        {% endif %}
+      </p>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
+
 <section aria-labelledby="paths-title">
   <h2 id="paths-title">المسارات بنظرة سريعة</h2>
   <p class="section-intro">أشهر برامج الابتعاث لخريجي الثانوية، وحالة التقديم في كل منها.</p>

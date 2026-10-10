@@ -39,14 +39,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pip install -r requirements.txt     # install dependencies
 uvicorn app.main:app --reload       # run locally at http://127.0.0.1:8000
 $env:WADIH_SHOW_DRAFTS="1"; uvicorn app.main:app --reload   # same, but also show unverified drafts (e.g. the Tuwaiq section)
+pip install -r requirements-dev.txt # adds pytest + httpx (dev only; the live server uses requirements.txt)
+pytest                              # run all tests
+pytest tests/test_data.py -v        # one file
+pytest tests/test_pages.py::test_about_loads   # one test
 ```
-Tests (pytest) arrive in Stage 1, Step 6.
+Tests: `test_pages.py` (pages load, 404s, draft gating, no third-party requests), `test_data.py` (the trust rules as code, e.g. a path can't be `verified` unless every track status has a source), `test_content.py` (Markdown loader + slug safety). Run `pytest` before every commit.
+
+## Deploy
+Live at https://wadih-mqni.onrender.com (Render free web service, Frankfurt). **Pushing to `main` deploys automatically**, so run `pytest` before every push. Render installs `requirements.txt` only (not the dev file) and starts `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Never set `WADIH_SHOW_DRAFTS` on Render. Free instances sleep when idle.
 
 ## Architecture
 - `app/main.py`: the FastAPI app. Loads `data/site.json` once at startup and exposes it to every template as the Jinja global `site`. Routes return server-rendered Jinja2 templates (no frontend framework).
 - `app/templates/`: `base.html` is the shared layout (`<html lang="ar" dir="rtl">`, header, footer). Pages `{% extends "base.html" %}`. Header, main, and footer all use the `.container` class so their edges line up.
 - `app/static/`: `style.css` (mobile-first; use logical properties like `padding-inline`, never left/right), `fonts.css` + `fonts/` (self-hosted IBM Plex Sans Arabic for body, Noto Naskh Arabic for headings, OFL).
-- `data/`: settings and facts as JSON (`site.json`, `paths.json`, `tests.json`, `featured_quote.json`), loaded once at startup by `load_json()` in `app/main.py`. Anything with `verified: false` / `status_source: null` / `status: draft` renders with the "غير مؤكد" stamp or stays hidden. `featured_quote.json` renders only when `status` is `verified` or `WADIH_SHOW_DRAFTS=1`. Data changes need a server restart.
+- `data/`: settings and facts as JSON (`site.json`, `paths.json`, `tests.json`, `news.json`, `featured_quote.json`), loaded once at startup by `load_json()` in `app/main.py`. `news.json` items (`date`, `type`: opening/closing/deadline/announcement, `path_id`, `title_ar`, `source_url`) are sorted newest first, and the homepage shows the latest 5. Items without `source_url` get the "غير مؤكد" stamp. Dates are ISO in data and shown via the `arabic_date` Jinja filter. Anything with `verified: false` / `status_source: null` / `status: draft` renders with the "غير مؤكد" stamp or stays hidden. `featured_quote.json` renders only when `status` is `verified` or `WADIH_SHOW_DRAFTS=1`. Data changes need a server restart.
 - `content/<section>/<slug>.md`: Markdown pages with frontmatter (`title`, `description`, `status`, `sources`, `last_checked`, `next_step`). `app/content.py` `load_page()` validates the slug (`^[a-z0-9-]+$`, so URLs can never reach other files) and renders the Markdown on every request, so content edits need no restart. Routes like `/grades/{slug}` render `page.html`; unknown pages raise 404, which shows the Arabic `404.html`.
 - Full-width bands (e.g. `partials/tuwaiq.html`) go in `{% block after_content %}`. Normal page content goes in `{% block content %}`, inside the reading column.
 - After CSS changes, browsers may serve a cached copy: hard-refresh with Ctrl+Shift+R.

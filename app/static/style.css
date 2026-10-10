@@ -401,6 +401,54 @@ main {
   color: var(--paper);
 }
 
+/* Latest news: a compact dated list. Opening news gets a green marker. */
+.news-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.news-item {
+  position: relative;
+  padding-block: var(--space-3);
+  padding-inline-start: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.news-item::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 2px;
+  top: calc(var(--space-3) + 0.7em);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+}
+
+.news-item--opening::before {
+  background: var(--green);
+}
+
+.news-meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-1);
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.news-type {
+  font-weight: 600;
+}
+
+.news-title {
+  margin: 0;
+  font-weight: 600;
+}
+
 /* Content pages (Markdown) */
 .page-draft {
   font-size: 0.85rem;

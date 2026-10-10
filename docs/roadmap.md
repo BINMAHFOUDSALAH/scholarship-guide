@@ -24,9 +24,12 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
   - [x] 4b.5 Homepage structure (paths at a glance from `data/paths.json`, tests from `data/tests.json`, how we verify) + Tuwaiq section (`data/featured_quote.json`, shown only when `status: verified` or `WADIH_SHOW_DRAFTS=1`)
   - [x] 4b.6 Remaining docs (handoff rule in CLAUDE.md)
 - [x] **Step 5:** Markdown content: 3 grade pages ("what to do this year") + scholarship path overview, `status: draft`. Homepage hero "في أي صف أنت؟" ("Which grade are you in?") links to them. Needs `markdown`, `python-frontmatter` (ask before installing).
-- [ ] **Step 6:** pytest tests: pages load, RTL, theme toggle present, Tuwaiq hidden when draft, 404. Needs `pytest`, `httpx` (ask first).
-- [ ] **Step 7:** Deploy to Render free tier. The owner creates the account and commits/pushes.
-- [ ] **Step 8:** README + decisions update.
+- [x] **Step 5b:** "آخر المستجدات" (latest news) on the homepage from `data/news.json` (later fed by the update-monitor agent and linked to email alerts)
+- [x] **Step 6:** pytest tests (33): pages, 404s, slug safety, draft gating, trust rules for data, no third-party requests. `requirements-dev.txt` + `pytest.ini`.
+- [x] **Step 7:** Live on Render (free, Frankfurt): https://wadih-mqni.onrender.com. Every push to `main` redeploys (decision 017). Later: pin the Python version.
+- [x] **Step 8:** README (live link, tests, how changes go live) + decisions 001–017.
+
+**Stage 1 complete:** the site is live, tested, and deploys on every push.
 
 ## Research (in progress, alongside Stage 1)
 - [x] First draft of the 3 paths + Tuwaiq quote sources: [research/paths-research.md](research/paths-research.md)

@@ -19,20 +19,34 @@ DATA_DIR = APP_DIR.parent / "data"
 SHOW_DRAFTS = os.environ.get("WADIH_SHOW_DRAFTS") == "1"
 
 
+ARABIC_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                 "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
+
+
 def load_json(name):
     return json.loads((DATA_DIR / name).read_text(encoding="utf-8"))
+
+
+def arabic_date(iso_date):
+    """'2026-10-09' -> '9 أكتوبر 2026'"""
+    year, month, day = (int(part) for part in iso_date.split("-"))
+    return f"{day} {ARABIC_MONTHS[month - 1]} {year}"
 
 
 site = load_json("site.json")
 paths = load_json("paths.json")
 tests = load_json("tests.json")
 featured_quote = load_json("featured_quote.json")
+# Newest first. ISO dates (YYYY-MM-DD) sort correctly as plain text.
+news = sorted(load_json("news.json"), key=lambda item: item["date"], reverse=True)
+path_names = {path["id"]: path["name_ar"] for path in paths}
 
 app = FastAPI(title=site["name"])
 app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=APP_DIR / "templates")
 templates.env.globals["site"] = site
 templates.env.globals["show_drafts"] = SHOW_DRAFTS
+templates.env.filters["arabic_date"] = arabic_date
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -41,7 +55,13 @@ def home(request: Request):
     return templates.TemplateResponse(
         request,
         "home.html",
-        {"paths": paths, "tests": tests, "quote": featured_quote if show_quote else None},
+        {
+            "paths": paths,
+            "tests": tests,
+            "news": news[:5],
+            "path_names": path_names,
+            "quote": featured_quote if show_quote else None,
+        },
     )
 
 
