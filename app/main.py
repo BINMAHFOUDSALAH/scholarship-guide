@@ -2,10 +2,14 @@ import json
 import os
 from pathlib import Path
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.exception_handlers import http_exception_handler
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+from app.content import load_page
 
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR.parent / "data"
@@ -44,3 +48,20 @@ def home(request: Request):
 @app.get("/about", response_class=HTMLResponse)
 def about(request: Request):
     return templates.TemplateResponse(request, "about.html")
+
+
+@app.get("/grades/{slug}", response_class=HTMLResponse)
+def grade_page(request: Request, slug: str):
+    # Markdown is read on every request, so content edits show up without a restart.
+    page = load_page("grades", slug)
+    if page is None:
+        raise HTTPException(status_code=404)
+    return templates.TemplateResponse(request, "page.html", {"page": page})
+
+
+@app.exception_handler(StarletteHTTPException)
+async def not_found(request: Request, exc: StarletteHTTPException):
+    # A friendly Arabic page for unknown addresses; other errors keep FastAPI's default.
+    if exc.status_code == 404:
+        return templates.TemplateResponse(request, "404.html", status_code=404)
+    return await http_exception_handler(request, exc)

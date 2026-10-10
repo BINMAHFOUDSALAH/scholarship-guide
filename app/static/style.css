@@ -364,6 +364,62 @@ main {
   color: var(--ink-muted);
 }
 
+/* Grade picker: the first thing a student does. Three plain links. */
+.grade-picker {
+  margin-block: var(--space-5) 0;
+}
+
+.grade-picker-title {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 700;
+}
+
+.grade-picker ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grade-picker a {
+  display: block;
+  padding: var(--space-3) var(--space-2);
+  border: 1.5px solid var(--green);
+  border-radius: 6px;
+  color: var(--green);
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.grade-picker a:hover {
+  background: var(--green);
+  color: var(--paper);
+}
+
+/* Content pages (Markdown) */
+.page-draft {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+.prose h2 {
+  margin-block: var(--space-5) var(--space-2);
+  font-size: var(--step-1);
+}
+
+.prose ul {
+  padding-inline-start: var(--space-4);
+}
+
+.prose li {
+  margin-block: var(--space-1);
+}
+
 /* Paths: an editorial ruled list, not a grid of cards. */
 .path-list {
   border-top: 1px solid var(--line);
@@ -463,6 +519,13 @@ main {
 
 .track-status--invitation {
   color: var(--ink);
+}
+
+.path-item-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
 }
 
 .path-item-link {

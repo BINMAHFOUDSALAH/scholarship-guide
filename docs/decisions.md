@@ -89,3 +89,18 @@ Newest entries go at the bottom. When a decision changes, add a new entry instea
 **Decision:** All guides and path pages stay readable without an account. The **guided start** (questions → recommended paths → personal plan with progress) **requires an account**. Accounts store the minimum: login details plus the guided-start answers (grade, school track, goal, interests). Never national ID, GPA, test scores, or passport. Shipped in two launches: Launch 1 = public guides (no accounts); Launch 2 = accounts + guided start.
 **Alternatives:** Progress saved on the device only, no accounts (recommended by Claude: zero personal data, keeps the "no account" promise); optional accounts only for saving; accounts for the whole site.
 **Why:** The owner wants saved progress per student and to learn real backend skills (database, authentication, security). Trade-offs accepted: the footer promise changes to "guides need no signup"; most users are minors, so a privacy policy, data deletion, and a review of Saudi PDPL obligations (including consent for under-18s) are required before Launch 2; a login wall in front of the guided start is what competitors do, so the guides must stay genuinely useful without it.
+
+## 015 — Login like a normal website: email or Google; email alerts; visitor counting
+**Date:** 2026-10-09
+**Decision:**
+- **Sign-in options:** email + password, or "Continue with Google" (OAuth / OpenID Connect).
+- **What's open vs. behind login:** browsing stays open (guides, path pages, universities page). Logging in unlocks personal features: guided start + saved plan (014), saved universities, and **email alerts** per path (e.g. "مسار الرواد opened", a new announcement), sent only to users who opt in.
+- **Usage numbers** come from privacy-friendly visitor counting on our own server (page views, popular pages), so no account is needed just to be counted.
+**Alternatives:** Login for the universities page or the whole site; alerts without accounts (email-only subscription).
+**Why:** The owner wants users, emails, and data, plus real-time alerts. Pages behind a login can't be indexed by Google, and students find guides through search, so public pages stay public. Google sign-in means fewer passwords to store, and it's a key skill (OAuth). Costs accepted: an email-sending service (free tier, ask before signing up), unsubscribe links, a privacy policy, PDPL obligations (users are mostly minors), and a Google Cloud project the owner creates.
+
+## 016 — Universities explorer for the Custodian scholarship; SAT info per university
+**Date:** 2026-10-09
+**Decision:** A dedicated, public, interactive page: type a university name → see its rank for مسار الرواد and مسار إمداد and its rank per field/major, all from the official MoE guide (PDF). Data is extracted by a reusable script into `data/universities.json` (re-run when the new edition comes out, expected Dec 2026 / Jan 2027) and spot-checked by the owner. No logos in version 1 (trademarks, hundreds of files to maintain). SAT is removed from the homepage; whether a university requires SAT is shown per university, each with its own source, starting with the Arruaad top 30. Each path gets its own subtle visual theme based on **place**, never on another organization's logo or branding.
+**Alternatives:** Linking only to the PDF; typing the data by hand; showing logos; keeping SAT on the homepage.
+**Why:** It is the most useful free tool for the biggest audience, and no competitor offers it openly. A script makes the yearly update repeatable. Not every university needs SAT, so pushing it to everyone misleads students.

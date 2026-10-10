@@ -4,8 +4,10 @@
     "name_ar": "برنامج خادم الحرمين الشريفين للابتعاث",
     "name_en": "Custodian of the Two Holy Mosques Scholarship Program",
     "provider_ar": "وزارة التعليم",
-    "summary_ar": "ابتعاث حكومي للدراسة في جامعات عالمية مختارة. تحتاج قبولًا نهائيًا غير مشروط من جامعة ضمن قائمة المسار، ويكون التقديم عبر منصة سفير.",
+    "summary_ar": "ابتعاث حكومي للدراسة في جامعات عالمية مختارة. تحتاج قبولًا نهائيًا غير مشروط من جامعة ضمن قائمة المسار، ويكون التقديم عبر منصة قبول.",
     "official_url": "https://sites.moe.gov.sa/scholarship-program/",
+    "apply_url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/scholarshipprog.aspx",
+    "universities_guide_url": "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf",
     "verified": false,
     "tracks": [
       {

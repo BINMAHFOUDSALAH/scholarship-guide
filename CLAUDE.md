@@ -7,7 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **واضح (Wadih, "clear")**: a free, Arabic-first website that helps Saudi high school students go from confusion to action about their future. Tagline: "مستقبلك بعد الثانوية، بوضوح" ("your future after high school, clearly").
 
 - Organized around **paths** (مسارات), the programs a student can aim for: the government external scholarship, Aramco, KAUST, more later. Each path has requirements, steps, documents, and official sources. **Resources** (IELTS, SAT, Calculus, Khan Academy…) are shared and linked from many paths.
-- **Help first.** All guides and path pages are readable without an account. No email gates, memberships, or consultations. Only the **guided start / personal plan** requires an account (decision 014).
+- **Help first.** Guides, path pages, and the universities explorer are open without an account (so Google can index them). Logging in (email + password or Google) unlocks personal features: guided start + saved plan, saved universities, and opt-in email alerts (decisions 014–015). No memberships or consultations.
+- **Universities explorer** (decision 016): a public page to search the official MoE universities list by name and see ranks per track (الرواد / إمداد) and per field. Data comes from the official PDF via a re-runnable script. No logos. SAT is shown per university, not pushed to everyone.
 - Launch 1 (~2026-12-09): public guides + the government scholarship path, fully verified, no accounts. Launch 2: accounts + guided start (roadmap Stage 4). Other paths come one at a time.
 - Later: a chatbot and agents that answer only from verified content and always show sources.
 
@@ -46,5 +47,6 @@ Tests (pytest) arrive in Stage 1, Step 6.
 - `app/templates/`: `base.html` is the shared layout (`<html lang="ar" dir="rtl">`, header, footer). Pages `{% extends "base.html" %}`. Header, main, and footer all use the `.container` class so their edges line up.
 - `app/static/`: `style.css` (mobile-first; use logical properties like `padding-inline`, never left/right), `fonts.css` + `fonts/` (self-hosted IBM Plex Sans Arabic for body, Noto Naskh Arabic for headings, OFL).
 - `data/`: settings and facts as JSON (`site.json`, `paths.json`, `tests.json`, `featured_quote.json`), loaded once at startup by `load_json()` in `app/main.py`. Anything with `verified: false` / `status_source: null` / `status: draft` renders with the "غير مؤكد" stamp or stays hidden. `featured_quote.json` renders only when `status` is `verified` or `WADIH_SHOW_DRAFTS=1`. Data changes need a server restart.
-- Full-width bands (e.g. `partials/tuwaiq.html`) go in `{% block after_content %}`. Normal page content goes in `{% block content %}`, inside the reading column. `content/` (planned): Markdown pages with frontmatter (`title`, `status: draft|verified`, `sources`, `last_checked`).
+- `content/<section>/<slug>.md`: Markdown pages with frontmatter (`title`, `description`, `status`, `sources`, `last_checked`, `next_step`). `app/content.py` `load_page()` validates the slug (`^[a-z0-9-]+$`, so URLs can never reach other files) and renders the Markdown on every request, so content edits need no restart. Routes like `/grades/{slug}` render `page.html`; unknown pages raise 404, which shows the Arabic `404.html`.
+- Full-width bands (e.g. `partials/tuwaiq.html`) go in `{% block after_content %}`. Normal page content goes in `{% block content %}`, inside the reading column.
 - After CSS changes, browsers may serve a cached copy: hard-refresh with Ctrl+Shift+R.

@@ -12,6 +12,15 @@
 <section class="hero">
   <h1>{{ site.tagline }}</h1>
   <p class="lead">دليل مجاني لطلاب الثانوية في السعودية: المسارات المتاحة بعد التخرج، متطلباتها، وخطوتك القادمة. كل الأدلة مفتوحة بدون تسجيل.</p>
+
+  <nav class="grade-picker" aria-labelledby="grade-picker-title">
+    <p id="grade-picker-title" class="grade-picker-title">في أي صف أنت؟</p>
+    <ul>
+      <li><a href="{{ url_for('grade_page', slug='grade-10') }}">أول ثانوي</a></li>
+      <li><a href="{{ url_for('grade_page', slug='grade-11') }}">ثاني ثانوي</a></li>
+      <li><a href="{{ url_for('grade_page', slug='grade-12') }}">ثالث ثانوي</a></li>
+    </ul>
+  </nav>
 </section>
 
 <section aria-labelledby="paths-title">
@@ -43,7 +52,11 @@
         {% endfor %}
       </ul>
 
-      <a class="path-item-link" href="{{ path.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
+      <p class="path-item-links">
+        <a class="path-item-link" href="{{ path.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
+        {% if path.apply_url %}<a class="path-item-link" href="{{ path.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
+        {% if path.universities_guide_url %}<a class="path-item-link" href="{{ path.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
+      </p>
     </article>
     {% endfor %}
   </div>

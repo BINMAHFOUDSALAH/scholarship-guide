@@ -10,7 +10,9 @@ Legend: 🟢 from an official page · 🟡 official but the page may be outdated
 ## 1. برنامج خادم الحرمين الشريفين للابتعاث (Custodian of the Two Holy Mosques Scholarship Program)
 
 **Official site:** https://sites.moe.gov.sa/scholarship-program/
-**Apply on:** منصة سفير (Safeer): https://safeer2.moe.gov.sa/Portal 🟡 (the FAQ says Safeer; some third-party sites mention "قبول". **Verify for the current cycle.**)
+**Apply on: منصة قبول** ✅ (confirmed by the owner, 2026-10-09). Ministry e-service "طلب تقديم على بعثة في برنامج خادم الحرمين الشريفين للابتعاث الخارجي": https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/scholarshipprog.aspx → "ابدأ الخدمة" opens https://www.uap.sa
+- Steps on that page: log in with النفاذ الوطني (or the Ministry's unified login) → check personal data → enter language/international test info → "بدء تقديم الطلب" → follow the application on the platform. Free; support line 19996.
+- Older pages (the FAQ, updated Jan 2024) say Safeer. Safeer is likely used **after** selection (MIFT: "Apply on Qubool. After they pick you, use Safeer"). 🟡 Confirm before publishing that detail.
 
 ### Current status (reported by the owner from the program's official X account, 2026-10-09) ✅
 | Track | Status now | Note |
@@ -65,7 +67,8 @@ Source: https://sites.moe.gov.sa/scholarship-program/paths/path-emdad/
 - No current-cycle dates on the official pages I read.
 - Third parties mention "10 Jan – 7 May 2026" and "until 15 Nov 2026". These conflict and are unofficial. **Verify on Safeer / official accounts.**
 
-### University and majors lists (needed later for the universities feature) 🟢
+### University and majors lists (needed later for the universities feature) ✅
+- **Confirmed by the owner (2026-10-09) as the current official list.** A new edition is expected around **Dec 2026 / Jan 2027**; the owner will send it. When it changes, update `data/universities.json` and every `last_checked`.
 - Official guide PDF: **الدليل الإرشادي لترتيب قوائم الجامعات حسب المجالات 2026–2027**
   https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf
   → This is the official source for the top 30 / top 200 lists by field. In Stage 2/3 it becomes `data/universities.json` (each entry with `name_ar`, `name_en`, field, track, source, last_checked).
@@ -135,7 +138,9 @@ No current-cycle dates found. Check the official site.
 ---
 
 ## Owner's verification checklist
-- [ ] Current application platform for the government scholarship (Safeer vs قبول) and this cycle's dates
+- [x] Current application platform: **قبول** (uap.sa) via the MoE e-service page (owner, 2026-10-09)
+- [x] Current universities/majors list: the 2026–2027 guide PDF (owner, 2026-10-09); a new edition is expected Dec 2026 / Jan 2027
+- [ ] This cycle's dates
 - [ ] Whether any minimum high school GPA applies to Arruaad / Emdad
 - [ ] Whether Waaid / R&D apply to high school graduates
 - [ ] Whether "مسار التميز" still exists
