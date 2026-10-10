@@ -11,6 +11,12 @@ CONTENT_DIR = Path(__file__).parent.parent / "content"
 SLUG_PATTERN = re.compile(r"^[a-z0-9-]+$")
 
 
+def list_slugs(section):
+    """All valid page slugs in content/<section>/, sorted (used by the sitemap)."""
+    folder = CONTENT_DIR / section
+    return sorted(p.stem for p in folder.glob("*.md") if SLUG_PATTERN.match(p.stem))
+
+
 def load_page(section, slug):
     """Read content/<section>/<slug>.md and return its frontmatter plus rendered HTML, or None."""
     if not SLUG_PATTERN.match(slug):

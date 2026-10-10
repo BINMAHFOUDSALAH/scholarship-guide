@@ -3,6 +3,8 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
+> **Next session (as of 2026-10-09):** start **Stage 2, the universities explorer**: ask the owner to approve installing `pdfplumber` (dev only), inspect the official PDF's structure, then write `docs/specs/universities-explorer.md` for approval before building. Owner to-dos still open: confirm the Al Arabiya clip's wording (Stage 1b), send the X post links for الرواد/إمداد, and verify the research checklist.
+
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
 **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
 **Pace:** ~5 hours per week.
@@ -31,6 +33,23 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 
 **Stage 1 complete:** the site is live, tested, and deploys on every push.
 
+## Stage 1b: Homepage design pass
+- [x] Hero with Tuwaiq horizon + "ابدأ من هنا" revealing the grade question (decision 018)
+- [x] News + tests in panels; news sorted by date then status, with status chips
+- [x] Path panels with place scenes and accents (world / desert / sea)
+- [x] Click-to-play video slot in the Tuwaiq band (decision 019)
+- [x] Real licensed photos per path with credits (decision 020)
+- [x] Share preview (Open Graph + share image), meta descriptions, robots.txt, sitemap.xml (decision 021)
+- [x] Tuwaiq video: Al Arabiya's own clip `6fVtY11654w` added as draft, with a source line
+- [ ] Owner: watch the clip, confirm the wording matches `quote_ar` → set `status: verified` in `featured_quote.json`
+
+## Stage 1c: Wide editorial redesign (decisions 022–023)
+- [x] Light-first theme, two-state toggle
+- [x] Plex Bold headlines + Naskh accents; owner's palette; wide grid + reading column
+- [x] Header with nav + phone menu; 3-column footer
+- [x] Hero with signature drawing; «من أين تبدأ؟»; compact news; facts-first path rows with «لمن؟»; 5-step journey; «كيف نعمل»
+- [ ] Owner: X post links for الرواد open / إمداد closed → `source_url` in `news.json` and `status_source` in `paths.json`
+
 ## Research (in progress, alongside Stage 1)
 - [x] First draft of the 3 paths + Tuwaiq quote sources: [research/paths-research.md](research/paths-research.md)
 - [ ] Owner verifies (checklist at the bottom of that file)
@@ -40,6 +59,7 @@ Teaches data extraction, data modeling + validation (Pydantic), a JSON API, and 
 - Spec first: `docs/specs/universities-explorer.md`.
 - Extraction script `scripts/extract_universities.py` (needs a PDF library, ask before installing) → `data/universities.json`: `name_ar`, `name_en`, country, rank per track (الرواد / إمداد), rank per field/major, source = the MoE guide PDF, `last_checked`. Re-run when the new edition comes out (Dec 2026 / Jan 2027). The owner spot-checks a sample against the PDF.
 - Public page `/universities`: type a name → the university appears with its track ranks and field ranks. JSON endpoint `/api/universities`. No logos in v1 (decision 016).
+- Owner's design idea (2026-10-09): a "course finder" style box (search field + quick chips) that lets students browse by **target degree, country, and major**, then open a **university page** showing its available programs, degrees, and ranks per track (الرواد / إمداد) and per field, all exactly as the official list says. Which filters are possible depends on what the PDF contains; inspect it first. This is also where the header search arrives.
 - SAT policy per university (required / optional / not considered + source link), starting with the Arruaad top 30.
 - Pydantic models for paths, tracks, and universities: every fact has `source` + `last_checked`, or the app refuses to start. `active_year` setting.
 - Shared resources (English/IELTS, Qudurat, math/Calc, Khan Academy links), linked many-to-many from paths.

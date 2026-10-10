@@ -133,7 +133,9 @@ No current-cycle dates found. Check the official site.
   ("The ambition of Saudis is like Mount Tuwaiq; it will not break unless this mountain collapses and is leveled with the ground.") The exact punctuation and connecting words vary between sources.
 - **Context per Saudipedia:** said by Crown Prince Mohammed bin Salman at the **Future Investment Initiative (مبادرة مستقبل الاستثمار), Riyadh, 2018**.
   Source (secondary): https://saudipedia.com/ar/ما-المقصود-بهمة-طويق؟ (it cites no specific video).
-- **Still needed:** the original video from an official channel (e.g. the FII Institute, SPA (واس), or Saudi TV), to confirm the exact wording and to be the play-button link. Until then the section stays hidden (decision 011).
+- **Confirmed context (2 news sources):** day 2 of FII 2018 in Riyadh, on a panel (Al Arabiya English: https://english.alarabiya.net/life-style/travel-and-tourism/2018/10/24/Formidable-Mount-Tuwaiq-which-Crown-Prince-likened-to-Saudi-strength).
+- **Video chosen by the owner (2026-10-09):** Al Arabiya's own YouTube channel, "محمد بن سلمان : همة السعوديين مثل جبل طويق ولن تنكسر": https://www.youtube.com/watch?v=6fVtY11654w (uploader verified via YouTube oEmbed: @AlArabiya). Other search results were re-uploads by individuals and are not used. No SPA / Saudi TV / FII copy was found.
+- **Still needed:** the owner watches the clip and confirms the wording matches `quote_ar` word for word → `status: verified`. Until then the section stays hidden on the live site.
 
 ---
 

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
+{% import "partials/path-art.html" as art %}
 
 {% set status_labels = {
   "open": "مفتوح الآن",
@@ -7,35 +8,67 @@
   "not_open": "لم يفتح بعد",
   "invitation": "بالترشيح والدعوة"
 } %}
+{% set news_labels = {"opening": "فتح التقديم", "deadline": "موعد نهائي", "closing": "إغلاق", "announcement": "إعلان"} %}
+{% set arabic_digits = ["١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"] %}
+
+{% block hero %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <p class="hero-kicker">{{ site.descriptor }} · مجاني وبدون تسجيل</p>
+      <h1 id="hero-title">{{ site.tagline }}</h1>
+      <p class="lead">{{ home.lead_ar }}</p>
+
+      <div class="hero-actions">
+        {# Native open/close element: works without JavaScript and with screen readers. #}
+        <details class="start">
+          <summary class="btn btn-primary">ابدأ من هنا</summary>
+          <nav class="start-panel" aria-labelledby="grade-picker-title">
+            <p id="grade-picker-title" class="start-title">في أي صف أنت؟</p>
+            <ul class="grade-choices">
+              <li><a href="{{ url_for('grade_page', slug='grade-10') }}">أول ثانوي</a></li>
+              <li><a href="{{ url_for('grade_page', slug='grade-11') }}">ثاني ثانوي</a></li>
+              <li><a href="{{ url_for('grade_page', slug='grade-12') }}">ثالث ثانوي</a></li>
+            </ul>
+          </nav>
+        </details>
+        <a class="btn btn-secondary" href="#paths">تصفّح المسارات</a>
+      </div>
+    </div>
+    {{ art.hero_visual(home.hero_labels) }}
+  </div>
+</section>
+{% endblock %}
 
 {% block content %}
-<section class="hero">
-  <h1>{{ site.tagline }}</h1>
-  <p class="lead">دليل مجاني لطلاب الثانوية في السعودية: المسارات المتاحة بعد التخرج، متطلباتها، وخطوتك القادمة. كل الأدلة مفتوحة بدون تسجيل.</p>
-
-  <nav class="grade-picker" aria-labelledby="grade-picker-title">
-    <p id="grade-picker-title" class="grade-picker-title">في أي صف أنت؟</p>
-    <ul>
-      <li><a href="{{ url_for('grade_page', slug='grade-10') }}">أول ثانوي</a></li>
-      <li><a href="{{ url_for('grade_page', slug='grade-11') }}">ثاني ثانوي</a></li>
-      <li><a href="{{ url_for('grade_page', slug='grade-12') }}">ثالث ثانوي</a></li>
-    </ul>
-  </nav>
+<section id="start" class="section" aria-labelledby="start-title">
+  <h2 id="start-title" class="section-title">من أين تبدأ؟</h2>
+  <ol class="start-points">
+    {% for item in home.start %}
+    <li class="start-point">
+      <a href="{{ item.href }}">
+        <span class="start-num" aria-hidden="true">{{ arabic_digits[loop.index0] }}</span>
+        <span class="start-point-title">{{ item.title_ar }}</span>
+        <span class="start-point-text">{{ item.text_ar }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
 </section>
 
 {% if news %}
-{% set news_labels = {"opening": "فتح التقديم", "closing": "إغلاق", "deadline": "موعد نهائي", "announcement": "إعلان"} %}
-<section class="news" aria-labelledby="news-title">
-  <h2 id="news-title">آخر المستجدات</h2>
+<section id="news" class="section news" aria-labelledby="news-title">
+  <div class="section-head">
+    <h2 id="news-title" class="section-title">آخر المستجدات</h2>
+    <p class="section-note">مرتبة من الأحدث، والأهم أولًا في اليوم نفسه.</p>
+  </div>
   <ol class="news-list">
     {% for item in news %}
-    <li class="news-item news-item--{{ item.type }}">
+    <li class="news-item">
       <p class="news-meta">
+        <span class="chip chip--{{ item.type }}">{{ news_labels[item.type] }}</span>
         <time datetime="{{ item.date }}">{{ item.date | arabic_date }}</time>
-        <span aria-hidden="true">·</span>
-        <span class="news-type">{{ news_labels[item.type] }}</span>
       </p>
-      <p class="news-meta">{{ path_names[item.path_id] }}</p>
       <p class="news-title">
         {% if item.source_url %}
         <a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
@@ -43,58 +76,111 @@
         {{ item.title_ar }} {{ c.unverified_stamp() }}
         {% endif %}
       </p>
+      <p class="news-path">{{ path_names[item.path_id] }}</p>
     </li>
     {% endfor %}
   </ol>
 </section>
 {% endif %}
 
-<section aria-labelledby="paths-title">
-  <h2 id="paths-title">المسارات بنظرة سريعة</h2>
-  <p class="section-intro">أشهر برامج الابتعاث لخريجي الثانوية، وحالة التقديم في كل منها.</p>
+<section id="paths" class="section" aria-labelledby="paths-title">
+  <div class="section-head">
+    <h2 id="paths-title" class="section-title">المسارات</h2>
+    <p class="section-note">أشهر برامج الابتعاث لخريجي الثانوية: لمن هي، وحالة التقديم، ومصادرها الرسمية.</p>
+  </div>
 
   <div class="path-list">
     {% for path in paths %}
-    <article class="path-item">
-      <header class="path-item-header">
-        <h3 class="path-item-name">{{ path.name_ar }}</h3>
-        {% if not path.verified %}{{ c.unverified_stamp() }}{% endif %}
-      </header>
-      <p class="path-item-en" lang="en" dir="ltr">{{ path.name_en }}</p>
-      <p>{{ path.summary_ar }}</p>
+    <article class="path-row theme-{{ path.theme }}">
+      {% if path.photo %}
+      {% set ph = path.photo %}
+      <figure class="path-photo">
+        {# The browser picks the 500px file on small screens and the 960px file on larger or sharper ones. #}
+        <img src="{{ url_for('static', path=ph.file ~ '-960.jpg') }}"
+             srcset="{{ url_for('static', path=ph.file ~ '-500.jpg') }} 500w, {{ url_for('static', path=ph.file ~ '-960.jpg') }} 960w"
+             sizes="(min-width: 900px) 380px, calc(100vw - 32px)"
+             width="{{ ph.width }}" height="{{ ph.height }}"
+             alt="{{ ph.alt_ar }}" loading="lazy" decoding="async"
+             style="object-position: {{ ph.focus }}">
+        <figcaption class="photo-credit">
+          {% if ph.caption_ar %}{{ ph.caption_ar }} · {% endif %}
+          <a href="{{ ph.source_url }}" target="_blank" rel="noopener">صورة: <span lang="en" dir="ltr">{{ ph.credit }}</span></a>
+          · {% if ph.license_url %}<a href="{{ ph.license_url }}" target="_blank" rel="noopener" lang="en" dir="ltr">{{ ph.license }}</a>{% else %}{{ ph.license }}{% endif %}
+        </figcaption>
+      </figure>
+      {% else %}
+      <div class="path-art">{{ art.scene(path.theme) }}</div>
+      {% endif %}
 
-      <ul class="track-list">
-        {% for track in path.tracks %}
-        <li class="track">
-          <div class="track-main">
-            <span class="track-name">{{ track.name_ar }}</span>
-            <span class="track-note">{{ track.note_ar }}</span>
-          </div>
-          <div class="track-state">
-            <span class="track-status track-status--{{ track.status }}">{{ status_labels[track.status] }}</span>
-            {% if not track.status_source %}{{ c.unverified_stamp() }}{% endif %}
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
+      <div class="path-facts">
+        <header class="path-item-header">
+          <h3 class="path-item-name">{{ path.name_ar }}</h3>
+          {% if not path.verified %}{{ c.unverified_stamp() }}{% endif %}
+        </header>
+        <p class="path-item-en" lang="en" dir="ltr">{{ path.name_en }}</p>
 
-      <p class="path-item-links">
-        <a class="path-item-link" href="{{ path.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
-        {% if path.apply_url %}<a class="path-item-link" href="{{ path.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
-        {% if path.universities_guide_url %}<a class="path-item-link" href="{{ path.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
-      </p>
+        <dl class="fact-list">
+          <div class="fact"><dt>الجهة</dt><dd>{{ path.provider_ar }}</dd></div>
+          <div class="fact"><dt>لمن؟</dt><dd>{{ path.audience_ar }}</dd></div>
+          <div class="fact"><dt>باختصار</dt><dd>{{ path.summary_ar }}</dd></div>
+        </dl>
+
+        <ul class="track-list">
+          {% for track in path.tracks %}
+          <li class="track">
+            <div class="track-main">
+              <span class="track-name">{{ track.name_ar }}</span>
+              <span class="track-note">{{ track.note_ar }}</span>
+            </div>
+            <div class="track-state">
+              <span class="status status--{{ track.status }}">{{ status_labels[track.status] }}</span>
+              {% if not track.status_source %}{{ c.unverified_stamp() }}{% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+
+        {% set reviewed = path.tracks | map(attribute='last_checked') | max %}
+        <p class="path-reviewed">آخر مراجعة: <time datetime="{{ reviewed }}">{{ reviewed | arabic_date }}</time></p>
+
+        <p class="path-item-links">
+          <a class="path-item-link" href="{{ path.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
+          {% if path.apply_url %}<a class="path-item-link" href="{{ path.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
+          {% if path.universities_guide_url %}<a class="path-item-link" href="{{ path.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
+        </p>
+      </div>
     </article>
     {% endfor %}
   </div>
 </section>
 
-<section aria-labelledby="tests-title">
-  <h2 id="tests-title">اختبارات ستسمع عنها كثيرًا</h2>
-  <dl class="term-list">
+<section id="journey" class="section" aria-labelledby="journey-title">
+  <div class="section-head">
+    <h2 id="journey-title" class="section-title">رحلة التقديم في ٥ خطوات</h2>
+    <p class="section-note">إرشاد عام. تفاصيل كل برنامج في موقعه الرسمي.</p>
+  </div>
+  <ol class="journey">
+    {% for step in home.journey %}
+    <li class="journey-step{% if loop.first %} journey-step--current{% endif %}">
+      <span class="journey-num" aria-hidden="true">{{ arabic_digits[loop.index0] }}</span>
+      <h3 class="journey-title">{{ step.title_ar }}</h3>
+      <p class="journey-text">{{ step.text_ar }}</p>
+      <a class="journey-link" href="{{ step.href }}">{{ step.link_ar }} ←</a>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section class="section tests" aria-labelledby="tests-title">
+  <div class="section-head">
+    <h2 id="tests-title" class="section-title">اختبارات ستسمع عنها كثيرًا</h2>
+  </div>
+  <dl class="test-grid">
     {% for test in tests %}
-    <div class="term">
+    <div class="test">
       <dt>{{ test.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ test.name_en }}</span></dt>
-      <dd>{{ test.what_ar }} <a href="{{ test.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a></dd>
+      <dd>{{ test.what_ar }}</dd>
+      <dd><a href="{{ test.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a></dd>
     </div>
     {% endfor %}
   </dl>
@@ -105,10 +191,24 @@
 {% if quote %}{% include "partials/tuwaiq.html" %}{% endif %}
 
 <div class="container">
-  <section aria-labelledby="verify-title">
-    <h2 id="verify-title">كيف نتحقق من المعلومات؟</h2>
-    <p>كل معلومة رسمية معها رابط مصدرها وتاريخ آخر تحقق، وما لم نتحقق منه بعد نضع بجانبه {{ c.unverified_stamp() }}.</p>
-    {{ c.next_step("قبل أي قرار، افتح رابط المصدر الرسمي وتأكد من آخر التحديثات.", "اقرأ كيف نعمل", url_for('about')) }}
+  <section class="section trust" aria-labelledby="trust-title">
+    <div class="section-head">
+      <h2 id="trust-title" class="section-title">كيف نعمل</h2>
+      <p class="section-note"><a href="{{ url_for('about') }}">اقرأ طريقتنا بالتفصيل ←</a></p>
+    </div>
+    <ul class="trust-points">
+      {% for point in home.trust %}
+      <li class="trust-point">
+        <h3>{{ point.title_ar }}</h3>
+        <p>{{ point.text_ar }}{% if loop.last %} {{ c.unverified_stamp() }}{% endif %}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {{ c.next_step("قبل أي قرار، افتح رابط المصدر الرسمي وتأكد من آخر التحديثات.", "كيف نتحقق من المعلومات", url_for('about')) }}
   </section>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{% if quote and quote.youtube_id %}<script src="{{ url_for('static', path='video.js') }}" defer></script>{% endif %}
 {% endblock %}

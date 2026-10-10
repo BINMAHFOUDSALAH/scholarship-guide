@@ -5,9 +5,11 @@
   "context_ar": "مبادرة مستقبل الاستثمار، الرياض ٢٠١٨",
   "message_ar": "الهمة تبدأ بخطوة واضحة. نحن هنا لنساعدك تعرف خطوتك القادمة.",
   "source_url": "https://saudipedia.com/ar/ما-المقصود-بهمة-طويق؟",
-  "video_url": null,
+  "video_url": "https://www.youtube.com/watch?v=6fVtY11654w",
+  "youtube_id": "6fVtY11654w",
   "last_checked": "2026-10-09",
   "photo": null,
   "photo_credit": null,
-  "todo": "Owner: confirm exact wording + add the official video link, then set status to verified. See docs/research/paths-research.md."
+  "todo": "Owner: watch the Al Arabiya clip, confirm it shows the Crown Prince saying the quote and that quote_ar matches word for word, then set status to verified.",
+  "video_publisher": "قناة العربية"
 }

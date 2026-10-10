@@ -110,3 +110,46 @@ Newest entries go at the bottom. When a decision changes, add a new entry instea
 **Decision:** The site runs on Render as a Python web service (free instance) in the Frankfurt region, at https://wadih-mqni.onrender.com. Render builds from GitHub `main` (`pip install -r requirements.txt`) and starts `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Every push to `main` redeploys automatically. No environment variables, so drafts stay hidden.
 **Alternatives:** Railway, Fly.io, Koyeb (similar platforms); static hosts like GitHub Pages or Netlify (can't run Python); AWS/GCP (complex, easy to overspend); a self-managed VPS (more maintenance).
 **Why:** Free, simple, runs our FastAPI backend, and offers Postgres later for accounts. Frankfurt is the closest region to users in Saudi Arabia, even though the owner is currently in the US; the region can't be changed without recreating the service. Trade-offs: free instances sleep after ~15 minutes idle (slow first visit), and the server's Python version (3.14) differs from local (3.13), to be pinned later.
+
+## 018 — Homepage with character: hero, panels, per-path place themes
+**Date:** 2026-10-09
+**Decision:** The homepage opens with a hero: kicker, big tagline, and a **"ابدأ من هنا"** button (a native `<details>`) that reveals the grade question only when the student asks for it, plus a full-width Mount Tuwaiq horizon drawn in SVG. Sections get editorial labels (٠١، ٠٢، ٠٣). News and tests sit in **panels** (one raised sheet per section); each path is a wide stacked panel with a small illustrated **place scene** and its own accent: world/route for the scholarship (green), dunes for Aramco (amber), Red Sea waves for KAUST (sea teal). News is sorted by publication date, then by status (opening → deadline → closing → announcement), with colored status chips.
+**Alternatives:** Keep the plain ruled lists; accent colors only; real photos per path; show the grade question immediately.
+**Why:** The owner found the page dry. Panels group information so it scans faster, and place scenes give each path a recognizable identity without logos or brand colors. Hiding the grade question behind one clear action keeps the first screen calm. `<details>` works without JavaScript and with screen readers. Colors are mixed from tokens (`color-mix`), so every tint follows light/dark mode automatically; all text contrast measured ≥ 5:1. Panels are allowed; repetitive grids of identical cards still are not.
+
+## 019 — Click-to-play video (updates decision 011)
+**Date:** 2026-10-09
+**Decision:** The Tuwaiq band shows the video **on the homepage** as a click-to-play box: our own artwork and a play button. Nothing is requested from YouTube until the student clicks; then `app/static/video.js` swaps in the privacy-enhanced `youtube-nocookie.com` player. Without JavaScript it is a normal link. The band stays hidden until the quote and video are verified (`youtube_id` + `source_url`).
+**Alternatives:** Link out only (decision 011); a normal YouTube embed that loads on page open.
+**Why:** The owner wants the video visible on the homepage. A normal embed loads Google scripts and cookies for every visitor, most of them minors; click-to-play keeps the page free of third-party requests until the student chooses to watch.
+
+## 020 — Real, licensed photos for each path; no program logos
+**Date:** 2026-10-09
+**Decision:** Each path panel opens with a real photo of the program's place, from Wikimedia Commons, with the licence checked and the credit shown on the photo: Aramco, the College Preparatory Center in Dhahran (public domain, Eagleamn); KAUST, a campus building (CC BY-SA 3.0, juhotski); the Custodian scholarship, Oxford's Radcliffe Camera labeled "صورة توضيحية لجامعة عالمية" (CC BY 4.0, Julian Herzog). Files are self-hosted in `app/static/img/paths/` at 500px and 960px (`srcset`, lazy-loaded). Photo details (file, alt text, credit, licence, source page) live in `paths.json`; a test fails if a photo lacks credit, licence, or source. The drawn SVG scene stays as the fallback for a path without a photo. **No program logos.**
+**Alternatives:** The program logos the owner shared; small KAUST/Aramco logos only; keep the drawn scenes.
+**Why:** Expert guidance (Nielsen Norman Group) favors meaningful photos of real places over decorative art. The Custodian program's logo contains the Saudi state emblem, whose unofficial use is restricted (royal order 3587, 1440H; 2024 Ministry of Commerce decision on national symbols). Other organizations' logos are trademarks and would make "not affiliated" less credible. Wikimedia only serves certain standard thumbnail widths, so 500px and 960px were used.
+
+## 021 — Share preview and search-engine basics
+**Date:** 2026-10-09
+**Decision:** Every page has a meta description (from `site.description`, frontmatter `description`, or a page block), a canonical URL, Open Graph/Twitter tags, and a 1200×630 share image (`app/static/img/og-image.png`, drawn in the browser by `scripts/og-image.js` so Arabic shaping is correct). `/robots.txt` allows all and points to `/sitemap.xml`, which lists the home, about, and every grade page found in `content/grades/`. The public address is one setting: `site.base_url`.
+**Alternatives:** No share preview (bare links on WhatsApp/X); generating the image with an image library (would need an install, and many tools don't join Arabic letters).
+**Why:** Students share links mostly via WhatsApp and X, and find guides through Google. When we buy a domain, changing `base_url` updates every canonical, share, and sitemap URL at once.
+
+## 022 — Light mode first, two-state theme toggle (updates 4b.2)
+**Date:** 2026-10-09
+**Decision:** Every visitor starts in light mode. Dark mode applies only when chosen with the toggle (فاتح ↔ داكن), saved in `localStorage`; the browser's theme color follows. The automatic `prefers-color-scheme` switch was removed.
+**Alternatives:** Follow the device setting (the previous behavior, and the usual accessibility recommendation); three states (system/light/dark).
+**Why:** The owner's choice: the ivory editorial look is the brand's main presentation. Trade-off accepted: someone whose phone is in dark mode sees light first and must press the toggle once (then it's remembered).
+
+## 023 — Wide editorial redesign of the homepage, header, and footer
+**Date:** 2026-10-09
+**Decision:**
+- **Grid:** the page grid is ~1240px (`.container`); reading pages keep a 720px column (`.measure`).
+- **Typography:** IBM Plex Sans Arabic Bold for headlines and section titles; Noto Naskh only for editorial accents (the واضح wordmark, the Tuwaiq quote, the footer brand).
+- **Palette (owner's brief):** ivory `#F6F4EE`, charcoal text `#101713`, forest headings/links `#184B3A`, lime `#D8ED9B`. Lime is now used sparingly for primary/selected states, progress (current journey step), "open now" status, and small graphic accents, never as small text (updates 009).
+- **Header:** a bigger wordmark, a 4-link nav, and on phones a `<details>` menu (no JavaScript needed).
+- **Homepage:** a two-column hero with a signature drawing (the Tuwaiq escarpment, a route to a lime waypoint, 3 step labels) replacing the full-width mountain divider; «من أين تبدأ؟» starting points; compact news (newest 3); facts-first path rows (provider, «لمن؟», tracks with status, last review date, official links) with a smaller photo; a 5-step application journey; tests; the Tuwaiq band; «كيف نعمل». The general text lives in `data/home.json`.
+- **Footer:** 3 columns.
+- **No search button yet:** it comes with the universities explorer, where there is something to search.
+**Alternatives:** Keep the 720px single column; a header search box now; Plex everywhere or Naskh everywhere.
+**Why:** The narrow column made the desktop page feel empty. Facts first answers what students came for; numbered starting points and a journey give clear next steps (NN/g: clear starting points for the main tasks). Every link goes to a real page or section, and a test checks this.

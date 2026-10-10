@@ -1,28 +1,48 @@
 {% import "components.html" as c %}
 {# Mount Tuwaiq band. Rendered only when data/featured_quote.json is verified (or drafts are shown locally). #}
 <section class="tuwaiq" aria-labelledby="tuwaiq-quote">
-  {% if quote.photo %}
-  <img class="tuwaiq-photo" src="{{ url_for('static', path=quote.photo) }}" alt="جبل طويق" loading="lazy">
-  {% else %}
-  <svg class="tuwaiq-art" viewBox="0 0 800 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <path d="M0 220 L0 170 L220 150 L330 120 L420 112 L560 60 L640 52 L700 70 L800 200 L800 220 Z" fill="currentColor" opacity="0.35"/>
-    <path d="M630 54 L700 70 L800 200 L800 220 L590 220 Z" fill="currentColor" opacity="0.55"/>
-  </svg>
-  {% endif %}
-
   <div class="container tuwaiq-inner">
-    {% if quote.status != "verified" %}<p>{{ c.unverified_stamp() }} <small>مسودة: لا تظهر على الموقع المباشر حتى التحقق</small></p>{% endif %}
-    <blockquote id="tuwaiq-quote" class="tuwaiq-quote">
-      <p>«{{ quote.quote_ar }}»</p>
-      <footer>{{ quote.attribution_ar }} · {{ quote.context_ar }}</footer>
-    </blockquote>
-    <p class="tuwaiq-message">{{ quote.message_ar }}</p>
-    {% if quote.video_url %}
-    <a class="tuwaiq-play" href="{{ quote.video_url }}" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 8 L16 12 L10 16 Z" fill="currentColor"/></svg>
-      شاهد المقطع الأصلي
-    </a>
-    {% endif %}
-    {% if quote.photo_credit %}<p class="tuwaiq-credit">الصورة: {{ quote.photo_credit }}</p>{% endif %}
+    <div class="tuwaiq-text">
+      {% if quote.status != "verified" %}<p>{{ c.unverified_stamp() }} <small>مسودة: لا تظهر على الموقع المباشر حتى التحقق</small></p>{% endif %}
+      <blockquote id="tuwaiq-quote" class="tuwaiq-quote">
+        <p>«{{ quote.quote_ar }}»</p>
+        <footer>{{ quote.attribution_ar }} · {{ quote.context_ar }}</footer>
+      </blockquote>
+      <p class="tuwaiq-message">{{ quote.message_ar }}</p>
+    </div>
+
+    <div class="video">
+      {% if quote.youtube_id %}
+      {#
+        Click-to-play: nothing is loaded from YouTube until the student clicks.
+        With JavaScript, video.js swaps this link for the player (youtube-nocookie.com).
+        Without JavaScript, it's a normal link to the video.
+      #}
+      <a class="video-facade" href="https://www.youtube.com/watch?v={{ quote.youtube_id }}"
+         target="_blank" rel="noopener" data-youtube-id="{{ quote.youtube_id }}">
+        <span class="video-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8 5 L19 12 L8 19 Z" fill="currentColor"/></svg>
+        </span>
+        <span class="video-label">شاهد المقطع الأصلي</span>
+        <span class="video-note">يُحمَّل من يوتيوب عند الضغط فقط</span>
+      </a>
+      {% elif quote.video_url %}
+      <a class="video-facade" href="{{ quote.video_url }}" target="_blank" rel="noopener">
+        <span class="video-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8 5 L19 12 L8 19 Z" fill="currentColor"/></svg>
+        </span>
+        <span class="video-label">شاهد المقطع الأصلي ↗</span>
+      </a>
+      {% endif %}
+      {% if quote.youtube_id or quote.video_url %}
+      <p class="video-source">المصدر: <a href="{{ quote.video_url }}" target="_blank" rel="noopener">{{ quote.video_publisher }} على يوتيوب ↗</a></p>
+      {% elif show_drafts %}
+      <div class="video-facade video-facade--empty">
+        <span class="video-label">مكان المقطع الأصلي</span>
+        <span class="video-note">يُضاف بعد التحقق من رابط رسمي</span>
+      </div>
+      {% endif %}
+    </div>
   </div>
+  {% if quote.photo_credit %}<p class="container tuwaiq-credit">الصورة: {{ quote.photo_credit }}</p>{% endif %}
 </section>

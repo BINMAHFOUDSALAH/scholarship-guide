@@ -1,0 +1,61 @@
+{#
+  Illustrations drawn as inline SVG. Colors come from CSS variables, so they follow
+  the theme (light/dark) and each path's accent. Decorative only: hidden from screen readers.
+  Places, never logos or another organization's branding (decision 016).
+#}
+
+{#
+  The homepage signature: the logo's Tuwaiq escarpment, drawn large, with a route climbing
+  to a lime waypoint on the cliff (your next step). The three labels are HTML, not SVG text,
+  so Arabic shapes correctly; they're placed with physical left/top because they sit on
+  points of the drawing, which isn't mirrored in RTL.
+#}
+{% macro hero_visual(labels) %}
+<div class="hero-visual" aria-hidden="true">
+  <svg viewBox="0 0 520 420" focusable="false">
+    <circle class="hv-sun" cx="350" cy="150" r="120"/>
+    <path class="hv-far" d="M0 420 L0 300 L120 280 L240 262 L330 240 L520 232 L520 420 Z"/>
+    <path class="hv-body" d="M0 420 L0 340 L140 312 L210 300 L300 228 L360 178 L408 152 L440 176 L520 420 Z"/>
+    <path class="hv-cliff" d="M404 154 L440 176 L520 420 L384 420 Z"/>
+    <path class="hv-layers" d="M394 240 L470 240 M388 300 L490 300 M384 360 L508 360"/>
+    <path class="hv-route" d="M40 396 C 120 382, 150 336, 200 326 S 286 276, 318 236 S 380 176, 408 152"/>
+    <circle class="hv-start" cx="40" cy="396" r="7"/>
+    <circle class="hv-waypoint" cx="408" cy="152" r="11"/>
+  </svg>
+  {% for label in labels %}
+  <span class="hv-label hv-label--{{ loop.index }}"><span class="hv-num">{{ ["١", "٢", "٣"][loop.index0] }}</span>{{ label }}</span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{# One small scene per path theme. #}
+{% macro scene(theme) %}
+<svg class="path-art-svg" viewBox="0 0 600 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  {% if theme == "world" %}
+    {# The world: meridian arcs and a flight route between two points. #}
+    <g class="s-line-soft" fill="none">
+      <ellipse cx="300" cy="150" rx="60" ry="150"/>
+      <ellipse cx="300" cy="150" rx="150" ry="150"/>
+      <ellipse cx="300" cy="150" rx="240" ry="150"/>
+      <path d="M0 52 H600 M0 92 H600"/>
+    </g>
+    <path class="s-route" d="M70 96 Q 300 -6 530 58" fill="none"/>
+    <circle class="s-dot-hollow" cx="70" cy="96" r="6"/>
+    <circle class="s-dot" cx="530" cy="58" r="7"/>
+  {% elif theme == "desert" %}
+    {# The eastern desert: sun, horizon, two layers of dunes. #}
+    <circle class="s-fill-2" cx="470" cy="46" r="22"/>
+    <path class="s-line-soft" d="M0 84 H600" fill="none"/>
+    <path class="s-fill-1" d="M0 120 L0 88 C120 62 220 72 320 86 C420 100 500 78 600 70 L600 120 Z"/>
+    <path class="s-fill-2" d="M0 120 L0 104 C140 84 260 96 360 108 C460 118 540 98 600 96 L600 120 Z"/>
+  {% elif theme == "sea" %}
+    {# The Red Sea coast: waves and a strip of shore. #}
+    <g class="s-line-soft" fill="none">
+      <path d="M0 40 Q37.5 30 75 40 T150 40 T225 40 T300 40 T375 40 T450 40 T525 40 T600 40"/>
+      <path d="M0 66 Q37.5 56 75 66 T150 66 T225 66 T300 66 T375 66 T450 66 T525 66 T600 66"/>
+      <path d="M0 92 Q37.5 82 75 92 T150 92 T225 92 T300 92 T375 92 T450 92 T525 92 T600 92"/>
+    </g>
+    <path class="s-fill-2" d="M600 0 L600 120 L478 120 C506 92 486 64 524 44 C552 28 566 12 600 0 Z"/>
+  {% endif %}
+</svg>
+{% endmacro %}
