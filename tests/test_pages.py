@@ -81,12 +81,23 @@ def test_footer_says_we_are_independent_and_links_how_we_verify():
     assert 'id="verify"' in client.get("/about").text
 
 
-def test_homepage_order_programs_first():
-    """Hero → programs → news. The journey, tests, and «كيف نعمل» are no longer on the homepage."""
+def test_homepage_order():
+    """Decision 035: hero (grades, then search) → what's open now → programs.
+    The journey, tests, «كيف نعمل», and the decorative drawing are not on the homepage."""
     html = client.get("/").text
-    assert html.index('id="grades"') < html.index('id="programs"') < html.index('id="news"')
-    for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل"):
+    assert html.index('id="grades"') < html.index('class="hero-search"') < html.index('id="open-now"') < html.index('id="programs"')
+    for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل", "hero-visual"):
         assert gone not in html
+
+
+def test_homepage_search_goes_to_the_explorer_with_real_examples():
+    html = client.get("/").text
+    hero = html.split('<section class="hero"')[1].split("</section>")[0]
+    assert 'action="http://testserver/universities"' in hero and 'name="q"' in hero
+    assert 'data-suggest="http://testserver/api/suggestions"' in hero
+    assert "/universities/stanford-university" in hero  # an example that opens a university
+    n = len(main.explorer.universities)
+    assert f"{n} جامعة في 15 دولة" in hero
 
 
 @pytest.mark.parametrize("page", ["/", "/programs/custodian-scholarship", "/grades/grade-10", "/grades/grade-11",
@@ -178,12 +189,17 @@ def test_home_lists_every_path():
         assert path["name_ar"] in response.text
 
 
-def test_home_shows_the_news_board_in_three_groups():
+def test_home_shows_whats_open_now_and_links_the_full_board():
+    """Decision 035: the homepage shows only what's open (soonest deadline first); /news has all three groups."""
     html = client.get("/").text
-    news = html.split('id="news"')[1].split("</section>\n</div>")[0]
+    section = html.split('id="open-now"')[1].split("</section>")[0]
+    assert "مفتوح للتقديم الآن" in section and "/news" in section
+    for item in main.status_board()["open"][:4]:
+        assert item["title_ar"] in section
+    assert "فُتح وأُغلق مؤخرًا" not in html
+    news = client.get("/news").text
     for title in ("مفتوح الآن", "مغلق أو لم يفتح بعد", "فُتح وأُغلق مؤخرًا"):
         assert title in news
-    assert "/news" in news
 
 
 def test_theme_toggle_is_present_but_hidden_without_js():
@@ -352,13 +368,15 @@ def test_ielts_resource_page():
 # ---------- Waaid latest programs, deadlines, SDAIA ----------
 
 def test_waaid_toggle_lists_latest_programs_newest_first():
+    """The latest واعد programs live on the program page (decision 035); the homepage links there."""
     w = main.waaid()
     closing = [p["apply_to"] for p in w["programs"]]
     assert closing == sorted(closing, reverse=True)
-    html = client.get("/").text
+    html = client.get("/programs/custodian-scholarship").text
     assert 'class="waaid-latest"' in html
     assert w["programs"][0]["program_ar"] in html
     assert main.waaid_data["source_url"] in html
+    assert "/programs/custodian-scholarship#waaid-latest" in client.get("/").text
 
 
 def test_open_track_closes_itself_after_its_deadline(monkeypatch):

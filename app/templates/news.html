@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}المستجدات | {{ site.name }}{% endblock %}
+{% block title %}مواعيد التقديم والمستجدات | {{ site.name }}{% endblock %}
 {% block description %}ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا في برامج الابتعاث، مع روابط المصادر الرسمية.{% endblock %}
 
 {% block content %}
-<div class="news-page">
+<div class="news-page page-wide">
   <header>
-    <h1>المستجدات</h1>
-    <p class="lead">حالة التقديم في كل برنامج ومسار، مأخوذة من مصادرها الرسمية. الحالة تتحدث تلقائيًا مع مواعيد الفتح والإغلاق المعلنة.</p>
+    <h1>مواعيد التقديم والمستجدات</h1>
+    <p class="lead">ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا، لكل برنامج ومسار. الحالة من مصدرها الرسمي، وتتغير وحدها مع مواعيد الفتح والإغلاق المعلنة.</p>
   </header>
 
   {% set board_limit = None %}
@@ -32,6 +32,6 @@
   </section>
   {% endif %}
 
-  <p class="explorer-fineprint">تابع أيضًا الحسابات الرسمية: <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">برنامج خادم الحرمين الشريفين للابتعاث على X ↗</a></p>
+  <p class="result-note">تابع أيضًا الحسابات الرسمية: <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">برنامج خادم الحرمين الشريفين للابتعاث على X ↗</a></p>
 </div>
 {% endblock %}

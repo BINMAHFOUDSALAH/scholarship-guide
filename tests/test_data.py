@@ -41,7 +41,16 @@ def test_every_path_says_who_it_is_for():
 def test_home_text_entries_are_complete():
     home = main.home_text
     assert home["lead_ar"]
-    assert len(home["hero_labels"]) == 3
+    assert [g["slug"] for g in home["grades"]] == ["grade-10", "grade-11", "grade-12"]
+    assert all(g["label_ar"] and g["hint_ar"] for g in home["grades"])
+    for ex in home["search_examples"]:
+        assert ex["label_ar"]
+        if ex.get("university"):
+            assert ex["university"] in main.explorer.universities, ex
+        elif ex.get("track"):
+            assert ex["track"] in main.TRACKS, ex
+        else:
+            assert main.explorer.search(q=ex["q"])["mode"] == "major", ex  # a real major
 
 
 def test_program_logos_are_official_and_self_hosted():

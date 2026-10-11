@@ -192,6 +192,7 @@ def home(request: Request):
             "path_names": path_names,
             "quote": featured_quote if show_quote else None,
             "program_pages": program_slugs(),
+            "explorer": explorer,
         },
     )
 

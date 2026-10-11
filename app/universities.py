@@ -55,7 +55,9 @@ def count_ar(n, forms):
 UNIVERSITIES_AR = ("جامعة واحدة", "جامعتان", "جامعات", "جامعة", "جامعة")
 PROGRAMS_AR = ("برنامج واحد", "برنامجان", "برامج", "برنامجًا", "برنامج")
 FIELDS_AR = ("مجال واحد", "مجالان", "مجالات", "مجالًا", "مجال")
-COUNT_FORMS = {"universities": UNIVERSITIES_AR, "programs": PROGRAMS_AR, "fields": FIELDS_AR}
+COUNTRIES_AR = ("دولة واحدة", "دولتان", "دول", "دولة", "دولة")
+COUNT_FORMS = {"universities": UNIVERSITIES_AR, "programs": PROGRAMS_AR, "fields": FIELDS_AR,
+               "countries": COUNTRIES_AR}
 
 ARABIC_DIACRITICS = re.compile(r"[\u064b-\u0652\u0640]")  # short vowels + tatweel, as escapes (the marks are invisible)
 
