@@ -79,6 +79,14 @@ Rules:
   - Requirements (if researched): English scores, SAT/ACT policy, dates, acceptance rate, each with its source.
   - Non-English-speaking country: a note linking to the conditional-admission section.
 - **`/api/universities`**: the data as JSON.
+- **Since decision 035:**
+  - Applied filters are shown as removable tags + «مسح الكل», drawn by the server.
+  - Choosing a university in the suggestions opens its page.
+  - Result links carry `from=<search>`, and the university page links back to the same results (only known parameters and values).
+  - The rank is explained as the position in the list, not a world ranking.
+  - The university's own next deadline is labelled as such.
+  - A university page starts with «باختصار» and folds the doctorate lists.
+  - «قائمتي» saves universities on the device (`/my-list`).
 - Header: an «الجامعات» link.
 
 ## Research plan for requirements

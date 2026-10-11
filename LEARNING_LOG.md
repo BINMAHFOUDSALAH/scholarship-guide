@@ -226,3 +226,66 @@ What we built in واضح, why, how it works, and how to talk about it. Updated 
 - the explorer covers the 2026–2027 guide only
 **Who did what:** Owner chose the features (an advanced search, Arabic + English names, the doctorate lists, the requirements per university, the Waaid toggle, SDAIA) and the cheaper agents, and supplied the الرواد deadline and the Waaid and SDAIA news. Claude built the extraction, explorer, and pages; research agents gathered the requirements and Arabic names.
 **Understood?** Not yet checked.
+
+## 13. UX redesign: one design system, a clearer explorer, «قائمتي» (2026-10-11)
+**Built / why:**
+- **One design system:** colour tokens with fixed meanings (lime = open now / next step only), one type scale, shared components (buttons, status tags, notices, summary list, back link), and a test that checks the contrast of every colour pair.
+- **Homepage:** your grade is the main way in; searching the official lists is the second; then what's open now; then compact program rows.
+- **Explorer:**
+  - Applied filters as removable tags + «مسح الكل».
+  - Clear labels («الترتيب» isn't a world ranking; «أقرب موعد تقديم في الجامعة» is the university's date).
+  - Choosing a university opens its page.
+  - «الرجوع إلى نتائج البحث» comes back to the same list and scroll position.
+  - Filters fold on phones.
+  - An error state.
+- **University page:** «باختصار» first, and a notice that being on a list isn't admission.
+- **«قائمتي»:** save universities on this device (localStorage), see them on /my-list, remove them.
+- **Bugs found by testing in a real browser:**
+  - Arabic typing never filtered the suggestions.
+  - Three pages scrolled sideways at 320px.
+  - The suggestions list was a Tab stop.
+
+**Key concepts:**
+- **Design tokens and components:** decide once (colour meanings, sizes, a button), reuse everywhere, test the rules.
+- **Visual hierarchy:** one main action and one second action, instead of giving everything the same weight (NN/g).
+- **Applied filters:** show what's active and make each part removable (Baymard, the UK MOJ pattern).
+- **Progressive enhancement:** filter tags are plain links the server draws; JavaScript only makes them instant.
+- **Accessibility:**
+  - status messages (`role="status"`) instead of a live region around a whole table
+  - visible focus
+  - reflow at 320px
+  - targets of at least 24px
+  - `aria-current`
+  - a skip link
+- **Security in small things:** the "back to results" link rebuilds the address from a whitelist, so a crafted link can't send students elsewhere.
+- **Unicode:** invisible combining marks can be reordered by tools. Write them as `\u` escapes in code.
+- **Honest persistence:** localStorage is real but device-only, and the page says exactly that.
+
+**Decisions:** 035.
+
+**Tested:**
+- 216 pytest tests. New ones cover the nav marker, skip link, footer, applied-filter links, the `from` whitelist, Arabic counting, the university summary, «قائمتي» rows, program/grade pages, contrast, and the type floor.
+- Playwright scripts:
+  - Typing and keyboard-choosing suggestions.
+  - Filters, tag removal, «مسح الكل».
+  - The phone filter toggle.
+  - A failed request + retry.
+  - Back to results with the same scroll.
+  - Save/remove/empty state/corrupted storage.
+  - No-JavaScript mode.
+- axe-core on 14 routes × 320/1280px × light/dark: no violations.
+- Before/after screenshots at 360/768/1280px.
+- **Not tested:** real students; a screen reader on a real phone; Safari/Firefox.
+
+**Limits:**
+- The research came from search summaries (the articles themselves couldn't be opened from the work environment).
+- «قائمتي» doesn't follow the student to another device until accounts exist.
+- The homepage on a phone is still long (~6,400px), mostly the program rows.
+
+**Interview pitch:** "I audited my own product as a first-time student on a phone, then redesigned it around one design system and two clear ways in. Testing in a real browser exposed a bug no unit test caught: an invisible Unicode mistake made Arabic search suggestions useless. I fixed it and locked it with a regression test."
+
+**Who did what:**
+- **Owner:** asked for a research-backed, honest redesign; chose device-only saving, replacing the hero drawing with search, the test tooling, and commit/push per step.
+- **Claude:** audited, researched, implemented, and tested.
+
+**Understood?** Not yet checked.

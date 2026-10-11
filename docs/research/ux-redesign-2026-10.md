@@ -90,5 +90,35 @@ Three directions were compared:
 ## 7. Data issue noticed (not changed)
 In the R&D natural-sciences majors, «الاحياء الدقيقة» (microbiology) is paired with "General biology" in `data/universities.json`; the إمداد list pairs it with "Microbiology". It's either a typo in the guide or an extraction slip. **Owner: check the guide (pages 7–13)**. Nothing was changed, because the data is generated from the PDF.
 
-## 8. What changed and how it was verified
-See [decision 035](../decisions.md) and the verification notes at the end of this file (filled in after implementation).
+## 8. What changed
+The full list is in [decision 035](../decisions.md). In short:
+- **Design system:** colour meanings, one type scale, components, contrast tests.
+- **Navigation:** where you are, a skip link, «مواعيد التقديم», the independence line in the footer.
+- **Homepage:** grades first, search second, what's open now, compact programs.
+- **Explorer:** filter tags, labels, suggestions that open a university, back to results, a phone filter toggle, status and error states.
+- **University page:** «باختصار» first, the not-admission notice, dates in their own section.
+- **«قائمتي»** on the device.
+- **Program and grade pages:** the next step first, «في هذه الصفحة».
+
+## 9. Verification (after), measured
+| Check | Before | After |
+|---|---|---|
+| Homepage length, 360px phone | ~7,400px, scrolled sideways by 22px | ~6,400px, no sideways scroll |
+| Horizontal scroll at 320px (14 routes, both themes) | 6 failures (home, Tsinghua, King scholarship page) | none |
+| axe-core WCAG 2.0–2.2 A/AA (14 routes × 320/1280px × light/dark) | no violations | no violations (incl. the new /my-list) |
+| Interactive targets under 24×24px (2.5.8) | none found | none found |
+| Explorer on a phone | results below a ~600px form | form folds to search + «الفلاتر (n)»; active filters shown as tags |
+| Arabic typing in the suggestions | **didn't filter** (every Arabic letter was removed) | filters; covered by a test |
+| Keyboard | the suggestions list was a Tab stop | focus stays in the search box; focus ring visible at every stop, lime on dark bands |
+| pytest | 177 | 216 |
+
+**Browser scripts** (Playwright, Chromium):
+- The explorer: 33 checks, including keyboard selection, filter tags, «مسح الكل», back to results with the same scroll, a failed request + retry, the phone toggle, and no-JavaScript mode.
+- «قائمتي»: 23 checks, including save, markers, newest first, removing with focus kept, the empty state, corrupted storage, and no-JavaScript mode.
+
+**Not verified:**
+- Real students using it (Stage 1e step 5).
+- A screen reader on a real phone.
+- Safari and Firefox (only Chromium was available).
+- The live site (blocked from the work environment; the branch isn't deployed).
+

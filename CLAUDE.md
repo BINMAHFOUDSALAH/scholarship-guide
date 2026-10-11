@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **واضح (Wadih, "clear")**: a free, Arabic-first website that helps Saudi high school students go from confusion to action about their future. Tagline: "مستقبلك بعد الثانوية، بوضوح".
 
 - Organized around **programs** («البرامج» on the site, `paths` in code): the government external scholarship (with the Ministry's four tracks, «مسار الرواد»…), Aramco, KAUST, more later. Each has requirements, steps, and official sources; a program with `content/programs/<id>.md` gets its own page. **Resources** (IELTS, SAT, Calculus…) are shared across programs.
-- **Help first.** Guides, path pages, and the universities explorer are public (Google can index them). Login (email + password or Google) unlocks personal features: guided start + saved plan, saved universities, opt-in email alerts (decisions 014–016).
+- **Help first.** Guides, path pages, and the universities explorer are public (Google can index them). Login (email + password or Google) unlocks personal features: guided start + saved plan, saved universities, opt-in email alerts (decisions 014–016). Until then, «قائمتي» saves universities on the student's device only (decision 035).
 - Launch 1 (~2026-12-09): public guides + the government scholarship path, fully verified. Launch 2: accounts + guided start. Later: a chatbot and agents that answer only from verified content, with sources.
 - The owner is building this to become an AI-focused Forward Deployed Engineer: ship a real product **and** understand it well enough to explain, debug, and improve it.
 
@@ -20,7 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Never collect sensitive data (no national ID, GPA, test scores, passport). Users are mostly minors: privacy and security are requirements. No third-party requests until the user acts (self-hosted fonts, no trackers; the only embed is click-to-play video).
 - Never read, edit, or print `.env` (also enforced by `.claude/settings.json`).
 - Arabic first, RTL, mobile first. One Arabic site with English names inline.
-- Design: ivory `#F6F4EE`, charcoal `#101713`, forest `#184B3A`, lime `#D8ED9B`. Light mode first (dark via toggle). Lime sparingly, never as small text. Plex Sans Arabic Bold headlines; Naskh only for the wordmark and quotes. Wide grid for the homepage, 720px `.measure` for reading. Panels yes; no gradients, grids of identical cards, stock photos, flags, logos, or decorative animation. Real licensed photos with credit. Check text contrast ≥ 4.5:1. No search UI until there's something to search.
+- Design (decision 035): ivory `#F6F4EE`, charcoal `#101713`, forest `#184B3A` (headings, links, the main button), lime `#D8ED9B` only for «مفتوح الآن» and the next step, never as small text. Light mode first (dark via toggle). Plex Sans Arabic Bold headlines; Naskh only for the wordmark and quotes. Wide grid for the homepage, `.page-wide` for tool pages, 720px `.measure` for reading. Build with the shared components (buttons, `status_tag`, tags, notices, summary list, back link) instead of one-off styles; nothing under 13px. Panels yes; no gradients, grids of identical cards, stock photos, flags, logos other than the programs' official ones (decision 028), or decorative animation. Real licensed photos with credit. Contrast is checked by `tests/test_design.py` (≥ 4.5:1 text, ≥ 3:1 borders and focus).
 - Nothing official is hard-coded in templates: data in `data/`, page text in `content/`.
 
 ## How to work with me

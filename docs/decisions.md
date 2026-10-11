@@ -254,3 +254,77 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **واعد in «المسار»:** choosing it lists the latest واعد programs (company, institution, country, level, dates, open/closed, requirements, «لخريجي الثانوية»), with a note that واعد doesn't use the guide's lists. A major or name search also shows matching واعد programs (e.g. «الهندسة الكهربائية» → Maaden's Colorado School of Mines program, linked to that university's page).
 - **Removed (owner):** the «برامج إضافية» filter and the «مستهدفة في سدايا» tags (decision 032), and the explorer's fine-print line. SDAIA's full list stays on SDAIA's own page.
 **Why:** The owner wants each university to read simply as "fields → rank → majors", because the fields decide which majors a student can apply for there, and a calmer, grouped search list.
+
+## 035 — UX redesign: one design system, grades + search on the homepage, a clearer explorer, «قائمتي» on the device (updates 018, 022–023, 027–028, 031–034)
+**Date:** 2026-10-11
+**Decision:**
+- **Direction, «Editorial clarity».** Keep واضح's identity: ivory, forest, Plex Bold, the Naskh wordmark. Adopt proven GOV.UK-style patterns: back link, status tags, summary list, notices, and "filter a list" with removable selected filters. **One design system** in `style.css`:
+  - one type scale (nothing under 13px)
+  - a `--focus` token (a 3px ring, lime on dark bands)
+  - input borders at 3:1
+  - shared components: buttons, status tags, info/warn tags, notices, summary list, back link, rows, form fields
+  - one `status_tag` macro instead of four copies
+- **Colour meanings:**
+  - Lime = only "open now" and "your next step" (الرواد's lime chip is gone).
+  - Forest = headings, links, and the main action.
+  - Amber = restrictions and "not open yet".
+  - `tests/test_design.py` checks the contrast of every token pair in both themes.
+- **Navigation:**
+  - The current section is marked with `aria-current`, visible as an underline.
+  - A skip link.
+  - «المستجدات» → «مواعيد التقديم» (/news is titled «مواعيد التقديم والمستجدات»).
+  - The footer again says, on every page, that واضح is independent and free and links «كيف نتحقق؟». This reverses part of 032, because pages show official logos and data.
+- **Homepage** (in order):
+  1. The tagline and a lead that says what's here.
+  2. **«ابدأ من صفك»** with three large grade buttons: the main way in.
+  3. A **search panel** for the official lists: the second way in, with example searches and «290 جامعة في 15 دولة».
+  4. **«مفتوح للتقديم الآن»**: only the open items, with the full board on /news.
+  5. Compact program rows (a smaller image, one main button, links that wrap).
+  6. The Tuwaiq band.
+  Removed from the homepage: the decorative Tuwaiq drawing, the 3-group board, the واعد toggle (now linked as «آخر برامجه»).
+- **Explorer:**
+  - Applied filters appear as removable tags plus «مسح الكل» (server-rendered links, so they work without JS).
+  - A visible hint replaces placeholder-only examples.
+  - Filters fold behind «الفلاتر (n)» on phones.
+  - The field select explains why it's unavailable.
+  - «ما الفرق بين المسارات؟» is built from `paths.json`.
+  - The rank is explained once («وليس تصنيفًا عالميًا»), with a language-exception note.
+  - «أقرب موعد تقديم في الجامعة» is labelled as the university's own date.
+  - Proper Arabic counting.
+  - Choosing a **university** in the suggestions opens its page.
+  - A `role=status` line announces counts (not the whole table).
+  - An error state with «حاول مرة أخرى».
+- **University page:**
+  - **«باختصار»** first: lists, majors, the next university deadline, platform, SAT/ACT, and «صفحة القبول في موقع الجامعة».
+  - A notice that being on a list is not admission.
+  - A back link to the same search results: a whitelisted `from` parameter, and `history.back()` when possible, so the scroll position is kept.
+  - The doctorate lists folded.
+  - The university's dates in their own section.
+- **«قائمتي»:**
+  - Save/remove on university pages, markers in the explorer, and a header link with a count.
+  - `/my-list` (noindex), whose rows the server draws for known ids only.
+  - Stored **only in this browser** (`localStorage`, ids only), and the page says so. No account, no database, nothing kept by us.
+  - Future, documented here only: sync to accounts at Launch 2, a per-university checklist, a deadline view.
+- **Program and grade pages:**
+  - The main next step as buttons, and official links grouped.
+  - «في هذه الصفحة», built from Markdown headings (toc ids; short `{#id}` anchors on the King scholarship page).
+  - Grade pages: a grade switcher, «الخطوة التالية» first, and a link to the next grade.
+- **Fixes found along the way:**
+  - The browser's search normalisation removed every Arabic letter. Invisible combining characters were stored out of order, so the range ran U+0300–064B. Arabic typing never filtered the suggestions. It's now written with `\u` escapes and has a test.
+  - A long URL widened Tsinghua's page.
+  - Links that couldn't wrap widened the homepage and the program page.
+  - The scrollable suggestions list was a Tab stop.
+
+**Alternatives:**
+- (B) An app-like dashboard: card grids, bottom tabs, icons. Rejected as generic, against our rules, and more JS.
+- (C) A plain government-service look. Rejected because it could be mistaken for the Ministry.
+- Search-first or grade-only homepages.
+- Saving to an account now (needs Stage 4).
+- A placeholder save button (fake functionality).
+- Keeping the drawing beside the search.
+
+**Why:**
+- A first-time student on a phone had to scroll through ~7,400px where everything had the same weight.
+- The most useful tool, the explorer, wasn't reachable from the hero.
+- The explorer hid which filters were on, and its numbers and dates were easy to misread.
+- Expert guidance (NN/g homepage and visual-design principles, Baymard and the MOJ pattern on applied filters, WCAG 2.2, the GOV.UK patterns) points the same way. Details, sources, and their limits (search summaries only, no user testing yet): `docs/research/ux-redesign-2026-10.md`.
