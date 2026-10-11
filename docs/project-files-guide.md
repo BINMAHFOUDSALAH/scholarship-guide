@@ -16,7 +16,7 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `AGENTS.md` | The same idea as `CLAUDE.md`, but read by *other* AI coding tools (OpenAI Codex, Cursor, etc.). | ❌ | Only if you start using another AI tool on this repo. Then it can point to `CLAUDE.md` instead of repeating it. |
 | `.claude/skills/<name>/SKILL.md` | A reusable recipe Claude follows for a **repeated** task, e.g. "add a new path: create the JSON, check every source, add tests." You can trigger it by name. | ⏳ Stage 2 / 5 | When we've done the same multi-step task at least once or twice and want it done the same way every time. Don't write one before doing the task. |
 | `.claude/agents/<name>.md` | A specialized Claude helper (subagent) with its own instructions and tools, e.g. a "content checker" that reviews pages for missing sources. | ⏳ Stage 3+ | When there's enough content that a dedicated reviewer saves time. Not the same as the AI agents in Stage 8, which are website features for students. |
-| `.claude/settings.json` | Project settings for Claude Code: allowed commands (permissions) and hooks (actions that run automatically, e.g. after every edit). Shared via git. | ⏳ when needed | When you keep approving the same safe command, or want something automated (e.g. "run tests after each change"). |
+| `.claude/settings.json` | Project settings for Claude Code: allowed/blocked actions (permissions) and hooks (actions that run automatically). Shared via git. | ✅ | Today it blocks Claude from reading `.env`. Add to it when you keep approving the same safe command, or want something automated (e.g. "run tests after each change"). |
 | `.claude/settings.local.json` | The same, but personal to your machine. Not committed (already in `.gitignore`). | as needed | Personal preferences you don't want in the repo. |
 | `.claude/launch.json` | Tells the Claude desktop app how to start the dev server in its browser pane. | ✅ | Already set up. Update it if the start command changes. |
 | Claude's memory | Notes Claude keeps about you and the project, stored on **your computer**, outside the repo. | automatic | It helps across sessions, but it isn't in git. Anything important for the project belongs in `CLAUDE.md` or `docs/`. |
@@ -30,6 +30,9 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `docs/decisions.md` | Every design choice: what we chose, the alternatives, and why. | ✅ | Add an entry whenever we make a choice someone might later question. Never delete old entries; mark them "Superseded." |
 | `spec.md` / `docs/specs/<feature>.md` | A **specification**: a short document describing exactly what a feature must do *before* building it (goal, inputs, outputs, rules, edge cases, how we'll test it). | ⏳ Stage 2+ | Before any feature bigger than a page: the paths data model (Stage 2), the compare-paths table, the chatbot (Stage 7), each agent (Stage 8). One spec per feature in `docs/specs/`, not one giant `spec.md`. Specs are also great input for AI: "build what this spec says." |
 | `docs/project-files-guide.md` | This file. | ✅ | Look things up here. |
+| `docs/architecture.md` | How the code fits together (moved out of CLAUDE.md to keep it short). | ✅ | Update when the structure changes. |
+| `docs/CLAUDE_WORKFLOW_GUIDE.md` | How to work with Claude Code: subagents, skills, hooks, MCP, best practices, example prompts. | ✅ | Read when unsure which Claude feature to use. |
+| `LEARNING_LOG.md` | What we built, the concepts, decisions, tests, limits, interview pitches, and who did what. | ✅ | Updated after every meaningful feature. |
 | `README.md` | The front page of the repo on GitHub: what the project is, how to run it, the live link. | ✅ | Update it when how to run the project changes, and at launch (add the live URL + screenshots). |
 | `CHANGELOG.md` | A list of what changed in each release, written for users. | ❌ for now | Useful once the site is live and you ship updates people care about. |
 | `CONTRIBUTING.md` | How other people can contribute (style rules, how to submit changes). | ❌ | Only if others start contributing. |
@@ -45,7 +48,7 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `.env` | Secrets (API keys) for your machine only. **Never committed, never shared.** Claude never reads it. | ⏳ Stage 7 | When we use a paid AI API. |
 | `.env.example` | A copy of `.env` with the **names** of the settings but **no real values**, so others know what to set. | ⏳ Stage 7 | Created together with `.env`. Safe to commit. |
 | `data/*.json` | Settings and facts (site name, paths, resources, the quote). | ✅ | Edit content here, never in templates. |
-| `content/**/*.md` | Page text in Markdown, with a frontmatter header (`title`, `status`, `sources`, `last_checked`). | ⏳ Step 5 | Every guide page. |
-| `tests/` | Automated tests (pytest). | ⏳ Step 6 | Every feature gets tests. CI runs them automatically. |
-| `.github/workflows/*.yml` | GitHub Actions (CI): runs tests on every push. | ⏳ Stage 4 | When we want automatic checks so a broken change can't slip through. |
+| `content/**/*.md` | Page text in Markdown, with a frontmatter header (`title`, `status`, `sources`, `last_checked`). | ✅ | Every guide page. |
+| `tests/` | Automated tests (pytest). | ✅ | Every feature gets tests. CI runs them automatically. |
+| `.github/workflows/*.yml` | GitHub Actions (CI): runs tests on every push. | ✅ (`tests.yml`) | Render deploys only after it passes. Add workflows for scheduled checks later (e.g. a weekly link checker). |
 | `render.yaml` | Render's deployment config as a file ("infrastructure as code"). | ⏳ Step 7 (optional) | When the deploy settings should live in git instead of only in Render's dashboard. |

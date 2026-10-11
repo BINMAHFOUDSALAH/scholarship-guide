@@ -3,7 +3,12 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-09):** start **Stage 2, the universities explorer**: ask the owner to approve installing `pdfplumber` (dev only), inspect the official PDF's structure, then write `docs/specs/universities-explorer.md` for approval before building. Owner to-dos still open: confirm the Al Arabiya clip's wording (Stage 1b), send the X post links for الرواد/إمداد, and verify the research checklist.
+> **Next session (as of 2026-10-10):**
+> 1. **First, design changes the owner will describe**, including rethinking how the "verified / غير مؤكد" status is shown (the owner feels some of it may be unnecessary; hear their reasoning before changing anything, and keep the "never invent facts" rule).
+> 2. **Then Stage 2, the universities explorer**: ask the owner to approve installing `pdfplumber` (dev only), inspect the official PDF's structure, then write `docs/specs/universities-explorer.md` for approval before building.
+> 3. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass" (after the first green CI run).
+>
+> Owner to-dos still open: confirm the Al Arabiya clip's wording, send the X post links for الرواد/إمداد, and verify the research checklist.
 
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
 **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
@@ -42,6 +47,13 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] Share preview (Open Graph + share image), meta descriptions, robots.txt, sitemap.xml (decision 021)
 - [x] Tuwaiq video: Al Arabiya's own clip `6fVtY11654w` added as draft, with a source line
 - [ ] Owner: watch the clip, confirm the wording matches `quote_ar` → set `status: verified` in `featured_quote.json`
+
+## Stage 1d: Tooling and learning docs (decision 024)
+- [x] CI: GitHub Actions runs pytest on every push (`.github/workflows/tests.yml`)
+- [ ] Owner: Render → wadih → Settings → Auto-Deploy → "After CI Checks Pass" (after the first CI run is green)
+- [x] `.env` permission lock (`.claude/settings.json`)
+- [x] `docs/CLAUDE_WORKFLOW_GUIDE.md`, `LEARNING_LOG.md`, `docs/architecture.md`; CLAUDE.md trimmed
+- [ ] Later: stale-facts test (fail when `last_checked` > 90 days), weekly broken-link check, pin the server's Python version
 
 ## Stage 1c: Wide editorial redesign (decisions 022–023)
 - [x] Light-first theme, two-state toggle

@@ -1,0 +1,27 @@
+# Runs the test suite on GitHub for every push and pull request.
+# Render is set to "Auto-Deploy: After CI Checks Pass", so the live site only
+# updates when this passes (decision 024).
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies (app + test tools)
+        run: pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: pytest -q

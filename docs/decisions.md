@@ -153,3 +153,12 @@ Newest entries go at the bottom. When a decision changes, add a new entry instea
 - **No search button yet:** it comes with the universities explorer, where there is something to search.
 **Alternatives:** Keep the 720px single column; a header search box now; Plex everywhere or Naskh everywhere.
 **Why:** The narrow column made the desktop page feel empty. Facts first answers what students came for; numbered starting points and a journey give clear next steps (NN/g: clear starting points for the main tasks). Every link goes to a real page or section, and a test checks this.
+
+## 024 — CI gate before deploy; `.env` locked for Claude; leaner CLAUDE.md
+**Date:** 2026-10-10
+**Decision:**
+- **CI gate:** GitHub Actions (`.github/workflows/tests.yml`) runs `pytest` on every push and pull request, and Render's Auto-Deploy is set to "After CI Checks Pass", so a commit with failing tests never reaches the live site.
+- **`.env` lock:** `.claude/settings.json` denies Claude's `Read` on `.env` and `.env.*` (except `.env.example`). Per the Claude Code docs, this covers Claude's file tools and recognized shell file commands such as `cat`, but not scripts that open files themselves; full protection would need the sandbox.
+- **Leaner CLAUDE.md:** the architecture moved to `docs/architecture.md`; CLAUDE.md keeps the rules, working style, commands, and pointers. Also added: `docs/CLAUDE_WORKFLOW_GUIDE.md` and `LEARNING_LOG.md`.
+**Alternatives:** Keep deploying on every push; a git pre-commit hook (runs only on the owner's machine); a Claude Stop hook; relying on the CLAUDE.md sentence for `.env`; keeping one long CLAUDE.md.
+**Why:** Render deployed every push even with failing tests. Anthropic's guidance: use enforced mechanisms for must-always rules, and keep CLAUDE.md short so rules aren't ignored. Deferred: a stale-facts test and a weekly link checker.
