@@ -45,9 +45,40 @@ def test_each_path_row_has_its_theme_and_facts():
 def test_header_nav_on_desktop_and_phone_menu():
     html = client.get("/about").text
     header = html.split("</header>")[0]
-    for label in ("حسب صفك", "البرامج", "المستجدات", "عن الدليل"):
+    for label in ("حسب صفك", "البرامج", "مواعيد التقديم", "عن الدليل"):
         assert header.count(f">{label}</a>") == 2, label  # desktop nav + phone menu
     assert '<details class="menu">' in header
+
+
+@pytest.mark.parametrize("url, label, value", [
+    ("/universities", "الجامعات", "page"),
+    ("/universities/stanford-university", "الجامعات", "true"),  # a page inside the section
+    ("/news", "مواعيد التقديم", "page"),
+    ("/about", "عن الدليل", "page"),
+    ("/grades/grade-11", "حسب صفك", "true"),
+    ("/programs/custodian-scholarship", "البرامج", "true"),
+])
+def test_nav_marks_where_you_are(url, label, value):
+    """Decision 035: the current section is marked in the nav (desktop + phone), and only that one."""
+    header = client.get(url).text.split("</header>")[0]
+    assert header.count(f'aria-current="{value}">{label}</a>') == 2
+    assert header.count("aria-current=") == 2
+
+
+def test_home_marks_no_nav_item_and_every_page_has_a_skip_link():
+    html = client.get("/").text
+    assert "aria-current=" not in html.split("</header>")[0]
+    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/grades/grade-10"):
+        html = client.get(page).text
+        assert '<a class="skip-link" href="#main">' in html
+        assert '<main id="main" tabindex="-1">' in html
+
+
+def test_footer_says_we_are_independent_and_links_how_we_verify():
+    footer = client.get("/universities").text.split('<footer class="site-footer">')[1]
+    assert "لا يتبع وزارة التعليم" in footer
+    assert "/about#verify" in footer
+    assert 'id="verify"' in client.get("/about").text
 
 
 def test_homepage_order_programs_first():

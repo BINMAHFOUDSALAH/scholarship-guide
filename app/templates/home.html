@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "partials/path-art.html" as art %}
+{% import "components.html" as c %}
 
 {% set news_labels = {"opening": "فتح التقديم", "deadline": "موعد نهائي", "closing": "إغلاق", "announcement": "إعلان"} %}
 
@@ -83,10 +84,7 @@
             {# A status is shown only when it has an official source or the owner confirmed it (decision 028). #}
             {% set st = track_status(track) %}
             {% if st and (track.status_source or track.owner_confirmed or track.latest_programs) %}
-            <div class="track-state">
-              <span class="status status--{{ st }}">{{ track_status_labels[st] }}</span>
-              {% if st == "open" and track.status_until %}<span class="status-until">حتى {{ track.status_until | arabic_date }}</span>{% endif %}
-            </div>
+            <div class="track-state">{{ c.status_tag(st, track.status_until) }}</div>
             {% endif %}
           </li>
           {% endfor %}

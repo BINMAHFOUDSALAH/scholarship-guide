@@ -53,8 +53,7 @@
           <td data-label="حالة التقديم">
             {% set st = track_status(track) %}
             {% if st and (track.status_source or track.owner_confirmed or track.latest_programs) %}
-            <span class="status status--{{ st }}">{{ track_status_labels[st] }}</span>
-            {% if st == "open" and track.status_until %}<span class="status-until">حتى {{ track.status_until | arabic_date }}</span>{% endif %}
+            {{ c.status_tag(st, track.status_until) }}
             {% else %}
             <span class="track-note">لا نتابع حالته في هذا الدليل</span>
             {% endif %}

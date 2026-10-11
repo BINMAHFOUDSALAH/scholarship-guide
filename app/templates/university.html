@@ -61,7 +61,7 @@
           {% set shown = 10 %}
           <ul class="major-list">
             {% for m in f.majors[:shown] %}
-            <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="note-chip note-chip--warn">ماجستير فقط</span>{% endif %}</li>
+            <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="tag tag--warn">ماجستير فقط</span>{% endif %}</li>
             {% endfor %}
           </ul>
           {% if f.majors | length > shown %}
@@ -69,7 +69,7 @@
             <summary>عرض باقي التخصصات ({{ f.majors | length - shown }})</summary>
             <ul class="major-list">
               {% for m in f.majors[shown:] %}
-              <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="note-chip note-chip--warn">ماجستير فقط</span>{% endif %}</li>
+              <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="tag tag--warn">ماجستير فقط</span>{% endif %}</li>
               {% endfor %}
             </ul>
           </details>
@@ -112,7 +112,7 @@
       {% if d.dates %}
       <div class="req"><dt>المواعيد</dt><dd>
         <ul class="req-scores">
-          {% for x in p.dates %}<li{% if x.date and x.date < today %} class="req-past"{% endif %}>{{ x.label_ar }}: <strong>{% if x.date %}{{ x.date | arabic_date }}{% else %}غير منشور{% endif %}</strong>{% if x.date and x.date < today %} <span class="note-chip">انتهى</span>{% endif %} <a class="req-src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>{% endfor %}
+          {% for x in p.dates %}<li{% if x.date and x.date < today %} class="req-past"{% endif %}>{{ x.label_ar }}: <strong>{% if x.date %}{{ x.date | arabic_date }}{% else %}غير منشور{% endif %}</strong>{% if x.date and x.date < today %} <span class="tag">انتهى</span>{% endif %} <a class="req-src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>{% endfor %}
         </ul>
       </dd></div>
       {% endif %}
