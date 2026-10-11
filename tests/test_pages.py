@@ -23,14 +23,15 @@ def test_home_has_grade_picker_links():
         assert f"/grades/{slug}" in response.text
 
 
-def test_grade_question_is_hidden_until_start_is_clicked():
-    """The grade links live inside a closed <details>, revealed by "ابدأ من هنا"."""
+def test_grade_buttons_are_visible_in_the_hero():
+    """The grade question is in the hero itself, no click needed; «حسب صفك» points at it."""
     html = client.get("/").text
-    details = html.split('<details class="start">')[1].split("</details>")[0]
-    assert "ابدأ من هنا" in details
-    assert "في أي صف أنت؟" in details
-    assert "/grades/grade-10" in details
-    assert '<details class="start" open' not in html
+    hero = html.split('<section class="hero"')[1].split("</section>")[0]
+    assert 'id="grades"' in hero
+    assert "في أي صف أنت؟" in hero
+    for slug in ("grade-10", "grade-11", "grade-12"):
+        assert f"/grades/{slug}" in hero
+    assert "<details" not in hero
 
 
 def test_each_path_row_has_its_theme_and_facts():
@@ -44,32 +45,33 @@ def test_each_path_row_has_its_theme_and_facts():
 def test_header_nav_on_desktop_and_phone_menu():
     html = client.get("/about").text
     header = html.split("</header>")[0]
-    for label in ("حسب صفك", "المسارات", "المستجدات", "عن الدليل"):
+    for label in ("حسب صفك", "البرامج", "المستجدات", "عن الدليل"):
         assert header.count(f">{label}</a>") == 2, label  # desktop nav + phone menu
     assert '<details class="menu">' in header
 
 
-def test_homepage_sections_and_starting_points():
+def test_homepage_order_programs_first():
+    """Hero → programs → news. The journey, tests, and «كيف نعمل» are no longer on the homepage."""
     html = client.get("/").text
-    for section_id in ("start", "news", "paths", "journey"):
-        assert f'id="{section_id}"' in html
-    for item in main.home_text["start"] + main.home_text["journey"]:
-        assert item["title_ar"] in html
+    assert html.index('id="grades"') < html.index('id="programs"') < html.index('id="news"')
+    for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل"):
+        assert gone not in html
 
 
-def test_every_internal_link_on_the_homepage_works():
+@pytest.mark.parametrize("page", ["/", "/programs/custodian-scholarship", "/grades/grade-10", "/grades/grade-11",
+                                  "/grades/grade-12", "/resources/ielts"])
+def test_every_internal_link_works(page):
     """Every internal page link returns 200, and every #anchor points at a real section."""
-    html = client.get("/").text
-    ids = set(re.findall(r'id="([^"]+)"', html))
+    html = client.get(page).text
     hrefs = set(re.findall(r'href="([^"]+)"', html))
     for href in hrefs:
         if href.startswith(("https://", "mailto:")) and not href.startswith("http://testserver"):
             continue  # external links are checked by hand, not in tests
         path_part, _, anchor = href.replace("http://testserver", "").partition("#")
+        target = client.get(path_part or page)
+        assert target.status_code == 200, href
         if anchor:
-            assert anchor in ids, f"missing section #{anchor}"
-        if path_part:
-            assert client.get(path_part).status_code == 200, href
+            assert f'id="{anchor}"' in target.text, f"{href}: missing section #{anchor}"
 
 
 def test_light_is_the_default_theme():
@@ -81,16 +83,25 @@ def test_light_is_the_default_theme():
     assert ':root[data-theme="dark"]' in css
 
 
-def test_path_photos_load_with_credit():
+def test_path_images_load_and_are_credited_on_about():
+    """Photos and logos load on the homepage; their credits live on /about, not on the image."""
     html = client.get("/").text
+    about = client.get("/about").text
+    assert 'class="photo-credit"' not in html
     for path in main.paths:
-        photo = path["photo"]
-        assert photo["alt_ar"] in html
-        assert photo["credit"] in html
+        image, ext = (path["logo"], "png") if path.get("logo") else (path["photo"], "jpg")
+        if image is None:
+            continue  # no image: the drawn scene is shown instead
+        assert image["alt_ar"] in html
         for size in ("500", "960"):
-            url = f"/static/{photo['file']}-{size}.jpg"
+            url = f"/static/{image['file']}-{size}.{ext}"
             assert url in html
             assert client.get(url).status_code == 200, url
+        if path.get("logo"):
+            assert path["logo"]["source_url"] in about
+        else:
+            assert image["credit"] in about
+            assert image["source_url"] in about
 
 
 def test_share_preview_and_description_tags():
@@ -114,7 +125,8 @@ def test_sitemap_lists_public_pages():
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("application/xml")
     base = main.site["base_url"]
-    for path in ("/", "/about", "/grades/grade-10", "/grades/grade-11", "/grades/grade-12"):
+    for path in ("/", "/about", "/grades/grade-10", "/grades/grade-11", "/grades/grade-12",
+                 "/programs/custodian-scholarship"):
         assert f"<loc>{base}{path}</loc>" in response.text
 
 
@@ -157,9 +169,26 @@ def test_grade_pages_load(slug):
     assert 'class="next-step"' in response.text
 
 
-def test_draft_page_shows_unverified_stamp():
-    response = client.get("/grades/grade-10")
-    assert "غير مؤكد" in response.text
+@pytest.mark.parametrize("page", ["/", "/about", "/programs/custodian-scholarship",
+                                  "/grades/grade-10", "/grades/grade-11", "/grades/grade-12"])
+def test_no_unverified_stamps_or_review_dates_anywhere(page):
+    """Decision 028: unconfirmed things are hidden instead of stamped, and check dates stay in the data."""
+    html = client.get(page).text
+    assert "غير مؤكد" not in html
+    assert "آخر مراجعة" not in html
+    assert "unverified-stamp" not in html
+
+
+def test_news_shows_no_dates():
+    """The stored date is only when we added the item, not when it was announced, so it's never shown."""
+    news = client.get("/").text.split('id="news"')[1].split("</section>")[0]
+    assert "<time" not in news
+
+
+def test_grade_11_lists_the_tests():
+    html = client.get("/grades/grade-11").text
+    for test in main.tests:
+        assert test["name_ar"] in html
 
 
 def test_unknown_page_shows_arabic_404():
@@ -195,3 +224,66 @@ def test_no_third_party_requests_in_page():
     assert urls, "expected the head to load at least the stylesheet"
     for url in urls:
         assert url.startswith("http://testserver/"), f"third-party request: {url}"
+
+
+# ---------- Program pages ----------
+
+def test_program_page_compares_every_track():
+    html = client.get("/programs/custodian-scholarship").text
+    program = main.paths_by_id["custodian-scholarship"]
+    assert '<table class="compare">' in html
+    for track in program["tracks"]:
+        assert track["name_ar"] in html
+        assert track["levels_ar"] in html
+
+
+def test_program_page_explains_conditional_admission():
+    """The language exception must be on the page, next to its official source."""
+    html = client.get("/programs/custodian-scholarship").text
+    assert "القبول المشروط" in html
+    assert "مشروطًا بدراسة لغة" in html
+    assert "https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" in html
+
+
+def test_program_page_shows_sources_and_conflicts():
+    html = client.get("/programs/custodian-scholarship").text
+    assert html.count('class="source-stamp"') >= 5
+    assert "منصة قبول" in html and "منصة سفير" in html  # the conflict is shown with both names
+    assert "program-kicker" not in html
+    logo = main.paths_by_id["custodian-scholarship"]["logo"]
+    assert logo["alt_ar"] in html
+
+
+def test_homepage_links_to_program_page_and_hides_doctorate_track():
+    html = client.get("/").text
+    assert "/programs/custodian-scholarship" in html
+    assert "مسار البحث والتطوير" not in html  # doctorate only: on the program page, not the homepage
+
+
+@pytest.mark.parametrize("slug", ["nope", "aramco-cdpne", "CUSTODIAN-SCHOLARSHIP", "..%2F..%2F.env"])
+def test_programs_without_a_page_return_404(slug):
+    """Aramco is in paths.json but has no content file yet, so no page."""
+    assert client.get(f"/programs/{slug}").status_code == 404
+
+
+
+def test_tuwaiq_video_is_on_the_homepage():
+    html = client.get("/").text
+    assert 'class="tuwaiq"' in html
+    assert "محمد بن سلمان" in html
+    assert 'data-youtube-id="6fVtY11654w"' in html
+
+
+def test_unconfirmed_items_are_hidden():
+    assert main.is_confirmed({"source_url": "https://example.org"})
+    assert main.is_confirmed({"source_url": None, "owner_confirmed": True})
+    assert not main.is_confirmed({"source_url": None})
+
+
+def test_ielts_resource_page():
+    html = client.get("/resources/ielts").text
+    assert "IELTS Academic" in html
+    assert "https://sites.moe.gov.sa/scholarship-program/conditions/info-4/" in html
+    assert 'class="source-stamp"' in html
+    assert client.get("/resources/nope").status_code == 404
+    assert f"<loc>{main.site['base_url']}/resources/ielts</loc>" in client.get("/sitemap.xml").text

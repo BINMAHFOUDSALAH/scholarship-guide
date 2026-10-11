@@ -2,41 +2,297 @@
   {
     "id": "custodian-scholarship",
     "theme": "world",
-    "photo": {
-      "file": "img/paths/oxford-radcliffe",
+    "photo": null,
+    "logo": {
+      "file": "img/programs/custodian-logo",
       "width": 960,
-      "height": 1062,
-      "alt_ar": "مبنى رادكليف كاميرا في جامعة أكسفورد",
-      "caption_ar": "صورة توضيحية لجامعة عالمية",
-      "credit": "Julian Herzog",
-      "license": "CC BY 4.0",
-      "license_url": "https://creativecommons.org/licenses/by/4.0/",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Radcliffe_Camera_Oxford_2018_04.jpg",
-      "focus": "center 35%"
+      "height": 354,
+      "alt_ar": "شعار برنامج خادم الحرمين الشريفين للابتعاث",
+      "source_url": "https://sites.moe.gov.sa/scholarship-program/",
+      "asset_url": "https://object.moe.gov.sa/nasaq/cm/files/scs6-638407626472861199.png",
+      "retrieved": "2026-10-11",
+      "note": "Cropped from the first slide of the program's official homepage: the program logo only (Vision 2030 and HCDP logos removed). Colors and proportions unchanged. Owner approved use on 2026-10-11 (decision 028)."
     },
     "name_ar": "برنامج خادم الحرمين الشريفين للابتعاث",
     "name_en": "Custodian of the Two Holy Mosques Scholarship Program",
     "provider_ar": "وزارة التعليم",
-    "audience_ar": "خريجو الثانوية الحاصلون على قبول نهائي غير مشروط من جامعة ضمن قائمة المسار",
-    "summary_ar": "ابتعاث حكومي للدراسة في جامعات عالمية مختارة. تحتاج قبولًا نهائيًا غير مشروط من جامعة ضمن قائمة المسار، ويكون التقديم عبر منصة قبول.",
+    "audience_ar": "من خريجي الثانوية: من حصل على قبول من جامعة ضمن قائمة المسار. القبول غير مشروط، إلا في الدول غير الناطقة بالإنجليزية حيث يمكن أن يكون مشروطًا بدراسة لغة الدولة.",
+    "summary_ar": "ابتعاث حكومي بأربعة مسارات. في الرواد وإمداد تحصل على قبول من جامعة في قائمة المسار أولًا، ثم تقدّم على الابتعاث، ويُختار طلب واحد لكل متقدم بالمفاضلة.",
     "official_url": "https://sites.moe.gov.sa/scholarship-program/",
     "apply_url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/scholarshipprog.aspx",
     "universities_guide_url": "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf",
     "verified": false,
     "tracks": [
       {
+        "id": "arruaad",
         "name_ar": "مسار الرواد",
-        "note_ar": "أفضل 30 جامعة في العالم",
+        "name_en": "Arruaad",
+        "note_ar": "أفضل 30 مؤسسة تعليمية حسب قائمة البرنامج، كل التخصصات",
+        "levels_ar": "بكالوريوس، ماجستير",
+        "for_high_school": true,
+        "high_school_ar": "نعم",
+        "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية",
         "status": "open",
         "status_source": null,
-        "last_checked": "2026-10-09"
+        "last_checked": "2026-10-09",
+        "facts": [
+          {
+            "id": "arruaad-rule",
+            "text_ar": "أفضل 30 مؤسسة حسب قائمة البرنامج، لمرحلتي البكالوريوس والماجستير، في كل التخصصات، بالدراسة الحضورية. القبول نهائي غير مشروط وصادر من مكتب القبول في جامعة ضمن قائمة البرنامج. الاستثناء: في دولة غير ناطقة بالإنجليزية يمكن أن يكون القبول مشروطًا بدراسة لغة تلك الدولة، ويتاح الابتعاث لدراسة اللغة.",
+            "sources": [
+              {
+                "title": "الشروط الخاصة بمسار الرواد",
+                "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-6/"
+              }
+            ],
+            "last_checked": "2026-10-11",
+            "academic_year": null,
+            "status": "sourced",
+            "owner_reviewed": false,
+            "note_ar": null
+          }
+        ],
+        "owner_confirmed": true
       },
       {
+        "id": "emdad",
         "name_ar": "مسار إمداد",
-        "note_ar": "أفضل 200 جامعة، في تخصصات يحتاجها سوق العمل",
+        "name_en": "Emdad",
+        "note_ar": "أفضل 200 مؤسسة حسب قائمة البرنامج، في مجالات يحتاجها سوق العمل",
+        "levels_ar": "بكالوريوس، ماجستير",
+        "for_high_school": true,
+        "high_school_ar": "نعم",
+        "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية",
         "status": "closed",
         "status_source": null,
-        "last_checked": "2026-10-09"
+        "last_checked": "2026-10-09",
+        "facts": [
+          {
+            "id": "emdad-rule",
+            "text_ar": "أفضل 200 مؤسسة حسب قائمة البرنامج، في مجالات محددة ذات احتياج عالٍ في سوق العمل، لمرحلتي البكالوريوس والماجستير، بالدراسة الحضورية. القبول نهائي غير مشروط وصادر من مكتب القبول في جامعة ضمن قائمة البرنامج. الاستثناء: في دولة غير ناطقة بالإنجليزية يمكن أن يكون القبول مشروطًا بدراسة لغة تلك الدولة، ويتاح الابتعاث لدراسة اللغة.",
+            "sources": [
+              {
+                "title": "الشروط الخاصة بمسار إمداد",
+                "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-5/"
+              }
+            ],
+            "last_checked": "2026-10-11",
+            "academic_year": null,
+            "status": "sourced",
+            "owner_reviewed": false,
+            "note_ar": null
+          }
+        ],
+        "owner_confirmed": true
+      },
+      {
+        "id": "waaid",
+        "name_ar": "مسار واعد",
+        "name_en": "Waaid",
+        "note_ar": "برامج مرتبطة بجهة توظيف، لكل برنامج شروطه ومواعيده",
+        "levels_ar": "حسب البرنامج: بكالوريوس، دبلوم، ماجستير، تدريب",
+        "for_high_school": true,
+        "high_school_ar": "بعض البرامج",
+        "admission_ar": "حسب شروط كل برنامج",
+        "status": "none_open",
+        "status_source": "https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/",
+        "last_checked": "2026-10-11",
+        "facts": [
+          {
+            "id": "waaid-programs",
+            "text_ar": "كل برنامج في واعد مرتبط بجهة توظيف وله شروطه ومؤسسته التعليمية الخاصة. بعضها لخريجي الثانوية (مثل برامج بكالوريوس أعلنتها مجموعة MBC وطيران الرياض في 2026)، وأغلبها لحملة البكالوريوس. فترة التقديم قصيرة، غالبًا أسبوع إلى أسبوعين.",
+            "sources": [
+              {
+                "title": "صفحة مسار واعد",
+                "url": "https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/"
+              }
+            ],
+            "last_checked": "2026-10-11",
+            "academic_year": null,
+            "status": "sourced",
+            "owner_reviewed": false,
+            "note_ar": null
+          }
+        ]
+      },
+      {
+        "id": "rnd",
+        "name_ar": "مسار البحث والتطوير",
+        "name_en": "Research & Development",
+        "note_ar": "أفضل 200 مؤسسة في المجالات ذات الأولوية",
+        "levels_ar": "دكتوراه",
+        "for_high_school": false,
+        "high_school_ar": "لا، للدكتوراه فقط",
+        "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية",
+        "status": null,
+        "status_source": null,
+        "last_checked": "2026-10-11",
+        "facts": [
+          {
+            "id": "rnd-rule",
+            "text_ar": "لدرجة الدكتوراه فقط، من أفضل 200 مؤسسة حسب قائمة البرنامج في المجالات ذات الأولوية. القبول نهائي غير مشروط وصادر من مكتب القبول في جامعة ضمن قائمة البرنامج. الاستثناء: في دولة غير ناطقة بالإنجليزية يمكن أن يكون القبول مشروطًا بدراسة لغة تلك الدولة، ويتاح الابتعاث لدراسة اللغة.",
+            "sources": [
+              {
+                "title": "الشروط الخاصة بمسار البحث والتطوير",
+                "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-7/"
+              }
+            ],
+            "last_checked": "2026-10-11",
+            "academic_year": null,
+            "status": "sourced",
+            "owner_reviewed": false,
+            "note_ar": null
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "id": "four-tracks",
+        "text_ar": "للبرنامج أربعة مسارات: الرواد، والبحث والتطوير، وإمداد، وواعد.",
+        "sources": [
+          {
+            "title": "الأسئلة الشائعة للبرنامج",
+            "url": "https://sites.moe.gov.sa/scholarship-program/faqs/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "general-conditions",
+        "text_ar": "الشروط العامة: الجنسية السعودية، وحسن السيرة، وقبول من مؤسسة في قائمة المسار، وتخصص ضمن تخصصات سنة التقديم، ودراسة بانتظام كامل مع الإقامة في بلد الابتعاث، واجتياز المفاضلة ومنع التكدس.",
+        "sources": [
+          {
+            "title": "الشروط العامة للتقديم والابتعاث",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-1/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "one-application",
+        "text_ar": "يمكنك تقديم أكثر من طلب (مسار أو جامعة أو تخصص مختلف)، لكن يُقبل لك طلب واحد فقط حسب المفاضلة أو المقاعد المتاحة.",
+        "sources": [
+          {
+            "title": "سياسات التقديم والابتعاث",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-2/"
+          },
+          {
+            "title": "الأسئلة الشائعة للبرنامج",
+            "url": "https://sites.moe.gov.sa/scholarship-program/faqs/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "no-qudurat",
+        "text_ar": "لا تُشترط درجة في اختبار القدرات أو التحصيلي، ولا نسبة عامة محددة، ولا عمر محدد.",
+        "sources": [
+          {
+            "title": "صفحة الشروط والأسئلة الشائعة",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": "لكن هناك حدود دنيا في حالات محددة، في المعلومة التالية."
+      },
+      {
+        "id": "extra-2025",
+        "text_ar": "شروط إضافية منذ 2025–2026: لدراسة السنة التحضيرية (بكالوريوس): معدل الثانوية 90% فأعلى وآيلتس 5.5 فأعلى. للدراسة في الصين (بكالوريوس): العمر 30 سنة فأقل، ومعدل الثانوية 85% فأعلى، وآيلتس 4.5 فأعلى. للدراسة في ألمانيا: مستوى A2 في اللغة الألمانية.",
+        "sources": [
+          {
+            "title": "شروط إضافية من العام الأكاديمي 2025–2026",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-4/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": "2025-2026",
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "no-english-year",
+        "text_ar": "لا يشمل الابتعاث سنة لغة إنجليزية في الدول التي تدرّس بالإنجليزية مثل أمريكا وبريطانيا.",
+        "sources": [
+          {
+            "title": "صفحة الشروط والأسئلة الشائعة",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "documents",
+        "text_ar": "المستندات المطلوبة: جواز سفر ساري، وشهادة المؤهل السابق، وخطاب قبول رسمي يوضح التخصص وتاريخ بدء الدراسة واسم الجامعة، وكشف الدرجات، وعنوان وطني مسجل.",
+        "sources": [
+          {
+            "title": "صفحة التقديم في موقع البرنامج",
+            "url": "https://sites.moe.gov.sa/scholarship-program/submitting/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "platform",
+        "text_ar": "منصة التقديم: صفحة الخدمة في وزارة التعليم توجّه إلى منصة قبول (uap.sa)، بينما ما زالت صفحات موقع البرنامج تذكر منصة سفير.",
+        "sources": [
+          {
+            "title": "خدمة التقديم في موقع وزارة التعليم",
+            "url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/scholarshipprog.aspx"
+          },
+          {
+            "title": "صفحة التقديم في موقع البرنامج",
+            "url": "https://sites.moe.gov.sa/scholarship-program/submitting/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "conflict",
+        "owner_reviewed": false,
+        "note_ar": "المصدران الرسميان مختلفان. ابدأ من صفحة الخدمة في الوزارة، وتأكد من الرقم 19996 أو خدمة تواصل إن لم يتضح لك."
+      },
+      {
+        "id": "lists",
+        "text_ar": "قوائم الجامعات والتخصصات لكل مسار في الدليل الاسترشادي 2026–2027. موقع البرنامج يذكر أنه تحت التحديث ويحيل إلى هذا الدليل.",
+        "sources": [
+          {
+            "title": "الدليل الاسترشادي لترتيب قوائم الجامعات 2026–2027 (PDF)",
+            "url": "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf"
+          },
+          {
+            "title": "الموقع الرسمي للبرنامج",
+            "url": "https://sites.moe.gov.sa/scholarship-program/"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": "2026-2027",
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
       }
     ]
   },

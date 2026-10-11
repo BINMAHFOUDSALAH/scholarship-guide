@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% import "components.html" as c %}
+
+{% block title %}{{ page.title }} | {{ site.name }}{% endblock %}
+{% block description %}{{ page.description or site.description }}{% endblock %}
+
+{% block content %}
+<article class="program theme-{{ program.theme }}">
+  <header class="program-header measure">
+    {% if program.logo %}
+    <img class="program-logo" src="{{ url_for('static', path=program.logo.file ~ '-500.png') }}"
+         width="{{ program.logo.width // 2 }}" height="{{ program.logo.height // 2 }}" alt="{{ program.logo.alt_ar }}">
+    {% endif %}
+    <h1>{{ program.name_ar }}</h1>
+    <p class="path-item-en" lang="en" dir="ltr">{{ program.name_en }}</p>
+    <p class="lead">{{ program.summary_ar }}</p>
+    <p class="program-disclaimer">{{ site.name }} دليل طلابي مستقل، ولا يتبع {{ program.provider_ar }}. القرار في كل حالة للجهة الرسمية.</p>
+    <p class="path-item-links">
+      <a class="path-item-link" href="{{ program.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
+      {% if program.apply_url %}<a class="path-item-link" href="{{ program.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
+      {% if program.universities_guide_url %}<a class="path-item-link" href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
+    </p>
+  </header>
+
+  <section class="program-section" aria-labelledby="tracks-title">
+    <h2 id="tracks-title">المسارات</h2>
+    {# A real table: the same fields for every track, so they can be compared. On phones each row stacks. #}
+    <table class="compare">
+      <caption class="sr-only">مقارنة مسارات {{ program.name_ar }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">المسار</th>
+          <th scope="col">الدرجة</th>
+          <th scope="col">لخريجي الثانوية؟</th>
+          <th scope="col">شرط القبول</th>
+          <th scope="col">حالة التقديم</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for track in program.tracks %}
+        <tr>
+          <th scope="row">
+            <span class="track-name">{{ track.name_ar }}</span>
+            <span class="track-note">{{ track.note_ar }}</span>
+          </th>
+          <td data-label="الدرجة">{{ track.levels_ar }}</td>
+          <td data-label="لخريجي الثانوية؟">{{ track.high_school_ar }}</td>
+          <td data-label="شرط القبول">{{ track.admission_ar }}</td>
+          <td data-label="حالة التقديم">
+            {% if track.status and (track.status_source or track.owner_confirmed) %}
+            <span class="status status--{{ track.status }}">{{ track_status_labels[track.status] }}</span>
+            {% else %}
+            <span class="track-note">لا نتابع حالته في هذا الدليل</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h3 class="program-subtitle">شروط كل مسار من مصدره</h3>
+    <ul class="fact-items">
+      {% for track in program.tracks %}{% for f in track.facts %}{{ c.fact(f, label=track.name_ar) }}{% endfor %}{% endfor %}
+    </ul>
+  </section>
+
+  {% if program.facts %}
+  <section class="program-section measure" aria-labelledby="facts-title">
+    <h2 id="facts-title">ما يجب أن تعرفه قبل التقديم</h2>
+    <ul class="fact-items">
+      {% for f in program.facts %}{{ c.fact(f) }}{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <div class="program-section measure prose">
+    {{ page.html | safe }}
+  </div>
+
+  <footer class="measure">
+    {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
+    {% if page.next_step %}{{ c.next_step(page.next_step) }}{% endif %}
+    <p><a href="{{ url_for('home') }}#programs">→ كل البرامج</a></p>
+  </footer>
+</article>
+{% endblock %}

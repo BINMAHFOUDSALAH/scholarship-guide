@@ -1,12 +1,10 @@
-{% import "components.html" as c %}
 {# Mount Tuwaiq band. Rendered only when data/featured_quote.json is verified (or drafts are shown locally). #}
 <section class="tuwaiq" aria-labelledby="tuwaiq-quote">
   <div class="container tuwaiq-inner">
     <div class="tuwaiq-text">
-      {% if quote.status != "verified" %}<p>{{ c.unverified_stamp() }} <small>مسودة: لا تظهر على الموقع المباشر حتى التحقق</small></p>{% endif %}
       <blockquote id="tuwaiq-quote" class="tuwaiq-quote">
         <p>«{{ quote.quote_ar }}»</p>
-        <footer>{{ quote.attribution_ar }} · {{ quote.context_ar }}</footer>
+        <footer>— {{ quote.attribution_ar }}{% if quote.context_ar %} · {{ quote.context_ar }}{% endif %}</footer>
       </blockquote>
       <p class="tuwaiq-message">{{ quote.message_ar }}</p>
     </div>

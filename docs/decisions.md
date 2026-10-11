@@ -162,3 +162,39 @@ Newest entries go at the bottom. When a decision changes, add a new entry instea
 - **Leaner CLAUDE.md:** the architecture moved to `docs/architecture.md`; CLAUDE.md keeps the rules, working style, commands, and pointers. Also added: `docs/CLAUDE_WORKFLOW_GUIDE.md` and `LEARNING_LOG.md`.
 **Alternatives:** Keep deploying on every push; a git pre-commit hook (runs only on the owner's machine); a Claude Stop hook; relying on the CLAUDE.md sentence for `.env`; keeping one long CLAUDE.md.
 **Why:** Render deployed every push even with failing tests. Anthropic's guidance: use enforced mechanisms for must-always rules, and keep CLAUDE.md short so rules aren't ignored. Deferred: a stale-facts test and a weekly link checker.
+
+## 025 — Verification display: source + date everywhere, «غير مؤكد» only for real gaps (updates 005 and 013)
+**Date:** 2026-10-11
+**Decision:** Every consequential fact is stored with one shape (`text_ar`, `sources` [title + url], `last_checked`, `academic_year`, `status`, `owner_reviewed`, `note_ar`) and rendered by one macro (`fact` in `components.html`):
+- `sourced`: the text, its official source(s), and «آخر مراجعة» (the day the source was actually read).
+- `unverified`: the text + «غير مؤكد» (no official source yet, e.g. a status reported from X without the post link).
+- `conflict`: the text + «غير مؤكد» + a note; both official sources are linked, and no single answer is published.
+- `outdated`: hidden.
+
+Claude may mark a fact `sourced` after reading the official page itself. The owner's review is tracked as `owner_reviewed` (not shown to students). Markdown pages use `status: draft | sourced | verified`; only `draft` shows the draft notice. Programs whose facts are sourced one by one lose the blanket «غير مؤكد» on their name.
+**Alternatives:** Keep the old rule (everything stays «غير مؤكد» until the owner checks); two visible levels («تحققنا منه» vs source only).
+**Why:** The owner found that blanket stamps on almost everything made the site look unreliable and hid the real gaps. A source link + date is honest about what was checked and when; the stamp now means something specific. «آخر مراجعة» is a manual reading date: the about page says the site doesn't monitor sources automatically.
+
+## 026 — Program identity image: the generic photo is removed; the official logo is pending
+**Date:** 2026-10-11
+**Decision:** The Oxford photo is removed from the government scholarship (it showed one specific university and was generic). The owner wants an official image. Research found only one official visual: the program's logo on its website, which contains the Saudi state emblem (see `docs/research/custodian-scholarship-2026-27.md` §4). Nothing has been downloaded. Until the owner decides, the row shows the drawn world scene (the existing fallback from decision 020). Aramco and KAUST keep their licensed photos.
+**Alternatives:** Use the logo now; a text-only name block; keep the Oxford photo.
+**Why:** The owner prefers the program's real identity over a stock-style campus photo. The emblem restriction noted in decision 020 still applies, so the logo needs an explicit owner decision first.
+
+## 027 — «البرامج» on the site; one page per program
+**Date:** 2026-10-11
+**Decision:** The homepage section and nav item are «البرامج» (anchor `#programs`); the Ministry's tracks keep their official name «مسار …». Code keeps the name `paths` (`data/paths.json`). A program gets its own page at `/programs/<id>` when `content/programs/<id>.md` exists: facts from `paths.json` (a comparison table with the same fields for every track, plus sourced facts) and explanations from the Markdown file. The first is the government scholarship, with all four tracks and the conditional-admission explainer. The homepage row shows only tracks open to high school graduates and links to the page.
+**Alternatives:** Keep «المسارات» and explain the difference; put everything on the homepage.
+**Why:** On the homepage «المسارات» meant programs, while the Ministry uses «مسار» for tracks inside one program, so students saw two meanings of one word. The conditional-admission rule needs more room than a homepage row, and a page per program is where Aramco and KAUST will go next.
+
+## 028 — No «غير مؤكد» on the site; owner-confirmed or hidden; official logo; programs-first homepage (updates 018, 020, 025, 026)
+**Date:** 2026-10-11
+**Decision:**
+- **No stamps:** «غير مؤكد» and the draft notice are removed everywhere. Something reaches students only if it has an official source or the owner confirmed it (`owner_confirmed: true` on a track status or news item); otherwise it's hidden. Facts with `status: unverified` are hidden; `conflict` facts show both official sources and a note.
+- **No dates on screen:** «آخر مراجعة» and news dates are not shown. `last_checked` stays in the data for a future stale-facts check. A news item's date is now `added` (the day we added it, used only for ordering), because the stored date wasn't the announcement date.
+- **Official logo:** the King scholarship row and page show the program's official logo (decision 026's pending question), cropped from the program homepage's first slide (`object.moe.gov.sa/.../scs6-638407626472861199.png`): the program logo only, colors and proportions unchanged, self-hosted at `app/static/img/programs/`, on a white plate, with "واضح لا يتبع وزارة التعليم" on the program page and the source on /about.
+- **Photo credits** moved from the photos to /about («الصور والشعارات»). The KAUST photo's CC BY-SA licence still requires credit, so it isn't dropped.
+- **Homepage:** a short hero with the grade buttons visible (no «ابدأ من هنا» reveal), then «البرامج», then «آخر المستجدات», then the Tuwaiq video. Removed: «من أين تبدأ؟», the 5-step journey (now a list on the grade 12 page), the tests (now on the grade 11 page), «كيف نعمل», and «مجاني وبدون تسجيل».
+- **Tuwaiq video** is shown. The quote line is Al Arabiya's own title for its clip («همة السعوديين مثل جبل طويق ولن تنكسر»), attributed «— محمد بن سلمان».
+**Alternatives:** Keep source dates and stamps (decision 025); text-only or a building photo instead of the logo; keep the hero reveal.
+**Why:** The owner commits to verifying everything that's published, so a visible "unverified" label would only mark mistakes we should fix or hide. Hiding unconfirmed items keeps the "never invent facts" rule. The owner chose the official logo knowing the state-emblem concern noted in decision 020; it's shown only to identify the program, never as endorsement. Programs are the main thing students come for, so they come first.

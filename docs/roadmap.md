@@ -3,12 +3,13 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-10):**
-> 1. **First, design changes the owner will describe**, including rethinking how the "verified / غير مؤكد" status is shown (the owner feels some of it may be unnecessary; hear their reasoning before changing anything, and keep the "never invent facts" rule).
-> 2. **Then Stage 2, the universities explorer**: ask the owner to approve installing `pdfplumber` (dev only), inspect the official PDF's structure, then write `docs/specs/universities-explorer.md` for approval before building.
-> 3. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass" (after the first green CI run).
+> **Next session (as of 2026-10-11):**
+> 1. **Owner approves `docs/specs/universities-explorer.md`** (3 decisions at the bottom), then build the explorer: extraction script → `data/universities.json` → `/universities`.
+> 2. Apply the KGSP and Aramco research (`docs/research/kgsp-2026-27.md`, `aramco-cdpne-2026-27.md`) to `paths.json` once the owner has reviewed them.
+> 3. Then Stage 1e step 3 (grade-page task lists) and step 4 (FAQ from real student questions).
+> 4. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
 >
-> Owner to-dos still open: confirm the Al Arabiya clip's wording, send the X post links for الرواد/إمداد, and verify the research checklist.
+> Owner to-dos still open: review the fact-check tables (§5 of each research file), send the X post links for الرواد/إمداد, optionally export the Telegram group (JSON) for the FAQ step.
 
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
 **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
@@ -61,6 +62,21 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] Header with nav + phone menu; 3-column footer
 - [x] Hero with signature drawing; «من أين تبدأ؟»; compact news; facts-first path rows with «لمن؟»; 5-step journey; «كيف نعمل»
 - [ ] Owner: X post links for الرواد open / إمداد closed → `source_url` in `news.json` and `status_source` in `paths.json`
+
+## Stage 1e: Accuracy + clarity pass (owner's design brief, 2026-10-10; decisions 025–027)
+Order chosen by the owner: facts first, then layout.
+- [x] **Step 1: facts + program page.** Official-source fact-check (`docs/research/custodian-scholarship-2026-27.md`); one fact shape with source + date (decision 025); «غير مؤكد» only for real gaps; `/programs/custodian-scholarship` with all 4 tracks, a comparison table, the conditional-admission explainer + 5-question checklist, admission vs. scholarship; «المسارات» → «البرامج» (decision 027); Oxford photo removed (decision 026); grade 12 wording fixed. 64 tests.
+- [x] Owner chose the official logo (decision 028)
+- [ ] Owner: review the fact-check table
+- [x] **Step 2: homepage restructure (decision 028):** short hero with visible grade buttons → programs → news → Tuwaiq video; journey moved to grade 12, tests to grade 11; «من أين تبدأ؟», «كيف نعمل», and all «غير مؤكد» stamps and on-screen dates removed; photo credits moved to /about.
+- [x] **IELTS resource page** `/resources/ielts` (official IELTS + MoE + KGSP sources).
+- [x] KGSP and Aramco research by two parallel research agents → `docs/research/`.
+- [x] Universities explorer: PDF downloaded to `data/raw/` (git-ignored), `pdfplumber` installed (dev), structure inspected, spec written. **Awaiting owner approval.**
+- [ ] **Step 3: grade pages «خطوتك القادمة»:** a short task list per grade (action, why, source, now/later; dates only when verified). Grade pages get sources (end their draft status).
+- [ ] **Step 4: FAQ from real student questions.** The owner exports the Telegram group (Telegram Desktop → JSON); the raw export never enters the repo. Claude extracts only the questions, strips names/usernames/numbers, groups duplicates, counts them. Answers go in a data file with the fact shape; unanswered ones stay hidden. No automatic scraping.
+- [ ] **Step 5: usability test script** (`docs/research/usability-test.md`) for 3–5 students; the owner runs it.
+- [ ] **Step 6: accessibility + broken-link pass.**
+- Later (Stage 2): per-university conditional-admission table for non-English-speaking destinations, generated from `data/universities.json` ("potentially eligible under the published exception", never "guaranteed").
 
 ## Research (in progress, alongside Stage 1)
 - [x] First draft of the 3 paths + Tuwaiq quote sources: [research/paths-research.md](research/paths-research.md)

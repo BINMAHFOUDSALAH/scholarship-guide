@@ -8,9 +8,6 @@
 <article class="measure">
   <header class="page-header">
     <h1>{{ page.title }}</h1>
-    {% if page.status != "verified" %}
-    <p class="page-draft">{{ c.unverified_stamp() }} مسودة لم يُتحقق منها بعد. تأكد دائمًا من المصدر الرسمي.</p>
-    {% endif %}
     {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
   </header>
 
@@ -18,9 +15,22 @@
     {{ page.html | safe }}
   </div>
 
-  {% for source in page.sources %}
-    {{ c.source_stamp(source.title, source.url, page.last_checked) }}
-  {% endfor %}
+  {% if page.show_tests %}
+  <section class="page-tests" aria-labelledby="tests-title">
+    <h2 id="tests-title">اختبارات ستسمع عنها كثيرًا</h2>
+    <dl class="test-grid">
+      {% for test in tests %}
+      <div class="test">
+        <dt>{{ test.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ test.name_en }}</span></dt>
+        <dd>{{ test.what_ar }}</dd>
+        <dd><a href="{{ test.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a></dd>
+      </div>
+      {% endfor %}
+    </dl>
+  </section>
+  {% endif %}
+
+  {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
 
   {% if page.next_step %}{{ c.next_step(page.next_step) }}{% endif %}
 

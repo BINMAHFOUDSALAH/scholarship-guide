@@ -2,3 +2,4 @@
 -r requirements.txt
 pytest==9.1.1
 httpx==0.28.1
+pdfplumber==0.11.10  # reads the official universities PDF (scripts/extract_universities.py), dev only

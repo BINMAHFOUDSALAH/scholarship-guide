@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **واضح (Wadih, "clear")**: a free, Arabic-first website that helps Saudi high school students go from confusion to action about their future. Tagline: "مستقبلك بعد الثانوية، بوضوح".
 
-- Organized around **paths** (مسارات): the government external scholarship, Aramco, KAUST, more later. Each has requirements, steps, and official sources. **Resources** (IELTS, SAT, Calculus…) are shared across paths.
+- Organized around **programs** («البرامج» on the site, `paths` in code): the government external scholarship (with the Ministry's four tracks, «مسار الرواد»…), Aramco, KAUST, more later. Each has requirements, steps, and official sources; a program with `content/programs/<id>.md` gets its own page. **Resources** (IELTS, SAT, Calculus…) are shared across programs.
 - **Help first.** Guides, path pages, and the universities explorer are public (Google can index them). Login (email + password or Google) unlocks personal features: guided start + saved plan, saved universities, opt-in email alerts (decisions 014–016).
 - Launch 1 (~2026-12-09): public guides + the government scholarship path, fully verified. Launch 2: accounts + guided start. Later: a chatbot and agents that answer only from verified content, with sources.
 - The owner is building this to become an AI-focused Forward Deployed Engineer: ship a real product **and** understand it well enough to explain, debug, and improve it.
@@ -15,8 +15,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Rules
 - A student guide: NOT the Ministry of Education, NOT Safeer, not affiliated with Aramco or KAUST.
-- Never invent official lists, deadlines, requirements, scores, or quotes. Claude may research facts only from **official sources** (link every fact); researched facts stay `draft` / "غير مؤكد" until the owner verifies them. If sources conflict, record the conflict and publish no number. Research notes: `docs/research/`.
-- Every important page shows a source and a last-checked date.
+- Never invent official lists, deadlines, requirements, scores, or quotes. Claude may research facts only from **official sources**, read directly (link every fact, with the date it was read). A fact with an official source shows its source link; anything not backed by an official source or the owner's confirmation is **hidden, never stamped** (no «غير مؤكد», decision 028). Check dates stay in the data (`last_checked`) but aren't shown. The owner's review is tracked as `owner_reviewed`. If official sources conflict, show both and publish no single answer. Research notes: `docs/research/`.
+- Every important page shows its official sources.
 - Never collect sensitive data (no national ID, GPA, test scores, passport). Users are mostly minors: privacy and security are requirements. No third-party requests until the user acts (self-hosted fonts, no trackers; the only embed is click-to-play video).
 - Never read, edit, or print `.env` (also enforced by `.claude/settings.json`).
 - Arabic first, RTL, mobile first. One Arabic site with English names inline.

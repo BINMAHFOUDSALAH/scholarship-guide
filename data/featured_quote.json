@@ -1,15 +1,16 @@
 {
-  "status": "draft",
-  "quote_ar": "همة السعوديين مثل جبل طويق، ولن تنكسر إلا إذا انهدّ هذا الجبل وتساوى بالأرض",
-  "attribution_ar": "ولي العهد الأمير محمد بن سلمان",
+  "status": "verified",
+  "quote_ar": "همة السعوديين مثل جبل طويق ولن تنكسر",
+  "attribution_ar": "محمد بن سلمان",
   "context_ar": "مبادرة مستقبل الاستثمار، الرياض ٢٠١٨",
   "message_ar": "الهمة تبدأ بخطوة واضحة. نحن هنا لنساعدك تعرف خطوتك القادمة.",
-  "source_url": "https://saudipedia.com/ar/ما-المقصود-بهمة-طويق؟",
+  "source_url": "https://www.youtube.com/watch?v=6fVtY11654w",
   "video_url": "https://www.youtube.com/watch?v=6fVtY11654w",
   "youtube_id": "6fVtY11654w",
-  "last_checked": "2026-10-09",
+  "last_checked": "2026-10-11",
   "photo": null,
   "photo_credit": null,
-  "todo": "Owner: watch the Al Arabiya clip, confirm it shows the Crown Prince saying the quote and that quote_ar matches word for word, then set status to verified.",
-  "video_publisher": "قناة العربية"
+  "todo": null,
+  "video_publisher": "قناة العربية",
+  "note": "Owner decision 2026-10-11: show the video. The quote line is the title Al Arabiya gave its own clip ('محمد بن سلمان : همة السعوديين مثل جبل طويق ولن تنكسر'), so it matches the published source word for word."
 }

@@ -16,20 +16,30 @@
 </ol>
 {% endmacro %}
 
-{# Footnote-style stamp under a fact: where it comes from and when it was last checked. #}
-{% macro source_stamp(source, url, last_checked) %}
+{# Footnote-style stamp under a fact: where it comes from. sources = [{"title": "...", "url": "..."}, ...].
+   The check date stays in the data (for spotting stale facts) but isn't shown (decision 028). #}
+{% macro source_stamp(sources) %}
 <p class="source-stamp">
   <span class="source-stamp-label">المصدر:</span>
-  <a href="{{ url }}" target="_blank" rel="noopener">{{ source }}</a>
-  <span aria-hidden="true">·</span>
-  <span class="source-stamp-label">آخر تحقق:</span>
-  <time>{{ last_checked }}</time>
+  {% for s in sources %}<a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }}</a>{% if not loop.last %}<span aria-hidden="true">،</span> {% endif %}{% endfor %}
 </p>
 {% endmacro %}
 
-{# Shown next to anything not yet checked against an official source. #}
-{% macro unverified_stamp() %}
-<span class="unverified-stamp" title="لم نتحقق من هذه المعلومة بعد من مصدر رسمي">غير مؤكد</span>
+{#
+  One fact, shown the same way everywhere (decisions 025 + 028):
+  - "sourced": the text + its official source
+  - "conflict": the text + a note saying which official sources disagree + both sources
+  - "unverified" and "outdated": not shown at all (nothing unconfirmed reaches students)
+  label (optional) is shown in bold before the text, e.g. the track name.
+#}
+{% macro fact(f, label=None) %}
+{% if f.status in ("sourced", "conflict") %}
+<li class="fact-item" id="fact-{{ f.id }}">
+  <p class="fact-text">{% if label %}<strong>{{ label }}:</strong> {% endif %}{{ f.text_ar }}</p>
+  {% if f.note_ar %}<p class="fact-note">{{ f.note_ar }}</p>{% endif %}
+  {% if f.sources %}{{ source_stamp(f.sources) }}{% endif %}
+</li>
+{% endif %}
 {% endmacro %}
 
 {# The one place lime is used: what the student should do next. #}

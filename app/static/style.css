@@ -343,42 +343,6 @@ main:has(> .hero) {
   }
 }
 
-/* ---------- Buttons ---------- */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  min-height: 48px; /* comfortable tap target */
-  padding: 10px 22px;
-  border: 1.5px solid transparent;
-  border-radius: var(--radius);
-  font: inherit;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: var(--heading);
-  color: var(--paper);
-}
-
-.btn-primary:hover {
-  background: var(--ink);
-}
-
-.btn-secondary {
-  background: transparent;
-  border-color: var(--line-strong);
-  color: var(--heading);
-}
-
-.btn-secondary:hover {
-  border-color: var(--heading);
-}
-
 /* ---------- Hero ---------- */
 
 .hero {
@@ -425,68 +389,10 @@ main:has(> .hero) {
   color: var(--ink-muted);
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--space-3);
-  margin-top: var(--space-4);
-}
-
-/* "ابدأ من هنا": a native <details>. When open it takes the full row. */
-.start[open] {
-  flex-basis: 100%;
-}
-
-.start > summary {
-  list-style: none;
-}
-
-.start > summary::-webkit-details-marker {
-  display: none;
-}
-
-.start > summary::after {
-  content: "▾";
-  font-size: 0.9em;
-  transition: transform 150ms ease;
-}
-
-.start[open] > summary::after {
-  transform: rotate(180deg);
-}
-
-.start-panel {
+/* The grade buttons, visible in the hero (no click needed). */
+.hero-grades {
   max-width: 520px;
-  margin-top: var(--space-3);
-  padding: var(--space-4);
-  background: var(--surface-strong);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-}
-
-/* A short reveal, only for people who haven't asked their device to reduce motion. */
-@media (prefers-reduced-motion: no-preference) {
-  .start[open] .start-panel {
-    animation: reveal 180ms ease-out;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .start > summary::after {
-    transition: none;
-  }
-}
-
-@keyframes reveal {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  margin-top: var(--space-4);
 }
 
 .start-title {
@@ -528,7 +434,7 @@ main:has(> .hero) {
   display: none;
   position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: 440px;
   justify-self: center;
   aspect-ratio: 520 / 420;
 }
@@ -640,7 +546,7 @@ main:has(> .hero) {
 
 @media (min-width: 900px) {
   .hero {
-    padding-block: var(--space-6) var(--space-7);
+    padding-block: var(--space-5) var(--space-6);
   }
 
   .hero-grid {
@@ -688,7 +594,7 @@ main:has(> .hero) {
 }
 
 /*
-  Rows divided by fine lines (start points, news, tests, trust). On wide screens the items sit
+  Rows divided by fine lines (news, tests). On wide screens the items sit
   side by side with a line between them, so the page has rhythm without a grid of boxes.
 */
 .rule-grid {
@@ -702,86 +608,6 @@ main:has(> .hero) {
 .rule-grid > * {
   padding-block: var(--space-4);
   border-bottom: 1px solid var(--line);
-}
-
-/* ---------- من أين تبدأ؟ ---------- */
-
-.start-points {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line-strong);
-}
-
-.start-point a {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  height: 100%;
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--line);
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.start-num {
-  font-family: var(--font-heading);
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--heading);
-}
-
-.start-point-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--heading);
-}
-
-.start-point-title::after {
-  content: " ←";
-}
-
-.start-point-text {
-  font-size: 0.95rem;
-  color: var(--ink-muted);
-}
-
-.start-point a:hover .start-point-title {
-  text-decoration: underline;
-  text-underline-offset: 0.3em;
-}
-
-.start-point a:hover .start-num {
-  color: var(--ink);
-}
-
-@media (min-width: 700px) {
-  .start-points {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: var(--space-5);
-  }
-}
-
-@media (min-width: 1024px) {
-  .start-points {
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 0;
-  }
-
-  .start-point a {
-    padding-inline: var(--space-4);
-    border-bottom: 0;
-  }
-
-  .start-point:first-child a {
-    padding-inline-start: 0;
-  }
-
-  .start-point + .start-point a {
-    border-inline-start: 1px solid var(--line);
-  }
 }
 
 /* ---------- Latest news ---------- */
@@ -933,23 +759,24 @@ main:has(> .hero) {
   pointer-events: none;
 }
 
-/* Credit line required by the photo licences, small and on the photo. */
-.photo-credit {
-  position: absolute;
-  inset-inline-start: var(--space-2);
-  bottom: var(--space-2);
-  z-index: 1;
-  max-width: calc(100% - 2 * var(--space-2));
-  padding: 0 var(--space-2);
-  border-radius: 4px;
-  background: rgba(16, 23, 19, 0.75);
-  color: #ece9e0;
-  font-size: 0.7rem;
-  line-height: 1.9;
+/* Official logo instead of a photo: shown whole, on white, so its colors stay true in dark mode. */
+.path-logo {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  height: 180px;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #ffffff;
 }
 
-.photo-credit a {
-  color: inherit;
+.path-logo img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
 
 /* Drawn scene: fallback for a path without a photo. */
@@ -1119,6 +946,7 @@ main:has(> .hero) {
   }
 
   .path-photo,
+  .path-logo,
   .path-art {
     grid-column: 2;
     grid-row: 1;
@@ -1132,96 +960,9 @@ main:has(> .hero) {
   }
 }
 
-/* ---------- Application journey ---------- */
+/* ---------- Tests: lined rows ---------- */
 
-.journey {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.journey-step {
-  position: relative;
-  padding-block-end: var(--space-4);
-  padding-inline-start: 60px;
-}
-
-.journey-num {
-  position: absolute;
-  inset-inline-start: 0;
-  top: 0;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--heading);
-  border-radius: 50%;
-  background: var(--paper);
-  color: var(--heading);
-  font-weight: 700;
-  z-index: 1;
-}
-
-.journey-step--current .journey-num {
-  background: var(--lime);
-  border-color: var(--lime);
-  color: var(--on-lime);
-}
-
-/* The connecting line (vertical on phones). */
-.journey-step:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  inset-inline-start: 19px;
-  top: 44px;
-  bottom: 4px;
-  width: 2px;
-  background: var(--line-strong);
-}
-
-.journey-title {
-  margin: 6px 0 var(--space-1);
-  font-size: 1.1rem;
-}
-
-.journey-text {
-  margin: 0 0 var(--space-1);
-  font-size: 0.95rem;
-  color: var(--ink-muted);
-}
-
-.journey-link {
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-@media (min-width: 1024px) {
-  /* A horizontal stepper on wide screens. */
-  .journey {
-    grid-template-columns: repeat(5, 1fr);
-    gap: var(--space-4);
-  }
-
-  .journey-step {
-    padding-inline-start: 0;
-    padding-top: 60px;
-  }
-
-  .journey-step:not(:last-child)::after {
-    top: 19px;
-    bottom: auto;
-    inset-inline-start: 48px;
-    inset-inline-end: calc(-1 * var(--space-4) + 4px);
-    width: auto;
-    height: 2px;
-  }
-}
-
-/* ---------- Tests and trust: lined rows ---------- */
-
-.test-grid,
-.trust-points {
+.test-grid {
   display: grid;
   margin: 0;
   padding: 0;
@@ -1229,8 +970,7 @@ main:has(> .hero) {
   border-top: 1px solid var(--line-strong);
 }
 
-.test,
-.trust-point {
+.test {
   padding-block: var(--space-4);
   border-bottom: 1px solid var(--line);
 }
@@ -1257,35 +997,21 @@ main:has(> .hero) {
   white-space: nowrap;
 }
 
-.trust-point h3 {
-  margin: 0 0 var(--space-1);
-  font-size: 1.1rem;
-}
-
-.trust-point p {
-  margin: 0;
-  color: var(--ink-muted);
-}
-
 @media (min-width: 800px) {
-  .test-grid,
-  .trust-points {
+  .test-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .test,
-  .trust-point {
+  .test {
     padding-inline: var(--space-4);
     border-bottom: 0;
   }
 
-  .test:first-child,
-  .trust-point:first-child {
+  .test:first-child {
     padding-inline-start: 0;
   }
 
-  .test + .test,
-  .trust-point + .trust-point {
+  .test + .test {
     border-inline-start: 1px solid var(--line);
   }
 }
@@ -1309,11 +1035,6 @@ main:has(> .hero) {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-6);
   }
-}
-
-.tuwaiq .unverified-stamp {
-  color: #ece9e0;
-  border-color: #a9b4ad;
 }
 
 .tuwaiq-quote {
@@ -1482,20 +1203,6 @@ main:has(> .hero) {
   font-weight: 700;
 }
 
-/* "غير مؤكد": visible, but not alarming. */
-.unverified-stamp {
-  display: inline-block;
-  padding: 0 var(--space-2);
-  border: 1px dashed var(--ink-muted);
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.7;
-  color: var(--ink-muted);
-  vertical-align: middle;
-  cursor: help;
-}
-
 /* Next step: the lime highlight. */
 .next-step {
   margin-block: var(--space-4);
@@ -1530,11 +1237,6 @@ main:has(> .hero) {
 
 /* ---------- Content pages (Markdown) ---------- */
 
-.page-draft {
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-}
-
 .prose h2 {
   margin-block: var(--space-5) var(--space-2);
   font-size: var(--step-1);
@@ -1546,6 +1248,164 @@ main:has(> .hero) {
 
 .prose li {
   margin-block: var(--space-1);
+}
+
+/* ---------- Program pages ---------- */
+
+/* Wider than a reading page so the comparison table fits; text sections keep .measure. */
+.program {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+/* Every section starts at the same edge as the table, so the page reads as one column. */
+.program .measure,
+.program .fact-items {
+  max-width: var(--measure);
+  margin-inline: 0;
+}
+
+.program-header {
+  margin-block-end: var(--space-5);
+}
+
+/* The program's official logo at the top of its page: small, on a white plate. */
+.program-logo {
+  display: block;
+  width: 250px;
+  max-width: 100%;
+  height: auto;
+  margin-block-end: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: #ffffff;
+}
+
+.program-disclaimer {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.program-section {
+  margin-block-end: var(--space-5);
+}
+
+.program-section > h2 {
+  margin-block-start: var(--space-5);
+}
+
+.program-subtitle {
+  margin-block: var(--space-5) var(--space-2);
+}
+
+/* The link to a program's own page, on the homepage row. */
+.path-item-link--page {
+  color: var(--heading);
+}
+
+/* Comparison table: same fields for every track. */
+.compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.compare th,
+.compare td {
+  padding: var(--space-2) var(--space-3);
+  text-align: start;
+  vertical-align: top;
+}
+
+.compare thead th {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.compare tbody tr {
+  border-bottom: 1px solid var(--line);
+}
+
+.compare tbody th {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+}
+
+/* Phones: each track becomes a stacked block, and each value gets its column name. */
+@media (max-width: 759px) {
+  .compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .compare tr,
+  .compare td {
+    display: block;
+  }
+
+  .compare tbody tr {
+    padding-block: var(--space-3);
+  }
+
+  .compare th,
+  .compare td {
+    padding: var(--space-1) 0;
+  }
+
+  .compare td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink-muted);
+  }
+}
+
+/* Facts with their source stamps. */
+.fact-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fact-item {
+  padding-block: var(--space-3) var(--space-1);
+  border-bottom: 1px solid var(--line);
+}
+
+.fact-text {
+  margin-block-end: var(--space-1);
+}
+
+.fact-note {
+  margin-block-end: var(--space-1);
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.prose h3 {
+  margin-block: var(--space-4) var(--space-1);
+  font-size: var(--step-0);
+}
+
+.prose ol {
+  padding-inline-start: var(--space-4);
+}
+
+.credits {
+  padding-inline-start: var(--space-4);
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.credits li {
+  margin-block: var(--space-2);
 }
 
 /* ---------- Footer ---------- */

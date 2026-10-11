@@ -161,3 +161,46 @@ What we built in واضح, why, how it works, and how to talk about it. Updated 
 **Interview pitch:** "Broken code can't reach production: CI must pass before Render deploys. Secrets are protected from the AI assistant by an enforced rule, not just an instruction."
 **Who did what:** Owner chose which automations to adopt after asking for plain explanations and the trade-offs. Claude implemented.
 **Understood?** Not yet checked.
+
+## 10. Fact-checking, one fact shape, and the first program page (2026-10-11)
+**Built / why:**
+- a claim-by-claim fact-check of the government scholarship from official Ministry pages (`docs/research/custodian-scholarship-2026-27.md`)
+- one data shape for every fact (text, sources, check date, status) rendered by one macro, so every fact looks and behaves the same
+- `/programs/custodian-scholarship`: the 4 tracks in a comparison table, sourced facts, and the conditional-admission explainer
+- fixed a real error: the site said "unconditional offer" with no mention of the official language-study exception
+**Key concepts:**
+- a data model as a contract (the same fields everywhere → reusable templates and tests)
+- the difference between "we found an official source" and "the owner reviewed it"
+- recording conflicting official sources instead of picking one
+- accessible tables (`<th scope>`, caption) that stack on phones
+**Decisions:** 025 (verification display), 026 (official logo pending), 027 («البرامج» + program pages).
+**Tested:** 64 pytest tests (new: fact rules, program page, 404s, links on the new page). Browser checks at 1280px and 375px, light and dark, no horizontal scroll, no console errors. Not tested: real students using the page.
+**Limits:**
+- the universities PDF wasn't read (needs Stage 2's extraction)
+- the track statuses (open/closed) still lack their X post links
+- «آخر مراجعة» is a manual date, not monitoring
+**Interview pitch:** "I found that my own site overstated a rule. I traced every claim to an official page, modeled facts with sources and statuses, and made the UI show uncertainty only where it actually exists."
+**Who did what:** Owner wrote the audit brief, chose the verification display, the naming, and the order of work, and suggested mining real student questions for an FAQ. Claude researched the official pages, wrote the fact-check, and implemented and tested.
+**Understood?** Not yet checked.
+
+
+## 11. Programs-first homepage, official logo, IELTS page, explorer spec (2026-10-11)
+**Built / why:**
+- The homepage now leads with the programs, with the grade buttons visible in a shorter hero.
+- «غير مؤكد» stamps and on-screen dates were removed: unconfirmed things are hidden instead.
+- The King scholarship shows its official logo, cropped cleanly from the program's own site.
+- A first shared resource page: `/resources/ielts`.
+- A spec for the universities explorer, based on what the official PDF actually contains.
+**Key concepts:**
+- "hide vs. label" as two ways to handle uncertainty
+- image licences (why CC BY-SA credit can move but not disappear)
+- inspecting a data source before designing the feature (the PDF has English names and flags, but no Arabic names or degrees)
+- running independent research in parallel with subagents
+**Decisions:** 028.
+**Tested:** 77 pytest tests (no stamps or review dates on any page, programs before news, IELTS page, logo files and source). Browser checks at 1440px and 375px, light and dark.
+**Limits:**
+- the logo includes the state emblem (the owner's informed choice)
+- the explorer isn't built yet
+- the KGSP/Aramco research isn't on the site yet
+**Who did what:** Owner reviewed the live page and set the direction (programs first, no stamps or dates, the official logo, the video, the King-scholarship focus, using subagents). Claude researched, implemented, and tested; two research agents wrote the KGSP and Aramco notes.
+**Understood?** Not yet checked.

@@ -10,11 +10,25 @@
 <p>{{ site.name }} دليل طلابي مستقل، وليس وزارة التعليم ولا منصة سفير، ولا يتبع أرامكو السعودية أو كاوست.</p>
 
 <h2>كيف نتحقق من المعلومات</h2>
-<p>كل معلومة رسمية (شروط، مواعيد، قوائم جامعات) تُؤخذ من مصدرها الرسمي، ويظهر تحتها مصدرها وتاريخ آخر تحقق، هكذا:</p>
-{{ c.source_stamp("مثال: موقع برنامج خادم الحرمين الشريفين للابتعاث", "https://sites.moe.gov.sa/scholarship-program/", "يُذكر هنا تاريخ التحقق") }}
+<p>كل معلومة رسمية (شروط، مواعيد، قوائم جامعات) تُؤخذ من مصدرها الرسمي، ويظهر تحتها رابط مصدرها، هكذا:</p>
+{{ c.source_stamp([{"title": "مثال: الشروط الخاصة بمسار الرواد", "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-6/"}]) }}
 
-<p>وإذا لم نتحقق من معلومة بعد من مصدر رسمي، نضع بجانبها هذه العلامة {{ c.unverified_stamp() }} بدل أن نخمّن.</p>
+<p>ما لم نتحقق منه لا ننشره. وإذا قال مصدران رسميان شيئين مختلفين، نذكر المصدرين ولا نختار بينهما.</p>
+
+<p>نحن لا نراقب المواقع الرسمية آليًا، فقد تتغير معلومة بعد أن نشرناها.</p>
 
 <p>المعلومات الرسمية تتغير، لذلك ننصح دائمًا بفتح رابط المصدر قبل أي قرار مهم.</p>
+
+<h2 id="credits">الصور والشعارات</h2>
+<ul class="credits">
+  {% for path in paths %}
+  {% if path.logo %}
+  <li>شعار {{ path.name_ar }}: من <a href="{{ path.logo.source_url }}" target="_blank" rel="noopener">موقع البرنامج الرسمي</a>. نعرضه للتعريف بالبرنامج فقط، و{{ site.name }} لا يتبع الجهة المالكة له.</li>
+  {% elif path.photo %}
+  <li>{{ path.photo.alt_ar }}: <a href="{{ path.photo.source_url }}" target="_blank" rel="noopener">صورة: <span lang="en" dir="ltr">{{ path.photo.credit }}</span></a>،
+    {% if path.photo.license_url %}<a href="{{ path.photo.license_url }}" target="_blank" rel="noopener" lang="en" dir="ltr">{{ path.photo.license }}</a>{% else %}{{ path.photo.license }}{% endif %}</li>
+  {% endif %}
+  {% endfor %}
+</ul>
 </div>
 {% endblock %}

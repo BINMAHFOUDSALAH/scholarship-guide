@@ -1,5 +1,7 @@
 # Paths Research (draft, غير مؤكد)
 
+**Update 2026-10-11:** the government scholarship was re-checked fact by fact in [custodian-scholarship-2026-27.md](custodian-scholarship-2026-27.md), which replaces section 1 below (e.g. Waaid and R&D are now answered, and the application platform is a recorded conflict).
+
 **Status:** Draft researched by Claude on 2026-10-09. **Nothing here is verified.** Every fact needs the owner to open the source, confirm it is current, and then mark it verified.
 **How this is used:** after verification, these facts become `data/paths/*.json` in Stage 2, each with `source` and `last_checked`.
 
