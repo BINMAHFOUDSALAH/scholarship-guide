@@ -459,3 +459,17 @@ def test_grade_pages_switch_grades_and_put_the_next_step_first():
     assert "ماذا ينتظرك في ثالث ثانوي؟" in html
     assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text  # the last grade has no next one
     assert 'class="grade-switch"' not in client.get("/resources/ielts").text
+
+
+def test_owner_x_link_is_in_the_footer_only():
+    """The owner's X account: in the global footer on every page, never in the nav; safe new tab; labelled."""
+    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/my-list"):
+        html = client.get(page).text
+        header, footer = html.split("</header>")[0], html.split('<footer class="site-footer">')[1]
+        assert "x.com/salahmetaverse" not in header
+        link = footer.split('class="footer-x"')[1].split("</a>")[0]
+        assert 'href="https://x.com/salahmetaverse"' in link
+        assert 'target="_blank"' in link and 'rel="noopener noreferrer"' in link
+        assert 'aria-label="تابعني على X' in link and 'aria-hidden="true"' in link
+    main_part = client.get("/").text.split('<main id="main"')[1].split('<footer class="site-footer">')[0]
+    assert "salahmetaverse" not in main_part
