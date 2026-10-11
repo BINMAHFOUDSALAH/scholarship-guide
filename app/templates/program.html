@@ -86,13 +86,23 @@
   {% if program.target_universities %}
   <section class="program-section" aria-labelledby="targets-title">
     <h2 id="targets-title">الجامعات المستهدفة</h2>
-    <p class="result-note">{{ program.target_universities | length }} جامعة كما تعرضها صفحة البرنامج الرسمية. إعلان الدفعة الرابعة يذكر أكثر من 50 جامعة، والقائمة الكاملة في ملف سدايا (PDF) أدناه.</p>
+    {% if program.targets_note_ar %}<p class="result-note">{{ program.targets_note_ar }}</p>{% endif %}
+    {% set listed = program.target_universities | selectattr("id") | list %}
+    {% set unlisted = program.target_universities | rejectattr("id") | list %}
     <ul class="target-list">
-      {% for t in program.target_universities %}
-      <li>{% if t.id in explorer.universities %}{% set u = explorer.universities[t.id] %}<a href="{{ url_for('university_page', uid=t.id) }}">{{ u.name_ar or u.name_en }}</a>{% else %}<span lang="en" dir="ltr">{{ t.name_en }}</span>{% endif %}</li>
+      {% for t in listed %}
+      {% set u = explorer.universities[t.id] %}
+      <li><a href="{{ url_for('university_page', uid=t.id) }}">{{ u.name_ar or u.name_en }}</a></li>
       {% endfor %}
     </ul>
-    {% if program.targets_guide_url %}<p><a href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات المستهدفة (PDF) ↗</a></p>{% endif %}
+    {% if unlisted %}
+    <p class="uni-majors-title">ليست في قوائم الدليل الاسترشادي لبرنامج خادم الحرمين 2026–2027:</p>
+    <ul class="target-list">
+      {% for t in unlisted %}<li><span lang="en" dir="ltr">{{ t.name_en }}</span> ({{ t.country_ar }})</li>{% endfor %}
+    </ul>
+    <p class="fact-note">برنامج سدايا يشترط قرار ابتعاث من برنامج خادم الحرمين، فتأكد من الجهة الرسمية قبل أن تستهدف جامعة غير موجودة في قوائمه.</p>
+    {% endif %}
+    {% if program.targets_source %}{{ c.source_stamp([program.targets_source]) }}{% endif %}
   </section>
   {% endif %}
 

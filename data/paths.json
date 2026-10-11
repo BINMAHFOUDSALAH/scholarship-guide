@@ -329,7 +329,22 @@
         "academic_year": null,
         "status": "sourced",
         "owner_reviewed": true,
-        "note_ar": "صفحة البرنامج تعرض 28 جامعة فقط، والإعلان يذكر أكثر من 50. القائمة الكاملة في ملف الجامعات المستهدفة (PDF) من سدايا."
+        "note_ar": "القائمة الكاملة في ملف سدايا: 95 جامعة في 15 دولة (صفحة البرنامج تعرض 28 فقط)."
+      },
+      {
+        "id": "sdaia-target-list",
+        "text_ar": "الجامعات المستهدفة: 95 جامعة في 15 دولة، ضمن أفضل 50 جامعة في التخصصات المستهدفة في تصنيف THE أو QS أو Shanghai. القائمة قابلة للتغيير.",
+        "sources": [
+          {
+            "title": "قائمة الجامعات المستهدفة من سدايا (PDF)",
+            "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Documents/University-Guide.pdf"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
       },
       {
         "id": "sdaia-degrees",
@@ -427,7 +442,7 @@
         "id": "sdaia-ai",
         "name_ar": "الابتعاث في الذكاء الاصطناعي",
         "name_en": "AI Scholarship",
-        "note_ar": "الدفعة الرابعة: أكثر من 50 جامعة حسب إعلان سدايا",
+        "note_ar": "الدفعة الرابعة: 95 جامعة في 15 دولة حسب قائمة سدايا",
         "levels_ar": "بكالوريوس، ماجستير، دكتوراه",
         "for_high_school": true,
         "high_school_ar": "نعم، بعد القبول الجامعي وقرار الابتعاث",
@@ -441,32 +456,149 @@
     ],
     "target_universities": [
       {
+        "name_en": "Australian National University",
+        "id": "australian-national-university"
+      },
+      {
+        "name_en": "Beihang University",
+        "id": "beihang-university-former-buaa"
+      },
+      {
+        "name_en": "Beijing Institute of Technology",
+        "id": "beijing-institute-of-technology"
+      },
+      {
+        "name_en": "Beijing University of Posts and Telecommunications",
+        "id": null,
+        "country_ar": "الصين"
+      },
+      {
+        "name_en": "Brunel University London",
+        "id": null,
+        "country_ar": "المملكة المتحدة"
+      },
+      {
         "name_en": "California Institute of Technology",
         "id": "california-institute-of-technology-caltech"
+      },
+      {
+        "name_en": "Carnegie Mellon University",
+        "id": "carnegie-mellon-university"
+      },
+      {
+        "name_en": "City University of Hong Kong",
+        "id": "city-university-of-hong-kong"
+      },
+      {
+        "name_en": "Columbia University",
+        "id": "columbia-university"
       },
       {
         "name_en": "Cornell University",
         "id": "cornell-university"
       },
       {
+        "name_en": "Delft University of Technology",
+        "id": "delft-university-of-technology"
+      },
+      {
         "name_en": "ETH Zurich",
         "id": "eth-zurich"
+      },
+      {
+        "name_en": "Fudan University",
+        "id": "fudan-university"
+      },
+      {
+        "name_en": "Georgia Institute of Technology",
+        "id": "georgia-institute-of-technology"
+      },
+      {
+        "name_en": "Harbin Institute of Technology",
+        "id": "harbin-institute-of-technology"
       },
       {
         "name_en": "Harvard University",
         "id": "harvard-university"
       },
       {
+        "name_en": "Huazhong University of Science and Technology",
+        "id": "huazhong-university-of-science-and-technology"
+      },
+      {
         "name_en": "Imperial College London",
         "id": "imperial-college-london"
+      },
+      {
+        "name_en": "Indian Institute of Technology Bombay",
+        "id": "indian-institute-of-technology-bombay-iitb"
+      },
+      {
+        "name_en": "Indian Institute of Technology Delhi",
+        "id": "indian-institute-of-technology-delhi-iitd"
+      },
+      {
+        "name_en": "Institut Polytechnique de Paris",
+        "id": "institut-polytechnique-de-paris"
+      },
+      {
+        "name_en": "Institute of Science Tokyo",
+        "id": "institute-of-science-tokyo"
       },
       {
         "name_en": "Johns Hopkins University",
         "id": "johns-hopkins-university"
       },
       {
+        "name_en": "King's College London",
+        "id": "king-s-college-london"
+      },
+      {
+        "name_en": "Korea Advanced Institute of Science and Technology",
+        "id": "korea-advanced-institute-of-science-and-technology-kaist"
+      },
+      {
+        "name_en": "KU Leuven",
+        "id": null,
+        "country_ar": "بلجيكا"
+      },
+      {
+        "name_en": "LMU Munich",
+        "id": "ludwig-maximilians-universitat-munchen"
+      },
+      {
+        "name_en": "Macquarie University",
+        "id": "macquarie-university"
+      },
+      {
         "name_en": "Massachusetts Institute of Technology",
         "id": "massachusetts-institute-of-technology-mit"
+      },
+      {
+        "name_en": "McGill University",
+        "id": "mcgill-university"
+      },
+      {
+        "name_en": "Monash University",
+        "id": "monash-university"
+      },
+      {
+        "name_en": "Nanjing University",
+        "id": "nanjing-university"
+      },
+      {
+        "name_en": "Nanjing University of Science & Technology",
+        "id": null,
+        "country_ar": "الصين"
+      },
+      {
+        "name_en": "Nanyang Technological University, Singapore",
+        "id": "nanyang-technological-university-singapore-ntu"
+      },
+      {
+        "name_en": "National University of Defense Technology",
+        "id": null,
+        "country_ar": "الصين"
       },
       {
         "name_en": "National University of Singapore",
@@ -477,85 +609,254 @@
         "id": "new-york-university-nyu"
       },
       {
-        "name_en": "Paris Sciences et Lettres – PSL Research University Paris",
+        "name_en": "Northwestern Polytechnical University",
+        "id": null,
+        "country_ar": "الصين"
+      },
+      {
+        "name_en": "Paris Sciences et Lettres - PSL Research University Paris",
         "id": "universite-psl"
-      },
-      {
-        "name_en": "Princeton University",
-        "id": "princeton-university"
-      },
-      {
-        "name_en": "UCL",
-        "id": "ucl-university-college-london"
-      },
-      {
-        "name_en": "University of California Berkeley",
-        "id": "university-of-california-berkeley-ucb"
-      },
-      {
-        "name_en": "University of Edinburgh",
-        "id": "the-university-of-edinburgh"
-      },
-      {
-        "name_en": "University of Chicago",
-        "id": "university-of-chicago"
-      },
-      {
-        "name_en": "University of Toronto",
-        "id": "university-of-toronto"
-      },
-      {
-        "name_en": "University of Melbourne",
-        "id": "university-of-melbourne"
-      },
-      {
-        "name_en": "University of Pennsylvania",
-        "id": "university-of-pennsylvania"
-      },
-      {
-        "name_en": "University of Oxford",
-        "id": "university-of-oxford"
-      },
-      {
-        "name_en": "Yale University",
-        "id": "yale-university"
-      },
-      {
-        "name_en": "University of California Los Angeles",
-        "id": "university-of-california-los-angeles-ucla"
-      },
-      {
-        "name_en": "University of Tokyo",
-        "id": "the-university-of-tokyo"
-      },
-      {
-        "name_en": "University of Michigan Ann Arbor",
-        "id": "university-of-michigan-ann-arbor"
-      },
-      {
-        "name_en": "Columbia University",
-        "id": "columbia-university"
       },
       {
         "name_en": "Peking University",
         "id": "peking-university"
       },
       {
+        "name_en": "Politecnico di Milano",
+        "id": "politecnico-di-milano"
+      },
+      {
+        "name_en": "Princeton University",
+        "id": "princeton-university"
+      },
+      {
+        "name_en": "Purdue University, West Lafayette",
+        "id": "purdue-university"
+      },
+      {
+        "name_en": "Seoul National University",
+        "id": "seoul-national-university"
+      },
+      {
+        "name_en": "Shanghai Jiao Tong University",
+        "id": "shanghai-jiao-tong-university"
+      },
+      {
+        "name_en": "Sichuan University",
+        "id": "sichuan-university"
+      },
+      {
+        "name_en": "South China University of Technology",
+        "id": "south-china-university-of-technology"
+      },
+      {
+        "name_en": "Southeast University",
+        "id": "southeast-university"
+      },
+      {
+        "name_en": "Southern University of Science and Technology",
+        "id": "southern-university-of-science-and-technology"
+      },
+      {
         "name_en": "Stanford University",
         "id": "stanford-university"
+      },
+      {
+        "name_en": "Sun Yat-sen University",
+        "id": "sun-yat-sen-university"
+      },
+      {
+        "name_en": "Swinburne University of Technology",
+        "id": null,
+        "country_ar": "أستراليا"
+      },
+      {
+        "name_en": "Technical University of Munich",
+        "id": "technical-university-of-munich"
+      },
+      {
+        "name_en": "The Chinese University of Hong Kong",
+        "id": "the-chinese-university-of-hong-kong-cuhk"
+      },
+      {
+        "name_en": "The Hong Kong Polytechnic University",
+        "id": "the-hong-kong-polytechnic-university"
+      },
+      {
+        "name_en": "The Hong Kong University of Science and Technology",
+        "id": "the-hong-kong-university-of-science-and-technology"
+      },
+      {
+        "name_en": "The University of Hong Kong",
+        "id": "the-university-of-hong-kong"
+      },
+      {
+        "name_en": "The University of Manchester",
+        "id": "university-of-manchester"
+      },
+      {
+        "name_en": "The University of New South Wales",
+        "id": "the-university-of-new-south-wales-unsw-sydney"
+      },
+      {
+        "name_en": "The University of Tennessee, Knoxville",
+        "id": null,
+        "country_ar": "الولايات المتحدة"
+      },
+      {
+        "name_en": "The University of Tokyo",
+        "id": "the-university-of-tokyo"
+      },
+      {
+        "name_en": "Tongji University",
+        "id": "tongji-university"
       },
       {
         "name_en": "Tsinghua University",
         "id": "tsinghua-university"
       },
       {
+        "name_en": "University College London",
+        "id": "ucl-university-college-london"
+      },
+      {
+        "name_en": "University of Alberta",
+        "id": "university-of-alberta"
+      },
+      {
+        "name_en": "University of British Columbia",
+        "id": "university-of-british-columbia"
+      },
+      {
+        "name_en": "University of California, Berkeley",
+        "id": "university-of-california-berkeley-ucb"
+      },
+      {
+        "name_en": "University of California, Los Angeles",
+        "id": "university-of-california-los-angeles-ucla"
+      },
+      {
+        "name_en": "University of California, San Diego",
+        "id": "university-of-california-san-diego-ucsd"
+      },
+      {
         "name_en": "University of Cambridge",
         "id": "university-of-cambridge"
+      },
+      {
+        "name_en": "University of Chicago",
+        "id": "university-of-chicago"
+      },
+      {
+        "name_en": "University of Edinburgh",
+        "id": "the-university-of-edinburgh"
+      },
+      {
+        "name_en": "University of Electronic Science and Technology of China",
+        "id": "university-of-electronic-science-and-technology-of-china"
+      },
+      {
+        "name_en": "University of Illinois Urbana-Champaign",
+        "id": "university-of-illinois-at-urbana-champaign"
+      },
+      {
+        "name_en": "University of Melbourne",
+        "id": "university-of-melbourne"
+      },
+      {
+        "name_en": "University of Michigan-Ann Arbor",
+        "id": "university-of-michigan-ann-arbor"
+      },
+      {
+        "name_en": "University of Montreal",
+        "id": "universite-de-montreal"
+      },
+      {
+        "name_en": "University of Oxford",
+        "id": "university-of-oxford"
+      },
+      {
+        "name_en": "University of Pennsylvania",
+        "id": "university-of-pennsylvania"
+      },
+      {
+        "name_en": "University of Science and Technology of China",
+        "id": "university-of-science-and-technology-of-china"
+      },
+      {
+        "name_en": "University of Southern California",
+        "id": "university-of-southern-california"
+      },
+      {
+        "name_en": "University of Sydney",
+        "id": "the-university-of-sydney"
+      },
+      {
+        "name_en": "University of Technology Sydney",
+        "id": null,
+        "country_ar": "أستراليا"
+      },
+      {
+        "name_en": "University of Texas at Austin",
+        "id": "university-of-texas-at-austin"
+      },
+      {
+        "name_en": "University of Toronto",
+        "id": "university-of-toronto"
+      },
+      {
+        "name_en": "University of Washington",
+        "id": "university-of-washington"
+      },
+      {
+        "name_en": "University of Waterloo",
+        "id": "university-of-waterloo"
+      },
+      {
+        "name_en": "Victoria University of Wellington",
+        "id": null,
+        "country_ar": "نيوزيلندا"
+      },
+      {
+        "name_en": "Virginia Polytechnic Institute and State University",
+        "id": "virginia-polytechnic-institute-and-state-university"
+      },
+      {
+        "name_en": "Wuhan University",
+        "id": "wuhan-university"
+      },
+      {
+        "name_en": "Xi'an Jiaotong University",
+        "id": "xian-jiaotong-university"
+      },
+      {
+        "name_en": "Xidian University",
+        "id": null,
+        "country_ar": "الصين"
+      },
+      {
+        "name_en": "Yale University",
+        "id": "yale-university"
+      },
+      {
+        "name_en": "Zhejiang University",
+        "id": "zhejiang-university"
+      },
+      {
+        "name_en": "École Polytechnique Fédérale de Lausanne",
+        "id": "epfl"
       }
     ],
     "not_standalone_ar": "انتبه: هذا ليس ابتعاثًا تتقدم عليه وحده. يشترط أن يكون لديك قبول نهائي غير مشروط من جامعة في قائمة سدايا، وقرار ابتعاث من برنامج خادم الحرمين الشريفين في تخصص من تخصصاته. من دونهما لا يُقبل طلبك.",
     "social_url": "https://x.com/SDAIA_SA/status/2107816249824621004",
-    "social_label_ar": "إعلان سدايا على X (7 أكتوبر 2026)"
+    "social_label_ar": "إعلان سدايا على X (7 أكتوبر 2026)",
+    "targets_source": {
+      "title": "الدليل الاسترشادي للجامعات المستهدفة لبرنامج سدايا للابتعاث في الذكاء الاصطناعي (PDF)",
+      "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Documents/University-Guide.pdf",
+      "retrieved": "2026-10-11"
+    },
+    "targets_note_ar": "95 جامعة في 15 دولة حسب ملف سدايا الرسمي. اختيرت لأنها ضمن أفضل 50 جامعة في التخصصات المستهدفة في واحد على الأقل من تصنيفات THE وQS وShanghai، والقائمة قابلة للتغيير.",
+    "target_label_ar": "مستهدفة في سدايا (الذكاء الاصطناعي)"
   },
   {
     "id": "aramco-cdpne",

@@ -15,6 +15,11 @@
 {% if l.bachelors_only_majors %}<span class="note-chip">بكالوريوس في تخصصات محددة</span>{% endif %}
 {% endmacro %}
 
+{# Extra programs that target this university (e.g. SDAIA's AI scholarship). #}
+{% macro target_chips(u) %}
+{% for pid in explorer.targets_of.get(u.id, []) %}<span class="note-chip">{{ explorer.target_programs[pid].label_ar }}</span>{% endfor %}
+{% endmacro %}
+
 {# The university's next deadline, from its researched requirements (if any). #}
 {% macro next_deadline(u) %}
 {% set d = explorer.next_deadline(u.id) %}

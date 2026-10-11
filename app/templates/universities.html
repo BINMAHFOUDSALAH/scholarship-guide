@@ -66,6 +66,18 @@
         </select>
       </div>
 
+      {% if explorer.target_programs %}
+      <div class="explorer-filter">
+        <label for="target">برامج إضافية</label>
+        <select id="target" name="target">
+          <option value="">كل الجامعات</option>
+          {% for pid, t in explorer.target_programs.items() %}
+          <option value="{{ pid }}"{% if r.target == pid %} selected{% endif %}>{{ t.label_ar }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% endif %}
+
       <button class="explorer-submit" type="submit">ابحث</button>
     </div>
   </form>

@@ -174,10 +174,10 @@ def program_page(request: Request, slug: str):
 
 @app.get("/universities", response_class=HTMLResponse)
 def universities_page(request: Request, q: str = "", track: str = "", field: str = "",
-                      country: str = "", lang: str = "", partial: bool = False):
+                      country: str = "", lang: str = "", target: str = "", partial: bool = False):
     # Search runs on the server, so the page works without JavaScript; universities.js asks for
     # partial=1 to swap in just the results as the student types.
-    result = explorer.search(q=q[:100], track=track, field=field, country=country, language=lang)
+    result = explorer.search(q=q[:100], track=track, field=field, country=country, language=lang, target=target)
     context = {"result": result, "explorer": explorer}
     template = "partials/uni_results.html" if partial else "universities.html"
     return templates.TemplateResponse(request, template, context)

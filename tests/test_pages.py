@@ -320,8 +320,12 @@ def test_sdaia_program_page_and_targets():
     assert "قرار ابتعاث" in html
     assert "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx" in html
     sdaia = main.paths_by_id["sdaia-ai-scholarship"]
+    assert len(sdaia["target_universities"]) == 95
     for target in sdaia["target_universities"]:
-        assert target["id"] in main.explorer.universities, target
+        if target["id"] is None:
+            assert target["country_ar"], target  # not in the King lists: shown with its country
+        else:
+            assert target["id"] in main.explorer.universities, target
     assert "مستهدفة في" in client.get("/universities/the-university-of-edinburgh").text
 
 
@@ -342,3 +346,11 @@ def test_news_can_point_to_our_own_explainer():
 
 def test_scholarship_links_its_official_x_account():
     assert "https://x.com/SA_Scholarships" in client.get("/").text
+
+
+def test_footer_has_no_raw_sitemap_link_or_signup_promise():
+    footer = client.get("/").text.split('<footer class="site-footer">')[1]
+    assert "/sitemap.xml" not in footer  # the XML file is for search engines, not people
+    assert "بدون تسجيل" not in footer
+    assert client.get("/sitemap.xml").status_code == 200
+

@@ -1473,7 +1473,7 @@ main:has(> .hero) {
 
 @media (min-width: 900px) {
   .explorer-filters {
-    grid-template-columns: repeat(4, 1fr) auto;
+    grid-template-columns: repeat(5, 1fr) auto;
   }
 }
 

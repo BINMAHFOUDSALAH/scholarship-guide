@@ -70,6 +70,16 @@ class Explorer:
             if d.get("id") in self.universities:
                 self.details[d["id"]] = d
 
+        # Programs with their own list of target universities (e.g. SDAIA's AI scholarship), for the filter.
+        self.target_programs = {}
+        self.targets_of = {}
+        for path in _load("paths.json", []):
+            ids = {t["id"] for t in path.get("target_universities", []) if t.get("id")}
+            if ids:
+                self.target_programs[path["id"]] = {"label_ar": path.get("target_label_ar") or path["name_ar"], "ids": ids}
+                for uid in ids:
+                    self.targets_of.setdefault(uid, []).append(path["id"])
+
         # Every major once per (track, field), with a search key in both languages.
         self.majors = []
         for (track, fid), f in self.fields.items():
@@ -113,7 +123,9 @@ class Explorer:
         exact = [m for m in self.majors if nq in (normalize(m["name_ar"]), normalize(m["name_en"]))]
         return exact or [m for m in self.majors if nq in m["key"]]
 
-    def _keep(self, u, country, language):
+    def _keep(self, u, country, language, target=""):
+        if target and u["id"] not in self.target_programs[target]["ids"]:
+            return False
         if country and u["country"] != country:
             return False
         if language == "english" and not u["country_info"]["english"]:
@@ -122,7 +134,7 @@ class Explorer:
             return False
         return True
 
-    def search(self, q="", track="", field="", country="", language=""):
+    def search(self, q="", track="", field="", country="", language="", target=""):
         """Return a dict describing what to show: a mode and sections of rows.
 
         - major mode: q names a major → الرواد (all majors) + the ranked list of the major's field
@@ -132,9 +144,10 @@ class Explorer:
         """
         q = (q or "").strip()
         track = track if track in TRACKS else ""
-        keep = lambda u: self._keep(u, country, language)  # noqa: E731
+        target = target if target in self.target_programs else ""
+        keep = lambda u: self._keep(u, country, language, target)  # noqa: E731
         result = {"q": q, "track": track, "field": field, "country": country, "language": language,
-                  "mode": "browse", "sections": [], "majors": []}
+                  "target": target, "mode": "browse", "sections": [], "majors": []}
 
         majors = self.matching_majors(q) if q else []
         name_hits = [u for u in self.universities.values() if q and normalize(q) in u["search_key"]]

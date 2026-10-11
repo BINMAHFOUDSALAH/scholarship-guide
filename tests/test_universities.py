@@ -197,3 +197,15 @@ def test_next_deadline_skips_past_dates():
         pytest.skip("no dated items")
     assert ex.next_deadline(uid, today="2000-01-01")["date"] == dated[0]
     assert ex.next_deadline(uid, today="2999-01-01") is None
+
+
+def test_filter_by_sdaia_targets():
+    """A student into AI can keep only universities that are on SDAIA's list too."""
+    r = ex.search(q="الذكاء الاصطناعي", target="sdaia-ai-scholarship")
+    ids = ex.target_programs["sdaia-ai-scholarship"]["ids"]
+    rows = [u for s in r["sections"] for _, u in s.get("rows", [])]
+    assert rows and all(u["id"] in ids for u in rows)
+    assert ex.search(target="not-a-program")["target"] == ""
+    html = client.get("/universities?target=sdaia-ai-scholarship").text
+    assert 'value="sdaia-ai-scholarship" selected' in html
+
