@@ -11,8 +11,8 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. Then Stage 1e step 3 (grade-page task lists) and step 4 (FAQ from real student questions).
 > 5. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
 >
-> Also done 2026-10-11 (decision 031): official X accounts as sources (@SA_Scholarships, @SDAIA_SA), SDAIA open (cohort 4) with a 'not standalone' warning, next deadline per university in the explorer.
-> Owner to-dos still open: review the fact-check tables (§5 of each research file), send a post that states الرواد's 15 Nov end date and one for إمداد closing, review the 15 least-certain Arabic university names, optionally export the Telegram group (JSON) for the FAQ step.
+> Also done 2026-10-11: official X accounts as sources (@SA_Scholarships, @SDAIA_SA), SDAIA open (cohort 4) with a 'not standalone' warning, next deadline per university (decision 031); SDAIA's full list of 95 universities from its PDF, the explorer's «برامج إضافية» filter, leaner footer without the raw sitemap link (decision 032). Last commit: `beba8ce`, 171 tests.
+> Owner to-dos still open: review the fact-check tables (§5 of each research file), send a post that states الرواد's 15 Nov end date and one for إمداد closing, review the 15 least-certain Arabic university names (`docs/research/arabic-names-to-check.md`), optionally export the Telegram group (JSON) for the FAQ step.
 
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
 **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
@@ -86,6 +86,7 @@ Order chosen by the owner: facts first, then layout.
 - [ ] Owner verifies (checklist at the bottom of that file)
 
 ## Stage 2: Universities explorer + content model (headline of Launch 1)
+- [x] **Shipped 2026-10-11** (decisions 029–032): extraction script → `data/universities.json` (290 universities, all track/field lists, majors, notes), `/universities` (search by university or major, filters incl. SDAIA targets), `/universities/<id>`, `/api/universities`, requirements for the 30 الرواد universities, Arabic names. Still open below: requirements for إمداد universities, Pydantic models, shared resources beyond IELTS.
 Teaches data extraction, data modeling + validation (Pydantic), a JSON API, and client-side search.
 - Spec first: `docs/specs/universities-explorer.md`.
 - Extraction script `scripts/extract_universities.py` (needs a PDF library, ask before installing) → `data/universities.json`: `name_ar`, `name_en`, country, rank per track (الرواد / إمداد), rank per field/major, source = the MoE guide PDF, `last_checked`. Re-run when the new edition comes out (Dec 2026 / Jan 2027). The owner spot-checks a sample against the PDF.

@@ -218,8 +218,8 @@ What we built in واضح, why, how it works, and how to talk about it. Updated 
 - server-side search with progressive enhancement (works without JavaScript)
 - computing a status from today's date instead of editing it by hand
 - delegating research to cheaper parallel agents and validating their output
-**Decisions:** 029, 030.
-**Tested:** 133 pytest tests (lists, notes, Arabic names, requirement-file schema, search modes, pages, API, deadlines, the واعد toggle, SDAIA); browser checks on desktop and phone.
+**Decisions:** 029–032 (later the same day: official X posts as sources, SDAIA's full list of 95 universities from its PDF, the «برامج إضافية» filter, the next deadline per university).
+**Tested:** 171 pytest tests by the end of the day (133 when this entry was first written) (lists, notes, Arabic names, requirement-file schema, search modes, pages, API, deadlines, the واعد toggle, SDAIA); browser checks on desktop and phone.
 **Limits:**
 - the Arabic university names are our translation
 - some requirement values need a hand check: Michigan and Columbia pages blocked the agent, and some years are inferred
