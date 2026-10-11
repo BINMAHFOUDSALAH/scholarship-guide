@@ -32,7 +32,6 @@
   --control-border: #4f5a54; /* inputs and selects: ≥ 3:1 against the page (WCAG 1.4.11) */
   --lime: #d8ed9b;           /* "open now" and "your next step" only. Never small text. */
   --on-lime: #101713;
-  --logo-deep: #184b3a;      /* mountain body in the logo */
   --amber: #774c0c;          /* restrictions and "not open yet" (darkened for contrast on tints) */
   --sea: #1d6470;            /* Red Sea path accent */
   --band: #184b3a;           /* the Tuwaiq band background */
@@ -80,7 +79,6 @@
   --control-border: #8a968f;
   --lime: #d8ed9b;
   --on-lime: #101713;
-  --logo-deep: #4e9a79;
   --amber: #e0b26a;
   --sea: #6cc3cf;
   --band: #16211c;
@@ -275,8 +273,8 @@ main:has(> .hero) {
 }
 
 .brand-mark {
-  width: 58px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
 }
 
@@ -2780,8 +2778,8 @@ a.uni-name:hover .uni-name-en:only-child {
 
 @media (max-width: 379px) {
   .brand-mark {
-    width: 44px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
   }
 
   .brand-name {

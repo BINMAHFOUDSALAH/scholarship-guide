@@ -72,7 +72,7 @@ Newest entries go at the bottom. When a decision changes, add a new entry instea
 **Alternatives:** An embedded YouTube player; a photo of the Crown Prince; quoting from memory.
 **Why:** An embed loads third-party trackers. A portrait on an unofficial site could suggest government endorsement. Famous quotes are often misquoted, so the exact wording, date, and video come from an official source checked by the owner. The photo must be freely licensed and credited.
 
-## 012 — Logo: the Mount Tuwaiq cliff
+## 012 — Logo: the Mount Tuwaiq cliff (superseded by 036)
 **Date:** 2026-10-09
 **Decision:** The logo is a long ramp rising to a sharp cliff face, Mount Tuwaiq's escarpment, with the cliff in lime and two thin rock-layer lines. It is drawn as inline SVG in the header, with a simplified version as `app/static/favicon.svg`. This is the one allowed use of lime outside "الخطوة التالية" (the next step): the lit cliff is "the side you climb."
 **Alternatives:** A generic pointed peak (closer to the first AI concept image, but a very common logo shape); the earlier abstract path-line mark; a cliff combined with a path line.
@@ -328,3 +328,36 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - The most useful tool, the explorer, wasn't reachable from the hero.
 - The explorer hid which filters were on, and its numbers and dates were easy to misread.
 - Expert guidance (NN/g homepage and visual-design principles, Baymard and the MOJ pattern on applied filters, WCAG 2.2, the GOV.UK patterns) points the same way. Details, sources, and their limits (search summaries only, no user testing yet): `docs/research/ux-redesign-2026-10.md`.
+
+## 036 — Logo: the ض mark (supersedes 012); the owner's X link in the footer
+**Date:** 2026-10-11
+**Decision:**
+- **Logo.**
+  - The mark is the letter **ص from Noto Naskh Arabic Bold** (the font we already self-host, OFL licence), with its dot redrawn as a **lime diamond**, on a **forest tile** (`#184b3a`, ivory letter, lime diamond).
+  - The tile keeps the lime visible on ivory and makes the mark read as a logo, not a stray letter beside «واضح».
+  - The wordmark stays as real text (Naskh), so it stays readable and searchable.
+  - One drawing, used in three places:
+    - inline in `base.html`'s header (42px; 36px under 380px)
+    - `app/static/favicon.svg`
+    - the share image (`scripts/og-image.js` draws `favicon.svg`; `og-image.png` regenerated)
+  - The glyph outline was copied once with fonttools in a throwaway environment; it isn't a project dependency.
+  - The unused `--logo-deep` token is removed. The Tuwaiq drawing stays in the share image's horizon and in the Tuwaiq band.
+- **Footer:** a small X icon (the X logo, inline SVG) links to the owner's account `@salahmetaverse`.
+  - It is in the global footer only, never in the nav or page content.
+  - It opens in a new tab with `rel="noopener noreferrer"`.
+  - Its label is «تابعني على X».
+
+**Alternatives:** see `docs/research/` and the 8-concept sheet (2026-10-11):
+- Najdi stepped parapet (podium look)
+- geometric palm (too close to the state emblem)
+- و lens; ح path (read as a Latin C)
+- Najdi window (looked like a warning sign)
+- horizon line (read as ÷)
+- a refined Tuwaiq cliff (the safe option)
+- a hand-drawn ص (would not match the approved sketch)
+
+**Why:**
+- The name itself becomes the identity, with no added symbol.
+- The lime dot keeps the site's one meaning for lime ("your next step").
+- The drawing stays legible at 16px.
+- It is the most Arabic and least forced of the concepts. The owner chose it.

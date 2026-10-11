@@ -473,3 +473,14 @@ def test_owner_x_link_is_in_the_footer_only():
         assert 'aria-label="تابعني على X' in link and 'aria-hidden="true"' in link
     main_part = client.get("/").text.split('<main id="main"')[1].split('<footer class="site-footer">')[0]
     assert "salahmetaverse" not in main_part
+
+
+def test_logo_mark_is_the_same_in_the_header_and_the_favicon():
+    """Decision 036: one drawing (ض with a lime diamond dot on a forest tile) in the header and favicon.svg."""
+    header = client.get("/about").text.split("</header>")[0]
+    favicon = client.get("/static/favicon.svg").text
+    mark = header.split('<svg class="brand-mark"')[1].split("</svg>")[0]
+    for colour in ("#184b3a", "#f6f4ee", "#d8ed9b"):
+        assert colour in mark and colour in favicon
+    glyph = mark.split('<path d="')[1].split('"')[0]
+    assert glyph in favicon
