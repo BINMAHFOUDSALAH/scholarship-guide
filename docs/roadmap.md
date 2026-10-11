@@ -11,7 +11,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. Then Stage 1e step 3 (grade-page task lists) and step 4 (FAQ from real student questions).
 > 5. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
 >
-> Also done 2026-10-11: official X accounts as sources (@SA_Scholarships, @SDAIA_SA), SDAIA open (cohort 4) with a 'not standalone' warning, next deadline per university (decision 031); SDAIA's full list of 95 universities from its PDF, the explorer's «برامج إضافية» filter, leaner footer without the raw sitemap link (decision 032). Last commit: `beba8ce`, 171 tests.
+> Also done 2026-10-11: official X accounts as sources (@SA_Scholarships, @SDAIA_SA), SDAIA open (cohort 4) with a 'not standalone' warning, next deadline per university (decision 031); SDAIA's full list of 95 universities from its PDF, the explorer's «برامج إضافية» filter, leaner footer without the raw sitemap link (decision 032); news as a status board + /news page, video ends on our cover, «طريقتنا» footer column removed, SDAIA logo (decision 033); explorer: majors by field on university pages, own suggestions panel, واعد in «المسار», SDAIA filter removed (decision 034). 177 tests.
 > Owner to-dos still open: review the fact-check tables (§5 of each research file), send a post that states الرواد's 15 Nov end date and one for إمداد closing, review the 15 least-certain Arabic university names (`docs/research/arabic-names-to-check.md`), optionally export the Telegram group (JSON) for the FAQ step.
 
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.

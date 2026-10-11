@@ -75,12 +75,6 @@ paths_by_id = {path["id"]: path for path in paths}
 explorer = Explorer()
 waaid_data = load_json("waaid_programs.json")
 
-# Which programs target which universities (e.g. SDAIA's AI scholarship), for the university pages.
-program_targets = {}
-for path in paths:
-    for target in path.get("target_universities", []):
-        program_targets.setdefault(target["id"], []).append(path)
-
 
 def waaid():
     """The latest واعد programs, newest first, each marked open or closed for today."""
@@ -91,6 +85,66 @@ def waaid():
     ]
     return {"programs": programs, "any_open": any(p["is_open"] for p in programs),
             "source_url": waaid_data["source_url"]}
+
+
+# How long a closed program stays in «فُتح وأُغلق مؤخرًا» before it drops out of the board.
+RECENT_DAYS = 120
+
+
+def status_board():
+    """The news board, built from the data that already holds each status (decision 033):
+    - open: tracks open today (soonest deadline first) and واعد programs open today
+    - waiting: tracks closed until further notice or not open yet, and واعد programs opening later
+    - recent: واعد programs and dated tracks that closed in the last RECENT_DAYS days (newest first)
+    Nothing is typed twice: a status lives in paths.json / waaid_programs.json and shows up here.
+    """
+    today = date.today()
+    iso = today.isoformat()
+    pages = set(program_slugs())
+    groups = {"open": [], "waiting": [], "recent": []}
+
+    for path in paths:
+        page = f"/programs/{path['id']}" if path["id"] in pages else None
+        for track in path["tracks"]:
+            confirmed = track.get("status_source") or track.get("owner_confirmed")
+            if track.get("for_high_school") is False or track.get("latest_programs") or not confirmed:
+                continue
+            status = track_status(track)
+            if not status:
+                continue
+            item = {
+                "title_ar": track["name_ar"] if len(path["tracks"]) > 1 else path["name_ar"],
+                "program_ar": path["name_ar"] if len(path["tracks"]) > 1 else path["provider_ar"],
+                "status": status, "page": page, "source_url": track.get("status_source"),
+                "until": track.get("status_until") if status == "open" else None,
+            }
+            until = track.get("status_until")
+            if status == "open":
+                groups["open"].append(item)
+            elif track.get("status") == "open" and until and until < iso:
+                item["closed_on"] = until  # closed by its own deadline
+                recent = (today - date.fromisoformat(until)).days <= RECENT_DAYS
+                groups["recent" if recent else "waiting"].append(item)
+            else:
+                groups["waiting"].append(item)
+
+    w = waaid()
+    for p in w["programs"]:
+        item = {
+            "title_ar": p["program_ar"], "program_ar": f"مسار واعد · {p['company_ar']}",
+            "page": "/programs/custodian-scholarship#waaid-latest", "source_url": w["source_url"],
+            "for_high_school": p["for_high_school"],
+        }
+        if p["is_open"]:
+            groups["open"].append({**item, "status": "open", "until": p["apply_to"]})
+        elif p["apply_from"] > iso:
+            groups["waiting"].append({**item, "status": "not_open", "opens": p["apply_from"]})
+        elif (today - date.fromisoformat(p["apply_to"])).days <= RECENT_DAYS:
+            groups["recent"].append({**item, "status": "closed", "closed_on": p["apply_to"]})
+
+    groups["open"].sort(key=lambda i: (i.get("until") is None, i.get("until") or ""))
+    groups["recent"].sort(key=lambda i: i["closed_on"], reverse=True)
+    return groups
 
 
 def track_status(track):
@@ -115,6 +169,7 @@ templates.env.globals["site"] = site
 templates.env.globals["show_drafts"] = SHOW_DRAFTS
 templates.env.globals["track_status_labels"] = TRACK_STATUS_LABELS
 templates.env.globals["tracks"] = TRACKS
+explorer.waaid = waaid  # the explorer lists واعد programs from the same data as the homepage
 templates.env.globals["waaid"] = waaid
 templates.env.globals["track_status"] = track_status
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
@@ -130,13 +185,20 @@ def home(request: Request):
         {
             "paths": paths,
             "tests": tests,
-            "news": news[:3],
+            "board": status_board(),
             "home": home_text,
             "path_names": path_names,
             "quote": featured_quote if show_quote else None,
             "program_pages": program_slugs(),
         },
     )
+
+
+@app.get("/news", response_class=HTMLResponse)
+def news_page(request: Request):
+    # Everything on the board (no limits) plus the announcements from data/news.json.
+    return templates.TemplateResponse(request, "news.html",
+                                      {"board": status_board(), "announcements": news, "path_names": path_names})
 
 
 @app.get("/about", response_class=HTMLResponse)
@@ -174,10 +236,10 @@ def program_page(request: Request, slug: str):
 
 @app.get("/universities", response_class=HTMLResponse)
 def universities_page(request: Request, q: str = "", track: str = "", field: str = "",
-                      country: str = "", lang: str = "", target: str = "", partial: bool = False):
+                      country: str = "", lang: str = "", partial: bool = False):
     # Search runs on the server, so the page works without JavaScript; universities.js asks for
     # partial=1 to swap in just the results as the student types.
-    result = explorer.search(q=q[:100], track=track, field=field, country=country, language=lang, target=target)
+    result = explorer.search(q=q[:100], track=track, field=field, country=country, language=lang)
     context = {"result": result, "explorer": explorer}
     template = "partials/uni_results.html" if partial else "universities.html"
     return templates.TemplateResponse(request, template, context)
@@ -189,8 +251,13 @@ def university_page(request: Request, uid: str):
     if profile is None:
         raise HTTPException(status_code=404)
     return templates.TemplateResponse(request, "university.html",
-                                      {"p": profile, "explorer": explorer, "program_targets": program_targets,
-                                       "today": date.today().isoformat()})
+                                      {"p": profile, "explorer": explorer, "today": date.today().isoformat()})
+
+
+@app.get("/api/suggestions")
+def suggestions_api():
+    # Majors grouped by field + university names, loaded by the search box the first time it's used.
+    return JSONResponse(explorer.suggestions())
 
 
 @app.get("/api/universities")
@@ -209,7 +276,7 @@ def robots():
 def sitemap():
     # The list of public pages for search engines. Grade and program pages come from content/.
     page_paths = (
-        ["/", "/about"]
+        ["/", "/about", "/news"]
         + [f"/grades/{slug}" for slug in list_slugs("grades")]
         + [f"/programs/{slug}" for slug in program_slugs()]
         + [f"/resources/{slug}" for slug in list_slugs("resources")]

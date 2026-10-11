@@ -51,7 +51,7 @@ def test_program_logos_are_official_and_self_hosted():
         if logo is None:
             continue
         assert logo["alt_ar"], path["id"]
-        assert logo["source_url"].startswith("https://sites.moe.gov.sa/"), path["id"]
+        assert logo["source_url"].startswith(("https://sites.moe.gov.sa/", "https://sdaia.gov.sa/")), path["id"]
         assert ISO_DATE.match(logo["retrieved"]), path["id"]
         for size in ("500", "960"):
             assert (STATIC / f"{logo['file']}-{size}.png").is_file(), path["id"]

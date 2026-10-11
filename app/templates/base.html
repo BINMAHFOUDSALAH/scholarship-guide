@@ -41,7 +41,7 @@
     ("حسب صفك", url_for('home') ~ "#grades"),
     ("البرامج", url_for('home') ~ "#programs"),
     ("الجامعات", url_for('universities_page')),
-    ("المستجدات", url_for('home') ~ "#news"),
+    ("المستجدات", url_for('news_page')),
     ("عن الدليل", url_for('about')),
   ] %}
 
@@ -103,10 +103,6 @@
         <p class="footer-title">الدليل</p>
         {% for label, href in nav_links %}<a href="{{ href }}">{{ label }}</a>{% endfor %}
       </nav>
-      <div class="footer-links">
-        <p class="footer-title">طريقتنا</p>
-        <a href="{{ url_for('about') }}">كيف نتحقق من المعلومات</a>
-      </div>
     </div>
   </footer>
   {% block scripts %}{% endblock %}

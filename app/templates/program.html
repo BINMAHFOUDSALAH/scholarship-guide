@@ -8,7 +8,7 @@
 <article class="program theme-{{ program.theme }}">
   <header class="program-header measure">
     {% if program.logo %}
-    <img class="program-logo" src="{{ url_for('static', path=program.logo.file ~ '-500.png') }}"
+    <img class="program-logo{% if program.logo.plate == 'dark' %} program-logo--dark{% endif %}" src="{{ url_for('static', path=program.logo.file ~ '-500.png') }}"
          width="{{ program.logo.width // 2 }}" height="{{ program.logo.height // 2 }}" alt="{{ program.logo.alt_ar }}">
     {% endif %}
     <h1>{{ program.name_ar }}</h1>

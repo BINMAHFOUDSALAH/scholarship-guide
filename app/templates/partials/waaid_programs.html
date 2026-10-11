@@ -3,7 +3,7 @@
 {% set w = waaid() %}
 {% if w.programs %}
 {% set latest = w.programs[0] %}
-<details class="waaid-latest">
+<details class="waaid-latest" id="waaid-latest">
   <summary>
     <span class="waaid-summary-title">آخر برامج مسار واعد ({{ w.programs | length }})</span>
     <span class="waaid-summary-note">{% if w.any_open %}يوجد برنامج مفتوح الآن{% else %}آخرها: {{ latest.company_ar }}، أُغلق في {{ latest.apply_to | arabic_date }}{% endif %}</span>

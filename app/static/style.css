@@ -667,6 +667,123 @@ main:has(> .hero) {
   }
 }
 
+/* ---------- News board (decision 033) ---------- */
+
+.board {
+  display: grid;
+  border-top: 1px solid var(--line-strong);
+}
+
+.board-group {
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.board-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-1);
+}
+
+.board-group--open .board-title::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 2px var(--heading);
+}
+
+.board-count {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+.board-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.board-item {
+  padding-block-end: var(--space-3);
+  border-bottom: 1px dashed var(--line);
+}
+
+.board-item:last-child {
+  border-bottom: 0;
+  padding-block-end: 0;
+}
+
+.board-name {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.board-program,
+.board-when,
+.board-empty {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.board-when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin-block-start: var(--space-1);
+}
+
+.board-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: var(--space-1) 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.board-more {
+  margin: var(--space-3) 0 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.board-list--plain {
+  padding-block: var(--space-3);
+}
+
+@media (min-width: 900px) {
+  .board {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .board-group {
+    padding-inline: var(--space-4);
+    border-bottom: 0;
+  }
+
+  .board-group:first-child {
+    padding-inline-start: 0;
+  }
+
+  .board-group + .board-group {
+    border-inline-start: 1px solid var(--line);
+  }
+}
+
+.news-page {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
 /* Status chips and labels: color = meaning. Lime marks what's open now. */
 .chip,
 .status {
@@ -769,6 +886,13 @@ main:has(> .hero) {
   border: 1px solid var(--line);
   border-radius: 10px;
   background: #ffffff;
+}
+
+/* A logo that's white on its owner's dark background (e.g. SDAIA) keeps that background. */
+.path-logo--dark,
+.program-logo--dark {
+  border-color: transparent;
+  background: #0d0e58;
 }
 
 .path-logo img {
@@ -1473,7 +1597,7 @@ main:has(> .hero) {
 
 @media (min-width: 900px) {
   .explorer-filters {
-    grid-template-columns: repeat(5, 1fr) auto;
+    grid-template-columns: repeat(4, 1fr) auto;
   }
 }
 
@@ -1903,6 +2027,143 @@ a.uni-name:hover .uni-name-en:only-child {
   font-size: 0.9rem;
 }
 
+/* Search suggestions: our own panel (the browser's list can't be styled and scrolls too fast). */
+.explorer-search {
+  position: relative;
+}
+
+.suggest {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 4px);
+  z-index: 20;
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  overscroll-behavior: contain;  /* scrolling the list never scrolls the page behind it */
+  scroll-behavior: smooth;
+  padding-block: var(--space-1);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  box-shadow: 0 10px 30px rgba(16, 23, 19, 0.16);
+}
+
+.suggest-group {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  background: var(--surface-strong);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.suggest-option {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 10px var(--space-3);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.suggest-option small {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  text-align: end;  /* dir="ltr": sits on the right, under the Arabic name */
+}
+
+.suggest-option[aria-selected="true"],
+.suggest-option:hover {
+  background: color-mix(in srgb, var(--heading) 9%, var(--surface-strong));
+}
+
+.suggest-empty {
+  margin: 0;
+  padding: var(--space-3);
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+/* University page: one block per field (rank + majors), no clicking needed. */
+.field-blocks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.field-block {
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.field-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin-block-end: var(--space-2);
+}
+
+.field-rank {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--heading) 10%, var(--paper));
+  color: var(--heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.field-rank-label {
+  font-size: 0.75rem;
+}
+
+.field-name {
+  flex: 1;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.field-block .major-list {
+  columns: 1;
+}
+
+@media (min-width: 700px) {
+  .field-block .major-list {
+    columns: 2;
+    column-gap: var(--space-5);
+  }
+}
+
+.major-list--only {
+  font-weight: 700;
+}
+
+.more-majors summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--heading);
+}
+
+.field-src {
+  margin: var(--space-2) 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.waaid-list--results {
+  padding: 0;
+}
+
 .credits {
   padding-inline-start: var(--space-4);
   font-size: 0.9rem;
@@ -1969,7 +2230,7 @@ a.uni-name:hover .uni-name-en:only-child {
 
 @media (min-width: 800px) {
   .footer-grid {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
   }
 }
 

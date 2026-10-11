@@ -306,6 +306,17 @@
     "id": "sdaia-ai-scholarship",
     "theme": "world",
     "photo": null,
+    "logo": {
+      "file": "img/programs/sdaia-logo",
+      "width": 960,
+      "height": 337,
+      "plate": "dark",
+      "alt_ar": "شعار الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا)",
+      "source_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Documents/University-Guide.pdf",
+      "asset_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Documents/University-Guide.pdf",
+      "retrieved": "2026-10-11",
+      "note": "Cut from the cover of SDAIA's official university list (PDF, page 1): the SDAIA logo on SDAIA's own navy background, colors and proportions unchanged. sdaia.gov.sa blocks direct downloads of its logo file. Owner asked for SDAIA's logo (2026-10-11)."
+    },
     "name_ar": "برنامج الابتعاث في الذكاء الاصطناعي",
     "name_en": "SDAIA AI Scholarship Program",
     "provider_ar": "الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا)",

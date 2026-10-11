@@ -15,9 +15,18 @@
 {% if l.bachelors_only_majors %}<span class="note-chip">بكالوريوس في تخصصات محددة</span>{% endif %}
 {% endmacro %}
 
-{# Extra programs that target this university (e.g. SDAIA's AI scholarship). #}
-{% macro target_chips(u) %}
-{% for pid in explorer.targets_of.get(u.id, []) %}<span class="note-chip">{{ explorer.target_programs[pid].label_ar }}</span>{% endfor %}
+{# One واعد program: what, who runs it, where, when, open or closed, and the key requirements. #}
+{% macro waaid_item(p) %}
+<li class="waaid-item">
+  <p class="waaid-title">
+    <strong>{{ p.program_ar }}</strong>
+    <span class="status status--{{ 'open' if p.is_open else 'closed' }}">{{ 'مفتوح الآن' if p.is_open else 'مغلق' }}</span>
+    {% if p.for_high_school %}<span class="note-chip">لخريجي الثانوية</span>{% endif %}
+  </p>
+  <p class="waaid-meta">{{ p.company_ar }} · {% if p.university_id %}<a href="{{ url_for('university_page', uid=p.university_id) }}" lang="en" dir="ltr">{{ p.institution }}</a>{% else %}<span lang="en" dir="ltr">{{ p.institution }}</span>{% endif %} ({{ p.country_ar }}) · {{ p.level_ar }} · {{ p.duration_ar }}</p>
+  <p class="waaid-meta">التقديم: من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %} · بداية الدراسة: {{ p.start_ar }}{% endif %}</p>
+  {% if p.requirements_ar %}<ul class="waaid-req">{% for x in p.requirements_ar %}<li>{{ x }}</li>{% endfor %}</ul>{% endif %}
+</li>
 {% endmacro %}
 
 {# The university's next deadline, from its researched requirements (if any). #}

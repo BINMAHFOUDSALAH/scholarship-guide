@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}المستجدات | {{ site.name }}{% endblock %}
+{% block description %}ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا في برامج الابتعاث، مع روابط المصادر الرسمية.{% endblock %}
+
+{% block content %}
+<div class="news-page">
+  <header>
+    <h1>المستجدات</h1>
+    <p class="lead">حالة التقديم في كل برنامج ومسار، مأخوذة من مصادرها الرسمية. الحالة تتحدث تلقائيًا مع مواعيد الفتح والإغلاق المعلنة.</p>
+  </header>
+
+  {% set board_limit = None %}
+  {% set recent_days = 120 %}
+  {% include "partials/status_board.html" %}
+
+  {% if announcements %}
+  <section class="section" aria-labelledby="announcements-title">
+    <h2 id="announcements-title" class="section-title">إعلانات</h2>
+    <ul class="board-list board-list--plain">
+      {% for item in announcements %}
+      <li class="board-item">
+        <p class="board-name">
+          {% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }} ←</a>
+          {% elif item.source_url %}<a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
+          {% else %}{{ item.title_ar }}{% endif %}
+        </p>
+        <p class="board-program">{{ path_names[item.path_id] }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <p class="explorer-fineprint">تابع أيضًا الحسابات الرسمية: <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">برنامج خادم الحرمين الشريفين للابتعاث على X ↗</a></p>
+</div>
+{% endblock %}

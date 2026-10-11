@@ -38,7 +38,7 @@
       {% if path.logo %}
       {# The program's official logo, on a white plate so its colors stay true in both themes. Source on /about. #}
       {% set lg = path.logo %}
-      <figure class="path-logo">
+      <figure class="path-logo{% if lg.plate == 'dark' %} path-logo--dark{% endif %}">
         <img src="{{ url_for('static', path=lg.file ~ '-960.png') }}"
              srcset="{{ url_for('static', path=lg.file ~ '-500.png') }} 500w, {{ url_for('static', path=lg.file ~ '-960.png') }} 960w"
              sizes="(min-width: 900px) 340px, calc(100vw - 32px)"
@@ -108,33 +108,15 @@
   </div>
 </section>
 
-{% if news %}
-<section id="news" class="section news" aria-labelledby="news-title">
+<section id="news" class="section" aria-labelledby="news-title">
   <div class="section-head">
-    <h2 id="news-title" class="section-title">آخر المستجدات</h2>
+    <h2 id="news-title" class="section-title">المستجدات</h2>
+    <p class="section-note"><a href="{{ url_for('news_page') }}">كل المستجدات والإعلانات ←</a></p>
   </div>
-  <ol class="news-list">
-    {% for item in news %}
-    <li class="news-item">
-      <p class="news-meta">
-        <span class="chip chip--{{ item.type }}">{{ news_labels[item.type] }}</span>
-      </p>
-      <p class="news-title">
-        {% if item.page %}
-        {# Our own explainer first (e.g. who SDAIA's program is really for); the official post is linked there. #}
-        <a href="{{ item.page }}">{{ item.title_ar }} ←</a>
-        {% elif item.source_url %}
-        <a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
-        {% else %}
-        {{ item.title_ar }}
-        {% endif %}
-      </p>
-      <p class="news-path">{{ path_names[item.path_id] }}</p>
-    </li>
-    {% endfor %}
-  </ol>
+  {% set board_limit = 4 %}
+  {% set recent_days = 120 %}
+  {% include "partials/status_board.html" %}
 </section>
-{% endif %}
 {% endblock %}
 
 {% block after_content %}

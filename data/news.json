@@ -1,37 +1,10 @@
 [
   {
-    "type": "opening",
-    "path_id": "custodian-scholarship",
-    "title_ar": "مسار الرواد مفتوح للتقديم حتى 15 نوفمبر 2026",
-    "source_url": "https://x.com/SA_Scholarships/status/2092689695088026059",
-    "note": "Open: official X post 26 Aug 2026. 'Until 15 Nov 2026' confirmed by the owner (2026-10-11).",
-    "added": "2026-10-11",
-    "owner_confirmed": true
-  },
-  {
-    "type": "closing",
-    "path_id": "custodian-scholarship",
-    "title_ar": "مسار إمداد مغلق حتى إشعار آخر",
-    "source_url": null,
-    "note": "Confirmed by the owner from the program's official X account. The real announcement date is earlier; 'added' is only the day we added it (used for ordering). Add the post link as source_url.",
-    "added": "2026-10-09",
-    "owner_confirmed": true
-  },
-  {
     "type": "announcement",
     "path_id": "custodian-scholarship",
     "title_ar": "قائمة الجامعات والتخصصات المعتمدة 2026–2027 متاحة",
     "source_url": "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf",
     "note": "Confirmed current by the owner. A new edition is expected Dec 2026 / Jan 2027.",
     "added": "2026-10-09"
-  },
-  {
-    "added": "2026-10-11",
-    "type": "opening",
-    "path_id": "sdaia-ai-scholarship",
-    "title_ar": "سدايا تفتح التسجيل في الدفعة الرابعة من الابتعاث في الذكاء الاصطناعي: لمن هو؟",
-    "source_url": "https://x.com/SDAIA_SA/status/2107816249824621004",
-    "note": "Links to our explainer, because many students think they can apply without a scholarship.",
-    "page": "/programs/sdaia-ai-scholarship"
   }
 ]

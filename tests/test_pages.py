@@ -147,10 +147,12 @@ def test_home_lists_every_path():
         assert path["name_ar"] in response.text
 
 
-def test_home_shows_latest_news():
-    response = client.get("/")
-    assert "آخر المستجدات" in response.text
-    assert main.news[0]["title_ar"] in response.text
+def test_home_shows_the_news_board_in_three_groups():
+    html = client.get("/").text
+    news = html.split('id="news"')[1].split("</section>\n</div>")[0]
+    for title in ("مفتوح الآن", "مغلق أو لم يفتح بعد", "فُتح وأُغلق مؤخرًا"):
+        assert title in news
+    assert "/news" in news
 
 
 def test_theme_toggle_is_present_but_hidden_without_js():
@@ -179,10 +181,37 @@ def test_no_unverified_stamps_or_review_dates_anywhere(page):
     assert "unverified-stamp" not in html
 
 
-def test_news_shows_no_dates():
-    """The stored date is only when we added the item, not when it was announced, so it's never shown."""
-    news = client.get("/").text.split('id="news"')[1].split("</section>")[0]
-    assert "<time" not in news
+def test_board_groups_follow_the_data():
+    board = main.status_board()
+    open_titles = [i["title_ar"] for i in board["open"]]
+    waiting_titles = [i["title_ar"] for i in board["waiting"]]
+    assert "مسار الرواد" in open_titles          # open until 15 Nov 2026
+    assert "مسار إمداد" in waiting_titles        # closed until further notice
+    assert board["recent"] and all(i.get("closed_on") for i in board["recent"])
+    closed = [i["closed_on"] for i in board["recent"]]
+    assert closed == sorted(closed, reverse=True)  # newest first
+    for item in board["open"] + board["waiting"] + board["recent"]:
+        assert item.get("source_url") or item.get("page"), item  # every item leads somewhere
+
+
+def test_arruaad_moves_to_recently_closed_after_its_deadline(monkeypatch):
+    import datetime
+
+    class Day(datetime.date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 11, 20)
+    monkeypatch.setattr(main, "date", Day)
+    board = main.status_board()
+    assert "مسار الرواد" in [i["title_ar"] for i in board["recent"]]
+    assert "مسار الرواد" not in [i["title_ar"] for i in board["open"]]
+
+
+def test_news_page_lists_everything():
+    html = client.get("/news").text
+    assert "المستجدات" in html and "إعلانات" in html
+    for item in main.status_board()["recent"]:
+        assert item["title_ar"] in html
 
 
 def test_grade_11_lists_the_tests():
@@ -326,7 +355,6 @@ def test_sdaia_program_page_and_targets():
             assert target["country_ar"], target  # not in the King lists: shown with its country
         else:
             assert target["id"] in main.explorer.universities, target
-    assert "مستهدفة في" in client.get("/universities/the-university-of-edinburgh").text
 
 
 def test_sdaia_is_open_with_its_source_and_warns_it_is_not_standalone():
@@ -337,11 +365,9 @@ def test_sdaia_is_open_with_its_source_and_warns_it_is_not_standalone():
     assert sdaia["not_standalone_ar"] in html
 
 
-def test_news_can_point_to_our_own_explainer():
-    item = [n for n in main.news if n["path_id"] == "sdaia-ai-scholarship"][0]
-    assert item["page"] == "/programs/sdaia-ai-scholarship"
-    news = client.get("/").text.split('id="news"')[1].split("</section>")[0]
-    assert f'href="{item["page"]}"' in news
+def test_board_links_sdaia_to_our_explainer():
+    sdaia = [i for i in main.status_board()["open"] if i["page"] == "/programs/sdaia-ai-scholarship"]
+    assert sdaia and sdaia[0]["source_url"].startswith("https://x.com/SDAIA_SA/")
 
 
 def test_scholarship_links_its_official_x_account():

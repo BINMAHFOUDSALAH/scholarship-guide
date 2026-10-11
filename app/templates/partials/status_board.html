@@ -1,0 +1,37 @@
+{# The news board (decision 033). Set board_limit to show only the first few items per group. #}
+{% set groups = [
+  ("open", "مفتوح الآن", "يمكنك التقديم عليه اليوم."),
+  ("waiting", "مغلق أو لم يفتح بعد", "تابع حساباته الرسمية لمعرفة موعد الفتح."),
+  ("recent", "فُتح وأُغلق مؤخرًا", "أُغلق في آخر " ~ recent_days ~ " يومًا."),
+] %}
+<div class="board">
+  {% for key, title, hint in groups %}
+  {% set items = board[key] %}
+  <section class="board-group board-group--{{ key }}" aria-labelledby="board-{{ key }}">
+    <h3 id="board-{{ key }}" class="board-title">{{ title }} <span class="board-count">{{ items | length }}</span></h3>
+    {% if items %}
+    <ul class="board-list">
+      {% for item in (items[:board_limit] if board_limit else items) %}
+      <li class="board-item">
+        <p class="board-name">{{ item.title_ar }}</p>
+        <p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="note-chip">لخريجي الثانوية</span>{% endif %}</p>
+        <p class="board-when">
+          <span class="status status--{{ item.status }}">{{ track_status_labels[item.status] if key != "recent" else "أُغلق" }}</span>
+          {% if item.until %}حتى <time datetime="{{ item.until }}">{{ item.until | arabic_date }}</time>{% endif %}
+          {% if item.opens %}يفتح في <time datetime="{{ item.opens }}">{{ item.opens | arabic_date }}</time>{% endif %}
+          {% if item.closed_on %}في <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time>{% endif %}
+        </p>
+        <p class="board-links">
+          {% if item.page %}<a href="{{ item.page }}">التفاصيل ←</a>{% endif %}
+          {% if item.source_url %}<a href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% if board_limit and items | length > board_limit %}<p class="board-more"><a href="{{ url_for('news_page') }}">و{{ items | length - board_limit }} غيرها ←</a></p>{% endif %}
+    {% else %}
+    <p class="board-empty">لا شيء الآن. {{ hint }}</p>
+    {% endif %}
+  </section>
+  {% endfor %}
+</div>

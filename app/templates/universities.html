@@ -15,11 +15,13 @@
   <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" data-explorer>
     <div class="explorer-search">
       <label for="q">الجامعة أو التخصص</label>
-      <input id="q" name="q" type="search" value="{{ r.q }}" list="majors-list" autocomplete="off"
+      {# A combobox: universities.js shows our own suggestions panel (majors grouped by field, then
+         universities). Without JavaScript it's a plain search field. #}
+      <input id="q" name="q" type="search" value="{{ r.q }}" autocomplete="off"
+             role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="q-suggest"
+             data-suggest="{{ url_for('suggestions_api') }}"
              placeholder="مثال: الذكاء الاصطناعي، Stanford، هندسة البرمجيات">
-      <datalist id="majors-list">
-        {% for m in explorer.major_options() %}<option value="{{ m.name_ar }}" label="{{ m.name_en }}"></option>{% endfor %}
-      </datalist>
+      <div id="q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" hidden></div>
     </div>
 
     <div class="explorer-filters">
@@ -28,7 +30,7 @@
         <select id="track" name="track">
           <option value="">كل المسارات</option>
           {% for tid, t in tracks.items() %}
-          <option value="{{ tid }}"{% if r.track == tid %} selected{% endif %}>{{ t.short_ar }}{% if tid == "rnd" %} (دكتوراه){% endif %}</option>
+          <option value="{{ tid }}"{% if r.track == tid %} selected{% endif %}>{{ t.short_ar }}{% if tid == "rnd" %} (دكتوراه){% endif %}{% if tid == "waaid" %} (برامج بجهات توظيف){% endif %}</option>
           {% endfor %}
         </select>
       </div>
@@ -66,18 +68,6 @@
         </select>
       </div>
 
-      {% if explorer.target_programs %}
-      <div class="explorer-filter">
-        <label for="target">برامج إضافية</label>
-        <select id="target" name="target">
-          <option value="">كل الجامعات</option>
-          {% for pid, t in explorer.target_programs.items() %}
-          <option value="{{ pid }}"{% if r.target == pid %} selected{% endif %}>{{ t.label_ar }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      {% endif %}
-
       <button class="explorer-submit" type="submit">ابحث</button>
     </div>
   </form>
@@ -88,7 +78,6 @@
 
   <footer class="explorer-footer">
     {{ c.source_stamp([{"title": explorer.source.title_ar ~ " (PDF)", "url": explorer.source.url}]) }}
-    <p class="explorer-fineprint">الأسماء العربية للجامعات ترجمتنا للتسهيل، والاسم الرسمي في الدليل هو الإنجليزي. القبول في الجامعة لا يعني الترشيح للابتعاث: اقرأ <a href="{{ url_for('program_page', slug='custodian-scholarship') }}">شروط البرنامج</a>.</p>
   </footer>
 </div>
 {% endblock %}

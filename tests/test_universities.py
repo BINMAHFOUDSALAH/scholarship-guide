@@ -199,13 +199,43 @@ def test_next_deadline_skips_past_dates():
     assert ex.next_deadline(uid, today="2999-01-01") is None
 
 
-def test_filter_by_sdaia_targets():
-    """A student into AI can keep only universities that are on SDAIA's list too."""
-    r = ex.search(q="الذكاء الاصطناعي", target="sdaia-ai-scholarship")
-    ids = ex.target_programs["sdaia-ai-scholarship"]["ids"]
-    rows = [u for s in r["sections"] for _, u in s.get("rows", [])]
-    assert rows and all(u["id"] in ids for u in rows)
-    assert ex.search(target="not-a-program")["target"] == ""
-    html = client.get("/universities?target=sdaia-ai-scholarship").text
-    assert 'value="sdaia-ai-scholarship" selected' in html
+def test_waaid_track_lists_its_programs():
+    r = ex.search(track="waaid")
+    assert r["mode"] == "waaid"
+    programs = r["sections"][0]["waaid"]
+    assert programs and all("is_open" in p for p in programs)
+    html = client.get("/universities?track=waaid").text
+    head = html.split('class="result-head"')[1].split("</header>")[0]
+    assert f"{len(programs)} برنامج" in head and programs[0]["program_ar"] not in head
+    assert programs[0]["program_ar"] in html
+
+
+def test_major_search_also_shows_matching_waaid_programs():
+    r = ex.search(q="الهندسة الكهربائية")
+    waaid = [s for s in r["sections"] if s["track"] == "waaid"]
+    assert waaid and any("معادن" in p["company_ar"] for p in waaid[0]["waaid"])
+    mines = [p for p in waaid[0]["waaid"] if p["institution"] == "Colorado School of Mines"]
+    assert mines and mines[0]["university_id"] == "colorado-school-of-mines"
+
+
+def test_suggestions_group_majors_by_field():
+    data = client.get("/api/suggestions").json()
+    titles = [g["title_ar"] for g in data["fields"]]
+    assert "تقنية الاتصالات والمعلومات" in titles
+    ict = [g for g in data["fields"] if g["title_ar"] == "تقنية الاتصالات والمعلومات"][0]
+    assert any(m["name_ar"] == "الذكاء الاصطناعي" for m in ict["majors"])
+    assert len(data["universities"]) == len(ex.universities)
+
+
+def test_university_page_shows_every_field_with_rank_and_majors():
+    html = client.get("/universities/university-of-wisconsin-madison").text
+    assert html.count('class="field-block"') == len(ex.universities["university-of-wisconsin-madison"]["listings"])
+    assert "زراعة المناطق الجافة" in html  # a major of the agriculture field, visible without clicking
+    assert "<details>" not in html.split('class="field-blocks"')[1].split('class="field-src"')[0]
+
+
+def test_no_target_filter_or_fineprint_on_the_explorer():
+    html = client.get("/universities").text
+    assert "برامج إضافية" not in html and "مستهدفة في" not in html
+    assert "ترجمتنا للتسهيل" not in html
 

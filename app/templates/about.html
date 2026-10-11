@@ -23,7 +23,7 @@
 <ul class="credits">
   {% for path in paths %}
   {% if path.logo %}
-  <li>شعار {{ path.name_ar }}: من <a href="{{ path.logo.source_url }}" target="_blank" rel="noopener">موقع البرنامج الرسمي</a>. نعرضه للتعريف بالبرنامج فقط، و{{ site.name }} لا يتبع الجهة المالكة له.</li>
+  <li>شعار {{ path.provider_ar if path.logo.plate == 'dark' else path.name_ar }}: من <a href="{{ path.logo.source_url }}" target="_blank" rel="noopener">مصدره الرسمي</a>. نعرضه للتعريف بالبرنامج فقط، و{{ site.name }} لا يتبع الجهة المالكة له.</li>
   {% elif path.photo %}
   <li>{{ path.photo.alt_ar }}: <a href="{{ path.photo.source_url }}" target="_blank" rel="noopener">صورة: <span lang="en" dir="ltr">{{ path.photo.credit }}</span></a>،
     {% if path.photo.license_url %}<a href="{{ path.photo.license_url }}" target="_blank" rel="noopener" lang="en" dir="ltr">{{ path.photo.license }}</a>{% else %}{{ path.photo.license }}{% endif %}</li>

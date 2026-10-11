@@ -17,6 +17,8 @@ TRACKS = {
     "arruaad": {"name_ar": "مسار الرواد", "short_ar": "الرواد"},
     "emdad": {"name_ar": "مسار إمداد", "short_ar": "إمداد"},
     "rnd": {"name_ar": "مسار البحث والتطوير", "short_ar": "البحث والتطوير"},
+    # واعد has no ranked lists: each program names its own institution (data/waaid_programs.json).
+    "waaid": {"name_ar": "مسار واعد", "short_ar": "واعد"},
 }
 SAT_POLICY_AR = {
     "required": "مطلوب",
@@ -70,15 +72,9 @@ class Explorer:
             if d.get("id") in self.universities:
                 self.details[d["id"]] = d
 
-        # Programs with their own list of target universities (e.g. SDAIA's AI scholarship), for the filter.
-        self.target_programs = {}
-        self.targets_of = {}
-        for path in _load("paths.json", []):
-            ids = {t["id"] for t in path.get("target_universities", []) if t.get("id")}
-            if ids:
-                self.target_programs[path["id"]] = {"label_ar": path.get("target_label_ar") or path["name_ar"], "ids": ids}
-                for uid in ids:
-                    self.targets_of.setdefault(uid, []).append(path["id"])
+        # main.py plugs in its waaid() here: the latest واعد programs, each marked open or closed today.
+        self.waaid = lambda: {"programs": [], "source_url": None}
+        self.by_name = {normalize(u["name_en"]): uid for uid, u in self.universities.items()}
 
         # Every major once per (track, field), with a search key in both languages.
         self.majors = []
@@ -123,9 +119,7 @@ class Explorer:
         exact = [m for m in self.majors if nq in (normalize(m["name_ar"]), normalize(m["name_en"]))]
         return exact or [m for m in self.majors if nq in m["key"]]
 
-    def _keep(self, u, country, language, target=""):
-        if target and u["id"] not in self.target_programs[target]["ids"]:
-            return False
+    def _keep(self, u, country, language):
         if country and u["country"] != country:
             return False
         if language == "english" and not u["country_info"]["english"]:
@@ -134,7 +128,7 @@ class Explorer:
             return False
         return True
 
-    def search(self, q="", track="", field="", country="", language="", target=""):
+    def search(self, q="", track="", field="", country="", language=""):
         """Return a dict describing what to show: a mode and sections of rows.
 
         - major mode: q names a major → الرواد (all majors) + the ranked list of the major's field
@@ -144,10 +138,14 @@ class Explorer:
         """
         q = (q or "").strip()
         track = track if track in TRACKS else ""
-        target = target if target in self.target_programs else ""
-        keep = lambda u: self._keep(u, country, language, target)  # noqa: E731
+        keep = lambda u: self._keep(u, country, language)  # noqa: E731
         result = {"q": q, "track": track, "field": field, "country": country, "language": language,
-                  "target": target, "mode": "browse", "sections": [], "majors": []}
+                  "mode": "browse", "sections": [], "majors": []}
+
+        if track == "waaid":
+            result["mode"] = "waaid"
+            result["sections"].append({"track": "waaid", "field": None, "waaid": self.waaid_matches(q)})
+            return result
 
         majors = self.matching_majors(q) if q else []
         name_hits = [u for u in self.universities.values() if q and normalize(q) in u["search_key"]]
@@ -167,6 +165,7 @@ class Explorer:
                     rows = [(l, u) for l, u in self.listings(t, fid) if keep(u)]
                     result["sections"].append({"track": t, "field": self.field(t, fid), "rows": rows,
                                                "matched_majors": names})
+            self._add_waaid(result, q)
             return result
 
         if q:
@@ -176,6 +175,7 @@ class Explorer:
             result["sections"].append({"track": None, "field": None, "universities": rows})
             if not rows and majors:
                 result["majors"] = majors
+            self._add_waaid(result, q)
             return result
 
         # Browse.
@@ -191,6 +191,52 @@ class Explorer:
             result["sections"].append({"track": "arruaad", "field": None, "rows": rows,
                                        "note_ar": "الرواد يشمل كل التخصصات."})
         return result
+
+    # ---------- واعد ----------
+
+    def waaid_matches(self, q=""):
+        """واعد programs whose program, company, institution, or level matches q (all of them if q is empty).
+        Each gets `university_id` when its institution is in the guide's lists, so we can link to it."""
+        nq = normalize(q)
+        out = []
+        for p in self.waaid()["programs"]:
+            key = normalize(f"{p['program_ar']} {p['company_ar']} {p['institution']} {p['level_ar']}")
+            if not nq or nq in key:
+                out.append({**p, "university_id": self.by_name.get(normalize(p["institution"]))})
+        return out
+
+    def _add_waaid(self, result, q):
+        matches = self.waaid_matches(q) if q else []
+        if matches and result["track"] in ("", "waaid"):
+            result["sections"].append({"track": "waaid", "field": None, "waaid": matches})
+
+    # ---------- search suggestions ----------
+
+    def suggestions(self):
+        """For the search box: majors grouped by their إمداد field (as in the guide), doctorate-only
+        majors in their own group, and every university name in both languages."""
+        groups, seen = [], set()
+        emdad = sorted((f for (t, _), f in self.fields.items() if t == "emdad"), key=lambda f: min(f["list_pages"]))
+        for f in emdad:
+            majors = []
+            for m in f["majors"]:
+                if m["name_ar"] not in seen:
+                    seen.add(m["name_ar"])
+                    majors.append({"name_ar": m["name_ar"], "name_en": m["name_en"], "masters_only": m["masters_only"]})
+            groups.append({"title_ar": f["name_ar"], "title_en": f["name_en"], "majors": majors})
+        doctorate = []
+        for (t, _), f in self.fields.items():
+            if t != "rnd":
+                continue
+            for m in f["majors"]:
+                if m["name_ar"] not in seen:
+                    seen.add(m["name_ar"])
+                    doctorate.append({"name_ar": m["name_ar"], "name_en": m["name_en"], "masters_only": False})
+        if doctorate:
+            groups.append({"title_ar": "تخصصات الدكتوراه فقط (البحث والتطوير)", "title_en": "Doctorate only", "majors": doctorate})
+        unis = [{"id": u["id"], "name_ar": u["name_ar"], "name_en": u["name_en"]}
+                for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())]
+        return {"fields": groups, "universities": unis}
 
     # ---------- one university ----------
 
