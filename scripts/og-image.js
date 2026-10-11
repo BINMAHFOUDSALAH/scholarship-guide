@@ -51,7 +51,7 @@ async function drawShareImage() {
 
   ctx.fillStyle = "#4e605a";
   ctx.font = '400 34px "IBM Plex Sans Arabic"';
-  ctx.fillText("دليل مجاني لطلاب الثانوية في السعودية · بدون تسجيل", 1130, 400);
+  ctx.fillText("دليل مجاني لطلاب الثانوية في السعودية", 1130, 400);
 
   return canvas.toDataURL("image/png");
 }

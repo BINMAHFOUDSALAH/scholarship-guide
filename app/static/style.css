@@ -2723,31 +2723,8 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink);
 }
 
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-1);
-}
-
-.footer-title {
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--heading);
-}
-
-.footer-links a {
-  padding-block: 2px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-/* The owner's X account: a small icon under the links, in the footer's own colours. */
-.footer-links a.footer-x {
+/* The owner's X account: a small icon under the footer text, in the footer's own colours. */
+.footer-x {
   display: inline-grid;
   place-items: center;
   width: 36px;
@@ -2758,7 +2735,7 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink-muted);
 }
 
-.footer-links a.footer-x:hover {
+.footer-x:hover {
   border-color: var(--heading);
   color: var(--heading);
 }
@@ -2766,12 +2743,6 @@ a.uni-name:hover .uni-name-en:only-child {
 .footer-x svg {
   width: 16px;
   height: 16px;
-}
-
-@media (min-width: 800px) {
-  .footer-grid {
-    grid-template-columns: 2fr 1fr;
-  }
 }
 
 /* ---------- Very narrow phones (e.g. 320–379px) ---------- */
