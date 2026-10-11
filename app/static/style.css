@@ -1268,19 +1268,6 @@ main:has(> .hero) {
   font-weight: 700;
 }
 
-/* Program pages still use these for their official links. */
-.path-item-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-4);
-  margin: 0;
-}
-
-.path-item-link {
-  font-size: var(--text-sm);
-  font-weight: 700;
-}
-
 @media (min-width: 900px) {
   /* Facts on the right (read first), the image small on the left. */
   .path-row {
