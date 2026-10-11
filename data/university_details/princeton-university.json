@@ -1,0 +1,58 @@
+{
+  "id": "princeton-university",
+  "name_en": "Princeton University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.princeton.edu/apply",
+  "platform": {
+    "value_ar": "Common Application مع أسئلة Princeton الإضافية",
+    "source_url": "https://admission.princeton.edu/apply/first-year-application-dates-deadlines"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "تقبل Princeton اختبار IELTS Academic ضمن الخيارات، ولا تنشر حدًا أدنى له.",
+      "source_url": "https://admission.princeton.edu/apply/international-students"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "تقبل Princeton اختبار TOEFL، ولا تنشر حدًا أدنى له ولا مقياسًا للدرجات.",
+      "source_url": "https://admission.princeton.edu/apply/international-students"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "تذكر صفحة الطلاب الدوليين أن Duolingo English Test مقبول، لكن صفحة المواعيد لا تذكره لجولة Regular Decision. لا يوجد حد أدنى منشور.",
+      "source_url": "https://admission.princeton.edu/apply/international-students"
+    },
+    "note_ar": "الاختبار مطلوب فقط إذا لم تكن الإنجليزية لغتك الأم ولم تدرس في مدرسة تُدرَّس بالإنجليزية. ومعفى من درس ثلاث سنوات على الأقل في مدرسة ثانوية تُدرَّس بالإنجليزية بشكل أساسي. لا تنشر Princeton حدًا أدنى للدرجات ولا موعدًا محددًا لإرسال نتيجة الاختبار."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "SAT أو ACT اختياري للمتقدمين لخريف 2027 (دورة 2026–2027)، ولا يُعاقب من لا يقدّمه. ستعود Princeton لاشتراطه ابتداءً من دورة 2027–2028 (لخريف 2028). لا تحدد درجات دنيا.",
+    "source_url": "https://admission.princeton.edu/apply/standardized-testing"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Single-Choice Early Action (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2026-11-01",
+      "source_url": "https://admission.princeton.edu/apply/first-year-application-dates-deadlines"
+    },
+    {
+      "label_ar": "آخر موعد Regular Decision (الصفحة تذكر 1 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2027-01-01",
+      "source_url": "https://admission.princeton.edu/apply/first-year-application-dates-deadlines"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 4.4,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 1,868 مقبولًا من 42,303 متقدمًا، محسوبة من القسم C1 في Common Data Set 2025–2026",
+    "international_percent": null,
+    "source_url": "https://ir.princeton.edu/sites/g/files/toruqf2041/files/documents/CDS_2526_Princeton_v2.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "تاريخ فتح التقديم غير محدد في الصفحة إلا بعبارة «منتصف أغسطس» دون سنة",
+    "نسبة قبول الطلاب الدوليين غير منشورة كنسبة؛ CDS تنشر العدد فقط: 241 مقبولًا من 10,567 متقدمًا دوليًا (خريف 2025)",
+    "صفحات المواعيد لا تذكر السنة صراحة، فالسنوات أعلاه مستنتجة من الدورة الحالية"
+  ]
+}

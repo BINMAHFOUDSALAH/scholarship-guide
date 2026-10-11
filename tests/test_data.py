@@ -85,8 +85,9 @@ def test_track_statuses_and_dates_are_valid():
     for path in main.paths:
         for track in path["tracks"]:
             if track["status"] is None:
-                # Only tracks outside our audience (e.g. doctorate only) may have no status.
-                assert track.get("for_high_school") is False, track["name_ar"]
+                # No status = we don't track it (e.g. doctorate only, or a program without a
+                # published window); the page then says so instead of showing a chip.
+                assert not track.get("status_source"), track["name_ar"]
             else:
                 assert track["status"] in TRACK_STATUSES
                 assert track["status"] in main.TRACK_STATUS_LABELS

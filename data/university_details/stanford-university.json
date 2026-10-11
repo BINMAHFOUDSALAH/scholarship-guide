@@ -1,0 +1,58 @@
+{
+  "id": "stanford-university",
+  "name_en": "Stanford University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.stanford.edu/apply/first-year/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://admission.stanford.edu/apply/first-year/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لا تشترط Stanford اختبار IELTS للمتقدمين للسنة الأولى، ولا تنشر حدًا أدنى له. يمكن ذكر النتيجة في الطلب اختياريًا.",
+      "source_url": "https://admission.stanford.edu/apply/international/index.html"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لا تشترط Stanford اختبار TOEFL للمتقدمين للسنة الأولى، ولا تنشر حدًا أدنى له. يمكن ذكر النتيجة في الطلب اختياريًا.",
+      "source_url": "https://admission.stanford.edu/apply/international/index.html"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "لا تشترط Stanford اختبار Duolingo للمتقدمين للسنة الأولى، ولا تنشر حدًا أدنى له. يمكن ذكر النتيجة في الطلب اختياريًا.",
+      "source_url": "https://admission.stanford.edu/apply/international/index.html"
+    },
+    "note_ar": "لا تشترط Stanford اختبار لغة إنجليزية، لكن إتقان الإنجليزية شرط للقبول. اختبارات اللغة لا تغني عن SAT أو ACT."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط Stanford تقديم SAT أو ACT، ولا تفضّل أحدهما على الآخر. أُعيد هذا الشرط ابتداءً من طلبات خريف 2026، وتذكره CDS 2025–2026 للمتقدمين لخريف 2027 (القسم C8).",
+    "source_url": "https://admission.stanford.edu/apply/first-year/testing.html"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Restrictive Early Action (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2026-11-01",
+      "source_url": "https://admission.stanford.edu/apply/first-year/"
+    },
+    {
+      "label_ar": "آخر موعد Regular Decision (الصفحة تذكر 5 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2027-01-05",
+      "source_url": "https://admission.stanford.edu/apply/first-year/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 3.8,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 2,302 مقبولًا من 60,646 متقدمًا، محسوبة من القسم C1 في Common Data Set 2025–2026",
+    "international_percent": null,
+    "source_url": "https://irds.stanford.edu/data-findings/cds"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "تاريخ فتح التقديم لدورة خريف 2027 غير منشور بتاريخ محدد في الصفحات الرسمية التي اطّلعنا عليها",
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا (خانات الدوليين في جدول C1 فارغة)",
+    "صفحات المواعيد لا تذكر السنة صراحة، فالسنوات أعلاه مستنتجة من الدورة الحالية"
+  ]
+}

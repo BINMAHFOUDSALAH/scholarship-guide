@@ -52,7 +52,9 @@
             "note_ar": null
           }
         ],
-        "owner_confirmed": true
+        "owner_confirmed": true,
+        "status_until": "2026-11-15",
+        "status_note": "Owner confirmed 2026-10-11: الرواد is open until 15 November 2026."
       },
       {
         "id": "emdad",
@@ -113,7 +115,9 @@
             "owner_reviewed": false,
             "note_ar": null
           }
-        ]
+        ],
+        "latest_programs": "waaid",
+        "status_note": "Computed from data/waaid_programs.json: open while any listed program's window is open."
       },
       {
         "id": "rnd",
@@ -293,6 +297,242 @@
         "status": "sourced",
         "owner_reviewed": false,
         "note_ar": null
+      }
+    ]
+  },
+  {
+    "id": "sdaia-ai-scholarship",
+    "theme": "world",
+    "photo": null,
+    "name_ar": "برنامج الابتعاث في الذكاء الاصطناعي",
+    "name_en": "SDAIA AI Scholarship Program",
+    "provider_ar": "الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا)",
+    "audience_ar": "من حصل على قبول نهائي غير مشروط من إحدى الجامعات المستهدفة، وعلى قرار ابتعاث من برنامج خادم الحرمين الشريفين، في تخصصات الذكاء الاصطناعي وعلوم الحاسب.",
+    "summary_ar": "برنامج من سدايا يُضاف إلى ابتعاثك في الذكاء الاصطناعي: إرشاد أكاديمي وفرص بحثية وتدريب، للبكالوريوس والماجستير والدكتوراه.",
+    "official_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx",
+    "apply_url": "https://sdaia.gov.sa/ar/scholarship/Pages/form.aspx",
+    "targets_guide_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Documents/University-Guide.pdf",
+    "verified": false,
+    "facts": [
+      {
+        "id": "sdaia-degrees",
+        "text_ar": "الدرجات المتاحة: البكالوريوس والماجستير والدكتوراه.",
+        "sources": [
+          {
+            "title": "صفحة برنامج الابتعاث في الذكاء الاصطناعي (سدايا)",
+            "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "sdaia-fields",
+        "text_ar": "المجالات ذات الأولوية: الذكاء الاصطناعي، وعلوم البيانات، والروبوتات، وتعلّم الآلة، والتعلّم العميق، والرؤية الحاسوبية، ومعالجة اللغات الطبيعية، والبيانات الضخمة، والمدن الذكية، والذكاء الاصطناعي التوليدي، وأمن المعلومات في الذكاء الاصطناعي، وعلوم الحاسب.",
+        "sources": [
+          {
+            "title": "صفحة برنامج الابتعاث في الذكاء الاصطناعي (سدايا)",
+            "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "sdaia-prereq",
+        "text_ar": "للتقديم تحتاج أولًا قبولًا نهائيًا غير مشروط من إحدى الجامعات المستهدفة، وقرار ابتعاث من برنامج خادم الحرمين الشريفين للابتعاث. لا يكفي أحدهما وحده.",
+        "sources": [
+          {
+            "title": "صفحة برنامج الابتعاث في الذكاء الاصطناعي (سدايا)",
+            "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": "يعني ذلك أن برنامج سدايا يأتي بعد الابتعاث، ولا يغني عنه."
+      },
+      {
+        "id": "sdaia-conditions",
+        "text_ar": "شروط أخرى: الجنسية السعودية، ومؤهل من جهة معتمدة (أو معادلته)، وتقدير آخر مؤهل «جيد جدًا» على الأقل، والقبول في أحد التخصصات المستهدفة، والدراسة بانتظام كامل، واجتياز المقابلة الشخصية والمفاضلة على المقاعد المتاحة.",
+        "sources": [
+          {
+            "title": "صفحة برنامج الابتعاث في الذكاء الاصطناعي (سدايا)",
+            "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "sdaia-benefits",
+        "text_ar": "يقدم البرنامج إرشادًا أكاديميًا، وفرصًا بحثية مع جهات عالمية، وتدريبًا وريادة أعمال، والانضمام إلى مجموعات بحثية ورابطة مبتعثي الذكاء الاصطناعي.",
+        "sources": [
+          {
+            "title": "صفحة برنامج الابتعاث في الذكاء الاصطناعي (سدايا)",
+            "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": "لا يوفر البرنامج وظيفة مباشرة بعد التخرج، حسب أسئلته الشائعة، لكنه يدعم الجاهزية للتوظيف."
+      },
+      {
+        "id": "sdaia-dates",
+        "text_ar": "تُعلن مواعيد التقديم في صفحة البرنامج بموقع سدايا وحسابات الهيئة الرسمية. للتواصل: 8001221111 أو SSP@SDAIA.GOV.SA.",
+        "sources": [
+          {
+            "title": "صفحة برنامج الابتعاث في الذكاء الاصطناعي (سدايا)",
+            "url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      }
+    ],
+    "tracks": [
+      {
+        "id": "sdaia-ai",
+        "name_ar": "الابتعاث في الذكاء الاصطناعي",
+        "name_en": "AI Scholarship",
+        "note_ar": "12 مجالًا ذا أولوية، و28 جامعة مستهدفة (القائمة قابلة للتغيير)",
+        "levels_ar": "بكالوريوس، ماجستير، دكتوراه",
+        "for_high_school": true,
+        "high_school_ar": "نعم، بعد القبول الجامعي وقرار الابتعاث",
+        "admission_ar": "قبول نهائي غير مشروط من جامعة مستهدفة، مع قرار ابتعاث من برنامج خادم الحرمين الشريفين",
+        "status": null,
+        "status_source": null,
+        "last_checked": "2026-10-11",
+        "facts": []
+      }
+    ],
+    "target_universities": [
+      {
+        "name_en": "California Institute of Technology",
+        "id": "california-institute-of-technology-caltech"
+      },
+      {
+        "name_en": "Cornell University",
+        "id": "cornell-university"
+      },
+      {
+        "name_en": "ETH Zurich",
+        "id": "eth-zurich"
+      },
+      {
+        "name_en": "Harvard University",
+        "id": "harvard-university"
+      },
+      {
+        "name_en": "Imperial College London",
+        "id": "imperial-college-london"
+      },
+      {
+        "name_en": "Johns Hopkins University",
+        "id": "johns-hopkins-university"
+      },
+      {
+        "name_en": "Massachusetts Institute of Technology",
+        "id": "massachusetts-institute-of-technology-mit"
+      },
+      {
+        "name_en": "National University of Singapore",
+        "id": "national-university-of-singapore-nus"
+      },
+      {
+        "name_en": "New York University",
+        "id": "new-york-university-nyu"
+      },
+      {
+        "name_en": "Paris Sciences et Lettres – PSL Research University Paris",
+        "id": "universite-psl"
+      },
+      {
+        "name_en": "Princeton University",
+        "id": "princeton-university"
+      },
+      {
+        "name_en": "UCL",
+        "id": "ucl-university-college-london"
+      },
+      {
+        "name_en": "University of California Berkeley",
+        "id": "university-of-california-berkeley-ucb"
+      },
+      {
+        "name_en": "University of Edinburgh",
+        "id": "the-university-of-edinburgh"
+      },
+      {
+        "name_en": "University of Chicago",
+        "id": "university-of-chicago"
+      },
+      {
+        "name_en": "University of Toronto",
+        "id": "university-of-toronto"
+      },
+      {
+        "name_en": "University of Melbourne",
+        "id": "university-of-melbourne"
+      },
+      {
+        "name_en": "University of Pennsylvania",
+        "id": "university-of-pennsylvania"
+      },
+      {
+        "name_en": "University of Oxford",
+        "id": "university-of-oxford"
+      },
+      {
+        "name_en": "Yale University",
+        "id": "yale-university"
+      },
+      {
+        "name_en": "University of California Los Angeles",
+        "id": "university-of-california-los-angeles-ucla"
+      },
+      {
+        "name_en": "University of Tokyo",
+        "id": "the-university-of-tokyo"
+      },
+      {
+        "name_en": "University of Michigan Ann Arbor",
+        "id": "university-of-michigan-ann-arbor"
+      },
+      {
+        "name_en": "Columbia University",
+        "id": "columbia-university"
+      },
+      {
+        "name_en": "Peking University",
+        "id": "peking-university"
+      },
+      {
+        "name_en": "Stanford University",
+        "id": "stanford-university"
+      },
+      {
+        "name_en": "Tsinghua University",
+        "id": "tsinghua-university"
+      },
+      {
+        "name_en": "University of Cambridge",
+        "id": "university-of-cambridge"
       }
     ]
   },

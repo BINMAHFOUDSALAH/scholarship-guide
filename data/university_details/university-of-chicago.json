@@ -1,0 +1,59 @@
+{
+  "id": "university-of-chicago",
+  "name_en": "University of Chicago",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
+  "admissions_url": "https://collegeadmissions.uchicago.edu/",
+  "platform": {
+    "value_ar": "Common App أو Apply Coalition (Scoir) أو QuestBridge، مع UChicago Supplement إضافي",
+    "source_url": "https://collegeadmissions.uchicago.edu/apply/application/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لا تنشر الجامعة حدًا أدنى لطلاب السنة الأولى الدوليين. الإرسال اختياري.",
+      "source_url": "https://collegeadmissions.uchicago.edu/apply/international-applicants/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لا تنشر الجامعة حدًا أدنى لطلاب السنة الأولى الدوليين. الإرسال اختياري.",
+      "source_url": "https://collegeadmissions.uchicago.edu/apply/international-applicants/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "لا تنشر الجامعة حدًا أدنى لطلاب السنة الأولى الدوليين. الإرسال اختياري.",
+      "source_url": "https://collegeadmissions.uchicago.edu/apply/international-applicants/"
+    },
+    "note_ar": "تقبل الجامعة من يُظهر إتقانًا عاليًا للإنجليزية، ويمكن إرسال أي اختبار إنجليزي تراه مناسبًا، أو درجات ذاتية. إذا أظهر الطلب نفسه إتقان اللغة فلا تُطلب الاختبارات. لا تقدّم الكلية دورات ESL ولا قبولًا مشروطًا."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "SAT وACT غير مطلوبين للقبول، لكن تُراجَع الدرجة إن قُدّمت. هذا حسب القسم C8 في Common Data Set 2025–2026 (دورة خريف 2025). لم نتمكن من فتح صفحة الجامعة الخاصة بالاختبارات مباشرة.",
+    "source_url": "https://data.uchicago.edu/files/2026/08/CDS_2025-2026_to_publish-1.pdf"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Early Action وEarly Decision I لدورة 2026–2027 (الصفحة الرسمية تذكر 2 نوفمبر 2026)",
+      "date": "2026-11-02",
+      "source_url": "https://collegeadmissions.uchicago.edu/apply/application/"
+    },
+    {
+      "label_ar": "آخر موعد Regular Decision وEarly Decision II لدورة 2026–2027 (الصفحة الرسمية تذكر 4 يناير 2027)",
+      "date": "2027-01-04",
+      "source_url": "https://collegeadmissions.uchicago.edu/apply/application/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 4.5,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 2,039 مقبولًا من 45,533 متقدمًا، والنسبة محسوبة من أعداد القسم C1 في Common Data Set 2025–2026 (ذكور وإناث ومجهولو الجنس)",
+    "international_percent": null,
+    "source_url": "https://data.uchicago.edu/files/2026/08/CDS_2025-2026_to_publish-1.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة (جدول الإقامة في C1 فارغ)",
+    "صفحات الجامعة الرسمية تُحمَّل بالجافاسكربت ولم تُقرأ مباشرة. تواريخ التقديم والمنصات وسياسة الإنجليزية مأخوذة من مقتطفات بحث من موقع الجامعة، وتحتاج تأكيدًا قبل الاعتماد عليها",
+    "دليل المرشدين التعليميين يذكر 1 نوفمبر و6 يناير، وهذا يتعارض مع 2 نوفمبر و4 يناير في صفحة التقديم، فاعتمدنا الصفحة الرسمية",
+    "مواعيد الإعلان عن القرار والرد غير مؤكدة لأن الصفحة الرسمية لم تُفتح مباشرة"
+  ]
+}

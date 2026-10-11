@@ -1,0 +1,19 @@
+{
+  "_note": "Flag image hash (first 12 hex chars of the MD5 of the image data in the 2026-2027 guide PDF) -> ISO country code. Identified by eye from a rendered sheet of the 16 distinct flags on 2026-10-11. Hong Kong universities carry China's flag in the guide, so they map to CN, as the official list shows.",
+  "788080c86887": "US",
+  "9d4c5f0831dd": "CN",
+  "10f72768463b": "GB",
+  "efa3dc0c9e1e": "AU",
+  "609d01c21f76": "DE",
+  "4f1dabd3155d": "CA",
+  "112c08e7ee05": "NL",
+  "906bfb636086": "FR",
+  "0e8b2111a105": "KR",
+  "85c23a77010c": "JP",
+  "a7e3721445b4": "JP",
+  "c08001e922c7": "CH",
+  "d7a6e6e71609": "IT",
+  "e6aaccf902c4": "SG",
+  "21b0f6ad3208": "ES",
+  "72dadeb469e3": "IN"
+}

@@ -198,3 +198,24 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **Tuwaiq video** is shown. The quote line is Al Arabiya's own title for its clip («همة السعوديين مثل جبل طويق ولن تنكسر»), attributed «— محمد بن سلمان».
 **Alternatives:** Keep source dates and stamps (decision 025); text-only or a building photo instead of the logo; keep the hero reveal.
 **Why:** The owner commits to verifying everything that's published, so a visible "unverified" label would only mark mistakes we should fix or hide. Hiding unconfirmed items keeps the "never invent facts" rule. The owner chose the official logo knowing the state-emblem concern noted in decision 020; it's shown only to identify the program, never as endorsement. Programs are the main thing students come for, so they come first.
+
+## 029 — Universities explorer: extracted from the official PDF, searchable by university or major
+**Date:** 2026-10-11
+**Decision:**
+- `scripts/extract_universities.py` (pdfplumber, dev only) reads the 2026–2027 guide into `data/universities.json`: 290 universities, the الرواد list (30), 5 البحث والتطوير field lists, 8 إمداد field lists, every field's majors (Arabic + English, with «درجة الماجستير فقط»), and the notes on listings (master's only, for deaf and hard-of-hearing students, bachelor's only in named majors). Countries come from each entry's flag image (hashed, mapped once by hand). The script refuses to write data if ranks have gaps the PDF doesn't explain, the الرواد list isn't 30, or a flag is unknown.
+- PDF problems are recorded, never silently fixed: a hidden entry under another (p74), a numbering jump (R&D ICT 90→100), wrong flags (Groningen, Erasmus, Tilburg), a cut-off major name. We follow what a student sees on the page.
+- `/universities`: search by university name or by major, in Arabic or English, with filters (track, field, country, English-speaking country or not). A major shows the 30 الرواد universities (all majors) and its إمداد field's ranked list; the doctorate lists appear only when asked for. Search runs on the server (works without JavaScript); `universities.js` updates results as you type. `/universities/<id>` shows every listing, the field's majors, the language-exception note for non-English-speaking countries, and the requirements researched from the university's own site. `/api/universities` serves the same data.
+- Arabic university names are our translation (`data/university_names_ar.json`), always shown with the official English name.
+- Requirements (`data/university_details/<id>.json`) come only from each university's official pages, researched by agents in parallel, starting with the 30 الرواد universities; anything not found officially is listed as not found.
+**Alternatives:** Link to the PDF only; type the lists by hand; a simple name-only search; a JavaScript app with all data in the browser.
+**Why:** It's the guide's most-used information, and a PDF is hard to search on a phone. A script makes the yearly update repeatable and checkable. Searching by major matches how students think ("I want AI, where can I go?").
+
+## 030 — Live statuses from data: الرواد's deadline, واعد's latest programs, SDAIA as a program; research agents on Haiku
+**Date:** 2026-10-11
+**Decision:**
+- **Deadlines:** a track can carry `status_until`. An open track shows «حتى <date>» and turns to «مغلق» by itself the day after (`track_status()` in `main.py`). الرواد: open until 15 November 2026 (owner-confirmed).
+- **واعد:** its programs open and close every few weeks, so instead of one status the track shows a toggle with the latest programs (`data/waaid_programs.json`, copied from the Ministry's واعد page): program, company, institution, country, level, duration, application window, open/closed (computed from today's date), whether it's for high school graduates, and key requirements. The track's own status follows: «مفتوح الآن» if any listed program is open, otherwise «لا يوجد برنامج مفتوح الآن».
+- **SDAIA's AI scholarship** is a program of its own (`/programs/sdaia-ai-scholarship`), with facts from its official page and its 28 target universities linked to the explorer; a university page says when SDAIA targets it. It sits on top of the King scholarship (it needs an unconditional offer and a King scholarship decision first), and the page says so.
+- **Research agents run on Haiku** (owner's choice, after the main model hit its usage limit): small batches, a schema + example, save as you go, validated by tests (CLAUDE.md).
+**Alternatives:** Hand-edit statuses after each deadline; one Waaid status line; SDAIA as a news item only; research on the main model.
+**Why:** Statuses that change on known dates shouldn't depend on someone remembering to edit them. واعد is a stream of short programs, so the useful view is "what opened and closed recently". SDAIA's program changes what an AI-minded student should aim for (a university that's on both lists).

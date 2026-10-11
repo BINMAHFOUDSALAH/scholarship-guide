@@ -1,0 +1,63 @@
+{
+  "id": "washington-university-in-st-louis",
+  "name_en": "Washington University in St. Louis",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
+  "admissions_url": "https://admissions.washu.edu/",
+  "platform": {
+    "value_ar": "Common Application أو Coalition Application",
+    "source_url": "https://admissions.washu.edu/how-to-apply/application-deadlines/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "تعارض في المصادر الرسمية: صفحة القبول الجامعية تذكر 7.0 كدرجة يُنصح بها، وصفحة مكتب الطلاب الدوليين (OISS) تذكر 6.5 حدًا أدنى لعموم الطلاب الدوليين، لذلك لم ننشر رقمًا.",
+      "source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
+    },
+    "toefl_ibt": {
+      "min": 5.0,
+      "note_ar": "للاختبارات من 21 يناير 2026 فصاعدًا: 5.0 يُنصح بها، وتذكر صفحة OISS الدرجة نفسها. الرقم من مقياس 1–6 (الصفحة لا تذكر المقياس صراحة). للاختبارات قبل ذلك تذكر الصفحة الجامعية 100، وتذكر OISS 90، فلم ننشر رقمًا لها بسبب التعارض.",
+      "source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "تعارض في المصادر الرسمية: صفحة القبول الجامعية تذكر 130 كدرجة يُنصح بها، وصفحة OISS تذكر 125 حدًا أدنى، لذلك لم ننشر رقمًا.",
+      "source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
+    },
+    "note_ar": "إثبات الإنجليزية مطلوب لمن لغته الأولى ليست الإنجليزية، ويمكن الإعفاء لمن درس ثلاث سنوات أو أكثر في برنامج أكاديمي بالإنجليزية أو في مدرسة أمريكية مع أداء أكاديمي قوي، وتُراجع الحالات الأخرى فرديًا. لا تُقبل SAT أو ACT بدلًا من اختبار الإنجليزية لمتقدمي خريف 2027."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "WashU جامعة تقبل الاختبار اختياريًا (test-optional) لمتقدمي خريف 2027، ولا يُعاقَب من لم يقدّم. آخر اختبار مقبول هو اختبار ديسمبر 2026، أو أكتوبر لـEarly Action وEarly Decision I. إذا قُدّم SAT أو ACT تُقبل الدرجات الذاتية.",
+    "source_url": "https://admissions.washu.edu/how-to-apply/first-year-us-applicants/"
+  },
+  "dates": [
+    {
+      "label_ar": "فتح التقديم لدورة خريف 2027 (الصفحة تذكر 1 أغسطس ضمن جدول خريف 2027)",
+      "date": "2026-08-01",
+      "source_url": "https://admissions.washu.edu/how-to-apply/application-deadlines/"
+    },
+    {
+      "label_ar": "آخر موعد Early Action وEarly Decision I لدورة خريف 2027 (الصفحة تذكر 2 نوفمبر)",
+      "date": "2026-11-02",
+      "source_url": "https://admissions.washu.edu/how-to-apply/application-deadlines/"
+    },
+    {
+      "label_ar": "آخر موعد Early Decision II وRegular Decision لدورة خريف 2027 (الصفحة تذكر 4 يناير)",
+      "date": "2027-01-04",
+      "source_url": "https://admissions.washu.edu/how-to-apply/application-deadlines/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 11.9,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025: 3,968 مقبولًا من 33,283 متقدمًا، والنسبة محسوبة من أعداد القسم C1 في Common Data Set 2025–2026",
+    "international_percent": null,
+    "source_url": "https://washu.edu/app/uploads/2026/06/2025-2026-WashU-CDS.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة كنسبة. أعدادها في CDS 2025–2026: 575 مقبولًا من 7,830 متقدمًا دوليًا",
+    "تعارض بين صفحة القبول الجامعية وصفحة OISS في أرقام IELTS وDuolingo، فلم تُنشر أرقامهما. صفحة OISS تخص عمومًا الطلاب الدوليين من فئة F وJ ولا تذكر طلاب السنة الأولى",
+    "صفحة 'What's New' لا تعرض أرقام قبول. الملف الشخصي المنشور للدفعة 2030 يذكر أرقامًا أخرى، وهو يخص خريف 2026 لا خريف 2025"
+  ]
+}

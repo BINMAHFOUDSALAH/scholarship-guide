@@ -1,0 +1,45 @@
+{
+  "id": "columbia-university",
+  "name_en": "Columbia University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (لم تُؤكَّد الصفحات الرسمية بعد)",
+  "admissions_url": "https://undergrad.admissions.columbia.edu/apply/firstyear",
+  "platform": null,
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "حدود اختبارات الإنجليزية لكلية كولومبيا والهندسة غير مؤكدة بعد. تعذّر فتح صفحة القبول الرسمية لهذا الشرط، فلم تُسجَّل أي أرقام."
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "سياسة SAT أو ACT لدورة خريف 2027 غير مؤكدة بعد من صفحة Columbia الرسمية. وجدنا ملخصات تذكر أنها اختيارية لدورة 2026–2027 وأنها تعود للاشتراط في دورة 2027–2028، لكن لم نؤكدها من المصدر.",
+    "source_url": null
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Early Decision (CDS 2025–2026 تذكر 1 نوفمبر دون سنة، وهو لدورة قبول خريف 2025 أي تقديم 2024، وليس دورة 2027)",
+      "date": "2024-11-01",
+      "source_url": "https://opir.columbia.edu/sites/opir.columbia.edu/files/content/Common%20Data%20Set/2025-26_Columbia_College_and_Columbia_Enginnering_CDS.pdf"
+    },
+    {
+      "label_ar": "آخر موعد تقديم عادي Priority Date (CDS 2025–2026 تذكر 1 يناير دون سنة، وهو لدورة قبول خريف 2025 أي تقديم 2024–2025، وليس دورة 2027)",
+      "date": "2025-01-01",
+      "source_url": "https://opir.columbia.edu/sites/opir.columbia.edu/files/content/Common%20Data%20Set/2025-26_Columbia_College_and_Columbia_Enginnering_CDS.pdf"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 4.9,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029) في كلية كولومبيا والهندسة: 2,946 مقبولًا من 59,611 متقدمًا، محسوبة من القسم C1 في Common Data Set 2025–2026",
+    "international_percent": null,
+    "source_url": "https://opir.columbia.edu/sites/opir.columbia.edu/files/content/Common%20Data%20Set/2025-26_Columbia_College_and_Columbia_Enginnering_CDS.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "منصة التقديم غير مؤكدة: صفحة التقديم الرسمية تعذّر فتحها",
+    "حدود اختبارات الإنجليزية غير مؤكدة: صفحة Columbia الرسمية تعذّر فتحها",
+    "سياسة SAT أو ACT لدورة خريف 2027 غير مؤكدة: صفحة الاختبارات الرسمية تعذّر فتحها، وجدول C8 في CDS لا يُقرأ",
+    "مواعيد دورة خريف 2027 غير منشورة في المصادر التي اطّلعنا عليها؛ التواريخ أعلاه من CDS لدورة 2025",
+    "نسبة قبول الطلاب الدوليين غير منشورة كنسبة؛ CDS تنشر العدد فقط: 407 مقبولًا من 15,380 متقدمًا دوليًا (خريف 2025)"
+  ]
+}

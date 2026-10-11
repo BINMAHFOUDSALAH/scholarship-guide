@@ -1,0 +1,64 @@
+{
+  "id": "university-of-washington",
+  "name_en": "University of Washington (Seattle)",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admit.washington.edu/apply/first-year/how-to-apply/",
+  "platform": {
+    "value_ar": "Common App (تقول الصفحة إنه يمكن التقديم إلى UW عبر Common App)",
+    "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 حسب صفحة UW. الصفحة لا تحدد إن كانت الدرجة الكلية. تُقبل IELTS Indicator (الاختبار المنزلي).",
+      "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/english-proficiency/"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "4.0 للاختبارات بعد 21 يناير 2026، وهو على المقياس الجديد 1–6 (الصفحة لا تذكر المقياس صراحة، والاستنتاج من تاريخ التغيير). قبل ذلك كان الحد 76 على المقياس القديم 0–120. تُقبل TOEFL iBT Home Edition.",
+      "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/english-proficiency/"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": null,
+      "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/english-proficiency/"
+    },
+    "note_ar": "يجب أن تُؤدَّى الاختبارات في موعد أقصاه 31 ديسمبر من سنة التقديم، وترسل الجهة المختبِرة النتيجة مباشرة إلى UW. بديل حسب الصفحة: معدل B على الأقل في مواد الإنجليزية في الثانوية، مع SAT Evidence-Based Reading and Writing 580 فأكثر أو ACT English 22 فأكثر. تذكر الصفحة إعفاءً لمن تلقّى تعليمه الابتدائي والثانوي في أستراليا، وتفاصيل الإعفاء في الصفحة نفسها."
+  },
+  "sat_act": {
+    "policy": "not_considered",
+    "note_ar": "ألغت UW شرط SAT وACT بشكل دائم. تقول الصفحة إن المراجعين لا يرون درجات الاختبار إن أُرسلت، مع احتمال النظر في درجات عالية جدًا (1400 SAT أو 31 ACT) لعدد قليل من الطلاب. الطلاب المنزليون ومن مدارس بلا درجات حرفية أو رقمية ما زالوا مطالبين بإرسال SAT أو ACT.",
+    "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/test-scores/"
+  },
+  "dates": [
+    {
+      "label_ar": "يفتح طلب UW لقبول الخريف (Autumn) 2027 (الصفحة تذكر 15 أغسطس دون ذكر السنة)",
+      "date": "2026-08-15",
+      "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/"
+    },
+    {
+      "label_ar": "آخر موعد لتقديم طلب UW لقبول الخريف (Autumn) 2027 (الصفحة تذكر 15 نوفمبر دون ذكر السنة)",
+      "date": "2026-11-15",
+      "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/"
+    },
+    {
+      "label_ar": "تبدأ نتائج القرارات (تُعلن بين 1 و15 مارس)",
+      "date": "2027-03-01",
+      "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 41.7,
+    "scope_ar": "القبول العام لدفعة خريف 2025 (CDS 2025–2026 لحرم Seattle، القسم C1: قُبل 30,446 من 72,933)",
+    "international_percent": null,
+    "source_url": "https://cdn.uw.edu/wp-content/uploads/sites/162/2026/02/27111247/CDS_2025-2026_Seattle.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "لم نجد موعد قبول مبكر أو أي موعد ثانٍ لخريف 2027؛ الصفحة تذكر موعدًا واحدًا فقط.",
+    "صفحة UW لا تذكر سنة الدورة لتاريخي 15 أغسطس و15 نوفمبر صراحة، ويُفترض أنهما لدورة خريف 2027.",
+    "نسبة قبول الدوليين غير منشورة كنسبة. حسب CDS 2025–2026 تقدم 13,054 دوليًا وقُبل منهم 4,653.",
+    "صفحة إحصاءات UW تذكر متوسط 3 سنوات بدون تحديد السنوات (47% للمقيمين في واشنطن، 39% لغيرهم)، ولم نعتمدها لأنها غير محددة السنة."
+  ]
+}

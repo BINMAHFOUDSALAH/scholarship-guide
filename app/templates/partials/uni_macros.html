@@ -1,0 +1,33 @@
+{# Small pieces shared by the explorer and the university page. #}
+
+{# Arabic name (our translation) with the official English name; links to the university page. #}
+{% macro uni_name(u, link=True) %}
+{% if link %}<a class="uni-name" href="{{ url_for('university_page', uid=u.id) }}">{% else %}<span class="uni-name">{% endif %}
+  {% if u.name_ar %}<span class="uni-name-ar">{{ u.name_ar }}</span>{% endif %}
+  <span class="uni-name-en" lang="en" dir="ltr">{{ u.name_en }}</span>
+{% if link %}</a>{% else %}</span>{% endif %}
+{% endmacro %}
+
+{# The notes the official guide attaches to a listing. #}
+{% macro listing_notes(l) %}
+{% if l.masters_only %}<span class="note-chip note-chip--warn">ماجستير فقط</span>{% endif %}
+{% if l.hearing_impaired_only %}<span class="note-chip">لذوي الإعاقة السمعية</span>{% endif %}
+{% if l.bachelors_only_majors %}<span class="note-chip">بكالوريوس في تخصصات محددة</span>{% endif %}
+{% endmacro %}
+
+{# Country, with a marker when its official language isn't English (where the language exception may apply). #}
+{% macro country(u) %}
+<span class="uni-country">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="lang-mark" title="لغة الدولة الرسمية ليست الإنجليزية">لغة أخرى</span>{% endif %}</span>
+{% endmacro %}
+
+{# One university's memberships, as short chips: «الرواد ١٢»، «إمداد: ٤ مجالات». #}
+{% macro memberships(u) %}
+{% set ar = u.listings | selectattr("track", "equalto", "arruaad") | list %}
+{% set em = u.listings | selectattr("track", "equalto", "emdad") | list %}
+{% set rd = u.listings | selectattr("track", "equalto", "rnd") | list %}
+<span class="memberships">
+  {% if ar %}<span class="track-chip track-chip--arruaad">الرواد · المرتبة {{ ar[0].rank }}</span>{% endif %}
+  {% if em %}<span class="track-chip track-chip--emdad">إمداد · {{ em | length }} {{ "مجال" if em | length == 1 else "مجالات" }}</span>{% endif %}
+  {% if rd %}<span class="track-chip track-chip--rnd">البحث والتطوير · {{ rd | length }} {{ "مجال" if rd | length == 1 else "مجالات" }}</span>{% endif %}
+</span>
+{% endmacro %}

@@ -32,6 +32,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   4. **Recommend the next step** (fix, commit, push, or move on).
 - After a meaningful feature, update `LEARNING_LOG.md` accurately. Never mark something as understood just because it was explained. At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
 - Use subagents only when they add real value (wide research, independent review of a big diff) or when I ask, and tell me briefly when and why. Don't add tools or complexity just because they exist.
+- **Multi-part research = parallel subagents on Haiku** (`model: "haiku"`): small batches (~5 items), a strict schema + a finished example file, save each result as soon as it's done, official sources only, touch no other files. Code, final checks, and the summary stay in the main session; validate agent output with tests and flag anything an agent couldn't verify.
 - Ask before installing packages, downloading files, or spending money. Never commit or push unless I ask.
 - Record design choices (with alternatives) in `docs/decisions.md`; tick progress in `docs/roadmap.md`.
 - **Handoff rule:** after any fundamental change (rule, decision, architecture, plan), update `CLAUDE.md` / `docs/roadmap.md` / `docs/decisions.md` / `docs/architecture.md` in the same step. Repo docs are the source of truth. When I say a session is ending, make sure the roadmap's "next session" note is accurate.

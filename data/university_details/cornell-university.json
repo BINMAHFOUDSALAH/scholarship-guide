@@ -1,0 +1,59 @@
+{
+  "id": "cornell-university",
+  "name_en": "Cornell University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
+  "admissions_url": "https://admissions.cornell.edu/",
+  "platform": {
+    "value_ar": "Common Application (الطلب المشترك)",
+    "source_url": "https://admissions.cornell.edu/how-to-apply/first-year-applicants"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.5,
+      "note_ar": "أدنى درجة تنافسية 7.5 حسب الصفحة (minimum competitive). الصفحة تقول إن النتائج الرسمية لازمة للمقبولين.",
+      "source_url": "https://admissions.cornell.edu/resources/submit-english-language-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 5.0,
+      "note_ar": "للاختبارات من يناير 2026 فصاعدًا: الحد الأدنى 5.0 والموصى به 5.5، وهو مقياس 1–6 حسب الرقم (الصفحة لا تذكر المقياس صراحة). للاختبارات قبل يناير 2026: 100 (مقياس 0–120).",
+      "source_url": "https://admissions.cornell.edu/resources/submit-english-language-proficiency"
+    },
+    "duolingo": {
+      "min": 130,
+      "note_ar": "أدنى درجة تنافسية 130 حسب الصفحة (minimum competitive).",
+      "source_url": "https://admissions.cornell.edu/resources/submit-english-language-proficiency"
+    },
+    "note_ar": "إثبات الإنجليزية مطلوب من غير الأمريكيين وغير المقيمين، ومن لم تكن الإنجليزية لغته الأم أو لغة تدريسه الأساسية لأربع سنوات. الأرقام السابقة هي 'أدنى درجة تنافسية' للمراجعة، وليست حدًا تلقائيًا للرفض حسب الصفحة. الصفحة تذكر أيضًا Cambridge C1 Advanced أو C2 Proficiency بدرجة تنافسية 191."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط Cornell تقديم SAT أو ACT للمتقدمين للسنة الأولى. الصفحة لا تذكر سنة الدورة صراحة.",
+    "source_url": "https://admissions.cornell.edu/policies/standardized-testing-policy"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Early Decision (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2026-11-01",
+      "source_url": "https://admissions.cornell.edu/how-to-apply/first-year-applicants"
+    },
+    {
+      "label_ar": "آخر موعد Regular Decision (الصفحة تذكر 2 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2027-01-02",
+      "source_url": "https://admissions.cornell.edu/how-to-apply/first-year-applicants"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 8.4,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 6,077 مقبولًا من 72,523 متقدمًا، والنسبة محسوبة من أعداد القسم C1 في Common Data Set 2025–2026",
+    "international_percent": null,
+    "source_url": "https://irp.cornell.edu/wp-content/uploads/2026/09/Cornell-Common-Data-Set-2025-26.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة كنسبة. أعدادها في CDS 2025–2026: 664 مقبولًا من 18,566 متقدمًا دوليًا",
+    "تاريخ فتح التقديم غير مذكور في صفحة التقديم الرسمية",
+    "صفحة Cornell الخاصة بالطلاب الدوليين (international-applicants) أعادت خطأ 404، فاعتمدنا صفحة إثبات الإنجليزية الرسمية",
+    "علامات اختيارات قسم C8 في CDS غير مقروءة في الملف، فاعتمدنا صفحة سياسة الاختبارات الرسمية"
+  ]
+}

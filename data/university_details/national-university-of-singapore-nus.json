@@ -1,0 +1,29 @@
+{
+  "id": "national-university-of-singapore-nus",
+  "name_en": "National University of Singapore (NUS)",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول للعام الأكاديمي 2027/2028",
+  "admissions_url": "https://www.nus.edu.sg/oam/admissions/admissions",
+  "platform": null,
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "لم نتمكن من فتح صفحة شروط اللغة في NUS، فصفحات nus.edu.sg التي حاولنا فتحها عادت فارغة، لذلك لا نعرض رقمًا. مقتطف بحث يقول إن فئة «الشهادات الأخرى» لا تطلب اختبار لغة، ولم نتحقق هل تنطبق على التوجيهية. المصدر: https://nus.edu.sg/oam/admissions/international-qualifications-for-foreigners/international-qualifications/other-high-school-qualifications"
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "مقتطف بحث من صفحة «Other High School Qualifications» يقول إن AP أو ACT with Writing أو SAT مطلوبة لهذه الفئة، ولا نعرف إن كانت التوجيهية ضمنها. لم نفتح الصفحة، لذلك لم نحدد السياسة.",
+    "source_url": "https://nus.edu.sg/oam/admissions/international-qualifications-for-foreigners/international-qualifications/other-high-school-qualifications"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "التوجيهية السعودية: لم نجد في صفحات NUS التي وصلنا إليها ذكرًا لها، فلا نستطيع تحديد قبولها أو رفضها. مقتطف بحث يقول إن NUS تشترط إتمام 12 سنة من التعليم العام بحلول يوليو من سنة التقديم، وإن شروط البرنامج (Programme Prerequisites) تسري على كل برنامج. وقد يكون مسار التوجيهية ضمن «الشهادات الأخرى»، لكن لم نتحقق. اسأل مكتب القبول في NUS قبل التقديم. المصدر: https://www.nus.edu.sg/oam/admissions/admissions",
+  "not_found_ar": [
+    "صفحات nus.edu.sg التي فتحناها عادت فارغة، لذلك كل ما سبق مأخوذ من مقتطفات بحث ويحتاج إلى تحقق قبل النشر",
+    "نافذة التقديم لدورة AY2027/28 تظهر في مقتطف من صفحة المواعيد الرسمية بين 16 ديسمبر 2026 و17 فبراير 2027 للشهادات الدولية غير IB، لكن الصفحة وسمتها «مغلقة» ولم نتمكن من فتحها للتحقق، فلم نُدرجها كتاريخ",
+    "شروط اللغة الإنجليزية (IELTS وTOEFL وDuolingo) غير متحقَّق منها",
+    "منصة التقديم الرسمية لم نتحقق منها",
+    "نسبة القبول العامة أو للطلاب الدوليين غير منشورة في ما وجدناه"
+  ]
+}

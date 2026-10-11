@@ -1,0 +1,56 @@
+{
+  "id": "eth-zurich",
+  "name_en": "ETH Zurich",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (بكالوريوس، شهادة ثانوية من خارج سويسرا)",
+  "admissions_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate.html",
+  "platform": {
+    "value_ar": "بوابة التقديم الإلكتروني eApply التابعة للجامعة، ويُسمح بالتقديم لبرنامج بكالوريوس واحد فقط",
+    "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/how-to-apply.html"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لا تذكر صفحات القبول للبكالوريوس شرط IELTS، لأن لغة الدراسة الأساسية هي الألمانية",
+      "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/admission-prerequisites.html"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لا يُذكر TOEFL في صفحات القبول للبكالوريوس",
+      "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/admission-prerequisites.html"
+    },
+    "duolingo": null,
+    "note_ar": "لم تذكر الصفحات الرسمية التي قرأناها برنامج بكالوريوس يُدرَّس بالإنجليزية بالكامل، والمطلوب للقبول هو الألمانية وليس الإنجليزية"
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "لم تذكر صفحات ETH الرسمية SAT أو ACT ضمن شروط القبول للبكالوريوس",
+    "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/admission-prerequisites.html"
+  },
+  "dates": [
+    {
+      "label_ar": "التسجيل في الاختبار الدخولي لمن يُطلب منه، حتى 15 أكتوبر (السنة مستنتجة من موعد الاختبار)",
+      "date": "2026-10-15",
+      "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/eth-entrance-examination.html"
+    },
+    {
+      "label_ar": "بدء الاختبار الدخولي لمن يُطلب منه (18–28 يناير 2027)",
+      "date": "2027-01-18",
+      "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/eth-entrance-examination.html"
+    },
+    {
+      "label_ar": "آخر موعد للتقديم لحاملي الشهادات من خارج سويسرا لخريف 2027؛ يفتح التقديم في 1 ديسمبر 2026 ويُغلق 23:59 بتوقيت وسط أوروبا",
+      "date": "2027-03-31",
+      "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/how-to-apply.html"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "لغة الدراسة الأساسية في برامج البكالوريوس هي الألمانية، وقد تُدرَّس بعض المقررات بالإنجليزية أو الفرنسية. لم تذكر الصفحات الرسمية أي برنامج بكالوريوس يُدرَّس بالإنجليزية بالكامل. اختبار اللغة المطلوب: شهادة ألمانية بمستوى C1 على الأقل تُقدَّم بحلول 31 مارس، وتُذكر ضمن الشهادات المقبولة شهادتا Goethe C2 وÖSD C2. عمر الشهادة: C1 لا يزيد عن سنتين، وC2 لا يزيد عن 5 سنوات. ويُعفى من الشهادة أصحاب شهادات ثانوية ألمانية أو نمساوية أو سويسرية ناطقة بالألمانية وغيرهم من الحالات المذكورة في الصفحة. الاختبار الدخولي (إن طُلب) يُجرى بالألمانية، ولا تقدم ETH دورات ألمانية قبل بدء الدراسة. المصادر: https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/admission-prerequisites.html و https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/language-requirements.html و https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/eth-entrance-examination.html",
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا",
+    "القائمة الكاملة لشهادات الألمانية المقبولة ودرجاتها لم تظهر في الصفحة الرسمية؛ الصفحة تذكر C1 وGoethe C2 وÖSD C2 فقط، ولا تذكر TestDaF أو DSH أو telc",
+    "لم تنشر ETH قائمة الدول التي يلزمها الاختبار الدخولي؛ تحدد الجامعة ذلك بعد استلام الطلب، وشروط كل بلد تُنشر عبر swissuniversities",
+    "صفحة التواريخ الرسمية تعتمد على JavaScript ولم تُقرأ منها مواعيد 2027 كاملة؛ موعد 31 مارس 2027 مأخوذ من صفحة طريقة التقديم",
+    "تعارض: صفحة الاختبار الدخولي تذكر «آخر موعد 31 مارس 2026»، وصفحة طريقة التقديم تذكر 31 مارس دون سنة؛ اعتمدنا 2027 لأنها دورة خريف 2027، ويجب التأكد من eApply"
+  ]
+}

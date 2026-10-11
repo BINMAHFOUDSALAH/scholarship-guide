@@ -1,0 +1,67 @@
+{
+  "id": "university-of-california-los-angeles-ucla",
+  "name_en": "University of California, Los Angeles (UCLA)",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.ucla.edu/apply/international-applicants",
+  "platform": {
+    "value_ar": "طلب جامعة كاليفورنيا (UC Application): طلب واحد تختار فيه فروع UC التي تريدها",
+    "source_url": "https://admission.universityofcalifornia.edu/"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.5,
+      "note_ar": "صفحة UCLA تذكر 7.5 كدرجة «تنافسية» وليست حدًا أدنى مسمّى. الصفحة لا تحدد إن كانت الدرجة الكلية. الحد العام لجامعات UC هو 6.5.",
+      "source_url": "https://admission.ucla.edu/apply/international-applicants"
+    },
+    "toefl_ibt": {
+      "min": 5,
+      "note_ar": "5 فأكثر (مع أقسام 5 فأكثر) على المقياس الجديد المعمول به من 21 يناير 2026، والذي يعرض بدرجات 1–6. على المقياس القديم 0–120 تذكر الصفحة «أكثر من 100» مع أقسام فوق 24. تُذكر كدرجة «تنافسية». الحد العام لجامعات UC هو 4.5.",
+      "source_url": "https://admission.ucla.edu/apply/international-applicants"
+    },
+    "duolingo": {
+      "min": 135,
+      "note_ar": "135 فأكثر حسب الصفحة، وتُذكر كدرجة «تنافسية». الحد العام لجامعات UC هو 115.",
+      "source_url": "https://admission.ucla.edu/apply/international-applicants"
+    },
+    "note_ar": "صفحة UCLA تقول: «نبحث عن درجات لغة إنجليزية تنافسية». من أكمل تعليمه الثانوي بالإنجليزية كله يُعتبر متمكنًا ولا يحتاج امتحانًا. من درس أقل من 3 سنوات بالإنجليزية في بلد لا تُدرَّس فيه بالإنجليزية عليه إثبات الكفاءة. تقبل UCLA TOEFL وIELTS وDuolingo فقط، ولا تعتبر SAT أو ACT بديلًا. يجب تسجيل كل نتائج الاختبار في الطلب بحلول يناير. قد تطلب UCLA امتحان ESLPE بعد القبول."
+  },
+  "sat_act": {
+    "policy": "not_considered",
+    "note_ar": "UCLA لا تنظر في درجات SAT أو ACT للقبول أو المنح، وتصف نفسها بأنها test-free. صفحة UC تقول كذلك إن الاختبار غير مطلوب ولا يدخل في القرار.",
+    "source_url": "https://admission.ucla.edu/apply/international-applicants"
+  },
+  "dates": [
+    {
+      "label_ar": "يفتح طلب UC لخريف 2027 (يمكنك البدء بتعبئته)",
+      "date": "2026-08-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "تبدأ فترة إرسال طلب UC لخريف 2027",
+      "date": "2026-10-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "آخر موعد لإرسال طلب UC لخريف 2027 (لا يوجد قبول مبكر)",
+      "date": "2026-11-30",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "آخر موعد لقبول عرض القبول (SIR) لخريف 2027",
+      "date": "2027-05-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 9.4,
+    "scope_ar": "القبول العام لدفعة خريف 2025 (Common Data Set 2025–2026، القسم C1: قُبل 13,659 من 145,086)",
+    "international_percent": null,
+    "source_url": "https://apb.ucla.edu/file/d1ab04b3-ee89-4cf2-9124-8dc0471b5e5a"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الدوليين غير منشورة. صفحة UCLA للملف الشخصي تذكر أن 9% من فوج خريف 2025 دوليون، وهذه نسبة من المسجلين وليست نسبة قبول.",
+    "لم نجد إحصاءات القبول لخريف 2026 في الصفحات المتاحة، والأحدث المنشور هو خريف 2025."
+  ]
+}

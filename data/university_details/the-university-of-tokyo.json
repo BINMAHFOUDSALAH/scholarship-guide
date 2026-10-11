@@ -1,0 +1,61 @@
+{
+  "id": "the-university-of-tokyo",
+  "name_en": "The University of Tokyo",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لربيع 2027 (أبريل) للبرامج اليابانية، ولخريف 2027 لكلية التصميم بالإنجليزية",
+  "admissions_url": "https://welcome.adm.u-tokyo.ac.jp/admissions",
+  "platform": {
+    "value_ar": "استمارة التقديم الإلكترونية للجامعة (إنترنت الاستمارة) للمسار الياباني؛ ولم أتحقق من طريقة التقديم الخاصة بكلية التصميم",
+    "source_url": "https://www.u-tokyo.ac.jp/ja/admissions/undergraduate/e01_02_04.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "لكلية التصميم فقط (المسار المدرّس بالإنجليزية). الصفحة تكتب «أكبر من 6.0» وتقول إن الدرجات «متوقعة وليست درجات قطع». تُقبل الاختبارات التي أُجريت منذ 1 يناير 2025",
+      "source_url": "https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "المقياس الجديد من 1 إلى 6 للاختبارات منذ 21 يناير 2026 (أكبر من 4)، وكان الحد القديم أكبر من 80 على المقياس من 0 إلى 120 قبل هذا التاريخ",
+      "source_url": "https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "لكلية التصميم فقط؛ الصفحة تكتب «أكبر من 110»",
+      "source_url": "https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/"
+    },
+    "note_ar": "الاختبارات الإنجليزية المقبولة في كلية التصميم: IELTS وTOEFL وDuolingo وCambridge (B2 أو C1 أو C2) وEIKEN. من درس ثلاث سنوات على الأقل من السنوات الأربع الأخيرة بالإنجليزية يُعفى من الاختبار في المسار B فقط. أما المسار الياباني فلا يشترط حدًا أدنى لدرجات الإنجليزية، بل تُستخدم نتائج TOEFL أو IELTS التي أُجريت خلال سنتين قبل بدء التقديم",
+    "source_url": "https://www.u-tokyo.ac.jp/ja/admissions/undergraduate/e01_014.html"
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "ليس شرطًا عامًا. تُقبل في كلية التصميم فقط (المسار B) بديلًا اختياريًا: SAT بدرجة ERW-M أو RW-M من 1480 فأعلى، أو ACT بمجموع 33 فأعلى، دون Superscore. لم تذكر الصفحات الرسمية SAT أو ACT للمسار الياباني",
+    "source_url": "https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/"
+  },
+  "dates": [
+    {
+      "label_ar": "كلية التصميم (بالإنجليزية، خريف 2027): آخر موعد للتقديم 5:00 مساءً بتوقيت اليابان؛ التقديم مفتوح من 15 أكتوبر 2026 الساعة 9 صباحًا",
+      "date": "2026-11-05",
+      "source_url": "https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/"
+    },
+    {
+      "label_ar": "كلية التصميم، المسار B: نتيجة المرحلة الأولى",
+      "date": "2026-12-22",
+      "source_url": "https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/"
+    },
+    {
+      "label_ar": "كلية التصميم، المسارين A وB: القرار النهائي بما فيه العروض المشروطة",
+      "date": "2027-02-20",
+      "source_url": "https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "لغة الدراسة في البرامج اليابانية التقليدية للبكالوريوس هي اليابانية، وتشترط الجامعة «مستوى عالٍ من الكفاءة في اليابانية» عند الالتحاق، دون ذكر اختبار أو درجة. في مسار «الطلاب من مدارس أجنبية» (الفئة الأولى) يُطلب اختبار EJU، وفيه مادة اليابانية، ويمكن أداؤه باليابانية أو الإنجليزية، ولا يُطلب JLPT. أما اختبار JLPT N1 الذي يظهر في الصفحات فهو لطلاب التبادل وليس لطلاب الدرجة. البرامج بالإنجليزية: PEAK أُغلق قبوله بعد خريف 2026؛ وبرنامج GSC تحويل إلى السنة الثالثة في كلية العلوم بعد دراسة جامعية لا تقل عن سنتين خارج اليابان؛ وكلية التصميم UTokyo College of Design (بدء سبتمبر 2027، بكالوريوس وماجستير متكاملان لخمس سنوات) تُدرَّس بالإنجليزية بالكامل ولا تشترط اليابانية، لكنها بانتظار موافقة وزارة التعليم اليابانية MEXT وقد تتغير. المصادر: https://welcome.adm.u-tokyo.ac.jp/admissions و https://www.u-tokyo.ac.jp/en/prospective-students/undergraduate_english.html و https://www.u-tokyo.ac.jp/ja/admissions/undergraduate/e01_014.html و https://www.u-tokyo.ac.jp/en/academics/ustep-type-u.html و https://design.adm.u-tokyo.ac.jp/admissions/admissions-overview-2027/",
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا",
+    "تواريخ 2027 لمسار الطلاب من مدارس أجنبية في البرامج اليابانية (أبريل 2027) لم تظهر في الصفحات التي قرأناها؛ الدورة المنشورة السابقة كانت حتى 5 ديسمبر 2025، والمستند الرسمي للدورة الجديدة (PDF) لم يُقرأ",
+    "الحد الأدنى لدرجة EJU في مسار الفئة الأولى غير منصوص عليه في الصفحات التي قرأناها",
+    "لم أتحقق من إمكانية أداء اختبار Common Test للمسار A (يناير 2027) من خارج اليابان؛ يجب سؤال الجامعة مباشرة",
+    "كلية التصميم ما زالت بانتظار موافقة MEXT، فقد تتغير الشروط أو تواريخ 2027"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "university-of-pennsylvania",
+  "name_en": "University of Pennsylvania",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
+  "admissions_url": "https://admissions.upenn.edu/",
+  "platform": {
+    "value_ar": "Common App أو Coalition Application أو QuestBridge، ويُقدَّم واحد فقط",
+    "source_url": "https://admissions.upenn.edu/how-to-apply/first-year-applicants"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى للقبول حسب الصفحة. المعيار التنافسي للمتقدمين: 7 أو أعلى (مقياس 0–9). لا تقبل الجامعة IELTS Indicator أو IELTS One Retake.",
+      "source_url": "https://admissions.upenn.edu/apply/international-applicants"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى للقبول حسب الصفحة. المعيار التنافسي: 5 أو أعلى للاختبارات الجديدة (مقياس 1–6)، و100 أو أعلى للاختبارات بالنظام القديم (مقياس 0–120). لا تقبل الجامعة TOEFL MyBest.",
+      "source_url": "https://admissions.upenn.edu/apply/international-applicants"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى للقبول حسب الصفحة. المعيار التنافسي: 130 أو أعلى (مقياس 10–160).",
+      "source_url": "https://admissions.upenn.edu/apply/international-applicants"
+    },
+    "note_ar": "إثبات الإنجليزية مطلوب إلا لمن كانت الإنجليزية لغته الأم، أو لغة تدريسه الأساسية لثلاث سنوات على الأقل قبل الالتحاق. الصفحة تقول إن الجامعة لا تشترط حدًا أدنى في المراجعة الشاملة. يُقبل فقط ما يصل مباشرة من جهة الاختبار، ولا تُقبل النتائج المنتهية."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط Penn تقديم SAT أو ACT للمتقدمين للسنة الأولى، ويمكن طلب إعفاء بسبب الظروف يُقدَّم من داخل التقديم. آخر مواعيد الاختبارات المقبولة تعود لدورة 2026، أي خريف 2027.",
+    "source_url": "https://admissions.upenn.edu/how-to-apply/first-year-applicants/application-requirements"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Early Decision لدورة خريف 2027 (الصفحة تذكر 1 نوفمبر 2026)",
+      "date": "2026-11-01",
+      "source_url": "https://admissions.upenn.edu/how-to-apply/first-year-applicants"
+    },
+    {
+      "label_ar": "آخر موعد Regular Decision لدورة خريف 2027 (الصفحة تذكر 5 يناير 2027)",
+      "date": "2027-01-05",
+      "source_url": "https://admissions.upenn.edu/how-to-apply/first-year-applicants"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 5,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 3,570 مقبولًا من 72,544 متقدمًا، وتذكر الصفحة الرسمية النسبة 5%",
+    "international_percent": 2.5,
+    "source_url": "https://www.upenn.edu/about/facts"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "ملف Common Data Set 2025–2026 منشور على Box، ولم نتمكن من فتحه، لذلك جاءت الأرقام من صفحة الحقائق الرسمية في Penn",
+    "تاريخ فتح التقديم غير مذكور في الصفحة الرسمية",
+    "تاريخ الإعلان عن القرار في Regular Decision غير محدد بيوم بعينه في الصفحة الرسمية (تُذكر ديسمبر لـED وأبريل لـRD في صفحة، ومارس في صفحة أخرى)"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "university-of-toronto",
+  "name_en": "University of Toronto",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://future.utoronto.ca/",
+  "platform": {
+    "value_ar": "OUAC للمتقدمين إلى جامعات أونتاريو، أو نموذج U of T International Application لمن هم خارج كندا ولم يدرسوا فيها ويقدّمون إلى تورنتو فقط (تحقق من صفحة التواريخ)",
+    "source_url": "https://future.utoronto.ca/deadlines"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "IELTS Academic بمجموع 6.5 مع 6.0 على الأقل في كل قسم، وتحقق الدرجات في اختبار واحد لا يُقبل فيه إعادة قسم واحد. IELTS Indicator وOne Skill Retake غير مقبولين.",
+      "source_url": "https://future.utoronto.ca/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "المقياس 1–6 للاختبارات بعد 21 يناير 2026: 4.5 إجمالًا، مع 4.5 في الكتابة و4.0 في التحدث. للاختبارات قبل 21 يناير 2026 كان المقياس 0–120: 89 إجمالًا مع 22 على الأقل في التحدث والكتابة. رمز المؤسسة 0982-00، ولا تُقبل MyBest.",
+      "source_url": "https://future.utoronto.ca/english-language-requirements"
+    },
+    "duolingo": null,
+    "note_ar": "صفحة اللغة لا تذكر السعودية ضمن الدول التي قد يُعفى طلابها من اختبار اللغة بعد دراسة سنوات كافية بالإنجليزية، فلا نفترض الإعفاء. Duolingo غير مذكور في الصفحة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "للطلاب من المدارس الدولية، جامعة تورنتو تقبل SAT أو ACT اختياريًا، ويُنظر إليها إن أُرسلت، ولا يُعاقب من لم يقدّمها. كلية الهندسة (Engineering) مختلفة: تطلب الإفصاح عن كل النتائج، وتتوقع درجات قياسية، وتعارض صفحتها نفسها بين «اختياري» و«مطلوب». إذا كنت تقدّم للهندسة، تحقق منها مباشرة. تفاصيل من مقتطف بحث، والصفحة لا تحدد الدورة.",
+    "source_url": "https://future.utoronto.ca/apply/requirements/international-high-school-secondary/usa/us-admissions/"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد لتقديم الطلب عبر OUAC لمعظم البرامج لدورة 2027 (الجدول يذكر التقديم الدولي معه، لكن دون تأكيد صريح لطلاب خارج كندا)",
+      "date": "2027-01-15",
+      "source_url": "https://future.utoronto.ca/deadlines"
+    },
+    {
+      "label_ar": "موعد التقديم المبكر الموصى به لمعظم البرامج لدورة 2027 (القرارات تبدأ في يناير)",
+      "date": "2026-11-07",
+      "source_url": "https://future.utoronto.ca/deadlines"
+    },
+    {
+      "label_ar": "آخر موعد لتقديم المستندات لمعظم البرامج لدورة 2027، ما عدا الهندسة والموسيقى (15 يناير)",
+      "date": "2027-02-01",
+      "source_url": "https://future.utoronto.ca/deadlines"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "السعودية في جدول تورنتو للمدارس الدولية مدرجة بالعبارة «Minimum Admission Requirements: General Secondary Education Certificate»، أي أن التوجيهية هي الحد الأدنى للقبول حسب الجدول، دون ذكر درجة أو امتحانات إضافية. الجدول لا يحدد شروط البرامج، فتحقق من صفحة برنامجك، لأن القبول يتطلب مؤهلات مسبقة وقد يكون التنافس عاليًا. المصدر: https://future.utoronto.ca/international-high-school-requirements-country?page=5",
+  "not_found_ar": [
+    "نسبة القبول العامة أو للطلاب الدوليين لدورة 2025 غير منشورة في ما وجدناه",
+    "شروط البرامج التفصيلية (مثل مواد الإعداد والدرجات المطلوبة) غير مفصلة هنا؛ انظر صفحة البرنامج",
+    "اختبار CAEL وELDA/COPE ليسا مذكورين في الصفحات التي فتحناها، وإن كانا مقبولين فيجب التحقق",
+    "صفحة الهندسة تعارض صفحات أخرى بشأن SAT وACT، ولم نحسم ذلك؛ اتصل بمكتب الهندسة إن كنت تقدّم لها"
+  ]
+}

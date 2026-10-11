@@ -1,0 +1,63 @@
+{
+  "id": "zhejiang-university",
+  "name_en": "Zhejiang University",
+  "checked": "2026-10-11",
+  "entry_ar": "آخر دليل منشور لدفعة 2026؛ دليل دفعة 2027 لم يصدر بعد",
+  "admissions_url": "https://iczu.zju.edu.cn/admissionsen/",
+  "platform": {
+    "value_ar": "نظام التقديم الدولي في الجامعة (intlstudent.zju.edu.cn)",
+    "source_url": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 (ولا تقل أي مهارة عن 5.0) للطب MBBS والهندسة الطبية الحيوية، و6.5 لبرنامج Global Communication and Management (دليل 2026)",
+      "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf"
+    },
+    "toefl_ibt": {
+      "min": 75,
+      "note_ar": "75 (ولا يقل أي قسم عن 15) للطب والهندسة الطبية الحيوية، و80 لبرنامج Global Communication and Management",
+      "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf"
+    },
+    "duolingo": {
+      "min": 100,
+      "note_ar": "100 للطب والهندسة الطبية الحيوية، و120 لبرنامج Global Communication and Management",
+      "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf"
+    },
+    "note_ar": "هذه الحدود لبرامج الإنجليزية في دليل 2026. برنامجا ZJU-UoE المزدوجان يحيلان إلى موقع المعهد. وبعض البرامج الصينية (علوم الحاسب وهندسة البرمجيات) تطلب أيضًا TOEFL 80 أو IELTS 6.5 من غير الناطقين بالإنجليزية."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب؛ تُرفق نتائج SAT أو ACT أو IB أو A-Level «إن وُجدت». المطلوب من كل المتقدمين الدوليين اختبار CSCA (China Scholastic Competency Assessment) بدءًا من عام 2026/2027.",
+    "source_url": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm"
+  },
+  "dates": [
+    {
+      "label_ar": "موعد التقديم لدفعة 2027",
+      "date": null,
+      "source_url": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm"
+    },
+    {
+      "label_ar": "دفعة 2026 (للاسترشاد): فتح التقديم",
+      "date": "2025-12-01",
+      "source_url": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm"
+    },
+    {
+      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد لمعظم البرامج الصينية (بتوقيت بكين)",
+      "date": "2026-02-28",
+      "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/3300a725-ca29-443b-845f-8c1a3c15c929.pdf"
+    },
+    {
+      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد لبرامج الإنجليزية",
+      "date": "2026-05-31",
+      "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "معظم برامج البكالوريوس تُدرَّس بالصينية. تشترط أغلب التخصصات HSK المستوى 5 بدرجة 180 فأكثر، وبعضها أعلى (مثلًا HSK 6 بدرجة 180 للطب والقانون، وHSK 6 بدرجة 220 لإدارة الأعمال والمحاسبة)، ويُختبر المتقدم في CSCA باللغة الصينية. توجد برامج بالإنجليزية (دليل 2026): Clinical Medicine (MBBS)، وBiomedical Engineering، وGlobal Communication and Management، وبرنامجا ZJU-UoE المزدوجان Integrative Biomedical Sciences وBiomedical Informatics. المصدر: https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/3300a725-ca29-443b-845f-8c1a3c15c929.pdf و https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf",
+  "not_found_ar": [
+    "دليل القبول لدفعة 2027 لم يُنشر بعد",
+    "متطلبات الإنجليزية لبرنامجي ZJU-UoE المزدوجين منشورة في موقع المعهد ولم نتحقق منها",
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا"
+  ]
+}

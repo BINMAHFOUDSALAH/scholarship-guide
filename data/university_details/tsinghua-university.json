@@ -1,0 +1,55 @@
+{
+  "id": "tsinghua-university",
+  "name_en": "Tsinghua University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دليل 2027 منشور)",
+  "admissions_url": "https://international.join-tsinghua.edu.cn/",
+  "platform": {
+    "value_ar": "نظام التقديم الإلكتروني للطلاب الدوليين في تسنغهوا (apply.join-tsinghua.edu.cn)",
+    "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Eligibility.htm"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "للبرامج الإنجليزية والبرامج الصينية-الإنجليزية: «مستوى عالٍ» من الإنجليزية دون حد أدنى منشور",
+      "source_url": "https://international.join-tsinghua.edu.cn/Admission1/FAQ.htm"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "يُقبل TOEFL أو IELTS أو أي اختبار إنجليزية آخر",
+      "source_url": "https://international.join-tsinghua.edu.cn/Admission1/FAQ.htm"
+    },
+    "duolingo": null,
+    "note_ar": "يقدّم غير الناطقين بالإنجليزية تقرير اختبار إنجليزية رسميًا، ولا تنشر الجامعة حدًا أدنى للدرجات."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "ليس شرطًا. تذكر الجامعة SAT وACT ضمن أمثلة الاختبارات الدولية التي تدعم الملف الأكاديمي (مع CSCA وA-Level وAP وIB).",
+    "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Eligibility.htm"
+  },
+  "dates": [
+    {
+      "label_ar": "الجولة الأولى: فتح التقديم (8 صباحًا بتوقيت بكين)",
+      "date": "2026-09-30",
+      "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
+    },
+    {
+      "label_ar": "الجولة الأولى: آخر موعد للتقديم (5 مساءً بتوقيت بكين، والنتيجة في يناير 2027)",
+      "date": "2026-11-20",
+      "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
+    },
+    {
+      "label_ar": "الجولة الثانية: آخر موعد للتقديم (5 مساءً بتوقيت بكين، والنتيجة أوائل مايو 2027)",
+      "date": "2027-02-28",
+      "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "معظم برامج البكالوريوس تُدرَّس بالصينية والإنجليزية (Chinese-English)، ويدرس الطلاب الدوليون مع الطلاب الصينيين. تشترط هذه البرامج HSK المستوى 5 فأعلى، بدرجة تزيد على 60 في كل من الاستماع والقراءة والكتابة (ويمكن طلب إعفاء لمن درس في ثانوية تدرّس بالصينية). توجد أربعة برامج بالإنجليزية بالكامل لا تشترط الصينية: Global Talents in Science and Engineering، وUrban Regeneration and Design، وPolitics, Economics and Sociology for Global Leaders in Smart Society، وبرنامج الدرجة المزدوجة Tsinghua–CUHK في الاقتصاد. المصدر: https://international.join-tsinghua.edu.cn/Admission1/Eligibility.htm و https://international.join-tsinghua.edu.cn/Admission1/FAQ.htm",
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا",
+    "لا يوجد حد أدنى منشور لدرجات TOEFL أو IELTS",
+    "طريقة وموعد التقييم الشامل (Comprehensive Assessment) لم يُعلنا بعد",
+    "لم تحدد الجامعة هل يُطلب اختبار CSCA لدفعة 2027 (الأسئلة الشائعة تقول إنه غير مطلوب لدفعة 2026)"
+  ]
+}

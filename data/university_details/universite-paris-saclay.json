@@ -1,0 +1,57 @@
+{
+  "id": "universite-paris-saclay",
+  "name_en": "Université Paris-Saclay",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (السنة الأولى من الليسانس عبر طلب القبول المسبق DAP)",
+  "admissions_url": "https://www.universite-paris-saclay.fr/en/admissions/applying-undergraduate-programmes",
+  "platform": {
+    "value_ar": "منصة Études en France (طلب القبول المسبق DAP) لغير الأوروبيين، والسعودية من الدول المشمولة بها",
+    "source_url": "https://www.campusfrance.org/en/application-etudes-en-france-procedure"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لم نجد برنامج بكالوريوس بالإنجليزية في الصفحات الرسمية، فلا يوجد حد IELTS منشور لطلاب البكالوريوس",
+      "source_url": "https://www.universite-paris-saclay.fr/en/education/licence-undergraduate-programme"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لم يُذكر TOEFL لطلاب البكالوريوس في الصفحات الرسمية",
+      "source_url": "https://www.universite-paris-saclay.fr/en/education/licence-undergraduate-programme"
+    },
+    "duolingo": null,
+    "note_ar": "لا تذكر صفحات القبول الرسمية للبكالوريوس أي اختبار إنجليزية، لأن لغة الدراسة الأساسية هي الفرنسية"
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "لم تذكر صفحات الجامعة أو Campus France الرسمية SAT أو ACT ضمن شروط السنة الأولى من الليسانس",
+    "source_url": "https://www.universite-paris-saclay.fr/en/admissions/applying-undergraduate-programmes"
+  },
+  "dates": [
+    {
+      "label_ar": "فتح تسجيل طلب القبول المسبق DAP على منصة Études en France لدورة 2027/2028",
+      "date": "2026-10-01",
+      "source_url": "https://www.campusfrance.org/en/application-etudes-en-france-procedure"
+    },
+    {
+      "label_ar": "رد الجامعات على طلبات DAP: قبل هذا التاريخ",
+      "date": "2027-04-30",
+      "source_url": "https://www.campusfrance.org/en/application-etudes-en-france-procedure"
+    },
+    {
+      "label_ar": "رد الطالب على عرض القبول: قبل هذا التاريخ",
+      "date": "2027-05-31",
+      "source_url": "https://www.campusfrance.org/en/application-etudes-en-france-procedure"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "معظم درجات البكالوريوس (الليسانس) في جامعة باريس-ساكلاي تُدرَّس بالفرنسية، وتذكر الجامعة أن «مستوى الفرنسية الجيد (B2 أو C1) مطلوب لحضور المقررات». لم نجد برنامج بكالوريوس يُدرَّس بالإنجليزية بالكامل في صفحات الجامعة الرسمية؛ البرامج الإنجليزية التي وجدناها ماجستير. اختبار اللغة المطلوب هو الفرنسية. تذكر صفحة تعلّم الفرنسية أن TEF إلزامي لطلاب السنة الأولى من الدول الأخرى، وتذكر DELF وDALF، دون درجات دنيا منشورة، وأن الشروط تختلف بين المعاهد الأعضاء. صفحة Campus France السعودية التي وجدناها (دورة 2022/2023) تقول إن TCF أو DELF إلزامي للـDAP، وصفحة Campus France العامة تذكر الحد الأدنى B2 لمعظم المؤسسات. المصادر: https://www.universite-paris-saclay.fr/en/node/42117 و https://www.universite-paris-saclay.fr/en/campus-life/international-welcome-desk/learning-french و https://www.arabiesaoudite.campusfrance.org/en/admissions و https://www.algerie.campusfrance.org/faq/quel-niveau-de-francais-pour-etre-accepte-dans-un-etablissement-d-enseignement-superieur و https://www.universite-paris-saclay.fr/en/education/licence-undergraduate-programme",
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا",
+    "تعارض في آخر موعد لتقديم DAP لدورة 2027/2028: صفحة Campus France العامة (محدّثة 28 سبتمبر 2026) تكتب 15 ديسمبر 2027، وصفحات دول أخرى تكتب 15 ديسمبر 2026، لذلك لم ننشر تاريخ الإغلاق حتى يُتحقق منه",
+    "تعارض في نافذة التقديم: صفحة جامعة باريس-ساكلاي تقول إن DAP يُقدَّم بين نوفمبر ويناير، بينما جدول Campus France يبدأ 1 أكتوبر",
+    "صفحة Campus France السعودية المتاحة تعود إلى دورة 2022/2023 (الرسوم والمستندات والحد الأقصى للجامعات)؛ لم نجد نسخة سعودية محدثة لدورة 2027",
+    "لم نجد برنامج بكالوريوس بالإنجليزية في الصفحات الرسمية؛ المعاهد الأعضاء (مثل CentraleSupélec) قد تكون لها شروط منفصلة لم نراجعها",
+    "اختبار الفرنسية المقبول والحد الأدنى للدورة 2027 لم يتأكدا من صفحة سعودية محدّثة؛ الصفحات الرسمية تختلف بين TEF وTCF/DELF"
+  ]
+}

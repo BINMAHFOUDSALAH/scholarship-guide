@@ -1,0 +1,52 @@
+{
+  "id": "peking-university",
+  "name_en": "Peking University",
+  "checked": "2026-10-11",
+  "entry_ar": "آخر إعلان منشور لدفعة 2026؛ إعلان دفعة 2027 لم يصدر بعد",
+  "admissions_url": "https://isd.pku.edu.cn/en/undergraduate_program.php",
+  "platform": {
+    "value_ar": "نظام التقديم الإلكتروني studyatpku.com",
+    "source_url": "https://isd.pku.edu.cn/en/detail.php?id=813"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "البرامج تُدرَّس بالصينية، ولا تطلب إعلانات 2026 درجة IELTS أو TOEFL. في مسار اختبار القبول تكون الإنجليزية مادة في الاختبار الكتابي."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "في مسار القبول دون اختبار كتابي (دفعة 2026) يُقبل أحد الخيارات: SAT بمجموع 1400 فأكثر مع 3 مواد AP بدرجة 4 فأكثر، أو ACT بمجموع 30 فأكثر مع الكتابة، أو IB أو A-Level أو شهادات وطنية محددة. البديل مسار اختبار القبول الكتابي دون SAT.",
+    "source_url": "https://isd.pku.edu.cn/en/detail.php?id=816"
+  },
+  "dates": [
+    {
+      "label_ar": "موعد التقديم لدفعة 2027",
+      "date": null,
+      "source_url": "https://isd.pku.edu.cn/en/items.php?category2=36"
+    },
+    {
+      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد لمسار اختبار القبول الكتابي",
+      "date": "2026-02-28",
+      "source_url": "https://isd.pku.edu.cn/en/detail.php?id=818"
+    },
+    {
+      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد للجولة الأولى في مسار القبول دون اختبار كتابي",
+      "date": "2026-02-28",
+      "source_url": "https://isd.pku.edu.cn/en/detail.php?id=813"
+    },
+    {
+      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد للجولة الثانية في مسار القبول دون اختبار كتابي",
+      "date": "2026-07-10",
+      "source_url": "https://isd.pku.edu.cn/en/detail.php?id=813"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "برامج البكالوريوس للطلاب الدوليين تُدرَّس بالصينية («Chinese as the medium of instruction»). في مسار القبول دون اختبار كتابي (دفعة 2026) تُشترط HSK 6 بدرجة 210 فأكثر مع SAT أو ACT (أو بدائل مثل IB HL Chinese بدرجة 6). ومسار اختبار القبول فيه اختبار كتابي في الصينية والإنجليزية والرياضيات. لم نجد برنامج بكالوريوس بالإنجليزية في صفحات القبول. ولتقوية الأساس يوجد برنامج تحضيري Yuke/Pre-university مدته سنة إلى سنتين. المصدر: https://isd.pku.edu.cn/en/detail.php?id=813 و https://isd.pku.edu.cn/en/detail.php?id=816 و https://isd.pku.edu.cn/en/detail.php?id=818",
+  "not_found_ar": [
+    "إعلان القبول لدفعة 2027 لم يُنشر بعد (إعلانات 2026 نُشرت في ديسمبر 2025)",
+    "لم نجد برنامج بكالوريوس يُدرَّس بالإنجليزية للطلاب الدوليين",
+    "مستوى HSK المطلوب في مسار اختبار القبول الكتابي غير مذكور في الإعلان",
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا"
+  ]
+}

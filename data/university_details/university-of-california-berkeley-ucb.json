@@ -1,0 +1,67 @@
+{
+  "id": "university-of-california-berkeley-ucb",
+  "name_en": "University of California, Berkeley",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.berkeley.edu/requirements-for-international-students/",
+  "platform": {
+    "value_ar": "طلب جامعة كاليفورنيا (UC Application): طلب واحد تختار فيه فروع UC التي تريدها",
+    "source_url": "https://admission.universityofcalifornia.edu/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "IELTS Academic بحد أدنى 6.5 حسب صفحة Berkeley. الصفحة لا تحدد إن كانت الدرجة الكلية. لا تقبل UC نتيجة IELTS One Skill Retake.",
+      "source_url": "https://admissions.berkeley.edu/requirements-for-international-students/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 على المقياس الجديد 1–6 المعمول به منذ يناير 2026. صفحة Berkeley تكتب «90/4.5»، والرقم 90 يخص المقياس القديم 0–120، بينما تذكر صفحة UC أن الحد القديم كان 80. الاختلاف في المقياس القديم فقط، والرقم 4.5 متفق عليه في الصفحتين.",
+      "source_url": "https://admissions.berkeley.edu/requirements-for-international-students/"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": null,
+      "source_url": "https://admissions.berkeley.edu/requirements-for-international-students/"
+    },
+    "note_ar": "يكفي أحد هذه: TOEFL أو IELTS أو Duolingo بالحد المذكور، أو ACT English Language Arts 24 فأكثر، أو SAT Writing and Language 31 فأكثر (حسب صفحة Berkeley). صفحة Berkeley تقول يجب إثبات الكفاءة بحلول 31 يناير، بينما تقول صفحة UC إن الاختبار يُؤدى قبل ديسمبر من السنة الأخيرة في الثانوية. لا تُقبل MyBest TOEFL."
+  },
+  "sat_act": {
+    "policy": "not_considered",
+    "note_ar": "Berkeley لا تستخدم درجات SAT أو ACT في أي جزء من عملية القبول (test-free). أي درجات تُرسل بعد القبول تُستخدم للتسكين أو لمواد ذات رصيد.",
+    "source_url": "https://admissions.berkeley.edu/apply-to-berkeley/first-year-applicants-uc-berkeley/first-year-policy-changes/"
+  },
+  "dates": [
+    {
+      "label_ar": "يفتح طلب UC لخريف 2027 (يمكنك البدء بتعبئته)",
+      "date": "2026-08-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "تبدأ فترة إرسال طلب UC لخريف 2027",
+      "date": "2026-10-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "آخر موعد لإرسال طلب UC لخريف 2027 (لا يوجد قبول مبكر)",
+      "date": "2026-11-30",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "آخر موعد لقبول عرض القبول (SIR) لخريف 2027",
+      "date": "2027-05-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 10.5,
+    "scope_ar": "القبول العام لدفعة خريف 2026 (لقطة قبول رسمية من موقع UC: قُبل 13,967 من 133,154 متقدمًا)",
+    "international_percent": null,
+    "source_url": "https://admission.universityofcalifornia.edu/campuses-majors/berkeley/first-year-admit-data.html"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الدوليين غير منشورة (الصفحة لا تقسم الأرقام حسب الإقامة)",
+    "لم نتمكن من قراءة جدول القبول في Common Data Set لبيركلي (الملف على Google Sheets)، لذلك استخدمنا لقطة UC لخريف 2026. إحصاءات OPA في بيركلي تذكر 14,451 مقبولًا من 126,842 متقدمًا لدورة 2025–26 (نحو 11.4%)."
+  ]
+}

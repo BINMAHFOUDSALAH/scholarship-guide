@@ -18,7 +18,9 @@
     <p class="path-item-links">
       <a class="path-item-link" href="{{ program.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
       {% if program.apply_url %}<a class="path-item-link" href="{{ program.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
-      {% if program.universities_guide_url %}<a class="path-item-link" href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
+      {% if program.targets_guide_url %}<a class="path-item-link" href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">الجامعات المستهدفة (PDF) ↗</a>{% endif %}
+      {% if program.universities_guide_url %}<a class="path-item-link path-item-link--page" href="{{ url_for('universities_page') }}">ابحث عن جامعتك وتخصصك ←</a>
+      <a class="path-item-link" href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
     </p>
   </header>
 
@@ -47,8 +49,10 @@
           <td data-label="لخريجي الثانوية؟">{{ track.high_school_ar }}</td>
           <td data-label="شرط القبول">{{ track.admission_ar }}</td>
           <td data-label="حالة التقديم">
-            {% if track.status and (track.status_source or track.owner_confirmed) %}
-            <span class="status status--{{ track.status }}">{{ track_status_labels[track.status] }}</span>
+            {% set st = track_status(track) %}
+            {% if st and (track.status_source or track.owner_confirmed or track.latest_programs) %}
+            <span class="status status--{{ st }}">{{ track_status_labels[st] }}</span>
+            {% if st == "open" and track.status_until %}<span class="status-until">حتى {{ track.status_until | arabic_date }}</span>{% endif %}
             {% else %}
             <span class="track-note">لا نتابع حالته في هذا الدليل</span>
             {% endif %}
@@ -58,10 +62,14 @@
       </tbody>
     </table>
 
+    {% for track in program.tracks if track.latest_programs %}{% include "partials/waaid_programs.html" %}{% endfor %}
+
+    {% if program.tracks | selectattr("facts") | list %}
     <h3 class="program-subtitle">شروط كل مسار من مصدره</h3>
     <ul class="fact-items">
       {% for track in program.tracks %}{% for f in track.facts %}{{ c.fact(f, label=track.name_ar) }}{% endfor %}{% endfor %}
     </ul>
+    {% endif %}
   </section>
 
   {% if program.facts %}
@@ -70,6 +78,19 @@
     <ul class="fact-items">
       {% for f in program.facts %}{{ c.fact(f) }}{% endfor %}
     </ul>
+  </section>
+  {% endif %}
+
+  {% if program.target_universities %}
+  <section class="program-section" aria-labelledby="targets-title">
+    <h2 id="targets-title">الجامعات المستهدفة</h2>
+    <p class="result-note">{{ program.target_universities | length }} جامعة، كما في صفحة البرنامج الرسمية (القائمة قابلة للتغيير).</p>
+    <ul class="target-list">
+      {% for t in program.target_universities %}
+      <li>{% if t.id in explorer.universities %}{% set u = explorer.universities[t.id] %}<a href="{{ url_for('university_page', uid=t.id) }}">{{ u.name_ar or u.name_en }}</a>{% else %}<span lang="en" dir="ltr">{{ t.name_en }}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% if program.targets_guide_url %}<p><a href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات المستهدفة (PDF) ↗</a></p>{% endif %}
   </section>
   {% endif %}
 

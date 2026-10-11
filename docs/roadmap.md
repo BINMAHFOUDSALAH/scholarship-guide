@@ -4,12 +4,14 @@ The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
 > **Next session (as of 2026-10-11):**
-> 1. **Owner approves `docs/specs/universities-explorer.md`** (3 decisions at the bottom), then build the explorer: extraction script → `data/universities.json` → `/universities`.
-> 2. Apply the KGSP and Aramco research (`docs/research/kgsp-2026-27.md`, `aramco-cdpne-2026-27.md`) to `paths.json` once the owner has reviewed them.
-> 3. Then Stage 1e step 3 (grade-page task lists) and step 4 (FAQ from real student questions).
-> 4. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
+> Done and pushed today: the universities explorer (decision 029: 290 universities from the official PDF, search by university or major, Arabic + English names, requirements for all 30 الرواد universities), الرواد open until 15 Nov 2026 (closes itself after), the واعد latest-programs toggle, SDAIA's AI scholarship page (decision 030), research agents on Haiku (CLAUDE.md).
+> 1. **Owner spot-checks the requirement files** in `data/university_details/`, starting with the ones the agents couldn't open directly (Columbia, Michigan, Oxford, UCL, NUS) and the years they inferred. Fix or null anything wrong.
+> 2. Next requirement batches: إمداد universities, most-searched first (Haiku agents, ~5 per batch).
+> 3. Apply the KGSP and Aramco research (`docs/research/kgsp-2026-27.md`, `aramco-cdpne-2026-27.md`) to `paths.json` once the owner has reviewed them.
+> 4. Then Stage 1e step 3 (grade-page task lists) and step 4 (FAQ from real student questions).
+> 5. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
 >
-> Owner to-dos still open: review the fact-check tables (§5 of each research file), send the X post links for الرواد/إمداد, optionally export the Telegram group (JSON) for the FAQ step.
+> Owner to-dos still open: review the fact-check tables (§5 of each research file), send the X post links for الرواد (open until 15 Nov) and إمداد, tell us SDAIA's registration status/deadline, review the 15 least-certain Arabic university names, optionally export the Telegram group (JSON) for the FAQ step.
 
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
 **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).

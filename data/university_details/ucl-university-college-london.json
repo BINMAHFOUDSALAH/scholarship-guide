@@ -1,0 +1,45 @@
+{
+  "id": "ucl-university-college-london",
+  "name_en": "UCL (University College London)",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.ucl.ac.uk/prospective-students/undergraduate/how-apply",
+  "platform": {
+    "value_ar": "UCAS (الرمز U80)",
+    "source_url": "https://ucl.ac.uk/prospective-students/undergraduate/how-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "الحد الأدنى يعتمد على مستوى البرنامج من 5 مستويات: المستوى 1 يطلب 6.5 إجمالًا مع 6.0 لكل قسم، والمستوى 4 يطلب 7.5 مع 7.0 لكل قسم، والمستوى 5 يطلب 8.0. تحقق من مستوى برنامجك. IELTS Academic Online مقبول، وIELTS One Skill Retake غير مقبول. هذه القيم من مقتطف بحث رسمي، والصفحة تعذّر فتحها (403).",
+      "source_url": "https://www.ucl.ac.uk/prospective-students/undergraduate/application/entry-requirements/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "المقياس العشري 1–6 للاختبارات بعد 21 يناير 2026: المستوى 1 يطلب 4.5 إجمالًا مع 4.0 لكل قسم، والمستوى 4 يطلب 5.5 مع 5.0 لكل قسم. قبل 21 يناير 2026 كان المقياس 0–120 (المستوى 1: 92 إجمالًا). لا تُجمع نتائج اختبارات مختلفة، ولا يُقبل MyBest. رمز UCL لـ TOEFL هو 9163. حدود المستويات الأعلى تتعارض بين مقتطفين لمستوى 3، لذلك لم نعتمدها.",
+      "source_url": "https://www.ucl.ac.uk/prospective-students/undergraduate/application/entry-requirements/english-language-requirements"
+    },
+    "duolingo": null,
+    "note_ar": "تقول UCL إن الطالب يحتاج إثبات قدرته الإنجليزية حديثًا، وإن بعض البرامج لها شرط أعلى (مثل القانون: المستوى 4). الصفحة لم تُفتح، والأرقام من مقتطفات بحث."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لا يُطلب SAT أو ACT من طلاب النظام السعودي. لمتقدمي النظام الأمريكي: مسار AP وحده (من 3 إلى 5 مواد AP)، أو مادتان AP مع SAT أو ACT. مثال: A*A*A تتطلب خمس AP بدرجة 5، أو درجتي 5 مع SAT 1500 أو ACT 34. الصفحة لا تحدد الدورة، والمقتطف من بحث.",
+    "source_url": "https://www.ucl.ac.uk/prospective-students/international/united-states-america"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد UCAS لمعظم التخصصات لدورة 2027 (equal consideration، 6 مساءً بتوقيت المملكة المتحدة)",
+      "date": "2027-01-13",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "التوجيهية السعودية غير مقبولة للقبول المباشر في UCL حسب صفحة UCL الخاصة بالسعودية (من مقتطف بحث، والصفحة تعذّر فتحها 403). المسارات المقبولة: A levels أو IB أو البكالوريا الفرنسية أو AP، أو الدبلوم الأساس UPC (Undergraduate Preparatory Certificate) الذي تعتبره UCL دبلومًا أساسيًا دوليًا لمن لا تُقبل شهادته للقبول المباشر، أو سنة مكتملة في جامعة سعودية مع درجات تعادل مستوى الشرف المحدد. أرقام المعدل المطلوب مختلفة بين صفحات UCL (80% في صفحة و85% في أخرى)، لذلك لم نعرض رقمًا. تحقق من التخصص عبر قائمة المؤهلات في دليل البرامج (اختر Saudi Arabia من قائمة 'Other qualifications'). الطب لا يقبل المؤهلات الدولية إلا إذا ذُكر ذلك صراحة.",
+  "not_found_ar": [
+    "صفحات ucl.ac.uk الرسمية رفضت الفتح (403)، لذلك كل القيم أعلاه من مقتطفات بحث وتحتاج إلى تحقق قبل النشر",
+    "نسبة القبول العامة أو للطلاب الدوليين غير منشورة في ما وجدناه، ولم نحسب نسبة من أرقام تقريبية",
+    "Duolingo English Test غير مذكور في المقتطفات التي وجدناها",
+    "اختبارات القبول الخاصة بالتخصص مثل TARA لهندسة الميكانيكا وESAT للهندسة الكهربائية والإلكترونية مذكورة في مقتطفات، ويجب التحقق من صفحة التخصص قبل التقديم"
+  ]
+}

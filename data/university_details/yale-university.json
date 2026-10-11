@@ -1,0 +1,60 @@
+{
+  "id": "yale-university",
+  "name_en": "Yale University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.yale.edu/timelines",
+  "platform": {
+    "value_ar": "Common App أو Coalition (عبر SCOIR) أو QuestBridge",
+    "source_url": "https://admissions.yale.edu/instructions"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "IELTS مقبول. صفحة Yale تذكر أن أقوى المتقدمين عادةً يحصلون على 7 أو أكثر، وهذا ليس حدًا أدنى منشورًا.",
+      "source_url": "https://admissions.yale.edu/standardized-testing"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "أقوى المتقدمين عادةً يحصلون على 5 أو أكثر على المقياس 1–6 للاختبارات بعد 21 يناير 2026، أو 100 على الأقل على المقياس 0–120 للاختبارات قبل ذلك. ليس حدًا أدنى منشورًا.",
+      "source_url": "https://admissions.yale.edu/standardized-testing"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "أقوى المتقدمين عادةً يحصلون على 120 أو أكثر في Duolingo English Test. ليس حدًا أدنى منشورًا.",
+      "source_url": "https://admissions.yale.edu/standardized-testing"
+    },
+    "note_ar": "تشترط Yale اختبار لغة إنجليزية من غير الناطقين الذين لم يدرسوا سنتين على الأقل في مدرسة تُدرَّس بالإنجليزية. الاختبار لا يغني عن SAT أو ACT. تقبل TOEFL وIELTS وCambridge وDuolingo وInitialView، ولا تنشر حدًا أدنى رسميًا."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط Yale تقديم SAT أو ACT للمتقدمين للسنة الأولى، وهو تغيير أُعلن في 27 مايو 2026 بدلًا من السياسة المرنة السابقة. AP وIB إضافة مشجّعة وليستا بديلًا. الصفحة لا تذكر سنة الدخول؛ أن الشرط يسري على خريف 2027 استنتاج من عبارة «الدورة القادمة» في الإعلان.",
+    "source_url": "https://admissions.yale.edu/standardized-testing"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Single-Choice Early Action (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2026-11-01",
+      "source_url": "https://admissions.yale.edu/timelines"
+    },
+    {
+      "label_ar": "آخر موعد Regular Decision (الصفحة تذكر 2 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2027-01-02",
+      "source_url": "https://admissions.yale.edu/timelines"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 4.7,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 2,387 مقبولًا من 50,264 متقدمًا، محسوبة من القسم C1 في Common Data Set 2025–2026",
+    "international_percent": null,
+    "source_url": "https://oir.yale.edu/sites/default/files/yale_cds_2025-26_md_20260616.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "تاريخ فتح التقديم غير منشور في الصفحات الرسمية التي اطّلعنا عليها",
+    "نسبة قبول الطلاب الدوليين غير منشورة؛ جدول الإقامة في القسم C1 من CDS فارغ",
+    "صفحة الاختبارات لا تذكر سنة الدخول صراحة، وتكتفي بعبارة «الدورة القادمة» في إعلان 27 مايو 2026",
+    "حد أدنى رسمي لاختبارات الإنجليزية غير منشور (الأرقام أعلاه معايير لأقوى المتقدمين)",
+    "صفحة المواعيد لا تذكر سنة الدخول، فالسنوات أعلاه مستنتجة من الدورة الحالية"
+  ]
+}

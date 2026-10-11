@@ -1,0 +1,62 @@
+{
+  "id": "harvard-university",
+  "name_en": "Harvard University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
+  "admissions_url": "https://college.harvard.edu/admissions",
+  "platform": {
+    "value_ar": "Common App مع أسئلة Harvard الإضافية (Harvard شريكة أيضًا في QuestBridge)",
+    "source_url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "غير مطلوب للمتقدمين للسنة الأولى، ولا يوجد حد أدنى منشور. يمكن إرسال النتيجة اختياريًا.",
+      "source_url": "https://college.harvard.edu/admissions/apply/international-applicants"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "غير مطلوب للمتقدمين للسنة الأولى، ولا يوجد حد أدنى منشور. يمكن إرسال النتيجة اختياريًا.",
+      "source_url": "https://college.harvard.edu/admissions/apply/international-applicants"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "غير مطلوب للمتقدمين للسنة الأولى، ولا يوجد حد أدنى منشور. يمكن إرسال النتيجة اختياريًا.",
+      "source_url": "https://college.harvard.edu/admissions/apply/international-applicants"
+    },
+    "note_ar": "لا تشترط Harvard اختبار لغة إنجليزية للمتقدمين للسنة الأولى أو المحوّلين. اختبارات اللغة لا تغني عن شرط SAT أو ACT."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط Harvard تقديم SAT أو ACT، ويمكن إدخال الدرجات ذاتيًا. فقط في حالات استثنائية عند تعذّر الاختبار تقبل نتائج AP أو IB أو A-Level أو اختبار الثانوية الوطني.",
+    "source_url": "https://college.harvard.edu/admissions/apply/application-requirements"
+  },
+  "dates": [
+    {
+      "label_ar": "فتح التقديم عبر Common App (الصفحة تذكر 1 أغسطس دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2026-08-01",
+      "source_url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
+    },
+    {
+      "label_ar": "آخر موعد Restrictive Early Action (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2026-11-01",
+      "source_url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
+    },
+    {
+      "label_ar": "آخر موعد Regular Decision (الصفحة تذكر 1 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2027-01-01",
+      "source_url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 4.2,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 2,003 مقبولًا من 47,893 متقدمًا، محسوبة من القسم C1 في Common Data Set 2025–2026",
+    "international_percent": null,
+    "source_url": "https://oira.harvard.edu/files/2026/07/CDS_2025-2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الطلاب الدوليين غير منشورة رسميًا (جدول الإقامة في C1 فارغ)",
+    "صفحات المواعيد لا تذكر السنة صراحة، فالسنوات أعلاه مستنتجة من الدورة الحالية"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "imperial-college-london",
+  "name_en": "Imperial College London",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.imperial.ac.uk/study/apply/undergraduate/entry-requirements/",
+  "platform": {
+    "value_ar": "UCAS (الرمز I50)",
+    "source_url": "https://www.imperial.ac.uk/study/apply/undergraduate/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "مستويان حسب البرنامج: القياسي (Standard) 6.5 إجمالًا مع 6.0 لكل قسم، والأعلى (Higher) 7.0 إجمالًا مع 6.5 لكل قسم. الصفحة تحيل إلى صفحة البرنامج لمعرفة المستوى المطلوب. لا تُقبل إعادة قسم واحد من IELTS، ويجب تحقيق الدرجات في اختبار واحد.",
+      "source_url": "https://www.imperial.ac.uk/study/apply/english-language/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات بعد 21 يناير 2026 يُستخدم المقياس 1–6: المستوى القياسي 4.5 إجمالًا، والأعلى 5.0، مع حد أدنى في كل قسم. قبل ذلك كان المقياس 0–120: القياسي 92 (20 على الأقل لكل قسم)، والأعلى 100 (22 لكل قسم). الصفحة لا تربط الأعمدة بالمستويات صراحة، لذلك نتحقق منها قبل النشر.",
+      "source_url": "https://www.imperial.ac.uk/study/apply/english-language/"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "المستوى القياسي 115 إجمالًا مع 105 على الأقل في كل جزء، والأعلى 125 مع 115 على الأقل في كل جزء.",
+      "source_url": "https://www.imperial.ac.uk/study/apply/english-language/"
+    },
+    "note_ar": "لا يُعفى أي متقدم من اختبار اللغة حتى إن كانت لغته الأم الإنجليزية، وتسري النتيجة لسنتين من بدء الدراسة. الصفحة لا تفصل بين البكالوريوس والدراسات العليا في الأرقام."
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "الصفحة الرئيسية لا تذكر SAT أو ACT. نتيجة بحث (لم نتحقق من صفحتها) تقول إن مسار AP وحده يقبل خمس مواد AP (ثلاث بدرجة 5 واثنتان بدرجة 4)، أو AP مع SAT 1460 أو ACT 31. وقسم الكيمياء لا يقبل SAT أو ACT بديلًا عن AP. لذلك لم نحدد السياسة.",
+    "source_url": "https://www.imperial.ac.uk/study/apply/undergraduate/entry-requirements/accepted-qualifications/"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد UCAS لمعظم التخصصات لدورة 2027 (equal consideration، 6 مساءً بتوقيت المملكة المتحدة)",
+      "date": "2027-01-13",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "التوجيهية السعودية غير مذكورة في صفحات Imperial الرسمية التي فتحناها (قائمة المؤهلات وصفحة الشرق الأوسط)، فلا نستطيع الجزم بقبولها أو رفضها، واللازم مراسلة القبول. المسار المعروض: A-levels بدرجات من AAA إلى A*A*A حسب التخصص، أو IB بنحو 38 إلى 42 نقطة مع 6 إلى 7 في المواد المطلوبة على المستوى الأعلى. وتقول الصفحة إنه قد يُنظر في طالب يدرس برنامج أساس مقبولًا أو مؤهلًا مقبولًا من مزود خارجي، دون تحديد التوجيهية. الاختبارات: لا يوجد اختبار عام، لكن بعض الأقسام تستخدم اختبارًا ضمن الانتقاء (مثل ESAT وTMUA)، وعلى صفحة قبول الأقسام تفاصيل كل اختبار. المصدر: https://www.imperial.ac.uk/study/apply/undergraduate/entry-requirements/accepted-qualifications/",
+  "not_found_ar": [
+    "لا توجد في صفحات Imperial الرسمية التي فحصناها شروط خاصة بالتوجيهية السعودية؛ اسأل مكتب القبول قبل التقديم",
+    "نسبة القبول لدورة 2025 والنسبة الخاصة بالطلاب الدوليين غير منشورة في ما وجدناه؛ الأرقام العامة (نحو 9.9% لدورة 2024–25) من مقتطف بحث وغير مؤكدة، ولم نعرضها",
+    "تفاصيل اختبارات القبول لكل قسم (ESAT وTMUA وغيرها) ومواعيد تسجيلها لم نتحقق منها هنا",
+    "شروط SAT وACT ومسار AP الأمريكي مأخوذة من مقتطف بحث لم نتحقق من صفحته"
+  ]
+}

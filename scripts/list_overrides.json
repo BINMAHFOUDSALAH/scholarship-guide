@@ -1,0 +1,31 @@
+{
+  "_note": "Manual readings for list cells the PDF draws badly. Key: 'page:x:y' of the visible (top-drawn) flag, rounded. We always follow what a student sees on the page, and record what's hidden.",
+  "74:164:294": {
+    "rank": 66,
+    "name_en": "University of Lausanne",
+    "hidden": "Under this cell the PDF also contains 'Utrecht University' with rank 70 and a Netherlands flag, covered by the cell background. The visible page shows University of Lausanne, rank 66, Swiss flag. Owner: worth asking the Ministry which is intended."
+  },
+  "_gaps": {
+    "rnd:ict": {
+      "missing": [
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "note": "The official R&D ICT list goes from rank 90 (end of page 22) to rank 100 (start of page 23); 91-99 are not in the PDF."
+    }
+  },
+  "_country": {
+    "Tilburg University": {
+      "country": "NL",
+      "guide_flag": "FR",
+      "note": "Tilburg University is in Tilburg, the Netherlands; the guide shows the French flag next to it (its only listing). We show the Netherlands and keep the guide's flag on record."
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "massachusetts-institute-of-technology-mit",
+  "name_en": "Massachusetts Institute of Technology (MIT)",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/",
+  "platform": {
+    "value_ar": "بوابة التقديم الخاصة بـ MIT",
+    "source_url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.0,
+      "note_ar": "الحد الأدنى 7، والدرجة الموصى بها 7.5 حسب صفحة الاختبارات في MIT.",
+      "source_url": "https://mitadmissions.org/apply/firstyear/tests-scores/"
+    },
+    "toefl_ibt": {
+      "min": 5.0,
+      "note_ar": "المقياس 1–6 بخطوات 0.5 للاختبارات من 21 يناير 2026 فصاعدًا: الحد الأدنى 5، والموصى به 5.5. الاختبار الأقدم (قبل 21 يناير 2026) يحتاج 90 على المقياس 0–120، والموصى به 100.",
+      "source_url": "https://mitadmissions.org/apply/firstyear/tests-scores/"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "الحد الأدنى 120، والموصى به 125 حسب صفحة الاختبارات في MIT.",
+      "source_url": "https://mitadmissions.org/apply/firstyear/tests-scores/"
+    },
+    "note_ar": "MIT توصي بقوة بتقديم نتيجة اختبار إنجليزية لمن استخدم الإنجليزية أقل من خمس سنوات أو لا يتحدثها في البيت أو المدرسة، ولا تشترطه للجميع. تقبل أيضًا PTE Academic (الحد الأدنى 65، والموصى به 70) وCambridge C1 Advanced أو C2 Proficiency (الحد الأدنى 185، والموصى به 190)."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تطلب MIT تقديم SAT أو ACT للمتقدمين للسنة الأولى، ولا تحدد درجات دنيا أو موصى بها لهما. تقبل SAT الورقي والرقمي، ولا تطلب كتابة ACT أو قسم العلوم فيه.",
+    "source_url": "https://mitadmissions.org/apply/firstyear/tests-scores/"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Early Action (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2026-11-01",
+      "source_url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/"
+    },
+    {
+      "label_ar": "آخر موعد Regular Action (الصفحة تذكر 4 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "date": "2027-01-04",
+      "source_url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 4.6,
+    "scope_ar": "القبول العام لطلاب السنة الأولى لخريف 2025 (دفعة 2029): 1,334 مقبولًا من 29,281 متقدمًا، حسب صفحة الإحصاءات الرسمية في MIT وCommon Data Set 2025–2026 (القسم C1)",
+    "international_percent": null,
+    "source_url": "https://mitadmissions.org/apply/process/stats/"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "تاريخ فتح التقديم لدورة 2027 غير منشور في الصفحة",
+    "نسبة قبول الطلاب الدوليين غير منشورة كنسبة؛ الصفحة تنشر العدد فقط: 136 مقبولًا من 6,926 متقدمًا دوليًا (دفعة 2029)",
+    "صفحات MIT لا تذكر سنة الدخول صراحة في المواعيد والاختبارات، فالسنوات أعلاه مستنتجة من الدورة الحالية"
+  ]
+}

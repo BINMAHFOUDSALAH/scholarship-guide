@@ -287,3 +287,39 @@ def test_ielts_resource_page():
     assert 'class="source-stamp"' in html
     assert client.get("/resources/nope").status_code == 404
     assert f"<loc>{main.site['base_url']}/resources/ielts</loc>" in client.get("/sitemap.xml").text
+
+
+# ---------- Waaid latest programs, deadlines, SDAIA ----------
+
+def test_waaid_toggle_lists_latest_programs_newest_first():
+    w = main.waaid()
+    closing = [p["apply_to"] for p in w["programs"]]
+    assert closing == sorted(closing, reverse=True)
+    html = client.get("/").text
+    assert 'class="waaid-latest"' in html
+    assert w["programs"][0]["program_ar"] in html
+    assert main.waaid_data["source_url"] in html
+
+
+def test_open_track_closes_itself_after_its_deadline(monkeypatch):
+    track = {"status": "open", "status_until": "2026-11-15"}
+
+    class Day:
+        @staticmethod
+        def today():
+            return Day.value
+    monkeypatch.setattr(main, "date", Day)
+    Day.value = __import__("datetime").date(2026, 11, 15)
+    assert main.track_status(track) == "open"
+    Day.value = __import__("datetime").date(2026, 11, 16)
+    assert main.track_status(track) == "closed"
+
+
+def test_sdaia_program_page_and_targets():
+    html = client.get("/programs/sdaia-ai-scholarship").text
+    assert "قرار ابتعاث" in html
+    assert "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx" in html
+    sdaia = main.paths_by_id["sdaia-ai-scholarship"]
+    for target in sdaia["target_universities"]:
+        assert target["id"] in main.explorer.universities, target
+    assert "مستهدفة في" in client.get("/universities/the-university-of-edinburgh").text

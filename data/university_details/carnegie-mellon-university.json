@@ -1,0 +1,63 @@
+{
+  "id": "carnegie-mellon-university",
+  "name_en": "Carnegie Mellon University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.cmu.edu/admission/admission/international-applicants",
+  "platform": {
+    "value_ar": "Common App (صفحة الاختبارات في CMU تذكر إرسال الدرجات عبر Common Application)",
+    "source_url": "https://www.cmu.edu/admission/admission/standardized-testing"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.5,
+      "note_ar": "7.5 overall band على IELTS Academic فقط (الورقي أو المحوسب) حسب صفحة CMU الدولية. تُقبل الأقسام 7.5 فأكثر بعين الاعتبار.",
+      "source_url": "https://www.cmu.edu/admission/admission/international-applicants"
+    },
+    "toefl_ibt": {
+      "min": 5,
+      "note_ar": "5 فأكثر في الدرجة الكلية على المقياس الجديد 1–6 للاختبارات بعد 21 يناير 2026. الاختبارات قبل ذلك تحتاج 102 على المقياس القديم 0–120.",
+      "source_url": "https://www.cmu.edu/admission/admission/international-applicants"
+    },
+    "duolingo": {
+      "min": 135,
+      "note_ar": "135 في الدرجة الكلية، و135 في كل مهارة من المهارات الأربع (Literacy، Conversation، Comprehension، Production) حسب الصفحة.",
+      "source_url": "https://www.cmu.edu/admission/admission/international-applicants"
+    },
+    "note_ar": "صفحة CMU تكتب «require at least»، أي حدًا أدنى. تُقبل أيضًا TOEFL Essentials بدرجة 11 فأكثر وCambridge English بدرجة 191 فأكثر. يجب ألا تزيد النتيجة على سنتين وقت التقديم. مقابلة InitialView أو Vericant موصى بها للمتحدثين بغير الإنجليزية وغير مطلوبة. عند إعادة TOEFL تُعتمد المجموعة ذات أعلى درجة كلية، ولا يُعتمد MyBest."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "CMU ليست test-optional للمعظم. كليات الهندسة وDietrich وMellon College of Science وTepper وبرنامج أنظمة المعلومات في Heinz «test flexible»: تشترط إرسال نتيجة اختبار لإكمال الطلب. كلية علوم الحاسوب تشترط SAT أو ACT. كلية الفنون الجميلة اختيارية مع ملف أو اختبار أداء. تُقبل الدرجات الفائقة (superscore) في SAT ولا تُقبل في ACT. الصفحة لا تذكر سنة الدخول صراحة.",
+    "source_url": "https://www.cmu.edu/admission/admission/standardized-testing"
+  },
+  "dates": [
+    {
+      "label_ar": "Early Decision (ملزم) لدورة خريف 2027 (الصفحة لا تذكر السنة)",
+      "date": "2026-11-02",
+      "source_url": "https://www.cmu.edu/admission/admission"
+    },
+    {
+      "label_ar": "Regular Decision (الموعد العام) لدورة خريف 2027 (الصفحة لا تذكر السنة)",
+      "date": "2027-01-04",
+      "source_url": "https://www.cmu.edu/admission/admission"
+    },
+    {
+      "label_ar": "Regular Decision لطلاب الدراما والموسيقى فقط (الصفحة لا تذكر السنة)",
+      "date": "2026-12-01",
+      "source_url": "https://www.cmu.edu/admission/admission"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 11.1,
+    "scope_ar": "القبول العام لطلاب السنة الأولى في حرم بيتسبرغ لدفعة خريف 2025 (CDS 2025–2026، القسم C1: قُبل 3,859 من 34,867)",
+    "international_percent": null,
+    "source_url": "https://www.cmu.edu/ira/CDS/pdf/cds_2025_26/cds-2025-c-first-time-first-year-admission.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحات CMU لا تذكر سنة الدخول لسياسة SAT/ACT ولمتطلبات اللغة، والمواعيد المنشورة هي للدورة المعروضة حاليًا (خريف 2027)، ويجب التأكد من ذلك عند التقديم.",
+    "نسبة قبول الدوليين غير منشورة في CDS.",
+    "الأرقام لحرم بيتسبرغ فقط، وCMU-Qatar لها قواعد خاصة بها لم تُفحص هنا."
+  ]
+}

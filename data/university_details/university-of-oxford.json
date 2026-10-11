@@ -1,0 +1,56 @@
+{
+  "id": "university-of-oxford",
+  "name_en": "University of Oxford",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.ox.ac.uk/admissions/undergraduate",
+  "platform": {
+    "value_ar": "UCAS، مع اختبارات قبول إضافية في بعض التخصصات",
+    "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.5,
+      "note_ar": "IELTS Academic بمجموع 7.5 مع 7.0 على الأقل في كل قسم، وهو المستوى المطلوب حاليًا لكل التخصصات حسب الصفحة. IELTS General وIELTS Online غير مقبولين. ملاحظة: هذه القيمة من مقتطف بحث رسمي، والصفحة نفسها تعذّر فتحها (403)، فتحتاج إلى تحقق.",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying-to-oxford/for-international-students/ELR"
+    },
+    "toefl_ibt": {
+      "min": 110,
+      "note_ar": "المقياس 0–120، مع حد أدنى لكل قسم: الاستماع 22، القراءة 24، التحدث 25، الكتابة 24. الأهم: حسب المقتطف، تُقبل نتائج TOEFL حتى 20 يناير 2026 فقط، ولا تُقبل الاختبارات من 21 يناير 2026، والجامعة تراجع الاختبار المعدّل. لذلك لا تختبر TOEFL قبل أن تسأل Oxford. ملاحظة: مقتطف بحث واحد، ولم نفتح الصفحة (403).",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying-to-oxford/for-international-students/ELR"
+    },
+    "duolingo": null,
+    "note_ar": "اختبارات أخرى حسب المقتطفات: Oxford Test of English (Advanced) 165 مع 155 على الأقل في كل قسم، وC1 Advanced أو C2 Proficiency بمجموع 191 مع 185 على الأقل في كل قسم، وPTE Academic 76 مع 66 على الأقل في كل مهارة. يجب إثبات المستوى قبل 31 يوليو من سنة العرض. قد يُعفى من درسوا IB أو Singapore Integrated Programme بالإنجليزية، أو من كانت لغتهم الأولى الإنجليزية ومن الدول الناطقة بها. وتتعارض صفحة قديمة مع الصفحات الأحدث في مستوى بعض التخصصات (الرياضيات والحاسب)، واتبعنا الأحدث."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لا يوجد شرط SAT أو ACT عام. تُستخدم الدرجة بديلًا لأحد اختبارات AP فقط إذا كانت مع ثلاث درجات AP بمستوى 5، والحد يختلف حسب التخصص، مثلًا ACT 33 أو SAT 1480 لتخصصات A*A*A. التفاصيل من مقتطف بحث رسمي، ولم نفتح الصفحة (403).",
+    "source_url": "https://www.ox.ac.uk/admissions/undergraduate/courses/admissions-requirements/international-qualifications"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد لتقديم الطلب عبر UCAS لدخول 2027 (6 مساءً بتوقيت المملكة المتحدة)",
+      "date": "2026-10-15",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
+    },
+    {
+      "label_ar": "آخر موعد لتسليم العمل الكتابي، إن طلبه التخصص",
+      "date": "2026-11-10",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
+    },
+    {
+      "label_ar": "موعد إعلان النتيجة للمتقدمين الذين أُجريت لهم مقابلات (المقابلات عبر الإنترنت في ديسمبر 2026)",
+      "date": "2027-01-12",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "التوجيهية السعودية: لم نتمكن من فتح قائمة Oxford الرسمية للمؤهلات الدولية (403). ملخص البحث يقول إنها غير مقبولة للقبول الجامعي، لكن لم نتحقق من النص أو تاريخ الصفحة، فلم نعرض حكمًا نهائيًا. المسار المعتاد لغير البريطانيين هو A-levels أو ما يعادله. الدبلوم الأساس: دبلومات Oxford الخاصة بها مخصصة لطلاب المدارس الحكومية المقيمين في المملكة المتحدة، ودبلوم جامعي خارجي يُقبل فقط إذا غطى المحتوى المطلوب بالمستوى نفسه (من مقتطف بحث). اختبارات القبول: TMUA لتخصصات الرياضيات والحاسب، وESAT للفيزياء وهندسة العلوم، وTARA لـ PPE وعلم النفس، وUCAT للطب، وLNAT للقانون. تنتقل اختبارات Oxford إلى UAT-UK من 2026، وانتهى موعد التسجيل في 28 سبتمبر 2026 (من مقتطف بحث). المصدر: https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline",
+  "not_found_ar": [
+    "تعذّر فتح صفحات ox.ac.uk الرسمية كلها (رد 403)، فالقيم أعلاه مأخوذة من مقتطفات بحث رسمية وتحتاج إلى تحقق قبل النشر",
+    "أرقام القبول لدورة 2025 موجودة في تقرير Oxford الرسمي، لكن الملف رفض الفتح، فلم نُدرجها",
+    "حكم التوجيهية السعودية غير مؤكد، ولم نُدرجه كقرار نهائي",
+    "Duolingo English Test غير مذكور في المقتطفات التي وجدناها",
+    "مواعيد التسجيل والاختبار لدورة 2027 في UAT-UK وTMUA وESAT وTARA غير مؤكدة، وتوجد في ox.ac.uk/tests"
+  ]
+}

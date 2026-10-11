@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% import "components.html" as c %}
+
+{% block title %}الجامعات المعتمدة للابتعاث | {{ site.name }}{% endblock %}
+{% block description %}ابحث باسم الجامعة أو بالتخصص، واعرف ترتيبها في قوائم مسارات الرواد وإمداد والبحث والتطوير لبرنامج خادم الحرمين الشريفين للابتعاث 2026–2027.{% endblock %}
+
+{% block content %}
+{% set r = result %}
+<div class="explorer">
+  <header class="explorer-header">
+    <h1>الجامعات المعتمدة</h1>
+    <p class="lead">ابحث باسم الجامعة أو بالتخصص الذي تريده، واعرف أين تقع في قوائم برنامج خادم الحرمين الشريفين للابتعاث للعام 2026–2027.</p>
+  </header>
+
+  <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" data-explorer>
+    <div class="explorer-search">
+      <label for="q">الجامعة أو التخصص</label>
+      <input id="q" name="q" type="search" value="{{ r.q }}" list="majors-list" autocomplete="off"
+             placeholder="مثال: الذكاء الاصطناعي، Stanford، هندسة البرمجيات">
+      <datalist id="majors-list">
+        {% for m in explorer.major_options() %}<option value="{{ m.name_ar }}" label="{{ m.name_en }}"></option>{% endfor %}
+      </datalist>
+    </div>
+
+    <div class="explorer-filters">
+      <div class="explorer-filter">
+        <label for="track">المسار</label>
+        <select id="track" name="track">
+          <option value="">كل المسارات</option>
+          {% for tid, t in tracks.items() %}
+          <option value="{{ tid }}"{% if r.track == tid %} selected{% endif %}>{{ t.short_ar }}{% if tid == "rnd" %} (دكتوراه){% endif %}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="explorer-filter">
+        <label for="field">المجال</label>
+        <select id="field" name="field">
+          <option value="">كل المجالات</option>
+          {% for tid in ("emdad", "rnd") %}
+          <optgroup label="{{ tracks[tid].short_ar }}" data-track="{{ tid }}">
+            {% for f in explorer.field_options(tid) %}
+            <option value="{{ f.id }}"{% if r.track == tid and r.field == f.id %} selected{% endif %}>{{ f.name_ar }}</option>
+            {% endfor %}
+          </optgroup>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="explorer-filter">
+        <label for="country">الدولة</label>
+        <select id="country" name="country">
+          <option value="">كل الدول</option>
+          {% for code, info in explorer.country_options() %}
+          <option value="{{ code }}"{% if r.country == code %} selected{% endif %}>{{ info.name_ar }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="explorer-filter">
+        <label for="lang">لغة الدولة</label>
+        <select id="lang" name="lang">
+          <option value="">الكل</option>
+          <option value="english"{% if r.language == "english" %} selected{% endif %}>تتحدث الإنجليزية</option>
+          <option value="other"{% if r.language == "other" %} selected{% endif %}>لا تتحدث الإنجليزية</option>
+        </select>
+      </div>
+
+      <button class="explorer-submit" type="submit">ابحث</button>
+    </div>
+  </form>
+
+  <div id="results" class="explorer-results" aria-live="polite">
+    {% include "partials/uni_results.html" %}
+  </div>
+
+  <footer class="explorer-footer">
+    {{ c.source_stamp([{"title": explorer.source.title_ar ~ " (PDF)", "url": explorer.source.url}]) }}
+    <p class="explorer-fineprint">الأسماء العربية للجامعات ترجمتنا للتسهيل، والاسم الرسمي في الدليل هو الإنجليزي. القبول في الجامعة لا يعني الترشيح للابتعاث: اقرأ <a href="{{ url_for('program_page', slug='custodian-scholarship') }}">شروط البرنامج</a>.</p>
+  </footer>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}" defer></script>{% endblock %}

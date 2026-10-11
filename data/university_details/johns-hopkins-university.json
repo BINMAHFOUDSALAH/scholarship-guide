@@ -1,0 +1,59 @@
+{
+  "id": "johns-hopkins-university",
+  "name_en": "Johns Hopkins University",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
+  "admissions_url": "https://apply.jhu.edu/",
+  "platform": {
+    "value_ar": "Common Application أو Coalition Application (عبر Scoir)",
+    "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "الصفحة تذكر 7.0 أو أعلى في كل فقرة كمعيار يتوقعه المتقدمون، وليست حدًا أدنى للقبول.",
+      "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/standardized-testing/"
+    },
+    "toefl_ibt": {
+      "min": 5,
+      "note_ar": "الصفحة تذكر 'حدًا أدنى 5' إجماليًا، مع درجات مفضلة 5.5 في القراءة والاستماع و5 في الكتابة والتحدث. الصفحة لا تذكر إن كان المقياس 0–120 أو 1–6، والرقم 5 يدل على مقياس 1–6.",
+      "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/standardized-testing/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "الصفحة تذكر 120 أو أعلى كمعيار تنافسي، وليست حدًا أدنى. الدرجات المفضلة حسب المهارات: 125 و120 و135 و105.",
+      "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/standardized-testing/"
+    },
+    "note_ar": "الاختبارات موصى بها وليست شرطًا لمن لغته الأساسية ليست الإنجليزية، أو لم يدرس في مدرسة تعليمها بالإنجليزية خلال آخر ثلاث سنوات. يمكن أيضًا تقديم Cambridge C1 Advanced أو C2 Proficiency بدرجة 185 أو أعلى."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط JHU تقديم SAT (قسم الرياضيات والقراءة والكتابة) أو ACT (الرياضيات والقراءة والإنجليزية) للنظر في القبول. الصفحة لا تذكر سنة الدورة صراحة.",
+    "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/standardized-testing/"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد Early Decision I لدورة 2026–2027 (خريف 2027)",
+      "date": "2026-11-01",
+      "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/"
+    },
+    {
+      "label_ar": "آخر موعد Early Decision II وRegular Decision لدورة 2026–2027 (خريف 2027)",
+      "date": "2027-01-02",
+      "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": null,
+    "scope_ar": "لم نعتمد نسبة قبول لدفعة 2029 (خريف 2025): صفحة Fast Facts لا تذكر عدد المقبولين، وملف Common Data Set 2025–2026 رفض الفتح (خطأ 403).",
+    "international_percent": null,
+    "source_url": "https://apply.jhu.edu/fast-facts/"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة القبول الرسمية لدورة خريف 2025 غير متاحة لنا. مقتطف بحث من ملف CDS 2025–2026 أعطى أرقامًا (نحو 50,259 متقدمًا و3,072 مقبولًا)، لكنها لم تُتحقق مباشرة من الملف، فلم نعتمدها",
+    "صفحة Fast Facts تعرض 49,112 متقدمًا للدفعة 2029 دون عدد المقبولين، وتعرض 13.5% دوليين من الدفعة (نسبة من الطلاب المسجلين لا من المتقدمين)",
+    "تاريخ فتح التقديم غير مذكور في الصفحة الرسمية",
+    "QuestBridge ذُكرت كبرنامج شريك للجامعة، لكنها ليست منصة تقديم في صفحة المتطلبات"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "university-of-california-san-diego-ucsd",
+  "name_en": "University of California, San Diego (UCSD)",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.ucsd.edu/international/index.html",
+  "platform": {
+    "value_ar": "طلب جامعة كاليفورنيا (UC Application): طلب واحد تختار فيه فروع UC التي تريدها",
+    "source_url": "https://admission.universityofcalifornia.edu/"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.0,
+      "note_ar": "IELTS Academic، والحد الأدنى 7.",
+      "source_url": "https://admissions.ucsd.edu/first-year/application-requirements.html"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 على مقياس TOEFL الجديد (1–6) المعمول به منذ يناير 2026، و83 من 120 للاختبارات قبل يناير 2026.",
+      "source_url": "https://admissions.ucsd.edu/first-year/application-requirements.html"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": null,
+      "source_url": "https://admissions.ucsd.edu/first-year/application-requirements.html"
+    },
+    "note_ar": "مطلوب إذا كانت لغتك الأم غير الإنجليزية ودرست الثانوية في بلد لا يدرّس بالإنجليزية. حدود UCSD أعلى من الحد الأدنى العام لجامعة كاليفورنيا. يجب إنهاء الاختبار قبل نهاية ديسمبر من سنتك الأخيرة في الثانوية (حسب موقع UC)."
+  },
+  "sat_act": {
+    "policy": "not_considered",
+    "note_ar": "UCSD لا تنظر في درجات SAT أو ACT عند قرار القبول أو المنح.",
+    "source_url": "https://admissions.ucsd.edu/first-year/application-requirements.html"
+  },
+  "dates": [
+    {
+      "label_ar": "يفتح طلب UC لخريف 2027 (يمكنك البدء بتعبئته)",
+      "date": "2026-08-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "تبدأ فترة إرسال طلب UC لخريف 2027",
+      "date": "2026-10-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "آخر موعد لإرسال طلب UC لخريف 2027 (لا يوجد قبول مبكر)",
+      "date": "2026-11-30",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    },
+    {
+      "label_ar": "آخر موعد لقبول عرض القبول (SIR) لخريف 2027",
+      "date": "2027-05-01",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 28.6,
+    "scope_ar": "القبول العام لدفعة خريف 2025 (Common Data Set 2025–2026، القسم C1: قُبل 39,054 من 136,750، والنسبة محسوبة من هذين الرقمين)",
+    "international_percent": 30.9,
+    "source_url": "https://ir.ucsd.edu/stats/undergrad/C4.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الدوليين محسوبة من أرقام CDS (قُبل 7,496 من 24,254 متقدمًا دوليًا)، ولا تنشر الجامعة النسبة نفسها"
+  ]
+}

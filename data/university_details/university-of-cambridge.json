@@ -1,0 +1,50 @@
+{
+  "id": "university-of-cambridge",
+  "name_en": "University of Cambridge",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.undergraduate.study.cam.ac.uk/",
+  "platform": {
+    "value_ar": "UCAS، مع My Cambridge Application بعد التقديم عبر UCAS",
+    "source_url": "https://www.undergraduate.study.cam.ac.uk/apply/how/ucas-application"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.5,
+      "note_ar": "المطلوب عادةً IELTS Academic بدرجة 7.5 إجمالًا، مع 7.0 على الأقل في كل قسم. للمقابلة تُوصي الجامعة بمعادل 6.5 إجمالًا وبلا قسم أقل من 6.0، وهذه توصية وليست حد القبول.",
+      "source_url": "https://www.undergraduate.study.cam.ac.uk/node/143"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "صفحة القبول المركزية لا تذكر TOEFL iBT. كلية Fitzwilliam تذكر 110 إجمالًا مع 25 على الأقل في كل قسم (المقياس 0–120)، أما كلية Christ's فتقول، حسب نتيجة البحث، إن 110 تنطبق فقط على نتائج أُجريت قبل 21 يناير 2026، ولم نتمكن من فتح صفحتها للتحقق. تعارض المصادر، فلم نعرض رقمًا.",
+      "source_url": "https://www.fitz.cam.ac.uk/international-undergraduates"
+    },
+    "duolingo": null,
+    "note_ar": "تقبل الجامعة أيضًا اختبارات Cambridge English: C1 Advanced بمجموع 193، وC2 Proficiency بمجموع 200، ولا يقل أي قسم عن 185 في الاختبارين. المصدر: https://www.undergraduate.study.cam.ac.uk/node/143"
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب لكل المتقدمين. يُتوقع عادةً من متقدمي مسار AP (خمس درجات AP بمستوى 5 على الأقل) درجة SAT لا تقل عن 1500 مع 750 في الرياضيات للعلوم والاقتصاد، أو 1460 مع 730 في القراءة والكتابة لبقية التخصصات. ACT وحده لا يكفي للقبول.",
+    "source_url": "https://www.undergraduate.study.cam.ac.uk/usa"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد لتقديم طلب UCAS لدورة 2027 لمعظم المتقدمين (الساعة 6 مساءً بتوقيت المملكة المتحدة)",
+      "date": "2026-10-15",
+      "source_url": "https://www.undergraduate.study.cam.ac.uk/apply/how/ucas-application"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 16.3,
+    "scope_ar": "القبول العام لدورة 2025 (لخريف 2025): 3,669 مقبولًا من 22,513 متقدمًا. النسبة الدولية المنشورة هي 10.7% للمتقدمين غير المقيمين دائمًا في المملكة المتحدة (Other applications): 890 من 8,300.",
+    "international_percent": 10.7,
+    "source_url": "https://www.undergraduate.study.cam.ac.uk/sites/default/files/2026-05/ug_admissions_statistics_2025_cycle.pdf"
+  },
+  "language_note_ar": "القبول بالتوجيهية وحدها غير كافٍ: الجامعة تقول «Applicants with the Tawjihiyah alone will not be competitive» وتذكر مسارات مقبولة مثل A levels أو IB أو خمس درجات AP بمستوى 5 مع 90% على الأقل في التوجيهية (https://www.undergraduate.study.cam.ac.uk/usa). الدبلوم الأساس (Foundation Year) المستقل يُقبل لبعض تخصصات الآداب فقط، وعادةً لا يُقبل للعلوم (https://www.undergraduate.study.cam.ac.uk/apply/before/accepted-qualifications). بعض التخصصات تتطلب اختبارًا قبليًا: ESAT للهندسة والعلوم والطب البيطري، وTMUA للرياضيات والاقتصاد وعلوم الحاسب، وUCAT للطب، وLNAT للقانون، وتتطلب بقية التخصصات تقييم الكلية بعد الاختيار (https://www.undergraduate.study.cam.ac.uk/apply/how/admission-tests).",
+  "not_found_ar": [
+    "لم نجد في الصفحات الرسمية التي فحصناها ذكرًا لـ Duolingo English Test، فتُرك الحقل فارغًا",
+    "لم نجد في الصفحات الرسمية التي فحصناها موعدًا رسميًا لإرسال My Cambridge Application لدورة 2027",
+    "مواعيد التسجيل والاختبار لـ ESAT وTMUA موجودة في صفحات كل اختبار، ولم نتحقق منها هنا",
+    "إحصاءات القبول لدورة 2027 غير منشورة بعد، والأرقام أعلاه لدورة 2025"
+  ]
+}

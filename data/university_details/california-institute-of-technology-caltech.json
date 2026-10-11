@@ -1,0 +1,60 @@
+{
+  "id": "california-institute-of-technology-caltech",
+  "name_en": "California Institute of Technology (Caltech)",
+  "checked": "2026-10-11",
+  "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
+  "admissions_url": "https://www.admissions.caltech.edu/",
+  "platform": {
+    "value_ar": "Common App أو QuestBridge Application",
+    "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/application-requirements"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.0,
+      "note_ar": "الحد الأدنى 7 للمجموع و7 في كل قسم. مطلوب من المتقدمين غير الناطقين بالإنجليزية، مع استثناءات.",
+      "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/international-applicants"
+    },
+    "toefl_ibt": {
+      "min": 5,
+      "note_ar": "الرقم 5 لكل قسم وللمجموع، ويُطبّق على الاختبارات بعد 21 يناير 2026، وهو مقياس 1–6 حسب الرقم المنشور (الصفحة لا تذكر المقياس صراحة). للاختبارات قبل هذا التاريخ: 100 مجموعًا و25 في كل قسم (مقياس 0–120).",
+      "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/international-applicants"
+    },
+    "duolingo": {
+      "min": 130,
+      "note_ar": "الحد الأدنى 130 حسب الصفحة الرسمية.",
+      "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/international-applicants"
+    },
+    "note_ar": "إثبات الإنجليزية مطلوب من المتقدمين غير الناطقين بها، ويُعفى الناطق بالإنجليزية. من درس في مدرسة تعليمها الأساسي بالإنجليزية تنصحه Caltech بإرسال درجة، وليس شرطًا. InitialView لا يغني عن الاختبار، ويجب أن يُكمل الاختبار قبل موعد التقديم."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط Caltech تقديم SAT أو ACT (أحدهما). لا يوجد حد أدنى للدرجات، وتُراجع الأقسام الفرعية لا المجموع. تُطلب أيضًا تقارير اختبارات AP وIB مهما كانت الدرجات. تنص الصفحة على أن هذه السياسة تشمل متقدمي خريف 2027.",
+    "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/standardized-tests"
+  },
+  "dates": [
+    {
+      "label_ar": "آخر موعد لتقديم Restrictive Early Action (الصفحة تذكر 1 نوفمبر 2026 صراحة)",
+      "date": "2026-11-01",
+      "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
+    },
+    {
+      "label_ar": "آخر موعد لتقديم Regular Decision لدورة خريف 2027 (الصفحة تذكر 4 يناير 2027 صراحة)",
+      "date": "2027-01-04",
+      "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": null,
+    "scope_ar": "لم تُحسب نسبة رسمية: القسم C1 في Common Data Set 2025–2026 (قبول خريف 2025، دفعة 2029) يذكر 7,772 متقدمًا ذكرًا و3,513 أنثى، و224 ذكرًا و204 أنثى مقبولين، لكن صف مجهولي الجنس غير مقروء في الملف فلم نحسب النسبة.",
+    "international_percent": null,
+    "source_url": "https://iro.caltech.edu/documents/35129/Caltech_CDS_2025-26_August_2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول رسمية منشورة للسنة الأولى غير موجودة في الصفحات التي قرأناها. الملف الشخصي لدفعة 2030 (دخول خريف 2026) يذكر 11,404 متقدمًا و247 مسجلًا فقط، دون عدد المقبولين.",
+    "الملف الشخصي لدفعة 2030 يذكر أن 12% من المسجلين دوليون، وهذه نسبة من المسجلين لا من المقبولين، فلم تُعتبر نسبة قبول دولية.",
+    "تاريخ فتح التقديم غير مذكور في الصفحات التي قرأناها.",
+    "صفحة المواعيد تذكر تاريخ رد الطلاب المقبولين في RD بـ1 مايو 2026، وهو يتعارض مع 1 مايو 2027 المذكور لـREA، فلم نستخدمه.",
+    "مواعيد الإعلان عن القرار (منتصف ديسمبر لـREA ومنتصف مارس لـRD) غير محددة بيوم بعينه، فلم نضفها."
+  ]
+}

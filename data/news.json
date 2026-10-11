@@ -2,10 +2,10 @@
   {
     "type": "opening",
     "path_id": "custodian-scholarship",
-    "title_ar": "مسار الرواد مفتوح للتقديم",
+    "title_ar": "مسار الرواد مفتوح للتقديم حتى 15 نوفمبر 2026",
     "source_url": null,
-    "note": "Confirmed by the owner from the program's official X account. The real announcement date is earlier; 'added' is only the day we added it (used for ordering). Add the post link as source_url.",
-    "added": "2026-10-09",
+    "note": "Owner confirmed (2026-10-11): open until 15 November 2026. Add the official post link as source_url.",
+    "added": "2026-10-11",
     "owner_confirmed": true
   },
   {
@@ -24,5 +24,13 @@
     "source_url": "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf",
     "note": "Confirmed current by the owner. A new edition is expected Dec 2026 / Jan 2027.",
     "added": "2026-10-09"
+  },
+  {
+    "added": "2026-10-11",
+    "type": "announcement",
+    "path_id": "sdaia-ai-scholarship",
+    "title_ar": "سدايا تعلن برنامج الابتعاث في الذكاء الاصطناعي",
+    "source_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx",
+    "note": "Owner reported the announcement on 2026-10-11; details read from SDAIA's official page."
   }
 ]

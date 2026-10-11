@@ -204,3 +204,25 @@ What we built in واضح, why, how it works, and how to talk about it. Updated 
 - the KGSP/Aramco research isn't on the site yet
 **Who did what:** Owner reviewed the live page and set the direction (programs first, no stamps or dates, the official logo, the video, the King-scholarship focus, using subagents). Claude researched, implemented, and tested; two research agents wrote the KGSP and Aramco notes.
 **Understood?** Not yet checked.
+
+## 12. Universities explorer, live statuses, SDAIA (2026-10-11)
+**Built / why:**
+- `scripts/extract_universities.py` turns the Ministry's 75-page PDF into data: 290 universities, every track and field list, the majors, the guide's notes, and countries from the flag images.
+- `/universities`: search by university or by major, in Arabic or English, with filters; a page per university with its ranks, its majors, and requirements from its own site.
+- Statuses now follow data and dates: الرواد closes itself after 15 Nov 2026, and واعد shows its latest programs in a toggle.
+- SDAIA's AI scholarship has its own page, linked to its 28 target universities.
+**Key concepts:**
+- extracting structured data from a PDF by position (pdfplumber), and refusing to write when checks fail
+- right-to-left text extraction: reverse the glyphs, not the letters
+- recording a source's own errors instead of silently fixing them
+- server-side search with progressive enhancement (works without JavaScript)
+- computing a status from today's date instead of editing it by hand
+- delegating research to cheaper parallel agents and validating their output
+**Decisions:** 029, 030.
+**Tested:** 133 pytest tests (lists, notes, Arabic names, requirement-file schema, search modes, pages, API, deadlines, the واعد toggle, SDAIA); browser checks on desktop and phone.
+**Limits:**
+- the Arabic university names are our translation
+- some requirement values need a hand check: Michigan and Columbia pages blocked the agent, and some years are inferred
+- the explorer covers the 2026–2027 guide only
+**Who did what:** Owner chose the features (an advanced search, Arabic + English names, the doctorate lists, the requirements per university, the Waaid toggle, SDAIA) and the cheaper agents, and supplied the الرواد deadline and the Waaid and SDAIA news. Claude built the extraction, explorer, and pages; research agents gathered the requirements and Arabic names.
+**Understood?** Not yet checked.
