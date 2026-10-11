@@ -1,0 +1,12 @@
+{# Rows of «قائمتي», drawn for the ids the student's browser sends (see my_list in main.py). #}
+{% import "partials/uni_macros.html" as um with context %}
+{% for u in unis %}
+<li class="mylist-item" data-mylist-item="{{ u.id }}">
+  <div class="mylist-main">
+    {{ um.uni_name(u) }}
+    <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</div>
+    {{ um.next_deadline(u) }}
+  </div>
+  <button class="btn btn--secondary btn--small" type="button" data-remove="{{ u.id }}" aria-label="إزالة {{ u.name_ar or u.name_en }} من قائمتي">إزالة</button>
+</li>
+{% endfor %}

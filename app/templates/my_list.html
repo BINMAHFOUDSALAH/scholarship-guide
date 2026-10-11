@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}قائمتي | {{ site.name }}{% endblock %}
+{% block description %}الجامعات التي حفظتها في {{ site.name }}، محفوظة في متصفحك على هذا الجهاز.{% endblock %}
+{# A personal page: nothing for search engines here. #}
+{% block head_extra %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+<div class="mylist page-wide" data-mylist-page data-rows-url="{{ url_for('my_list') }}">
+  <header class="mylist-header">
+    <h1>قائمتي</h1>
+    <p class="lead">الجامعات التي حفظتها لتعود إليها، مع أقرب موعد تقديم في كل جامعة.</p>
+    <p class="mylist-privacy">القائمة محفوظة في متصفحك على هذا الجهاز فقط، ولا نحفظها في خوادمنا. إذا مسحت بيانات المتصفح أو فتحت الموقع من جهاز آخر فلن تجدها.</p>
+  </header>
+
+  <noscript>
+    <div class="notice notice--warn"><p>«قائمتي» تحتاج تفعيل JavaScript في متصفحك.</p></div>
+  </noscript>
+
+  <p class="sr-only" role="status" data-mylist-status></p>
+  <p class="mylist-loading" data-mylist-loading hidden>جارٍ تحميل قائمتك…</p>
+  <div class="notice notice--warn" data-mylist-error hidden>
+    <p>تعذّر عرض قائمتك الآن. تحقق من اتصالك ثم أعد تحميل الصفحة. قائمتك ما زالت محفوظة.</p>
+  </div>
+
+  <ul class="rows mylist-rows" data-mylist-rows hidden></ul>
+
+  <div class="mylist-empty" data-mylist-empty hidden>
+    <p class="mylist-empty-title">لم تحفظ أي جامعة بعد.</p>
+    <p>افتح صفحة أي جامعة واضغط «احفظ في قائمتي»، وستجدها هنا.</p>
+    <a class="btn btn--primary" href="{{ url_for('universities_page') }}">ابحث في الجامعات</a>
+  </div>
+</div>
+{% endblock %}

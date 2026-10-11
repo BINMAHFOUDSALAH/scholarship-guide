@@ -14,7 +14,7 @@
     <h1>{{ program.name_ar }}</h1>
     <p class="path-item-en" lang="en" dir="ltr">{{ program.name_en }}</p>
     <p class="lead">{{ program.summary_ar }}</p>
-    {% if program.not_standalone_ar %}<aside class="uni-callout" role="note"><p><strong>{{ program.not_standalone_ar }}</strong></p></aside>{% endif %}
+    {% if program.not_standalone_ar %}<aside class="notice notice--warn" role="note"><p><strong>{{ program.not_standalone_ar }}</strong></p></aside>{% endif %}
     <p class="program-disclaimer">{{ site.name }} دليل طلابي مستقل، ولا يتبع {{ program.provider_ar }}. القرار في كل حالة للجهة الرسمية.</p>
     <p class="path-item-links">
       <a class="path-item-link" href="{{ program.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>

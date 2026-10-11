@@ -114,6 +114,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.8;
+  overflow-wrap: break-word; /* long URLs and English names wrap instead of widening the page (WCAG 1.4.10) */
 }
 
 h1,
@@ -959,6 +960,7 @@ main:has(> .hero) {
 
 .summary-row {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2px var(--space-4);
   padding-block: var(--space-3);
   border-bottom: 1px solid var(--line);
@@ -980,7 +982,7 @@ main:has(> .hero) {
 
 @media (min-width: 640px) {
   .summary-row {
-    grid-template-columns: 11rem 1fr;
+    grid-template-columns: 11rem minmax(0, 1fr);
   }
 }
 
@@ -2131,14 +2133,18 @@ a.uni-name:hover .uni-name-en:only-child {
   gap: var(--space-1) var(--space-2);
 }
 
-/* One university */
-
-.uni-back {
-  font-size: var(--text-sm);
-}
+/* ---------- One university (decision 035) ---------- */
 
 .uni-header h1 {
-  margin-bottom: var(--space-1);
+  margin-bottom: 0;
+}
+
+.uni-header-en {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-base);
+  color: var(--ink-muted);
+  text-align: end;  /* dir="ltr": under the Arabic name, on the same side */
+  width: fit-content;
 }
 
 .uni-header-meta {
@@ -2146,21 +2152,85 @@ a.uni-name:hover .uni-name-en:only-child {
   flex-wrap: wrap;
   gap: var(--space-2);
   align-items: center;
+  margin-bottom: var(--space-3);
 }
 
-.uni-callout {
-  margin-block: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  border-inline-start: 4px solid var(--heading);
+/* «احفظ في قائمتي»: an outlined button beside the facts, never louder than them. */
+.save-area {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.save-toggle svg {
+  fill: none;
+}
+
+.save-toggle.is-saved svg {
+  fill: currentColor;
+}
+
+.save-note {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* «باختصار»: the answers, before the details. */
+.uni-summary {
+  margin-block: var(--space-4) var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface-strong);
+}
+
+.uni-summary-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-lg);
+}
+
+.uni-summary .notice {
+  margin-block: var(--space-3) 0;
   background: var(--surface);
 }
 
-.uni-callout p {
-  margin-block-end: var(--space-2);
+.uni-summary .actions {
+  margin-block: var(--space-3) 0;
+}
+
+/* «في هذه الصفحة»: jump links for long pages (GOV.UK "contents list"). */
+.page-contents {
+  margin-block: 0 var(--space-5);
+  font-size: var(--text-sm);
+}
+
+.page-contents-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.page-contents ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-contents a {
+  display: inline-block;
+  padding-block: 2px;
+  font-weight: 700;
 }
 
 .uni-section {
   margin-block: var(--space-5);
+  scroll-margin-top: var(--space-4);
 }
 
 .uni-section > h2 {
@@ -2181,6 +2251,51 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink-muted);
 }
 
+/* The doctorate lists, folded. */
+.rnd-lists {
+  margin-block: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+}
+
+.rnd-lists > summary {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+}
+
+.rnd-title {
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.rnd-title::before {
+  content: "▸ ";
+}
+
+.rnd-lists[open] .rnd-title::before {
+  content: "▾ ";
+}
+
+.rnd-note {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.rnd-lists > summary::-webkit-details-marker {
+  display: none;
+}
+
+.rnd-lists > summary {
+  list-style: none;
+}
+
+.rnd-lists > .field-blocks {
+  padding-inline: var(--space-4);
+}
+
 .uni-majors-title {
   margin: var(--space-2) 0 var(--space-1);
   font-weight: 700;
@@ -2194,41 +2309,101 @@ a.uni-name:hover .uni-name-en:only-child {
   columns: 1;
 }
 
-.req-list {
-  margin: 0;
-  border-top: 1px solid var(--line);
-}
-
-.req {
-  display: grid;
-  gap: var(--space-1) var(--space-4);
-  padding-block: var(--space-3);
-  border-bottom: 1px solid var(--line);
-}
-
-@media (min-width: 700px) {
-  .req {
-    grid-template-columns: 10rem 1fr;
-  }
-}
-
-.req dt {
-  font-weight: 700;
-  color: var(--ink-muted);
-}
-
-.req dd {
-  margin: 0;
-}
-
 .req-scores {
   margin: 0;
   padding-inline-start: var(--space-4);
 }
 
-.req-src {
-  font-size: var(--text-xs);
-  white-space: nowrap;
+.req-scores li + li {
+  margin-top: var(--space-1);
+}
+
+/* The university's own dates: date first, so they scan down the column. */
+.uni-dates > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+}
+
+.uni-date {
+  min-width: 9rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.uni-date-label {
+  flex: 1 1 16rem;
+}
+
+.req-past .uni-date {
+  color: var(--ink-muted);
+  text-decoration: line-through;
+}
+
+/* ---------- «قائمتي» ---------- */
+
+.mylist-privacy {
+  max-width: 44em;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.mylist-rows {
+  margin-top: var(--space-4);
+}
+
+.mylist-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.mylist-main {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  flex: 1 1 18rem;
+}
+
+.btn--small {
+  min-height: 40px;
+  padding: 4px 14px;
+  font-size: var(--text-sm);
+}
+
+.mylist-empty {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+}
+
+.mylist-empty-title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.mylist-loading {
+  color: var(--ink-muted);
+}
+
+@media (max-width: 379px) {
+  .mylist-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .mylist-link {
+    padding: 0 10px;
+  }
 }
 
 /* واعد: the latest programs, in a toggle under the track list. */

@@ -262,6 +262,22 @@ def university_page(request: Request, uid: str, from_: str | None = Query(None, 
                                        "back_url": explorer.back_url(from_)})
 
 
+@app.get("/my-list", response_class=HTMLResponse)
+def my_list(request: Request, ids: str = "", partial: bool = False):
+    """«قائمتي» (decision 035). The list itself lives in the student's browser (mylist.js); the page
+    asks for its rows with ?partial=1&ids=a,b. Only ids of universities we know are drawn, in the
+    student's order, at most 100. Nothing is stored here."""
+    if not partial:
+        return templates.TemplateResponse(request, "my_list.html", {})
+    wanted = []
+    for uid in ids.split(",")[:100]:
+        uid = uid.strip()
+        if SLUG_PATTERN.match(uid) and uid in explorer.universities and uid not in wanted:
+            wanted.append(uid)
+    return templates.TemplateResponse(request, "partials/my_list_rows.html",
+                                      {"unis": [explorer.universities[uid] for uid in wanted], "explorer": explorer})
+
+
 @app.get("/api/suggestions")
 def suggestions_api():
     # Majors grouped by field + university names, loaded by the search box the first time it's used.

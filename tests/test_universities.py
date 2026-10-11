@@ -327,3 +327,51 @@ def test_suggestion_search_keeps_arabic_letters():
     expected = "[" + bs + "u0300-" + bs + "u036f" + bs + "u064b-" + bs + "u0652" + bs + "u0640]"
     assert expected in line
     assert not any(0x0300 <= ord(ch) <= 0x036F or 0x064B <= ord(ch) <= 0x0652 for ch in line)
+
+
+# ---------- university page + «قائمتي» (decision 035) ----------
+
+def test_university_page_answers_first():
+    html = client.get("/universities/stanford-university").text
+    summary = html.split('id="summary-title"')[1].split("</section>")[0]
+    assert "قوائم الابتعاث" in summary and "التخصصات" in summary
+    assert "أقرب موعد تقديم في الجامعة" in summary
+    assert "لا يعني قبولك فيها" in summary  # being on a list is not admission
+    assert "/programs/custodian-scholarship#admission-vs-scholarship" in summary
+    assert html.index('id="summary-title"') < html.index('id="lists-title"') < html.index('id="req-title"')
+    assert 'id="dates-title"' in html and "وليست مواعيد الابتعاث" in html
+
+
+def test_doctorate_lists_are_folded_unless_they_are_all_there_is():
+    stanford = client.get("/universities/stanford-university").text
+    assert '<details class="uni-track rnd-lists">' in stanford
+    only_rnd = next(uid for uid, u in ex.universities.items() if all(l["track"] == "rnd" for l in u["listings"]))
+    assert '<details class="uni-track rnd-lists" open>' in client.get(f"/universities/{only_rnd}").text
+
+
+def test_save_button_needs_javascript_and_the_header_link_starts_hidden():
+    html = client.get("/universities/harvard-university").text
+    assert 'data-save="harvard-university" hidden' in html
+    assert "data-mylist-link hidden" in html
+    assert "/static/mylist.js" in html
+
+
+def test_my_list_page_is_private_and_not_indexed():
+    html = client.get("/my-list").text
+    assert '<meta name="robots" content="noindex">' in html
+    assert "على هذا الجهاز فقط" in html and "<noscript>" in html
+    assert "/my-list" not in client.get("/sitemap.xml").text
+
+
+def test_my_list_rows_keep_known_ids_in_order():
+    html = client.get("/my-list?partial=1&ids=yale-university,nope,../../.env,harvard-university,yale-university").text
+    assert re.findall(r'data-mylist-item="([^"]+)"', html) == ["yale-university", "harvard-university"]
+    assert "<html" not in html
+    assert 'aria-label="إزالة جامعة ييل من قائمتي"' in html  # the visible «إزالة» is in the name (WCAG 2.5.3)
+    assert "data-mylist-item" not in client.get("/my-list?partial=1&ids=").text
+
+
+def test_my_list_rows_are_capped_at_100():
+    ids = ",".join(sorted(ex.universities)[:150])
+    html = client.get(f"/my-list?partial=1&ids={ids}").text
+    assert len(re.findall(r"data-mylist-item=", html)) == 100
