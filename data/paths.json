@@ -21,6 +21,8 @@
     "official_url": "https://sites.moe.gov.sa/scholarship-program/",
     "apply_url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/scholarshipprog.aspx",
     "universities_guide_url": "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf",
+    "social_url": "https://x.com/SA_Scholarships",
+    "social_label_ar": "حساب البرنامج الرسمي على X (أول من ينشر المستجدات)",
     "verified": false,
     "tracks": [
       {
@@ -33,7 +35,7 @@
         "high_school_ar": "نعم",
         "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية",
         "status": "open",
-        "status_source": null,
+        "status_source": "https://x.com/SA_Scholarships/status/2092689695088026059",
         "last_checked": "2026-10-09",
         "facts": [
           {
@@ -54,7 +56,7 @@
         ],
         "owner_confirmed": true,
         "status_until": "2026-11-15",
-        "status_note": "Owner confirmed 2026-10-11: الرواد is open until 15 November 2026."
+        "status_note": "Open: official X post, 26 Aug 2026 ('يمكنك التقديم الآن… عبر منصة قبول'). Until 15 Nov 2026: owner-confirmed 2026-10-11 (not in that post)."
       },
       {
         "id": "emdad",
@@ -262,22 +264,22 @@
       },
       {
         "id": "platform",
-        "text_ar": "منصة التقديم: صفحة الخدمة في وزارة التعليم توجّه إلى منصة قبول (uap.sa)، بينما ما زالت صفحات موقع البرنامج تذكر منصة سفير.",
+        "text_ar": "التقديم عبر منصة قبول (uap.sa)، كما في صفحة الخدمة بوزارة التعليم وحساب البرنامج الرسمي على X.",
         "sources": [
+          {
+            "title": "حساب البرنامج على X: «يمكنك التقديم الآن… عبر منصة قبول» (26 أغسطس 2026)",
+            "url": "https://x.com/SA_Scholarships/status/2092689695088026059"
+          },
           {
             "title": "خدمة التقديم في موقع وزارة التعليم",
             "url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/scholarshipprog.aspx"
-          },
-          {
-            "title": "صفحة التقديم في موقع البرنامج",
-            "url": "https://sites.moe.gov.sa/scholarship-program/submitting/"
           }
         ],
         "last_checked": "2026-10-11",
         "academic_year": null,
-        "status": "conflict",
+        "status": "sourced",
         "owner_reviewed": false,
-        "note_ar": "المصدران الرسميان مختلفان. ابدأ من صفحة الخدمة في الوزارة، وتأكد من الرقم 19996 أو خدمة تواصل إن لم يتضح لك."
+        "note_ar": "بعض صفحات موقع البرنامج القديمة ما زالت تذكر منصة سفير."
       },
       {
         "id": "lists",
@@ -307,13 +309,28 @@
     "name_ar": "برنامج الابتعاث في الذكاء الاصطناعي",
     "name_en": "SDAIA AI Scholarship Program",
     "provider_ar": "الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا)",
-    "audience_ar": "من حصل على قبول نهائي غير مشروط من إحدى الجامعات المستهدفة، وعلى قرار ابتعاث من برنامج خادم الحرمين الشريفين، في تخصصات الذكاء الاصطناعي وعلوم الحاسب.",
-    "summary_ar": "برنامج من سدايا يُضاف إلى ابتعاثك في الذكاء الاصطناعي: إرشاد أكاديمي وفرص بحثية وتدريب، للبكالوريوس والماجستير والدكتوراه.",
+    "audience_ar": "ليس ابتعاثًا مستقلًا: تتقدم عليه فقط إذا كان لديك ابتعاث قائم من برنامج خادم الحرمين الشريفين، في تخصص من تخصصات الذكاء الاصطناعي وعلوم الحاسب، وفي جامعة من قائمة سدايا.",
+    "summary_ar": "برنامج من سدايا يُضاف إلى ابتعاثك إن كنت تدرس الذكاء الاصطناعي: إرشاد أكاديمي وفرص بحثية وتدريب. لا يمكن التقديم عليه مباشرة دون ابتعاث.",
     "official_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx",
     "apply_url": "https://sdaia.gov.sa/ar/scholarship/Pages/form.aspx",
     "targets_guide_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Documents/University-Guide.pdf",
     "verified": false,
     "facts": [
+      {
+        "id": "sdaia-cohort-4",
+        "text_ar": "فتحت سدايا التسجيل في الدفعة الرابعة من البرنامج، لدراسة الذكاء الاصطناعي في أكثر من 50 جامعة، للبكالوريوس والماجستير والدكتوراه. لم يُعلن موعد إغلاق بعد.",
+        "sources": [
+          {
+            "title": "إعلان سدايا على X (7 أكتوبر 2026)",
+            "url": "https://x.com/SDAIA_SA/status/2107816249824621004"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": true,
+        "note_ar": "صفحة البرنامج تعرض 28 جامعة فقط، والإعلان يذكر أكثر من 50. القائمة الكاملة في ملف الجامعات المستهدفة (PDF) من سدايا."
+      },
       {
         "id": "sdaia-degrees",
         "text_ar": "الدرجات المتاحة: البكالوريوس والماجستير والدكتوراه.",
@@ -410,15 +427,16 @@
         "id": "sdaia-ai",
         "name_ar": "الابتعاث في الذكاء الاصطناعي",
         "name_en": "AI Scholarship",
-        "note_ar": "12 مجالًا ذا أولوية، و28 جامعة مستهدفة (القائمة قابلة للتغيير)",
+        "note_ar": "الدفعة الرابعة: أكثر من 50 جامعة حسب إعلان سدايا",
         "levels_ar": "بكالوريوس، ماجستير، دكتوراه",
         "for_high_school": true,
         "high_school_ar": "نعم، بعد القبول الجامعي وقرار الابتعاث",
         "admission_ar": "قبول نهائي غير مشروط من جامعة مستهدفة، مع قرار ابتعاث من برنامج خادم الحرمين الشريفين",
-        "status": null,
-        "status_source": null,
+        "status": "open",
+        "status_source": "https://x.com/SDAIA_SA/status/2107816249824621004",
         "last_checked": "2026-10-11",
-        "facts": []
+        "facts": [],
+        "status_note": "SDAIA's X post, 7 Oct 2026: registration opened for the 4th cohort. No deadline published yet."
       }
     ],
     "target_universities": [
@@ -534,7 +552,10 @@
         "name_en": "University of Cambridge",
         "id": "university-of-cambridge"
       }
-    ]
+    ],
+    "not_standalone_ar": "انتبه: هذا ليس ابتعاثًا تتقدم عليه وحده. يشترط أن يكون لديك قبول نهائي غير مشروط من جامعة في قائمة سدايا، وقرار ابتعاث من برنامج خادم الحرمين الشريفين في تخصص من تخصصاته. من دونهما لا يُقبل طلبك.",
+    "social_url": "https://x.com/SDAIA_SA/status/2107816249824621004",
+    "social_label_ar": "إعلان سدايا على X (7 أكتوبر 2026)"
   },
   {
     "id": "aramco-cdpne",

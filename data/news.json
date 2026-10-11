@@ -3,8 +3,8 @@
     "type": "opening",
     "path_id": "custodian-scholarship",
     "title_ar": "مسار الرواد مفتوح للتقديم حتى 15 نوفمبر 2026",
-    "source_url": null,
-    "note": "Owner confirmed (2026-10-11): open until 15 November 2026. Add the official post link as source_url.",
+    "source_url": "https://x.com/SA_Scholarships/status/2092689695088026059",
+    "note": "Open: official X post 26 Aug 2026. 'Until 15 Nov 2026' confirmed by the owner (2026-10-11).",
     "added": "2026-10-11",
     "owner_confirmed": true
   },
@@ -27,10 +27,11 @@
   },
   {
     "added": "2026-10-11",
-    "type": "announcement",
+    "type": "opening",
     "path_id": "sdaia-ai-scholarship",
-    "title_ar": "سدايا تعلن برنامج الابتعاث في الذكاء الاصطناعي",
-    "source_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx",
-    "note": "Owner reported the announcement on 2026-10-11; details read from SDAIA's official page."
+    "title_ar": "سدايا تفتح التسجيل في الدفعة الرابعة من الابتعاث في الذكاء الاصطناعي: لمن هو؟",
+    "source_url": "https://x.com/SDAIA_SA/status/2107816249824621004",
+    "note": "Links to our explainer, because many students think they can apply without a scholarship.",
+    "page": "/programs/sdaia-ai-scholarship"
   }
 ]

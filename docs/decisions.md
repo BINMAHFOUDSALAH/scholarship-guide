@@ -219,3 +219,13 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **Research agents run on Haiku** (owner's choice, after the main model hit its usage limit): small batches, a schema + example, save as you go, validated by tests (CLAUDE.md).
 **Alternatives:** Hand-edit statuses after each deadline; one Waaid status line; SDAIA as a news item only; research on the main model.
 **Why:** Statuses that change on known dates shouldn't depend on someone remembering to edit them. واعد is a stream of short programs, so the useful view is "what opened and closed recently". SDAIA's program changes what an AI-minded student should aim for (a university that's on both lists).
+
+## 031 — Official X accounts as sources; SDAIA explained as an add-on; next deadline per university
+**Date:** 2026-10-11
+**Decision:**
+- The King scholarship's official X account (@SA_Scholarships) is the first place to check for openings and closings; a specific post is a valid `status_source` / news `source_url`. Its 26 Aug 2026 post («يمكنك التقديم الآن… عبر منصة قبول») is the source for الرواد being open and settles the قبول vs سفير conflict (قبول). The 15 Nov 2026 end date stays owner-confirmed until a post states it. Each program row links the account so students can follow it.
+- SDAIA's AI scholarship: registration open (cohort 4, SDAIA's post of 7 Oct 2026, no deadline yet). Its page opens with a warning that it is **not** a standalone scholarship (you need an unconditional offer from a listed university plus a King scholarship decision), and its news item links to that explainer instead of the post, because many students think they can apply directly. The post says "more than 50 universities" while SDAIA's page lists 28: both are shown.
+- University-specific deadlines (e.g. Oxford/Cambridge's UCAS date) are not news items; the explorer shows each university's next upcoming deadline from its requirements file, and the university page marks past dates «انتهى».
+- News items may carry `page` (one of our pages) in addition to `source_url`.
+**Alternatives:** Ministry website only as a source; SDAIA as a plain news link to the post; deadline news items per university.
+**Why:** The owner says the official account posts first. The SDAIA misunderstanding is common enough that the explainer matters more than the announcement. Deadlines belong with the university they're for.

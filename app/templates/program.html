@@ -14,11 +14,13 @@
     <h1>{{ program.name_ar }}</h1>
     <p class="path-item-en" lang="en" dir="ltr">{{ program.name_en }}</p>
     <p class="lead">{{ program.summary_ar }}</p>
+    {% if program.not_standalone_ar %}<aside class="uni-callout" role="note"><p><strong>{{ program.not_standalone_ar }}</strong></p></aside>{% endif %}
     <p class="program-disclaimer">{{ site.name }} دليل طلابي مستقل، ولا يتبع {{ program.provider_ar }}. القرار في كل حالة للجهة الرسمية.</p>
     <p class="path-item-links">
       <a class="path-item-link" href="{{ program.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
       {% if program.apply_url %}<a class="path-item-link" href="{{ program.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
       {% if program.targets_guide_url %}<a class="path-item-link" href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">الجامعات المستهدفة (PDF) ↗</a>{% endif %}
+      {% if program.social_url %}<a class="path-item-link" href="{{ program.social_url }}" target="_blank" rel="noopener">{{ program.social_label_ar }} ↗</a>{% endif %}
       {% if program.universities_guide_url %}<a class="path-item-link path-item-link--page" href="{{ url_for('universities_page') }}">ابحث عن جامعتك وتخصصك ←</a>
       <a class="path-item-link" href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
     </p>
@@ -84,7 +86,7 @@
   {% if program.target_universities %}
   <section class="program-section" aria-labelledby="targets-title">
     <h2 id="targets-title">الجامعات المستهدفة</h2>
-    <p class="result-note">{{ program.target_universities | length }} جامعة، كما في صفحة البرنامج الرسمية (القائمة قابلة للتغيير).</p>
+    <p class="result-note">{{ program.target_universities | length }} جامعة كما تعرضها صفحة البرنامج الرسمية. إعلان الدفعة الرابعة يذكر أكثر من 50 جامعة، والقائمة الكاملة في ملف سدايا (PDF) أدناه.</p>
     <ul class="target-list">
       {% for t in program.target_universities %}
       <li>{% if t.id in explorer.universities %}{% set u = explorer.universities[t.id] %}<a href="{{ url_for('university_page', uid=t.id) }}">{{ u.name_ar or u.name_en }}</a>{% else %}<span lang="en" dir="ltr">{{ t.name_en }}</span>{% endif %}</li>

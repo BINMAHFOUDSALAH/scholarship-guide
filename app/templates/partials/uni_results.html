@@ -44,7 +44,7 @@
           <td class="uni-rank" data-label="الترتيب">{{ l.rank }}</td>
           <th scope="row">{{ um.uni_name(u) }}</th>
           <td data-label="الدولة">{{ um.country(u) }}</td>
-          <td data-label="ملاحظات">{{ um.listing_notes(l) }}</td>
+          <td data-label="ملاحظات">{{ um.listing_notes(l) }} {{ um.next_deadline(u) }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -58,7 +58,7 @@
       {% for u in s.universities %}
       <li class="uni-item">
         {{ um.uni_name(u) }}
-        <span class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</span>
+        <span class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }} {{ um.next_deadline(u) }}</span>
       </li>
       {% endfor %}
     </ul>

@@ -11,7 +11,8 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. Then Stage 1e step 3 (grade-page task lists) and step 4 (FAQ from real student questions).
 > 5. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
 >
-> Owner to-dos still open: review the fact-check tables (§5 of each research file), send the X post links for الرواد (open until 15 Nov) and إمداد, tell us SDAIA's registration status/deadline, review the 15 least-certain Arabic university names, optionally export the Telegram group (JSON) for the FAQ step.
+> Also done 2026-10-11 (decision 031): official X accounts as sources (@SA_Scholarships, @SDAIA_SA), SDAIA open (cohort 4) with a 'not standalone' warning, next deadline per university in the explorer.
+> Owner to-dos still open: review the fact-check tables (§5 of each research file), send a post that states الرواد's 15 Nov end date and one for إمداد closing, approve downloading SDAIA's university list PDF (50+ universities), review the 15 least-certain Arabic university names, optionally export the Telegram group (JSON) for the FAQ step.
 
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
 **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).

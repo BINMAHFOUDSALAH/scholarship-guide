@@ -323,3 +323,22 @@ def test_sdaia_program_page_and_targets():
     for target in sdaia["target_universities"]:
         assert target["id"] in main.explorer.universities, target
     assert "مستهدفة في" in client.get("/universities/the-university-of-edinburgh").text
+
+
+def test_sdaia_is_open_with_its_source_and_warns_it_is_not_standalone():
+    sdaia = main.paths_by_id["sdaia-ai-scholarship"]
+    track = sdaia["tracks"][0]
+    assert track["status"] == "open" and track["status_source"].startswith("https://x.com/SDAIA_SA/")
+    html = client.get("/programs/sdaia-ai-scholarship").text
+    assert sdaia["not_standalone_ar"] in html
+
+
+def test_news_can_point_to_our_own_explainer():
+    item = [n for n in main.news if n["path_id"] == "sdaia-ai-scholarship"][0]
+    assert item["page"] == "/programs/sdaia-ai-scholarship"
+    news = client.get("/").text.split('id="news"')[1].split("</section>")[0]
+    assert f'href="{item["page"]}"' in news
+
+
+def test_scholarship_links_its_official_x_account():
+    assert "https://x.com/SA_Scholarships" in client.get("/").text

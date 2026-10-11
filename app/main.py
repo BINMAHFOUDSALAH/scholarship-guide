@@ -189,7 +189,8 @@ def university_page(request: Request, uid: str):
     if profile is None:
         raise HTTPException(status_code=404)
     return templates.TemplateResponse(request, "university.html",
-                                      {"p": profile, "explorer": explorer, "program_targets": program_targets})
+                                      {"p": profile, "explorer": explorer, "program_targets": program_targets,
+                                       "today": date.today().isoformat()})
 
 
 @app.get("/api/universities")

@@ -129,6 +129,7 @@ def test_news_items_are_valid():
         assert item["type"] in NEWS_TYPES
         assert item["path_id"] in main.path_names, f"unknown path: {item['path_id']}"
         assert item["source_url"] is None or item["source_url"].startswith("https://")
+        assert item.get("page") is None or item["page"].startswith("/")
 
 
 def test_news_is_sorted_newest_first():

@@ -181,6 +181,13 @@ class Explorer:
 
     # ---------- one university ----------
 
+    def next_deadline(self, uid, today=None):
+        """The next upcoming dated item for a university (from its researched requirements), or None."""
+        from datetime import date as _date
+        today = today or _date.today().isoformat()
+        dates = [d for d in (self.details.get(uid) or {}).get("dates") or [] if d.get("date") and d["date"] >= today]
+        return min(dates, key=lambda d: d["date"]) if dates else None
+
     def profile(self, uid):
         u = self.universities.get(uid)
         if u is None:
@@ -188,7 +195,10 @@ class Explorer:
         by_track = {}
         for l in sorted(u["listings"], key=lambda l: l["rank"]):
             by_track.setdefault(l["track"], []).append({**l, "field_info": self.field(l["track"], l["field"])})
-        return {"university": u, "by_track": by_track, "details": self.details.get(uid)}
+        details = self.details.get(uid)
+        # Dated items in order; items the university hasn't dated yet go last.
+        dates = sorted((details or {}).get("dates") or [], key=lambda d: (d.get("date") is None, d.get("date") or ""))
+        return {"university": u, "by_track": by_track, "details": details, "dates": dates}
 
     def api(self):
         """Everything as plain data, for /api/universities."""

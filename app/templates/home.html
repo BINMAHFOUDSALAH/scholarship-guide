@@ -100,6 +100,7 @@
           {% if path.apply_url %}<a class="path-item-link" href="{{ path.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
           {% if path.universities_guide_url %}<a class="path-item-link" href="{{ path.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
           {% if path.targets_guide_url %}<a class="path-item-link" href="{{ path.targets_guide_url }}" target="_blank" rel="noopener">الجامعات المستهدفة (PDF) ↗</a>{% endif %}
+          {% if path.social_url %}<a class="path-item-link" href="{{ path.social_url }}" target="_blank" rel="noopener">{{ path.social_label_ar }} ↗</a>{% endif %}
         </p>
       </div>
     </article>
@@ -119,7 +120,10 @@
         <span class="chip chip--{{ item.type }}">{{ news_labels[item.type] }}</span>
       </p>
       <p class="news-title">
-        {% if item.source_url %}
+        {% if item.page %}
+        {# Our own explainer first (e.g. who SDAIA's program is really for); the official post is linked there. #}
+        <a href="{{ item.page }}">{{ item.title_ar }} ←</a>
+        {% elif item.source_url %}
         <a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
         {% else %}
         {{ item.title_ar }}

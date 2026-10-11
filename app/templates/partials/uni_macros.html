@@ -15,6 +15,12 @@
 {% if l.bachelors_only_majors %}<span class="note-chip">بكالوريوس في تخصصات محددة</span>{% endif %}
 {% endmacro %}
 
+{# The university's next deadline, from its researched requirements (if any). #}
+{% macro next_deadline(u) %}
+{% set d = explorer.next_deadline(u.id) %}
+{% if d %}<span class="note-chip note-chip--date" title="{{ d.label_ar }}">أقرب موعد: {{ d.date | arabic_date }}</span>{% endif %}
+{% endmacro %}
+
 {# Country, with a marker when its official language isn't English (where the language exception may apply). #}
 {% macro country(u) %}
 <span class="uni-country">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="lang-mark" title="لغة الدولة الرسمية ليست الإنجليزية">لغة أخرى</span>{% endif %}</span>
