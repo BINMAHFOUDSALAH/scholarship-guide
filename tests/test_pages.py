@@ -319,6 +319,10 @@ def test_program_page_explains_conditional_admission():
     assert "القبول المشروط" in html
     assert "مشروطًا بدراسة لغة" in html
     assert "https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" in html
+    # The second accepted case: a preparatory year, with its conditions and source (owner-confirmed 2026-10-11).
+    explainer = html.split('id="conditional"')[1]
+    assert "السنة التحضيرية" in explainer and "90%" in explainer and "5.5" in explainer
+    assert "https://sites.moe.gov.sa/scholarship-program/conditions/info-4/" in explainer
 
 
 def test_program_page_shows_sources_and_conflicts():
@@ -455,3 +459,28 @@ def test_grade_pages_switch_grades_and_put_the_next_step_first():
     assert "ماذا ينتظرك في ثالث ثانوي؟" in html
     assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text  # the last grade has no next one
     assert 'class="grade-switch"' not in client.get("/resources/ielts").text
+
+
+def test_owner_x_link_is_in_the_footer_only():
+    """The owner's X account: in the global footer on every page, never in the nav; safe new tab; labelled."""
+    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/my-list"):
+        html = client.get(page).text
+        header, footer = html.split("</header>")[0], html.split('<footer class="site-footer">')[1]
+        assert "x.com/salahmetaverse" not in header
+        link = footer.split('class="footer-x"')[1].split("</a>")[0]
+        assert 'href="https://x.com/salahmetaverse"' in link
+        assert 'target="_blank"' in link and 'rel="noopener noreferrer"' in link
+        assert 'aria-label="تابعني على X' in link and 'aria-hidden="true"' in link
+    main_part = client.get("/").text.split('<main id="main"')[1].split('<footer class="site-footer">')[0]
+    assert "salahmetaverse" not in main_part
+
+
+def test_logo_mark_is_the_same_in_the_header_and_the_favicon():
+    """Decision 036: one drawing (ض with a lime diamond dot on a forest tile) in the header and favicon.svg."""
+    header = client.get("/about").text.split("</header>")[0]
+    favicon = client.get("/static/favicon.svg").text
+    mark = header.split('<svg class="brand-mark"')[1].split("</svg>")[0]
+    for colour in ("#184b3a", "#f6f4ee", "#d8ed9b"):
+        assert colour in mark and colour in favicon
+    glyph = mark.split('<path d="')[1].split('"')[0]
+    assert glyph in favicon

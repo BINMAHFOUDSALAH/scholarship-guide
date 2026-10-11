@@ -32,7 +32,6 @@
   --control-border: #4f5a54; /* inputs and selects: ≥ 3:1 against the page (WCAG 1.4.11) */
   --lime: #d8ed9b;           /* "open now" and "your next step" only. Never small text. */
   --on-lime: #101713;
-  --logo-deep: #184b3a;      /* mountain body in the logo */
   --amber: #774c0c;          /* restrictions and "not open yet" (darkened for contrast on tints) */
   --sea: #1d6470;            /* Red Sea path accent */
   --band: #184b3a;           /* the Tuwaiq band background */
@@ -80,7 +79,6 @@
   --control-border: #8a968f;
   --lime: #d8ed9b;
   --on-lime: #101713;
-  --logo-deep: #4e9a79;
   --amber: #e0b26a;
   --sea: #6cc3cf;
   --band: #16211c;
@@ -275,8 +273,8 @@ main:has(> .hero) {
 }
 
 .brand-mark {
-  width: 58px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
 }
 
@@ -2725,41 +2723,34 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink);
 }
 
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-1);
+/* The owner's X account: a small icon under the footer text, in the footer's own colours. */
+.footer-x {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-top: var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  color: var(--ink-muted);
 }
 
-.footer-title {
-  font-size: var(--text-sm);
-  font-weight: 700;
+.footer-x:hover {
+  border-color: var(--heading);
   color: var(--heading);
 }
 
-.footer-links a {
-  padding-block: 2px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-@media (min-width: 800px) {
-  .footer-grid {
-    grid-template-columns: 2fr 1fr;
-  }
+.footer-x svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* ---------- Very narrow phones (e.g. 320–379px) ---------- */
 
 @media (max-width: 379px) {
   .brand-mark {
-    width: 44px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
   }
 
   .brand-name {

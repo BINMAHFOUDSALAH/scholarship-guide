@@ -33,16 +33,11 @@ async function drawShareImage() {
   ctx.stroke(new Path2D("M944 80 L1006 80 M937 116 L1022 116 M932 145 L1034 145"));
   ctx.restore();
 
-  // Logo mark, top right (Arabic reads from the right)
-  ctx.save();
-  ctx.translate(1000, 70);
-  ctx.scale(2.5, 2.5);
-  shape("M1 38 L30 25 L36 24 L47 13 L54 11 L58 15 L63 38 Z", "#16302a");
-  shape("M53 12 L58 15 L63 38 L50 38 Z", "#d5ec6b");
-  ctx.strokeStyle = "#16302a";
-  ctx.lineWidth = 1.6;
-  ctx.stroke(new Path2D("M51.5 22 L60 22 M50.8 30 L61.6 30"));
-  ctx.restore();
+  // Logo mark, top right (Arabic reads from the right): the same drawing as favicon.svg (decision 036)
+  const mark = new Image();
+  mark.src = "/static/favicon.svg";
+  await mark.decode();
+  ctx.drawImage(mark, 1000, 62, 150, 150);
 
   // Text, right-aligned
   ctx.direction = "rtl";
@@ -56,7 +51,7 @@ async function drawShareImage() {
 
   ctx.fillStyle = "#4e605a";
   ctx.font = '400 34px "IBM Plex Sans Arabic"';
-  ctx.fillText("دليل مجاني لطلاب الثانوية في السعودية · بدون تسجيل", 1130, 400);
+  ctx.fillText("دليل مجاني لطلاب الثانوية في السعودية", 1130, 400);
 
   return canvas.toDataURL("image/png");
 }
