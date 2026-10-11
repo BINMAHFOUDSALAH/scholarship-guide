@@ -319,6 +319,10 @@ def test_program_page_explains_conditional_admission():
     assert "القبول المشروط" in html
     assert "مشروطًا بدراسة لغة" in html
     assert "https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" in html
+    # The second accepted case: a preparatory year, with its conditions and source (owner-confirmed 2026-10-11).
+    explainer = html.split('id="conditional"')[1]
+    assert "السنة التحضيرية" in explainer and "90%" in explainer and "5.5" in explainer
+    assert "https://sites.moe.gov.sa/scholarship-program/conditions/info-4/" in explainer
 
 
 def test_program_page_shows_sources_and_conflicts():

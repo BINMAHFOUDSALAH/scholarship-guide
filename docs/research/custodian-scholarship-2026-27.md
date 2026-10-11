@@ -55,8 +55,14 @@ Applies to: **الرواد, إمداد, البحث والتطوير**. Not to **
 | Conditional on studying the **destination country's language**, in a **non-English-speaking country** | ✅ Allowed by the exception, and language study can be funded. |
 | Conditional on grades / finishing high school | ❔ Not covered by the exception. Don't assume it's accepted. |
 | Conditional on an English test (IELTS/TOEFL) | ❔ Not covered. The FAQ also says an English-language year isn't funded in English-speaking countries. |
-| Through a preparatory / foundation year | ⚠️ info-4 sets conditions for "دراسة السنة التحضيرية" (GPA ≥ 90%, IELTS ≥ 5.5), so it exists in some form, but how a foundation-year offer fits the "unconditional" rule isn't stated. Ask officially. |
+| Through a preparatory / foundation year (bachelor's) | ✅ **Resolved 2026-10-11.** Accepted with info-4's extra conditions (HS GPA ≥ 90%, IELTS ≥ 5.5 or equivalent), no country named, so English-speaking countries too. Source: [info-4](https://sites.moe.gov.sa/scholarship-program/conditions/info-4/) (text pasted by the owner, because the site is blocked from Claude's environment) + **owner confirmation**. Not the same as a language-only year, which isn't funded in English-speaking countries. |
 | Any other condition | ❔ Not covered. |
+
+### To check on the official page (owner, 2026-10-11)
+The owner pasted the conditions page text on 2026-10-11. Two points differ from what we read earlier; the site shows neither until checked:
+- **Age:** the paste lists «ألا يتجاوز عمر المتقدم للبكالوريوس 30 عامًا، مع استثناء المتقدمين في مسار الرواد» as a *general* condition (info-1). We had read it as China-only, and the FAQ as "no age limit". The site no longer states any age rule either way.
+- **China (info-4):** per the paste, the 85% / IELTS 4.5 rule applies only to offers conditional on language study (not direct admission), with master's thresholds (2.75/4, 3.75/5 or 80/100, IELTS 4.5). Applied on the site.
+- **Number of admissions:** the paste says «ثلاثة قبولات كحد أقصى» (info-2); earlier we found no "up to 3". The site keeps "several applications, one accepted" until checked.
 
 ### Country level (official country pages, 2026-10-11)
 Official language **not English** per the program's [country pages](https://sites.moe.gov.sa/scholarship-program/countries/): China, Japan, South Korea, France, Germany, Italy, Spain, Netherlands, Switzerland. English: USA, UK, Canada, Australia, Singapore, Malaysia, India.

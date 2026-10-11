@@ -15,6 +15,8 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > Audit and research: `docs/research/ux-redesign-2026-10.md`.
 > 1. **Owner reviews the branch** (screenshots in the session, or run it locally), then merges to `main` to go live.
 > 2. **Usability test with 3–5 students** (Stage 1e step 5). The redesign is based on expert guidance, not on watching students yet.
+> 2b. **Conditions page, still to check by the owner** (`docs/research/custodian-scholarship-2026-27.md` §3 «To check»): the age rule and «ثلاثة قبولات». The preparatory-year case was fixed on 2026-10-11.
+> 2c. **Next guide edition** (expected before إمداد opens): re-run `scripts/extract_universities.py`; universities may be added or removed, ranks and possibly the الرواد list may change.
 > 3. **Owner spot-checks the requirement files** in `data/university_details/`, starting with the ones the agents couldn't open directly (Columbia, Michigan, Oxford, UCL, NUS) and the years they inferred. Also check «الاحياء الدقيقة» = "General biology" in the R&D natural-sciences majors against the guide (pages 7–13).
 > 4. Next requirement batches: إمداد universities, most-searched first (Haiku agents, ~5 per batch).
 > 5. Apply the KGSP and Aramco research (`docs/research/kgsp-2026-27.md`, `aramco-cdpne-2026-27.md`) to `paths.json` once the owner has reviewed them.
