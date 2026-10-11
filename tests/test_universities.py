@@ -239,3 +239,139 @@ def test_no_target_filter_or_fineprint_on_the_explorer():
     assert "برامج إضافية" not in html and "مستهدفة في" not in html
     assert "ترجمتنا للتسهيل" not in html
 
+
+
+# ---------- explorer redesign (decision 035) ----------
+
+def test_arabic_counting():
+    from app.universities import PROGRAMS_AR, UNIVERSITIES_AR, count_ar
+    assert count_ar(1, UNIVERSITIES_AR) == "جامعة واحدة"
+    assert count_ar(2, UNIVERSITIES_AR) == "جامعتان"
+    assert count_ar(5, UNIVERSITIES_AR) == "5 جامعات"
+    assert count_ar(30, UNIVERSITIES_AR) == "30 جامعة"
+    assert count_ar(11, PROGRAMS_AR) == "11 برنامجًا"
+    assert count_ar(200, PROGRAMS_AR) == "200 برنامج"
+    assert count_ar(103, UNIVERSITIES_AR) == "103 جامعات"
+
+
+def test_applied_filters_each_have_a_remove_link():
+    view = ex.describe(ex.search(q="الذكاء الاصطناعي", track="emdad", field="ict", country="GB", language="english"))
+    labels = [a["label_ar"] for a in view["applied"]]
+    assert labels == ["التخصص", "المسار", "المجال", "الدولة", "الدول"]
+    track = view["applied"][1]
+    assert "track=" not in track["href"] and "field=" not in track["href"]  # the field goes with its track
+    assert "country=GB" in track["href"]
+    country = view["applied"][3]
+    assert "country=" not in country["href"] and "track=emdad" in country["href"]
+    assert ex.describe(ex.search())["applied"] == []
+
+
+def test_explorer_page_shows_applied_tags_clear_all_and_a_summary():
+    html = client.get("/universities?track=emdad&field=ict&country=CN").text
+    assert html.count('class="applied-chip"') == 3
+    assert 'class="applied-clear" href="http://testserver/universities"' in html
+    assert 'data-summary="مسار إمداد (تقنية الاتصالات والمعلومات): 17 جامعة"' in html
+    assert 'role="status"' in html
+    assert 'aria-live="polite"' not in html.split('id="results"')[1]  # the big region is not live
+    assert "وليس تصنيفًا عالميًا" in html  # what the rank means
+    assert "/programs/custodian-scholarship#conditional" in html  # non-English countries in the list
+    assert "<bdi>" in html  # filter values are isolated from the Arabic sentence
+
+
+def test_no_filter_tags_and_no_clear_all_by_default():
+    html = client.get("/universities").text
+    assert 'class="applied-chip"' not in html and 'class="applied-clear"' not in html
+
+
+def test_result_links_carry_the_search_back():
+    html = client.get("/universities?q=stanford").text
+    assert "/universities/stanford-university?from=q%3Dstanford" in html
+
+
+@pytest.mark.parametrize("raw, expected", [
+    ("q=AI&track=emdad&field=ict", "/universities?q=AI&track=emdad&field=ict"),
+    ("track=arruaad&field=ict", "/universities?track=arruaad"),       # a field only belongs to إمداد / R&D
+    ("country=ZZ&lang=klingon&evil=1", "/universities"),               # unknown values are dropped
+    ("//evil.example/path", "/universities"),                          # never another site
+    ("", "/universities"),
+])
+def test_back_url_keeps_only_known_search_params(raw, expected):
+    assert ex.back_url(raw) == expected
+
+
+def test_university_page_links_back_to_the_search():
+    html = client.get("/universities/stanford-university?from=q%3Dstanford%26country%3DUS").text
+    assert 'href="/universities?q=stanford&amp;country=US"' in html
+    plain = client.get("/universities/stanford-university").text
+    assert 'href="/universities?' not in plain
+
+
+def test_a_field_without_a_track_means_emdad():
+    r = ex.search(field="ict")
+    assert r["track"] == "emdad" and r["sections"][0]["field"]["id"] == "ict"
+
+
+def test_suggestions_name_the_country():
+    data = client.get("/api/suggestions").json()
+    stanford = [u for u in data["universities"] if u["id"] == "stanford-university"][0]
+    assert stanford["country_ar"] == "الولايات المتحدة الأمريكية"
+
+
+def test_suggestion_search_keeps_arabic_letters():
+    """The browser's normalize() removes marks only. Its character class once ran U+0300–064B by a
+    typo (invisible combining characters), which removed every Arabic letter, so Arabic typing never
+    filtered the suggestions. It's written with \\u escapes now; this keeps it that way."""
+    js = (main.APP_DIR / "static" / "universities.js").read_text(encoding="utf-8")
+    line = [l for l in js.splitlines() if '.normalize("NFKD")' in l][0]
+    bs = chr(92)  # a backslash, spelled out so no tool can turn the escapes into real marks
+    expected = "[" + bs + "u0300-" + bs + "u036f" + bs + "u064b-" + bs + "u0652" + bs + "u0640]"
+    assert expected in line
+    assert not any(0x0300 <= ord(ch) <= 0x036F or 0x064B <= ord(ch) <= 0x0652 for ch in line)
+
+
+# ---------- university page + «قائمتي» (decision 035) ----------
+
+def test_university_page_answers_first():
+    html = client.get("/universities/stanford-university").text
+    summary = html.split('id="summary-title"')[1].split("</section>")[0]
+    assert "قوائم الابتعاث" in summary and "التخصصات" in summary
+    assert "أقرب موعد تقديم في الجامعة" in summary
+    assert "لا يعني قبولك فيها" in summary  # being on a list is not admission
+    assert "/programs/custodian-scholarship#admission-vs-scholarship" in summary
+    assert html.index('id="summary-title"') < html.index('id="lists-title"') < html.index('id="req-title"')
+    assert 'id="dates-title"' in html and "وليست مواعيد الابتعاث" in html
+
+
+def test_doctorate_lists_are_folded_unless_they_are_all_there_is():
+    stanford = client.get("/universities/stanford-university").text
+    assert '<details class="uni-track rnd-lists">' in stanford
+    only_rnd = next(uid for uid, u in ex.universities.items() if all(l["track"] == "rnd" for l in u["listings"]))
+    assert '<details class="uni-track rnd-lists" open>' in client.get(f"/universities/{only_rnd}").text
+
+
+def test_save_button_needs_javascript_and_the_header_link_starts_hidden():
+    html = client.get("/universities/harvard-university").text
+    assert 'data-save="harvard-university" hidden' in html
+    assert "data-mylist-link hidden" in html
+    assert "/static/mylist.js" in html
+
+
+def test_my_list_page_is_private_and_not_indexed():
+    html = client.get("/my-list").text
+    assert '<meta name="robots" content="noindex">' in html
+    assert "على هذا الجهاز فقط" in html and "<noscript>" in html
+    assert "/my-list" not in client.get("/sitemap.xml").text
+
+
+def test_my_list_rows_keep_known_ids_in_order():
+    html = client.get("/my-list?partial=1&ids=yale-university,nope,../../.env,harvard-university,yale-university").text
+    assert re.findall(r'data-mylist-item="([^"]+)"', html) == ["yale-university", "harvard-university"]
+    assert "<html" not in html
+    assert 'aria-label="إزالة جامعة ييل من قائمتي"' in html  # the visible «إزالة» is in the name (WCAG 2.5.3)
+    assert "data-mylist-item" not in client.get("/my-list?partial=1&ids=").text
+
+
+def test_my_list_rows_are_capped_at_100():
+    ids = ",".join(sorted(ex.universities)[:150])
+    html = client.get(f"/my-list?partial=1&ids={ids}").text
+    assert len(re.findall(r"data-mylist-item=", html)) == 100

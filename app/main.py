@@ -3,7 +3,7 @@ import os
 from datetime import date
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exception_handlers import http_exception_handler
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, Response
 from fastapi.staticfiles import StaticFiles
@@ -11,7 +11,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.content import SLUG_PATTERN, list_slugs, load_page
-from app.universities import SAT_POLICY_AR, TRACKS, Explorer
+from app.universities import COUNT_FORMS, SAT_POLICY_AR, TRACKS, Explorer, count_ar
 
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR.parent / "data"
@@ -174,6 +174,8 @@ templates.env.globals["waaid"] = waaid
 templates.env.globals["track_status"] = track_status
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
 templates.env.filters["arabic_date"] = arabic_date
+# {{ 5 | count_ar("universities") }} → «5 جامعات» (Arabic counting rules, see universities.count_ar).
+templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun])
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -190,6 +192,7 @@ def home(request: Request):
             "path_names": path_names,
             "quote": featured_quote if show_quote else None,
             "program_pages": program_slugs(),
+            "explorer": explorer,
         },
     )
 
@@ -212,7 +215,8 @@ def grade_page(request: Request, slug: str):
     page = load_page("grades", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html", {"page": page, "tests": tests})
+    return templates.TemplateResponse(request, "page.html",
+                                      {"page": page, "tests": tests, "section": "grades", "grades": home_text["grades"]})
 
 
 @app.get("/resources/{slug}", response_class=HTMLResponse)
@@ -221,7 +225,7 @@ def resource_page(request: Request, slug: str):
     page = load_page("resources", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html", {"page": page, "tests": tests})
+    return templates.TemplateResponse(request, "page.html", {"page": page, "tests": tests, "section": "resources"})
 
 
 @app.get("/programs/{slug}", response_class=HTMLResponse)
@@ -240,18 +244,40 @@ def universities_page(request: Request, q: str = "", track: str = "", field: str
     # Search runs on the server, so the page works without JavaScript; universities.js asks for
     # partial=1 to swap in just the results as the student types.
     result = explorer.search(q=q[:100], track=track, field=field, country=country, language=lang)
-    context = {"result": result, "explorer": explorer}
+    # The King scholarship's tracks (name, who it's for, levels) for «ما الفرق بين المسارات؟».
+    scholarship_tracks = [t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("id") in TRACKS]
+    context = {"result": result, "explorer": explorer, "view": explorer.describe(result),
+               "scholarship_tracks": scholarship_tracks}
     template = "partials/uni_results.html" if partial else "universities.html"
     return templates.TemplateResponse(request, template, context)
 
 
 @app.get("/universities/{uid}", response_class=HTMLResponse)
-def university_page(request: Request, uid: str):
+def university_page(request: Request, uid: str, from_: str | None = Query(None, alias="from")):
     profile = explorer.profile(uid) if SLUG_PATTERN.match(uid) else None
     if profile is None:
         raise HTTPException(status_code=404)
+    # `from` is the search the student came from (set on result links), so the page can link back
+    # to the same results. Only known parameters survive (see Explorer.back_url).
     return templates.TemplateResponse(request, "university.html",
-                                      {"p": profile, "explorer": explorer, "today": date.today().isoformat()})
+                                      {"p": profile, "explorer": explorer, "today": date.today().isoformat(),
+                                       "back_url": explorer.back_url(from_)})
+
+
+@app.get("/my-list", response_class=HTMLResponse)
+def my_list(request: Request, ids: str = "", partial: bool = False):
+    """«قائمتي» (decision 035). The list itself lives in the student's browser (mylist.js); the page
+    asks for its rows with ?partial=1&ids=a,b. Only ids of universities we know are drawn, in the
+    student's order, at most 100. Nothing is stored here."""
+    if not partial:
+        return templates.TemplateResponse(request, "my_list.html", {})
+    wanted = []
+    for uid in ids.split(",")[:100]:
+        uid = uid.strip()
+        if SLUG_PATTERN.match(uid) and uid in explorer.universities and uid not in wanted:
+            wanted.append(uid)
+    return templates.TemplateResponse(request, "partials/my_list_rows.html",
+                                      {"unis": [explorer.universities[uid] for uid in wanted], "explorer": explorer})
 
 
 @app.get("/api/suggestions")

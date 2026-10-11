@@ -4,27 +4,95 @@
 
 {% set u = p.university %}
 {% set d = p.details %}
+{% set next = explorer.next_deadline(u.id) %}
 {% block title %}{{ u.name_ar or u.name_en }} | {{ site.name }}{% endblock %}
 {% block description %}{{ u.name_ar or u.name_en }} ({{ u.name_en }}): ترتيبها في قوائم برنامج خادم الحرمين الشريفين للابتعاث 2026–2027، والتخصصات المتاحة، ومتطلبات القبول من مصادرها الرسمية.{% endblock %}
 
 {% block content %}
-<article class="uni-page">
+<article class="uni-page page-wide">
+  {% if back_url %}{{ c.back_link(back_url, "الرجوع إلى نتائج البحث") }}{% else %}{{ c.back_link(url_for('universities_page'), "كل الجامعات") }}{% endif %}
+
   <header class="uni-header">
-    <p class="uni-back"><a href="{{ url_for('universities_page') }}">→ كل الجامعات</a></p>
     <h1>{{ u.name_ar or u.name_en }}</h1>
-    {% if u.name_ar %}<p class="path-item-en" lang="en" dir="ltr">{{ u.name_en }}</p>{% endif %}
-    <p class="uni-header-meta">{{ um.country(u) }} {{ um.memberships(u) }}</p>
+    {% if u.name_ar %}<p class="uni-header-en" lang="en" dir="ltr">{{ u.name_en }}</p>{% endif %}
+    <p class="uni-header-meta">{{ um.country(u) }}</p>
     {% if u.country_note %}<p class="fact-note">ملاحظة: في الدليل يظهر بجانبها علم دولة أخرى، والجامعة في {{ u.country_info.name_ar }}.</p>{% endif %}
+
+    {# «احفظ في قائمتي»: works with JavaScript only (mylist.js), so it starts hidden. #}
+    <div class="save-area">
+      <button class="btn btn--secondary save-toggle" type="button" data-save="{{ u.id }}" hidden>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.75h8v12.5l-4-3-4 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span data-save-label>احفظ في قائمتي</span>
+      </button>
+      <p class="save-note" data-save-note="{{ u.id }}" hidden>✓ محفوظة في <a href="{{ url_for('my_list') }}">قائمتي</a> على هذا الجهاز.</p>
+      <p class="sr-only" role="status" data-save-status></p>
+    </div>
   </header>
 
-  {% if not u.country_info.english %}
-  <aside class="uni-callout">
-    <p><strong>لغة {{ u.country_info.name_ar }} الرسمية {{ u.country_info.language_ar }}.</strong> في مسارات الرواد وإمداد والبحث والتطوير يمكن أن يكون القبول في دولة غير ناطقة بالإنجليزية مشروطًا بدراسة لغتها. هذا لا يشمل الشروط الأخرى، ولم يحدد المصدر الرسمي حكم البرامج التي تُدرَّس بالإنجليزية.</p>
-    <a href="{{ url_for('program_page', slug='custodian-scholarship') }}">متى يُقبل القبول المشروط؟ ←</a>
-  </aside>
-  {% endif %}
+  {# The answers first (decision 035): which lists, which majors, the next deadline, how to apply. #}
+  <section class="uni-summary" aria-labelledby="summary-title">
+    <h2 id="summary-title" class="uni-summary-title">باختصار</h2>
+    <dl class="summary-list">
+      <div class="summary-row">
+        <dt>قوائم الابتعاث</dt>
+        <dd>{{ um.memberships(u) }}</dd>
+      </div>
+      <div class="summary-row">
+        <dt>التخصصات</dt>
+        <dd>
+          {% if p.by_track.arruaad %}في مسار الرواد: <strong>كل التخصصات</strong>.{% endif %}
+          {% if p.by_track.emdad %}في مسار إمداد: تخصصات {{ p.by_track.emdad | length | count_ar("fields") }} محددة، <a href="#lists">تجدها أدناه</a>.{% endif %}
+          {% if not p.by_track.arruaad and not p.by_track.emdad %}في مسار البحث والتطوير فقط (للدكتوراه)، <a href="#lists">التفاصيل أدناه</a>.{% endif %}
+        </dd>
+      </div>
+      {% if next %}
+      <div class="summary-row">
+        <dt>أقرب موعد تقديم في الجامعة</dt>
+        <dd><strong>{{ next.date | arabic_date }}</strong> · {{ next.label_ar }} <a class="src" href="{{ next.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd>
+      </div>
+      {% endif %}
+      {% if d and d.platform %}
+      <div class="summary-row">
+        <dt>منصة التقديم</dt>
+        <dd>{{ d.platform.value_ar }}</dd>
+      </div>
+      {% endif %}
+      {% if d and d.sat_act %}
+      <div class="summary-row">
+        <dt><span lang="en" dir="ltr">SAT / ACT</span></dt>
+        <dd>{{ sat_policy_ar.get(d.sat_act.policy, d.sat_act.policy) }}</dd>
+      </div>
+      {% endif %}
+    </dl>
+    {% if d and d.admissions_url %}
+    <div class="actions">
+      <a class="btn btn--primary" href="{{ d.admissions_url }}" target="_blank" rel="noopener">صفحة القبول في موقع الجامعة ↗</a>
+    </div>
+    {% endif %}
 
-  <section class="uni-section" aria-labelledby="lists-title">
+    <div class="notice">
+      <p><strong>وجود الجامعة في قائمة المسار لا يعني قبولك فيها.</strong> تتقدم على الجامعة بنفسك وهي التي تقرر قبولك، ثم تقدّم على الابتعاث بخطاب القبول، والوزارة هي التي تقرر الترشيح.
+        <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#admission-vs-scholarship">الفرق بين القبول والابتعاث ←</a></p>
+    </div>
+
+    {% if not u.country_info.english %}
+    <div class="notice notice--warn">
+      <p><strong>لغة {{ u.country_info.name_ar }} الرسمية {{ u.country_info.language_ar }}.</strong> في مسارات الرواد وإمداد والبحث والتطوير يمكن أن يكون القبول في دولة غير ناطقة بالإنجليزية مشروطًا بدراسة لغتها. هذا لا يشمل الشروط الأخرى، ولم يحدد المصدر الرسمي حكم البرامج التي تُدرَّس بالإنجليزية.
+        <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى يُقبل القبول المشروط؟ ←</a></p>
+    </div>
+    {% endif %}
+  </section>
+
+  <nav class="page-contents" aria-label="في هذه الصفحة">
+    <p class="page-contents-title">في هذه الصفحة</p>
+    <ul>
+      <li><a href="#lists">قوائم الابتعاث والتخصصات</a></li>
+      <li><a href="#requirements">متطلبات القبول في الجامعة</a></li>
+      {% if p.dates %}<li><a href="#dates">مواعيد التقديم على الجامعة</a></li>{% endif %}
+    </ul>
+  </nav>
+
+  <section class="uni-section" id="lists" aria-labelledby="lists-title">
     <h2 id="lists-title">في قوائم الابتعاث 2026–2027</h2>
 
     {% if p.by_track.arruaad %}
@@ -39,66 +107,81 @@
     </div>
     {% endif %}
 
-    {% for tid in ("emdad", "rnd") if p.by_track[tid] %}
-    <div class="uni-track">
-      <h3>{{ tracks[tid].name_ar }}{% if tid == "rnd" %} <span class="uni-track-rank">للدكتوراه فقط</span>{% endif %}</h3>
-      <p>الجامعة مرتبة في {{ p.by_track[tid] | length }} {{ "مجال" if p.by_track[tid] | length == 1 else "مجالات" }}. تحت كل مجال: ترتيبها فيه، والتخصصات التابعة له حسب الدليل الاسترشادي.</p>
-      <ol class="field-blocks">
-        {% for l in p.by_track[tid] %}
-        {% set f = l.field_info %}
-        <li class="field-block">
-          <div class="field-head">
-            <span class="field-rank"><span class="field-rank-label">الترتيب</span> {{ l.rank }}</span>
-            <span class="field-name">{{ f.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ f.name_en }}</span></span>
-            {{ um.listing_notes(l) }}
-          </div>
-          {% if l.masters_only %}<p class="fact-note">في هذا المجال: الجامعة مدرجة لدرجة الماجستير فقط، فلا تنطبق على البكالوريوس.</p>{% endif %}
-          {% if l.bachelors_only_majors %}
-          <p class="fact-note">{{ l.box_ar }}</p>
-          <ul class="major-list major-list--only">{% for name in l.bachelors_only_majors %}<li lang="en" dir="ltr">{{ name }}</li>{% endfor %}</ul>
-          {% endif %}
-          {% if f.majors %}
-          {% set shown = 10 %}
+    {% macro field_blocks(tid) %}
+    <ol class="field-blocks">
+      {% for l in p.by_track[tid] %}
+      {% set f = l.field_info %}
+      <li class="field-block">
+        <div class="field-head">
+          <span class="field-rank"><span class="field-rank-label">الترتيب</span> {{ l.rank }}</span>
+          <span class="field-name">{{ f.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ f.name_en }}</span></span>
+          <span class="tags">{{ um.listing_notes(l) }}</span>
+        </div>
+        {% if l.masters_only %}<p class="fact-note">في هذا المجال: الجامعة مدرجة لدرجة الماجستير فقط، فلا تنطبق على البكالوريوس.</p>{% endif %}
+        {% if l.bachelors_only_majors %}
+        <p class="fact-note">{{ l.box_ar }}</p>
+        <ul class="major-list major-list--only">{% for name in l.bachelors_only_majors %}<li lang="en" dir="ltr">{{ name }}</li>{% endfor %}</ul>
+        {% endif %}
+        {% if f.majors %}
+        {% set shown = 10 %}
+        <ul class="major-list">
+          {% for m in f.majors[:shown] %}
+          <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="tag tag--warn">ماجستير فقط</span>{% endif %}</li>
+          {% endfor %}
+        </ul>
+        {% if f.majors | length > shown %}
+        <details class="more-majors">
+          <summary>عرض باقي التخصصات ({{ f.majors | length - shown }})</summary>
           <ul class="major-list">
-            {% for m in f.majors[:shown] %}
-            <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="note-chip note-chip--warn">ماجستير فقط</span>{% endif %}</li>
+            {% for m in f.majors[shown:] %}
+            <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="tag tag--warn">ماجستير فقط</span>{% endif %}</li>
             {% endfor %}
           </ul>
-          {% if f.majors | length > shown %}
-          <details class="more-majors">
-            <summary>عرض باقي التخصصات ({{ f.majors | length - shown }})</summary>
-            <ul class="major-list">
-              {% for m in f.majors[shown:] %}
-              <li>{{ m.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ m.name_en }}</span>{% if m.masters_only %} <span class="note-chip note-chip--warn">ماجستير فقط</span>{% endif %}</li>
-              {% endfor %}
-            </ul>
-          </details>
-          {% endif %}
-          {% endif %}
-          <p class="field-src">الدليل الاسترشادي، صفحة {{ l.pdf_page }}. قد يختلف مسمى التخصص في موقع الجامعة.</p>
-        </li>
-        {% endfor %}
-      </ol>
+        </details>
+        {% endif %}
+        {% endif %}
+        <p class="field-src">الدليل الاسترشادي، صفحة {{ l.pdf_page }}. قد يختلف مسمى التخصص في موقع الجامعة.</p>
+      </li>
+      {% endfor %}
+    </ol>
+    {% endmacro %}
+
+    {% if p.by_track.emdad %}
+    <div class="uni-track">
+      <h3>{{ tracks.emdad.name_ar }}</h3>
+      <p>الجامعة مرتبة في {{ p.by_track.emdad | length | count_ar("fields") }}. تحت كل مجال: ترتيبها فيه، والتخصصات التابعة له حسب الدليل الاسترشادي.</p>
+      {{ field_blocks("emdad") }}
     </div>
-    {% endfor %}
+    {% endif %}
+
+    {% if p.by_track.rnd %}
+    {# Doctorate only: folded, because this page is mostly read by high-school students. #}
+    <details class="uni-track rnd-lists"{% if not p.by_track.arruaad and not p.by_track.emdad %} open{% endif %}>
+      <summary>
+        <span class="rnd-title">{{ tracks.rnd.name_ar }} <span class="uni-track-rank">للدكتوراه فقط</span></span>
+        <span class="rnd-note">الجامعة مرتبة في {{ p.by_track.rnd | length | count_ar("fields") }}. لا يخص خريجي الثانوية.</span>
+      </summary>
+      {{ field_blocks("rnd") }}
+    </details>
+    {% endif %}
     {{ c.source_stamp([{"title": explorer.source.title_ar ~ " (PDF)", "url": explorer.source.url}]) }}
   </section>
 
-  <section class="uni-section" aria-labelledby="req-title">
+  <section class="uni-section" id="requirements" aria-labelledby="req-title">
     <h2 id="req-title">متطلبات القبول في الجامعة</h2>
     {% if d %}
     <p class="result-note">من موقع الجامعة الرسمي{% if d.entry_ar %}، {{ d.entry_ar }}{% endif %}. الجامعة هي التي تقرر القبول، فتأكد من صفحتها قبل التقديم.</p>
-    <dl class="req-list">
+    <dl class="summary-list">
       {% if d.platform %}
-      <div class="req"><dt>منصة التقديم</dt><dd>{{ d.platform.value_ar }} <a class="req-src" href="{{ d.platform.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd></div>
+      <div class="summary-row"><dt>منصة التقديم</dt><dd>{{ d.platform.value_ar }} <a class="src" href="{{ d.platform.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd></div>
       {% endif %}
 
       {% if d.english %}
-      <div class="req"><dt>اللغة الإنجليزية</dt><dd>
+      <div class="summary-row"><dt>اللغة الإنجليزية</dt><dd>
         <ul class="req-scores">
           {% for key, label in (("ielts", "IELTS"), ("toefl_ibt", "TOEFL iBT"), ("duolingo", "Duolingo")) if d.english[key] %}
           {% set e = d.english[key] %}
-          <li><span lang="en" dir="ltr">{{ label }}</span>: {% if e.min is not none %}<strong>{{ e.min }}</strong>{% else %}لا يوجد حد أدنى منشور{% endif %}{% if e.note_ar %} · {{ e.note_ar }}{% endif %} <a class="req-src" href="{{ e.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>
+          <li><span lang="en" dir="ltr">{{ label }}</span>: {% if e.min is not none %}<strong>{{ e.min }}</strong>{% else %}لا يوجد حد أدنى منشور{% endif %}{% if e.note_ar %} · {{ e.note_ar }}{% endif %} <a class="src" href="{{ e.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>
           {% endfor %}
         </ul>
         {% if d.english.note_ar %}<p class="fact-note">{{ d.english.note_ar }}</p>{% endif %}
@@ -106,27 +189,19 @@
       {% endif %}
 
       {% if d.sat_act %}
-      <div class="req"><dt><span lang="en" dir="ltr">SAT / ACT</span></dt><dd><strong>{{ sat_policy_ar.get(d.sat_act.policy, d.sat_act.policy) }}</strong>{% if d.sat_act.note_ar %} · {{ d.sat_act.note_ar }}{% endif %}{% if d.sat_act.source_url %} <a class="req-src" href="{{ d.sat_act.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}</dd></div>
-      {% endif %}
-
-      {% if d.dates %}
-      <div class="req"><dt>المواعيد</dt><dd>
-        <ul class="req-scores">
-          {% for x in p.dates %}<li{% if x.date and x.date < today %} class="req-past"{% endif %}>{{ x.label_ar }}: <strong>{% if x.date %}{{ x.date | arabic_date }}{% else %}غير منشور{% endif %}</strong>{% if x.date and x.date < today %} <span class="note-chip">انتهى</span>{% endif %} <a class="req-src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>{% endfor %}
-        </ul>
-      </dd></div>
+      <div class="summary-row"><dt><span lang="en" dir="ltr">SAT / ACT</span></dt><dd><strong>{{ sat_policy_ar.get(d.sat_act.policy, d.sat_act.policy) }}</strong>{% if d.sat_act.note_ar %} · {{ d.sat_act.note_ar }}{% endif %}{% if d.sat_act.source_url %} <a class="src" href="{{ d.sat_act.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}</dd></div>
       {% endif %}
 
       {% if d.acceptance_rate %}
-      <div class="req"><dt>نسبة القبول</dt><dd>
+      <div class="summary-row"><dt>نسبة القبول</dt><dd>
         {% if d.acceptance_rate.percent is not none %}<strong>{{ d.acceptance_rate.percent }}%</strong> · {% endif %}{{ d.acceptance_rate.scope_ar }}
         {% if d.acceptance_rate.international_percent is not none %}<br>للطلاب الدوليين: <strong>{{ d.acceptance_rate.international_percent }}%</strong>{% endif %}
-        <a class="req-src" href="{{ d.acceptance_rate.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
+        <a class="src" href="{{ d.acceptance_rate.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
       </dd></div>
       {% endif %}
 
       {% if d.language_note_ar %}
-      <div class="req"><dt>لغة الدراسة</dt><dd>{{ d.language_note_ar }}</dd></div>
+      <div class="summary-row"><dt>لغة الدراسة</dt><dd>{{ d.language_note_ar }}</dd></div>
       {% endif %}
     </dl>
     {% if d.not_found_ar %}
@@ -138,5 +213,25 @@
     <p class="result-note">لم نجمع متطلبات هذه الجامعة بعد (درجات اللغة، SAT، المواعيد). نضيفها من موقع الجامعة الرسمي تباعًا، بدءًا بجامعات الرواد.</p>
     {% endif %}
   </section>
+
+  {% if p.dates %}
+  <section class="uni-section" id="dates" aria-labelledby="dates-title">
+    <h2 id="dates-title">مواعيد التقديم على الجامعة</h2>
+    <p class="result-note">مواعيد الجامعة نفسها، وليست مواعيد الابتعاث. مواعيد الابتعاث في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>.</p>
+    <ul class="rows uni-dates">
+      {% for x in p.dates %}
+      {% set past = x.date and x.date < today %}
+      <li{% if past %} class="req-past"{% endif %}>
+        <span class="uni-date">{% if x.date %}{{ x.date | arabic_date }}{% else %}لم يُنشر بعد{% endif %}</span>
+        {% if past %}<span class="tag">انتهى</span>{% endif %}
+        <span class="uni-date-label">{{ x.label_ar }}</span>
+        <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
 </article>
 {% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}" defer></script>{% endblock %}

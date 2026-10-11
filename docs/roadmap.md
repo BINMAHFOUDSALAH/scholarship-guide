@@ -3,15 +3,30 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-11):**
-> Done and pushed today: the universities explorer (decision 029: 290 universities from the official PDF, search by university or major, Arabic + English names, requirements for all 30 الرواد universities), الرواد open until 15 Nov 2026 (closes itself after), the واعد latest-programs toggle, SDAIA's AI scholarship page (decision 030), research agents on Haiku (CLAUDE.md).
-> 1. **Owner spot-checks the requirement files** in `data/university_details/`, starting with the ones the agents couldn't open directly (Columbia, Michigan, Oxford, UCL, NUS) and the years they inferred. Fix or null anything wrong.
-> 2. Next requirement batches: إمداد universities, most-searched first (Haiku agents, ~5 per batch).
-> 3. Apply the KGSP and Aramco research (`docs/research/kgsp-2026-27.md`, `aramco-cdpne-2026-27.md`) to `paths.json` once the owner has reviewed them.
-> 4. Then Stage 1e step 3 (grade-page task lists) and step 4 (FAQ from real student questions).
-> 5. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
+> **Next session (as of 2026-10-11, after the UX redesign):**
+> Done today, late: **UX redesign (decision 035)**, on branch `claude/loving-hopper-sai8de` (not merged to `main`, so not live yet):
+> - one design system (tokens, components, contrast tests)
+> - homepage: grades + search, «مفتوح للتقديم الآن», compact programs
+> - explorer: filter tags, rank/deadline labels, back to results; also fixed Arabic suggestions that never filtered
+> - university pages: «باختصار» first
+> - «قائمتي» on the device
+> - program and grade pages
+> - 216 tests; axe clean on 14 routes at 320/1280px in both themes
+> Audit and research: `docs/research/ux-redesign-2026-10.md`.
+> 1. **Owner reviews the branch** (screenshots in the session, or run it locally), then merges to `main` to go live.
+> 2. **Usability test with 3–5 students** (Stage 1e step 5). The redesign is based on expert guidance, not on watching students yet.
+> 3. **Owner spot-checks the requirement files** in `data/university_details/`, starting with the ones the agents couldn't open directly (Columbia, Michigan, Oxford, UCL, NUS) and the years they inferred. Also check «الاحياء الدقيقة» = "General biology" in the R&D natural-sciences majors against the guide (pages 7–13).
+> 4. Next requirement batches: إمداد universities, most-searched first (Haiku agents, ~5 per batch).
+> 5. Apply the KGSP and Aramco research (`docs/research/kgsp-2026-27.md`, `aramco-cdpne-2026-27.md`) to `paths.json` once the owner has reviewed them.
+> 6. Then Stage 1e step 3 (grade-page task lists: the grade pages now put «الخطوة التالية» first and switch between grades) and step 4 (FAQ from real student questions).
+> 7. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
 >
-> Also done 2026-10-11: official X accounts as sources (@SA_Scholarships, @SDAIA_SA), SDAIA open (cohort 4) with a 'not standalone' warning, next deadline per university (decision 031); SDAIA's full list of 95 universities from its PDF, the explorer's «برامج إضافية» filter, leaner footer without the raw sitemap link (decision 032); news as a status board + /news page, video ends on our cover, «طريقتنا» footer column removed, SDAIA logo (decision 033); explorer: majors by field on university pages, own suggestions panel, واعد in «المسار», SDAIA filter removed (decision 034). 177 tests.
+> Also done 2026-10-11:
+> - official X accounts as sources (@SA_Scholarships, @SDAIA_SA)
+> - SDAIA open (cohort 4) with a 'not standalone' warning; next deadline per university (decision 031)
+> - SDAIA's full list of 95 universities from its PDF (decision 032)
+> - news as a status board + /news page; SDAIA logo (decision 033)
+> - explorer majors by field, own suggestions panel, واعد in «المسار» (decision 034)
 > Owner to-dos still open: review the fact-check tables (§5 of each research file), send a post that states الرواد's 15 Nov end date and one for إمداد closing, review the 15 least-certain Arabic university names (`docs/research/arabic-names-to-check.md`), optionally export the Telegram group (JSON) for the FAQ step.
 
 **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
@@ -77,8 +92,10 @@ Order chosen by the owner: facts first, then layout.
 - [x] Universities explorer: PDF downloaded to `data/raw/` (git-ignored), `pdfplumber` installed (dev), structure inspected, spec written. **Awaiting owner approval.**
 - [ ] **Step 3: grade pages «خطوتك القادمة»:** a short task list per grade (action, why, source, now/later; dates only when verified). Grade pages get sources (end their draft status).
 - [ ] **Step 4: FAQ from real student questions.** The owner exports the Telegram group (Telegram Desktop → JSON); the raw export never enters the repo. Claude extracts only the questions, strips names/usernames/numbers, groups duplicates, counts them. Answers go in a data file with the fact shape; unanswered ones stay hidden. No automatic scraping.
-- [ ] **Step 5: usability test script** (`docs/research/usability-test.md`) for 3–5 students; the owner runs it.
-- [ ] **Step 6: accessibility + broken-link pass.**
+- [x] **UX redesign (decision 035):** one design system; homepage (grades + search, open now, compact programs); explorer (filter tags, labels, back to results, Arabic suggestions fix); university pages («باختصار», not-admission notice); «قائمتي» on the device; program/grade pages; accessibility pass. Audit + research: `docs/research/ux-redesign-2026-10.md`.
+- [ ] Owner: review the redesign branch and merge it to `main`.
+- [ ] **Step 5: usability test script** (`docs/research/usability-test.md`) for 3–5 students; the owner runs it. Include: find a major's universities on a phone, tell «الترتيب» from a world ranking, find a university's own deadline vs. the scholarship's, save two universities and find them again.
+- [ ] **Step 6: accessibility + broken-link pass.** Accessibility half done in decision 035 (axe on 14 routes, 320px reflow, keyboard path, contrast tests); still to do: a screen-reader run on a real phone (VoiceOver/TalkBack) and the broken-link check.
 - Later (Stage 2): per-university conditional-admission table for non-English-speaking destinations, generated from `data/universities.json` ("potentially eligible under the published exception", never "guaranteed").
 
 ## Research (in progress, alongside Stage 1)
@@ -105,6 +122,7 @@ Teaches responsive/RTL polish, content workflow, CI, and shipping.
 - Domain check/purchase (ask first), then **Launch 1**.
 
 ## Stage 4: Accounts, email alerts, guided start → Launch 2
+- «قائمتي» exists on the device (decision 035): at sign-in, offer to move the device list into the account; later a per-university checklist and a deadlines view built from the saved list.
 Teaches databases, authentication (incl. OAuth), email delivery, security, privacy, and rules-based recommendation logic.
 - Specs first: `docs/specs/accounts.md`, `docs/specs/email-alerts.md`, `docs/specs/guided-start.md`.
 - Database: SQLite locally → Postgres in production (check free-tier limits then); tables like `users`, `plans`, `saved_universities`, `alert_subscriptions`; migrations (Alembic).

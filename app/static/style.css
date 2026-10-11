@@ -7,6 +7,15 @@
 
 /* ---------- Design tokens ---------- */
 
+/*
+  Meaning of the colours (decision 035):
+  - forest (--heading): headings, links, primary buttons, focus ring
+  - lime: only "open now" and "your next step" (never small text)
+  - amber: restrictions and "not open yet"
+  - grey (--ink-muted): closed, secondary text
+  Every text/background pair used here is checked for contrast in tests/test_design.py.
+*/
+
 /* Light theme: the default for everyone (decision 022). */
 :root {
   color-scheme: light;
@@ -17,23 +26,30 @@
   --ink: #101713;            /* body text: deep charcoal */
   --ink-muted: #4f5a54;      /* secondary text (contrast ≥ 6:1 on paper) */
   --heading: #184b3a;        /* headings, links, primary actions: forest green */
-  --line: #e2ded2;           /* fine borders */
+  --on-heading: #f6f4ee;     /* text on a forest button */
+  --line: #e2ded2;           /* fine borders between rows */
   --line-strong: #cfc9ba;
-  --lime: #d8ed9b;           /* sparingly: primary/selected states, progress, accents. Never small text. */
+  --control-border: #4f5a54; /* inputs and selects: ≥ 3:1 against the page (WCAG 1.4.11) */
+  --lime: #d8ed9b;           /* "open now" and "your next step" only. Never small text. */
   --on-lime: #101713;
   --logo-deep: #184b3a;      /* mountain body in the logo */
-  --amber: #774c0c;          /* desert path accent, "deadline" and "not open yet" (darkened for contrast on tints) */
+  --amber: #774c0c;          /* restrictions and "not open yet" (darkened for contrast on tints) */
   --sea: #1d6470;            /* Red Sea path accent */
   --band: #184b3a;           /* the Tuwaiq band background */
+  --focus: #184b3a;          /* keyboard focus ring */
 
   --font-body: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
   --font-heading: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
   --font-editorial: "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif; /* wordmark + quotes only */
 
-  --step-0: 1.0625rem;       /* body text */
-  --step-1: 1.25rem;
-  --step-2: 1.65rem;         /* section titles */
-  --step-3: 2.1rem;          /* page titles */
+  /* One type scale. Nothing smaller than --text-xs: small Arabic text is hard to read. */
+  --text-xs: 0.8125rem;      /* 13px: tags */
+  --text-sm: 0.9375rem;      /* 15px: notes, meta, sources */
+  --text-base: 1.0625rem;    /* 17px: body */
+  --text-lg: 1.1875rem;      /* 19px: lead, h3 */
+  --text-xl: 1.5rem;         /* h2 */
+  --text-2xl: 1.875rem;      /* h1 */
+  --text-hero: clamp(2rem, 1.35rem + 2.8vw, 3.1rem);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -44,6 +60,7 @@
   --space-7: 88px;
 
   --wide: 1240px;            /* the page grid */
+  --page: 1040px;            /* tool pages: explorer, university, program, news */
   --measure: 720px;          /* comfortable reading column */
   --radius: 8px;
 }
@@ -57,20 +74,27 @@
   --ink: #ece9e0;
   --ink-muted: #a9b4ad;
   --heading: #9ad3b4;
+  --on-heading: #101713;
   --line: #26332d;
   --line-strong: #34443c;
+  --control-border: #8a968f;
   --lime: #d8ed9b;
   --on-lime: #101713;
   --logo-deep: #4e9a79;
   --amber: #e0b26a;
   --sea: #6cc3cf;
   --band: #16211c;
+  --focus: #d8ed9b;
 }
 
 /* ---------- Base ---------- */
 
 * {
   box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html {
@@ -88,8 +112,9 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: var(--step-0);
+  font-size: var(--text-base);
   line-height: 1.8;
+  overflow-wrap: break-word; /* long URLs and English names wrap instead of widening the page (WCAG 1.4.10) */
 }
 
 h1,
@@ -104,17 +129,18 @@ h3 {
 }
 
 h1 {
-  font-size: var(--step-3);
-  margin-block: 0 var(--space-4);
+  font-size: var(--text-2xl);
+  line-height: 1.3;
+  margin-block: 0 var(--space-3);
 }
 
 h2 {
-  font-size: var(--step-2);
+  font-size: var(--text-xl);
   margin-block: var(--space-6) var(--space-3);
 }
 
 h3 {
-  font-size: var(--step-1);
+  font-size: var(--text-lg);
 }
 
 p {
@@ -131,10 +157,11 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
-/* A clear outline for keyboard users, in both themes. */
+/* A clear ring for keyboard users, in both themes (WCAG 2.4.7). Bands with a dark
+   background switch --focus to lime so the ring never disappears. */
 :focus-visible {
-  outline: 2px solid var(--heading);
-  outline-offset: 3px;
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
   border-radius: 2px;
 }
 
@@ -151,6 +178,34 @@ a:hover {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* English names and terms inside Arabic text (always with lang="en" dir="ltr"). */
+.term-en {
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+/* Lets keyboard users jump over the header (WCAG 2.4.1). Visible only when focused. */
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--space-3);
+  top: -200px;
+  z-index: 100;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: var(--heading);
+  color: var(--on-heading);
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+main:focus {
+  outline: none; /* focused only as the skip link's target */
 }
 
 /* ---------- Layout ---------- */
@@ -172,6 +227,12 @@ a:hover {
   .container {
     padding-inline: var(--space-5);
   }
+}
+
+/* Tool pages (explorer, university, program, news) share one width. */
+.page-wide {
+  max-width: var(--page);
+  margin-inline: auto;
 }
 
 /* Reading pages (grades, about) keep a comfortable line length inside the grid. */
@@ -233,7 +294,7 @@ main:has(> .hero) {
 }
 
 .brand-descriptor {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--ink-muted);
 }
 
@@ -243,15 +304,25 @@ main:has(> .hero) {
 }
 
 .site-nav a {
+  padding-block: var(--space-1);
   color: var(--ink);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
   text-decoration: none;
 }
 
 .site-nav a:hover {
   color: var(--heading);
   text-decoration: underline;
+}
+
+/* Where you are: the section's link is forest and underlined (WCAG: never colour alone). */
+.site-nav a[aria-current] {
+  color: var(--heading);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.55em;
 }
 
 .header-tools {
@@ -262,30 +333,58 @@ main:has(> .hero) {
 }
 
 .theme-toggle,
-.menu-button {
+.menu-button,
+.mylist-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 var(--space-3);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   background: transparent;
   color: var(--ink);
   font: inherit;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
 }
 
 .theme-toggle:hover,
-.menu-button:hover {
+.menu-button:hover,
+.mylist-link:hover {
   border-color: var(--heading);
 }
 
-.theme-toggle svg {
+.theme-toggle svg,
+.mylist-link svg {
   width: 1em;
   height: 1em;
+  flex-shrink: 0;
+}
+
+/* «قائمتي»: appears once the student has saved a university (mylist.js). */
+.mylist-link[hidden] {
+  display: none;
+}
+
+.mylist-link[aria-current] {
+  border-color: var(--heading);
+  color: var(--heading);
+}
+
+.mylist-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5em;
+  padding-inline: 4px;
+  border-radius: 999px;
+  background: var(--heading);
+  color: var(--on-heading);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
 }
 
 .menu {
@@ -311,16 +410,16 @@ main:has(> .hero) {
   top: calc(100% + var(--space-2));
   display: flex;
   flex-direction: column;
-  min-width: 210px;
+  min-width: 220px;
   padding: var(--space-2);
   background: var(--surface-strong);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
-  box-shadow: 0 8px 24px rgba(16, 23, 19, 0.12);
+  box-shadow: 0 8px 24px rgba(16, 23, 19, 0.14);
 }
 
 .menu-panel a {
-  padding: var(--space-2) var(--space-3);
+  padding: 10px var(--space-3);
   border-radius: 6px;
   color: var(--ink);
   font-weight: 600;
@@ -328,8 +427,16 @@ main:has(> .hero) {
 }
 
 .menu-panel a:hover {
-  background: var(--lime);
-  color: var(--on-lime);
+  background: color-mix(in srgb, var(--heading) 10%, var(--surface-strong));
+  color: var(--heading);
+}
+
+.menu-panel a[aria-current] {
+  border-inline-start: 3px solid var(--heading);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  color: var(--heading);
+  font-weight: 700;
 }
 
 @media (min-width: 900px) {
@@ -343,7 +450,7 @@ main:has(> .hero) {
   }
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero (decision 035) ---------- */
 
 .hero {
   padding-block: var(--space-5) var(--space-6);
@@ -361,7 +468,7 @@ main:has(> .hero) {
   align-items: center;
   gap: var(--space-2);
   margin-bottom: var(--space-3);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--heading);
 }
@@ -378,34 +485,34 @@ main:has(> .hero) {
 
 .hero h1 {
   margin-bottom: var(--space-3);
-  font-size: clamp(2.3rem, 5.2vw, 3.7rem);
+  font-size: var(--text-hero);
   line-height: 1.25;
 }
 
 .lead {
   max-width: 34em;
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   line-height: 1.85;
   color: var(--ink-muted);
 }
 
-/* The grade buttons, visible in the hero (no click needed). */
+/* The main way in: your grade. The biggest targets on the page. */
 .hero-grades {
-  max-width: 520px;
+  max-width: 560px;
   margin-top: var(--space-4);
 }
 
 .start-title {
   margin-bottom: var(--space-3);
   font-family: var(--font-heading);
-  font-size: var(--step-1);
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--heading);
 }
 
 .grade-choices {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-2);
   margin: 0;
   padding: 0;
@@ -413,149 +520,85 @@ main:has(> .hero) {
 }
 
 .grade-choices a {
-  display: block;
-  padding: var(--space-3) var(--space-2);
-  border: 1.5px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 76px;
+  padding: var(--space-2);
+  border: 2px solid var(--heading);
   border-radius: var(--radius);
+  background: var(--surface-strong);
   color: var(--heading);
-  font-weight: 700;
   text-align: center;
   text-decoration: none;
 }
 
-.grade-choices a:hover {
-  background: var(--lime);
-  border-color: var(--lime);
-  color: var(--on-lime);
+.grade-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  line-height: 1.4;
 }
 
-/* The signature drawing (partials/path-art.html → hero_visual). Hidden on small phones. */
-.hero-visual {
-  display: none;
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  justify-self: center;
-  aspect-ratio: 520 / 420;
-}
-
-.hero-visual svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.hv-sun {
-  fill: var(--surface);
-  fill: color-mix(in srgb, var(--lime) 38%, var(--paper));
-}
-
-.hv-far {
-  fill: var(--line);
-  fill: color-mix(in srgb, var(--heading) 12%, var(--paper));
-}
-
-.hv-body {
-  fill: var(--heading);
-}
-
-.hv-cliff {
-  fill: var(--lime);
-}
-
-.hv-layers {
-  fill: none;
-  stroke: var(--heading);
-  stroke-width: 3;
-}
-
-/* The route runs over the mountain, so it's drawn in the paper color. */
-.hv-route {
-  fill: none;
-  stroke: var(--paper);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-dasharray: 1 9;
-}
-
-.hv-start {
-  fill: none;
-  stroke: var(--paper);
-  stroke-width: 3;
-}
-
-.hv-waypoint {
-  fill: var(--lime);
-  stroke: var(--paper);
-  stroke-width: 3;
-}
-
-.hv-label {
-  position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 6px 4px 12px;
-  background: var(--surface-strong);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgba(16, 23, 19, 0.08);
-  font-size: 0.85rem;
+.grade-hint {
+  font-size: var(--text-xs);
   font-weight: 600;
-  white-space: nowrap;
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
 
-.hv-num {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
+.grade-choices a:hover {
   background: var(--heading);
-  color: var(--paper);
-  font-size: 0.75rem;
+  color: var(--on-heading);
 }
 
-/* Step 3 is "your next step": the lime waypoint. */
-.hv-label--3 .hv-num {
-  background: var(--lime);
-  color: var(--on-lime);
+.grade-choices a:hover .grade-hint {
+  color: var(--on-heading);
 }
 
-/* Physical positions on purpose: they match points of the SVG (start, middle, waypoint). */
-.hv-label--1 {
-  left: 3%;
-  top: 76%;
+/* The second way in: search the official lists. A quieter panel beside (or under) the grades. */
+.hero-search {
+  padding: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface-strong);
 }
 
-.hv-label--2 {
-  left: 38%;
-  top: 58%;
+.hero-search-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-lg);
 }
 
-.hv-label--3 {
-  left: 47%;
-  top: 22%;
+.hero-search-examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin: var(--space-3) 0 var(--space-2);
+  font-size: var(--text-sm);
 }
 
-@media (min-width: 560px) {
-  .hero-visual {
-    display: block;
-  }
+.hero-search-examples a {
+  font-weight: 700;
+}
+
+.hero-search-examples-label {
+  color: var(--ink-muted);
+}
+
+.hero-search-meta {
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
 }
 
 @media (min-width: 900px) {
-  .hero {
-    padding-block: var(--space-5) var(--space-6);
-  }
-
   .hero-grid {
-    grid-template-columns: 1.1fr 0.9fr; /* text on the right (RTL start), drawing on the left */
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); /* grades on the right (RTL start), search on the left */
     gap: var(--space-6);
-  }
-
-  .lead {
-    font-size: var(--step-1);
   }
 }
 
@@ -567,104 +610,6 @@ main:has(> .hero) {
 
 .section:first-child {
   margin-top: var(--space-6);
-}
-
-.section-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-2) var(--space-4);
-  margin-bottom: var(--space-4);
-}
-
-.section-title {
-  margin: 0;
-  font-size: var(--step-2);
-}
-
-.section > .section-title {
-  margin-bottom: var(--space-4);
-}
-
-.section-note {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--ink-muted);
-}
-
-/*
-  Rows divided by fine lines (news, tests). On wide screens the items sit
-  side by side with a line between them, so the page has rhythm without a grid of boxes.
-*/
-.rule-grid {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line-strong);
-}
-
-.rule-grid > * {
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--line);
-}
-
-/* ---------- Latest news ---------- */
-
-.news-list {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line-strong);
-}
-
-.news-item {
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--line);
-}
-
-.news-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-  margin: 0 0 var(--space-2);
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-}
-
-.news-title {
-  margin: 0 0 var(--space-1);
-  font-size: 1.05rem;
-  font-weight: 700;
-  line-height: 1.6;
-}
-
-.news-path {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-}
-
-@media (min-width: 800px) {
-  .news-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .news-item {
-    padding-inline: var(--space-4);
-    border-bottom: 0;
-  }
-
-  .news-item:first-child {
-    padding-inline-start: 0;
-  }
-
-  .news-item + .news-item {
-    border-inline-start: 1px solid var(--line);
-  }
 }
 
 /* ---------- News board (decision 033) ---------- */
@@ -684,7 +629,7 @@ main:has(> .hero) {
   align-items: center;
   gap: var(--space-2);
   margin: 0 0 var(--space-3);
-  font-size: var(--step-1);
+  font-size: var(--text-lg);
 }
 
 .board-group--open .board-title::before {
@@ -697,7 +642,7 @@ main:has(> .hero) {
 }
 
 .board-count {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
@@ -729,7 +674,7 @@ main:has(> .hero) {
 .board-when,
 .board-empty {
   margin: 2px 0 0;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
@@ -746,13 +691,13 @@ main:has(> .hero) {
   flex-wrap: wrap;
   gap: var(--space-1) var(--space-3);
   margin: var(--space-1) 0 0;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
 .board-more {
   margin: var(--space-3) 0 0;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
@@ -779,51 +724,298 @@ main:has(> .hero) {
   }
 }
 
-.news-page {
-  max-width: 1000px;
-  margin-inline: auto;
+/* ---------- Shared components (decision 035) ---------- */
+
+/* Buttons: forest = the main action on a page; outlined = the second action. Lime is never a button. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 2px solid var(--heading);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--heading);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-/* Status chips and labels: color = meaning. Lime marks what's open now. */
-.chip,
+.btn--primary {
+  background: var(--heading);
+  color: var(--on-heading);
+}
+
+.btn--primary:hover {
+  background: color-mix(in srgb, var(--heading) 85%, var(--ink));
+  border-color: color-mix(in srgb, var(--heading) 85%, var(--ink));
+}
+
+.btn--secondary:hover {
+  background: color-mix(in srgb, var(--heading) 9%, transparent);
+}
+
+.btn svg {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+}
+
+.btn[hidden] {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-block: var(--space-4);
+}
+
+/*
+  Status tags: the state of an application (GOV.UK "tag": text + colour, never colour alone).
+  Rendered only through the status_tag macro in components.html.
+*/
 .status {
   --chip: var(--ink-muted);
   display: inline-block;
   padding: 1px var(--space-2);
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   font-weight: 700;
-  line-height: 1.7;
+  line-height: 1.75;
   white-space: nowrap;
   color: var(--chip);
   background: var(--surface);
   background: color-mix(in srgb, var(--chip) 13%, var(--paper));
 }
 
-.chip--opening,
 .status--open {
   background: var(--lime);
   color: var(--on-lime);
 }
 
-.chip--deadline,
 .status--not_open {
   --chip: var(--amber);
 }
 
-.chip--closing,
-.status--closed {
+.status--closed,
+.status--none_open {
   --chip: var(--ink-muted);
 }
 
-.chip--announcement,
 .status--invitation {
   --chip: var(--ink);
   background: transparent;
   box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 
-/* ---------- Paths: facts first, photo as context ---------- */
+/* «حتى 15 نوفمبر 2026» beside an open status. */
+.status-until {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Info tags: facts about something (track membership, «لخريجي الثانوية»). Never lime. */
+.tag {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border-radius: 4px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1.85;
+  color: var(--ink);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+/* A restriction the student must notice («ماجستير فقط»). */
+.tag--warn {
+  color: var(--amber);
+  background: color-mix(in srgb, var(--amber) 12%, var(--paper));
+  box-shadow: none;
+}
+
+/* Saved in «قائمتي». */
+.tag--saved {
+  color: var(--heading);
+  box-shadow: inset 0 0 0 1px var(--heading);
+}
+
+.tag[hidden] {
+  display: none;
+}
+
+.tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+/* Notices: something to read before deciding (GOV.UK "inset text"). */
+.notice {
+  margin-block: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-inline-start: 4px solid var(--heading);
+  background: var(--surface);
+}
+
+.notice--warn {
+  border-color: var(--amber);
+}
+
+.notice > :last-child {
+  margin-bottom: 0;
+}
+
+.notice-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 700;
+  color: var(--heading);
+}
+
+/* Summary list: one row per question and its answer (GOV.UK "summary list"). */
+.summary-list {
+  margin: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.summary-row dt {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.summary-row dd {
+  margin: 0;
+}
+
+.summary-row dd > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .summary-row {
+    grid-template-columns: 11rem minmax(0, 1fr);
+  }
+}
+
+/* A small "source" link at the end of a value. */
+.src {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* Back link: back to where the student came from (GOV.UK "back link"). */
+.back-link-wrap {
+  margin: 0 0 var(--space-4);
+}
+
+.back-link {
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+/* Section heading with an optional link beside it. */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.section-title {
+  margin: 0;
+  font-size: var(--text-xl);
+}
+
+.section-note {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.section-link {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+/* Rows divided by fine lines: the default way to list things (no grids of identical cards). */
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.rows > li {
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Form controls. Borders are dark enough to see (WCAG 1.4.11: 3:1). */
+.field-label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.field-hint {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.input,
+.select {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 2px solid var(--control-border);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  color: var(--ink);
+  font: inherit;
+}
+
+.input {
+  font-size: var(--text-lg);
+}
+
+.input:focus,
+.select:focus {
+  border-color: var(--focus);
+}
+
+.select:disabled {
+  border-style: dashed;
+  color: var(--ink-muted);
+  cursor: not-allowed;
+}
+
+/* ---------- Programs on the homepage: facts first, image as a small identifier ---------- */
 
 .path-list {
   border-top: 1px solid var(--line-strong);
@@ -832,7 +1024,7 @@ main:has(> .hero) {
 .path-row {
   --accent: var(--heading);
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-3);
   padding-block: var(--space-5);
   border-bottom: 1px solid var(--line);
 }
@@ -849,13 +1041,18 @@ main:has(> .hero) {
   --accent: var(--sea);
 }
 
-/* Real, licensed photo of the program's place, lightly tinted with the path's accent. */
-.path-photo {
+/* Logo or photo: small, so the facts lead (decision 035). Credits are on /about. */
+.path-photo,
+.path-logo,
+.path-art {
   position: relative;
   margin: 0;
-  height: 180px;
+  height: 96px;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: var(--radius);
+}
+
+.path-photo {
   background: var(--line);
 }
 
@@ -876,15 +1073,12 @@ main:has(> .hero) {
   pointer-events: none;
 }
 
-/* Official logo instead of a photo: shown whole, on white, so its colors stay true in dark mode. */
+/* Official logo: shown whole, on white, so its colours stay true in dark mode. */
 .path-logo {
   display: grid;
   place-items: center;
-  margin: 0;
-  height: 180px;
-  padding: var(--space-4);
+  padding: var(--space-2) var(--space-3);
   border: 1px solid var(--line);
-  border-radius: 10px;
   background: #ffffff;
 }
 
@@ -903,11 +1097,8 @@ main:has(> .hero) {
   height: auto;
 }
 
-/* Drawn scene: fallback for a path without a photo. */
+/* Drawn scene: fallback for a program without a photo. */
 .path-art {
-  height: 180px;
-  overflow: hidden;
-  border-radius: 10px;
   background: var(--surface);
   background: color-mix(in srgb, var(--accent) 7%, var(--surface));
 }
@@ -950,47 +1141,68 @@ main:has(> .hero) {
   stroke-width: 2;
 }
 
-/* The facts column, marked with the path's accent line. */
+/* The facts column, marked with the program's accent line. */
 .path-facts {
+  min-width: 0;
   padding-inline-start: var(--space-4);
   border-inline-start: 3px solid var(--accent);
 }
 
-.path-item-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
+.path-addon {
+  margin: 0 0 var(--space-2);
 }
 
 .path-item-name {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.path-item-name a {
+  text-decoration: none;
+}
+
+.path-item-name a:hover {
+  text-decoration: underline;
 }
 
 .path-item-en {
-  margin: 2px 0 var(--space-3);
-  font-size: 0.85rem;
+  width: fit-content;
+  margin: 2px 0 var(--space-1);
+  font-size: var(--text-sm);
   color: var(--ink-muted);
   text-align: end;  /* sits on the same side as the Arabic text */
+}
+
+.path-provider {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .fact-list {
   display: grid;
   gap: var(--space-2);
-  max-width: 660px; /* keep facts and statuses readable on wide screens */
+  max-width: 680px; /* keep facts and statuses readable on wide screens */
   margin: 0 0 var(--space-3);
 }
 
+/* Phones: the label above its text, so the text gets the full width. */
 .fact {
   display: grid;
-  grid-template-columns: 5rem 1fr;
-  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr);
   align-items: baseline;
 }
 
+@media (min-width: 560px) {
+  .fact {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+}
+
 .fact dt {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   color: var(--ink-muted);
 }
@@ -1002,8 +1214,8 @@ main:has(> .hero) {
 
 .track-list {
   list-style: none;
-  max-width: 660px;
-  margin: 0 0 var(--space-2);
+  max-width: 680px;
+  margin: 0 0 var(--space-3);
   padding: 0;
   border-top: 1px solid var(--line);
 }
@@ -1017,12 +1229,13 @@ main:has(> .hero) {
   gap: var(--space-1) var(--space-3);
   padding-block: var(--space-2);
   border-bottom: 1px solid var(--line);
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
 }
 
 .track-main {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   line-height: 1.6;
 }
 
@@ -1032,39 +1245,33 @@ main:has(> .hero) {
 
 .track-note {
   color: var(--ink-muted);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
 }
 
 .track-state {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
 }
 
-.path-reviewed {
-  margin: var(--space-2) 0 var(--space-3);
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-}
-
-.path-item-links {
+.path-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1) var(--space-4);
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
   margin: 0;
 }
 
-.path-item-link {
-  color: var(--accent);
-  font-size: 0.9rem;
+.path-link {
+  font-size: var(--text-sm);
   font-weight: 700;
-  white-space: nowrap;
 }
 
 @media (min-width: 900px) {
-  /* Facts on the right (read first), the photo smaller on the left. */
+  /* Facts on the right (read first), the image small on the left. */
   .path-row {
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: minmax(0, 1fr) 220px;
     gap: var(--space-6);
     align-items: start;
   }
@@ -1084,6 +1291,43 @@ main:has(> .hero) {
   }
 }
 
+/* «مفتوح للتقديم الآن» on the homepage. */
+.open-item {
+  display: grid;
+  gap: var(--space-1) var(--space-4);
+  align-items: center;
+}
+
+.open-main p,
+.open-when,
+.open-source {
+  margin: 0;
+}
+
+.open-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+.open-name a {
+  text-decoration: none;
+}
+
+.open-name a:hover {
+  text-decoration: underline;
+}
+
+.open-program {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+@media (min-width: 760px) {
+  .open-item {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+}
+
 /* ---------- Tests: lined rows ---------- */
 
 .test-grid {
@@ -1100,15 +1344,9 @@ main:has(> .hero) {
 }
 
 .test dt {
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--heading);
-}
-
-.term-en {
-  font-weight: 400;
-  font-size: 0.8rem;
-  color: var(--ink-muted);
 }
 
 .test dd {
@@ -1143,6 +1381,7 @@ main:has(> .hero) {
 /* ---------- Tuwaiq band: contained, dark, quiet ---------- */
 
 .tuwaiq {
+  --focus: var(--lime); /* a forest ring would vanish on the forest band */
   padding-block: var(--space-6);
   background: var(--band);
   color: #ece9e0;
@@ -1176,7 +1415,7 @@ main:has(> .hero) {
 
 .tuwaiq-quote footer {
   margin-top: var(--space-3);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: #c2cbc5;
 }
 
@@ -1187,7 +1426,7 @@ main:has(> .hero) {
 .tuwaiq-credit {
   margin: 0;
   padding-block: var(--space-2);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: #c2cbc5;
 }
 
@@ -1234,13 +1473,13 @@ main:has(> .hero) {
 }
 
 .video-note {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: #c2cbc5;
 }
 
 .video-source {
   margin: var(--space-2) 0 0;
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: #c2cbc5;
 }
 
@@ -1302,7 +1541,7 @@ main:has(> .hero) {
 
 .path-step-title {
   margin: 4px 0 var(--space-1);
-  font-size: var(--step-0);
+  font-size: var(--text-base);
 }
 
 .path-step p {
@@ -1319,7 +1558,7 @@ main:has(> .hero) {
   margin-block: var(--space-1) var(--space-3);
   padding-inline-start: var(--space-2);
   border-inline-start: 2px solid var(--line-strong);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
@@ -1341,13 +1580,13 @@ main:has(> .hero) {
 }
 
 .next-step-label {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
 .next-step-text {
   font-family: var(--font-heading);
-  font-size: var(--step-1);
+  font-size: var(--text-lg);
   font-weight: 700;
   line-height: 1.55;
 }
@@ -1361,9 +1600,56 @@ main:has(> .hero) {
 
 /* ---------- Content pages (Markdown) ---------- */
 
+/* أول / ثاني / ثالث ثانوي: switch grades without going back to the homepage. */
+.grade-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.grade-switch a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 4px 14px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.grade-switch a:hover {
+  border-color: var(--heading);
+  color: var(--heading);
+}
+
+.grade-switch a[aria-current] {
+  border-color: var(--heading);
+  background: var(--heading);
+  color: var(--on-heading);
+}
+
+.page-header .lead {
+  margin-bottom: var(--space-2);
+}
+
+.next-grade {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-weight: 700;
+}
+
+.prose h2 {
+  scroll-margin-top: var(--space-4);
+}
+
 .prose h2 {
   margin-block: var(--space-5) var(--space-2);
-  font-size: var(--step-1);
+  font-size: var(--text-lg);
 }
 
 .prose ul {
@@ -1375,12 +1661,6 @@ main:has(> .hero) {
 }
 
 /* ---------- Program pages ---------- */
-
-/* Wider than a reading page so the comparison table fits; text sections keep .measure. */
-.program {
-  max-width: 1000px;
-  margin-inline: auto;
-}
 
 /* Every section starts at the same edge as the table, so the page reads as one column. */
 .program .measure,
@@ -1406,8 +1686,39 @@ main:has(> .hero) {
 }
 
 .program-disclaimer {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
+}
+
+/* Official links, grouped under one label instead of a row of equal links. */
+.program-links {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.program-links-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.program-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.program-links a {
+  display: inline-block;
+  padding-block: 2px;
+  font-weight: 700;
+}
+
+.program .page-contents {
+  margin-inline: 0;
 }
 
 .program-section {
@@ -1422,16 +1733,11 @@ main:has(> .hero) {
   margin-block: var(--space-5) var(--space-2);
 }
 
-/* The link to a program's own page, on the homepage row. */
-.path-item-link--page {
-  color: var(--heading);
-}
-
 /* Comparison table: same fields for every track. */
 .compare {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
   line-height: 1.7;
 }
 
@@ -1443,7 +1749,7 @@ main:has(> .hero) {
 }
 
 .compare thead th {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
   border-bottom: 1px solid var(--line-strong);
 }
@@ -1485,7 +1791,7 @@ main:has(> .hero) {
   .compare td::before {
     content: attr(data-label);
     display: block;
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
     font-weight: 700;
     color: var(--ink-muted);
   }
@@ -1509,113 +1815,176 @@ main:has(> .hero) {
 
 .fact-note {
   margin-block-end: var(--space-1);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
 .prose h3 {
   margin-block: var(--space-4) var(--space-1);
-  font-size: var(--step-0);
+  font-size: var(--text-base);
 }
 
 .prose ol {
   padding-inline-start: var(--space-4);
 }
 
-/* ---------- Universities explorer ---------- */
-
-.explorer,
-.uni-page {
-  max-width: 1000px;
-  margin-inline: auto;
-}
+/* ---------- Universities explorer (decision 035) ---------- */
 
 .explorer-header .lead {
   max-width: 44em;
+  margin-bottom: var(--space-2);
+}
+
+.explorer-source {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
 }
 
 .explorer-form {
   display: grid;
   gap: var(--space-3);
-  margin-block: var(--space-4);
+  margin-block: var(--space-4) var(--space-5);
   padding: var(--space-4);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 10px;
   background: var(--surface-strong);
 }
 
-.explorer-form label {
-  display: block;
-  margin-block-end: var(--space-1);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--ink-muted);
+.search-field .field-hint {
+  margin-bottom: var(--space-2);
 }
 
-.explorer-form input,
-.explorer-form select,
-.explorer-submit {
-  width: 100%;
-  min-height: 48px;
-  padding: 8px 12px;
-  border: 1.5px solid var(--line-strong);
-  border-radius: var(--radius);
-  background: var(--paper);
-  color: var(--ink);
-  font: inherit;
-}
-
-.explorer-form input {
-  font-size: 1.05rem;
-}
-
-.explorer-form input:focus,
-.explorer-form select:focus {
-  border-color: var(--heading);
-  outline: 2px solid var(--heading);
-  outline-offset: 1px;
-}
-
-.explorer-form select:disabled {
-  opacity: 0.55;
-}
-
-.explorer-filters {
+/* The search box and its button side by side; the suggestions open underneath. */
+.search-box {
+  position: relative;
   display: grid;
-  gap: var(--space-3);
-  grid-template-columns: 1fr 1fr;
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2);
 }
 
-.explorer-submit {
-  border-color: var(--heading);
-  background: var(--heading);
-  color: var(--paper);
+.search-submit {
+  min-height: 48px;
+  padding-inline: var(--space-4);
+}
+
+.filters-toggle {
+  justify-self: start;
+}
+
+.filters-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  min-width: 0; /* a fieldset is as wide as its content by default, which breaks small screens */
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filter-hint {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+}
+
+@media (min-width: 760px) {
+  .filters {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.filters-wide {
+  grid-column: 1 / -1;
+}
+
+.tracks-help > summary {
+  width: fit-content;
+  padding-block: var(--space-1);
+  font-size: var(--text-sm);
   font-weight: 700;
+  color: var(--heading);
   cursor: pointer;
 }
 
-@media (min-width: 900px) {
-  .explorer-filters {
-    grid-template-columns: repeat(4, 1fr) auto;
-  }
+.tracks-help[open] > summary {
+  margin-bottom: var(--space-2);
+}
+
+.tracks-help p {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.explorer-results {
+  scroll-margin-top: var(--space-4);
+}
+
+.explorer-results:focus {
+  outline: none;
 }
 
 .explorer-results[aria-busy="true"] {
   opacity: 0.6;
 }
 
-.major-summary {
-  margin-block-end: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  border-inline-start: 4px solid var(--lime);
-  background: var(--surface);
+/* «تبحث في:» and the removable filter tags (MOJ "filter a list" / Baymard "applied filters"). */
+.applied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
-.major-summary-title {
-  margin: 0 0 var(--space-1);
+.applied-label {
+  margin: 0;
+  font-size: var(--text-sm);
   font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.applied-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.applied-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 2px 14px;
+  border: 1.5px solid var(--heading);
+  border-radius: 999px;
+  background: var(--surface-strong);
   color: var(--heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.applied-chip:hover {
+  background: color-mix(in srgb, var(--heading) 10%, var(--surface-strong));
+}
+
+.applied-x {
+  font-size: var(--text-xs);
+}
+
+.applied-clear {
+  display: inline-block;
+  padding: 6px 4px;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .major-summary-list {
@@ -1638,7 +2007,7 @@ main:has(> .hero) {
 
 .result-title {
   margin: 0 0 var(--space-2);
-  font-size: var(--step-1);
+  font-size: var(--text-lg);
 }
 
 .result-field {
@@ -1647,30 +2016,87 @@ main:has(> .hero) {
 
 .result-count,
 .result-note,
-.result-empty {
+.result-empty,
+.result-explain {
   margin: var(--space-2) 0;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
+}
+
+.result-count {
+  font-weight: 700;
+}
+
+.result-empty {
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  color: var(--ink);
+}
+
+.result-empty p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ranked lists stay a real table: rank, name, country, notes can be compared down the column. */
+.uni-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+.uni-table th,
+.uni-table td {
+  padding: var(--space-2) var(--space-3);
+  text-align: start;
+  vertical-align: top;
+}
+
+.uni-table thead th {
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.uni-table tbody tr {
+  border-bottom: 1px solid var(--line);
+}
+
+.uni-table tbody th {
+  font-weight: 400;
 }
 
 .uni-table .uni-rank {
   width: 4.5rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--heading);
   font-variant-numeric: tabular-nums;
 }
 
-/* Phones: rank beside the name, country and notes underneath, no column labels. */
+.uni-cell-notes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+/* Phones: rank beside the name; country and notes underneath; no column headings. */
 @media (max-width: 759px) {
-  .uni-table tbody tr {
-    display: grid;
-    grid-template-columns: 2.75rem 1fr;
-    column-gap: var(--space-2);
-    padding-block: var(--space-2);
+  .uni-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
   }
 
-  .uni-table td::before {
-    content: none;
+  .uni-table tr {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    column-gap: var(--space-2);
+    padding-block: var(--space-3);
   }
 
   .uni-table tbody th,
@@ -1683,7 +2109,15 @@ main:has(> .hero) {
     grid-column: 1;
     grid-row: 1 / span 3;
     width: auto;
-    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  .uni-cell-country {
+    margin-top: 2px;
+  }
+
+  .uni-cell-notes:empty {
+    display: none;
   }
 }
 
@@ -1695,11 +2129,12 @@ main:has(> .hero) {
 }
 
 .uni-name-ar {
+  font-size: var(--text-base);
   font-weight: 700;
 }
 
 .uni-name-en {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
   text-align: end;  /* dir="ltr", so "end" is the right side, under the Arabic name */
 }
@@ -1709,49 +2144,21 @@ a.uni-name:hover .uni-name-en:only-child {
   text-decoration: underline;
 }
 
+.uni-name + .tag--saved {
+  margin-block-start: var(--space-1);
+}
+
 .uni-country {
-  font-size: 0.9rem;
-  white-space: nowrap;
+  font-size: var(--text-sm);
 }
 
-.lang-mark,
-.note-chip,
-.track-chip {
-  display: inline-block;
-  padding: 0 var(--space-2);
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.8;
-  white-space: nowrap;
-  background: var(--surface);
-  background: color-mix(in srgb, var(--heading) 10%, var(--paper));
-  color: var(--heading);
-}
-
-.note-chip--date {
-  background: transparent;
-  box-shadow: inset 0 0 0 1px var(--heading);
+.uni-deadline {
+  font-size: var(--text-sm);
+  color: var(--ink);
 }
 
 .req-past {
   color: var(--ink-muted);
-}
-
-.note-chip--warn {
-  background: color-mix(in srgb, var(--amber) 14%, var(--paper));
-  color: var(--amber);
-}
-
-.lang-mark {
-  background: transparent;
-  box-shadow: inset 0 0 0 1px var(--line-strong);
-  color: var(--ink-muted);
-}
-
-.track-chip--arruaad {
-  background: var(--lime);
-  color: var(--on-lime);
 }
 
 .uni-list {
@@ -1761,40 +2168,39 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .uni-item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-1) var(--space-3);
+  display: grid;
+  gap: var(--space-1);
   padding-block: var(--space-3);
   border-bottom: 1px solid var(--line);
 }
 
+.uni-item-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-1) var(--space-3);
+}
+
 .uni-item-meta,
 .memberships {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1) var(--space-2);
 }
 
-.explorer-footer {
-  margin-block-start: var(--space-5);
-}
-
-.explorer-fineprint {
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-}
-
-/* One university */
-
-.uni-back {
-  font-size: 0.9rem;
-}
+/* ---------- One university (decision 035) ---------- */
 
 .uni-header h1 {
-  margin-bottom: var(--space-1);
+  margin-bottom: 0;
+}
+
+.uni-header-en {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-base);
+  color: var(--ink-muted);
+  text-align: end;  /* dir="ltr": under the Arabic name, on the same side */
+  width: fit-content;
 }
 
 .uni-header-meta {
@@ -1802,21 +2208,85 @@ a.uni-name:hover .uni-name-en:only-child {
   flex-wrap: wrap;
   gap: var(--space-2);
   align-items: center;
+  margin-bottom: var(--space-3);
 }
 
-.uni-callout {
-  margin-block: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  border-inline-start: 4px solid var(--heading);
+/* «احفظ في قائمتي»: an outlined button beside the facts, never louder than them. */
+.save-area {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.save-toggle svg {
+  fill: none;
+}
+
+.save-toggle.is-saved svg {
+  fill: currentColor;
+}
+
+.save-note {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* «باختصار»: the answers, before the details. */
+.uni-summary {
+  margin-block: var(--space-4) var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface-strong);
+}
+
+.uni-summary-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-lg);
+}
+
+.uni-summary .notice {
+  margin-block: var(--space-3) 0;
   background: var(--surface);
 }
 
-.uni-callout p {
-  margin-block-end: var(--space-2);
+.uni-summary .actions {
+  margin-block: var(--space-3) 0;
+}
+
+/* «في هذه الصفحة»: jump links for long pages (GOV.UK "contents list"). */
+.page-contents {
+  margin-block: 0 var(--space-5);
+  font-size: var(--text-sm);
+}
+
+.page-contents-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.page-contents ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-contents a {
+  display: inline-block;
+  padding-block: 2px;
+  font-weight: 700;
 }
 
 .uni-section {
   margin-block: var(--space-5);
+  scroll-margin-top: var(--space-4);
 }
 
 .uni-section > h2 {
@@ -1833,92 +2303,66 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .uni-track-rank {
   margin-inline-start: var(--space-2);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
-.uni-fields {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line);
+/* The doctorate lists, folded. */
+.rnd-lists {
+  margin-block: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
 }
 
-.uni-field {
-  border-bottom: 1px solid var(--line);
-}
-
-.uni-field summary {
+.rnd-lists > summary {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1) var(--space-3);
-  padding-block: var(--space-3);
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
   cursor: pointer;
 }
 
-.uni-field-rank {
-  min-width: 2.5rem;
+.rnd-title {
   font-weight: 700;
-  font-size: 1.2rem;
   color: var(--heading);
-  font-variant-numeric: tabular-nums;
 }
 
-.uni-field-name {
-  flex: 1;
-  font-weight: 700;
+.rnd-title::before {
+  content: "▸ ";
 }
 
-.uni-field details[open] {
-  padding-block-end: var(--space-3);
+.rnd-lists[open] .rnd-title::before {
+  content: "▾ ";
+}
+
+.rnd-note {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.rnd-lists > summary::-webkit-details-marker {
+  display: none;
+}
+
+.rnd-lists > summary {
+  list-style: none;
+}
+
+.rnd-lists > .field-blocks {
+  padding-inline: var(--space-4);
 }
 
 .uni-majors-title {
   margin: var(--space-2) 0 var(--space-1);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .major-list {
   margin: 0 0 var(--space-2);
   padding-inline-start: var(--space-4);
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
   columns: 1;
-}
-
-@media (min-width: 700px) {
-  .uni-field .major-list {
-    columns: 2;
-    column-gap: var(--space-5);
-  }
-}
-
-.req-list {
-  margin: 0;
-  border-top: 1px solid var(--line);
-}
-
-.req {
-  display: grid;
-  gap: var(--space-1) var(--space-4);
-  padding-block: var(--space-3);
-  border-bottom: 1px solid var(--line);
-}
-
-@media (min-width: 700px) {
-  .req {
-    grid-template-columns: 10rem 1fr;
-  }
-}
-
-.req dt {
-  font-weight: 700;
-  color: var(--ink-muted);
-}
-
-.req dd {
-  margin: 0;
 }
 
 .req-scores {
@@ -1926,17 +2370,96 @@ a.uni-name:hover .uni-name-en:only-child {
   padding-inline-start: var(--space-4);
 }
 
-.req-src {
-  font-size: 0.8rem;
-  white-space: nowrap;
+.req-scores li + li {
+  margin-top: var(--space-1);
 }
 
-/* «حتى 15 نوفمبر 2026» beside an open status. */
-.status-until {
-  font-size: 0.8rem;
+/* The university's own dates: date first, so they scan down the column. */
+.uni-dates > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+}
+
+.uni-date {
+  min-width: 9rem;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.uni-date-label {
+  flex: 1 1 16rem;
+}
+
+.req-past .uni-date {
   color: var(--ink-muted);
-  white-space: nowrap;
+  text-decoration: line-through;
+}
+
+/* ---------- «قائمتي» ---------- */
+
+.mylist-privacy {
+  max-width: 44em;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.mylist-rows {
+  margin-top: var(--space-4);
+}
+
+.mylist-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.mylist-main {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  flex: 1 1 18rem;
+}
+
+.btn--small {
+  min-height: 40px;
+  padding: 4px 14px;
+  font-size: var(--text-sm);
+}
+
+.mylist-empty {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+}
+
+.mylist-empty-title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.mylist-loading {
+  color: var(--ink-muted);
+}
+
+@media (max-width: 379px) {
+  .mylist-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .mylist-link {
+    padding: 0 10px;
+  }
 }
 
 /* واعد: the latest programs, in a toggle under the track list. */
@@ -1970,7 +2493,7 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .waaid-summary-note {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
@@ -1995,14 +2518,14 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .waaid-meta {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
 .waaid-req {
   margin: var(--space-1) 0 0;
   padding-inline-start: var(--space-4);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .waaid-latest > .source-stamp {
@@ -2022,16 +2545,7 @@ a.uni-name:hover .uni-name-en:only-child {
   }
 }
 
-.uni-also {
-  margin: var(--space-2) 0 0;
-  font-size: 0.9rem;
-}
-
 /* Search suggestions: our own panel (the browser's list can't be styled and scrolls too fast). */
-.explorer-search {
-  position: relative;
-}
-
 .suggest {
   position: absolute;
   inset-inline: 0;
@@ -2040,7 +2554,6 @@ a.uni-name:hover .uni-name-en:only-child {
   max-height: min(60vh, 420px);
   overflow-y: auto;
   overscroll-behavior: contain;  /* scrolling the list never scrolls the page behind it */
-  scroll-behavior: smooth;
   padding-block: var(--space-1);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
@@ -2056,7 +2569,7 @@ a.uni-name:hover .uni-name-en:only-child {
   padding: var(--space-2) var(--space-3) var(--space-1);
   background: var(--surface-strong);
   border-bottom: 1px solid var(--line);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   color: var(--heading);
 }
@@ -2065,27 +2578,31 @@ a.uni-name:hover .uni-name-en:only-child {
   display: flex;
   flex-direction: column;
   gap: 1px;
+  min-height: 44px;
   padding: 10px var(--space-3);
   line-height: 1.5;
   cursor: pointer;
 }
 
 .suggest-option small {
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--ink-muted);
-  text-align: end;  /* dir="ltr": sits on the right, under the Arabic name */
 }
 
 .suggest-option[aria-selected="true"],
 .suggest-option:hover {
-  background: color-mix(in srgb, var(--heading) 9%, var(--surface-strong));
+  background: color-mix(in srgb, var(--heading) 10%, var(--surface-strong));
+}
+
+.suggest-option[aria-selected="true"] {
+  box-shadow: inset -3px 0 0 var(--heading);
 }
 
 .suggest-empty {
   margin: 0;
   padding: var(--space-3);
   color: var(--ink-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 /* University page: one block per field (rank + majors), no clicking needed. */
@@ -2123,13 +2640,13 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .field-rank-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .field-name {
   flex: 1;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: var(--text-base);
 }
 
 .field-block .major-list {
@@ -2150,13 +2667,13 @@ a.uni-name:hover .uni-name-en:only-child {
 .more-majors summary {
   cursor: pointer;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--heading);
 }
 
 .field-src {
   margin: var(--space-2) 0 0;
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--ink-muted);
 }
 
@@ -2166,7 +2683,7 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .credits {
   padding-inline-start: var(--space-4);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
@@ -2180,7 +2697,7 @@ a.uni-name:hover .uni-name-en:only-child {
   border-top: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   line-height: 1.8;
   padding-block: var(--space-5) var(--space-4);
 }
@@ -2203,6 +2720,7 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .footer-promise {
+  max-width: 34em;
   font-weight: 700;
   color: var(--ink);
 }
@@ -2210,16 +2728,18 @@ a.uni-name:hover .uni-name-en:only-child {
 .footer-links {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-1);
 }
 
 .footer-title {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   color: var(--heading);
 }
 
 .footer-links a {
+  padding-block: 2px;
   color: var(--ink);
   text-decoration: none;
 }
@@ -2267,8 +2787,8 @@ a.uni-name:hover .uni-name-en:only-child {
 
 @media (min-width: 768px) {
   :root {
-    --step-2: 1.9rem;
-    --step-3: 2.6rem;
+    --text-xl: 1.75rem;
+    --text-2xl: 2.375rem;
   }
 
   .tuwaiq-quote p {

@@ -42,6 +42,21 @@
 {% endif %}
 {% endmacro %}
 
+{#
+  An application status, shown the same way everywhere (decision 035): a text tag whose colour
+  matches its meaning, plus «حتى <date>» when an open status has a known end date.
+  status: open / closed / not_open / invitation / none_open. label overrides the standard text.
+#}
+{% macro status_tag(status, until=None, label=None) %}
+<span class="status status--{{ status }}">{{ label or track_status_labels[status] }}</span>
+{%- if until and status == "open" %} <span class="status-until">حتى <time datetime="{{ until }}">{{ until | arabic_date }}</time></span>{% endif %}
+{% endmacro %}
+
+{# Back to where the student came from (GOV.UK "back link"). In RTL, "back" points right. #}
+{% macro back_link(href, text) %}
+<p class="back-link-wrap"><a class="back-link" href="{{ href }}" data-back-link><span aria-hidden="true">→</span> {{ text }}</a></p>
+{% endmacro %}
+
 {# The one place lime is used: what the student should do next. #}
 {% macro next_step(text, link_text=None, link_url=None) %}
 <aside class="next-step" aria-label="الخطوة التالية">

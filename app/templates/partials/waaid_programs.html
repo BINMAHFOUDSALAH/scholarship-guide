@@ -1,5 +1,6 @@
 {# The latest programs announced under مسار واعد (data/waaid_programs.json), in a toggle.
    Status is computed from each program's application window on every request. #}
+{% import "components.html" as c %}
 {% set w = waaid() %}
 {% if w.programs %}
 {% set latest = w.programs[0] %}
@@ -13,8 +14,8 @@
     <li class="waaid-item">
       <p class="waaid-title">
         <strong>{{ p.program_ar }}</strong>
-        <span class="status status--{{ 'open' if p.is_open else 'closed' }}">{{ 'مفتوح الآن' if p.is_open else 'مغلق' }}</span>
-        {% if p.for_high_school %}<span class="note-chip">لخريجي الثانوية</span>{% endif %}
+        {{ c.status_tag('open' if p.is_open else 'closed', label=None if p.is_open else 'مغلق') }}
+        {% if p.for_high_school %}<span class="tag">لخريجي الثانوية</span>{% endif %}
       </p>
       <p class="waaid-meta">{{ p.company_ar }} · <span lang="en" dir="ltr">{{ p.institution }}</span> ({{ p.country_ar }}) · {{ p.level_ar }} · {{ p.duration_ar }}</p>
       <p class="waaid-meta">التقديم: من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %} · بداية الدراسة: {{ p.start_ar }}{% endif %}</p>

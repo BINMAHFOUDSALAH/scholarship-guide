@@ -1,18 +1,26 @@
-{# Small pieces shared by the explorer and the university page. #}
+{# Small pieces shared by the explorer, the university page, and «قائمتي». #}
+{% import "components.html" as c %}
 
-{# Arabic name (our translation) with the official English name; links to the university page. #}
-{% macro uni_name(u, link=True) %}
-{% if link %}<a class="uni-name" href="{{ url_for('university_page', uid=u.id) }}">{% else %}<span class="uni-name">{% endif %}
+{#
+  Arabic name (our translation) with the official English name; links to the university page.
+  back: the explorer query this link comes from, so the university page can link back to the same
+  results (decision 035). None = no "back to results" link.
+#}
+{% macro uni_name(u, link=True, back=None) %}
+{% if link %}<a class="uni-name" href="{{ url_for('university_page', uid=u.id) }}{% if back is not none %}?from={{ back | urlencode }}{% endif %}">{% else %}<span class="uni-name">{% endif %}
   {% if u.name_ar %}<span class="uni-name-ar">{{ u.name_ar }}</span>{% endif %}
   <span class="uni-name-en" lang="en" dir="ltr">{{ u.name_en }}</span>
 {% if link %}</a>{% else %}</span>{% endif %}
 {% endmacro %}
 
+{# «✓ في قائمتك»: hidden until mylist.js finds this university in the student's saved list. #}
+{% macro saved_marker(u) %}<span class="tag tag--saved" data-saved-marker="{{ u.id }}" hidden>✓ في قائمتك</span>{% endmacro %}
+
 {# The notes the official guide attaches to a listing. #}
 {% macro listing_notes(l) %}
-{% if l.masters_only %}<span class="note-chip note-chip--warn">ماجستير فقط</span>{% endif %}
-{% if l.hearing_impaired_only %}<span class="note-chip">لذوي الإعاقة السمعية</span>{% endif %}
-{% if l.bachelors_only_majors %}<span class="note-chip">بكالوريوس في تخصصات محددة</span>{% endif %}
+{% if l.masters_only %}<span class="tag tag--warn">ماجستير فقط</span>{% endif %}
+{% if l.hearing_impaired_only %}<span class="tag">لذوي الإعاقة السمعية</span>{% endif %}
+{% if l.bachelors_only_majors %}<span class="tag">بكالوريوس في تخصصات محددة</span>{% endif %}
 {% endmacro %}
 
 {# One واعد program: what, who runs it, where, when, open or closed, and the key requirements. #}
@@ -20,8 +28,8 @@
 <li class="waaid-item">
   <p class="waaid-title">
     <strong>{{ p.program_ar }}</strong>
-    <span class="status status--{{ 'open' if p.is_open else 'closed' }}">{{ 'مفتوح الآن' if p.is_open else 'مغلق' }}</span>
-    {% if p.for_high_school %}<span class="note-chip">لخريجي الثانوية</span>{% endif %}
+    {{ c.status_tag('open' if p.is_open else 'closed', label=None if p.is_open else 'مغلق') }}
+    {% if p.for_high_school %}<span class="tag">لخريجي الثانوية</span>{% endif %}
   </p>
   <p class="waaid-meta">{{ p.company_ar }} · {% if p.university_id %}<a href="{{ url_for('university_page', uid=p.university_id) }}" lang="en" dir="ltr">{{ p.institution }}</a>{% else %}<span lang="en" dir="ltr">{{ p.institution }}</span>{% endif %} ({{ p.country_ar }}) · {{ p.level_ar }} · {{ p.duration_ar }}</p>
   <p class="waaid-meta">التقديم: من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %} · بداية الدراسة: {{ p.start_ar }}{% endif %}</p>
@@ -29,25 +37,28 @@
 </li>
 {% endmacro %}
 
-{# The university's next deadline, from its researched requirements (if any). #}
+{#
+  The university's own next deadline (from its researched requirements). Labelled as the
+  university's, so it's never mistaken for a scholarship deadline.
+#}
 {% macro next_deadline(u) %}
 {% set d = explorer.next_deadline(u.id) %}
-{% if d %}<span class="note-chip note-chip--date" title="{{ d.label_ar }}">أقرب موعد: {{ d.date | arabic_date }}</span>{% endif %}
+{% if d %}<span class="uni-deadline" title="{{ d.label_ar }}">أقرب موعد تقديم في الجامعة: <strong>{{ d.date | arabic_date }}</strong></span>{% endif %}
 {% endmacro %}
 
-{# Country, with a marker when its official language isn't English (where the language exception may apply). #}
+{# Country, marked when its official language isn't English (where the language exception may apply). #}
 {% macro country(u) %}
-<span class="uni-country">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="lang-mark" title="لغة الدولة الرسمية ليست الإنجليزية">لغة أخرى</span>{% endif %}</span>
+<span class="uni-country">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">غير ناطقة بالإنجليزية</span>{% endif %}</span>
 {% endmacro %}
 
-{# One university's memberships, as short chips: «الرواد ١٢»، «إمداد: ٤ مجالات». #}
+{# One university's place in the lists, as short tags: «الرواد · المرتبة 12»، «إمداد · 4 مجالات». #}
 {% macro memberships(u) %}
 {% set ar = u.listings | selectattr("track", "equalto", "arruaad") | list %}
 {% set em = u.listings | selectattr("track", "equalto", "emdad") | list %}
 {% set rd = u.listings | selectattr("track", "equalto", "rnd") | list %}
-<span class="memberships">
-  {% if ar %}<span class="track-chip track-chip--arruaad">الرواد · المرتبة {{ ar[0].rank }}</span>{% endif %}
-  {% if em %}<span class="track-chip track-chip--emdad">إمداد · {{ em | length }} {{ "مجال" if em | length == 1 else "مجالات" }}</span>{% endif %}
-  {% if rd %}<span class="track-chip track-chip--rnd">البحث والتطوير · {{ rd | length }} {{ "مجال" if rd | length == 1 else "مجالات" }}</span>{% endif %}
+<span class="memberships tags">
+  {% if ar %}<span class="tag">الرواد · المرتبة {{ ar[0].rank }}</span>{% endif %}
+  {% if em %}<span class="tag">إمداد · {{ em | length | count_ar("fields") }}</span>{% endif %}
+  {% if rd %}<span class="tag">البحث والتطوير (دكتوراه) · {{ rd | length | count_ar("fields") }}</span>{% endif %}
 </span>
 {% endmacro %}

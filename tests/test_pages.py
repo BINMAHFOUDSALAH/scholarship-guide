@@ -45,17 +45,59 @@ def test_each_path_row_has_its_theme_and_facts():
 def test_header_nav_on_desktop_and_phone_menu():
     html = client.get("/about").text
     header = html.split("</header>")[0]
-    for label in ("حسب صفك", "البرامج", "المستجدات", "عن الدليل"):
+    for label in ("حسب صفك", "البرامج", "مواعيد التقديم", "عن الدليل"):
         assert header.count(f">{label}</a>") == 2, label  # desktop nav + phone menu
     assert '<details class="menu">' in header
 
 
-def test_homepage_order_programs_first():
-    """Hero → programs → news. The journey, tests, and «كيف نعمل» are no longer on the homepage."""
+@pytest.mark.parametrize("url, label, value", [
+    ("/universities", "الجامعات", "page"),
+    ("/universities/stanford-university", "الجامعات", "true"),  # a page inside the section
+    ("/news", "مواعيد التقديم", "page"),
+    ("/about", "عن الدليل", "page"),
+    ("/grades/grade-11", "حسب صفك", "true"),
+    ("/programs/custodian-scholarship", "البرامج", "true"),
+])
+def test_nav_marks_where_you_are(url, label, value):
+    """Decision 035: the current section is marked in the nav (desktop + phone), and only that one."""
+    header = client.get(url).text.split("</header>")[0]
+    assert header.count(f'aria-current="{value}">{label}</a>') == 2
+    assert header.count("aria-current=") == 2
+
+
+def test_home_marks_no_nav_item_and_every_page_has_a_skip_link():
     html = client.get("/").text
-    assert html.index('id="grades"') < html.index('id="programs"') < html.index('id="news"')
-    for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل"):
+    assert "aria-current=" not in html.split("</header>")[0]
+    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/grades/grade-10"):
+        html = client.get(page).text
+        assert '<a class="skip-link" href="#main">' in html
+        assert '<main id="main" tabindex="-1">' in html
+
+
+def test_footer_says_we_are_independent_and_links_how_we_verify():
+    footer = client.get("/universities").text.split('<footer class="site-footer">')[1]
+    assert "لا يتبع وزارة التعليم" in footer
+    assert "/about#verify" in footer
+    assert 'id="verify"' in client.get("/about").text
+
+
+def test_homepage_order():
+    """Decision 035: hero (grades, then search) → what's open now → programs.
+    The journey, tests, «كيف نعمل», and the decorative drawing are not on the homepage."""
+    html = client.get("/").text
+    assert html.index('id="grades"') < html.index('class="hero-search"') < html.index('id="open-now"') < html.index('id="programs"')
+    for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل", "hero-visual"):
         assert gone not in html
+
+
+def test_homepage_search_goes_to_the_explorer_with_real_examples():
+    html = client.get("/").text
+    hero = html.split('<section class="hero"')[1].split("</section>")[0]
+    assert 'action="http://testserver/universities"' in hero and 'name="q"' in hero
+    assert 'data-suggest="http://testserver/api/suggestions"' in hero
+    assert "/universities/stanford-university" in hero  # an example that opens a university
+    n = len(main.explorer.universities)
+    assert f"{n} جامعة في 15 دولة" in hero
 
 
 @pytest.mark.parametrize("page", ["/", "/programs/custodian-scholarship", "/grades/grade-10", "/grades/grade-11",
@@ -147,12 +189,17 @@ def test_home_lists_every_path():
         assert path["name_ar"] in response.text
 
 
-def test_home_shows_the_news_board_in_three_groups():
+def test_home_shows_whats_open_now_and_links_the_full_board():
+    """Decision 035: the homepage shows only what's open (soonest deadline first); /news has all three groups."""
     html = client.get("/").text
-    news = html.split('id="news"')[1].split("</section>\n</div>")[0]
+    section = html.split('id="open-now"')[1].split("</section>")[0]
+    assert "مفتوح للتقديم الآن" in section and "/news" in section
+    for item in main.status_board()["open"][:4]:
+        assert item["title_ar"] in section
+    assert "فُتح وأُغلق مؤخرًا" not in html
+    news = client.get("/news").text
     for title in ("مفتوح الآن", "مغلق أو لم يفتح بعد", "فُتح وأُغلق مؤخرًا"):
         assert title in news
-    assert "/news" in news
 
 
 def test_theme_toggle_is_present_but_hidden_without_js():
@@ -321,13 +368,15 @@ def test_ielts_resource_page():
 # ---------- Waaid latest programs, deadlines, SDAIA ----------
 
 def test_waaid_toggle_lists_latest_programs_newest_first():
+    """The latest واعد programs live on the program page (decision 035); the homepage links there."""
     w = main.waaid()
     closing = [p["apply_to"] for p in w["programs"]]
     assert closing == sorted(closing, reverse=True)
-    html = client.get("/").text
+    html = client.get("/programs/custodian-scholarship").text
     assert 'class="waaid-latest"' in html
     assert w["programs"][0]["program_ar"] in html
     assert main.waaid_data["source_url"] in html
+    assert "/programs/custodian-scholarship#waaid-latest" in client.get("/").text
 
 
 def test_open_track_closes_itself_after_its_deadline(monkeypatch):
@@ -380,3 +429,29 @@ def test_footer_has_no_raw_sitemap_link_or_signup_promise():
     assert "بدون تسجيل" not in footer
     assert client.get("/sitemap.xml").status_code == 200
 
+
+
+# ---------- program and grade pages (decision 035) ----------
+
+def test_program_page_leads_with_the_next_step_and_lists_its_sections():
+    html = client.get("/programs/custodian-scholarship").text
+    article = html.split('<article class="program')[1]
+    assert article.index('class="back-link"') < article.index("<h1>")
+    actions = article.split('class="actions"')[1].split("</div>")[0]
+    assert 'class="btn btn--primary" href="http://testserver/universities"' in actions
+    assert "صفحة التقديم الرسمية" in actions
+    assert "روابط رسمية" in article
+    contents = article.split('aria-label="في هذه الصفحة"')[1].split("</nav>")[0]
+    for anchor in ("#tracks-title", "#conditional", "#admission-vs-scholarship", "#faq"):
+        assert f'href="{anchor}"' in contents, anchor  # test_every_internal_link_works checks they exist
+
+
+def test_grade_pages_switch_grades_and_put_the_next_step_first():
+    html = client.get("/grades/grade-11").text
+    switch = html.split('class="grade-switch"')[1].split("</nav>")[0]
+    assert switch.count("<a ") == 3
+    assert 'aria-current="page">ثاني ثانوي</a>' in switch
+    assert html.index('class="next-step"') < html.index('class="prose"')
+    assert "ماذا ينتظرك في ثالث ثانوي؟" in html
+    assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text  # the last grade has no next one
+    assert 'class="grade-switch"' not in client.get("/resources/ielts").text

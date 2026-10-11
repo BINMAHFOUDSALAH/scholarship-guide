@@ -1,4 +1,5 @@
 {# The news board (decision 033). Set board_limit to show only the first few items per group. #}
+{% import "components.html" as c %}
 {% set groups = [
   ("open", "مفتوح الآن", "يمكنك التقديم عليه اليوم."),
   ("waiting", "مغلق أو لم يفتح بعد", "تابع حساباته الرسمية لمعرفة موعد الفتح."),
@@ -14,10 +15,9 @@
       {% for item in (items[:board_limit] if board_limit else items) %}
       <li class="board-item">
         <p class="board-name">{{ item.title_ar }}</p>
-        <p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="note-chip">لخريجي الثانوية</span>{% endif %}</p>
+        <p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">لخريجي الثانوية</span>{% endif %}</p>
         <p class="board-when">
-          <span class="status status--{{ item.status }}">{{ track_status_labels[item.status] if key != "recent" else "أُغلق" }}</span>
-          {% if item.until %}حتى <time datetime="{{ item.until }}">{{ item.until | arabic_date }}</time>{% endif %}
+          {{ c.status_tag(item.status, item.until, label=None if key != "recent" else "أُغلق") }}
           {% if item.opens %}يفتح في <time datetime="{{ item.opens }}">{{ item.opens | arabic_date }}</time>{% endif %}
           {% if item.closed_on %}في <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time>{% endif %}
         </p>

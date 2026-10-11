@@ -10,6 +10,7 @@ import json
 import re
 import unicodedata
 from pathlib import Path
+from urllib.parse import parse_qsl, urlencode
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 
@@ -27,8 +28,38 @@ SAT_POLICY_AR = {
     "not_applicable": "لا ينطبق",
     "unknown": "غير منشور",
 }
+LANGUAGE_AR = {"english": "دول ناطقة بالإنجليزية", "other": "دول غير ناطقة بالإنجليزية"}
 
-ARABIC_DIACRITICS = re.compile(r"[ً-ْـ]")
+# The search parameters a results link may carry back from a university page (decision 035).
+SEARCH_PARAMS = ("q", "track", "field", "country", "lang")
+
+
+def count_ar(n, forms):
+    """An Arabic count, with the noun in the form Arabic grammar asks for.
+
+    forms = (one, two, 3–10, 11–99, 100s), e.g. ("برنامج واحد", "برنامجان", "برامج", "برنامجًا", "برنامج"):
+    1 → «برنامج واحد», 2 → «برنامجان», 5 → «5 برامج», 30 → «30 برنامجًا», 200 → «200 برنامج».
+    """
+    one, two, few, many, hundreds = forms
+    if n == 1:
+        return one
+    if n == 2:
+        return two
+    if 3 <= n % 100 <= 10:
+        return f"{n} {few}"
+    if 11 <= n % 100 <= 99:
+        return f"{n} {many}"
+    return f"{n} {hundreds}"
+
+
+UNIVERSITIES_AR = ("جامعة واحدة", "جامعتان", "جامعات", "جامعة", "جامعة")
+PROGRAMS_AR = ("برنامج واحد", "برنامجان", "برامج", "برنامجًا", "برنامج")
+FIELDS_AR = ("مجال واحد", "مجالان", "مجالات", "مجالًا", "مجال")
+COUNTRIES_AR = ("دولة واحدة", "دولتان", "دول", "دولة", "دولة")
+COUNT_FORMS = {"universities": UNIVERSITIES_AR, "programs": PROGRAMS_AR, "fields": FIELDS_AR,
+               "countries": COUNTRIES_AR}
+
+ARABIC_DIACRITICS = re.compile(r"[\u064b-\u0652\u0640]")  # short vowels + tatweel, as escapes (the marks are invisible)
 
 
 def normalize(text):
@@ -138,6 +169,10 @@ class Explorer:
         """
         q = (q or "").strip()
         track = track if track in TRACKS else ""
+        # A field picked without a track (possible without JavaScript) belongs to إمداد's lists,
+        # the ones high-school graduates can use.
+        if field and not track and self.field("emdad", field):
+            track = "emdad"
         keep = lambda u: self._keep(u, country, language)  # noqa: E731
         result = {"q": q, "track": track, "field": field, "country": country, "language": language,
                   "mode": "browse", "sections": [], "majors": []}
@@ -192,6 +227,92 @@ class Explorer:
                                        "note_ar": "الرواد يشمل كل التخصصات."})
         return result
 
+    # ---------- describing a search (decision 035) ----------
+
+    def clean_params(self, params):
+        """Keep only search parameters we understand, with values we know. Used for links back to results."""
+        out = {}
+        q = (params.get("q") or "").strip()[:100]
+        if q:
+            out["q"] = q
+        track = params.get("track") or ""
+        if track in TRACKS:
+            out["track"] = track
+        field = params.get("field") or ""
+        if field and track in ("emdad", "rnd") and self.field(track, field):
+            out["field"] = field
+        if (params.get("country") or "") in self.countries:
+            out["country"] = params["country"]
+        if (params.get("lang") or "") in LANGUAGE_AR:
+            out["lang"] = params["lang"]
+        return out
+
+    def result_params(self, result):
+        """The parameters that produced a search result, cleaned."""
+        return self.clean_params({"q": result["q"], "track": result["track"], "field": result["field"],
+                                  "country": result["country"], "lang": result["language"]})
+
+    def back_url(self, raw):
+        """The explorer URL a university page should link back to, from its `from` parameter.
+
+        `raw` is the query string the results page put in the link (e.g. "q=AI&track=emdad").
+        Only known parameters and values survive, and the path is always /universities,
+        so the link can never point anywhere else. None when there's no `from`.
+        """
+        if raw is None:
+            return None
+        params = self.clean_params(dict(parse_qsl(raw[:400])))
+        return "/universities" + ("?" + urlencode(params) if params else "")
+
+    def describe(self, result):
+        """What the student is looking at, in words.
+
+        Returns {"applied": [{label_ar, value_ar, href}], "summary_ar": str, "query": str, "non_english": bool}:
+        - applied: one entry per active filter, each with a link to the same search without it
+          (removing the track also removes its field)
+        - summary_ar: one line for the screen-reader status message, e.g. «مسار الرواد: 30 جامعة»
+        - query: the cleaned query string, carried on result links as `from`
+        - non_english: a ranked list shows a university in a non-English-speaking country
+          (so the page explains the language exception once)
+        """
+        params = self.result_params(result)
+
+        def without(*names):
+            rest = {k: v for k, v in params.items() if k not in names}
+            return "/universities" + ("?" + urlencode(rest) if rest else "")
+
+        applied = []
+        if "q" in params:
+            is_major = result["mode"] == "major" and any(
+                normalize(params["q"]) in (normalize(m["name_ar"]), normalize(m["name_en"])) for m in result["majors"])
+            applied.append({"label_ar": "التخصص" if is_major else "البحث", "value_ar": params["q"], "href": without("q")})
+        if "track" in params:
+            applied.append({"label_ar": "المسار", "value_ar": TRACKS[params["track"]]["short_ar"],
+                            "href": without("track", "field")})
+        if "field" in params:
+            applied.append({"label_ar": "المجال", "value_ar": self.field(params["track"], params["field"])["name_ar"],
+                            "href": without("field")})
+        if "country" in params:
+            applied.append({"label_ar": "الدولة", "value_ar": self.countries[params["country"]]["name_ar"],
+                            "href": without("country")})
+        if "lang" in params:
+            applied.append({"label_ar": "الدول", "value_ar": LANGUAGE_AR[params["lang"]], "href": without("lang")})
+
+        parts = []
+        for s in result["sections"]:
+            if "waaid" in s:
+                parts.append(f"{count_ar(len(s['waaid']), PROGRAMS_AR)} في مسار واعد")
+                continue
+            n = len(s["rows"]) if "rows" in s else len(s["universities"])
+            where = TRACKS[s["track"]]["name_ar"] if s["track"] else "نتائج البحث"
+            if s.get("field"):
+                where += f" ({s['field']['name_ar']})"
+            parts.append(f"{where}: {count_ar(n, UNIVERSITIES_AR)}" if n else f"{where}: لا توجد نتائج")
+        non_english = any(not u["country_info"]["english"]
+                          for s in result["sections"] for _, u in s.get("rows", []))
+        return {"applied": applied, "summary_ar": "، ".join(parts), "query": urlencode(params),
+                "non_english": non_english}
+
     # ---------- واعد ----------
 
     def waaid_matches(self, q=""):
@@ -234,7 +355,8 @@ class Explorer:
                     doctorate.append({"name_ar": m["name_ar"], "name_en": m["name_en"], "masters_only": False})
         if doctorate:
             groups.append({"title_ar": "تخصصات الدكتوراه فقط (البحث والتطوير)", "title_en": "Doctorate only", "majors": doctorate})
-        unis = [{"id": u["id"], "name_ar": u["name_ar"], "name_en": u["name_en"]}
+        unis = [{"id": u["id"], "name_ar": u["name_ar"], "name_en": u["name_en"],
+                 "country_ar": u["country_info"]["name_ar"]}
                 for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())]
         return {"fields": groups, "universities": unis}
 
