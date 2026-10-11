@@ -8,9 +8,9 @@
 {% block description %}{{ u.name_ar or u.name_en }} ({{ u.name_en }}): ترتيبها في قوائم برنامج خادم الحرمين الشريفين للابتعاث 2026–2027، والتخصصات المتاحة، ومتطلبات القبول من مصادرها الرسمية.{% endblock %}
 
 {% block content %}
-<article class="uni-page">
+<article class="uni-page page-wide">
   <header class="uni-header">
-    <p class="uni-back"><a href="{{ url_for('universities_page') }}">→ كل الجامعات</a></p>
+    {% if back_url %}{{ c.back_link(back_url, "الرجوع إلى نتائج البحث") }}{% else %}{{ c.back_link(url_for('universities_page'), "كل الجامعات") }}{% endif %}
     <h1>{{ u.name_ar or u.name_en }}</h1>
     {% if u.name_ar %}<p class="path-item-en" lang="en" dir="ltr">{{ u.name_en }}</p>{% endif %}
     <p class="uni-header-meta">{{ um.country(u) }} {{ um.memberships(u) }}</p>
@@ -140,3 +140,5 @@
   </section>
 </article>
 {% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}" defer></script>{% endblock %}

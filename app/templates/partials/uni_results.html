@@ -1,10 +1,34 @@
+{#
+  The explorer's results. Rendered inside /universities, and alone (partial=1) when
+  universities.js updates the results as the student types.
+#}
 {% import "partials/uni_macros.html" as um with context %}
 {% set r = result %}
+{% set back = view.query %}
+
+{# One line for screen readers, copied into the page's role="status" line after each update (WCAG 4.1.3). #}
+<div class="results-meta" data-summary="{{ view.summary_ar }}" hidden></div>
+
+{#
+  The applied filters, each removable on its own, plus «مسح الكل» (decision 035).
+  Plain links, so they work without JavaScript; universities.js turns them into live updates.
+#}
+{% if view.applied %}
+<div class="applied">
+  <p class="applied-label" id="applied-label">تبحث في:</p>
+  <ul class="applied-list" aria-labelledby="applied-label">
+    {% for a in view.applied %}
+    <li><a class="applied-chip" href="{{ a.href }}" data-applied>{{ a.label_ar }}: <bdi>{{ a.value_ar }}</bdi><span class="applied-x" aria-hidden="true">✕</span><span class="sr-only"> (إزالة)</span></a></li>
+    {% endfor %}
+    {% if view.applied | length > 1 %}<li><a class="applied-clear" href="{{ url_for('universities_page') }}" data-applied>مسح الكل</a></li>{% endif %}
+  </ul>
+</div>
+{% endif %}
 
 {% if r.mode == "major" %}
-<div class="major-summary">
+<div class="notice major-summary">
   {% set m0 = r.majors[0] %}
-  <p class="major-summary-title">تخصص «{{ m0.name_ar }}» <span class="term-en" lang="en" dir="ltr">{{ m0.name_en }}</span></p>
+  <p class="notice-title">تخصص «{{ m0.name_ar }}» <span class="term-en" lang="en" dir="ltr">{{ m0.name_en }}</span></p>
   <ul class="major-summary-list">
     {% for m in r.majors if m.track == "emdad" %}
     <li>في إمداد يتبع مجال «{{ explorer.field("emdad", m.field).name_ar }}»{% if m.masters_only %}، <strong>ولدرجة الماجستير فقط</strong>{% endif %}.</li>
@@ -13,21 +37,22 @@
     <li>هذا التخصص ليس في قائمة تخصصات إمداد، لكن الرواد يشمل كل التخصصات.</li>
     {% endif %}
     {% if r.track != "rnd" and (r.majors | selectattr("track", "equalto", "rnd") | list) %}
-    <li>وله قائمة في البحث والتطوير (للدكتوراه): <a href="{{ url_for('universities_page') }}?q={{ r.q | urlencode }}&amp;track=rnd">اعرضها</a>.</li>
+    <li>وله قائمة في البحث والتطوير (للدكتوراه فقط): <a href="{{ url_for('universities_page') }}?q={{ r.q | urlencode }}&amp;track=rnd">اعرضها</a>.</li>
     {% endif %}
   </ul>
 </div>
 {% endif %}
 
+{% set ns = namespace(explained=false) %}
 {% for s in r.sections %}
-<section class="result-section">
+<section class="result-section" aria-labelledby="result-{{ loop.index }}">
   <header class="result-head">
-    <h2 class="result-title">
+    <h2 id="result-{{ loop.index }}" class="result-title">
       {% if s.track %}{{ tracks[s.track].name_ar }}{% else %}نتائج البحث{% endif %}
-      {% if s.field %}<span class="result-field"> · {{ s.field.name_ar }}</span>{% endif %}
+      {%- if s.field %}<span class="result-field">: {{ s.field.name_ar }}</span>{% endif %}
     </h2>
     <p class="result-count">
-      {% if s.waaid is defined %}{{ s.waaid | length }} برنامج{% elif s.rows is defined %}{{ s.rows | length }} جامعة{% else %}{{ s.universities | length }} جامعة{% endif %}
+      {% if s.waaid is defined %}{{ s.waaid | length | count_ar("programs") }}{% elif s.rows is defined %}{{ s.rows | length | count_ar("universities") }}{% else %}{{ s.universities | length | count_ar("universities") }}{% endif %}
       {% if s.track == "rnd" %} · للدكتوراه فقط{% endif %}
     </p>
   </header>
@@ -38,39 +63,54 @@
     {% if s.waaid %}
     <ul class="waaid-list waaid-list--results">{% for p in s.waaid %}{{ um.waaid_item(p) }}{% endfor %}</ul>
     {% else %}
-    <p class="result-empty">لا توجد برامج واعد مطابقة.</p>
+    <p class="result-empty">لا توجد برامج واعد مطابقة لبحثك. امسح البحث لترى كل البرامج.</p>
     {% endif %}
   {% elif s.rows is defined %}
     {% if s.rows %}
-    <table class="compare uni-table">
+    {% if not ns.explained %}{% set ns.explained = true %}
+    {# What the rank means, once, above the first ranked list. #}
+    <p class="result-explain">«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا.
+      {% if view.non_english %}
+      في الدول غير الناطقة بالإنجليزية قد يُقبل قبول مشروط بدراسة لغة الدولة: <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى؟</a>
+      {% endif %}
+    </p>
+    {% endif %}
+    <table class="uni-table">
       <caption class="sr-only">{{ tracks[s.track].name_ar }}{% if s.field %}: {{ s.field.name_ar }}{% endif %}</caption>
       <thead><tr><th scope="col">الترتيب</th><th scope="col">الجامعة</th><th scope="col">الدولة</th><th scope="col">ملاحظات</th></tr></thead>
       <tbody>
         {% for l, u in s.rows %}
         <tr>
-          <td class="uni-rank" data-label="الترتيب">{{ l.rank }}</td>
-          <th scope="row">{{ um.uni_name(u) }}</th>
-          <td data-label="الدولة">{{ um.country(u) }}</td>
-          <td data-label="ملاحظات">{{ um.listing_notes(l) }} {{ um.next_deadline(u) }}</td>
+          <td class="uni-rank">{{ l.rank }}</td>
+          <th scope="row">{{ um.uni_name(u, back=back) }} {{ um.saved_marker(u) }}</th>
+          <td class="uni-cell-country">{{ um.country(u) }}</td>
+          <td class="uni-cell-notes"><span class="tags">{{ um.listing_notes(l) }}</span>{{ um.next_deadline(u) }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% else %}
-    <p class="result-empty">لا توجد جامعات بهذه الفلاتر في هذه القائمة.</p>
+    <p class="result-empty">لا توجد جامعات في هذه القائمة مع الفلاتر الحالية. أزل أحد الفلاتر أعلاه، أو اختر مسارًا آخر.</p>
     {% endif %}
   {% else %}
     {% if s.universities %}
     <ul class="uni-list">
       {% for u in s.universities %}
       <li class="uni-item">
-        {{ um.uni_name(u) }}
-        <span class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }} {{ um.next_deadline(u) }}</span>
+        <div class="uni-item-name">{{ um.uni_name(u, back=back) }} {{ um.saved_marker(u) }}</div>
+        <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }} {{ um.next_deadline(u) }}</div>
       </li>
       {% endfor %}
     </ul>
     {% else %}
-    <p class="result-empty">لا توجد نتائج.{% if r.majors %} هل تقصد التخصص «<a href="{{ url_for('universities_page') }}?q={{ r.majors[0].name_ar | urlencode }}">{{ r.majors[0].name_ar }}</a>»؟{% else %} جرّب اسمًا آخر بالعربية أو الإنجليزية، أو أزل بعض الفلاتر.{% endif %}</p>
+    <div class="result-empty">
+      <p>لا توجد جامعة بهذا الاسم في قوائم {{ explorer.source.academic_year | replace("-", "–") }}{% if view.applied | length > 1 %} مع الفلاتر الحالية{% endif %}.</p>
+      {% if r.majors %}
+      <p>هل تقصد التخصص «<a href="{{ url_for('universities_page') }}?q={{ r.majors[0].name_ar | urlencode }}">{{ r.majors[0].name_ar }}</a>»؟</p>
+      {% else %}
+      <p>تأكد من الإملاء، أو جرّب الاسم بالإنجليزية كما يكتبه موقع الجامعة.</p>
+      {% endif %}
+    </div>
     {% endif %}
   {% endif %}
 </section>

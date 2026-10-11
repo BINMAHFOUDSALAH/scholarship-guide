@@ -93,6 +93,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -222,6 +226,12 @@ main:focus {
   .container {
     padding-inline: var(--space-5);
   }
+}
+
+/* Tool pages (explorer, university, program, news) share one width. */
+.page-wide {
+  max-width: var(--page);
+  margin-inline: auto;
 }
 
 /* Reading pages (grades, about) keep a comfortable line length inside the grid. */
@@ -1760,100 +1770,163 @@ main:has(> .hero) {
   padding-inline-start: var(--space-4);
 }
 
-/* ---------- Universities explorer ---------- */
-
-.explorer,
-.uni-page {
-  max-width: 1000px;
-  margin-inline: auto;
-}
+/* ---------- Universities explorer (decision 035) ---------- */
 
 .explorer-header .lead {
   max-width: 44em;
+  margin-bottom: var(--space-2);
+}
+
+.explorer-source {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
 }
 
 .explorer-form {
   display: grid;
   gap: var(--space-3);
-  margin-block: var(--space-4);
+  margin-block: var(--space-4) var(--space-5);
   padding: var(--space-4);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 10px;
   background: var(--surface-strong);
 }
 
-.explorer-form label {
-  display: block;
-  margin-block-end: var(--space-1);
+.search-field .field-hint {
+  margin-bottom: var(--space-2);
+}
+
+/* The search box and its button side by side; the suggestions open underneath. */
+.search-box {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2);
+}
+
+.search-submit {
+  min-height: 48px;
+  padding-inline: var(--space-4);
+}
+
+.filters-toggle {
+  justify-self: start;
+}
+
+.filters-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  min-width: 0; /* a fieldset is as wide as its content by default, which breaks small screens */
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filter-hint {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+}
+
+@media (min-width: 760px) {
+  .filters {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.filters-wide {
+  grid-column: 1 / -1;
+}
+
+.tracks-help > summary {
+  width: fit-content;
+  padding-block: var(--space-1);
   font-size: var(--text-sm);
   font-weight: 700;
-  color: var(--ink-muted);
-}
-
-.explorer-form input,
-.explorer-form select,
-.explorer-submit {
-  width: 100%;
-  min-height: 48px;
-  padding: 8px 12px;
-  border: 1.5px solid var(--line-strong);
-  border-radius: var(--radius);
-  background: var(--paper);
-  color: var(--ink);
-  font: inherit;
-}
-
-.explorer-form input {
-  font-size: var(--text-base);
-}
-
-.explorer-form input:focus,
-.explorer-form select:focus {
-  border-color: var(--heading);
-  outline: 2px solid var(--heading);
-  outline-offset: 1px;
-}
-
-.explorer-form select:disabled {
-  opacity: 0.55;
-}
-
-.explorer-filters {
-  display: grid;
-  gap: var(--space-3);
-  grid-template-columns: 1fr 1fr;
-  align-items: end;
-}
-
-.explorer-submit {
-  border-color: var(--heading);
-  background: var(--heading);
-  color: var(--paper);
-  font-weight: 700;
+  color: var(--heading);
   cursor: pointer;
 }
 
-@media (min-width: 900px) {
-  .explorer-filters {
-    grid-template-columns: repeat(4, 1fr) auto;
-  }
+.tracks-help[open] > summary {
+  margin-bottom: var(--space-2);
+}
+
+.tracks-help p {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.explorer-results {
+  scroll-margin-top: var(--space-4);
+}
+
+.explorer-results:focus {
+  outline: none;
 }
 
 .explorer-results[aria-busy="true"] {
   opacity: 0.6;
 }
 
-.major-summary {
-  margin-block-end: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  border-inline-start: 4px solid var(--lime);
-  background: var(--surface);
+/* «تبحث في:» and the removable filter tags (MOJ "filter a list" / Baymard "applied filters"). */
+.applied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
-.major-summary-title {
-  margin: 0 0 var(--space-1);
+.applied-label {
+  margin: 0;
+  font-size: var(--text-sm);
   font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.applied-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.applied-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 2px 14px;
+  border: 1.5px solid var(--heading);
+  border-radius: 999px;
+  background: var(--surface-strong);
   color: var(--heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.applied-chip:hover {
+  background: color-mix(in srgb, var(--heading) 10%, var(--surface-strong));
+}
+
+.applied-x {
+  font-size: var(--text-xs);
+}
+
+.applied-clear {
+  display: inline-block;
+  padding: 6px 4px;
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .major-summary-list {
@@ -1885,30 +1958,87 @@ main:has(> .hero) {
 
 .result-count,
 .result-note,
-.result-empty {
+.result-empty,
+.result-explain {
   margin: var(--space-2) 0;
   font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
+.result-count {
+  font-weight: 700;
+}
+
+.result-empty {
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  color: var(--ink);
+}
+
+.result-empty p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ranked lists stay a real table: rank, name, country, notes can be compared down the column. */
+.uni-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+.uni-table th,
+.uni-table td {
+  padding: var(--space-2) var(--space-3);
+  text-align: start;
+  vertical-align: top;
+}
+
+.uni-table thead th {
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.uni-table tbody tr {
+  border-bottom: 1px solid var(--line);
+}
+
+.uni-table tbody th {
+  font-weight: 400;
+}
+
 .uni-table .uni-rank {
   width: 4.5rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--heading);
   font-variant-numeric: tabular-nums;
 }
 
-/* Phones: rank beside the name, country and notes underneath, no column labels. */
+.uni-cell-notes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+/* Phones: rank beside the name; country and notes underneath; no column headings. */
 @media (max-width: 759px) {
-  .uni-table tbody tr {
-    display: grid;
-    grid-template-columns: 2.75rem 1fr;
-    column-gap: var(--space-2);
-    padding-block: var(--space-2);
+  .uni-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
   }
 
-  .uni-table td::before {
-    content: none;
+  .uni-table tr {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    column-gap: var(--space-2);
+    padding-block: var(--space-3);
   }
 
   .uni-table tbody th,
@@ -1921,7 +2051,15 @@ main:has(> .hero) {
     grid-column: 1;
     grid-row: 1 / span 3;
     width: auto;
-    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  .uni-cell-country {
+    margin-top: 2px;
+  }
+
+  .uni-cell-notes:empty {
+    display: none;
   }
 }
 
@@ -1933,6 +2071,7 @@ main:has(> .hero) {
 }
 
 .uni-name-ar {
+  font-size: var(--text-base);
   font-weight: 700;
 }
 
@@ -1947,8 +2086,17 @@ a.uni-name:hover .uni-name-en:only-child {
   text-decoration: underline;
 }
 
+.uni-name + .tag--saved {
+  margin-block-start: var(--space-1);
+}
+
 .uni-country {
   font-size: var(--text-sm);
+}
+
+.uni-deadline {
+  font-size: var(--text-sm);
+  color: var(--ink);
 }
 
 .req-past {
@@ -1962,30 +2110,25 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .uni-item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-1) var(--space-3);
+  display: grid;
+  gap: var(--space-1);
   padding-block: var(--space-3);
   border-bottom: 1px solid var(--line);
 }
 
+.uni-item-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-1) var(--space-3);
+}
+
 .uni-item-meta,
 .memberships {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1) var(--space-2);
-}
-
-.explorer-footer {
-  margin-block-start: var(--space-5);
-}
-
-.explorer-fineprint {
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
 }
 
 /* One university */
@@ -2172,10 +2315,6 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 /* Search suggestions: our own panel (the browser's list can't be styled and scrolls too fast). */
-.explorer-search {
-  position: relative;
-}
-
 .suggest {
   position: absolute;
   inset-inline: 0;
@@ -2184,7 +2323,6 @@ a.uni-name:hover .uni-name-en:only-child {
   max-height: min(60vh, 420px);
   overflow-y: auto;
   overscroll-behavior: contain;  /* scrolling the list never scrolls the page behind it */
-  scroll-behavior: smooth;
   padding-block: var(--space-1);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
@@ -2209,6 +2347,7 @@ a.uni-name:hover .uni-name-en:only-child {
   display: flex;
   flex-direction: column;
   gap: 1px;
+  min-height: 44px;
   padding: 10px var(--space-3);
   line-height: 1.5;
   cursor: pointer;
@@ -2217,12 +2356,15 @@ a.uni-name:hover .uni-name-en:only-child {
 .suggest-option small {
   font-size: var(--text-xs);
   color: var(--ink-muted);
-  text-align: end;  /* dir="ltr": sits on the right, under the Arabic name */
 }
 
 .suggest-option[aria-selected="true"],
 .suggest-option:hover {
-  background: color-mix(in srgb, var(--heading) 9%, var(--surface-strong));
+  background: color-mix(in srgb, var(--heading) 10%, var(--surface-strong));
+}
+
+.suggest-option[aria-selected="true"] {
+  box-shadow: inset -3px 0 0 var(--heading);
 }
 
 .suggest-empty {

@@ -3,6 +3,7 @@ from pathlib import Path
 
 import frontmatter
 import markdown
+from markdown.extensions.toc import slugify_unicode
 
 CONTENT_DIR = Path(__file__).parent.parent / "content"
 
@@ -27,4 +28,10 @@ def load_page(section, slug):
         return None
 
     post = frontmatter.load(path)
-    return {**post.metadata, "slug": slug, "html": markdown.markdown(post.content)}
+    # toc: every heading gets an id (Arabic kept, e.g. «#القبول-المشروط»), and the page gets a list of
+    # its h2s for «في هذه الصفحة». attr_list: a heading can set its own short id with {#id}.
+    md = markdown.Markdown(extensions=["toc", "attr_list"],
+                           extension_configs={"toc": {"slugify": slugify_unicode, "toc_depth": "2"}})
+    html = md.convert(post.content)
+    contents = [{"id": t["id"], "title": t["name"]} for t in md.toc_tokens]
+    return {**post.metadata, "slug": slug, "html": html, "contents": contents}
