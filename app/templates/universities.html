@@ -25,7 +25,7 @@
                role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="q-suggest"
                aria-describedby="q-hint" data-suggest="{{ url_for('suggestions_api') }}">
         <button class="btn btn--primary search-submit" type="submit">ابحث</button>
-        <div id="q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" hidden></div>
+        <div id="q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" tabindex="-1" hidden></div>
       </div>
     </div>
 

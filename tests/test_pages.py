@@ -429,3 +429,29 @@ def test_footer_has_no_raw_sitemap_link_or_signup_promise():
     assert "بدون تسجيل" not in footer
     assert client.get("/sitemap.xml").status_code == 200
 
+
+
+# ---------- program and grade pages (decision 035) ----------
+
+def test_program_page_leads_with_the_next_step_and_lists_its_sections():
+    html = client.get("/programs/custodian-scholarship").text
+    article = html.split('<article class="program')[1]
+    assert article.index('class="back-link"') < article.index("<h1>")
+    actions = article.split('class="actions"')[1].split("</div>")[0]
+    assert 'class="btn btn--primary" href="http://testserver/universities"' in actions
+    assert "صفحة التقديم الرسمية" in actions
+    assert "روابط رسمية" in article
+    contents = article.split('aria-label="في هذه الصفحة"')[1].split("</nav>")[0]
+    for anchor in ("#tracks-title", "#conditional", "#admission-vs-scholarship", "#faq"):
+        assert f'href="{anchor}"' in contents, anchor  # test_every_internal_link_works checks they exist
+
+
+def test_grade_pages_switch_grades_and_put_the_next_step_first():
+    html = client.get("/grades/grade-11").text
+    switch = html.split('class="grade-switch"')[1].split("</nav>")[0]
+    assert switch.count("<a ") == 3
+    assert 'aria-current="page">ثاني ثانوي</a>' in switch
+    assert html.index('class="next-step"') < html.index('class="prose"')
+    assert "ماذا ينتظرك في ثالث ثانوي؟" in html
+    assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text  # the last grade has no next one
+    assert 'class="grade-switch"' not in client.get("/resources/ielts").text

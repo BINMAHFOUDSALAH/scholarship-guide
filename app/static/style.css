@@ -1613,6 +1613,53 @@ main:has(> .hero) {
 
 /* ---------- Content pages (Markdown) ---------- */
 
+/* أول / ثاني / ثالث ثانوي: switch grades without going back to the homepage. */
+.grade-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.grade-switch a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 4px 14px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.grade-switch a:hover {
+  border-color: var(--heading);
+  color: var(--heading);
+}
+
+.grade-switch a[aria-current] {
+  border-color: var(--heading);
+  background: var(--heading);
+  color: var(--on-heading);
+}
+
+.page-header .lead {
+  margin-bottom: var(--space-2);
+}
+
+.next-grade {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-weight: 700;
+}
+
+.prose h2 {
+  scroll-margin-top: var(--space-4);
+}
+
 .prose h2 {
   margin-block: var(--space-5) var(--space-2);
   font-size: var(--text-lg);
@@ -1627,12 +1674,6 @@ main:has(> .hero) {
 }
 
 /* ---------- Program pages ---------- */
-
-/* Wider than a reading page so the comparison table fits; text sections keep .measure. */
-.program {
-  max-width: 1000px;
-  margin-inline: auto;
-}
 
 /* Every section starts at the same edge as the table, so the page reads as one column. */
 .program .measure,
@@ -1660,6 +1701,37 @@ main:has(> .hero) {
 .program-disclaimer {
   font-size: var(--text-sm);
   color: var(--ink-muted);
+}
+
+/* Official links, grouped under one label instead of a row of equal links. */
+.program-links {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.program-links-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.program-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.program-links a {
+  display: inline-block;
+  padding-block: 2px;
+  font-weight: 700;
+}
+
+.program .page-contents {
+  margin-inline: 0;
 }
 
 .program-section {

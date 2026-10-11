@@ -215,7 +215,8 @@ def grade_page(request: Request, slug: str):
     page = load_page("grades", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html", {"page": page, "tests": tests})
+    return templates.TemplateResponse(request, "page.html",
+                                      {"page": page, "tests": tests, "section": "grades", "grades": home_text["grades"]})
 
 
 @app.get("/resources/{slug}", response_class=HTMLResponse)
@@ -224,7 +225,7 @@ def resource_page(request: Request, slug: str):
     page = load_page("resources", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html", {"page": page, "tests": tests})
+    return templates.TemplateResponse(request, "page.html", {"page": page, "tests": tests, "section": "resources"})
 
 
 @app.get("/programs/{slug}", response_class=HTMLResponse)

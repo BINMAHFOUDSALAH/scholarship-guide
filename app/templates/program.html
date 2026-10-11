@@ -5,7 +5,8 @@
 {% block description %}{{ page.description or site.description }}{% endblock %}
 
 {% block content %}
-<article class="program theme-{{ program.theme }}">
+<article class="program page-wide theme-{{ program.theme }}">
+  {{ c.back_link(url_for('home') ~ "#programs", "كل البرامج") }}
   <header class="program-header measure">
     {% if program.logo %}
     <img class="program-logo{% if program.logo.plate == 'dark' %} program-logo--dark{% endif %}" src="{{ url_for('static', path=program.logo.file ~ '-500.png') }}"
@@ -16,15 +17,35 @@
     <p class="lead">{{ program.summary_ar }}</p>
     {% if program.not_standalone_ar %}<aside class="notice notice--warn" role="note"><p><strong>{{ program.not_standalone_ar }}</strong></p></aside>{% endif %}
     <p class="program-disclaimer">{{ site.name }} دليل طلابي مستقل، ولا يتبع {{ program.provider_ar }}. القرار في كل حالة للجهة الرسمية.</p>
-    <p class="path-item-links">
-      <a class="path-item-link" href="{{ program.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
-      {% if program.apply_url %}<a class="path-item-link" href="{{ program.apply_url }}" target="_blank" rel="noopener">صفحة التقديم ↗</a>{% endif %}
-      {% if program.targets_guide_url %}<a class="path-item-link" href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">الجامعات المستهدفة (PDF) ↗</a>{% endif %}
-      {% if program.social_url %}<a class="path-item-link" href="{{ program.social_url }}" target="_blank" rel="noopener">{{ program.social_label_ar }} ↗</a>{% endif %}
-      {% if program.universities_guide_url %}<a class="path-item-link path-item-link--page" href="{{ url_for('universities_page') }}">ابحث عن جامعتك وتخصصك ←</a>
-      <a class="path-item-link" href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a>{% endif %}
-    </p>
+
+    {# The main next step first (decision 035): for list-based programs, find your university in the lists. #}
+    {% if program.universities_guide_url or program.apply_url %}
+    <div class="actions">
+      {% if program.universities_guide_url %}<a class="btn btn--primary" href="{{ url_for('universities_page') }}">ابحث عن جامعتك وتخصصك في القوائم</a>{% endif %}
+      {% if program.apply_url %}<a class="btn btn--secondary" href="{{ program.apply_url }}" target="_blank" rel="noopener">صفحة التقديم الرسمية ↗</a>{% endif %}
+    </div>
+    {% endif %}
+    <div class="program-links">
+      <p class="program-links-title">روابط رسمية</p>
+      <ul>
+        <li><a href="{{ program.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a></li>
+        {% if program.universities_guide_url %}<li><a href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a></li>{% endif %}
+        {% if program.targets_guide_url %}<li><a href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">الجامعات المستهدفة (PDF) ↗</a></li>{% endif %}
+        {% if program.social_url %}<li><a href="{{ program.social_url }}" target="_blank" rel="noopener">{{ program.social_label_ar }} ↗</a></li>{% endif %}
+      </ul>
+    </div>
   </header>
+
+  {# «في هذه الصفحة»: the page's sections, including the h2s of the Markdown explainer (content.py). #}
+  <nav class="page-contents measure" aria-label="في هذه الصفحة">
+    <p class="page-contents-title">في هذه الصفحة</p>
+    <ul>
+      <li><a href="#tracks-title">المسارات</a></li>
+      {% if program.facts %}<li><a href="#facts-title">ما يجب أن تعرفه قبل التقديم</a></li>{% endif %}
+      {% if program.target_universities %}<li><a href="#targets-title">الجامعات المستهدفة</a></li>{% endif %}
+      {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
+    </ul>
+  </nav>
 
   <section class="program-section" aria-labelledby="tracks-title">
     <h2 id="tracks-title">المسارات</h2>
@@ -112,7 +133,6 @@
   <footer class="measure">
     {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
     {% if page.next_step %}{{ c.next_step(page.next_step) }}{% endif %}
-    <p><a href="{{ url_for('home') }}#programs">→ كل البرامج</a></p>
   </footer>
 </article>
 {% endblock %}

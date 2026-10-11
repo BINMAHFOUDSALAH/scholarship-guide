@@ -6,10 +6,30 @@
 
 {% block content %}
 <article class="measure">
+  {% if section == "grades" %}
+  {# Move between the three grades without going back to the homepage. #}
+  <nav class="grade-switch" aria-label="الصفوف">
+    {% for g in grades %}<a href="{{ url_for('grade_page', slug=g.slug) }}"{% if g.slug == page.slug %} aria-current="page"{% endif %}>{{ g.label_ar }}</a>{% endfor %}
+  </nav>
+  {% endif %}
+
   <header class="page-header">
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
   </header>
+
+  {# The answer first (decision 035): what to do next, then why. #}
+  {% if page.next_step %}{{ c.next_step(page.next_step) }}{% endif %}
+
+  {% if page.contents | length > 2 %}
+  <nav class="page-contents" aria-label="في هذه الصفحة">
+    <p class="page-contents-title">في هذه الصفحة</p>
+    <ul>
+      {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
+      {% if page.show_tests %}<li><a href="#tests-title">اختبارات ستسمع عنها كثيرًا</a></li>{% endif %}
+    </ul>
+  </nav>
+  {% endif %}
 
   <div class="prose">
     {{ page.html | safe }}
@@ -32,8 +52,10 @@
 
   {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
 
-  {% if page.next_step %}{{ c.next_step(page.next_step) }}{% endif %}
-
-  <p><a href="{{ url_for('home') }}">→ الرجوع إلى الرئيسية</a></p>
+  {% if section == "grades" %}
+  {% set ns = namespace(next=None) %}
+  {% for g in grades %}{% if loop.previtem is defined and loop.previtem.slug == page.slug %}{% set ns.next = g %}{% endif %}{% endfor %}
+  {% if ns.next %}<p class="next-grade"><a href="{{ url_for('grade_page', slug=ns.next.slug) }}">ماذا ينتظرك في {{ ns.next.label_ar }}؟ ←</a></p>{% endif %}
+  {% endif %}
 </article>
 {% endblock %}
