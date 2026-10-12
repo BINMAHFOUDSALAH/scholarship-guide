@@ -517,3 +517,16 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **A full visual redesign:** no evidence the identity fails students. It would cost consistency and add risk for no measured gain.
 - **"Show 10 then all" on long lists:** breaks scroll restoration on "back".
 - **A sort control:** the official rank is the meaningful order.
+
+## 042 — Domain: wadihguide.com
+**Date:** 2026-10-12
+**Decision:**
+- **Domain:** the owner bought `wadihguide.com` at Cloudflare Registrar (at-cost price, private contact details). The name matches «دليل طالب الثانوية» and doesn't sound official.
+- **DNS:** Cloudflare, records set to **DNS only** (no Cloudflare proxy), so Render issues and renews the HTTPS certificate.
+- **Hosting:** stays on Render.
+- **One public address:** `data/site.json` `base_url` is `https://wadihguide.com`. A middleware in `app/main.py` answers the old Render address and `www` with a **301** to the same path and query on the domain, so shared links keep working and search engines consolidate.
+**Alternatives:**
+- **Keep the onrender.com address:** looks temporary, and every link shared with testers would break at launch.
+- **A `.sa` domain:** more paperwork, and not needed for a guide.
+- **Cloudflare's proxy (orange cloud):** another moving part for HTTPS; not needed now.
+**Note:** «قائمتي» lives in the browser per address, so lists saved on the old address don't carry over. Testers should start on the new link.

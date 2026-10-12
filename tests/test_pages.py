@@ -581,3 +581,20 @@ def test_year_patterns_are_counted_from_the_university_files():
 def test_year_is_linked_from_the_university_and_program_pages():
     assert "/grades/grade-12#year" in client.get("/universities/stanford-university").text
     assert "/grades/grade-12#year" in client.get("/programs/custodian-scholarship").text
+
+
+# ---------- one public address (decision 042) ----------
+
+def test_old_addresses_redirect_to_the_domain_with_path_and_query():
+    for host in ("wadih-mqni.onrender.com", "www.wadihguide.com"):
+        r = client.get("/universities?q=stanford&country=GB", headers={"host": host}, follow_redirects=False)
+        assert r.status_code == 301, host
+        assert r.headers["location"] == "https://wadihguide.com/universities?q=stanford&country=GB"
+    r = client.get("/grades/grade-12", headers={"host": "wadih-mqni.onrender.com"}, follow_redirects=False)
+    assert r.headers["location"] == "https://wadihguide.com/grades/grade-12"
+
+
+def test_the_domain_itself_and_local_runs_are_not_redirected():
+    for host in ("wadihguide.com", "testserver", "127.0.0.1:8000"):
+        assert client.get("/", headers={"host": host}, follow_redirects=False).status_code == 200, host
+    assert "https://wadihguide.com/grades/grade-10" in client.get("/sitemap.xml").text

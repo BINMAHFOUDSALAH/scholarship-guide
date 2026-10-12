@@ -8,7 +8,7 @@ A free, Arabic-first guide for Saudi high school students: the paths open to the
 - **Verified:** every official fact shows its source and the date it was last checked. Anything unconfirmed is labeled "غير مؤكد".
 - **Independent:** this is a student guide. It is not the Ministry of Education, not Safeer, and not affiliated with Aramco or KAUST.
 
-**Live site:** https://wadih-mqni.onrender.com (free hosting, so the first visit after a quiet period can take up to a minute to wake up)
+**Live site:** https://wadihguide.com (free hosting, so the first visit after a quiet period can take up to a minute to wake up)
 
 > Status: in development. See [docs/roadmap.md](docs/roadmap.md).
 

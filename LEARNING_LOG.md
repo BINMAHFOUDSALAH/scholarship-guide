@@ -410,3 +410,19 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Decision:** 041. **Tested:** 247 pytest tests; the explorer and «قائمتي» browser flows; axe-core and 320px overflow on 8 routes × 2 sizes × 2 themes. **Not tested:** Safari, students, a screen reader.
 
 **Understood?** Not yet checked.
+
+## 18. A real domain: wadihguide.com (2026-10-12)
+**Built / why:** a real address before sharing with testers, so their links keep working after launch.
+- **DNS** maps the name to Render: CNAME records at Cloudflare, "DNS only".
+- **HTTPS:** Render issues the certificate itself.
+- **The code:** `base_url` changed, and a 301 redirect sends the old onrender address and www to the new domain.
+
+**Key concepts:**
+- **DNS:** the internet's phone book, name → server.
+- **CNAME:** this name is an alias of that one.
+- **301:** "moved permanently", so browsers and Google update the link.
+- **Order matters:** turn on the redirect only after the new address works.
+
+**Tested:** 249 pytest tests, including the redirect. The live checks wait for DNS verification.
+
+**Understood?** Not yet checked.

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exception_handlers import http_exception_handler
-from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, Response
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -165,6 +165,23 @@ def program_slugs():
     return [slug for slug in list_slugs("programs") if slug in paths_by_id]
 
 app = FastAPI(title=site["name"])
+
+# One public address (decision 042): visits to the old Render address or to www are sent, with the same
+# path and query, to base_url. Other hosts (local runs, tests) are left alone.
+CANONICAL_HOST = site["base_url"].split("://", 1)[1].rstrip("/")
+OLD_HOSTS = {"wadih-mqni.onrender.com", "www." + CANONICAL_HOST} - {CANONICAL_HOST}
+
+
+@app.middleware("http")
+async def redirect_to_canonical_host(request: Request, call_next):
+    host = request.headers.get("host", "").split(":")[0].lower()
+    if host in OLD_HOSTS:
+        target = site["base_url"].rstrip("/") + request.url.path
+        if request.url.query:
+            target += "?" + request.url.query
+        return RedirectResponse(target, status_code=301)
+    return await call_next(request)
+
 app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=APP_DIR / "templates")
 templates.env.globals["site"] = site
