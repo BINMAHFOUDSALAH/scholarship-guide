@@ -1,0 +1,11 @@
+{# أول ثانوي's own tool (decision 040): the five official tracks, from data/school_tracks.json. #}
+<section class="grade-tool" id="tracks" aria-labelledby="tracks-title">
+  <h2 id="tracks-title">المسارات الخمسة</h2>
+  <p class="result-note">بعد أول ثانوي يُسكَّن كل طالب في أحدها لثاني وثالث ثانوي، حسب ميوله وقدراته.</p>
+  <dl class="summary-list">
+    {% for t in school_tracks.tracks %}
+    <div class="summary-row"><dt>{{ t.name_ar }}</dt><dd>{{ t.summary_ar }}</dd></div>
+    {% endfor %}
+  </dl>
+  <p class="fact-note">المصدر: <a href="{{ school_tracks.source.url }}" target="_blank" rel="noopener">{{ school_tracks.source.title }} ↗</a>، الصفحات 11–15.</p>
+</section>

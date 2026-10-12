@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
-{% import "partials/uni_macros.html" as um with context %}
 
 {#
-  One grade (decision 038). The same order on every grade, so students know where things are:
-  this week's one action → what matters this year → priorities → (a tool) → selected resources →
-  the next step on واضح → official sources. The text is in content/grades/<slug>.md; tables come
-  from data/ (never retyped in Markdown).
+  One grade (decision 040). The same order on every grade:
+  1. what matters this year (three points, from the Markdown)
+  2. «ابدأ الآن»: one activity, with the button that does it
+  3. the grade's own tool: the five tracks (10), which tests (11), the year month by month (12)
+  4. «لتعرف أكثر»: a few resources
+  then the official sources. The grade switch at the top shows each year's job, so the whole journey
+  is visible without repeating it on every page.
 #}
 
 {% block title %}{{ page.title }}: {{ page.stage_ar }} | {{ site.name }}{% endblock %}
@@ -14,62 +16,32 @@
 
 {% block content %}
 <article class="measure grade-page">
-  <nav class="grade-switch" aria-label="الصفوف">
-    {% for g in grades %}<a href="{{ url_for('grade_page', slug=g.slug) }}"{% if g.slug == page.slug %} aria-current="page"{% endif %}>{{ g.label_ar }}</a>{% endfor %}
+  <nav class="grade-journey" aria-label="سنوات الثانوية">
+    <ol>
+      {% for g in grades %}
+      <li><a href="{{ url_for('grade_page', slug=g.slug) }}"{% if g.slug == page.slug %} aria-current="page"{% endif %}><span class="grade-journey-name">{{ g.label_ar }}</span> <span class="grade-journey-hint">{{ g.hint_ar }}</span></a></li>
+      {% endfor %}
+    </ol>
   </nav>
 
   <header class="page-header">
-    <p class="grade-stage">{{ page.stage_ar }}</p>
-    <h1>{{ page.title }}</h1>
+    <h1>{{ page.title }}: {{ page.stage_ar }}</h1>
     <p class="lead">{{ page.description }}</p>
   </header>
-
-  {{ c.next_step(page.this_week.text_ar, page.this_week.link_label_ar, page.this_week.href, label="هذا الأسبوع") }}
-
-  <nav class="page-contents" aria-label="في هذه الصفحة">
-    <p class="page-contents-title">في هذه الصفحة</p>
-    <ul>
-      {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
-      {% if "timeline" in page.tools %}<li><a href="#timeline-title">من أول ثانوي إلى الجامعة</a></li>{% endif %}
-      {% if "deadlines" in page.tools %}<li><a href="#deadlines-title">أقرب مواعيد الجامعات</a></li>{% endif %}
-      {% if "tests" in page.tools %}<li><a href="#tests-title">الاختبارات: من يطلب ماذا؟</a></li>{% endif %}
-      <li><a href="#resources-title">مصادر مختارة</a></li>
-    </ul>
-  </nav>
 
   <div class="prose">
     {{ page.html | safe }}
   </div>
 
-  {% if "timeline" in page.tools %}{% include "partials/timeline.html" %}{% endif %}
+  {# The one thing to do now (lime = your next step). #}
+  {{ c.next_step(page.activity.text_ar, page.activity.link_label_ar, page.activity.href, label="ابدأ الآن") }}
 
-  {% if "deadlines" in page.tools %}
-  {# The next university deadlines, straight from the researched requirement files. #}
-  <section class="grade-tool" aria-labelledby="deadlines-title">
-    <h2 id="deadlines-title">أقرب مواعيد الجامعات</h2>
-    <p class="result-note">آخر مواعيد التقديم القادمة في الجامعات التي جمعنا مواعيدها (جامعات مسار الرواد)، من مواقعها الرسمية. هذه مواعيد الجامعات، وليست مواعيد الابتعاث.</p>
-    {% if deadlines %}
-    <ul class="rows uni-dates">
-      {% for x in deadlines %}
-      <li>
-        <span class="uni-date">{{ x.date | arabic_date }}</span>
-        {% if not x.year_stated %}<span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}
-        <span class="uni-date-label"><a href="{{ url_for('university_page', uid=x.university.id) }}#dates">{{ x.university.name_ar or x.university.name_en }}</a> · {{ um.date_short(x) }}</span>
-        <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
-      </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p class="result-empty">لا توجد مواعيد قادمة منشورة في الجامعات التي جمعناها الآن.</p>
-    {% endif %}
-    <p class="result-note"><a href="{{ url_for('universities_page') }}?track=arruaad">مواعيد كل جامعة في صفحتها ←</a></p>
-  </section>
-  {% endif %}
-
-  {% if "tests" in page.tools %}{% include "partials/test_needs.html" %}{% endif %}
+  {% if page.tool == "tracks" %}{% include "partials/school_tracks.html" %}{% endif %}
+  {% if page.tool == "tests" %}{% include "partials/test_needs.html" %}{% endif %}
+  {% if page.tool == "year" %}{% include "partials/apply_year.html" %}{% endif %}
 
   <section class="grade-resources" aria-labelledby="resources-title">
-    <h2 id="resources-title">مصادر مختارة</h2>
+    <h2 id="resources-title">لتعرف أكثر</h2>
     <ul class="rows resource-list">
       {% for r in page.resources %}
       <li>
@@ -78,12 +50,6 @@
       </li>
       {% endfor %}
     </ul>
-  </section>
-
-  <section class="grade-next" aria-labelledby="next-title">
-    <h2 id="next-title">الخطوة التالية في واضح</h2>
-    <p>{{ page.next_feature.text_ar }}</p>
-    <p><a class="btn btn--primary" href="{{ page.next_feature.href }}">{{ page.next_feature.label_ar }}</a></p>
   </section>
 
   {{ c.source_stamp(page.sources) }}

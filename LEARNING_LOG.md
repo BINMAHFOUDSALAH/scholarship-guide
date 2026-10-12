@@ -367,3 +367,26 @@ What we built in واضح, why, how it works, and how to talk about it. Updated 
 **Not tested:** Safari/iPhone; real students.
 
 **Understood?** Not yet checked.
+
+## 16. Grade pages, take two: less, but each grade its own (2026-10-12)
+**Built / why:** the owner said the shared timeline wasn't clear. Measured against NN/g (main point first, chunking, progressive disclosure), the pages had ~10 sections, repeated each other, and grade 12 was 12.6 phone screens long.
+
+**Now every grade page has:**
+- three points
+- one activity
+- its own tool:
+  - grade 10: the five tracks
+  - grade 11: which tests
+  - grade 12: the year month by month, with «الآن» set from today's date
+- a few resources
+
+The whole journey is the grade bar at the top. Pages are about half as long.
+
+**Key concepts:**
+- **Duplication is a design smell:** the same section on three pages means none of them is "its own".
+- **Measure before and after:** page height on a phone is a cheap proxy for effort.
+- **Show "now" from data:** the current month's row is computed, not written.
+
+**Decision:** 040. **Tested:** 241 pytest tests; axe-core and 320px overflow on the grade, program and university pages; screenshots at 360/1280px in light and dark. **Not tested:** students; Safari.
+
+**Understood?** Not yet checked.

@@ -67,7 +67,8 @@ def is_confirmed(item):
 site = load_json("site.json")
 paths = load_json("paths.json")
 test_needs = load_json("test_needs.json")
-timeline = load_json("timeline.json")
+apply_year = load_json("apply_year.json")
+school_tracks = load_json("school_tracks.json")
 featured_quote = load_json("featured_quote.json")
 home_text = load_json("home.json")
 news = sort_news([item for item in load_json("news.json") if is_confirmed(item)])
@@ -215,15 +216,16 @@ def grade_page(request: Request, slug: str):
     page = load_page("grades", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    # Each grade page has the same structure (grade.html, decision 038); its tools come from data/.
-    return templates.TemplateResponse(request, "grade.html",
-                                      {"page": page, "grades": home_text["grades"], "explorer": explorer,
-                                       "test_needs": test_needs, "sat_summary": explorer.sat_summary(),
-                                       "deadlines": explorer.upcoming_deadlines(),
-                                       # «من أول ثانوي إلى الجامعة» (decision 039)
-                                       "timeline": timeline, "timeline_stats": explorer.timeline_stats(),
-                                       "arruaad_track": next(t for t in paths_by_id["custodian-scholarship"]["tracks"]
-                                                             if t.get("id") == "arruaad")})
+    # Each grade page has the same structure (grade.html, decision 040); its own tool comes from data/.
+    return templates.TemplateResponse(request, "grade.html", {
+        "page": page, "grades": home_text["grades"], "explorer": explorer,
+        "test_needs": test_needs, "sat_summary": explorer.sat_summary(),  # ثاني ثانوي
+        "school_tracks": school_tracks,  # أول ثانوي
+        # ثالث ثانوي: the year month by month, «الآن» from today's month
+        "apply_year": apply_year, "timeline_stats": explorer.timeline_stats(),
+        "deadlines": explorer.upcoming_deadlines(), "this_month": date.today().month,
+        "arruaad_track": next(t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("id") == "arruaad"),
+    })
 
 
 @app.get("/resources/{slug}", response_class=HTMLResponse)

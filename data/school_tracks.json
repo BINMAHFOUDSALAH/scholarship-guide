@@ -1,0 +1,15 @@
+{
+  "_note": "The five secondary-school tracks, for the grade 10 page (decision 040). Summaries follow the Ministry's 2025 introductory document (pages 11–15); read 2026-10-12.",
+  "source": {
+    "title": "الثانوية العامة، وثيقة تعريفية 2025، وزارة التعليم",
+    "url": "https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Documents/Pathways_documents_2025.pdf",
+    "read_on": "2026-10-12"
+  },
+  "tracks": [
+    {"name_ar": "المسار العام", "summary_ar": "علوم طبيعية وإنسانية معًا، ومجال اختياري للمهارات. يفتح التخصصات العلمية والإنسانية والتطبيقية في الدبلوم والبكالوريوس.", "page": 11},
+    {"name_ar": "علوم الحاسب والهندسة", "summary_ar": "الرياضيات والفيزياء والكيمياء مع الحاسب والهندسة. يهيئ لتخصصات علوم الحاسب والهندسة.", "page": 12},
+    {"name_ar": "الصحة والحياة", "summary_ar": "مواد عميقة في العلوم والرياضيات، ومواد في الصحة والحياة. يهيئ للتخصصات الصحية.", "page": 13},
+    {"name_ar": "إدارة الأعمال", "summary_ar": "الإدارة والاقتصاد والتسويق والمالية والمحاسبة وريادة الأعمال.", "page": 14},
+    {"name_ar": "المسار الشرعي", "summary_ar": "العلوم الشرعية، مع الأنظمة والقانون. يهيئ للمجالات الشرعية والقانونية واللغوية.", "page": 15}
+  ]
+}

@@ -1,40 +1,15 @@
 {
-  "_note": "The journey from grade 10 to university (decision 039), shown on the three grade pages. Worked example: a student who starts university in Fall 2028 (in ثاني ثانوي in 2026–2027). Each fact has its official source and the date we read it; 'pattern' facts are counted from data/university_details/ in Explorer.timeline_stats(). Research: docs/research/timeline-2026-10.md.",
-  "example_intake_ar": "خريف 2028",
-  "stages": [
+  "_note": "ثالث ثانوي month by month (decision 040), shown only on the grade 12 page. Months are the US/UK pattern for the current cycle; each official fact has its source and read date. The row whose months include today's month is marked «الآن». Patterns (computed) come from Explorer.timeline_stats(). The scholarship has no fixed month, so it sits in its own block. Research: docs/research/timeline-2026-10.md.",
+  "rows": [
     {
-      "id": "grade-10",
-      "grade": "grade-10",
-      "when_ar": "أول ثانوي",
-      "example_ar": "2025–2026",
-      "title_ar": "ابنِ الأساس",
-      "actions_ar": [
-        "اعرف المسارات الخمسة قبل التسكين، وتحدّث مع الموجه الطالبي.",
-        "معدلك يبدأ من الآن: بعض البرامج تحسبه من أول ثانوي.",
-        "عادة إنجليزي صغيرة كل يوم. لا تحتاج أي اختبار هذه السنة."
-      ]
-    },
-    {
-      "id": "grade-11",
-      "grade": "grade-11",
-      "when_ar": "ثاني ثانوي",
-      "example_ar": "2026–2027",
-      "title_ar": "ابحث وجرّب الاختبارات",
-      "actions_ar": [
-        "اختر مجالاتك، وابنِ قائمة أولى من الجامعات في «قائمتي».",
-        "اعرف الاختبارات التي تطلبها جهاتك، واختبر أول مرة قبل ثالث ثانوي، حتى يبقى وقت للإعادة.",
-        "صيف ما قبل ثالث ثانوي: جهّز ما تكتبه في الطلبات (المقالات، والأنشطة)."
-      ]
-    },
-    {
-      "id": "applications-open",
-      "grade": "grade-12",
-      "when_ar": "أغسطس، قبل بداية ثالث ثانوي",
-      "example_ar": "أغسطس 2027",
-      "title_ar": "يفتح التقديم في كثير من الجامعات الأمريكية",
-      "actions_ar": [
-        "أنشئ حسابك في منصة التقديم (مثل Common App) وابدأ التعبئة."
+      "id": "august",
+      "months": [
+        8,
+        9
       ],
+      "when_ar": "أغسطس وسبتمبر",
+      "title_ar": "يفتح التقديم في كثير من الجامعات الأمريكية",
+      "action_ar": "أنشئ حسابك في منصة التقديم (مثل Common App) وابدأ التعبئة.",
       "facts": [
         {
           "kind": "official",
@@ -61,27 +36,25 @@
       ]
     },
     {
-      "id": "early-deadlines",
-      "grade": "grade-12",
-      "when_ar": "أكتوبر ونوفمبر من ثالث ثانوي",
-      "example_ar": "أكتوبر–نوفمبر 2027",
+      "id": "early",
+      "months": [
+        10,
+        11
+      ],
+      "when_ar": "أكتوبر ونوفمبر",
       "title_ar": "المواعيد المبكرة",
       "computed": "early",
-      "actions_ar": [
-        "قدّم على الجامعات التي مواعيدها مبكرة، وأرسل نتائج اختباراتك قبلها.",
-        "اقرأ شروط التقديم المبكر في كل جامعة: بعضها ملزم (Early Decision) وبعضها لا."
-      ]
+      "action_ar": "قدّم على الجامعات التي مواعيدها مبكرة، وأرسل نتائج اختباراتك قبلها. بعض التقديم المبكر ملزم (Early Decision)، فاقرأ شروطه.",
+      "facts": []
     },
     {
-      "id": "early-decisions",
-      "grade": "grade-12",
-      "when_ar": "ديسمبر ويناير من ثالث ثانوي",
-      "example_ar": "ديسمبر 2027–يناير 2028",
-      "title_ar": "نتائج التقديم المبكر، ثم المواعيد العادية",
-      "computed": "regular",
-      "actions_ar": [
-        "إن لم تُقبل مبكرًا، فقدّم على باقي جامعاتك قبل مواعيدها العادية."
+      "id": "december",
+      "months": [
+        12
       ],
+      "when_ar": "ديسمبر",
+      "title_ar": "نتائج التقديم المبكر",
+      "action_ar": "إن لم تُقبل مبكرًا، فأكمل طلباتك للمواعيد العادية.",
       "facts": [
         {
           "kind": "official",
@@ -113,7 +86,20 @@
               "url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "january",
+      "months": [
+        1,
+        2
+      ],
+      "when_ar": "يناير وفبراير",
+      "title_ar": "المواعيد العادية",
+      "computed": "regular",
+      "action_ar": "قدّم على باقي جامعاتك قبل مواعيدها.",
+      "facts": [
         {
           "kind": "official",
           "text_ar": "كاوست (KGSP) في الدفعة الماضية: التقديم من 12 يناير إلى 11 فبراير 2026، لطلاب ثالث ثانوي.",
@@ -128,15 +114,14 @@
       ]
     },
     {
-      "id": "regular-decisions",
-      "grade": "grade-12",
-      "when_ar": "مارس وأبريل من ثالث ثانوي",
-      "example_ar": "مارس–أبريل 2028",
-      "title_ar": "نتائج التقديم العادي، ثم قرارك",
-      "actions_ar": [
-        "قارن العروض التي وصلتك، وقرّر قبل موعد الرد.",
-        "اطلب من الجامعة خطاب القبول الرسمي: تحتاجه للابتعاث."
+      "id": "march",
+      "months": [
+        3,
+        4
       ],
+      "when_ar": "مارس وأبريل",
+      "title_ar": "نتائج التقديم العادي، ثم قرارك",
+      "action_ar": "قارن العروض وقرّر قبل موعد الرد، واطلب خطاب القبول الرسمي: تحتاجه للابتعاث.",
       "facts": [
         {
           "kind": "official",
@@ -210,15 +195,15 @@
       ]
     },
     {
-      "id": "after-graduation",
-      "grade": "after",
-      "when_ar": "بعد التخرج من الثانوية",
-      "example_ar": "صيف 2028",
-      "title_ar": "الجامعات السعودية، وتجهيز السفر",
-      "actions_ar": [
-        "إن كنت تقدّم في السعودية: قدّم عبر المنصة الوطنية للقبول الموحد، وأكّد قبولك بعد إعلان نتائج الفرز.",
-        "إن كنت ستدرس في الخارج: جهّز التأشيرة والسكن حسب تعليمات جامعتك."
+      "id": "after",
+      "months": [
+        5,
+        6,
+        7
       ],
+      "when_ar": "بعد التخرج",
+      "title_ar": "الجامعات السعودية، وتجهيز السفر",
+      "action_ar": "إن كنت تقدّم في السعودية: قدّم عبر القبول الموحد، وأكّد قبولك بعد نتائج الفرز.",
       "facts": [
         {
           "kind": "official",
@@ -235,20 +220,11 @@
     }
   ],
   "scholarship": {
-    "title_ar": "والابتعاث؟ موعده يُعلن كل سنة، وليس ثابتًا",
+    "title_ar": "والابتعاث؟ لا يتبع هذه الأشهر",
     "rule_ar": "في مساري الرواد وإمداد تحتاج قبولًا «نهائيًا غير مشروط» من جامعة في قائمة المسار قبل أن تقدّم، إلا في حالتين محددتين (لغة الدولة، والسنة التحضيرية).",
     "rule_source": "https://sites.moe.gov.sa/scholarship-program/paths/path-arruaad/info-path_terms/",
-    "windows": [
-      {
-        "text_ar": "للسنة الأكاديمية 2023–2024: من 4 ديسمبر 2022 إلى 5 مايو 2023.",
-        "source_url": "https://www.moe.gov.sa/ar/mediacenter/MOEnews/Pages/King-Scholarship-Program.aspx",
-        "read_on": "2026-10-12"
-      }
-    ],
-    "conflict_ar": "إذا أُغلقت نافذة الابتعاث قبل أن تصلك نتائج جامعاتك، فلن يكون معك قبول تقدّم به فيها. البرنامج يسمح للطالب الدارس على حسابه الخاص بالتقديم، أي يمكنك التقديم في نافذة لاحقة، لكن المصادر الرسمية لا تذكر هل تُغطّى الفترة التي تسبق الترشيح. اسأل البرنامج قبل أن تقرر.",
+    "conflict_ar": "لن يكون معك قبول تقدّم به في تلك المرة. البرنامج يسمح للطالب الدارس على حسابه الخاص بالتقديم، أي يمكنك التقديم حين يُفتح مرة أخرى، لكن المصادر الرسمية لا تذكر هل تُغطّى الفترة التي تسبق الترشيح. اسأل البرنامج قبل أن تقرر.",
     "conflict_source": "https://sites.moe.gov.sa/scholarship-program/faqs/question-31/",
-    "results_ar": "موعد نتائج الترشيح «يتم الإعلان عنه» من خلال صفحة البرنامج وحساباته الرسمية.",
-    "results_source": "https://sites.moe.gov.sa/scholarship-program/faqs/",
     "read_on": "2026-10-12"
   }
 }
