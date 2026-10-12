@@ -3,18 +3,15 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-11, after the UX redesign):**
-> Done today, late: **UX redesign (decision 035)**, on branch `claude/loving-hopper-sai8de` (not merged to `main`, so not live yet):
-> - one design system (tokens, components, contrast tests)
-> - homepage: grades + search, «مفتوح للتقديم الآن», compact programs
-> - explorer: filter tags, rank/deadline labels, back to results; also fixed Arabic suggestions that never filtered
-> - university pages: «باختصار» first
-> - «قائمتي» on the device
-> - program and grade pages
-> - 216 tests; axe clean on 14 routes at 320/1280px in both themes
-> Audit and research: `docs/research/ux-redesign-2026-10.md`.
-> Then: preparatory year added as the second accepted kind of conditional offer; new logo (decision 036, the ض mark) and the owner's X link in the footer.
-> 1. **Owner reviews the branch** (screenshots in the session, or run it locally), then merges to `main` to go live.
+> **Next session (as of 2026-10-12):**
+> Live on `main`: the UX redesign (decision 035, PR #1). Audit and research: `docs/research/ux-redesign-2026-10.md`.
+> On branch `claude/loving-hopper-sai8de`, **not merged yet**:
+> - the preparatory year as the second accepted kind of conditional offer
+> - the new logo (decision 036, the ض mark)
+> - the owner's X icon in the footer
+> - a simpler footer (no link list)
+> - the share image without «بدون تسجيل»
+> 1. **Owner merges the branch** (PR from `claude/loving-hopper-sai8de` into `main`), then checks the live site. Next session: start new work from the updated `main`.
 > 2. **Usability test with 3–5 students** (Stage 1e step 5). The redesign is based on expert guidance, not on watching students yet.
 > 2b. **Conditions page, still to check by the owner** (`docs/research/custodian-scholarship-2026-27.md` §3 «To check»): the age rule and «ثلاثة قبولات». The preparatory-year case was fixed on 2026-10-11.
 > 2c. **Next guide edition** (expected before إمداد opens): re-run `scripts/extract_universities.py`; universities may be added or removed, ranks and possibly the الرواد list may change.
