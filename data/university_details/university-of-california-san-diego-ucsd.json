@@ -33,23 +33,35 @@
   },
   "dates": [
     {
-      "label_ar": "يفتح طلب UC لخريف 2027 (يمكنك البدء بتعبئته)",
+      "event_ar": "فتح الطلب، ويمكنك البدء بتعبئته",
+      "round_ar": "UC Application",
+      "cycle_ar": "خريف 2027",
       "date": "2026-08-01",
+      "year_stated": true,
       "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
     },
     {
-      "label_ar": "تبدأ فترة إرسال طلب UC لخريف 2027",
+      "event_ar": "بدء فترة إرسال الطلب",
+      "round_ar": "UC Application",
+      "cycle_ar": "خريف 2027",
       "date": "2026-10-01",
+      "year_stated": true,
       "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
     },
     {
-      "label_ar": "آخر موعد لإرسال طلب UC لخريف 2027 (لا يوجد قبول مبكر)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UC Application",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-30",
+      "year_stated": true,
+      "note_ar": "لا يوجد قبول مبكر",
       "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
     },
     {
-      "label_ar": "آخر موعد لقبول عرض القبول (SIR) لخريف 2027",
+      "event_ar": "آخر موعد لقبول عرض القبول (SIR)",
+      "cycle_ar": "خريف 2027",
       "date": "2027-05-01",
+      "year_stated": true,
       "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
     }
   ],

@@ -14,12 +14,13 @@ from urllib.parse import parse_qsl, urlencode
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 
+# In the order a high-school student needs them: the doctorate-only track comes last (decision 038).
 TRACKS = {
     "arruaad": {"name_ar": "مسار الرواد", "short_ar": "الرواد"},
     "emdad": {"name_ar": "مسار إمداد", "short_ar": "إمداد"},
-    "rnd": {"name_ar": "مسار البحث والتطوير", "short_ar": "البحث والتطوير"},
     # واعد has no ranked lists: each program names its own institution (data/waaid_programs.json).
     "waaid": {"name_ar": "مسار واعد", "short_ar": "واعد"},
+    "rnd": {"name_ar": "مسار البحث والتطوير", "short_ar": "البحث والتطوير"},
 }
 SAT_POLICY_AR = {
     "required": "مطلوب",
@@ -28,7 +29,9 @@ SAT_POLICY_AR = {
     "not_applicable": "لا ينطبق",
     "unknown": "غير منشور",
 }
-LANGUAGE_AR = {"english": "دول ناطقة بالإنجليزية", "other": "دول غير ناطقة بالإنجليزية"}
+# The country's official language, used by the scholarship's rule on conditional offers. It is not
+# the language a program is taught in: many universities in other countries teach in English.
+LANGUAGE_AR = {"english": "الإنجليزية", "other": "لغة أخرى"}
 
 # The search parameters a results link may carry back from a university page (decision 035).
 SEARCH_PARAMS = ("q", "track", "field", "country", "lang")
@@ -296,7 +299,7 @@ class Explorer:
             applied.append({"label_ar": "الدولة", "value_ar": self.countries[params["country"]]["name_ar"],
                             "href": without("country")})
         if "lang" in params:
-            applied.append({"label_ar": "الدول", "value_ar": LANGUAGE_AR[params["lang"]], "href": without("lang")})
+            applied.append({"label_ar": "لغة الدولة", "value_ar": LANGUAGE_AR[params["lang"]], "href": without("lang")})
 
         parts = []
         for s in result["sections"]:
@@ -363,11 +366,62 @@ class Explorer:
     # ---------- one university ----------
 
     def next_deadline(self, uid, today=None):
-        """The next upcoming dated item for a university (from its researched requirements), or None."""
+        """The university's next upcoming dated item for the current cycle, or None.
+        Dates kept only for reference (a past cycle) never count."""
         from datetime import date as _date
         today = today or _date.today().isoformat()
-        dates = [d for d in (self.details.get(uid) or {}).get("dates") or [] if d.get("date") and d["date"] >= today]
+        dates = [d for d in (self.details.get(uid) or {}).get("dates") or []
+                 if d.get("date") and d["date"] >= today and not d.get("reference_only")]
         return min(dates, key=lambda d: d["date"]) if dates else None
+
+    def key_facts(self, uid, today=None):
+        """What a result row shows at a glance (decision 038). Unknowns are said, never left blank.
+
+        Returns {"researched": bool, "sat_ar", "ielts_ar", "next", "admissions_url"}; without
+        researched requirements, only researched=False.
+        """
+        d = self.details.get(uid)
+        if not d:
+            return {"researched": False}
+        sat = (d.get("sat_act") or {}).get("policy") or "unknown"
+        ielts = (d.get("english") or {}).get("ielts") or {}
+        if ielts.get("min") is not None:
+            ielts_ar = str(ielts["min"])
+        elif ielts.get("note_ar"):
+            ielts_ar = "لا حد أدنى منشور"
+        else:
+            ielts_ar = "لم نتحقق منه"
+        return {"researched": True, "sat_ar": SAT_POLICY_AR.get(sat, SAT_POLICY_AR["unknown"]),
+                "ielts_ar": ielts_ar, "next": self.next_deadline(uid, today),
+                "admissions_url": d.get("admissions_url")}
+
+    def sat_summary(self, track="arruaad"):
+        """How many researched universities of a track require SAT/ACT, make it optional, etc.
+
+        Returns {"total": n, "researched": n, "counts": {policy: n}} for the grade pages' test table
+        (decision 038). Computed from the requirement files, so it can't drift from them.
+        """
+        on_track = [uid for uid, u in self.universities.items() if any(l["track"] == track for l in u["listings"])]
+        researched = [uid for uid in on_track if uid in self.details]
+        counts = {}
+        for uid in researched:
+            policy = (self.details[uid].get("sat_act") or {}).get("policy") or "unknown"
+            counts[policy] = counts.get(policy, 0) + 1
+        return {"total": len(on_track), "researched": len(researched), "counts": counts}
+
+    def upcoming_deadlines(self, limit=6, today=None):
+        """The next application deadlines across researched universities, soonest first (grade 12 page).
+        Only «آخر موعد للتقديم» items of the current cycle."""
+        from datetime import date as _date
+        today = today or _date.today().isoformat()
+        rows = []
+        for uid, d in self.details.items():
+            for x in d.get("dates") or []:
+                if (x.get("date") and x["date"] >= today and not x.get("reference_only")
+                        and x["event_ar"] == "آخر موعد للتقديم"):
+                    rows.append({**x, "university": self.universities[uid]})
+        rows.sort(key=lambda r: (r["date"], r["university"]["name_en"]))
+        return rows[:limit]
 
     def profile(self, uid):
         u = self.universities.get(uid)

@@ -33,13 +33,19 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد Restrictive Early Action (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Restrictive Early Action",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-01",
+      "year_stated": false,
       "source_url": "https://admission.stanford.edu/apply/first-year/"
     },
     {
-      "label_ar": "آخر موعد Regular Decision (الصفحة تذكر 5 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-05",
+      "year_stated": false,
       "source_url": "https://admission.stanford.edu/apply/first-year/"
     }
   ],

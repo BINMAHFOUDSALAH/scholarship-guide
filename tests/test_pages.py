@@ -6,8 +6,10 @@ import pytest
 from fastapi.testclient import TestClient
 
 import app.main as main
+from app.content import load_page
 
 client = TestClient(main.app)
+ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
 def test_home_loads_in_arabic_rtl():
@@ -152,7 +154,7 @@ def test_share_preview_and_description_tags():
     assert '<meta name="description"' in html
     assert f'<link rel="canonical" href="{base}/grades/grade-10">' in html
     assert f'<meta property="og:image" content="{base}/static/img/og-image.png">' in html
-    assert '<meta property="og:title" content="أول ثانوي | واضح">' in html
+    assert '<meta property="og:title" content="أول ثانوي: اكتشف وابنِ أساسك | واضح">' in html
     assert client.get("/static/img/og-image.png").status_code == 200
 
 
@@ -261,10 +263,66 @@ def test_news_page_lists_everything():
         assert item["title_ar"] in html
 
 
-def test_grade_11_lists_the_tests():
-    html = client.get("/grades/grade-11").text
-    for test in main.tests:
-        assert test["name_ar"] in html
+# ---------- grade pages (decision 038) ----------
+
+GRADES = ("grade-10", "grade-11", "grade-12")
+
+
+@pytest.mark.parametrize("slug", GRADES)
+def test_grade_pages_share_one_structure(slug):
+    """This week → what matters → priorities → (tools) → resources → next step on واضح → sources."""
+    page = load_page("grades", slug)
+    assert page["status"] == "sourced" and page["sources"] and page["stage_ar"]
+    assert page["this_week"]["text_ar"] and page["next_feature"]["href"].startswith("/")
+    assert 1 <= len(page["resources"]) <= 4
+    assert [c["title"] for c in page["contents"]][:1] == ["ما يهم هذه السنة"]
+    priorities = page["html"].split('id="أولوياتك"')[1].split("<ol>")[1].split("</ol>")[0]
+    assert 3 <= priorities.count("<li>") <= 4
+    html = client.get(f"/grades/{slug}").text
+    order = ['aria-label="هذا الأسبوع"', 'class="prose"', 'id="resources-title"', 'id="next-title"',
+             'class="source-stamp"']
+    positions = [html.index(marker) for marker in order]
+    assert positions == sorted(positions), slug
+
+
+@pytest.mark.parametrize("slug", GRADES)
+def test_every_external_link_on_a_grade_page_is_a_listed_source_or_resource(slug):
+    """Nothing on a grade page links outside without being declared (and so reviewed) in its frontmatter."""
+    page = load_page("grades", slug)
+    declared = {s["url"] for s in page["sources"]} | {r["url"] for r in page["resources"]}
+    for href in re.findall(r'href="(https?://[^"]+)"', page["html"]):
+        assert href in declared, (slug, href)
+
+
+def test_test_needs_rows_are_sourced_and_dated():
+    for row in main.test_needs["rows"]:
+        assert row["who_ar"] and ISO_DATE.match(row["read_on"]), row["id"]
+        assert row["source"]["url"].startswith(("https://", "/")), row["id"]
+        assert row.get("computed") or row["need_ar"], row["id"]
+
+
+def test_test_table_counts_sat_policies_from_the_university_files():
+    s = main.explorer.sat_summary()
+    assert sum(s["counts"].values()) == s["researched"] <= s["total"]
+    for slug in ("grade-11", "grade-12"):
+        html = client.get(f"/grades/{slug}").text
+        assert 'id="tests-title"' in html
+        assert f"مطلوب في {s['counts'].get('required', 0)} من {s['researched']}" in html
+        # The scholarship row says plainly that Qudurat/Tahsili aren't required for it.
+        assert "دون اشتراط درجة اختبار قدرات وتحصيلي" in html
+    assert 'id="tests-title"' not in client.get("/grades/grade-10").text  # no test pressure in grade 10
+
+
+def test_grade_12_lists_the_next_university_deadlines_from_the_data():
+    html = client.get("/grades/grade-12").text
+    section = html.split('id="deadlines-title"')[1].split("</section>")[0]
+    upcoming = main.explorer.upcoming_deadlines()
+    if upcoming:
+        assert f'/universities/{upcoming[0]["university"]["id"]}#dates' in section
+    assert "وليست مواعيد الابتعاث" in section
+    # The three kinds of application, in order, and the confirmation step.
+    assert html.index("الجامعات في الخارج") < html.index("الجامعات السعودية") < html.index("الابتعاث: بعد أن يصلك القبول")
+    assert "عدم التأكيد يسقط حق الطالب في الترشيح" in html
 
 
 def test_unknown_page_shows_arabic_404():

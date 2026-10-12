@@ -29,13 +29,19 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد لتقديم Early Decision وEarly Action لدورة خريف 2027",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision / Early Action",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-01",
+      "year_stated": true,
       "source_url": "https://admissions.umich.edu/apply/first-year-applicants/requirements-deadlines"
     },
     {
-      "label_ar": "آخر موعد لتقديم Regular Decision لدورة خريف 2027",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-02-01",
+      "year_stated": true,
       "source_url": "https://admissions.umich.edu/apply/first-year-applicants/requirements-deadlines"
     }
   ],

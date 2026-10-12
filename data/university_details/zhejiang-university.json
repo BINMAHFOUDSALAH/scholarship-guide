@@ -33,23 +33,37 @@
   },
   "dates": [
     {
-      "label_ar": "موعد التقديم لدفعة 2027",
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "دفعة 2027",
       "date": null,
+      "year_stated": true,
       "source_url": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm"
     },
     {
-      "label_ar": "دفعة 2026 (للاسترشاد): فتح التقديم",
+      "event_ar": "فتح التقديم",
+      "cycle_ar": "دفعة 2026",
       "date": "2025-12-01",
+      "year_stated": true,
+      "reference_only": true,
       "source_url": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm"
     },
     {
-      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد لمعظم البرامج الصينية (بتوقيت بكين)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "معظم البرامج الصينية",
+      "cycle_ar": "دفعة 2026",
       "date": "2026-02-28",
+      "year_stated": true,
+      "note_ar": "بتوقيت بكين",
+      "reference_only": true,
       "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/3300a725-ca29-443b-845f-8c1a3c15c929.pdf"
     },
     {
-      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد لبرامج الإنجليزية",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "برامج الإنجليزية",
+      "cycle_ar": "دفعة 2026",
       "date": "2026-05-31",
+      "year_stated": true,
+      "reference_only": true,
       "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf"
     }
   ],

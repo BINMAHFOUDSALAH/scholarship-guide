@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 
 import app.main as main
 from app.content import SLUG_PATTERN
-from app.universities import SAT_POLICY_AR, normalize
+from app.universities import SAT_POLICY_AR, TRACKS, normalize
 
 client = TestClient(main.app)
 ex = main.explorer
@@ -100,6 +100,11 @@ def test_requirement_files_follow_the_schema(path):
     for date in d.get("dates") or []:
         sourced(date)
         assert date["date"] is None or ISO_DATE.match(date["date"]), (path.stem, date)
+        # Structured, not free text (decision 038): what happens, for which intake, and whether
+        # the official page states the year.
+        assert date["event_ar"] and date["cycle_ar"], (path.stem, date)
+        assert isinstance(date["year_stated"], bool), (path.stem, date)
+        assert "label_ar" not in date, (path.stem, date)
     sourced(d.get("acceptance_rate"))
     assert d.get("admissions_url") is None or d["admissions_url"].startswith("https://")
 
@@ -257,7 +262,7 @@ def test_arabic_counting():
 def test_applied_filters_each_have_a_remove_link():
     view = ex.describe(ex.search(q="الذكاء الاصطناعي", track="emdad", field="ict", country="GB", language="english"))
     labels = [a["label_ar"] for a in view["applied"]]
-    assert labels == ["التخصص", "المسار", "المجال", "الدولة", "الدول"]
+    assert labels == ["التخصص", "المسار", "المجال", "الدولة", "لغة الدولة"]
     track = view["applied"][1]
     assert "track=" not in track["href"] and "field=" not in track["href"]  # the field goes with its track
     assert "country=GB" in track["href"]
@@ -335,11 +340,31 @@ def test_university_page_answers_first():
     html = client.get("/universities/stanford-university").text
     summary = html.split('id="summary-title"')[1].split("</section>")[0]
     assert "قوائم الابتعاث" in summary and "التخصصات" in summary
-    assert "أقرب موعد تقديم في الجامعة" in summary
+    assert "أقرب موعد في الجامعة" in summary and "SAT / ACT" in summary and "IELTS" in summary
     assert "لا يعني قبولك فيها" in summary  # being on a list is not admission
     assert "/programs/custodian-scholarship#admission-vs-scholarship" in summary
     assert html.index('id="summary-title"') < html.index('id="lists-title"') < html.index('id="req-title"')
-    assert 'id="dates-title"' in html and "وليست مواعيد الابتعاث" in html
+    assert 'id="dates-title"' in html
+
+
+def test_scholarship_dates_are_separate_from_university_dates():
+    """Decision 038: the scholarship's window and the university's dates, as two labelled blocks."""
+    html = client.get("/universities/stanford-university").text
+    dates = html.split('id="dates-title"')[1].split("</section>")[0]
+    scholarship = dates.index("موعد التقديم على الابتعاث")
+    university = dates.index("مواعيد التقديم على الجامعة")
+    assert scholarship < university
+    assert "مسار الرواد" in dates[scholarship:university]  # Stanford is in الرواد
+    assert "بعد</strong> أن يصلك قبول الجامعة" in dates
+    # University dates: event, round and intake in words; the year flag when the page omits the year.
+    assert "Restrictive Early Action" in dates and "لخريف 2027" in dates
+    assert "السنة غير مذكورة في الصفحة" in dates
+
+
+def test_reference_only_dates_never_count_as_the_next_deadline():
+    for uid, d in ex.details.items():
+        nxt = ex.next_deadline(uid, today="2000-01-01")
+        assert nxt is None or not nxt.get("reference_only"), uid
 
 
 def test_doctorate_lists_are_folded_unless_they_are_all_there_is():
@@ -375,3 +400,43 @@ def test_my_list_rows_are_capped_at_100():
     ids = ",".join(sorted(ex.universities)[:150])
     html = client.get(f"/my-list?partial=1&ids={ids}").text
     assert len(re.findall(r"data-mylist-item=", html)) == 100
+
+
+# ---------- at a glance (decision 038) ----------
+
+def test_tracks_list_puts_the_doctorate_track_last():
+    assert list(TRACKS) == ["arruaad", "emdad", "waaid", "rnd"]
+    html = client.get("/universities").text
+    select = html.split('id="track"')[1].split("</select>")[0]
+    assert select.index('value="waaid"') < select.index('value="rnd"')
+
+
+def test_language_filter_says_it_is_the_country_language_not_the_teaching_language():
+    html = client.get("/universities").text
+    assert "لغة الدولة الرسمية" in html and "وليست لغة الدراسة" in html
+    assert 'aria-describedby="lang-hint"' in html
+    tsinghua = client.get("/universities?q=tsinghua").text
+    assert "لغة الدولة: الصينية" in tsinghua
+
+
+def test_results_show_key_facts_or_say_they_are_not_collected():
+    stanford = ex.key_facts("stanford-university", today="2000-01-01")
+    assert stanford["researched"] and stanford["sat_ar"] == "مطلوب"
+    assert stanford["admissions_url"].startswith("https://")
+    unknown = next(uid for uid in ex.universities if uid not in ex.details)
+    assert ex.key_facts(unknown) == {"researched": False}
+    html = client.get("/universities?track=arruaad").text
+    assert "صفحة القبول الرسمية" in html
+    emdad = client.get("/universities?track=emdad&field=ict").text
+    assert "لم نجمعها بعد" in emdad
+
+
+def test_explorer_says_being_on_a_list_is_not_admission():
+    html = client.get("/universities").text
+    header = html.split('class="explorer-header"')[1].split("</header>")[0]
+    assert "لا يعني قبولك فيها" in header and "#admission-vs-scholarship" in header
+
+
+def test_saved_list_rows_show_key_facts():
+    html = client.get("/my-list?partial=1&ids=stanford-university").text
+    assert "SAT/ACT" in html and "صفحة القبول الرسمية" in html

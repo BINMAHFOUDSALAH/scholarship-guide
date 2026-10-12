@@ -33,18 +33,25 @@
   },
   "dates": [
     {
-      "label_ar": "يفتح طلب UW لقبول الخريف (Autumn) 2027 (الصفحة تذكر 15 أغسطس دون ذكر السنة)",
+      "event_ar": "فتح التقديم",
+      "cycle_ar": "خريف 2027",
       "date": "2026-08-15",
+      "year_stated": false,
       "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/"
     },
     {
-      "label_ar": "آخر موعد لتقديم طلب UW لقبول الخريف (Autumn) 2027 (الصفحة تذكر 15 نوفمبر دون ذكر السنة)",
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-15",
+      "year_stated": false,
       "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/"
     },
     {
-      "label_ar": "تبدأ نتائج القرارات (تُعلن بين 1 و15 مارس)",
+      "event_ar": "بدء إعلان القرارات",
+      "cycle_ar": "خريف 2027",
       "date": "2027-03-01",
+      "year_stated": true,
+      "note_ar": "تُعلن بين 1 و15 مارس",
       "source_url": "https://admit.washington.edu/apply/first-year/how-to-apply/"
     }
   ],

@@ -64,6 +64,13 @@ The owner pasted the conditions page text on 2026-10-11. Two points differ from 
 - **China (info-4):** per the paste, the 85% / IELTS 4.5 rule applies only to offers conditional on language study (not direct admission), with master's thresholds (2.75/4, 3.75/5 or 80/100, IELTS 4.5). Applied on the site.
 - **Number of admissions:** the paste says «ثلاثة قبولات كحد أقصى» (info-2); earlier we found no "up to 3". The site keeps "several applications, one accepted" until checked.
 
+**Resolved by reading the [conditions page](https://sites.moe.gov.sa/scholarship-program/conditions/) directly (Claude, 2026-10-12, `curl`):**
+- **Number of admissions: confirmed.** «سياسات التقديم والابتعاث» item 3: «يجوز للمتقدم تقديم ثلاث قبولات كحد أقصى، ويتم اختيار طلب واحد وفق نتائج المفاضلة ووفق المقاعد المتاحة على المسارات». Applied to `paths.json` (`one-application`) and the program page.
+- **Age: the official page conflicts with itself.**
+  - General condition 9: «ألا يتجاوز عمر المتقدم لمرحلة البكالوريوس 30 عاماً، ويستثنى من ذلك المتقدمون في مسار الرواد».
+  - The FAQ on the same page: «لا يشترط عمر محدد للتقديم على المسارات».
+  - Per the rules, no single answer is published. It doesn't affect high-school graduates.
+
 ### Country level (official country pages, 2026-10-11)
 Official language **not English** per the program's [country pages](https://sites.moe.gov.sa/scholarship-program/countries/): China, Japan, South Korea, France, Germany, Italy, Spain, Netherlands, Switzerland. English: USA, UK, Canada, Australia, Singapore, Malaysia, India.
 - Extra conditions: China (age ≤ 30, GPA ≥ 85%, IELTS ≥ 4.5 for undergraduate) and Germany (German A2), from [info-4](https://sites.moe.gov.sa/scholarship-program/conditions/info-4/).

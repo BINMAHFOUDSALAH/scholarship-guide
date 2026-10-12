@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% import "components.html" as c %}
+{% import "partials/uni_macros.html" as um with context %}
+
+{#
+  One grade (decision 038). The same order on every grade, so students know where things are:
+  this week's one action → what matters this year → priorities → (a tool) → selected resources →
+  the next step on واضح → official sources. The text is in content/grades/<slug>.md; tables come
+  from data/ (never retyped in Markdown).
+#}
+
+{% block title %}{{ page.title }}: {{ page.stage_ar }} | {{ site.name }}{% endblock %}
+{% block description %}{{ page.description }}{% endblock %}
+
+{% block content %}
+<article class="measure grade-page">
+  <nav class="grade-switch" aria-label="الصفوف">
+    {% for g in grades %}<a href="{{ url_for('grade_page', slug=g.slug) }}"{% if g.slug == page.slug %} aria-current="page"{% endif %}>{{ g.label_ar }}</a>{% endfor %}
+  </nav>
+
+  <header class="page-header">
+    <p class="grade-stage">{{ page.stage_ar }}</p>
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ page.description }}</p>
+  </header>
+
+  {{ c.next_step(page.this_week.text_ar, page.this_week.link_label_ar, page.this_week.href, label="هذا الأسبوع") }}
+
+  <nav class="page-contents" aria-label="في هذه الصفحة">
+    <p class="page-contents-title">في هذه الصفحة</p>
+    <ul>
+      {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
+      {% if "deadlines" in page.tools %}<li><a href="#deadlines-title">أقرب مواعيد الجامعات</a></li>{% endif %}
+      {% if "tests" in page.tools %}<li><a href="#tests-title">الاختبارات: من يطلب ماذا؟</a></li>{% endif %}
+      <li><a href="#resources-title">مصادر مختارة</a></li>
+    </ul>
+  </nav>
+
+  <div class="prose">
+    {{ page.html | safe }}
+  </div>
+
+  {% if "deadlines" in page.tools %}
+  {# The next university deadlines, straight from the researched requirement files. #}
+  <section class="grade-tool" aria-labelledby="deadlines-title">
+    <h2 id="deadlines-title">أقرب مواعيد الجامعات</h2>
+    <p class="result-note">آخر مواعيد التقديم القادمة في الجامعات التي جمعنا مواعيدها (جامعات مسار الرواد)، من مواقعها الرسمية. هذه مواعيد الجامعات، وليست مواعيد الابتعاث.</p>
+    {% if deadlines %}
+    <ul class="rows uni-dates">
+      {% for x in deadlines %}
+      <li>
+        <span class="uni-date">{{ x.date | arabic_date }}</span>
+        {% if not x.year_stated %}<span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}
+        <span class="uni-date-label"><a href="{{ url_for('university_page', uid=x.university.id) }}#dates">{{ x.university.name_ar or x.university.name_en }}</a> · {{ um.date_short(x) }}</span>
+        <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="result-empty">لا توجد مواعيد قادمة منشورة في الجامعات التي جمعناها الآن.</p>
+    {% endif %}
+    <p class="result-note"><a href="{{ url_for('universities_page') }}?track=arruaad">مواعيد كل جامعة في صفحتها ←</a></p>
+  </section>
+  {% endif %}
+
+  {% if "tests" in page.tools %}{% include "partials/test_needs.html" %}{% endif %}
+
+  <section class="grade-resources" aria-labelledby="resources-title">
+    <h2 id="resources-title">مصادر مختارة</h2>
+    <ul class="rows resource-list">
+      {% for r in page.resources %}
+      <li>
+        {% if r.url.startswith("/") %}<a href="{{ r.url }}">{{ r.title_ar }}</a>{% else %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title_ar }} ↗</a>{% endif %}
+        <span class="resource-why">{{ r.why_ar }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="grade-next" aria-labelledby="next-title">
+    <h2 id="next-title">الخطوة التالية في واضح</h2>
+    <p>{{ page.next_feature.text_ar }}</p>
+    <p><a class="btn btn--primary" href="{{ page.next_feature.href }}">{{ page.next_feature.label_ar }}</a></p>
+  </section>
+
+  {{ c.source_stamp(page.sources) }}
+
+  {% set ns = namespace(next=None) %}
+  {% for g in grades %}{% if loop.previtem is defined and loop.previtem.slug == page.slug %}{% set ns.next = g %}{% endif %}{% endfor %}
+  {% if ns.next %}<p class="next-grade"><a href="{{ url_for('grade_page', slug=ns.next.slug) }}">ماذا ينتظرك في {{ ns.next.label_ar }}؟ ←</a></p>{% endif %}
+</article>
+{% endblock %}

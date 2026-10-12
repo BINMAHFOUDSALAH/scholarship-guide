@@ -33,13 +33,19 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد Early Action وEarly Decision I لدورة 2026–2027 (الصفحة الرسمية تذكر 2 نوفمبر 2026)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action / Early Decision I",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-02",
+      "year_stated": true,
       "source_url": "https://collegeadmissions.uchicago.edu/apply/application/"
     },
     {
-      "label_ar": "آخر موعد Regular Decision وEarly Decision II لدورة 2026–2027 (الصفحة الرسمية تذكر 4 يناير 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision / Early Decision II",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-04",
+      "year_stated": true,
       "source_url": "https://collegeadmissions.uchicago.edu/apply/application/"
     }
   ],

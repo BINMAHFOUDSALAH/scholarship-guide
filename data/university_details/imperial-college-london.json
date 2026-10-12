@@ -33,8 +33,12 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد UCAS لمعظم التخصصات لدورة 2027 (equal consideration، 6 مساءً بتوقيت المملكة المتحدة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
       "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
     }
   ],

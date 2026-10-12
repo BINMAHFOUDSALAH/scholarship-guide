@@ -58,9 +58,9 @@
 {% endmacro %}
 
 {# The one place lime is used: what the student should do next. #}
-{% macro next_step(text, link_text=None, link_url=None) %}
-<aside class="next-step" aria-label="الخطوة التالية">
-  <p class="next-step-label">الخطوة التالية</p>
+{% macro next_step(text, link_text=None, link_url=None, label="الخطوة التالية") %}
+<aside class="next-step" aria-label="{{ label }}">
+  <p class="next-step-label">{{ label }}</p>
   <p class="next-step-text">{{ text }}</p>
   {% if link_url %}<a class="next-step-link" href="{{ link_url }}">{{ link_text }} ←</a>{% endif %}
 </aside>

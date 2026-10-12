@@ -381,3 +381,47 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 **Limits:**
 - Haiku is weaker at judgment than the main model, so a `reviewer` pass is a second opinion, not proof.
 - Official Saudi sites are blocked from the cloud environment (they work from the owner's laptop).
+
+## 038 — Grade pages with one structure and official sources; the finder shows what's known at a glance
+**Date:** 2026-10-12 · **Research:** [docs/research/grade-pages-2026-10.md](research/grade-pages-2026-10.md)
+**Context:**
+- The three grade pages were public drafts with no sources. Their advice was generic and sometimes too broad, e.g. «أغلب مسارات الدراسة في الخارج تحتاج… آيلتس». Stanford and Harvard ask for no English test, and the King scholarship needs no Qudurat or Tahsili.
+- The finder showed rankings, but no requirements.
+- Its «لغة الدولة» filter could be read as the language of teaching.
+- University dates were free-text labels with notes to ourselves inside them.
+- The scholarship's own deadline wasn't on the university page.
+**Decision:**
+- **Grade pages:**
+  - One template (`grade.html`) and one order:
+    1. this week's single action
+    2. what matters this year
+    3. 3–4 priorities
+    4. a data-driven tool
+    5. up to 4 selected resources
+    6. one next step on واضح
+    7. official sources
+  - Each grade has a distinct job:
+    - أول ثانوي «اكتشف وابنِ أساسك»: the five tracks, the counsellor, GPA, an English habit; no test pressure.
+    - ثاني ثانوي «ابحث وجهّز»: majors in the finder, a first shortlist, which tests, a plan.
+    - ثالث ثانوي «قدّم وتابع»: three kinds of application in order, the confirmation steps, a checklist.
+  - Every fact links to an official source read on 2026-10-12. Aramco's was read on 2026-10-11 and is labelled as the previous cycle.
+  - Our advice is labelled «نصيحتنا».
+  - Status `sourced`, `owner_reviewed: false`.
+- **«الاختبارات: من يطلب ماذا؟»** (`data/test_needs.json`): one sourced row per destination. The الرواد row is computed from the requirement files (9 require SAT/ACT, 12 optional, 4 don't consider it, 5 unpublished), so it can't drift.
+- **Grade 12** lists the next university deadlines straight from the data.
+- **Finder:**
+  - A one-line scope note («وجود الجامعة في القائمة لا يعني قبولك فيها»).
+  - Tracks in the order students need them, doctorate last.
+  - The language filter renamed «لغة الدولة الرسمية», with a visible hint that it isn't the language of teaching. The row tag says «لغة الدولة: الصينية».
+  - **At a glance:** each row shows SAT/ACT · IELTS · the next university date · the official admissions page, or «لم نجمعها بعد». The same line appears in «قائمتي».
+- **Dates are structured:** `event_ar`, `round_ar`, `cycle_ar`, `year_stated`, `note_ar`, `reference_only`, migrated by hand for all 75. The university page shows «السنة غير مذكورة في الصفحة» when the year was inferred, and «تحققنا في» with the check date.
+- **University page «المواعيد»:** two blocks:
+  - the scholarship's window, with its status and source, and «apply after the admission»
+  - the university's own dates
+- Found on the way: «ثلاث قبولات كحد أقصى» is on the official conditions page, now in `paths.json`. The age rule contradicts itself on that page, so it isn't published.
+**Alternatives:**
+- **An application tracker or dashboard in «قائمتي» (statuses per university).** Rejected for now: it's speculative until students say they'd track in واضح rather than in their own notes. The static checklist and the at-a-glance facts cover the need. It's a question for the usability test.
+- **A bachelor's-only filter:** only 5 listings are masters-only, and they're already tagged.
+- **Removing the language filter:** rewording keeps its real use (the scholarship's rule on non-English-speaking countries) without the confusion.
+- **A large resource library per grade:** rejected (CLAUDE.md: choose by need, verify).
+**Why:** students need to know which tests *their* targets ask for, and in which order to apply. Both answers now come from official sources and our own data, not general advice.

@@ -45,22 +45,26 @@
           {% if not p.by_track.arruaad and not p.by_track.emdad %}في مسار البحث والتطوير فقط (للدكتوراه)، <a href="#lists">التفاصيل أدناه</a>.{% endif %}
         </dd>
       </div>
-      {% if next %}
       <div class="summary-row">
-        <dt>أقرب موعد تقديم في الجامعة</dt>
-        <dd><strong>{{ next.date | arabic_date }}</strong> · {{ next.label_ar }} <a class="src" href="{{ next.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd>
+        <dt>أقرب موعد في الجامعة</dt>
+        <dd>{% if next %}<strong>{{ next.date | arabic_date }}</strong> · {{ um.date_words(next) }} <a class="src" href="{{ next.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% elif d %}لم يُنشر بعد لهذه الدورة{% else %}لم نجمعه بعد{% endif %}
+          · <a href="#dates">موعد الابتعاث منفصل</a></dd>
       </div>
-      {% endif %}
       {% if d and d.platform %}
       <div class="summary-row">
         <dt>منصة التقديم</dt>
         <dd>{{ d.platform.value_ar }}</dd>
       </div>
       {% endif %}
-      {% if d and d.sat_act %}
+      {% set k = explorer.key_facts(u.id) %}
+      {% if k.researched %}
       <div class="summary-row">
         <dt><span lang="en" dir="ltr">SAT / ACT</span></dt>
-        <dd>{{ sat_policy_ar.get(d.sat_act.policy, d.sat_act.policy) }}</dd>
+        <dd>{{ k.sat_ar }}</dd>
+      </div>
+      <div class="summary-row">
+        <dt><span lang="en" dir="ltr">IELTS</span></dt>
+        <dd>{{ k.ielts_ar }} · <a href="#requirements">التفاصيل</a></dd>
       </div>
       {% endif %}
     </dl>
@@ -88,7 +92,7 @@
     <ul>
       <li><a href="#lists">قوائم الابتعاث والتخصصات</a></li>
       <li><a href="#requirements">متطلبات القبول في الجامعة</a></li>
-      {% if p.dates %}<li><a href="#dates">مواعيد التقديم على الجامعة</a></li>{% endif %}
+      <li><a href="#dates">المواعيد: الابتعاث، ثم الجامعة</a></li>
     </ul>
   </nav>
 
@@ -214,23 +218,60 @@
     {% endif %}
   </section>
 
-  {% if p.dates %}
+  {#
+    Two kinds of dates that students mix up (decision 038): the scholarship's own window, and the
+    university's application dates. Same section, separate blocks, each with its own source.
+  #}
   <section class="uni-section" id="dates" aria-labelledby="dates-title">
-    <h2 id="dates-title">مواعيد التقديم على الجامعة</h2>
-    <p class="result-note">مواعيد الجامعة نفسها، وليست مواعيد الابتعاث. مواعيد الابتعاث في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>.</p>
-    <ul class="rows uni-dates">
-      {% for x in p.dates %}
-      {% set past = x.date and x.date < today %}
-      <li{% if past %} class="req-past"{% endif %}>
-        <span class="uni-date">{% if x.date %}{{ x.date | arabic_date }}{% else %}لم يُنشر بعد{% endif %}</span>
-        {% if past %}<span class="tag">انتهى</span>{% endif %}
-        <span class="uni-date-label">{{ x.label_ar }}</span>
-        <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
-      </li>
-      {% endfor %}
-    </ul>
+    <h2 id="dates-title">المواعيد</h2>
+
+    <div class="date-block">
+      <h3>موعد التقديم على الابتعاث</h3>
+      <p class="result-note">من شروط الابتعاث «أن يكون لدى المتقدم قبول من إحدى المؤسسات التعليمية المحددة»، فتقدّم على الابتعاث <strong>بعد</strong> أن يصلك قبول الجامعة. <a class="src" href="https://sites.moe.gov.sa/scholarship-program/conditions/" target="_blank" rel="noopener">المصدر ↗</a></p>
+      <ul class="rows uni-dates">
+        {# البحث والتطوير is for doctorates: shown only when it's the university's only track. #}
+        {% set hs_tracks = ("arruaad", "emdad") if (p.by_track.arruaad or p.by_track.emdad) else ("rnd",) %}
+        {% for tid in hs_tracks if p.by_track[tid] %}
+        {% set t = scholarship[tid] %}
+        {% set st = track_status(t) %}
+        <li>
+          <span class="uni-date-label">{{ t.name_ar }}{% if tid == "rnd" %} (للدكتوراه){% endif %}</span>
+          {% if st and (t.status_source or t.owner_confirmed) %}
+          <span>{{ c.status_tag(st, t.status_until) }}</span>
+          {% if t.status_source %}<a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}
+          {% else %}
+          <span class="uni-date-label">لم يُعلن موعده</span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="result-note">كل مواعيد الابتعاث والبرامج في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>.</p>
+    </div>
+
+    <div class="date-block">
+      <h3>مواعيد التقديم على الجامعة</h3>
+      {% if p.dates %}
+      <p class="result-note">مواعيد الجامعة نفسها، من موقعها الرسمي{% if d.checked %}، تحققنا منها في {{ d.checked | arabic_date }}{% endif %}. قد تختلف حسب التخصص، فتأكد من صفحة الجامعة.</p>
+      <ul class="rows uni-dates">
+        {% for x in p.dates %}
+        {% set past = x.date and x.date < today %}
+        <li{% if past or x.reference_only %} class="req-past"{% endif %}>
+          <span class="uni-date">{% if x.date %}{{ x.date | arabic_date }}{% else %}لم يُنشر بعد{% endif %}</span>
+          {% if x.reference_only %}<span class="tag">دورة سابقة، للاسترشاد</span>{% elif past %}<span class="tag">انتهى</span>{% endif %}
+          {% if x.date and not x.year_stated %}<span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}
+          <span class="uni-date-label">{{ um.date_words(x) }}{% if x.note_ar %}. {{ x.note_ar }}{% endif %}</span>
+          <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% if p.dates | selectattr("year_stated", "equalto", false) | list %}
+      <p class="fact-note">«السنة غير مذكورة في الصفحة»: الصفحة الرسمية تذكر اليوم والشهر فقط، والسنة من الدورة الحالية.</p>
+      {% endif %}
+      {% else %}
+      <p class="result-note">{% if d %}لم تنشر الجامعة مواعيد هذه الدورة بعد.{% else %}لم نجمع مواعيد هذه الجامعة بعد.{% endif %} {% if d and d.admissions_url %}<a href="{{ d.admissions_url }}" target="_blank" rel="noopener">صفحة القبول في موقع الجامعة ↗</a>{% endif %}</p>
+      {% endif %}
+    </div>
   </section>
-  {% endif %}
 </article>
 {% endblock %}
 

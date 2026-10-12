@@ -33,13 +33,19 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد Early Decision لدورة خريف 2027 (الصفحة تذكر 1 نوفمبر 2026)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-01",
+      "year_stated": true,
       "source_url": "https://admissions.upenn.edu/how-to-apply/first-year-applicants"
     },
     {
-      "label_ar": "آخر موعد Regular Decision لدورة خريف 2027 (الصفحة تذكر 5 يناير 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-05",
+      "year_stated": true,
       "source_url": "https://admissions.upenn.edu/how-to-apply/first-year-applicants"
     }
   ],

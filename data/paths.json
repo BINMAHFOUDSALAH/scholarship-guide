@@ -185,8 +185,12 @@
       },
       {
         "id": "one-application",
-        "text_ar": "يمكنك تقديم أكثر من طلب (مسار أو جامعة أو تخصص مختلف)، لكن يُقبل لك طلب واحد فقط حسب المفاضلة أو المقاعد المتاحة.",
+        "text_ar": "يمكنك تقديم ثلاثة قبولات على الأكثر (مسار أو جامعة أو تخصص مختلف)، لكن يُختار لك طلب واحد فقط حسب نتائج المفاضلة والمقاعد المتاحة، مع مراعاة رغبتك إن أمكن.",
         "sources": [
+          {
+            "title": "الشروط العامة وسياسات التقديم: «يجوز للمتقدم تقديم ثلاث قبولات كحد أقصى»",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/"
+          },
           {
             "title": "سياسات التقديم والابتعاث",
             "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-2/"
@@ -196,7 +200,7 @@
             "url": "https://sites.moe.gov.sa/scholarship-program/faqs/"
           }
         ],
-        "last_checked": "2026-10-11",
+        "last_checked": "2026-10-12",
         "academic_year": null,
         "status": "sourced",
         "owner_reviewed": false,

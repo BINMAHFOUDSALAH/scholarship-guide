@@ -53,7 +53,8 @@ Each list entry: rank, English name, country flag, and sometimes a note: «در�
   },
   "sat_act": {"policy": "required", "note_ar": "...", "source_url": "https://..."},
   "dates": [
-    {"label_ar": "آخر موعد للقرار المبكر (Restrictive Early Action)", "date": "2026-11-01", "source_url": "https://..."}
+    {"event_ar": "آخر موعد للتقديم", "round_ar": "Restrictive Early Action", "cycle_ar": "خريف 2027",
+     "date": "2026-11-01", "year_stated": false, "source_url": "https://..."}
   ],
   "acceptance_rate": {"percent": 3.6, "scope_ar": "القبول العام لدفعة خريف 2025 (Common Data Set 2025–2026)", "international_percent": null, "source_url": "https://..."},
   "language_note_ar": null,
@@ -64,7 +65,12 @@ Rules:
 - Every value has a `source_url` on the university's own site or its official application service (UCAS, Common App, OUAC…). No rankings sites, no forums, no consultants.
 - A number appears only if the official page states it. "No minimum" is recorded as `null` + a note. Anything not found goes in `not_found_ar`, never guessed.
 - `sat_act.policy` ∈ `required`, `optional`, `not_considered`, `not_applicable`, `unknown`.
-- Dates are for the next intake (2027 entry). If only an older cycle is published, say so in the label.
+- Dates are structured (decision 038), never free text:
+  - `event_ar`: what happens. Use «آخر موعد للتقديم» for application deadlines; the grade 12 page and «أقرب موعد» look for it.
+  - `round_ar`: the round, optional. English names stay English (`Early Decision / Early Action`), so they don't mix directions.
+  - `cycle_ar`: the intake, e.g. «خريف 2027».
+  - `year_stated`: false when the official page gives only the day and month, so we inferred the year. The site then shows «السنة غير مذكورة في الصفحة».
+  - Optional `note_ar` (time zone, who it applies to) and `reference_only: true` for an older cycle shown for reference. Reference dates never count as the next deadline.
 - Non-English-speaking countries: `language_note_ar` says what the language of instruction is and whether English-taught undergraduate programs exist (with source).
 
 ## Pages

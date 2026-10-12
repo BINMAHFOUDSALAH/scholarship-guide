@@ -33,18 +33,27 @@
   },
   "dates": [
     {
-      "label_ar": "فتح التقديم عبر Common App (الصفحة تذكر 1 أغسطس دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "event_ar": "فتح التقديم",
+      "cycle_ar": "خريف 2027",
       "date": "2026-08-01",
+      "year_stated": false,
+      "note_ar": "عبر Common App",
       "source_url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
     },
     {
-      "label_ar": "آخر موعد Restrictive Early Action (الصفحة تذكر 1 نوفمبر دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Restrictive Early Action",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-01",
+      "year_stated": false,
       "source_url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
     },
     {
-      "label_ar": "آخر موعد Regular Decision (الصفحة تذكر 1 يناير دون سنة؛ السنة مستنتجة لدورة خريف 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-01",
+      "year_stated": false,
       "source_url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
     }
   ],
