@@ -530,3 +530,11 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **A `.sa` domain:** more paperwork, and not needed for a guide.
 - **Cloudflare's proxy (orange cloud):** another moving part for HTTPS; not needed now.
 **Note:** «قائمتي» lives in the browser per address, so lists saved on the old address don't carry over. Testers should start on the new link.
+
+## 043 — Feedback through the owner's X account (footer)
+**Date:** 2026-10-12
+**Decision:** the footer's X link becomes the feedback channel for the test month: the X icon plus one line, «عندك ملاحظة أو اقتراح؟ راسلني على X», as **one link**. Same place, same safe new tab; the visible text is the link's name (WCAG 2.5.3, so no separate aria-label).
+**Alternatives:**
+- **A Google Form:** a third-party page and more setup, with no evidence it's needed yet.
+- **WhatsApp:** shares a personal phone number with minors.
+- **A form on the site:** needs a backend and storing messages.

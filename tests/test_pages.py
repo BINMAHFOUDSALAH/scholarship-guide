@@ -530,7 +530,8 @@ def test_owner_x_link_is_in_the_footer_only():
         link = footer.split('class="footer-x"')[1].split("</a>")[0]
         assert 'href="https://x.com/salahmetaverse"' in link
         assert 'target="_blank"' in link and 'rel="noopener noreferrer"' in link
-        assert 'aria-label="تابعني على X' in link and 'aria-hidden="true"' in link
+        assert "عندك ملاحظة أو اقتراح؟ راسلني على X" in link and 'aria-hidden="true"' in link
+        assert "aria-label" not in link  # the visible text is the link's name (WCAG 2.5.3)
     main_part = client.get("/").text.split('<main id="main"')[1].split('<footer class="site-footer">')[0]
     assert "salahmetaverse" not in main_part
 
