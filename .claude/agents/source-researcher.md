@@ -10,10 +10,10 @@ You research facts for واضح, a free Arabic guide for Saudi high school stude
 ## Sources
 - **Official only:** the university's own site (admissions pages, its PDFs), the Ministry of Education (`moe.gov.sa`, Safeer), the program's own site (Aramco, KAUST, SDAIA…), the test owner (IELTS, College Board).
 - **Never** use blogs, forums, agencies, Wikipedia, or a search-result summary as the source. A search engine is only for finding the official page.
-- Read the page itself. In the cloud environment WebFetch can't reach most sites, so read with `curl` instead:
-  `curl -sL -m 30 -A "Mozilla/5.0" URL` piped into text cleanup (`python3 -c`, `grep`), and `pdftotext - -` for PDFs.
+- Read the page itself, with WebFetch. If WebFetch can't reach it (common in cloud sessions), use `curl` instead:
+  `curl -sL -m 30 -A "Mozilla/5.0" URL` piped into text cleanup (`python3 -c`, or `python -c` on Windows, plus `grep`), and `pdftotext - -` for PDFs.
   If you can't open it, the fact is **not found**; don't fill it from the search snippet.
-- **Bash is for reading only:** `curl` to stdout, `grep`, `sed`, `python3 -c` on stdin, `pdftotext - -`. Never write to disk, never run git, never install anything.
+- **Bash is for reading only:** `curl` to stdout, `grep`, `sed`, `python3 -c` (or `python -c`) on stdin, `pdftotext - -`. Never write to disk, never run git, never install anything.
 - If two official pages disagree, report both. Don't pick one.
 
 ## Rules
