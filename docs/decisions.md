@@ -361,3 +361,23 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - The lime dot keeps the site's one meaning for lime ("your next step").
 - The drawing stays legible at 16px.
 - It is the most Arabic and least forced of the concepts. The owner chose it.
+
+## 037 — A small set of project subagents, all on Haiku 5.5
+**Date:** 2026-10-12
+**Context:** Research (university requirements, scholarship rules) was already done by Haiku agents (decision 030), but each time the instructions were rewritten from scratch in the prompt.
+**Decision:**
+- Three read-only agent definitions in `.claude/agents/`, each with one job:
+  - `source-researcher`: finds new facts from official sources
+  - `fact-checker`: checks published facts against their cited sources
+  - `reviewer`: independently reviews a big diff
+- Every subagent runs on `claude-haiku-5-5`: the `model` field in each file, plus `CLAUDE_CODE_SUBAGENT_MODEL` in `.claude/settings.json` for Claude Code's built-in agents (Explore, general-purpose).
+- Research agents return results instead of writing files. The main session saves them, validates them, decides, and writes code.
+- If Haiku 5.5 is unavailable, Claude stops and tells the owner, rather than switching model or doing the job silently.
+**Alternatives:**
+- No agent files, rules in CLAUDE.md only. This worked, but the source rules had to be retyped every time.
+- More agents (a codebase explorer, a UX researcher). Rejected: the built-in Explore agent already explores, and one-off research doesn't need a permanent file.
+- Agents that write their own result files. Rejected: read-only is safer and keeps one place (the main session) responsible for what lands in the repo.
+**Why:** Same rules every time, at low cost, with nothing an agent can break.
+**Limits:**
+- Haiku is weaker at judgment than the main model, so a `reviewer` pass is a second opinion, not proof.
+- Official Saudi sites are blocked from the cloud environment (they work from the owner's laptop).
