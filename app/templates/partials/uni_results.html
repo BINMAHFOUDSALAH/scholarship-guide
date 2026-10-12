@@ -25,6 +25,11 @@
 </div>
 {% endif %}
 
+{# A country typed in the search box (decision 041): offer the country filter. #}
+{% if r.country_match and r.country != r.country_match %}
+<p class="notice">هل تقصد الدولة «{{ explorer.countries[r.country_match].name_ar }}»؟ <a href="{{ url_for('universities_page') }}?country={{ r.country_match }}">اعرض جامعاتها في القوائم</a></p>
+{% endif %}
+
 {% if r.mode == "major" %}
 <div class="notice major-summary">
   {% set m0 = r.majors[0] %}
@@ -57,6 +62,10 @@
     </p>
   </header>
   {% if s.note_ar %}<p class="result-note">{{ s.note_ar }}</p>{% endif %}
+  {# Said once per list, not on every row (decision 041). #}
+  {% set listed = (s.rows | map(attribute=1) | list) if s.rows is defined else (s.universities if s.universities is defined else []) %}
+  {% set unknown = listed | rejectattr("id", "in", explorer.details) | list %}
+  {% if unknown %}<p class="result-note result-note--unknown">{% if unknown | length == listed | length %}لم نجمع متطلبات جامعات هذه القائمة ومواعيدها بعد، فتحقق منها في صفحة القبول الدولي (International admissions) في موقع كل جامعة.{% else %}الجامعات التي ليس لها «باختصار» لم نجمع متطلباتها بعد.{% endif %}</p>{% endif %}
 
   {% if s.waaid is defined %}
     <p class="result-note">واعد لا يعتمد على قوائم الجامعات: كل برنامج مرتبط بجهة توظيف ويحدد مؤسسته التعليمية وشروطه، وفترة التقديم قصيرة غالبًا. المصدر: <a href="https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/" target="_blank" rel="noopener">صفحة مسار واعد ↗</a></p>
@@ -65,11 +74,19 @@
     {% else %}
     <p class="result-empty">لا توجد برامج واعد مطابقة لبحثك. امسح البحث لترى كل البرامج.</p>
     {% endif %}
+  {% elif s.rows is defined and s.compact and s.rows %}
+    {# A major search: الرواد as a compact ranked list of names; details are one click away. #}
+    <ol class="compact-list">
+      {% for l, u in s.rows %}
+      <li><span class="compact-rank">{{ l.rank }}</span> {{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</li>
+      {% endfor %}
+    </ol>
+    <p class="section-link"><a href="{{ s.full_href }}">الرواد بالتفاصيل: المتطلبات والمواعيد ←</a></p>
   {% elif s.rows is defined %}
     {% if s.rows %}
     {% if not ns.explained %}{% set ns.explained = true %}
     {# What the rank means, once, above the first ranked list. #}
-    <p class="result-explain">«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا. و«باختصار» من موقع الجامعة الرسمي، للجامعات التي جمعنا متطلباتها.
+    <p class="result-explain">«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا. و«المتطلبات والمواعيد» من موقع الجامعة الرسمي، للجامعات التي جمعنا متطلباتها.
       {% if view.non_english %}
       في دولة لغتها الرسمية غير الإنجليزية قد يُقبل قبول مشروط بدراسة لغتها، والسنة التحضيرية مقبولة بشروط: <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى؟</a>
       {% endif %}
@@ -77,29 +94,37 @@
     {% endif %}
     <table class="uni-table">
       <caption class="sr-only">{{ tracks[s.track].name_ar }}{% if s.field %}: {{ s.field.name_ar }}{% endif %}</caption>
-      <thead><tr><th scope="col">الترتيب</th><th scope="col">الجامعة</th><th scope="col">الدولة</th><th scope="col">باختصار</th></tr></thead>
+      <thead><tr><th scope="col">الترتيب</th><th scope="col">الجامعة</th><th scope="col">الدولة</th><th scope="col">المتطلبات والمواعيد</th></tr></thead>
       <tbody>
         {% for l, u in s.rows %}
         <tr>
-          <td class="uni-rank">{{ l.rank }}</td>
-          <th scope="row">{{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</th>
+          <td class="uni-rank"><span class="sr-only">المرتبة </span>{{ l.rank }}</td>
+          <th scope="row">{{ um.uni_name(u, back=back) }}</th>
           <td class="uni-cell-country">{{ um.country(u) }}</td>
-          <td class="uni-cell-notes"><span class="tags">{{ um.listing_notes(l) }}</span>{{ um.key_facts(u) }}</td>
+          <td class="uni-cell-notes"><span class="tags">{{ um.listing_notes(l) }}</span>{{ um.key_facts(u, quiet=True) }}{{ um.save_button(u) }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% else %}
+    {% set cinfo = explorer.countries.get(r.country) if r.country else None %}
+    {% if cinfo and r.language and ((r.language == "english") != cinfo.english) %}
+    <p class="result-empty">{{ cinfo.name_ar }} لغتها الرسمية {{ "الإنجليزية" if cinfo.english else cinfo.language_ar }}، فلا تجتمع مع فلتر «{{ "الإنجليزية" if r.language == "english" else "غير الإنجليزية" }}». <a href="{{ url_for('universities_page') }}?country={{ r.country }}{% if r.track %}&amp;track={{ r.track }}{% endif %}">اعرض جامعات {{ cinfo.name_ar }}</a></p>
+    {% else %}
     <p class="result-empty">لا توجد جامعات في هذه القائمة مع الفلاتر الحالية. أزل أحد الفلاتر أعلاه، أو اختر مسارًا آخر.</p>
     {% endif %}
+    {% endif %}
   {% else %}
+    {% if s.outside_filters %}
+    <p class="notice">هذه الجامعة في قوائم الابتعاث، لكنها خارج الفلاتر التي اخترتها. <a href="{{ url_for('universities_page') }}?q={{ r.q | urlencode }}">اعرضها دون الفلاتر</a></p>
+    {% endif %}
     {% if s.universities %}
     <ul class="uni-list">
       {% for u in s.universities %}
       <li class="uni-item">
         <div class="uni-item-name">{{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</div>
         <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</div>
-        {{ um.key_facts(u) }}
+        {{ um.key_facts(u, quiet=True) }}
       </li>
       {% endfor %}
     </ul>

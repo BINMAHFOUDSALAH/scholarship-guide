@@ -3,12 +3,9 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-12, end of the timeline iteration):**
-> Live on `main`: decisions 035–038.
-> On branch `claude/loving-hopper-sai8de`, **not merged yet** (decision 039):
-> - «قائمتي» findable (save from results, link always visible, blocked-storage message)
-> - grade pages rebuilt (decision 040): three points, one activity, each grade's own tool (tracks / tests / the application year month by month)
-> - the product audit (`docs/research/product-audit-2026-10.md`)
+> **Next session (as of 2026-10-12, end of the final design pass):**
+> Live on `main`: decisions 035–040.
+> On branch `claude/loving-hopper-sai8de`, **not merged yet**: decision 041. The finder no longer says "none" when there are matches (Germany, filtered names, a typed country); major searches are compact; plainer labels. Audit: `docs/research/design-audit-2026-10.md`.
 >
 > ⏰ **When the next universities guide PDF is out (reminder):**
 > 1. re-run `scripts/extract_universities.py`; the test `test_every_requirement_file_belongs_to_a_listed_university` flags universities that left the lists
@@ -17,7 +14,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. update the guide link and year everywhere it appears
 >
 > **Next steps:**
-> 1. **Owner merges** the branch and reads the three grade pages and «قائمتي» on their own phone (Safari is untested).
+> 1. **Owner merges** the branch, then tries on their own phone: search «علوم الحاسب», filter by ألمانيا, save two universities (Safari is untested).
 > 2. **Stale-facts check** (the audit's single best next task): a test that fails when `last_checked` is over 90 days, plus a re-check list before Launch 1.
 > 3. **Owner decides on Render's cold start** (free tier sleeps after 15 minutes; about a minute to wake).
 > 4. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes).

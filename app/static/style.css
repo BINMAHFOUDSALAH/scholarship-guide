@@ -368,6 +368,10 @@ main:has(> .hero) {
   color: var(--heading);
 }
 
+.mylist-count:empty {
+  display: none;
+}
+
 .mylist-count {
   display: inline-grid;
   place-items: center;
@@ -2111,6 +2115,40 @@ main:has(> .hero) {
 }
 
 /* Ranked lists stay a real table: rank, name, country, notes can be compared down the column. */
+/* الرواد in a major search (decision 041): ranked names only, in columns on wide screens. */
+.compact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-3) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compact-list li {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.compact-rank {
+  min-width: 1.75rem;
+  font-weight: 700;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+}
+
+.compact-list .save-mini {
+  margin-block-start: 0;
+}
+
+.compact-rank {
+  line-height: 1.5;
+}
+
 .uni-table {
   width: 100%;
   border-collapse: collapse;

@@ -106,11 +106,24 @@
             option(u.name_ar || u.name_en, u.name_ar ? u.name_en : "", u.country_ar, () => onUniversity(u)))));
         }
       }
+      // Typing: at most 8 majors in total, so the list stays scannable on a phone (Baymard: 4–8 on
+      // mobile). An empty box keeps the full list, which works as "browse by field".
+      let room = q ? 8 : Infinity;
+      let hidden = 0;
       for (const g of d.fields) {
-        const majors = q ? g.majors.filter((m) => m.key.includes(q)) : g.majors;
+        const all = q ? g.majors.filter((m) => m.key.includes(q)) : g.majors;
+        const majors = all.slice(0, Math.max(room, 0));
+        hidden += all.length - majors.length;
+        room -= majors.length;
         if (!majors.length) continue;
         panel.append(group("تخصصات مجال: " + g.title_ar, majors.map((m) =>
           option(m.name_ar + (m.masters_only ? " (ماجستير فقط)" : ""), m.name_en, "", () => onMajor(m)))));
+      }
+      if (hidden) {
+        const more = document.createElement("p");
+        more.className = "suggest-empty";
+        more.textContent = "وتخصصات أخرى (" + hidden + "). اكتب كلمة أدق، أو اضغط «ابحث».";
+        panel.append(more);
       }
       if (!options.length) {
         const empty = document.createElement("p");
