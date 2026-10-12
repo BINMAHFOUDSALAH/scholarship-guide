@@ -7,7 +7,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > Live on `main`: decisions 035–038.
 > On branch `claude/loving-hopper-sai8de`, **not merged yet** (decision 039):
 > - «قائمتي» findable (save from results, link always visible, blocked-storage message)
-> - the timeline «من أول ثانوي إلى الجامعة» on the grade pages
+> - grade pages rebuilt (decision 040): three points, one activity, each grade's own tool (tracks / tests / the application year month by month)
 > - the product audit (`docs/research/product-audit-2026-10.md`)
 >
 > ⏰ **When the next universities guide PDF is out (reminder):**
@@ -17,7 +17,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. update the guide link and year everywhere it appears
 >
 > **Next steps:**
-> 1. **Owner merges** the branch and reads the timeline on the three grade pages and «قائمتي» on their own phone (Safari is untested).
+> 1. **Owner merges** the branch and reads the three grade pages and «قائمتي» on their own phone (Safari is untested).
 > 2. **Stale-facts check** (the audit's single best next task): a test that fails when `last_checked` is over 90 days, plus a re-check list before Launch 1.
 > 3. **Owner decides on Render's cold start** (free tier sleeps after 15 minutes; about a minute to wake).
 > 4. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes).

@@ -154,7 +154,7 @@ def test_share_preview_and_description_tags():
     assert '<meta name="description"' in html
     assert f'<link rel="canonical" href="{base}/grades/grade-10">' in html
     assert f'<meta property="og:image" content="{base}/static/img/og-image.png">' in html
-    assert '<meta property="og:title" content="أول ثانوي: اكتشف وابنِ أساسك | واضح">' in html
+    assert '<meta property="og:title" content="أول ثانوي: اكتشف واستعد | واضح">' in html
     assert client.get("/static/img/og-image.png").status_code == 200
 
 
@@ -263,26 +263,43 @@ def test_news_page_lists_everything():
         assert item["title_ar"] in html
 
 
-# ---------- grade pages (decision 038) ----------
+# ---------- grade pages (decisions 038, 040) ----------
 
 GRADES = ("grade-10", "grade-11", "grade-12")
+TOOLS = {"grade-10": "tracks-title", "grade-11": "tests-title", "grade-12": "year-title"}
 
 
 @pytest.mark.parametrize("slug", GRADES)
-def test_grade_pages_share_one_structure(slug):
-    """This week → what matters → priorities → (tools) → resources → next step on واضح → sources."""
+def test_grade_pages_share_one_short_structure(slug):
+    """What matters (3 points) → one activity → the grade's own tool → resources → sources."""
     page = load_page("grades", slug)
     assert page["status"] == "sourced" and page["sources"] and page["stage_ar"]
-    assert page["this_week"]["text_ar"] and page["next_feature"]["href"].startswith("/")
+    assert page["activity"]["text_ar"] and page["activity"]["href"]
     assert 1 <= len(page["resources"]) <= 4
-    assert [c["title"] for c in page["contents"]][:1] == ["ما يهم هذه السنة"]
-    priorities = page["html"].split('id="أولوياتك"')[1].split("<ol>")[1].split("</ol>")[0]
-    assert 3 <= priorities.count("<li>") <= 4
+    assert [c["title"] for c in page["contents"]] == ["ما يهم هذه السنة"]
+    assert page["html"].split("<ol>")[1].split("</ol>")[0].count("<li>") == 3
     html = client.get(f"/grades/{slug}").text
-    order = ['aria-label="هذا الأسبوع"', 'class="prose"', 'id="resources-title"', 'id="next-title"',
-             'class="source-stamp"']
+    order = ['class="prose"', 'aria-label="ابدأ الآن"', f'id="{TOOLS[slug]}"', 'id="resources-title"', 'class="source-stamp"']
     positions = [html.index(marker) for marker in order]
     assert positions == sorted(positions), slug
+
+
+def test_each_grade_has_its_own_tool_and_no_other():
+    for slug, own in TOOLS.items():
+        html = client.get(f"/grades/{slug}").text
+        assert f'id="{own}"' in html
+        for other in set(TOOLS.values()) - {own}:
+            assert f'id="{other}"' not in html, (slug, other)
+
+
+def test_grade_journey_shows_each_years_job_and_marks_the_current_one():
+    html = client.get("/grades/grade-11").text
+    journey = html.split('class="grade-journey"')[1].split("</nav>")[0]
+    assert journey.count("<a ") == 3 and "اكتشف واستعد" in journey and "قدّم وتابع" in journey
+    assert journey.count('aria-current="page"') == 1
+    assert 'aria-current="page"><span class="grade-journey-name">ثاني ثانوي' in journey
+    assert "ماذا ينتظرك في ثالث ثانوي؟" in html
+    assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text
 
 
 @pytest.mark.parametrize("slug", GRADES)
@@ -292,6 +309,13 @@ def test_every_external_link_on_a_grade_page_is_a_listed_source_or_resource(slug
     declared = {s["url"] for s in page["sources"]} | {r["url"] for r in page["resources"]}
     for href in re.findall(r'href="(https?://[^"]+)"', page["html"]):
         assert href in declared, (slug, href)
+
+
+def test_grade_pages_show_no_example_years():
+    """The owner's rule (2026-10-12): no «مثال: 2026–2027» labels, no past-year scholarship window."""
+    for slug in GRADES:
+        html = client.get(f"/grades/{slug}").text
+        assert "مثال:" not in html and "مثال من سنة سابقة" not in html, slug
 
 
 def test_test_needs_rows_are_sourced_and_dated():
@@ -304,25 +328,14 @@ def test_test_needs_rows_are_sourced_and_dated():
 def test_test_table_counts_sat_policies_from_the_university_files():
     s = main.explorer.sat_summary()
     assert sum(s["counts"].values()) == s["researched"] <= s["total"]
-    for slug in ("grade-11", "grade-12"):
+    for slug in ("grade-11",):
         html = client.get(f"/grades/{slug}").text
         assert 'id="tests-title"' in html
         assert f"مطلوب في {s['counts'].get('required', 0)} من {s['researched']}" in html
         # The scholarship row says plainly that Qudurat/Tahsili aren't required for it.
         assert "دون اشتراط درجة اختبار قدرات وتحصيلي" in html
     assert 'id="tests-title"' not in client.get("/grades/grade-10").text  # no test pressure in grade 10
-
-
-def test_grade_12_lists_the_next_university_deadlines_from_the_data():
-    html = client.get("/grades/grade-12").text
-    section = html.split('id="deadlines-title"')[1].split("</section>")[0]
-    upcoming = main.explorer.upcoming_deadlines()
-    if upcoming:
-        assert f'/universities/{upcoming[0]["university"]["id"]}#dates' in section
-    assert "وليست مواعيد الابتعاث" in section
-    # The three kinds of application, in order, and the confirmation step.
-    assert html.index("الجامعات في الخارج") < html.index("الجامعات السعودية") < html.index("الابتعاث: بعد أن يصلك القبول")
-    assert "عدم التأكيد يسقط حق الطالب في الترشيح" in html
+    assert "/grades/grade-11#tests-title" in client.get("/grades/grade-12").text  # grade 12 links to it
 
 
 def test_unknown_page_shows_arabic_404():
@@ -508,17 +521,6 @@ def test_program_page_leads_with_the_next_step_and_lists_its_sections():
         assert f'href="{anchor}"' in contents, anchor  # test_every_internal_link_works checks they exist
 
 
-def test_grade_pages_switch_grades_and_put_the_next_step_first():
-    html = client.get("/grades/grade-11").text
-    switch = html.split('class="grade-switch"')[1].split("</nav>")[0]
-    assert switch.count("<a ") == 3
-    assert 'aria-current="page">ثاني ثانوي</a>' in switch
-    assert html.index('class="next-step"') < html.index('class="prose"')
-    assert "ماذا ينتظرك في ثالث ثانوي؟" in html
-    assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text  # the last grade has no next one
-    assert 'class="grade-switch"' not in client.get("/resources/ielts").text
-
-
 def test_owner_x_link_is_in_the_footer_only():
     """The owner's X account: in the global footer on every page, never in the nav; safe new tab; labelled."""
     for page in ("/", "/universities", "/universities/harvard-university", "/news", "/my-list"):
@@ -544,50 +546,38 @@ def test_logo_mark_is_the_same_in_the_header_and_the_favicon():
     assert glyph in favicon
 
 
-# ---------- the timeline (decision 039) ----------
+# ---------- ثالث ثانوي month by month (decision 040) ----------
 
-def test_timeline_facts_are_sourced_and_dated():
-    for stage in main.timeline["stages"]:
-        assert stage["when_ar"] and stage["title_ar"] and stage["actions_ar"], stage["id"]
-        for fact in stage.get("facts", []):
-            assert fact["kind"] == "official" and ISO_DATE.match(fact["read_on"]), stage["id"]
-            assert fact["sources"] and all(s["url"].startswith("https://") for s in fact["sources"]), stage["id"]
-    sch = main.timeline["scholarship"]
-    for key in ("rule_source", "conflict_source", "results_source"):
-        assert sch[key].startswith("https://"), key
-    assert all(w["source_url"].startswith("https://") and ISO_DATE.match(w["read_on"]) for w in sch["windows"])
-
-
-@pytest.mark.parametrize("slug", GRADES)
-def test_timeline_marks_the_students_grade(slug):
-    html = client.get(f"/grades/{slug}").text
-    section = html.split('id="timeline"')[1].split("</section>")[0]
-    here = section.split('aria-current="step"')[1].split("</li>")[0]
-    assert "أنت هنا" in here
-    expected = {"grade-10": "أول ثانوي", "grade-11": "ثاني ثانوي", "grade-12": "أغسطس، قبل بداية ثالث ثانوي"}[slug]
-    assert expected in here
-    assert section.count('aria-current="step"') == 1
+def test_year_rows_cover_every_month_once_and_facts_are_sourced():
+    months = [m for r in main.apply_year["rows"] for m in r["months"]]
+    assert sorted(months) == list(range(1, 13))
+    for r in main.apply_year["rows"]:
+        for fact in r["facts"]:
+            assert fact["kind"] == "official" and ISO_DATE.match(fact["read_on"]), r["id"]
+            assert fact["sources"] and all(s["url"].startswith("https://") for s in fact["sources"]), r["id"]
+    sch = main.apply_year["scholarship"]
+    assert sch["rule_source"].startswith("https://") and sch["conflict_source"].startswith("https://")
 
 
-def test_timeline_opens_only_what_matters_for_each_grade():
-    def opened(slug):
-        section = client.get(f"/grades/{slug}").text.split('id="timeline"')[1].split("</section>")[0]
-        return [li.split('class="timeline-title">')[1].split("<")[0] for li in section.split('<li class="timeline-stage')[1:]
-                if "<details open>" in li]
-    assert opened("grade-10") == ["ابنِ الأساس"]
-    assert opened("grade-11") == ["ابحث وجرّب الاختبارات", "يفتح التقديم في كثير من الجامعات الأمريكية"]
-    assert "الجامعات السعودية، وتجهيز السفر" in opened("grade-12") and "ابنِ الأساس" not in opened("grade-12")
+def test_year_marks_the_current_month_and_lists_deadlines_there():
+    html = client.get("/grades/grade-12").text
+    year = html.split('id="year"')[1].split("</section>")[0]
+    assert year.count('aria-current="date"') == 1
+    now = year.split('aria-current="date"')[1].split("</li>\n    \n")[0]
+    assert "الآن" in now
+    upcoming = main.explorer.upcoming_deadlines()
+    if upcoming:
+        assert "أقرب مواعيد الجامعات الآن" in year
 
 
-def test_timeline_patterns_are_counted_from_the_university_files():
+def test_year_patterns_are_counted_from_the_university_files():
     s = main.explorer.timeline_stats()
     assert 0 < s["early"] <= s["with_deadlines"] and 0 < s["january"] <= s["with_deadlines"]
     html = client.get("/grades/grade-12").text
     assert f"في {s['early']} من {s['with_deadlines']} جامعة" in html
-    # The scholarship window is shown as changing from year to year, never as one fixed season.
-    assert "موعده يُعلن كل سنة، وليس ثابتًا" in html and "4 ديسمبر 2022" in html
+    assert "والابتعاث؟ لا يتبع هذه الأشهر" in html and "عدم التأكيد يسقط حق الطالب في الترشيح" in html
 
 
-def test_timeline_is_linked_from_the_university_and_program_pages():
-    assert "/grades/grade-12#timeline" in client.get("/universities/stanford-university").text
-    assert "/grades/grade-12#timeline" in client.get("/programs/custodian-scholarship").text
+def test_year_is_linked_from_the_university_and_program_pages():
+    assert "/grades/grade-12#year" in client.get("/universities/stanford-university").text
+    assert "/grades/grade-12#year" in client.get("/programs/custodian-scholarship").text

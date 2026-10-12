@@ -452,3 +452,39 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **A fixed "January–February" scholarship season:** false; the windows we found differ.
 - **Lime for «أنت هنا»:** lime stays for "open now" and "next step"; «أنت هنا» uses forest.
 **Why:** students arrive by grade, so the timeline meets them there, with their year open. One data file means one place to update when the program announces a window.
+
+## 040 — Grade pages: three points, one activity, each grade's own tool (supersedes the timeline placement in 039)
+**Date:** 2026-10-12 · **Owner feedback:** the shared timeline "doesn't feel very good or clear"; each grade should have its own thing; remove «مثال: 2026–2027» and the past-year window.
+**Evaluation (before):**
+- Grade 12 was 12.6 phone screens long, with about 10 sections.
+- The same 7-stage timeline appeared on all three pages and repeated each page's own priorities.
+- «ما يهم» and «أولوياتك» overlapped, and «هذا الأسبوع» and «الخطوة التالية في واضح» pointed to the same place.
+- Example years added noise.
+**Guidance used (read directly):**
+- NN/g [inverted pyramid](https://www.nngroup.com/articles/inverted-pyramid/): the main point first.
+- NN/g [chunking](https://www.nngroup.com/articles/chunking/): small distinct units.
+- NN/g [progressive disclosure](https://www.nngroup.com/articles/progressive-disclosure/): "the very fact that something appears on the initial display tells users that it's important", so the first display can't hold too many items.
+- GOV.UK [step by step](https://design-system.service.gov.uk/patterns/step-by-step-navigation/) is for an end-to-end journey. Ours is three years, which the grade bar now shows; it isn't a set of steps to repeat on every page.
+**Decision:**
+- **One short order on every grade page:**
+  1. «ما يهم هذه السنة», exactly three numbered points with sources
+  2. «ابدأ الآن», one activity with the button that does it (lime = next step)
+  3. **the grade's own tool**
+  4. «لتعرف أكثر», ≤ 4 resources
+  5. official sources
+- **Each grade's tool:**
+  - أول ثانوي: «المسارات الخمسة» (`data/school_tracks.json`, Ministry 2025 document pp. 11–15)
+  - ثاني ثانوي: «الاختبارات: من يطلب ماذا؟»
+  - ثالث ثانوي: «سنة التقديم شهرًا بشهر» (`data/apply_year.json`). Every month is covered once; today's row is marked «الآن» and holds the next university deadlines from our data. The scholarship sits in its own block, «والابتعاث؟ لا يتبع هذه الأشهر».
+- **The whole journey** is the grade bar at the top: three steps with each year's job (اكتشف واستعد · ابحث وخطّط · قدّم وتابع), the current one filled.
+- **Removed:**
+  - the shared timeline (`timeline.json`, `partials/timeline.html`)
+  - the example years and the 2023–24 window (kept in the research note)
+  - «الخطوة التالية في واضح» (merged into «ابدأ الآن»)
+  - the in-page contents list
+  - the tests table on grade 12 (it links to grade 11's)
+**Result:** phone page height at 360px: grade 10 5,042 → 2,984px; grade 11 6,771 → 3,398px; grade 12 9,789 → 4,898px.
+**Alternatives:**
+- **Keep the timeline, collapsed:** still the same content on every page.
+- **A separate /timeline page:** splits content and adds a nav item.
+- **Tabs per grade on one page:** hides content from search and from people sharing links to one grade.

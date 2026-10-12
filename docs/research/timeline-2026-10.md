@@ -3,7 +3,7 @@
 **Date:** 2026-10-12.
 **By:** two read-only research agents on Haiku (reading with `curl`), then every fact used re-checked by the main session with `curl`.
 **Owner review:** not yet.
-**Decision record:** [decision 039](../decisions.md).
+**Decision record:** [decision 039](../decisions.md); the placement was changed by [decision 040](../decisions.md): the facts now live in the grade 12 page's «سنة التقديم شهرًا بشهر», and the 2023–24 window is kept here as research only (not shown).
 
 ## 1. The student problem
 A student starting in **Fall 2028** is in ثاني ثانوي in 2026–2027.
