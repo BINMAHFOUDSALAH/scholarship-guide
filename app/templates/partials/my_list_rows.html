@@ -5,7 +5,7 @@
   <div class="mylist-main">
     {{ um.uni_name(u) }}
     <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</div>
-    {{ um.next_deadline(u) }}
+    {{ um.key_facts(u) }}
   </div>
   <button class="btn btn--secondary btn--small" type="button" data-remove="{{ u.id }}" aria-label="إزالة {{ u.name_ar or u.name_en }} من قائمتي">إزالة</button>
 </li>

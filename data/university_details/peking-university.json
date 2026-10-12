@@ -21,23 +21,37 @@
   },
   "dates": [
     {
-      "label_ar": "موعد التقديم لدفعة 2027",
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "دفعة 2027",
       "date": null,
+      "year_stated": true,
       "source_url": "https://isd.pku.edu.cn/en/items.php?category2=36"
     },
     {
-      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد لمسار اختبار القبول الكتابي",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "مسار اختبار القبول الكتابي",
+      "cycle_ar": "دفعة 2026",
       "date": "2026-02-28",
+      "year_stated": true,
+      "reference_only": true,
       "source_url": "https://isd.pku.edu.cn/en/detail.php?id=818"
     },
     {
-      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد للجولة الأولى في مسار القبول دون اختبار كتابي",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الجولة الأولى، القبول دون اختبار كتابي",
+      "cycle_ar": "دفعة 2026",
       "date": "2026-02-28",
+      "year_stated": true,
+      "reference_only": true,
       "source_url": "https://isd.pku.edu.cn/en/detail.php?id=813"
     },
     {
-      "label_ar": "دفعة 2026 (للاسترشاد): آخر موعد للجولة الثانية في مسار القبول دون اختبار كتابي",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الجولة الثانية، القبول دون اختبار كتابي",
+      "cycle_ar": "دفعة 2026",
       "date": "2026-07-10",
+      "year_stated": true,
+      "reference_only": true,
       "source_url": "https://isd.pku.edu.cn/en/detail.php?id=813"
     }
   ],

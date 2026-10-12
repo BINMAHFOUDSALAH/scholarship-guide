@@ -33,18 +33,26 @@
   },
   "dates": [
     {
-      "label_ar": "فتح التقديم لدورة خريف 2027 (الصفحة تذكر 1 أغسطس ضمن جدول خريف 2027)",
+      "event_ar": "فتح التقديم",
+      "cycle_ar": "خريف 2027",
       "date": "2026-08-01",
+      "year_stated": false,
       "source_url": "https://admissions.washu.edu/how-to-apply/application-deadlines/"
     },
     {
-      "label_ar": "آخر موعد Early Action وEarly Decision I لدورة خريف 2027 (الصفحة تذكر 2 نوفمبر)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action / Early Decision I",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-02",
+      "year_stated": false,
       "source_url": "https://admissions.washu.edu/how-to-apply/application-deadlines/"
     },
     {
-      "label_ar": "آخر موعد Early Decision II وRegular Decision لدورة خريف 2027 (الصفحة تذكر 4 يناير)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision II / Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-04",
+      "year_stated": false,
       "source_url": "https://admissions.washu.edu/how-to-apply/application-deadlines/"
     }
   ],

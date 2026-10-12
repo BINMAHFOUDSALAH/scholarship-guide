@@ -38,17 +38,47 @@
 {% endmacro %}
 
 {#
-  The university's own next deadline (from its researched requirements). Labelled as the
-  university's, so it's never mistaken for a scholarship deadline.
+  One university date in words: «آخر موعد للتقديم · Early Decision · لخريف 2027». Shared by the
+  result rows, «قائمتي», and the university page (decision 038).
+#}
+{% macro date_words(x) %}{{ x.event_ar }}{% if x.round_ar %} · <bdi>{{ x.round_ar }}</bdi>{% endif %} · ل{{ x.cycle_ar }}{% endmacro %}
+
+{# The short form for a result row: «آخر موعد للتقديم · Early Decision». No brackets: they flip around English text in RTL. #}
+{% macro date_short(x) %}{{ x.event_ar }}{% if x.round_ar %} · <bdi>{{ x.round_ar }}</bdi>{% endif %}{% endmacro %}
+
+{#
+  The university's own next date. Labelled as the university's, so it's never mistaken for a
+  scholarship deadline.
 #}
 {% macro next_deadline(u) %}
 {% set d = explorer.next_deadline(u.id) %}
-{% if d %}<span class="uni-deadline" title="{{ d.label_ar }}">أقرب موعد تقديم في الجامعة: <strong>{{ d.date | arabic_date }}</strong></span>{% endif %}
+{% if d %}<span class="uni-deadline">أقرب موعد في الجامعة: <strong>{{ d.date | arabic_date }}</strong>، {{ date_short(d) }}</span>{% endif %}
 {% endmacro %}
 
-{# Country, marked when its official language isn't English (where the language exception may apply). #}
+{#
+  At a glance: SAT/ACT, IELTS, the next university date, and the official admissions page. Says so
+  plainly when we haven't collected a university's requirements yet (decision 038).
+#}
+{% macro key_facts(u) %}
+{% set k = explorer.key_facts(u.id) %}
+{% if k.researched %}
+<p class="key-facts">
+  <span><span lang="en" dir="ltr">SAT/ACT</span>: {{ k.sat_ar }}</span>
+  <span><span lang="en" dir="ltr">IELTS</span>: {{ k.ielts_ar }}</span>
+  {% if k.next %}<span>أقرب موعد في الجامعة: <strong>{{ k.next.date | arabic_date }}</strong>، {{ date_short(k.next) }}</span>{% else %}<span>أقرب موعد في الجامعة: لم يُنشر بعد</span>{% endif %}
+  {% if k.admissions_url %}<a class="src" href="{{ k.admissions_url }}" target="_blank" rel="noopener">صفحة القبول الرسمية ↗</a>{% endif %}
+</p>
+{% else %}
+<p class="key-facts key-facts--unknown">المتطلبات والمواعيد: لم نجمعها بعد. <a href="{{ url_for('university_page', uid=u.id) }}">ماذا نعرف عنها؟</a></p>
+{% endif %}
+{% endmacro %}
+
+{#
+  Country, with its official language when it isn't English (the scholarship's rule on conditional
+  offers depends on it). That's the country's language, not necessarily the language of teaching.
+#}
 {% macro country(u) %}
-<span class="uni-country">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">غير ناطقة بالإنجليزية</span>{% endif %}</span>
+<span class="uni-country">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">لغة الدولة: {{ u.country_info.language_ar }}</span>{% endif %}</span>
 {% endmacro %}
 
 {# One university's place in the lists, as short tags: «الرواد · المرتبة 12»، «إمداد · 4 مجالات». #}

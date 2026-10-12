@@ -69,22 +69,22 @@
     {% if s.rows %}
     {% if not ns.explained %}{% set ns.explained = true %}
     {# What the rank means, once, above the first ranked list. #}
-    <p class="result-explain">«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا.
+    <p class="result-explain">«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا. و«باختصار» من موقع الجامعة الرسمي، للجامعات التي جمعنا متطلباتها.
       {% if view.non_english %}
-      في الدول غير الناطقة بالإنجليزية قد يُقبل قبول مشروط بدراسة لغة الدولة، والسنة التحضيرية مقبولة بشروط: <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى؟</a>
+      في دولة لغتها الرسمية غير الإنجليزية قد يُقبل قبول مشروط بدراسة لغتها، والسنة التحضيرية مقبولة بشروط: <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى؟</a>
       {% endif %}
     </p>
     {% endif %}
     <table class="uni-table">
       <caption class="sr-only">{{ tracks[s.track].name_ar }}{% if s.field %}: {{ s.field.name_ar }}{% endif %}</caption>
-      <thead><tr><th scope="col">الترتيب</th><th scope="col">الجامعة</th><th scope="col">الدولة</th><th scope="col">ملاحظات</th></tr></thead>
+      <thead><tr><th scope="col">الترتيب</th><th scope="col">الجامعة</th><th scope="col">الدولة</th><th scope="col">باختصار</th></tr></thead>
       <tbody>
         {% for l, u in s.rows %}
         <tr>
           <td class="uni-rank">{{ l.rank }}</td>
           <th scope="row">{{ um.uni_name(u, back=back) }} {{ um.saved_marker(u) }}</th>
           <td class="uni-cell-country">{{ um.country(u) }}</td>
-          <td class="uni-cell-notes"><span class="tags">{{ um.listing_notes(l) }}</span>{{ um.next_deadline(u) }}</td>
+          <td class="uni-cell-notes"><span class="tags">{{ um.listing_notes(l) }}</span>{{ um.key_facts(u) }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -98,7 +98,8 @@
       {% for u in s.universities %}
       <li class="uni-item">
         <div class="uni-item-name">{{ um.uni_name(u, back=back) }} {{ um.saved_marker(u) }}</div>
-        <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }} {{ um.next_deadline(u) }}</div>
+        <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</div>
+        {{ um.key_facts(u) }}
       </li>
       {% endfor %}
     </ul>

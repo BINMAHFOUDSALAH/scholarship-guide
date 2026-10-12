@@ -29,18 +29,30 @@
   },
   "dates": [
     {
-      "label_ar": "الجولة الأولى: فتح التقديم (8 صباحًا بتوقيت بكين)",
+      "event_ar": "فتح التقديم",
+      "round_ar": "الجولة الأولى",
+      "cycle_ar": "خريف 2027",
       "date": "2026-09-30",
+      "year_stated": true,
+      "note_ar": "8 صباحًا بتوقيت بكين",
       "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
     },
     {
-      "label_ar": "الجولة الأولى: آخر موعد للتقديم (5 مساءً بتوقيت بكين، والنتيجة في يناير 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الجولة الأولى",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-20",
+      "year_stated": true,
+      "note_ar": "5 مساءً بتوقيت بكين. النتيجة في يناير 2027",
       "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
     },
     {
-      "label_ar": "الجولة الثانية: آخر موعد للتقديم (5 مساءً بتوقيت بكين، والنتيجة أوائل مايو 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الجولة الثانية",
+      "cycle_ar": "خريف 2027",
       "date": "2027-02-28",
+      "year_stated": true,
+      "note_ar": "5 مساءً بتوقيت بكين. النتيجة أوائل مايو 2027",
       "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
     }
   ],

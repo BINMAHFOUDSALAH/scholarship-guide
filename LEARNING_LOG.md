@@ -289,3 +289,52 @@ What we built in واضح, why, how it works, and how to talk about it. Updated 
 - **Claude:** audited, researched, implemented, and tested.
 
 **Understood?** Not yet checked.
+
+## 14. Grade pages that answer real questions; the finder at a glance (2026-10-12)
+**Built / why:**
+- **Grade pages, one structure:** this week's single action → what matters → 3–4 priorities → a tool → ≤ 4 resources → one next step on واضح → official sources. Each grade has its own job: discover (10), research and prepare (11), apply and track (12).
+- **Facts, not general advice:** every claim links to an official page read directly:
+  - the Ministry's tracks page and 2025 document
+  - the vocational guidance manual
+  - the unified admission page
+  - the scholarship conditions
+  - KGSP
+  - Aramco (previous cycle)
+  - Our own advice is labelled «نصيحتنا».
+- **«الاختبارات: من يطلب ماذا؟»:** one row per destination. The الرواد row is *computed* from the 30 requirement files, so it updates itself when the data changes.
+- **Finder:**
+  - Each row shows SAT/ACT · IELTS · the next university date · the official admissions page, or says «لم نجمعها بعد».
+  - The language filter now says it's the country's language, not the language of teaching.
+  - The university page keeps the scholarship's deadline apart from the university's.
+- **Data cleanup:** 75 free-text dates became structured fields (what, which round, which intake, is the year on the page?). Notes to ourselves no longer leak onto the site.
+
+**Key concepts:**
+- **Computed vs. typed facts:** a number typed into a page («9 universities require SAT») goes stale silently; one counted from the data can't drift.
+- **Structured data beats labels:** once a date has `year_stated: false`, the site can warn about it everywhere, consistently.
+- **Bidirectional text:** brackets around English inside Arabic flip visually. A separator («·») plus `<bdi>` avoids it.
+- **Scope discipline:** a stateful application tracker was tempting, but there's no evidence students want it. Ask them first (usability test).
+
+**Decisions:** 038.
+
+**Tested:**
+- 233 pytest tests. New ones cover:
+  - the grade structure and order, and every external link on a grade page being a declared source or resource
+  - the sourced test table and the computed SAT counts
+  - the next deadlines on grade 12
+  - the scholarship and university dates apart
+  - the structured date schema
+  - the track order, the language hint, and key facts in results and «قائمتي»
+- Playwright: the explorer flow (33 checks) and «قائمتي» flow (23 checks) still pass.
+- axe-core: 13 routes × 320/1280px × light/dark, no violations, no sideways scroll.
+- Every new source link loads, except aramco.com, which times out from the cloud environment.
+- **Not tested:** real students; Safari/Firefox; a screen reader.
+
+**Limits:**
+- ETEC's site blocks automated reading (Cloudflare), so the site only links to it and says nothing about what Qudurat or Tahsili contain.
+- The إمداد universities have no requirements yet.
+
+**Who did what:**
+- **Owner:** asked for a product-focused iteration on the finder and grade pages, and opened network access for official sources.
+- **Claude:** read the sources, audited the old claims, built and tested.
+
+**Understood?** Not yet checked.

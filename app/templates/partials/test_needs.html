@@ -1,0 +1,27 @@
+{#
+  «الاختبارات: من يطلب ماذا؟» (decision 038). Each row from data/test_needs.json with its official
+  source; the الرواد row is counted from the universities' requirement files (Explorer.sat_summary).
+#}
+<section class="grade-tool test-needs" aria-labelledby="tests-title">
+  <h2 id="tests-title">الاختبارات: من يطلب ماذا؟</h2>
+  <p class="result-note">لا يوجد اختبار واحد يطلبه الجميع. اعرف أين ستقدّم أولًا، ثم اختبر ما تطلبه تلك الجهات.</p>
+  <dl class="summary-list">
+    {% for row in test_needs.rows %}
+    <div class="summary-row">
+      <dt>{{ row.who_ar }}</dt>
+      <dd>
+        {% if row.computed %}
+        {% set s = sat_summary %}
+        <span lang="en" dir="ltr">SAT</span> أو <span lang="en" dir="ltr">ACT</span>: مطلوب في {{ s.counts.get("required", 0) }} من {{ s.researched }}، واختياري في {{ s.counts.get("optional", 0) }}، ولا يُنظر فيه في {{ s.counts.get("not_considered", 0) }}، وغير منشور في {{ s.counts.get("unknown", 0) }}.
+        واختبار الإنجليزية ودرجته تحددهما كل جامعة.
+        <a href="{{ row.source.url }}">{{ row.source.title }} ←</a>
+        {% else %}
+        {{ row.need_ar }}
+        <a class="src" href="{{ row.source.url }}" target="_blank" rel="noopener">المصدر ↗</a>
+        {% endif %}
+      </dd>
+    </div>
+    {% endfor %}
+  </dl>
+  <p class="fact-note">جامعات مسار إمداد: لم نجمع متطلباتها بعد، فابحث في صفحة القبول الدولي (International admissions) في موقع كل جامعة. تعريف كل اختبار وموقعه الرسمي في <a href="{{ url_for('resource_page', slug='ielts') }}">صفحة آيلتس</a> و<a href="https://etec.gov.sa/" target="_blank" rel="noopener">هيئة تقويم التعليم والتدريب ↗</a>.</p>
+</section>

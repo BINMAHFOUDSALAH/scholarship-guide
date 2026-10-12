@@ -18,13 +18,23 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد Early Decision (CDS 2025–2026 تذكر 1 نوفمبر دون سنة، وهو لدورة قبول خريف 2025 أي تقديم 2024، وليس دورة 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2025",
       "date": "2024-11-01",
+      "year_stated": false,
+      "note_ar": "من Common Data Set 2025–2026. مواعيد دورة خريف 2027 لم نؤكدها من صفحة الجامعة بعد.",
+      "reference_only": true,
       "source_url": "https://opir.columbia.edu/sites/opir.columbia.edu/files/content/Common%20Data%20Set/2025-26_Columbia_College_and_Columbia_Enginnering_CDS.pdf"
     },
     {
-      "label_ar": "آخر موعد تقديم عادي Priority Date (CDS 2025–2026 تذكر 1 يناير دون سنة، وهو لدورة قبول خريف 2025 أي تقديم 2024–2025، وليس دورة 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision (Priority Date)",
+      "cycle_ar": "خريف 2025",
       "date": "2025-01-01",
+      "year_stated": false,
+      "note_ar": "من Common Data Set 2025–2026. مواعيد دورة خريف 2027 لم نؤكدها من صفحة الجامعة بعد.",
+      "reference_only": true,
       "source_url": "https://opir.columbia.edu/sites/opir.columbia.edu/files/content/Common%20Data%20Set/2025-26_Columbia_College_and_Columbia_Enginnering_CDS.pdf"
     }
   ],

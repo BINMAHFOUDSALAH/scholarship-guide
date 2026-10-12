@@ -33,13 +33,19 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد Early Decision I لدورة 2026–2027 (خريف 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision I",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-01",
+      "year_stated": true,
       "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/"
     },
     {
-      "label_ar": "آخر موعد Early Decision II وRegular Decision لدورة 2026–2027 (خريف 2027)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision II / Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-02",
+      "year_stated": true,
       "source_url": "https://apply.jhu.edu/how-to-apply/application-deadlines-requirements/"
     }
   ],

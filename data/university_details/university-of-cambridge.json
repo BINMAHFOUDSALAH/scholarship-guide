@@ -29,8 +29,12 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد لتقديم طلب UCAS لدورة 2027 لمعظم المتقدمين (الساعة 6 مساءً بتوقيت المملكة المتحدة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
       "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "لمعظم المتقدمين، 6 مساءً بتوقيت المملكة المتحدة",
       "source_url": "https://www.undergraduate.study.cam.ac.uk/apply/how/ucas-application"
     }
   ],

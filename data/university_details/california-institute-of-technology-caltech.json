@@ -33,13 +33,19 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد لتقديم Restrictive Early Action (الصفحة تذكر 1 نوفمبر 2026 صراحة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Restrictive Early Action",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-01",
+      "year_stated": true,
       "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
     },
     {
-      "label_ar": "آخر موعد لتقديم Regular Decision لدورة خريف 2027 (الصفحة تذكر 4 يناير 2027 صراحة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-04",
+      "year_stated": true,
       "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
     }
   ],

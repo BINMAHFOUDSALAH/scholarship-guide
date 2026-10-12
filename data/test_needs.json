@@ -1,0 +1,55 @@
+{
+  "_note": "Which tests each destination asks for (decision 038). One row per destination, each with its official source and the date we read it. The row with computed: true is filled from data/university_details/ (SAT/ACT policy per researched الرواد university). Research: docs/research/grade-pages-2026-10.md.",
+  "rows": [
+    {
+      "id": "saudi-universities",
+      "who_ar": "الجامعات الحكومية والكليات التقنية في السعودية",
+      "need_ar": "الاختبارات التي تطلبها كل جامعة، «مثل اختبار القدرات والاختبار التحصيلي»، والمفاضلة «بناءً على النسب الموزونة أو المركبة».",
+      "source": {
+        "title": "القبول الموحد في الجامعات والجهات التعليمية، وزارة التعليم",
+        "url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/pages/unified-admission.aspx"
+      },
+      "read_on": "2026-10-12"
+    },
+    {
+      "id": "custodian-scholarship",
+      "who_ar": "برنامج خادم الحرمين الشريفين للابتعاث (الرواد وإمداد)",
+      "need_ar": "«التقديم متاح دون اشتراط درجة اختبار قدرات وتحصيلي». آيلتس 5.5 فقط إذا كان قبولك في سنة تحضيرية، مع معدل 90%. وفيما عدا ذلك، اختباراتك هي ما تطلبه الجامعة التي تقبلك.",
+      "source": {
+        "title": "الشروط والأسئلة الشائعة، برنامج خادم الحرمين الشريفين للابتعاث",
+        "url": "https://sites.moe.gov.sa/scholarship-program/conditions/"
+      },
+      "read_on": "2026-10-12"
+    },
+    {
+      "id": "arruaad-universities",
+      "computed": true,
+      "who_ar": "جامعات مسار الرواد الثلاثون",
+      "source": {
+        "title": "صفحات القبول في مواقع الجامعات (في صفحة كل جامعة في واضح)",
+        "url": "/universities?track=arruaad"
+      },
+      "read_on": "2026-10-11"
+    },
+    {
+      "id": "aramco-cdpne",
+      "who_ar": "أرامكو السعودية (برنامج الابتعاث الجامعي CDPNE)",
+      "need_ar": "في الدورة السابقة (2025–2026): القدرات 90% أو أكثر، مع معدل 85% فأعلى في أول وثاني ثانوي والفصل الأول من ثالث. شروط الدورة الجديدة لم تُعلن بعد.",
+      "source": {
+        "title": "برنامج الابتعاث الجامعي لخريجي الثانوية، أرامكو السعودية",
+        "url": "https://www.aramco.com/ar/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne"
+      },
+      "read_on": "2026-10-11"
+    },
+    {
+      "id": "kaust-kgsp",
+      "who_ar": "كاوست (برنامج الطلاب الموهوبين KGSP)",
+      "need_ar": "في الدفعة الماضية (18): SAT ‏1350 (والرياضيات 700 على الأقل)، وTOEFL iBT ‏90 أو IELTS Academic ‏7.0. من يبلغها يُضمن له مقابلة، ومن لم يبلغها قد يُنظر في طلبه.",
+      "source": {
+        "title": "KGSP: Prospective Students",
+        "url": "https://kgsp.kaust.edu.sa/prospective-students"
+      },
+      "read_on": "2026-10-12"
+    }
+  ]
+}

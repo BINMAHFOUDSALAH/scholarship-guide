@@ -3,23 +3,18 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-12):**
-> Live on `main`: the UX redesign (decision 035, PR #1). Audit and research: `docs/research/ux-redesign-2026-10.md`.
-> On branch `claude/loving-hopper-sai8de`, **not merged yet**:
-> - the preparatory year as the second accepted kind of conditional offer
-> - the new logo (decision 036, the ض mark)
-> - the owner's X icon in the footer
-> - a simpler footer (no link list)
-> - the share image without «بدون تسجيل»
-> 1. **Owner merges the branch** (PR from `claude/loving-hopper-sai8de` into `main`), then checks the live site. Next session: start new work from the updated `main`.
-> 2. **Usability test with 3–5 students** (Stage 1e step 5). The redesign is based on expert guidance, not on watching students yet.
-> 2b. **Conditions page, still to check by the owner** (`docs/research/custodian-scholarship-2026-27.md` §3 «To check»): the age rule and «ثلاثة قبولات». The preparatory-year case was fixed on 2026-10-11.
-> 2c. **Next guide edition** (expected before إمداد opens): re-run `scripts/extract_universities.py`; universities may be added or removed, ranks and possibly the الرواد list may change.
-> 3. **Owner spot-checks the requirement files** in `data/university_details/`, starting with the ones the agents couldn't open directly (Columbia, Michigan, Oxford, UCL, NUS) and the years they inferred. Also check «الاحياء الدقيقة» = "General biology" in the R&D natural-sciences majors against the guide (pages 7–13).
-> 4. Next requirement batches: إمداد universities, most-searched first (Haiku agents, ~5 per batch).
-> 5. Apply the KGSP and Aramco research (`docs/research/kgsp-2026-27.md`, `aramco-cdpne-2026-27.md`) to `paths.json` once the owner has reviewed them.
-> 6. Then Stage 1e step 3 (grade-page task lists: the grade pages now put «الخطوة التالية» first and switch between grades) and step 4 (FAQ from real student questions).
-> 7. Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
+> **Next session (as of 2026-10-12, end of the grade-pages iteration):**
+> Live on `main`: the UX redesign (decision 035), the ض logo and the X link (decision 036), the subagent setup (decision 037, PR #3).
+> On branch `claude/loving-hopper-sai8de`, **not merged yet**: the grade pages and the finder's at-a-glance facts (decision 038).
+> 1. **Owner reviews and merges** the branch, then reads the three grade pages on the live site.
+> 2. **Owner checks** `docs/research/grade-pages-2026-10.md` §2–§3. Aramco's page couldn't be opened from the cloud environment, so its facts are from 2026-10-11 and labelled as the previous cycle. Re-check it from your laptop.
+> 3. **Usability test with 3–5 students** (Stage 1e step 5), with the open questions in `docs/research/grade-pages-2026-10.md` §5 (track choice, counsellor, which tests they think they need, Saudi + abroad in parallel, would they track applications in واضح).
+> 4. **Next guide edition** (expected before إمداد opens): re-run `scripts/extract_universities.py`; universities may be added or removed, ranks and possibly the الرواد list may change.
+> 5. **Owner spot-checks the requirement files** in `data/university_details/`, starting with the ones the agents couldn't open (Columbia, Michigan, Oxford, UCL, NUS). The dates whose year was inferred are now marked on the site («السنة غير مذكورة في الصفحة»). Also check «الاحياء الدقيقة» = "General biology" in the R&D majors against the guide (pages 7–13).
+> 6. Next requirement batches: إمداد universities, most-searched first (`source-researcher` agents on Haiku, ~5 per batch). Until then إمداد rows say «لم نجمعها بعد».
+> 7. Stage 1e step 4 (FAQ from real student questions). Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
+>
+> Resolved 2026-10-12: «ثلاث قبولات كحد أقصى» is on the official conditions page (now on the site). The age rule contradicts itself on that page, so it's not published (`docs/research/custodian-scholarship-2026-27.md`).
 >
 > Also done 2026-10-11:
 > - official X accounts as sources (@SA_Scholarships, @SDAIA_SA)
@@ -90,7 +85,8 @@ Order chosen by the owner: facts first, then layout.
 - [x] **IELTS resource page** `/resources/ielts` (official IELTS + MoE + KGSP sources).
 - [x] KGSP and Aramco research by two parallel research agents → `docs/research/`.
 - [x] Universities explorer: PDF downloaded to `data/raw/` (git-ignored), `pdfplumber` installed (dev), structure inspected, spec written. **Awaiting owner approval.**
-- [ ] **Step 3: grade pages «خطوتك القادمة»:** a short task list per grade (action, why, source, now/later; dates only when verified). Grade pages get sources (end their draft status).
+- [x] **Step 3: grade pages (decision 038):** one structure for every grade (this week → what matters → 3–4 priorities → tool → ≤ 4 resources → next step on واضح → sources); every fact sourced (`docs/research/grade-pages-2026-10.md`); «الاختبارات: من يطلب ماذا؟» from `data/test_needs.json`; grade 12: three kinds of application in order, confirmation steps, checklist, next university deadlines from data. Status `sourced`, owner review pending.
+- [x] **Finder, at a glance (decision 038):** scope note, tracks reordered, «لغة الدولة الرسمية» with a hint, SAT/IELTS/next date/admissions link per row and in «قائمتي», structured university dates (75 migrated), scholarship window shown apart from university dates.
 - [ ] **Step 4: FAQ from real student questions.** The owner exports the Telegram group (Telegram Desktop → JSON); the raw export never enters the repo. Claude extracts only the questions, strips names/usernames/numbers, groups duplicates, counts them. Answers go in a data file with the fact shape; unanswered ones stay hidden. No automatic scraping.
 - [x] **UX redesign (decision 035):** one design system; homepage (grades + search, open now, compact programs); explorer (filter tags, labels, back to results, Arabic suggestions fix); university pages («باختصار», not-admission notice); «قائمتي» on the device; program/grade pages; accessibility pass. Audit + research: `docs/research/ux-redesign-2026-10.md`.
 - [ ] Owner: review the redesign branch and merge it to `main`.

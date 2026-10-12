@@ -4,17 +4,17 @@
     {
       "slug": "grade-10",
       "label_ar": "أول ثانوي",
-      "hint_ar": "سنة البداية"
+      "hint_ar": "اكتشف وابنِ أساسك"
     },
     {
       "slug": "grade-11",
       "label_ar": "ثاني ثانوي",
-      "hint_ar": "سنة التحضير"
+      "hint_ar": "ابحث وجهّز"
     },
     {
       "slug": "grade-12",
       "label_ar": "ثالث ثانوي",
-      "hint_ar": "سنة القرار والتقديم"
+      "hint_ar": "قدّم وتابع"
     }
   ],
   "search_examples": [

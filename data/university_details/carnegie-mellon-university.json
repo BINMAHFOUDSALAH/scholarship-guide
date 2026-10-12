@@ -33,18 +33,29 @@
   },
   "dates": [
     {
-      "label_ar": "Early Decision (ملزم) لدورة خريف 2027 (الصفحة لا تذكر السنة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-02",
-      "source_url": "https://www.cmu.edu/admission/admission"
+      "year_stated": false,
+      "source_url": "https://www.cmu.edu/admission/admission",
+      "note_ar": "ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
     },
     {
-      "label_ar": "Regular Decision (الموعد العام) لدورة خريف 2027 (الصفحة لا تذكر السنة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-04",
+      "year_stated": false,
       "source_url": "https://www.cmu.edu/admission/admission"
     },
     {
-      "label_ar": "Regular Decision لطلاب الدراما والموسيقى فقط (الصفحة لا تذكر السنة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
       "date": "2026-12-01",
+      "year_stated": false,
+      "note_ar": "لطلاب الدراما والموسيقى فقط",
       "source_url": "https://www.cmu.edu/admission/admission"
     }
   ],

@@ -29,18 +29,27 @@
   },
   "dates": [
     {
-      "label_ar": "فتح تسجيل طلب القبول المسبق DAP على منصة Études en France لدورة 2027/2028",
+      "event_ar": "فتح التسجيل",
+      "round_ar": "طلب القبول المسبق DAP على منصة Études en France",
+      "cycle_ar": "خريف 2027",
       "date": "2026-10-01",
+      "year_stated": true,
       "source_url": "https://www.campusfrance.org/en/application-etudes-en-france-procedure"
     },
     {
-      "label_ar": "رد الجامعات على طلبات DAP: قبل هذا التاريخ",
+      "event_ar": "ترد الجامعات على الطلبات قبل هذا التاريخ",
+      "round_ar": "DAP",
+      "cycle_ar": "خريف 2027",
       "date": "2027-04-30",
+      "year_stated": true,
       "source_url": "https://www.campusfrance.org/en/application-etudes-en-france-procedure"
     },
     {
-      "label_ar": "رد الطالب على عرض القبول: قبل هذا التاريخ",
+      "event_ar": "آخر موعد لردك على عرض القبول",
+      "round_ar": "DAP",
+      "cycle_ar": "خريف 2027",
       "date": "2027-05-31",
+      "year_stated": true,
       "source_url": "https://www.campusfrance.org/en/application-etudes-en-france-procedure"
     }
   ],

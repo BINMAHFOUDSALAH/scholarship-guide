@@ -29,18 +29,28 @@
   },
   "dates": [
     {
-      "label_ar": "آخر موعد لتقديم الطلب عبر UCAS لدخول 2027 (6 مساءً بتوقيت المملكة المتحدة)",
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
       "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "6 مساءً بتوقيت المملكة المتحدة",
       "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
     },
     {
-      "label_ar": "آخر موعد لتسليم العمل الكتابي، إن طلبه التخصص",
+      "event_ar": "آخر موعد لتسليم العمل الكتابي",
+      "cycle_ar": "خريف 2027",
       "date": "2026-11-10",
+      "year_stated": true,
+      "note_ar": "إن طلبه التخصص",
       "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
     },
     {
-      "label_ar": "موعد إعلان النتيجة للمتقدمين الذين أُجريت لهم مقابلات (المقابلات عبر الإنترنت في ديسمبر 2026)",
+      "event_ar": "إعلان النتيجة لمن أُجريت لهم مقابلات",
+      "cycle_ar": "خريف 2027",
       "date": "2027-01-12",
+      "year_stated": true,
+      "note_ar": "المقابلات عبر الإنترنت في ديسمبر 2026",
       "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
     }
   ],

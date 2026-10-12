@@ -66,7 +66,7 @@ def is_confirmed(item):
 
 site = load_json("site.json")
 paths = load_json("paths.json")
-tests = load_json("tests.json")
+test_needs = load_json("test_needs.json")
 featured_quote = load_json("featured_quote.json")
 home_text = load_json("home.json")
 news = sort_news([item for item in load_json("news.json") if is_confirmed(item)])
@@ -186,7 +186,6 @@ def home(request: Request):
         "home.html",
         {
             "paths": paths,
-            "tests": tests,
             "board": status_board(),
             "home": home_text,
             "path_names": path_names,
@@ -215,8 +214,11 @@ def grade_page(request: Request, slug: str):
     page = load_page("grades", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html",
-                                      {"page": page, "tests": tests, "section": "grades", "grades": home_text["grades"]})
+    # Each grade page has the same structure (grade.html, decision 038); its tools come from data/.
+    return templates.TemplateResponse(request, "grade.html",
+                                      {"page": page, "grades": home_text["grades"], "explorer": explorer,
+                                       "test_needs": test_needs, "sat_summary": explorer.sat_summary(),
+                                       "deadlines": explorer.upcoming_deadlines()})
 
 
 @app.get("/resources/{slug}", response_class=HTMLResponse)
@@ -225,7 +227,7 @@ def resource_page(request: Request, slug: str):
     page = load_page("resources", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html", {"page": page, "tests": tests, "section": "resources"})
+    return templates.TemplateResponse(request, "page.html", {"page": page})
 
 
 @app.get("/programs/{slug}", response_class=HTMLResponse)
@@ -261,7 +263,10 @@ def university_page(request: Request, uid: str, from_: str | None = Query(None, 
     # to the same results. Only known parameters survive (see Explorer.back_url).
     return templates.TemplateResponse(request, "university.html",
                                       {"p": profile, "explorer": explorer, "today": date.today().isoformat(),
-                                       "back_url": explorer.back_url(from_)})
+                                       "back_url": explorer.back_url(from_),
+                                       # The scholarship's own dates, shown apart from the university's (decision 038).
+                                       "scholarship": {t["id"]: t for t in paths_by_id["custodian-scholarship"]["tracks"]
+                                                       if t.get("id")}})
 
 
 @app.get("/my-list", response_class=HTMLResponse)

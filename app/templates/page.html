@@ -6,13 +6,6 @@
 
 {% block content %}
 <article class="measure">
-  {% if section == "grades" %}
-  {# Move between the three grades without going back to the homepage. #}
-  <nav class="grade-switch" aria-label="الصفوف">
-    {% for g in grades %}<a href="{{ url_for('grade_page', slug=g.slug) }}"{% if g.slug == page.slug %} aria-current="page"{% endif %}>{{ g.label_ar }}</a>{% endfor %}
-  </nav>
-  {% endif %}
-
   <header class="page-header">
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
@@ -26,7 +19,6 @@
     <p class="page-contents-title">في هذه الصفحة</p>
     <ul>
       {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
-      {% if page.show_tests %}<li><a href="#tests-title">اختبارات ستسمع عنها كثيرًا</a></li>{% endif %}
     </ul>
   </nav>
   {% endif %}
@@ -35,27 +27,7 @@
     {{ page.html | safe }}
   </div>
 
-  {% if page.show_tests %}
-  <section class="page-tests" aria-labelledby="tests-title">
-    <h2 id="tests-title">اختبارات ستسمع عنها كثيرًا</h2>
-    <dl class="test-grid">
-      {% for test in tests %}
-      <div class="test">
-        <dt>{{ test.name_ar }} <span class="term-en" lang="en" dir="ltr">{{ test.name_en }}</span></dt>
-        <dd>{{ test.what_ar }}</dd>
-        <dd><a href="{{ test.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a></dd>
-      </div>
-      {% endfor %}
-    </dl>
-  </section>
-  {% endif %}
-
   {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
 
-  {% if section == "grades" %}
-  {% set ns = namespace(next=None) %}
-  {% for g in grades %}{% if loop.previtem is defined and loop.previtem.slug == page.slug %}{% set ns.next = g %}{% endif %}{% endfor %}
-  {% if ns.next %}<p class="next-grade"><a href="{{ url_for('grade_page', slug=ns.next.slug) }}">ماذا ينتظرك في {{ ns.next.label_ar }}؟ ←</a></p>{% endif %}
-  {% endif %}
 </article>
 {% endblock %}

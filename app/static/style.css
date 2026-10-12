@@ -1326,56 +1326,6 @@ main:has(> .hero) {
   }
 }
 
-/* ---------- Tests: lined rows ---------- */
-
-.test-grid {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line-strong);
-}
-
-.test {
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--line);
-}
-
-.test dt {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--heading);
-}
-
-.test dd {
-  margin: var(--space-1) 0 0;
-  color: var(--ink-muted);
-}
-
-.test dd a {
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-@media (min-width: 800px) {
-  .test-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .test {
-    padding-inline: var(--space-4);
-    border-bottom: 0;
-  }
-
-  .test:first-child {
-    padding-inline-start: 0;
-  }
-
-  .test + .test {
-    border-inline-start: 1px solid var(--line);
-  }
-}
-
 /* ---------- Tuwaiq band: contained, dark, quiet ---------- */
 
 .tuwaiq {
@@ -1634,6 +1584,47 @@ main:has(> .hero) {
   margin-bottom: var(--space-2);
 }
 
+/* ---------- Grade pages (decision 038): one structure for every grade ---------- */
+
+.grade-stage {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.prose ol > li {
+  margin-block: var(--space-3);
+}
+
+.prose h3 {
+  scroll-margin-top: var(--space-4);
+}
+
+.grade-tool,
+.grade-resources,
+.grade-next {
+  margin-top: var(--space-5);
+}
+
+.grade-tool h2,
+.grade-resources h2,
+.grade-next h2 {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-lg);
+  scroll-margin-top: var(--space-4);
+}
+
+.resource-list > li {
+  display: grid;
+  gap: 2px;
+}
+
+.resource-why {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
 .next-grade {
   margin-top: var(--space-5);
   padding-top: var(--space-3);
@@ -1836,6 +1827,12 @@ main:has(> .hero) {
 .explorer-source {
   font-size: var(--text-sm);
   color: var(--ink-muted);
+}
+
+.explorer-scope {
+  max-width: 44em;
+  margin-block: 0 var(--space-2);
+  font-size: var(--text-sm);
 }
 
 .explorer-form {
@@ -2153,6 +2150,21 @@ a.uni-name:hover .uni-name-en:only-child {
 .uni-deadline {
   font-size: var(--text-sm);
   color: var(--ink);
+}
+
+/* «باختصار» in a result row: SAT/ACT · IELTS · the next university date · the admissions page (decision 038). */
+.key-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-3);
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+
+.key-facts--unknown {
+  color: var(--ink-muted);
 }
 
 .req-past {
