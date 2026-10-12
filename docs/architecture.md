@@ -60,6 +60,7 @@ Server-rendered pages, no frontend framework. GitHub → Render deploys on push 
 ## Scripts and specs
 - `scripts/extract_universities.py` (+ `flag_countries.json`, `university_aliases.json`, `list_overrides.json`): rebuilds `data/universities.json` from the PDF in `data/raw/`. Run: `.venv\Scripts\python.exe scripts\extract_universities.py`. `pdfplumber` is dev only.
 - `docs/specs/universities-explorer.md`: the explorer spec and the requirements schema.
+- `marketing/src/` (decision 044): the launch ad, kept apart from the app. `capture_site.mjs` records the live site in headless Edge; `make_voice.py` calls ElevenLabs; `build_ad.py` assembles the videos with ffmpeg. Media lives in `marketing/assets/` and `marketing/out/` (git-ignored). Guide: `docs/marketing/launch-ad.md`.
 
 ## Tooling
 - `.github/workflows/tests.yml`: runs `pytest` on every push and pull request (CI). Render deploys only after it passes.

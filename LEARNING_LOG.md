@@ -438,3 +438,20 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** a sweep of 15 routes × 9 widths (320–768px) with mobile emulation, no overflow. Not tested on a real iPhone.
 
 **Understood?** Not yet checked.
+
+## 20. A launch ad built like software (2026-10-12)
+**Built / why:** a 30s vertical ad for the soft launch (decision 044). It is made by scripts so it can be rebuilt whenever the site changes.
+- `marketing/src/capture_site.mjs` drives the installed Edge in headless mode over the **Chrome DevTools Protocol** (CDP): phone-sized viewport, real taps and typing on the live site, sharp 1080-px frames.
+- `marketing/src/build_ad.py` uses **ffmpeg** to cut, scroll, mask and caption the video. Edge renders the Arabic text from HTML, because ffmpeg's own text drawing doesn't join Arabic letters reliably.
+- `marketing/src/make_voice.py` calls the **ElevenLabs API** with a restricted key kept outside the repo.
+
+**Key concepts:**
+- **Headless browser + CDP:** a program that controls a browser without a window.
+- **ffmpeg filter graphs:** inputs → filters (crop, scale, overlay, alphamerge) → output.
+- **Loudness (LUFS):** apps normalise around −14, so we master there.
+- **Safe zones:** keep text where the apps' buttons won't cover it.
+- **Measuring without trackers:** `?src=` links counted in the server's own logs.
+
+**Tested:** ffprobe (30.00s / 15.01s / 6.01s at 1080×1920, video + audio); a contact sheet of frames checked by eye; the audio path checked with test tones (−12.7 LUFS integrated, lines start on time). **Not tested yet:** real AI clips, real voices, playback on a phone, and the platforms' upload checks.
+
+**Understood?** Not yet checked.

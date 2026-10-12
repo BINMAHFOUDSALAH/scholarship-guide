@@ -15,6 +15,10 @@ Why each choice was made lives in [decisions.md](decisions.md).
 >
 > **Next steps:**
 > 1. **Testers:** share https://wadihguide.com; feedback comes through the footer's X link (decision 043). Render's paid instance (about $7/month) stops the free plan's sleep; the owner is upgrading for the test month.
+>    - **Launch ad «الشلة» (decision 044, guide in `docs/marketing/launch-ad.md`):** the pipeline and the real site footage are done.
+>    - **Paused (2026-10-12): no budget for paid tools yet.** Missing: the 4 AI clips (the Higgsfield free plan has no credits or commercial use; Starter $19, or the Veo API ~$5) and the voices (the ElevenLabs free plan has no commercial licence; Starter $6).
+>    - A $0 route exists if wanted: the owner's own phone shots + the owner's own voice, or caption cards instead of AI shots.
+>    - Then rebuild, review, and post organically with `?src=` links.
 > 2. **Stale-facts check** (the audit's single best next task): a test that fails when `last_checked` is over 90 days, plus a re-check list before Launch 1.
 > 3. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes), then act on feedback before the full launch (~one month).
 > 4. **Owner re-checks Aramco** from the laptop (the cloud environment couldn't reach aramco.com; its facts are from 2026-10-11, previous cycle).

@@ -538,3 +538,31 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **A Google Form:** a third-party page and more setup, with no evidence it's needed yet.
 - **WhatsApp:** shares a personal phone number with minors.
 - **A form on the site:** needs a backend and storing messages.
+
+## 044 — Launch ad «الشلة»: real product footage, minimal AI, built by script
+**Date:** 2026-10-12
+**Decision:**
+- **The ad:** a 30s vertical ad (plus 15s and 6s cutdowns) on the owner's concept, friends at school: «وأنت؟ وش ناوي؟» → the real site → «لسّه أقرّر… بس عرفت خطوتي الجاية».
+- **Real footage:** 14 of the 30 seconds are real wadihguide.com footage, captured by script from the live site.
+- **AI only for 4 scene-setting shots:** framed with no identifiable face (backs, shoulders, hands, soft focus) and labelled «مشهد تمثيلي مولَّد بالذكاء الاصطناعي».
+- **Toolkit:** Higgsfield for the 4 clips, ElevenLabs for the voices, ffmpeg + headless Edge for the edit. Edge renders the Arabic captions and end card in the site's own fonts. CapCut is optional.
+- **Files:**
+  - Scripts in `marketing/src/`.
+  - Media in `marketing/assets/` and `marketing/out/`, both git-ignored.
+  - The production guide and launch plan in `docs/marketing/launch-ad.md`.
+- **API keys:** stored outside the repo (`%USERPROFILE%\.wadih\`), restricted, with credit limits. They are never pasted in chat.
+- **Soft launch first:** organic only, measured with `?src=` links read from Render's access logs (no trackers). Any paid boost waits for 14 days of data and the owner's approval.
+
+**Why:**
+- Snapchat, Saudi Arabia's biggest youth platform, stopped recommending wholly AI-generated videos in Spotlight (July 2026).
+- TikTok asks for AI labels and may restrict AI likenesses of minors.
+- A guide whose promise is "real and sourced" shouldn't open with a fake teenager.
+- The real screen is also the most convincing proof: every fact has its source.
+- A script makes the edit repeatable: re-capture the site after a change, rebuild in two commands.
+
+**Alternatives:**
+- **A fully AI-generated ad with a realistic student:** reach and policy risk, and off-brand.
+- **«وش ناوي تدرس؟» from relatives, or a founder-voice video:** strong, kept for later variants. The owner chose the school concept.
+- **Higgsfield's free plan:** rejected, because it has 0 credits and no commercial use.
+- **Assembling only in CapCut:** manual and hard to repeat; kept as an optional polish step.
+- **Playwright for the screen capture:** a package install; Edge over the DevTools protocol needs nothing new.
