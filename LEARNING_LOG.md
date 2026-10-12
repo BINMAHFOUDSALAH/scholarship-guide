@@ -426,3 +426,15 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** 249 pytest tests, including the redirect. The live checks wait for DNS verification.
 
 **Understood?** Not yet checked.
+
+## 19. The iPhone "zoomed in" bug (2026-10-12)
+**What happened:** the owner said the site felt zoomed in on an iPhone 13.
+- **Cause:** between 380 and ~470px wide (most iPhones), the header showed its button labels and was 60px wider than the screen, so every page could slide sideways.
+- **Why it slipped through:** my overflow checks only used 320, 360 and 1280px.
+- **Fix:** icon-only header buttons up to 479px (they keep their accessible names), plus `text-size-adjust: 100%` so Safari doesn't enlarge text in landscape.
+
+**Key concept:** test the widths real users have (375, 390, 414, 430), not just the extremes.
+
+**Tested:** a sweep of 15 routes × 9 widths (320–768px) with mobile emulation, no overflow. Not tested on a real iPhone.
+
+**Understood?** Not yet checked.
