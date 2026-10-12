@@ -11,7 +11,7 @@ next_feature:
   href: /#programs
   label_ar: البرامج
   text_ar: اعرف من الآن ماذا تشترط برامج الابتعاث، ومنها المسارات التي تقبلها.
-tools: []
+tools: [timeline]
 resources:
   - title_ar: المسارات الثانوية (وزارة التعليم)
     url: https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Pages/SecondarySchoolTracks.aspx

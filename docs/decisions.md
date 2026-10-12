@@ -373,6 +373,7 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Every subagent runs on `claude-haiku-5-5`: the `model` field in each file, plus `CLAUDE_CODE_SUBAGENT_MODEL` in `.claude/settings.json` for Claude Code's built-in agents (Explore, general-purpose).
 - Research agents return results instead of writing files. The main session saves them, validates them, decides, and writes code.
 - If Haiku 5.5 is unavailable, Claude stops and tells the owner, rather than switching model or doing the job silently.
+- **Amended 2026-10-12 (decision 039):** `source-researcher` and `fact-checker` may use Bash to read pages with `curl` / `pdftotext` (to stdout only), because WebFetch can't reach sites from the cloud environment. Read-only is by instruction; the main session checks `git status` after each agent.
 **Alternatives:**
 - No agent files, rules in CLAUDE.md only. This worked, but the source rules had to be retyped every time.
 - More agents (a codebase explorer, a UX researcher). Rejected: the built-in Explore agent already explores, and one-off research doesn't need a permanent file.
@@ -425,3 +426,29 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **Removing the language filter:** rewording keeps its real use (the scholarship's rule on non-English-speaking countries) without the confusion.
 - **A large resource library per grade:** rejected (CLAUDE.md: choose by need, verify).
 **Why:** students need to know which tests *their* targets ask for, and in which order to apply. Both answers now come from official sources and our own data, not general advice.
+
+## 039 — «قائمتي» findable from the results; a timeline from grade 10 to university on every grade page
+**Date:** 2026-10-12 · **Research:** [timeline-2026-10.md](research/timeline-2026-10.md), [product-audit-2026-10.md](research/product-audit-2026-10.md)
+**Context:**
+- **«قائمتي» worked, but couldn't be found.** You could save only from a university's page, and the header link stayed hidden until the first save. Blocked storage left /my-list blank.
+- **Students start preparing too late.** US applications open in August before grade 12, and decisions come in December and March. The scholarship needs an unconditional offer, and its window is set each year: 4 Dec 2022 to 5 May 2023 for 2023–24, but late August to 15 Nov in 2026.
+**Decision:**
+- **«قائمتي»:**
+  - «احفظ» on every result row.
+  - The header link is always visible, with a count.
+  - When storage is blocked, there are no save buttons and /my-list says why.
+  - The note says where the list lives and when it can be lost.
+  - Still `localStorage` only; no backend.
+- **Timeline:** one shared section, «من أول ثانوي إلى الجامعة», on all three grade pages (`partials/timeline.html` + `data/timeline.json`). There's no new page or nav item.
+  - The student's own grade is open and marked «أنت هنا» (`aria-current="step"`).
+  - Worked example: Fall 2028.
+  - Each stage has actions, «موعد رسمي» facts with sources, and «من بياناتنا» patterns counted from the requirement files (`Explorer.timeline_stats()`).
+  - The scholarship sits apart, as «موعده يُعلن كل سنة، وليس ثابتًا»: the rule (unconditional offer), the current الرواد status from `paths.json`, the 2023–24 window as an example, and what happens when the dates clash (self-funded students may apply later; whether earlier time is funded isn't stated).
+  - Linked from the university page's «المواعيد» and the program page.
+- **Research agents read with `curl`** (Bash, read-only by instruction): WebFetch can't reach sites from the cloud environment (decision 037 amended).
+**Alternatives:**
+- **A separate /timeline page with a nav item:** splits the same content and adds navigation.
+- **A personal planner** (enter your grade and dates): there's no evidence students would use it yet.
+- **A fixed "January–February" scholarship season:** false; the windows we found differ.
+- **Lime for «أنت هنا»:** lime stays for "open now" and "next step"; «أنت هنا» uses forest.
+**Why:** students arrive by grade, so the timeline meets them there, with their year open. One data file means one place to update when the program announces a window.

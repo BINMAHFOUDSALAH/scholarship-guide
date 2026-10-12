@@ -13,8 +13,12 @@
 {% if link %}</a>{% else %}</span>{% endif %}
 {% endmacro %}
 
-{# «✓ في قائمتك»: hidden until mylist.js finds this university in the student's saved list. #}
-{% macro saved_marker(u) %}<span class="tag tag--saved" data-saved-marker="{{ u.id }}" hidden>✓ في قائمتك</span>{% endmacro %}
+{#
+  Save from a result row (decision 039): «احفظ» / «✓ في قائمتك». Invisible (but keeping its space, so
+  "back to results" lands on the same row) until mylist.js knows the browser can keep the list;
+  without JavaScript or with storage blocked, it never shows.
+#}
+{% macro save_button(u) %}<button class="save-mini" type="button" data-save="{{ u.id }}" data-save-name="{{ u.name_ar or u.name_en }}" data-pending tabindex="-1"><span data-save-label>احفظ</span></button>{% endmacro %}
 
 {# The notes the official guide attaches to a listing. #}
 {% macro listing_notes(l) %}

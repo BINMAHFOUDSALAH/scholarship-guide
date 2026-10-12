@@ -338,3 +338,32 @@ What we built in واضح, why, how it works, and how to talk about it. Updated 
 - **Claude:** read the sources, audited the old claims, built and tested.
 
 **Understood?** Not yet checked.
+
+## 15. «قائمتي» you can find, a timeline to university, and a product audit (2026-10-12)
+**Built / why:**
+- **«قائمتي»:** it worked, but nobody could find it. Now there's «احفظ» on every result row and an always-visible link. If the browser blocks storage, the page says so instead of staying blank.
+- **«من أول ثانوي إلى الجامعة»:** one timeline on all three grade pages, with your grade open and marked «أنت هنا».
+  - Official US dates: applications open 1 August, early results mid-December, regular results in March, reply by 1 May.
+  - Counted patterns from our data.
+  - A separate block explaining that the scholarship window changes every year (Dec 2022–May 2023 vs. Aug–Nov 2026) and needs an unconditional offer.
+- **Product audit:** ranked findings in `docs/research/product-audit-2026-10.md`. The best next task is a stale-facts check.
+- **إمداد:** postponed until the new guide, with a reminder checklist in the roadmap and a test that catches universities that leave the lists.
+
+**Key concepts:**
+- **Discoverability:** a feature nobody can find doesn't exist for users. Hidden-until-used UI hides the feature itself.
+- **Event delegation:** one click listener on the document handles buttons that don't exist yet (rows from live updates).
+- **Graceful failure:** when storage is blocked, show nothing that pretends to work, and explain.
+- **"Pattern" vs "official" dates:** label each; never turn a pattern into a promise.
+- **Agents as researchers, main session as editor:** an agent reported Stanford "early April". It wasn't on the page I read, so it wasn't used.
+
+**Decisions:** 039 (and 037 amended).
+
+**Tested:**
+- 243 pytest tests.
+- «قائمتي» browser flow: 36 checks, including saving from results, refresh, sync with the university page, blocked storage, and no JavaScript.
+- The explorer flow.
+- axe-core, overflow at 320px, and the source links (see the final report).
+
+**Not tested:** Safari/iPhone; real students.
+
+**Understood?** Not yet checked.

@@ -423,6 +423,23 @@ class Explorer:
         rows.sort(key=lambda r: (r["date"], r["university"]["name_en"]))
         return rows[:limit]
 
+    def timeline_stats(self):
+        """Deadline patterns for the grade-page timeline (decision 039), counted from the researched files.
+
+        Only «آخر موعد للتقديم» items of the current cycle (no reference_only). Returns
+        {"with_deadlines": n, "early": n (a deadline in October or November), "january": n}.
+        """
+        early = january = total = 0
+        for d in self.details.values():
+            months = {x["date"][5:7] for x in d.get("dates") or []
+                      if x.get("date") and not x.get("reference_only") and x["event_ar"] == "آخر موعد للتقديم"}
+            if not months:
+                continue
+            total += 1
+            early += bool(months & {"10", "11"})
+            january += "01" in months
+        return {"with_deadlines": total, "early": early, "january": january}
+
     def profile(self, uid):
         u = self.universities.get(uid)
         if u is None:

@@ -82,7 +82,7 @@
         {% for l, u in s.rows %}
         <tr>
           <td class="uni-rank">{{ l.rank }}</td>
-          <th scope="row">{{ um.uni_name(u, back=back) }} {{ um.saved_marker(u) }}</th>
+          <th scope="row">{{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</th>
           <td class="uni-cell-country">{{ um.country(u) }}</td>
           <td class="uni-cell-notes"><span class="tags">{{ um.listing_notes(l) }}</span>{{ um.key_facts(u) }}</td>
         </tr>
@@ -97,7 +97,7 @@
     <ul class="uni-list">
       {% for u in s.universities %}
       <li class="uni-item">
-        <div class="uni-item-name">{{ um.uni_name(u, back=back) }} {{ um.saved_marker(u) }}</div>
+        <div class="uni-item-name">{{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</div>
         <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</div>
         {{ um.key_facts(u) }}
       </li>
