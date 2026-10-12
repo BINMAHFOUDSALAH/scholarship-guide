@@ -25,7 +25,6 @@
         <span data-save-label>احفظ في قائمتي</span>
       </button>
       <p class="save-note" data-save-note="{{ u.id }}" hidden>✓ محفوظة في <a href="{{ url_for('my_list') }}">قائمتي</a> على هذا الجهاز.</p>
-      <p class="sr-only" role="status" data-save-status></p>
     </div>
   </header>
 
@@ -245,7 +244,7 @@
         </li>
         {% endfor %}
       </ul>
-      <p class="result-note">كل مواعيد الابتعاث والبرامج في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>.</p>
+      <p class="result-note">كل مواعيد الابتعاث والبرامج في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>. وكيف تتوافق مواعيد الجامعة مع الابتعاث: <a href="{{ url_for('grade_page', slug='grade-12') }}#timeline">من أول ثانوي إلى الجامعة ←</a></p>
     </div>
 
     <div class="date-block">

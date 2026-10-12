@@ -374,17 +374,33 @@ def test_doctorate_lists_are_folded_unless_they_are_all_there_is():
     assert '<details class="uni-track rnd-lists" open>' in client.get(f"/universities/{only_rnd}").text
 
 
-def test_save_button_needs_javascript_and_the_header_link_starts_hidden():
+def test_save_buttons_need_javascript_and_the_header_link_is_always_there():
+    """Decision 039: «قائمتي» is findable before anything is saved; save buttons appear only with JS."""
     html = client.get("/universities/harvard-university").text
     assert 'data-save="harvard-university" hidden' in html
-    assert "data-mylist-link hidden" in html
+    assert "data-mylist-link hidden" not in html and "data-mylist-link" in html
+    assert 'role="status" data-save-status' in html
     assert "/static/mylist.js" in html
+
+
+def test_result_rows_can_be_saved_from_the_list():
+    for url in ("/universities?track=arruaad", "/universities?q=stanford"):
+        html = client.get(url).text
+        assert 'class="save-mini" type="button" data-save="stanford-university"' in html, url
+        assert "data-pending" in html  # invisible until mylist.js is ready
+        assert 'data-save-name="جامعة ستانفورد"' in html or "data-save-name=" in html
+
+
+def test_my_list_explains_where_the_list_lives_and_when_storage_is_blocked():
+    html = client.get("/my-list").text
+    assert "لا تنتقل إلى جهاز أو متصفح آخر" in html and "التصفح الخاص" in html
+    assert "data-mylist-blocked hidden" in html
 
 
 def test_my_list_page_is_private_and_not_indexed():
     html = client.get("/my-list").text
     assert '<meta name="robots" content="noindex">' in html
-    assert "على هذا الجهاز فقط" in html and "<noscript>" in html
+    assert "في هذا المتصفح فقط" in html and "<noscript>" in html
     assert "/my-list" not in client.get("/sitemap.xml").text
 
 
@@ -440,3 +456,11 @@ def test_explorer_says_being_on_a_list_is_not_admission():
 def test_saved_list_rows_show_key_facts():
     html = client.get("/my-list?partial=1&ids=stanford-university").text
     assert "SAT/ACT" in html and "صفحة القبول الرسمية" in html
+
+
+def test_every_requirement_file_belongs_to_a_listed_university():
+    """When a new guide drops a university, its researched file must be noticed, not silently ignored."""
+    listed = {u["id"] for u in json.loads((Path(__file__).parent.parent / "data" / "universities.json")
+                                          .read_text(encoding="utf-8"))["universities"]}
+    orphans = [p.stem for p in DETAIL_FILES if p.stem not in listed]
+    assert not orphans, f"requirement files for universities no longer in the guide: {orphans}"

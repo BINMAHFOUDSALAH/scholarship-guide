@@ -3,18 +3,27 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-12, end of the grade-pages iteration):**
-> Live on `main`: the UX redesign (decision 035), the ض logo and the X link (decision 036), the subagent setup (decision 037, PR #3).
-> On branch `claude/loving-hopper-sai8de`, **not merged yet**: the grade pages and the finder's at-a-glance facts (decision 038).
-> 1. **Owner reviews and merges** the branch, then reads the three grade pages on the live site.
-> 2. **Owner checks** `docs/research/grade-pages-2026-10.md` §2–§3. Aramco's page couldn't be opened from the cloud environment, so its facts are from 2026-10-11 and labelled as the previous cycle. Re-check it from your laptop.
-> 3. **Usability test with 3–5 students** (Stage 1e step 5), with the open questions in `docs/research/grade-pages-2026-10.md` §5 (track choice, counsellor, which tests they think they need, Saudi + abroad in parallel, would they track applications in واضح).
-> 4. **Next guide edition** (expected before إمداد opens): re-run `scripts/extract_universities.py`; universities may be added or removed, ranks and possibly the الرواد list may change.
-> 5. **Owner spot-checks the requirement files** in `data/university_details/`, starting with the ones the agents couldn't open (Columbia, Michigan, Oxford, UCL, NUS). The dates whose year was inferred are now marked on the site («السنة غير مذكورة في الصفحة»). Also check «الاحياء الدقيقة» = "General biology" in the R&D majors against the guide (pages 7–13).
-> 6. Next requirement batches: إمداد universities, most-searched first (`source-researcher` agents on Haiku, ~5 per batch). Until then إمداد rows say «لم نجمعها بعد».
-> 7. Stage 1e step 4 (FAQ from real student questions). Check that the owner flipped Render's Auto-Deploy to "After CI Checks Pass".
+> **Next session (as of 2026-10-12, end of the timeline iteration):**
+> Live on `main`: decisions 035–038.
+> On branch `claude/loving-hopper-sai8de`, **not merged yet** (decision 039):
+> - «قائمتي» findable (save from results, link always visible, blocked-storage message)
+> - the timeline «من أول ثانوي إلى الجامعة» on the grade pages
+> - the product audit (`docs/research/product-audit-2026-10.md`)
 >
-> Resolved 2026-10-12: «ثلاث قبولات كحد أقصى» is on the official conditions page (now on the site). The age rule contradicts itself on that page, so it's not published (`docs/research/custodian-scholarship-2026-27.md`).
+> ⏰ **When the next universities guide PDF is out (reminder):**
+> 1. re-run `scripts/extract_universities.py`; the test `test_every_requirement_file_belongs_to_a_listed_university` flags universities that left the lists
+> 2. add Arabic names for new universities (`university_names_ar.json`)
+> 3. research **إمداد** requirements in waves, English-speaking countries first (US 53, UK 29, Australia 13, Canada 8, Singapore 2 in the current guide), with `source-researcher` agents on Haiku (`curl`), ~5 per batch
+> 4. update the guide link and year everywhere it appears
+>
+> **Next steps:**
+> 1. **Owner merges** the branch and reads the timeline on the three grade pages and «قائمتي» on their own phone (Safari is untested).
+> 2. **Stale-facts check** (the audit's single best next task): a test that fails when `last_checked` is over 90 days, plus a re-check list before Launch 1.
+> 3. **Owner decides on Render's cold start** (free tier sleeps after 15 minutes; about a minute to wake).
+> 4. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes).
+> 5. **Owner re-checks Aramco** from a laptop (the cloud environment can't reach aramco.com).
+>
+> Resolved 2026-10-12: «ثلاث قبولات كحد أقصى» (on the site); the age rule contradicts itself on the conditions page (not published).
 >
 > Also done 2026-10-11:
 > - official X accounts as sources (@SA_Scholarships, @SDAIA_SA)

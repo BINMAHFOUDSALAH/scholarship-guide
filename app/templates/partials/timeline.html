@@ -1,0 +1,63 @@
+{#
+  «من أول ثانوي إلى الجامعة» (decision 039): the whole journey on every grade page, the student's own
+  grade open and marked «أنت هنا». Stages from data/timeline.json; «نمط» counts from the researched
+  universities (Explorer.timeline_stats); the scholarship's current window from paths.json. The
+  scholarship sits apart because its window moves from year to year.
+#}
+{% import "components.html" as c %}
+{% set stats = timeline_stats %}
+{% set here_id = (timeline.stages | selectattr("grade", "equalto", page.slug) | first).id %}
+<section class="grade-tool timeline" id="timeline" aria-labelledby="timeline-title">
+  <h2 id="timeline-title">من أول ثانوي إلى الجامعة</h2>
+  <p class="result-note">مثال لمن يبدأ الجامعة في <strong>{{ timeline.example_intake_ar }}</strong>. تواريخ المثال للتوضيح فقط؛ المواعيد الحقيقية تختلف حسب الجامعة والسنة، فتحقق منها في صفحة كل جامعة.</p>
+
+  <ol class="timeline-list">
+    {% for st in timeline.stages %}
+    {% set here = st.id == here_id %}
+    <li class="timeline-stage{% if here %} is-here{% endif %}"{% if here %} aria-current="step"{% endif %}>
+      <details{% if st.grade == page.slug or st.id in (page.timeline_open or []) %} open{% endif %}>
+        <summary>
+          <span class="timeline-when">{{ st.when_ar }}{% if here %} <span class="tag tag--here">أنت هنا</span>{% endif %}</span>
+          <span class="timeline-title">{{ st.title_ar }}</span>
+          <span class="timeline-example">مثال: {{ st.example_ar }}</span>
+        </summary>
+        <ul class="timeline-actions">
+          {% for a in st.actions_ar %}<li>{{ a }}</li>{% endfor %}
+        </ul>
+        {% if st.computed or st.facts %}
+        <ul class="timeline-facts">
+          {% if st.computed == "early" %}
+          <li><span class="tag">من بياناتنا</span> في {{ stats.early }} من {{ stats.with_deadlines }} جامعة في مسار الرواد جمعنا مواعيدها، يوجد موعد تقديم في أكتوبر أو نوفمبر. <a href="{{ url_for('grade_page', slug='grade-12') }}#deadlines-title">أقربها الآن</a></li>
+          {% elif st.computed == "regular" %}
+          <li><span class="tag">من بياناتنا</span> {{ stats.january }} من {{ stats.with_deadlines }} جامعة في مسار الرواد جمعنا مواعيدها لها موعد تقديم في يناير.</li>
+          {% endif %}
+          {% for f in st.facts or [] %}
+          <li><span class="tag">موعد رسمي</span> {{ f.text_ar }}
+            <span class="timeline-sources">{% for s in f.sources %}<a class="src" href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }} ↗</a>{% if not loop.last %} · {% endif %}{% endfor %}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </details>
+    </li>
+    {% endfor %}
+  </ol>
+
+  {% set sch = timeline.scholarship %}
+  <div class="notice timeline-scholarship">
+    <h3>{{ sch.title_ar }}</h3>
+    <p>{{ sch.rule_ar }} <a class="src" href="{{ sch.rule_source }}" target="_blank" rel="noopener">المصدر ↗</a></p>
+    <ul>
+      {% set t = arruaad_track %}
+      {% set st_now = track_status(t) %}
+      {% if st_now and (t.status_source or t.owner_confirmed) %}
+      <li>{{ t.name_ar }} الآن: {{ c.status_tag(st_now, t.status_until) }}{% if t.status_source %} <a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}</li>
+      {% endif %}
+      {% for w in sch.windows %}
+      <li>مثال من سنة سابقة: {{ w.text_ar }} <a class="src" href="{{ w.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>
+      {% endfor %}
+    </ul>
+    <p><strong>إن تعارضت المواعيد:</strong> {{ sch.conflict_ar }} <a class="src" href="{{ sch.conflict_source }}" target="_blank" rel="noopener">المصدر ↗</a></p>
+    <p>{{ sch.results_ar }} <a class="src" href="{{ sch.results_source }}" target="_blank" rel="noopener">المصدر ↗</a> مواعيد الابتعاث المعلنة الآن في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>.</p>
+  </div>
+</section>

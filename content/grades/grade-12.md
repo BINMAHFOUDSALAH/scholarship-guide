@@ -13,7 +13,8 @@ next_feature:
   href: /my-list
   label_ar: قائمتي
   text_ar: جامعاتك ومتطلباتها وأقرب مواعيدها في مكان واحد، محفوظة على جهازك.
-tools: [deadlines, tests]
+tools: [timeline, deadlines, tests]
+timeline_open: [after-graduation]
 resources:
   - title_ar: المنصة الوطنية للقبول الموحد
     url: https://www.uap.sa/

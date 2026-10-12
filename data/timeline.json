@@ -1,0 +1,254 @@
+{
+  "_note": "The journey from grade 10 to university (decision 039), shown on the three grade pages. Worked example: a student who starts university in Fall 2028 (in ثاني ثانوي in 2026–2027). Each fact has its official source and the date we read it; 'pattern' facts are counted from data/university_details/ in Explorer.timeline_stats(). Research: docs/research/timeline-2026-10.md.",
+  "example_intake_ar": "خريف 2028",
+  "stages": [
+    {
+      "id": "grade-10",
+      "grade": "grade-10",
+      "when_ar": "أول ثانوي",
+      "example_ar": "2025–2026",
+      "title_ar": "ابنِ الأساس",
+      "actions_ar": [
+        "اعرف المسارات الخمسة قبل التسكين، وتحدّث مع الموجه الطالبي.",
+        "معدلك يبدأ من الآن: بعض البرامج تحسبه من أول ثانوي.",
+        "عادة إنجليزي صغيرة كل يوم. لا تحتاج أي اختبار هذه السنة."
+      ]
+    },
+    {
+      "id": "grade-11",
+      "grade": "grade-11",
+      "when_ar": "ثاني ثانوي",
+      "example_ar": "2026–2027",
+      "title_ar": "ابحث وجرّب الاختبارات",
+      "actions_ar": [
+        "اختر مجالاتك، وابنِ قائمة أولى من الجامعات في «قائمتي».",
+        "اعرف الاختبارات التي تطلبها جهاتك، واختبر أول مرة قبل ثالث ثانوي، حتى يبقى وقت للإعادة.",
+        "صيف ما قبل ثالث ثانوي: جهّز ما تكتبه في الطلبات (المقالات، والأنشطة)."
+      ]
+    },
+    {
+      "id": "applications-open",
+      "grade": "grade-12",
+      "when_ar": "أغسطس، قبل بداية ثالث ثانوي",
+      "example_ar": "أغسطس 2027",
+      "title_ar": "يفتح التقديم في كثير من الجامعات الأمريكية",
+      "actions_ar": [
+        "أنشئ حسابك في منصة التقديم (مثل Common App) وابدأ التعبئة."
+      ],
+      "facts": [
+        {
+          "kind": "official",
+          "text_ar": "Harvard: التقديم عبر Common Application يفتح في 1 أغسطس.",
+          "read_on": "2026-10-12",
+          "sources": [
+            {
+              "title": "Harvard",
+              "url": "https://college.harvard.edu/admissions/apply/application-timeline"
+            }
+          ]
+        },
+        {
+          "kind": "official",
+          "text_ar": "جامعة كاليفورنيا (UC): يفتح طلب خريف 2027 في 1 أغسطس 2026، والإرسال في نوفمبر.",
+          "read_on": "2026-10-12",
+          "sources": [
+            {
+              "title": "UC",
+              "url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "early-deadlines",
+      "grade": "grade-12",
+      "when_ar": "أكتوبر ونوفمبر من ثالث ثانوي",
+      "example_ar": "أكتوبر–نوفمبر 2027",
+      "title_ar": "المواعيد المبكرة",
+      "computed": "early",
+      "actions_ar": [
+        "قدّم على الجامعات التي مواعيدها مبكرة، وأرسل نتائج اختباراتك قبلها.",
+        "اقرأ شروط التقديم المبكر في كل جامعة: بعضها ملزم (Early Decision) وبعضها لا."
+      ]
+    },
+    {
+      "id": "early-decisions",
+      "grade": "grade-12",
+      "when_ar": "ديسمبر ويناير من ثالث ثانوي",
+      "example_ar": "ديسمبر 2027–يناير 2028",
+      "title_ar": "نتائج التقديم المبكر، ثم المواعيد العادية",
+      "computed": "regular",
+      "actions_ar": [
+        "إن لم تُقبل مبكرًا، فقدّم على باقي جامعاتك قبل مواعيدها العادية."
+      ],
+      "facts": [
+        {
+          "kind": "official",
+          "text_ar": "نتائج التقديم المبكر في منتصف ديسمبر في Stanford وHarvard وMIT وYale وPrinceton وCaltech.",
+          "read_on": "2026-10-12",
+          "sources": [
+            {
+              "title": "Stanford",
+              "url": "https://admission.stanford.edu/apply/first-year/"
+            },
+            {
+              "title": "Harvard",
+              "url": "https://college.harvard.edu/admissions/apply/application-timeline"
+            },
+            {
+              "title": "MIT",
+              "url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/"
+            },
+            {
+              "title": "Yale",
+              "url": "https://admissions.yale.edu/timelines"
+            },
+            {
+              "title": "Princeton",
+              "url": "https://admission.princeton.edu/apply/first-year-application-dates-deadlines"
+            },
+            {
+              "title": "Caltech",
+              "url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
+            }
+          ]
+        },
+        {
+          "kind": "official",
+          "text_ar": "كاوست (KGSP) في الدفعة الماضية: التقديم من 12 يناير إلى 11 فبراير 2026، لطلاب ثالث ثانوي.",
+          "read_on": "2026-10-12",
+          "sources": [
+            {
+              "title": "KGSP",
+              "url": "https://kgsp.kaust.edu.sa/prospective-students"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "regular-decisions",
+      "grade": "grade-12",
+      "when_ar": "مارس وأبريل من ثالث ثانوي",
+      "example_ar": "مارس–أبريل 2028",
+      "title_ar": "نتائج التقديم العادي، ثم قرارك",
+      "actions_ar": [
+        "قارن العروض التي وصلتك، وقرّر قبل موعد الرد.",
+        "اطلب من الجامعة خطاب القبول الرسمي: تحتاجه للابتعاث."
+      ],
+      "facts": [
+        {
+          "kind": "official",
+          "text_ar": "النتائج العادية في منتصف مارس (MIT، Caltech)، وأواخر مارس (Yale، Princeton، Harvard)، وفي مارس في جامعة كاليفورنيا.",
+          "read_on": "2026-10-12",
+          "sources": [
+            {
+              "title": "MIT",
+              "url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/"
+            },
+            {
+              "title": "Caltech",
+              "url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
+            },
+            {
+              "title": "Yale",
+              "url": "https://admissions.yale.edu/timelines"
+            },
+            {
+              "title": "Princeton",
+              "url": "https://admission.princeton.edu/apply/first-year-application-dates-deadlines"
+            },
+            {
+              "title": "Harvard",
+              "url": "https://college.harvard.edu/admissions/apply/application-timeline"
+            },
+            {
+              "title": "UC",
+              "url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+            }
+          ]
+        },
+        {
+          "kind": "official",
+          "text_ar": "آخر موعد للرد على عرض القبول: 1 مايو في Stanford وYale وPrinceton وCaltech وجامعة كاليفورنيا.",
+          "read_on": "2026-10-12",
+          "sources": [
+            {
+              "title": "Stanford",
+              "url": "https://admission.stanford.edu/apply/first-year/"
+            },
+            {
+              "title": "Yale",
+              "url": "https://admissions.yale.edu/timelines"
+            },
+            {
+              "title": "Princeton",
+              "url": "https://admission.princeton.edu/apply/first-year-application-dates-deadlines"
+            },
+            {
+              "title": "Caltech",
+              "url": "https://www.admissions.caltech.edu/apply/first-year-applicants/deadlines"
+            },
+            {
+              "title": "UC",
+              "url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+            }
+          ]
+        },
+        {
+          "kind": "official",
+          "text_ar": "أرامكو (CDPNE) في الدورة السابقة: التقديم لطلاب الفصل الثاني من ثالث ثانوي.",
+          "read_on": "2026-10-11",
+          "sources": [
+            {
+              "title": "أرامكو",
+              "url": "https://www.aramco.com/ar/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "after-graduation",
+      "grade": "after",
+      "when_ar": "بعد التخرج من الثانوية",
+      "example_ar": "صيف 2028",
+      "title_ar": "الجامعات السعودية، وتجهيز السفر",
+      "actions_ar": [
+        "إن كنت تقدّم في السعودية: قدّم عبر المنصة الوطنية للقبول الموحد، وأكّد قبولك بعد إعلان نتائج الفرز.",
+        "إن كنت ستدرس في الخارج: جهّز التأشيرة والسكن حسب تعليمات جامعتك."
+      ],
+      "facts": [
+        {
+          "kind": "official",
+          "text_ar": "القبول الموحد: من شروطه «أن يكون المتقدم حاصلاً على شهادة الثانوية العامة»، و«عدم التأكيد يسقط حق الطالب في الترشيح».",
+          "read_on": "2026-10-12",
+          "sources": [
+            {
+              "title": "وزارة التعليم",
+              "url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/pages/unified-admission.aspx"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scholarship": {
+    "title_ar": "والابتعاث؟ موعده يُعلن كل سنة، وليس ثابتًا",
+    "rule_ar": "في مساري الرواد وإمداد تحتاج قبولًا «نهائيًا غير مشروط» من جامعة في قائمة المسار قبل أن تقدّم، إلا في حالتين محددتين (لغة الدولة، والسنة التحضيرية).",
+    "rule_source": "https://sites.moe.gov.sa/scholarship-program/paths/path-arruaad/info-path_terms/",
+    "windows": [
+      {
+        "text_ar": "للسنة الأكاديمية 2023–2024: من 4 ديسمبر 2022 إلى 5 مايو 2023.",
+        "source_url": "https://www.moe.gov.sa/ar/mediacenter/MOEnews/Pages/King-Scholarship-Program.aspx",
+        "read_on": "2026-10-12"
+      }
+    ],
+    "conflict_ar": "إذا أُغلقت نافذة الابتعاث قبل أن تصلك نتائج جامعاتك، فلن يكون معك قبول تقدّم به فيها. البرنامج يسمح للطالب الدارس على حسابه الخاص بالتقديم، أي يمكنك التقديم في نافذة لاحقة، لكن المصادر الرسمية لا تذكر هل تُغطّى الفترة التي تسبق الترشيح. اسأل البرنامج قبل أن تقرر.",
+    "conflict_source": "https://sites.moe.gov.sa/scholarship-program/faqs/question-31/",
+    "results_ar": "موعد نتائج الترشيح «يتم الإعلان عنه» من خلال صفحة البرنامج وحساباته الرسمية.",
+    "results_source": "https://sites.moe.gov.sa/scholarship-program/faqs/",
+    "read_on": "2026-10-12"
+  }
+}

@@ -80,8 +80,8 @@
       </nav>
 
       <div class="header-tools">
-        {# «قائمتي»: shown by mylist.js once something is saved (the list lives in this browser only). #}
-        <a class="mylist-link" href="{{ url_for('my_list') }}" data-mylist-link hidden{% if path == url_for('my_list').path %} aria-current="page"{% endif %}>
+        {# «قائمتي»: always visible, so students can find it (decision 039); mylist.js adds the count. #}
+        <a class="mylist-link" href="{{ url_for('my_list') }}" data-mylist-link{% if path == url_for('my_list').path %} aria-current="page"{% endif %}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.75h8v12.5l-4-3-4 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
           <span class="mylist-label">قائمتي</span>
           <span class="mylist-count" data-mylist-count></span>
@@ -129,6 +129,8 @@
       </div>
     </div>
   </footer>
+  {# Announces «حُفظت» / «أُزيلت» after a save button is used, on any page (mylist.js). #}
+  <p class="sr-only" role="status" data-save-status></p>
   <script src="{{ url_for('static', path='mylist.js') }}" defer></script>
   {% block scripts %}{% endblock %}
 </body>

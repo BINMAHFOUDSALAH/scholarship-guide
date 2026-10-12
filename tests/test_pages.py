@@ -542,3 +542,52 @@ def test_logo_mark_is_the_same_in_the_header_and_the_favicon():
         assert colour in mark and colour in favicon
     glyph = mark.split('<path d="')[1].split('"')[0]
     assert glyph in favicon
+
+
+# ---------- the timeline (decision 039) ----------
+
+def test_timeline_facts_are_sourced_and_dated():
+    for stage in main.timeline["stages"]:
+        assert stage["when_ar"] and stage["title_ar"] and stage["actions_ar"], stage["id"]
+        for fact in stage.get("facts", []):
+            assert fact["kind"] == "official" and ISO_DATE.match(fact["read_on"]), stage["id"]
+            assert fact["sources"] and all(s["url"].startswith("https://") for s in fact["sources"]), stage["id"]
+    sch = main.timeline["scholarship"]
+    for key in ("rule_source", "conflict_source", "results_source"):
+        assert sch[key].startswith("https://"), key
+    assert all(w["source_url"].startswith("https://") and ISO_DATE.match(w["read_on"]) for w in sch["windows"])
+
+
+@pytest.mark.parametrize("slug", GRADES)
+def test_timeline_marks_the_students_grade(slug):
+    html = client.get(f"/grades/{slug}").text
+    section = html.split('id="timeline"')[1].split("</section>")[0]
+    here = section.split('aria-current="step"')[1].split("</li>")[0]
+    assert "أنت هنا" in here
+    expected = {"grade-10": "أول ثانوي", "grade-11": "ثاني ثانوي", "grade-12": "أغسطس، قبل بداية ثالث ثانوي"}[slug]
+    assert expected in here
+    assert section.count('aria-current="step"') == 1
+
+
+def test_timeline_opens_only_what_matters_for_each_grade():
+    def opened(slug):
+        section = client.get(f"/grades/{slug}").text.split('id="timeline"')[1].split("</section>")[0]
+        return [li.split('class="timeline-title">')[1].split("<")[0] for li in section.split('<li class="timeline-stage')[1:]
+                if "<details open>" in li]
+    assert opened("grade-10") == ["ابنِ الأساس"]
+    assert opened("grade-11") == ["ابحث وجرّب الاختبارات", "يفتح التقديم في كثير من الجامعات الأمريكية"]
+    assert "الجامعات السعودية، وتجهيز السفر" in opened("grade-12") and "ابنِ الأساس" not in opened("grade-12")
+
+
+def test_timeline_patterns_are_counted_from_the_university_files():
+    s = main.explorer.timeline_stats()
+    assert 0 < s["early"] <= s["with_deadlines"] and 0 < s["january"] <= s["with_deadlines"]
+    html = client.get("/grades/grade-12").text
+    assert f"في {s['early']} من {s['with_deadlines']} جامعة" in html
+    # The scholarship window is shown as changing from year to year, never as one fixed season.
+    assert "موعده يُعلن كل سنة، وليس ثابتًا" in html and "4 ديسمبر 2022" in html
+
+
+def test_timeline_is_linked_from_the_university_and_program_pages():
+    assert "/grades/grade-12#timeline" in client.get("/universities/stanford-university").text
+    assert "/grades/grade-12#timeline" in client.get("/programs/custodian-scholarship").text

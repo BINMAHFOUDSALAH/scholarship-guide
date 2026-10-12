@@ -13,7 +13,8 @@ next_feature:
   href: /universities
   label_ar: الجامعات المعتمدة للابتعاث
   text_ar: ابحث بالتخصص، وافتح صفحة كل جامعة لترى متطلباتها ومواعيدها، واحفظ قائمتك الأولى.
-tools: [tests]
+tools: [timeline, tests]
+timeline_open: [applications-open]
 resources:
   - title_ar: نماذج اختبار آيلتس الرسمية
     url: https://ielts.org/take-a-test/preparation-resources

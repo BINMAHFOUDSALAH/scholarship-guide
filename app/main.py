@@ -67,6 +67,7 @@ def is_confirmed(item):
 site = load_json("site.json")
 paths = load_json("paths.json")
 test_needs = load_json("test_needs.json")
+timeline = load_json("timeline.json")
 featured_quote = load_json("featured_quote.json")
 home_text = load_json("home.json")
 news = sort_news([item for item in load_json("news.json") if is_confirmed(item)])
@@ -218,7 +219,11 @@ def grade_page(request: Request, slug: str):
     return templates.TemplateResponse(request, "grade.html",
                                       {"page": page, "grades": home_text["grades"], "explorer": explorer,
                                        "test_needs": test_needs, "sat_summary": explorer.sat_summary(),
-                                       "deadlines": explorer.upcoming_deadlines()})
+                                       "deadlines": explorer.upcoming_deadlines(),
+                                       # «من أول ثانوي إلى الجامعة» (decision 039)
+                                       "timeline": timeline, "timeline_stats": explorer.timeline_stats(),
+                                       "arruaad_track": next(t for t in paths_by_id["custodian-scholarship"]["tracks"]
+                                                             if t.get("id") == "arruaad")})
 
 
 @app.get("/resources/{slug}", response_class=HTMLResponse)

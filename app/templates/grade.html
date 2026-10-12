@@ -30,6 +30,7 @@
     <p class="page-contents-title">في هذه الصفحة</p>
     <ul>
       {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
+      {% if "timeline" in page.tools %}<li><a href="#timeline-title">من أول ثانوي إلى الجامعة</a></li>{% endif %}
       {% if "deadlines" in page.tools %}<li><a href="#deadlines-title">أقرب مواعيد الجامعات</a></li>{% endif %}
       {% if "tests" in page.tools %}<li><a href="#tests-title">الاختبارات: من يطلب ماذا؟</a></li>{% endif %}
       <li><a href="#resources-title">مصادر مختارة</a></li>
@@ -39,6 +40,8 @@
   <div class="prose">
     {{ page.html | safe }}
   </div>
+
+  {% if "timeline" in page.tools %}{% include "partials/timeline.html" %}{% endif %}
 
   {% if "deadlines" in page.tools %}
   {# The next university deadlines, straight from the researched requirement files. #}

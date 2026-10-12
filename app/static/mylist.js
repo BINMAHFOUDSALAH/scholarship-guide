@@ -1,7 +1,8 @@
 // «قائمتي»: universities the student saved, kept in this browser only (decision 035).
 // What's stored: university ids (e.g. "stanford-university"), newest first, in localStorage under
 // "wadih:saved". Nothing is sent to us except when the «قائمتي» page asks the server to draw the rows
-// (the ids only, never stored). Without JavaScript, or with storage blocked, the save buttons stay hidden.
+// (the ids only, never stored). Without JavaScript, or with storage blocked, the save buttons stay hidden
+// and the «قائمتي» page says why.
 (function () {
   const KEY = "wadih:saved";
   const MAX = 100;
@@ -34,60 +35,57 @@
     }
   }
 
-  if (!storageWorks()) return;
+  const canStore = storageWorks();
 
-  // ---------- the header link «قائمتي (n)» ----------
+  // ---------- the header link «قائمتي (n)» (always visible, decision 039) ----------
 
   function renderHeader() {
-    const n = read().length;
+    const n = canStore ? read().length : 0;
     for (const link of document.querySelectorAll("[data-mylist-link]")) {
-      link.hidden = n === 0 && link.getAttribute("aria-current") === null;
       const count = link.querySelector("[data-mylist-count]");
       if (count) count.textContent = n ? String(n) : "";
     }
   }
 
-  // ---------- «✓ في قائمتك» markers in lists ----------
+  // ---------- save buttons: the university page's toggle and «احفظ» in result rows ----------
 
-  function renderMarkers(root) {
+  function renderButtons(root) {
     const saved = new Set(read());
-    for (const marker of (root || document).querySelectorAll("[data-saved-marker]")) {
-      marker.hidden = !saved.has(marker.dataset.savedMarker);
+    for (const button of (root || document).querySelectorAll("button[data-save]")) {
+      const id = button.dataset.save;
+      const isSaved = saved.has(id);
+      const label = button.querySelector("[data-save-label]");
+      button.classList.toggle("is-saved", isSaved);
+      if (button.classList.contains("save-mini")) {
+        // A short visible label, with the university's name for screen readers.
+        const name = button.dataset.saveName || "";
+        label.textContent = isSaved ? "✓ في قائمتك" : "احفظ";
+        button.setAttribute("aria-label", isSaved ? "أزِل " + name + " من قائمتي" : "احفظ " + name + " في قائمتي");
+      } else {
+        label.textContent = isSaved ? "أزِل من قائمتي" : "احفظ في قائمتي";
+        const note = document.querySelector('[data-save-note="' + id + '"]');
+        if (note) note.hidden = !isSaved;
+      }
+      button.hidden = false;
+      if (button.hasAttribute("data-pending")) {
+        button.removeAttribute("data-pending");
+        button.removeAttribute("tabindex");
+      }
     }
   }
 
-  // ---------- the save button on a university page ----------
-
-  function setupSaveButtons() {
-    for (const button of document.querySelectorAll("button[data-save]")) {
-      const id = button.dataset.save;
-      const label = button.querySelector("[data-save-label]");
-      const note = document.querySelector('[data-save-note="' + id + '"]');
-      const status = document.querySelector("[data-save-status]");
-
-      const render = () => {
-        const saved = read().includes(id);
-        button.classList.toggle("is-saved", saved);
-        label.textContent = saved ? "أزِل من قائمتي" : "احفظ في قائمتي";
-        if (note) note.hidden = !saved;
-      };
-
-      button.addEventListener("click", () => {
-        const ids = read();
-        const saved = ids.includes(id);
-        const next = saved ? ids.filter((x) => x !== id) : [id, ...ids];
-        if (!write(next)) {
-          if (status) status.textContent = "تعذّر الحفظ في هذا المتصفح.";
-          return;
-        }
-        render();
-        renderHeader();
-        if (status) status.textContent = saved ? "أُزيلت من قائمتك." : "حُفظت في قائمتك على هذا الجهاز.";
-      });
-
-      render();
-      button.hidden = false;
+  function toggle(id) {
+    const status = document.querySelector("[data-save-status]");
+    const ids = read();
+    const saved = ids.includes(id);
+    const next = saved ? ids.filter((x) => x !== id) : [id, ...ids];
+    if (!write(next)) {
+      if (status) status.textContent = "تعذّر الحفظ في هذا المتصفح.";
+      return;
     }
+    renderButtons();
+    renderHeader();
+    if (status) status.textContent = saved ? "أُزيلت من قائمتك." : "حُفظت في قائمتك على هذا الجهاز.";
   }
 
   // ---------- the «قائمتي» page ----------
@@ -108,6 +106,10 @@
       empty.hidden = false;
     };
 
+    if (!canStore) {
+      page.querySelector("[data-mylist-blocked]").hidden = false;
+      return;
+    }
     const ids = read();
     if (!ids.length) {
       showEmpty();
@@ -157,14 +159,20 @@
   }
 
   renderHeader();
-  renderMarkers();
-  setupSaveButtons();
   setupListPage();
-  document.addEventListener("wadih:results", (event) => renderMarkers(event.detail.root));
+  // Storage blocked (e.g. some private modes): no save buttons, so nothing pretends to be saved.
+  if (!canStore) return;
+  renderButtons();
+  // One listener for every save button, including result rows drawn later by live updates.
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-save]");
+    if (button) toggle(button.dataset.save);
+  });
+  document.addEventListener("wadih:results", (event) => renderButtons(event.detail.root));
   // Another tab saved or removed something: keep this one in step.
   window.addEventListener("storage", (event) => {
     if (event.key !== KEY) return;
     renderHeader();
-    renderMarkers();
+    renderButtons();
   });
 })();
