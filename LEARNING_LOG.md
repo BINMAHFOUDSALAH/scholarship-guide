@@ -390,3 +390,23 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Decision:** 040. **Tested:** 241 pytest tests; axe-core and 320px overflow on the grade, program and university pages; screenshots at 360/1280px in light and dark. **Not tested:** students; Safari.
 
 **Understood?** Not yet checked.
+
+## 17. Final design pass: trust before looks (2026-10-12)
+**Built / why:**
+- The audit found the design itself sound: tested colours, one type scale, clear components. So it was **kept**.
+- The real problems were **false "none" answers** in the finder:
+  - Germany showed 0 universities.
+  - Stanford was "not found" under a filter.
+  - A typed country found nothing.
+- Also: overstatements («متاحة لتخصصك»), a 22,000px phone page for a major search, repeated «لم نجمعها بعد», and unclear labels.
+- All fixed, with regression tests.
+
+**Key concepts:**
+- **The worst search error is a false "no results":** the student concludes something doesn't exist.
+- **Don't redesign what works:** the evidence decides what changes, not the wish for something new.
+- **Independent review catches what the author misses:** a Haiku agent found the Germany bug by walking real student tasks; I verified it before fixing.
+- **Say unknowns once,** not on every row.
+
+**Decision:** 041. **Tested:** 247 pytest tests; the explorer and «قائمتي» browser flows; axe-core and 320px overflow on 8 routes × 2 sizes × 2 themes. **Not tested:** Safari, students, a screen reader.
+
+**Understood?** Not yet checked.

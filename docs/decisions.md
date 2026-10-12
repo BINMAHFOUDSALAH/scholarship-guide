@@ -488,3 +488,32 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **Keep the timeline, collapsed:** still the same content on every page.
 - **A separate /timeline page:** splits content and adds a nav item.
 - **Tabs per grade on one page:** hides content from search and from people sharing links to one grade.
+
+## 041 — Final design pass: keep the identity, fix the finder's false "none" answers
+**Date:** 2026-10-12 · **Audit:** [design-audit-2026-10.md](research/design-audit-2026-10.md)
+**Context:**
+- A full audit, with two read-only Haiku agents (UX guidance; an independent finder review) and every finding re-checked.
+- The visual identity holds up: tested contrast, colours with fixed meanings, one type scale.
+- The finder gave **false "none" answers:**
+  - Germany showed 0 universities, though 17 are in إمداد.
+  - Stanford was "not found" while a country filter was on.
+  - Typing a country name found nothing.
+- It also overstated (a field list shown as the major's list; «متاحة لتخصصك»), and was very long on phones.
+**Decision:**
+- **Keep:** the palette, typography, tokens, the applied-filter chips, the rank order, and the save model.
+- **Finder:**
+  - A country or language without a track shows every list with matches.
+  - Name matches outside the filters are shown, with an explanation.
+  - A typed country offers the country filter (`aliases` in `countries.json`).
+  - Conflicting filters are explained.
+  - Major searches show الرواد as a compact ranked list and say the field list is the whole field.
+  - Unresearched universities are noted once per list.
+  - At most 8 typed major suggestions.
+  - A shorter intro, with the source below the results.
+  - Plainer labels: «الجامعات في قوائم الابتعاث», «كل اللغات», «غير الإنجليزية», «المتطلبات والمواعيد», «الجامعة لا تنشر حدًا أدنى».
+  - The save button moved out of the row-header cell.
+- **Header:** no empty count badge.
+**Alternatives:**
+- **A full visual redesign:** no evidence the identity fails students. It would cost consistency and add risk for no measured gain.
+- **"Show 10 then all" on long lists:** breaks scroll restoration on "back".
+- **A sort control:** the official rank is the meaningful order.

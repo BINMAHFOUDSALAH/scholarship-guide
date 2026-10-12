@@ -31,10 +31,13 @@ SAT_POLICY_AR = {
 }
 # The country's official language, used by the scholarship's rule on conditional offers. It is not
 # the language a program is taught in: many universities in other countries teach in English.
-LANGUAGE_AR = {"english": "الإنجليزية", "other": "لغة أخرى"}
+LANGUAGE_AR = {"english": "الإنجليزية", "other": "غير الإنجليزية"}
 
 # The search parameters a results link may carry back from a university page (decision 035).
 SEARCH_PARAMS = ("q", "track", "field", "country", "lang")
+# What الرواد's list means for a major: it names universities, not majors. Not "available to you":
+# admission is still the university's decision (decision 041).
+ARRUAAD_NOTE = "قائمة الرواد لا تحدد تخصصات: أي تخصص في هذه الجامعات يدخل في المسار، والقبول تقرره الجامعة."
 
 
 def count_ar(n, forms):
@@ -193,24 +196,38 @@ class Explorer:
             result["majors"] = majors
             if track in ("", "arruaad"):
                 rows = [(l, u) for l, u in self.listings("arruaad") if keep(u)]
-                result["sections"].append({"track": "arruaad", "field": None, "rows": rows,
-                                           "note_ar": "الرواد يشمل كل التخصصات، فهذه الجامعات الثلاثون كلها متاحة لتخصصك."})
+                # The same 30 for every major, so a compact ranked list here; the field list below is the
+                # answer that's specific to this major (decision 041).
+                full = urlencode({k: v for k, v in (("track", "arruaad"), ("country", country), ("lang", language)) if v})
+                result["sections"].append({"track": "arruaad", "field": None, "rows": rows, "compact": True,
+                                           "full_href": "/universities?" + full, "note_ar": ARRUAAD_NOTE})
             for t in ("emdad", "rnd"):
                 if track not in ("", t) or (t == "rnd" and track != "rnd"):
                     continue
                 for fid in dict.fromkeys(m["field"] for m in majors if m["track"] == t):
                     names = [m for m in majors if m["track"] == t and m["field"] == fid]
                     rows = [(l, u) for l, u in self.listings(t, fid) if keep(u)]
-                    result["sections"].append({"track": t, "field": self.field(t, fid), "rows": rows,
-                                               "matched_majors": names})
+                    field = self.field(t, fid)
+                    result["sections"].append({"track": t, "field": field, "rows": rows, "matched_majors": names,
+                                               # The guide ranks universities by field, not by major (decision 041).
+                                               "note_ar": f"هذا ترتيب مجال «{field['name_ar']}» كله في الدليل، وليس قائمة بتخصص "
+                                                          f"«{names[0]['name_ar']}» وحده. تأكد أن الجامعة تدرّس التخصص من موقعها."})
             self._add_waaid(result, q)
             return result
 
         if q:
             result["mode"] = "name"
-            rows = [u for u in sorted(name_hits, key=lambda u: u["name_en"].lower()) if keep(u)
-                    and (not track or any(l["track"] == track for l in u["listings"]))]
-            result["sections"].append({"track": None, "field": None, "universities": rows})
+            result["country_match"] = self.country_named(q)
+            hits = sorted(name_hits, key=lambda u: u["name_en"].lower())
+            rows = [u for u in hits if keep(u) and (not track or any(l["track"] == track for l in u["listings"]))]
+            section = {"track": None, "field": None, "universities": rows}
+            if not rows and hits:
+                # The university is on the lists, just not under these filters: say so, never "not found"
+                # (decision 041).
+                section = {"track": None, "field": None, "universities": hits, "outside_filters": True}
+            # A country typed in the box: the country link answers it; no "no university by this name".
+            if hits or not result["country_match"]:
+                result["sections"].append(section)
             if not rows and majors:
                 result["majors"] = majors
             self._add_waaid(result, q)
@@ -226,9 +243,25 @@ class Explorer:
             result["sections"].append({"track": track, "field": None, "universities": rows})
         else:
             rows = [(l, u) for l, u in self.listings("arruaad") if keep(u)]
-            result["sections"].append({"track": "arruaad", "field": None, "rows": rows,
-                                       "note_ar": "الرواد يشمل كل التخصصات."})
+            result["sections"].append({"track": "arruaad", "field": None, "rows": rows, "note_ar": ARRUAAD_NOTE})
+            if country or language:
+                # A country without a track: every list with matches, not only الرواد (decision 041).
+                emdad = [u for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())
+                         if keep(u) and any(l["track"] == "emdad" for l in u["listings"])]
+                if emdad:
+                    if not rows:
+                        result["sections"].pop()
+                    result["sections"].append({"track": "emdad", "field": None, "universities": emdad,
+                                               "note_ar": "مرتبة حسب الاسم. اختر مجالًا من «المجال» لترى ترتيبها فيه."})
         return result
+
+    def country_named(self, q):
+        """The country code if the search text is a country's name (Arabic or an alias), else None."""
+        nq = normalize(q)
+        for code, c in self.countries.items():
+            if nq in {normalize(n) for n in [c["name_ar"], *c.get("aliases", [])]}:
+                return code
+        return None
 
     # ---------- describing a search (decision 035) ----------
 
@@ -388,7 +421,7 @@ class Explorer:
         if ielts.get("min") is not None:
             ielts_ar = str(ielts["min"])
         elif ielts.get("note_ar"):
-            ielts_ar = "لا حد أدنى منشور"
+            ielts_ar = "الجامعة لا تنشر حدًا أدنى"
         else:
             ielts_ar = "لم نتحقق منه"
         return {"researched": True, "sat_ar": SAT_POLICY_AR.get(sat, SAT_POLICY_AR["unknown"]),

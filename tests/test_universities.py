@@ -444,7 +444,10 @@ def test_results_show_key_facts_or_say_they_are_not_collected():
     html = client.get("/universities?track=arruaad").text
     assert "صفحة القبول الرسمية" in html
     emdad = client.get("/universities?track=emdad&field=ict").text
-    assert "لم نجمعها بعد" in emdad
+    # Said once for the whole list (decision 041), not repeated on every row.
+    assert emdad.count("لم نجمع متطلبات جامعات هذه القائمة") == 1
+    assert "لم نجمعها بعد" not in emdad
+    assert "لم نجمعها بعد" in client.get("/my-list?partial=1&ids=adelaide-university").text
 
 
 def test_explorer_says_being_on_a_list_is_not_admission():
@@ -464,3 +467,56 @@ def test_every_requirement_file_belongs_to_a_listed_university():
                                           .read_text(encoding="utf-8"))["universities"]}
     orphans = [p.stem for p in DETAIL_FILES if p.stem not in listed]
     assert not orphans, f"requirement files for universities no longer in the guide: {orphans}"
+
+
+# ---------- trust fixes (decision 041) ----------
+
+def test_a_country_without_a_track_shows_every_list_it_is_in():
+    """Germany has no الرواد university but 17 in إمداد: never answer «none»."""
+    r = ex.search(country="DE")
+    assert [s["track"] for s in r["sections"]] == ["emdad"]
+    assert len(r["sections"][0]["universities"]) > 0
+    us = ex.search(country="US")
+    assert [s["track"] for s in us["sections"]] == ["arruaad", "emdad"]
+    assert [s["track"] for s in ex.search()["sections"]] == ["arruaad"]  # no filter: الرواد only
+
+
+def test_a_university_outside_the_filters_is_shown_with_an_explanation():
+    r = ex.search(q="stanford", country="GB")
+    section = r["sections"][0]
+    assert section.get("outside_filters") and [u["id"] for u in section["universities"]] == ["stanford-university"]
+    html = client.get("/universities?q=stanford&country=GB").text
+    assert "خارج الفلاتر التي اخترتها" in html and "لا توجد جامعة بهذا الاسم" not in html
+
+
+def test_a_country_typed_in_the_search_box_offers_the_country_filter():
+    for q in ("Germany", "ألمانيا", "UK"):
+        r = ex.search(q=q)
+        assert r["country_match"] in ("DE", "GB"), q
+    html = client.get("/universities?q=Germany").text
+    assert "هل تقصد الدولة «ألمانيا»" in html and "?country=DE" in html
+    assert "لا توجد جامعة بهذا الاسم" not in html
+
+
+def test_conflicting_country_and_language_filters_say_why():
+    html = client.get("/universities?country=GB&lang=other").text
+    assert "بريطانيا لغتها الرسمية الإنجليزية" in html
+
+
+def test_major_search_explains_the_field_list_and_keeps_rawwad_compact():
+    r = ex.search(q="هندسة البرمجيات")
+    rawwad, emdad = r["sections"][0], [s for s in r["sections"] if s["track"] == "emdad"][0]
+    assert rawwad.get("compact") and rawwad["full_href"].startswith("/universities?track=arruaad")
+    assert "وليس قائمة بتخصص" in emdad["note_ar"]
+    assert "متاحة لتخصصك" not in client.get("/universities?q=" + "هندسة البرمجيات").text
+
+
+def test_finder_labels_are_plain():
+    html = client.get("/universities?lang=other").text
+    assert "كل اللغات" in html and "لغة الدولة: <bdi>غير الإنجليزية</bdi>" in html
+    assert "<h1>الجامعات في قوائم الابتعاث</h1>" in html
+    rows = client.get("/universities?track=arruaad").text
+    assert "المتطلبات والمواعيد</th>" in rows and '<span class="sr-only">المرتبة </span>' in rows
+    # The save button is not inside the row header cell (a cleaner screen-reader row name).
+    th = rows.split('<th scope="row">')[1].split("</th>")[0]
+    assert "save-mini" not in th

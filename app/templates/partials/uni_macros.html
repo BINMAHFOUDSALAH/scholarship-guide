@@ -63,7 +63,7 @@
   At a glance: SAT/ACT, IELTS, the next university date, and the official admissions page. Says so
   plainly when we haven't collected a university's requirements yet (decision 038).
 #}
-{% macro key_facts(u) %}
+{% macro key_facts(u, quiet=False) %}
 {% set k = explorer.key_facts(u.id) %}
 {% if k.researched %}
 <p class="key-facts">
@@ -72,8 +72,8 @@
   {% if k.next %}<span>أقرب موعد في الجامعة: <strong>{{ k.next.date | arabic_date }}</strong>، {{ date_short(k.next) }}</span>{% else %}<span>أقرب موعد في الجامعة: لم يُنشر بعد</span>{% endif %}
   {% if k.admissions_url %}<a class="src" href="{{ k.admissions_url }}" target="_blank" rel="noopener">صفحة القبول الرسمية ↗</a>{% endif %}
 </p>
-{% else %}
-<p class="key-facts key-facts--unknown">المتطلبات والمواعيد: لم نجمعها بعد. <a href="{{ url_for('university_page', uid=u.id) }}">ماذا نعرف عنها؟</a></p>
+{% elif not quiet %}
+<p class="key-facts key-facts--unknown">المتطلبات والمواعيد: لم نجمعها بعد.</p>
 {% endif %}
 {% endmacro %}
 

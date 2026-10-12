@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}الجامعات المعتمدة للابتعاث | {{ site.name }}{% endblock %}
+{% block title %}الجامعات في قوائم الابتعاث | {{ site.name }}{% endblock %}
 {% block description %}ابحث باسم الجامعة أو بالتخصص، واعرف ترتيبها في قوائم مسارات الرواد وإمداد والبحث والتطوير لبرنامج خادم الحرمين الشريفين للابتعاث 2026–2027.{% endblock %}
 
 {% block content %}
 {% set r = result %}
 <div class="explorer page-wide">
   <header class="explorer-header">
-    <h1>الجامعات المعتمدة للابتعاث</h1>
-    <p class="lead">ابحث باسم الجامعة أو بالتخصص، واعرف هل هي في قوائم مسارات برنامج خادم الحرمين الشريفين للابتعاث، وماذا تطلب للقبول.</p>
+    <h1>الجامعات في قوائم الابتعاث</h1>
+    <p class="lead">هل الجامعة في قوائم برنامج خادم الحرمين الشريفين للابتعاث؟ وماذا تطلب للقبول؟</p>
     {# What the tool answers, and what it doesn't (decision 038). #}
     <p class="explorer-scope"><strong>وجود الجامعة في القائمة لا يعني قبولك فيها:</strong> القائمة تحدد الجامعات التي يبتعث لها المسار، والجامعة هي التي تقرر قبولك. <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#admission-vs-scholarship">الفرق بين القبول والابتعاث ←</a></p>
-    {# The basis of everything on this page, so it's at the top (decision 035). #}
-    <p class="explorer-source">المصدر: <a href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ explorer.source.title_ar }} (PDF) ↗</a>، {{ explorer.source.publisher_ar }}.</p>
   </header>
 
   <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" aria-label="البحث في الجامعات" data-explorer>
@@ -59,7 +57,7 @@
           </optgroup>
           {% endfor %}
         </select>
-        <p class="field-hint filter-hint" id="field-hint">لقوائم إمداد والبحث والتطوير، فاختر أحدهما أولًا.</p>
+        <p class="field-hint filter-hint" id="field-hint">اختر في «المسار» إمداد أو البحث والتطوير أولًا.</p>
       </div>
 
       <div class="filter">
@@ -75,11 +73,11 @@
       <div class="filter">
         <label class="field-label" for="lang">لغة الدولة الرسمية</label>
         <select class="select" id="lang" name="lang" aria-describedby="lang-hint">
-          <option value="">كل الدول</option>
+          <option value="">كل اللغات</option>
           <option value="english"{% if r.language == "english" %} selected{% endif %}>الإنجليزية</option>
-          <option value="other"{% if r.language == "other" %} selected{% endif %}>لغة أخرى</option>
+          <option value="other"{% if r.language == "other" %} selected{% endif %}>غير الإنجليزية</option>
         </select>
-        <p class="field-hint filter-hint" id="lang-hint">لغة الدولة، وليست لغة الدراسة: بعض الجامعات في دول لغتها غير الإنجليزية تدرّس برامج بالإنجليزية. تأكد من صفحة البرنامج.</p>
+        <p class="field-hint filter-hint" id="lang-hint">لغة الدولة، وليست لغة الدراسة: بعض البرامج تُدرَّس بالإنجليزية.</p>
       </div>
       {# What the tracks mean, from the program's own data (paths.json). #}
       <details class="tracks-help filters-wide">
@@ -103,6 +101,8 @@
   <div id="results" class="explorer-results" tabindex="-1">
     {% include "partials/uni_results.html" %}
   </div>
+  {# The basis of every list on this page (decision 041: below the results, so search comes first on phones). #}
+  <p class="explorer-source">مصدر القوائم: <a href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ explorer.source.title_ar }} (PDF) ↗</a>، {{ explorer.source.publisher_ar }}.</p>
 </div>
 {% endblock %}
 
