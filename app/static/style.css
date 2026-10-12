@@ -97,6 +97,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* iPhone Safari enlarges text when the phone turns sideways; keep the sizes we set. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2604,7 +2607,8 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink-muted);
 }
 
-@media (max-width: 379px) {
+/* Phones (up to 479px, e.g. iPhone 13 at 390px): icon-only header buttons, so the header never overflows. */
+@media (max-width: 479px) {
   .mylist-label {
     position: absolute;
     width: 1px;
@@ -2883,20 +2887,34 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 /* The owner's X account: a small icon under the footer text, in the footer's own colours. */
+/* The X link: an icon tile plus one line inviting feedback (decision 043). */
 .footer-x {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  margin-top: var(--space-2);
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.footer-x-icon {
   display: inline-grid;
   place-items: center;
+  flex-shrink: 0;
   width: 36px;
   height: 36px;
-  margin-top: var(--space-2);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
-  color: var(--ink-muted);
 }
 
 .footer-x:hover {
-  border-color: var(--heading);
   color: var(--heading);
+}
+
+.footer-x:hover .footer-x-icon {
+  border-color: var(--heading);
 }
 
 .footer-x svg {
@@ -2915,7 +2933,10 @@ a.uni-name:hover .uni-name-en:only-child {
   .brand-name {
     font-size: 1.6rem;
   }
+}
 
+/* Phones up to 479px (most iPhones are 375–430px): icons only in the header, so it never overflows. */
+@media (max-width: 479px) {
   .theme-toggle,
   .menu-button {
     padding: 0 10px;
