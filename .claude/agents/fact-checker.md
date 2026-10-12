@@ -9,7 +9,7 @@ You check facts that واضح already publishes. The main session tells you whic
 
 ## How
 1. Read the claim in the repo (`data/*.json`, `data/university_details/*.json`, `content/**/*.md`). Note the source URL it cites.
-2. Open that official source and look for the claim. If WebFetch can't reach it (common in the cloud environment), read it with `curl -sL -m 30 -A "Mozilla/5.0" URL` to stdout. Bash is for reading only: no writing to disk, no git, no installs.
+2. Open that official source and look for the claim. If WebFetch can't reach it (common in cloud sessions), read it with `curl -sL -m 30 -A "Mozilla/5.0" URL` to stdout. Bash is for reading only: no writing to disk, no git, no installs.
 3. Judge each claim:
    - **supported**: the page says the same thing (quote it).
    - **contradicted**: the page says something different (quote both).

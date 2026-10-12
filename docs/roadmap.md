@@ -3,11 +3,9 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Domain (decision 042):** `wadihguide.com` bought (Cloudflare). Before merging the branch: the owner connects it in Render (Custom Domains) and Cloudflare DNS (CNAMEs, DNS only), and Render shows both as verified with HTTPS. Merging earlier would redirect visitors to an address that isn't serving yet.
->
-> **Next session (as of 2026-10-12, end of the final design pass):**
-> Live on `main`: decisions 035–040.
-> On branch `claude/loving-hopper-sai8de`, **not merged yet**: decision 041. The finder no longer says "none" when there are matches (Germany, filtered names, a typed country); major searches are compact; plainer labels. Audit: `docs/research/design-audit-2026-10.md`.
+> **Next session (as of 2026-10-12, moving from cloud sessions to Claude Code on the owner's laptop):**
+> Live on `main` at **https://wadihguide.com** (decision 042; the old onrender address and www redirect with a 301): decisions 035–043, including the finder trust fixes (041), the footer feedback line (043), and the iPhone header fix (header icons only up to 479px).
+> Owner's laptop: `git checkout main` then `git pull`, and work on `main` or a new branch. The cloud branch `claude/loving-hopper-sai8de` is fully merged.
 >
 > ⏰ **When the next universities guide PDF is out (reminder):**
 > 1. re-run `scripts/extract_universities.py`; the test `test_every_requirement_file_belongs_to_a_listed_university` flags universities that left the lists
@@ -16,11 +14,11 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. update the guide link and year everywhere it appears
 >
 > **Next steps:**
-> 1. **Owner merges** the branch, then tries on their own phone: search «علوم الحاسب», filter by ألمانيا, save two universities (Safari is untested).
+> 1. **Testers:** share https://wadihguide.com; feedback comes through the footer's X link (decision 043). Render's paid instance (about $7/month) stops the free plan's sleep; the owner is upgrading for the test month.
 > 2. **Stale-facts check** (the audit's single best next task): a test that fails when `last_checked` is over 90 days, plus a re-check list before Launch 1.
-> 3. **Owner decides on Render's cold start** (free tier sleeps after 15 minutes; about a minute to wake).
-> 4. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes).
-> 5. **Owner re-checks Aramco** from a laptop (the cloud environment can't reach aramco.com).
+> 3. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes), then act on feedback before the full launch (~one month).
+> 4. **Owner re-checks Aramco** from the laptop (the cloud environment couldn't reach aramco.com; its facts are from 2026-10-11, previous cycle).
+> 5. **Optional:** page-view counts without trackers (a small counter of our own); for now, Render's Metrics tab.
 >
 > Resolved 2026-10-12: «ثلاث قبولات كحد أقصى» (on the site); the age rule contradicts itself on the conditions page (not published).
 >
