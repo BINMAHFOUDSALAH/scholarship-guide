@@ -52,4 +52,4 @@ pytest tests/test_pages.py::test_about_loads    # one test
 ```
 
 ## Deploy
-Live at https://wadih-mqni.onrender.com (Render free tier, Frankfurt). GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. Render installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Never set `WADIH_SHOW_DRAFTS` on Render. Free instances sleep when idle.
+Live at https://wadihguide.com (domain at Cloudflare, DNS only; hosted on Render free tier, Frankfurt). The old address https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042). GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. Render installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Never set `WADIH_SHOW_DRAFTS` on Render. Free instances sleep when idle.

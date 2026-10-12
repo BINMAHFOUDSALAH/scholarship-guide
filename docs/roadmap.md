@@ -3,6 +3,8 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
+> **Domain (decision 042):** `wadihguide.com` bought (Cloudflare). Before merging the branch: the owner connects it in Render (Custom Domains) and Cloudflare DNS (CNAMEs, DNS only), and Render shows both as verified with HTTPS. Merging earlier would redirect visitors to an address that isn't serving yet.
+>
 > **Next session (as of 2026-10-12, end of the final design pass):**
 > Live on `main`: decisions 035–040.
 > On branch `claude/loving-hopper-sai8de`, **not merged yet**: decision 041. The finder no longer says "none" when there are matches (Germany, filtered names, a typed country); major searches are compact; plainer labels. Audit: `docs/research/design-audit-2026-10.md`.
