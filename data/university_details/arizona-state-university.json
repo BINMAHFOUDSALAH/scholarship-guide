@@ -1,0 +1,46 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب، ويمكن إرساله لتحديد مستوى المقررات.",
+    "source_url": "https://admission.asu.edu/apply/international/first-year"
+  },
+  "dates": [],
+  "not_found_ar": [
+    "مواعيد خريف 2027 لم تُنشر بعد في صفحة الدوليين"
+  ],
+  "id": "arizona-state-university",
+  "name_en": "Arizona State University",
+  "admissions_url": "https://admission.asu.edu/apply/international/first-year",
+  "platform": {
+    "value_ar": "طلب ASU أو Common Application",
+    "source_url": "https://admission.asu.edu/apply/international/first-year"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "للبرامج العامة. التمريض وهندسة Fulton ‏6.5، والصحافة 7.0.",
+      "source_url": "https://admission.asu.edu/apply/international/undergrad/english-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 3.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 3.5 في كل مهارة. قبل ذلك: 61.",
+      "source_url": "https://admission.asu.edu/apply/international/undergrad/english-proficiency"
+    },
+    "duolingo": {
+      "min": 95,
+      "note_ar": "للبرامج العامة. التمريض 100، وهندسة Fulton ‏105، والصحافة 120.",
+      "source_url": "https://admission.asu.edu/apply/international/undergrad/english-proficiency"
+    },
+    "note_ar": null
+  },
+  "application_fee": {
+    "fee_usd": 90,
+    "waiver": "not_stated",
+    "note_ar": "للطلاب الدوليين.",
+    "source_url": "https://admission.asu.edu/apply/international/first-year"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لا يتضرر من لا يرسل SAT أو ACT.",
+    "source_url": "https://catalog.northeastern.edu/undergraduate/admission/admission-policy-entrance-requirements/"
+  },
+  "dates": [],
+  "not_found_ar": [
+    "مواعيد التقديم وحدود اختبارات الإنجليزية: صفحة القبول الدولي تحجب القراءة الآلية"
+  ],
+  "id": "northeastern-university",
+  "name_en": "Northeastern University",
+  "admissions_url": "https://catalog.northeastern.edu/undergraduate/admission/admission-policy-entrance-requirements/",
+  "platform": {
+    "value_ar": "Common Application أو Coalition Application",
+    "source_url": "https://catalog.northeastern.edu/undergraduate/admission/admission-policy-entrance-requirements/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "مطلوب اختبار معتمد (Duolingo أو Cambridge C1/C2 أو IELTS أو PTE أو TOEFL)، والحد الأدنى في صفحة الدوليين التي لم نتمكن من قراءتها."
+  },
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "own_waiver",
+    "note_ar": "أو طلب إعفاء من سؤال داخل الطلب.",
+    "source_url": "https://catalog.northeastern.edu/undergraduate/admission/admission-policy-entrance-requirements/"
+  }
+}

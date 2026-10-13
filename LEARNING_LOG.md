@@ -521,3 +521,15 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** 431 tests. Browser at 375px: McGill (row «مقبولة للسنة الأولى مباشرة»).
 
 **Understood?** Not yet checked.
+
+## 26. Checking what's already published (2026-10-13)
+**Built / why:** a verification pass over ~200 published claims (decision 056), alongside wave 4. New research adds facts; verification keeps old ones true. A guide that only adds slowly goes stale.
+
+**Key concepts:**
+- **Paraphrase drift.** The biggest error wasn't a wrong number but a wrong *framing*: "two exceptions" when the source has one exception plus a separate rule. It had spread to five places. Fix the idea everywhere, not one sentence.
+- **Tests guard behaviour, not just data.** Rewording one sentence dropped a phrase the search test expected, so the right section stopped ranking first. The test caught it.
+- **The owner is a source too.** Aramco's site doesn't load from the cloud; the owner pasted the page. CLAUDE.md allows "official source or the owner's confirmation", so it's recorded as owner-confirmed with the date.
+
+**Tested:** 475 tests; every fix re-checked against its source with `scripts/check_quote.py`.
+
+**Understood?** Not yet checked.

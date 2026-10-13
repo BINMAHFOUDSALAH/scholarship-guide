@@ -1,0 +1,34 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": null,
+    "source_url": "https://www.babson.edu/undergraduate/how-to-apply/standardized-testing/"
+  },
+  "dates": [],
+  "not_found_ar": [
+    "المواعيد: الصفحة تذكر 1 نوفمبر (ED I وEA) و4 يناير (ED II وRD) دون سنة"
+  ],
+  "id": "babson-college",
+  "name_en": "Babson College",
+  "admissions_url": "https://www.babson.edu/undergraduate/how-to-apply/international-applicants/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://www.babson.edu/undergraduate/how-to-apply/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "تقبل TOEFL وIELTS وDuolingo وCambridge، ولا تنشر حدًا أدنى."
+  },
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "own_waiver",
+    "note_ar": "يمكن طلب الإعفاء من مكتب القبول.",
+    "source_url": "https://www.babson.edu/undergraduate/how-to-apply/"
+  }
+}

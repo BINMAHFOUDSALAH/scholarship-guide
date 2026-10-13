@@ -1,0 +1,62 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختياري لدورة 2026–2027 (خريف 2027). من دورة 2027–2028 يصبح SAT أو ACT مطلوبًا.",
+    "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Restrictive Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "note_ar": "غير ملزم",
+      "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-04",
+      "year_stated": false,
+      "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "university-of-notre-dame",
+  "name_en": "University of Notre Dame",
+  "admissions_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/",
+  "platform": {
+    "value_ar": "Common Application أو Coalition Application",
+    "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.5,
+      "note_ar": "7.5 (الجامعة «توصي بشدة» بهذه الدرجات).",
+      "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+    },
+    "toefl_ibt": {
+      "min": 5.5,
+      "note_ar": "المقياس الجديد: 5.5 ولا يقل أي قسم عن 5.0. القديم: 100 مع 25 في التحدث.",
+      "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+    },
+    "duolingo": {
+      "min": 125,
+      "note_ar": "125.",
+      "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+    },
+    "note_ar": "يُعفى من الاختبار من حصل على 650 في SAT EBRW أو 26 في ACT English/Reading."
+  },
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "accepts_common_app",
+    "note_ar": "إعفاء تلقائي عبر Common App وCoalition دون موافقة مسبقة.",
+    "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
+  }
+}

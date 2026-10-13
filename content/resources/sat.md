@@ -3,12 +3,12 @@ title: سات (SAT)
 description: ما هو اختبار SAT، وكيف تُحسب درجته، ومن يطلبه من برامج الابتعاث، وكم يكلّف، وكيف تتدرب مجانًا. من المصادر الرسمية.
 status: sourced
 owner_reviewed: false
-last_checked: 2026-10-12
+last_checked: 2026-10-13
 sources:
   - title: SAT Structure (College Board)
     url: https://satsuite.collegeboard.org/sat/whats-on-the-test/structure
   - title: How SAT Scores Are Calculated
-    url: https://satsuite.collegeboard.org/scores/what-scores-mean/how-scores-calculated
+    url: https://satsuite.collegeboard.org/scores/what-scores-mean
   - title: SAT Dates and Deadlines
     url: https://satsuite.collegeboard.org/sat/dates-deadlines
   - title: International Testing Fees
@@ -35,7 +35,7 @@ next_step: حمّل تطبيق Bluebook وخذ اختبارًا تجريبيًا
 
 ## كيف تُحسب الدرجة؟
 
-كل قسم من **200 إلى 800**، والدرجة الكلية من **400 إلى 1600** ([المصدر](https://satsuite.collegeboard.org/scores/what-scores-mean/how-scores-calculated)). أغلب نتائج اختبارات نهاية الأسبوع تظهر بعد **أسبوعين إلى 4 أسابيع** من يوم الاختبار ([المصدر](https://satsuite.collegeboard.org/scores/score-release-dates)).
+كل قسم من **200 إلى 800**، والدرجة الكلية من **400 إلى 1600** ([المصدر](https://satsuite.collegeboard.org/scores/what-scores-mean)). أغلب نتائج اختبارات نهاية الأسبوع تظهر بعد **أسبوعين إلى 4 أسابيع** من يوم الاختبار ([المصدر](https://satsuite.collegeboard.org/scores/score-release-dates)).
 
 ## من يطلبه؟
 
@@ -46,7 +46,7 @@ next_step: حمّل تطبيق Bluebook وخذ اختبارًا تجريبيًا
 ## كم يكلّف، ومتى؟
 
 - **الرسوم:** 68 دولارًا، مع **رسوم دولية 43 دولارًا** لمن يختبر خارج أمريكا، وقد تُضاف رسوم مركز اختبار في بعض المواقع ([المصدر](https://satsuite.collegeboard.org/sat/registration/international-testing/fees)).
-- **المواعيد القادمة:** ‏5 ديسمبر 2026، ثم 6 مارس و1 مايو و5 يونيو 2027، وهي نفسها للطلاب الدوليين ([المصدر](https://satsuite.collegeboard.org/sat/dates-deadlines)). ابحث عن مركز قريب منك عند التسجيل.
+- **المواعيد القادمة:** ‏7 نوفمبر 2026 (التسجيل حتى 23 أكتوبر)، ثم 5 ديسمبر 2026، ثم 6 مارس و1 مايو و5 يونيو 2027، وهي نفسها للطلاب الدوليين ([المصدر](https://satsuite.collegeboard.org/sat/dates-deadlines)). ابحث عن مركز قريب منك عند التسجيل.
 
 ## إرسال الدرجة للجامعات
 

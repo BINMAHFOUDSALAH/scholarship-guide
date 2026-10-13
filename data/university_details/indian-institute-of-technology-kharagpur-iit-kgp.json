@@ -1,0 +1,22 @@
+{
+  "id": "indian-institute-of-technology-kharagpur-iit-kgp",
+  "name_en": "Indian Institute of Technology Kharagpur (IIT-KGP)",
+  "checked": "2026-10-13",
+  "entry_ar": null,
+  "admissions_url": null,
+  "platform": {
+    "value_ar": "للأجانب: التسجيل مباشرة في JEE (Advanced) دون JEE Main، ثم توزيع المقاعد عبر JoSAA. مقاعد الأجانب إضافية بحد أقصى 10% من مقاعد كل برنامج. هذه قواعد دورة 2026، وقواعد 2027 لم تُنشر بعد.",
+    "source_url": "https://jeeadv.ac.in/foreign.html"
+  },
+  "english": null,
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "موقع IIT Kharagpur لم يُفتح للتحقق، وصفحة الطلاب الدوليين فيه «Coming Soon»",
+    "مواعيد JEE (Advanced) وJoSAA لعام 2027 لم تُنشر بعد. مراكز الاختبار خارج الهند في 2026 كانت أبوظبي وكاتماندو فقط",
+    "الشهادة الثانوية السعودية غير مذكورة. يلزم الأجنبي شهادة معادلة للصف الثاني عشر من Association of Indian Universities (AIU)",
+    "لا يُذكر شرط اختبار إنجليزي للأجانب، والدراسة بالإنجليزية"
+  ]
+}

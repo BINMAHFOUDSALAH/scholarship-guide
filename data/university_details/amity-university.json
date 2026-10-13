@@ -1,0 +1,21 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": null,
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": null,
+  "dates": [],
+  "not_found_ar": [
+    "دورة 2027 لم تُنشر بعد (آخر موعد في كتيب 2026 كان 31 يوليو 2026)",
+    "شرط الإنجليزية: صفحة القبول وكتيب 2026 يختلفان في هل هو للبكالوريوس أو الدراسات العليا",
+    "الشهادة الثانوية السعودية غير مذكورة، ويلزم للأجانب شهادة معادلة من AIU أو UGC"
+  ],
+  "id": "amity-university",
+  "name_en": "Amity University",
+  "admissions_url": "https://amity.edu/admission-procedure-nri.aspx",
+  "platform": {
+    "value_ar": "التقديم أونلاين فقط (فرع Noida). شروط الأهلية للأجانب نفسها للطلاب الهنود، ورسوم النموذج معفاة للأجانب.",
+    "source_url": "https://amity.edu/admission-procedure-nri.aspx"
+  },
+  "english": null
+}

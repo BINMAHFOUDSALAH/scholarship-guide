@@ -1,0 +1,54 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "not_considered",
+    "note_ar": "جامعات UC لا تنظر في SAT وACT للقبول ولا للمنح.",
+    "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/filling-out-the-application.html"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UC filing period",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-30",
+      "year_stated": true,
+      "note_ar": "فترة التقديم من 1 أكتوبر إلى 30 نوفمبر 2026 لكل جامعات UC.",
+      "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-first-year/dates-and-deadlines.html"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "university-of-california-irvine",
+  "name_en": "University of California, Irvine",
+  "admissions_url": "https://admissions.uci.edu/apply/international-students.php",
+  "platform": {
+    "value_ar": "UC Application (طلب واحد لجامعات UC، والرسوم لكل جامعة)",
+    "source_url": "https://admissions.uci.edu/apply/international-students.php"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 أو أعلى.",
+      "source_url": "https://admissions.uci.edu/apply/international-students.php"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "من يناير 2026: 4.5. قبل ذلك: 80.",
+      "source_url": "https://admissions.uci.edu/apply/international-students.php"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115.",
+      "source_url": "https://admissions.uci.edu/apply/international-students.php"
+    },
+    "note_ar": "مطلوب إذا درست أقل من 3 سنوات بالإنجليزية حتى التخرج من الثانوية."
+  },
+  "application_fee": {
+    "fee_usd": 95,
+    "waiver": "domestic_only",
+    "note_ar": "95 دولارًا لكل جامعة UC. الإعفاء للمواطنين والمقيمين الأمريكيين فقط.",
+    "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/applying-for-admission/"
+  }
+}

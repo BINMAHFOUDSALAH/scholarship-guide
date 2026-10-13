@@ -1,0 +1,58 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب للطلاب الدوليين.",
+    "source_url": "https://www.vt.edu/admissions/international/requirements.html"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-15",
+      "year_stated": false,
+      "source_url": "https://www.vt.edu/admissions/undergraduate/apply/dates-and-deadlines.html"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "note_ar": "حسب توفر المقاعد",
+      "source_url": "https://www.vt.edu/admissions/undergraduate/apply/dates-and-deadlines.html"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "virginia-polytechnic-institute-and-state-university",
+  "name_en": "Virginia Polytechnic Institute and State University",
+  "admissions_url": "https://www.vt.edu/admissions/international.html",
+  "platform": {
+    "value_ar": "Common Application (لكل المتقدمين)",
+    "source_url": "https://www.vt.edu/admissions/undergraduate/apply/freshman-checklist.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 ولا تقل أي مهارة عن 6.5.",
+      "source_url": "https://www.vt.edu/admissions/international/requirements.html"
+    },
+    "toefl_ibt": null,
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115.",
+      "source_url": "https://www.vt.edu/admissions/international/requirements.html"
+    },
+    "note_ar": "TOEFL: الصفحة تذكر حدين مختلفين للاختبارات بعد 21 يناير 2026 (80 أو 4.5)، فلم نعتمد رقمًا. النتيجة خلال سنتين."
+  },
+  "application_fee": {
+    "fee_usd": 70,
+    "waiver": "not_stated",
+    "note_ar": "للمتقدمين الدوليين.",
+    "source_url": "https://www.vt.edu/admissions/undergraduate/apply/freshman-checklist.html"
+  }
+}
