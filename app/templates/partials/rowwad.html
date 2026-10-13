@@ -1,0 +1,92 @@
+{#
+  The الرواد destination (decision 060): the opening of /universities?track=arruaad.
+  «خريطة الثلاثين»: the track's 30 universities as stars, grouped into one constellation per country and
+  laid out like a world map. By day it is printed like a page of a star atlas (a nod to al-Sufi's
+  Book of Fixed Stars); by night it is the sky itself. The table below the search stays the place for details.
+
+  Every fact here comes from data: the track (paths.json: what it covers, its status and who can apply),
+  the list (the Ministry's guide, via the Explorer). The drawing decides only where each star sits (app/sky.py).
+  Shown only while «المسار» is الرواد; universities.js hides it when the track changes.
+#}
+{% import "components.html" as c %}
+{% import "partials/sky.html" as sky %}
+{% set chart = rowwad_chart %}
+{% set t = arruaad_track %}
+{% set st = track_status(t) %}
+<section class="rowwad" data-rowwad aria-labelledby="rowwad-title"{% if result.track != "arruaad" %} hidden{% endif %}>
+  <div class="container rowwad-inner">
+    <div class="rowwad-text">
+      <p class="rowwad-program"><a href="{{ url_for('program_page', slug='custodian-scholarship') }}">برنامج خادم الحرمين الشريفين للابتعاث</a></p>
+      <h1 id="rowwad-title" class="rowwad-title">جامعات مسار الرواد</h1>
+      <p class="lead">{{ t.note_ar }}. الدرجة: {{ t.levels_ar }}.</p>
+    </div>
+
+    <div class="rowwad-aside">
+
+      {% if st and (t.status_source or t.owner_confirmed) %}
+      <div class="rowwad-status">
+        <p class="rowwad-status-line">{{ c.status_tag(st, t.status_until) }}</p>
+        {% if t.apply_with_ar %}<p class="rowwad-who">لمن: {{ t.apply_with_ar }}</p>{% endif %}
+        {% if t.status_source %}<p class="rowwad-source"><a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">المصدر الرسمي ↗</a></p>{% endif %}
+      </div>
+      {{ c.window_note(t) }}
+      {% endif %}
+
+      {# What the list answers, and what it doesn't (decision 038). #}
+      <p class="rowwad-scope"><strong>وجود الجامعة في القائمة لا يعني قبولك فيها:</strong> القائمة تحدد الجامعات التي يبتعث لها المسار، والجامعة هي التي تقرر قبولك. <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#admission-vs-scholarship">الفرق بين القبول والابتعاث ←</a></p>
+    </div>
+
+    <figure class="rowwad-chart" data-chart>
+      {# The stars are links for a mouse; keyboard and screen-reader users get the same universities as a table below. #}
+      <svg class="chart-svg" viewBox="0 0 {{ chart.w }} {{ chart.h }}" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="chart-night" cx="0.62" cy="0.55" r="0.75">
+            <stop offset="0" class="night-in"/>
+            <stop offset="1" class="night-out"/>
+          </radialGradient>
+        </defs>
+        <rect class="chart-ground" width="{{ chart.w }}" height="{{ chart.h }}" rx="14" fill="url(#chart-night)"/>
+        <g class="chart-sky">{{ sky.stars(sky_stars.chart) }}</g>
+        {# The atlas grid: meridians and parallels, slightly curved like a projection. #}
+        <g class="chart-grid">
+          {% for x in range(100, 1000, 100) %}<path d="M{{ x }} 18 Q{{ x + (x - 500) * 0.14 }} 260 {{ x }} 502"/>{% endfor %}
+          {% for y in range(86, 520, 86) %}<path d="M18 {{ y }} Q500 {{ y - 22 }} 982 {{ y }}"/>{% endfor %}
+        </g>
+        <rect class="chart-frame" x="8" y="8" width="{{ chart.w - 16 }}" height="{{ chart.h - 16 }}" rx="10"/>
+
+        {% for k in chart.countries %}
+        <g class="chart-country" data-country="{{ k.code }}">
+          <path class="chart-path" d="{{ k.path }}" pathLength="1"/>
+          {% for a, b in k.lines %}<line class="chart-link" x1="{{ a[0] }}" y1="{{ a[1] }}" x2="{{ b[0] }}" y2="{{ b[1] }}"/>{% endfor %}
+          <text class="chart-label" x="{{ k.x }}" y="{{ k.label_y }}" text-anchor="middle">{{ k.name_ar }}</text>
+        </g>
+        {% endfor %}
+
+        {% for s in chart.stars %}
+        <a class="chart-star" href="{{ url_for('university_page', uid=s.id) }}?from=track%3Darruaad" tabindex="-1"
+           data-country="{{ s.country }}" data-rank="{{ s.rank }}" data-name="{{ s.name_ar }}">
+          <g transform="translate({{ s.x }} {{ s.y }})">
+            <circle class="chart-hit" r="13"/>
+            <path class="chart-star-shape" d="M0 -8 Q1.3 -1.3 8 0 Q1.3 1.3 0 8 Q-1.3 1.3 -8 0 Q-1.3 -1.3 0 -8Z"/>
+          </g>
+        </a>
+        {% endfor %}
+
+        {# Home: where the student starts. The guiding star, as on the homepage. #}
+        {{ sky.guide_star(chart.home[0], chart.home[1], 11, "chart-home") }}
+        <text class="chart-label chart-label--home" x="{{ chart.home[0] }}" y="{{ chart.home[1] + 34 }}" text-anchor="middle">المملكة</text>
+      </svg>
+      <figcaption class="chart-readout" data-chart-readout data-default="{{ chart.stars | length | count_ar('universities') }} في {{ chart.countries | length | count_ar('countries') }}">{{ chart.stars | length | count_ar("universities") }} في {{ chart.countries | length | count_ar("countries") }}</figcaption>
+    </figure>
+
+    {# The constellations as filters: choosing a country narrows the table below (and lights its path on the chart). #}
+    <ul class="country-chips" aria-label="جامعات الرواد حسب الدولة">
+      {% for k in chart.countries %}
+      <li><a class="country-chip" href="{{ url_for('universities_page') }}?track=arruaad&amp;country={{ k.code }}" data-country-chip="{{ k.code }}"{% if result.country == k.code %} aria-current="true"{% endif %}>
+        <img class="flag" src="{{ url_for('static', path='img/flags/' ~ (k.code | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">
+        <span>{{ k.name_ar }}</span><span class="country-chip-count">{{ k.count }}</span>
+      </a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

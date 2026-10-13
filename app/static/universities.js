@@ -394,10 +394,75 @@
       update().then(() => results.focus());
     });
 
+    // ---------- the الرواد destination (decision 060) ----------
+    // Shown while «المسار» is الرواد. The chart follows the «الدولة» filter: the chosen country's
+    // constellation lights up with a path from home. Its chips set that filter in the live form.
+    const rowwad = document.querySelector("[data-rowwad]");
+    const explorerHeader = document.querySelector("[data-explorer-header]");
+    const chart = rowwad && rowwad.querySelector("[data-chart]");
+    const readout = rowwad && rowwad.querySelector("[data-chart-readout]");
+    const country = form.elements.country;
+
+    function chipFor(code) {
+      return rowwad.querySelector('[data-country-chip="' + code + '"]');
+    }
+
+    // The line under the chart: the totals, or the chosen country with its count.
+    function restReadout() {
+      const chip = country.value && chipFor(country.value);
+      readout.textContent = chip
+        ? chip.querySelector("span").textContent + ": " + chip.querySelector(".country-chip-count").textContent + " في القائمة أدناه"
+        : readout.dataset.default;
+    }
+
+    function syncRowwad() {
+      if (!rowwad) return;
+      const on = track.value === "arruaad";
+      rowwad.hidden = !on;
+      if (explorerHeader) explorerHeader.hidden = on;
+      document.body.classList.toggle("page-rowwad", on);
+      const code = on && chart.querySelector('.chart-country[data-country="' + country.value + '"]') ? country.value : "";
+      if (code) chart.dataset.active = code; else delete chart.dataset.active;
+      for (const el of chart.querySelectorAll("[data-country]")) el.classList.toggle("is-active", el.dataset.country === code);
+      for (const chip of rowwad.querySelectorAll("[data-country-chip]")) {
+        if (chip.dataset.countryChip === code) chip.setAttribute("aria-current", "true");
+        else chip.removeAttribute("aria-current");
+      }
+      restReadout();
+    }
+
+    if (rowwad) {
+      rowwad.addEventListener("click", (event) => {
+        const chip = event.target.closest("a[data-country-chip]");
+        if (!chip) return;
+        event.preventDefault();
+        // The chosen chip again clears the country; any other chip replaces it. Only «الدولة» changes.
+        const code = chip.dataset.countryChip;
+        track.value = "arruaad";
+        country.value = country.value === code ? "" : code;
+        syncFields();
+        syncRowwad();
+        update();
+      });
+      // Pointing at a star names it under the chart (the chart's links are for a mouse; the table has them all).
+      chart.addEventListener("pointerover", (event) => {
+        const star = event.target.closest(".chart-star");
+        if (star) readout.textContent = star.dataset.rank + ". " + star.dataset.name;
+      });
+      chart.addEventListener("pointerout", (event) => {
+        if (event.target.closest(".chart-star")) restReadout();
+      });
+      form.addEventListener("change", syncRowwad);
+      results.addEventListener("click", (event) => {
+        if (event.target.closest("a[data-applied]")) setTimeout(syncRowwad); // after the ✕ clears its fields
+      });
+    }
+
     syncFields();
     countFilters();
     layout();
     lastQuery = formQuery(form);
+    syncRowwad();
   }
 
   // ---------- 3. back to results ----------

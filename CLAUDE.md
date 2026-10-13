@@ -22,7 +22,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Never read, edit, or print `.env` (also enforced by `.claude/settings.json`).
 - Arabic first, RTL, mobile first. One Arabic site with English names inline.
 - **Formal Arabic (الفصحى) on every page, never dialect** (decision 058; a test checks common dialect words). Keep terms consistent: test parts are «مهارات» (الاستماع، القراءة، الكتابة، التحدث); a score is «الحد الأدنى» or «الموصى به», never just a number.
-- Design (decision 035): ivory, charcoal, forest, lime only for «مفتوح الآن» and the next step; Arabic RTL, light mode first, shared components, nothing under 13px. Full rules in `.claude/rules/design.md` (loads when editing `app/templates/` or `app/static/`).
+- Design (decisions 035, 060): ivory, charcoal, forest, lime only for «مفتوح الآن» and the next step; one visual language, the sky (dawn in light mode, night in dark; the theme follows the device until the student picks); Arabic RTL, shared components, nothing under 13px. Full rules in `.claude/rules/design.md` (loads when editing `app/templates/` or `app/static/`).
 - Nothing official is hard-coded in templates: data in `data/`, page text in `content/`.
 
 ## How to work with me

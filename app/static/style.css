@@ -37,6 +37,16 @@
   --band: #184b3a;           /* the Tuwaiq band background */
   --focus: #184b3a;          /* keyboard focus ring */
 
+  /* The sky (decision 060). Decorative only: no text sits on these colours alone. */
+  --sky: #f4e6c8;            /* the warm top of the page at dawn */
+  --sun: #eeae4e;            /* the sun's edge; the moon at night */
+  --sun-core: #f8dc9c;
+  --sun-glow: rgba(239, 178, 79, 0.42);
+  --plate: rgba(24, 75, 58, 0.17); /* the astrolabe's hairlines */
+  --star: #184b3a;
+  --star-show: 0;            /* stars are out only at night */
+  --guide-edge: #184b3a;     /* the lime guiding star needs an edge on ivory */
+
   --font-body: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
   --font-heading: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
   --font-editorial: "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif; /* wordmark + quotes only */
@@ -62,27 +72,38 @@
   --page: 1040px;            /* tool pages: explorer, university, program, news */
   --measure: 720px;          /* comfortable reading column */
   --radius: 8px;
+  --radius-panel: 14px;      /* panels: search, filters, summaries, the chart */
+  --lift: 0 1px 0 rgba(16, 23, 19, 0.04), 0 18px 40px -28px rgba(16, 23, 19, 0.45); /* the main panel on a page */
 }
 
 /* Dark theme: only when the student picks it (data-theme="dark"). Designed, not inverted. */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --paper: #101713;
-  --surface: #16211c;
-  --surface-strong: #1c2a23;
+  --paper: #0c1310;          /* midnight with a trace of forest */
+  --surface: #131d18;
+  --surface-strong: #18251f;
   --ink: #ece9e0;
   --ink-muted: #a9b4ad;
   --heading: #9ad3b4;
-  --on-heading: #101713;
-  --line: #26332d;
-  --line-strong: #34443c;
+  --on-heading: #0c1310;
+  --line: #222f29;
+  --line-strong: #314139;
   --control-border: #8a968f;
   --lime: #d8ed9b;
   --on-lime: #101713;
   --amber: #e0b26a;
   --sea: #6cc3cf;
-  --band: #16211c;
+  --band: #131d18;
   --focus: #d8ed9b;
+  --sky: #060b09;
+  --sun: #d8d0b6;
+  --sun-core: #f3eedf;
+  --sun-glow: rgba(232, 226, 204, 0.16);
+  --plate: rgba(236, 233, 224, 0.1);
+  --star: #ece9e0;
+  --star-show: 1;
+  --guide-edge: #d8ed9b;
+  --lift: 0 0 0 1px rgba(236, 233, 224, 0.03), 0 22px 44px -26px rgba(0, 0, 0, 0.8);
 }
 
 /* ---------- Base ---------- */
@@ -255,8 +276,16 @@ main:has(> .hero) {
 .site-header {
   position: relative;
   z-index: 10;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  background: transparent; /* the sky shows through (decision 060) */
+}
+
+/* The homepage: the header floats over the sky of the opening section. */
+.page-home .site-header {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  border-bottom-color: transparent;
 }
 
 .header-inner {
@@ -366,6 +395,39 @@ main:has(> .hero) {
 }
 
 
+/* The toggle's icon: the same sun-to-crescent as the sky. */
+.theme-icon {
+  overflow: visible;
+}
+
+.theme-icon-shadow {
+  transform: translate(15px, -6px);
+  transition: transform 0.6s cubic-bezier(0.6, 0, 0.2, 1);
+}
+
+.theme-icon-rays {
+  transform-origin: center;
+  transition: opacity 0.4s ease, transform 0.6s ease;
+}
+
+[data-theme="dark"] .theme-icon-shadow {
+  transform: translate(3.2px, -2.6px);
+}
+
+.theme-icon-disc {
+  transition: transform 0.6s cubic-bezier(0.6, 0, 0.2, 1);
+}
+
+/* Without its rays, the crescent grows to fill the icon. */
+[data-theme="dark"] .theme-icon-disc {
+  transform: scale(1.5);
+}
+
+[data-theme="dark"] .theme-icon-rays {
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.6);
+}
+
 .mylist-link[aria-current] {
   border-color: var(--heading);
   color: var(--heading);
@@ -451,43 +513,188 @@ main:has(> .hero) {
   }
 }
 
-/* ---------- Hero (decision 035) ---------- */
+/* ---------- The sky (decision 060) ---------- */
+
+/*
+  One visual language for the whole site: the sky as a way to find your direction.
+  Light theme = dawn (a low sun, warm light); dark theme = the same sky at night (a crescent, stars).
+  The pieces are drawn in templates/partials/sky.html. Everything here is decorative: content never
+  sits on the sky alone, and nothing moves unless the student acts, except one short opening on the homepage.
+  The sky is composed on fixed points (the sun at the upper left), so it uses left/top, not logical properties.
+*/
+
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+.sky {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sky-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.st {
+  fill: var(--star);
+  opacity: 0;
+  transition: opacity 0.9s ease calc(var(--i) * 80ms);
+}
+
+.st0 { opacity: calc(var(--star-show) * 0.32); }
+.st1 { opacity: calc(var(--star-show) * 0.58); }
+.st2 { opacity: calc(var(--star-show) * 0.92); }
+
+.sky-anchor {
+  position: absolute;
+  left: 17%;
+  top: 250px;
+  width: 0;
+  height: 0;
+}
+
+.sky-plate {
+  position: absolute;
+  width: 1200px;
+  height: 1200px;
+  left: -600px;
+  top: -600px;
+  overflow: visible;
+}
+
+.plate-line,
+.plate-ticks line {
+  fill: none;
+  stroke: var(--plate);
+  stroke-width: 1.2;
+  transition: stroke 0.8s ease;
+}
+
+.plate-dots {
+  stroke-width: 2;
+  stroke-dasharray: 0 9;
+  stroke-linecap: round;
+}
+
+.sky-body {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  left: -190px;
+  top: -190px;
+  overflow: visible;
+}
+
+.disc-in {
+  stop-color: var(--sun-core);
+  transition: stop-color 0.9s ease;
+}
+
+.disc-out {
+  stop-color: var(--sun);
+  transition: stop-color 0.9s ease;
+}
+
+.glow-in {
+  stop-color: var(--sun-glow);
+  transition: stop-color 0.9s ease;
+}
+
+.glow-out {
+  stop-color: var(--sun-glow);
+  stop-opacity: 0;
+}
+
+/* At night a shadow slides across the sun and leaves a crescent. */
+.sky-shadow {
+  transform: translate(120px, -30px);
+  transition: transform 1.1s cubic-bezier(0.6, 0, 0.2, 1);
+}
+
+[data-theme="dark"] .sky-shadow {
+  transform: translate(17px, -13px);
+}
+
+/* Stars stay on the sun's side of the page, away from the text (which starts on the right). */
+.sky--hero .sky-stars {
+  -webkit-mask-image: linear-gradient(to left, transparent 8%, rgba(0, 0, 0, 0.35) 38%, #000 62%);
+  mask-image: linear-gradient(to left, transparent 8%, rgba(0, 0, 0, 0.35) 38%, #000 62%);
+}
+
+/* The guiding star: the logo's lime diamond. The morning star by day, the brightest star at night. */
+.guide-star-shape {
+  fill: var(--lime);
+  stroke: var(--guide-edge);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.guide-star-glow {
+  fill: var(--lime);
+  opacity: calc(0.1 + var(--star-show) * 0.12);
+  filter: blur(9px);
+}
+
+/* Every page but the homepage: a soft glow where the sun would be, a slice of the rim, a few stars at night. */
+.sky--top {
+  height: 440px;
+  background: radial-gradient(ellipse 55% 95% at 10% -10%, var(--sun-glow), transparent 70%);
+  -webkit-mask-image: linear-gradient(#000 45%, transparent);
+  mask-image: linear-gradient(#000 45%, transparent);
+}
+
+.sky--top .sky-anchor {
+  left: 6%;
+  top: 40px;
+}
+
+/* Tool pages: quieter than the homepage. The rim is a hint, and the stars keep to the sun's corner. */
+.sky--top .sky-plate {
+  opacity: 0.45;
+}
+
+.sky--top .sky-stars {
+  -webkit-mask-image: linear-gradient(to left, transparent 45%, #000 85%);
+  mask-image: linear-gradient(to left, transparent 45%, #000 85%);
+}
+
+/* ---------- Homepage opening (decisions 035, 060) ---------- */
 
 .hero {
-  padding-block: var(--space-5) var(--space-6);
-  border-bottom: 1px solid var(--line);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: calc(72px + var(--space-5)) var(--space-6);
+  background: linear-gradient(to bottom, var(--sky), color-mix(in srgb, var(--sky) 40%, var(--paper)) 45%, var(--paper) 92%);
+}
+
+.sky--hero {
+  inset: 0;
 }
 
 .hero-grid {
   display: grid;
-  gap: var(--space-5);
-  align-items: center;
 }
 
-.hero-kicker {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+.hero-text {
+  max-width: 640px;
+}
+
+/* The one display face: Naskh, the hand of the manuscripts, at the size of a title page. */
+.hero-title {
   margin-bottom: var(--space-3);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-family: var(--font-editorial);
+  font-size: clamp(2.35rem, 1.3rem + 4.2vw, 4.5rem);
+  line-height: 1.45;
   color: var(--heading);
-}
-
-/* A short lime bar: a graphic accent, not text. */
-.hero-kicker::before {
-  content: "";
-  width: 28px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--lime);
-  flex-shrink: 0;
-}
-
-.hero h1 {
-  margin-bottom: var(--space-3);
-  font-size: var(--text-hero);
-  line-height: 1.25;
 }
 
 .lead {
@@ -497,21 +704,52 @@ main:has(> .hero) {
   color: var(--ink-muted);
 }
 
-/* The main way in: your grade. The biggest targets on the page. */
+.hero .lead {
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* The main way in: your grade, as a constellation of three stars rising towards the sun. */
 .hero-grades {
   max-width: 560px;
-  margin-top: var(--space-4);
+  margin-top: var(--space-5);
 }
 
 .start-title {
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
   font-family: var(--font-heading);
   font-size: var(--text-lg);
   font-weight: 700;
   color: var(--heading);
 }
 
+.constellation {
+  position: relative;
+  padding-top: 12px;
+}
+
+.constellation-line {
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: 40px;
+  overflow: visible;
+}
+
+.constellation-line polyline {
+  fill: none;
+  stroke: var(--heading);
+  stroke-width: 1.5;
+  stroke-dasharray: 1 0;
+  opacity: 0.55;
+}
+
 .grade-choices {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-2);
@@ -520,20 +758,41 @@ main:has(> .hero) {
   list-style: none;
 }
 
+/* Grade 10 sits lowest, grade 12 highest: the line rises with the years. */
+.grade-choices li {
+  margin-top: calc((2 - var(--step)) * 12px);
+}
+
 .grade-choices a {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  min-height: 76px;
-  padding: var(--space-2);
-  border: 2px solid var(--heading);
-  border-radius: var(--radius);
-  background: var(--surface-strong);
+  min-height: 84px;
+  padding: var(--space-4) var(--space-2) var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
   color: var(--heading);
   text-align: center;
   text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.grade-star {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  fill: var(--paper);
+  stroke: var(--heading);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  transition: fill 0.2s ease, transform 0.25s ease;
 }
 
 .grade-name {
@@ -549,25 +808,34 @@ main:has(> .hero) {
   color: var(--ink-muted);
 }
 
-.grade-choices a:hover {
-  background: var(--heading);
-  color: var(--on-heading);
-}
-
-.grade-choices a:hover .grade-hint {
-  color: var(--on-heading);
-}
-
-/* The second way in: search the official lists. A quieter panel beside (or under) the grades. */
-.hero-search {
-  padding: var(--space-4);
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
+/* Choosing a grade lights its star: lime, the colour of "your next step". */
+.grade-choices a:hover,
+.grade-choices a:focus-visible {
+  border-color: var(--heading);
   background: var(--surface-strong);
 }
 
+.grade-choices a:hover .grade-star,
+.grade-choices a:focus-visible .grade-star {
+  fill: var(--lime);
+  stroke: var(--guide-edge);
+  transform: scale(1.25);
+}
+
+/* The second way in: search, on the horizon under the grades. */
+.hero-search {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  box-shadow: var(--lift);
+}
+
 .hero-search-title {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-1);
   font-size: var(--text-lg);
 }
 
@@ -576,7 +844,7 @@ main:has(> .hero) {
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--space-1) var(--space-3);
-  margin: var(--space-3) 0 var(--space-2);
+  margin: var(--space-3) 0 0;
   font-size: var(--text-sm);
 }
 
@@ -590,17 +858,121 @@ main:has(> .hero) {
 
 .hero-search-meta {
   margin: 0;
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--line);
   font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
+.hero-guide-search {
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-sm);
+}
+
 @media (min-width: 900px) {
-  .hero-grid {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); /* grades on the right (RTL start), search on the left */
-    gap: var(--space-6);
+  .hero-search {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr);
+    grid-template-areas: "head field" "guide field";
+    gap: var(--space-2) var(--space-6);
+    padding: var(--space-4) var(--space-5);
   }
+
+  .hero-search-head { grid-area: head; }
+  .hero-search-field { grid-area: field; }
+
+  .hero-guide-search {
+    grid-area: guide;
+    align-self: end;
+    border-top: 0;
+  }
+}
+
+/* Phones: a smaller sun in the free corner beside the title. */
+@media (max-width: 899px) {
+  .hero .sky-anchor {
+    left: 13%;
+    top: 150px;
+  }
+
+  .hero .sky-body {
+    transform: scale(0.42);
+  }
+
+  .hero .sky-plate {
+    transform: scale(0.5);
+  }
+
+  .sky--top .sky-plate {
+    transform: scale(0.6);
+  }
+}
+
+/* The one orchestrated moment (homepage only, once): the rim is drawn and the sun rises. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero .plate-rim,
+  .hero .plate-inner {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: sky-draw 2.2s cubic-bezier(0.45, 0, 0.2, 1) 0.1s forwards;
+  }
+
+  .hero .plate-inner {
+    animation-delay: 0.35s;
+  }
+
+  .hero .plate-ticks,
+  .hero .plate-dots,
+  .hero .plate-guide {
+    opacity: 0;
+    animation: sky-fade 1.2s ease 1.2s forwards;
+  }
+
+  .hero .sky-body {
+    translate: 0 36px;
+    opacity: 0;
+    animation: sky-rise 1.8s cubic-bezier(0.2, 0.6, 0.2, 1) 0.15s forwards;
+  }
+
+  .constellation-line polyline {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: sky-draw 1.2s ease 0.7s forwards;
+  }
+
+  /* As the page scrolls, the sun sinks a little: the only scroll-linked motion, and only where supported. */
+  @supports (animation-timeline: scroll()) {
+    .hero .sky-anchor {
+      animation: sky-sink linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 700px;
+    }
+  }
+}
+
+/* Less motion asked for: the sky changes with the theme at once. */
+@media (prefers-reduced-motion: reduce) {
+  .st,
+  .sky-shadow,
+  .disc-in,
+  .disc-out,
+  .glow-in,
+  .theme-icon-shadow,
+  .theme-icon-rays,
+  .theme-icon-disc,
+  .grade-star {
+    transition: none;
+  }
+}
+
+@keyframes sky-draw { to { stroke-dashoffset: 0; } }
+@keyframes sky-fade { to { opacity: 1; } }
+@keyframes sky-rise { to { translate: 0 0; opacity: 1; } }
+@keyframes sky-sink { to { transform: translateY(90px); } }
+
+/* Switching themes: the page cross-fades briefly (theme.js) while the sun turns into the moon. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
 }
 
 /* ---------- Homepage sections ---------- */
@@ -1362,9 +1734,65 @@ main:has(> .hero) {
 
 .tuwaiq {
   --focus: var(--lime); /* a forest ring would vanish on the forest band */
-  padding-block: var(--space-6);
-  background: var(--band);
+  --star: #ece9e0;
+  --star-show: 1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--space-7);
+  /* Where the page ends (decision 060). By day, night falls: deep forest with the first stars.
+     By night, first light: a warm glow rising on the horizon. */
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--band) 62%, #04100b), var(--band) 70%);
   color: #ece9e0;
+}
+
+[data-theme="dark"] .tuwaiq {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 118%, rgba(239, 178, 79, 0.2), transparent 70%),
+    linear-gradient(to bottom, var(--paper), var(--band));
+}
+
+.sky--band {
+  inset: 0;
+}
+
+.band-horizon {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 46%;
+}
+
+.band-arc {
+  fill: none;
+  stroke: rgba(236, 233, 224, 0.22);
+  stroke-width: 1.2;
+}
+
+[data-theme="dark"] .band-arc {
+  stroke: rgba(239, 178, 79, 0.4);
+}
+
+.tuwaiq-next {
+  margin: var(--space-4) 0 0;
+}
+
+/* The band's one action: ivory on the night band, with the lime guiding star. */
+.btn--on-band {
+  border-color: #ece9e0;
+  background: #ece9e0;
+  color: #0f3326;
+}
+
+.btn--on-band:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.btn--on-band svg {
+  fill: var(--lime);
+  stroke: #0f3326;
+  stroke-width: 1.6;
 }
 
 .tuwaiq-inner {
@@ -1419,7 +1847,7 @@ main:has(> .hero) {
   aspect-ratio: 16 / 9;
   width: 100%;
   border: 1px solid rgba(236, 233, 224, 0.25);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   background: #101713;
   color: #ece9e0;
   text-decoration: none;
@@ -1472,7 +1900,7 @@ main:has(> .hero) {
   width: 100%;
   aspect-ratio: 16 / 9;
   border: 0;
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
 }
 
 /* ---------- Components (templates/components.html) ---------- */
@@ -1550,7 +1978,7 @@ main:has(> .hero) {
 .next-step {
   margin-block: var(--space-4);
   padding: var(--space-4);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   background: var(--lime);
   color: var(--on-lime);
 }
@@ -1954,8 +2382,9 @@ main:has(> .hero) {
   margin-block: var(--space-4) var(--space-5);
   padding: var(--space-4);
   border: 1px solid var(--line-strong);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   background: var(--surface-strong);
+  box-shadow: var(--lift);
 }
 
 .search-field .field-hint {
@@ -2490,7 +2919,7 @@ a.uni-name:hover .uni-name-en:only-child {
   margin-block: var(--space-4) var(--space-5);
   padding: var(--space-4);
   border: 1px solid var(--line-strong);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   background: var(--surface-strong);
 }
 
@@ -2725,7 +3154,7 @@ a.uni-name:hover .uni-name-en:only-child {
   margin-top: var(--space-4);
   padding: var(--space-4);
   border: 1px dashed var(--line-strong);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
 }
 
 .mylist-empty-title {
@@ -3221,4 +3650,351 @@ a.uni-name:hover .uni-name-en:only-child {
 .us-fees-fee {
   color: var(--ink-muted);
   font-size: var(--text-sm);
+}
+
+/* ---------- The الرواد destination (decision 060) ---------- */
+
+/*
+  «خريطة الثلاثين»: by day a page of a star atlas, printed in forest ink on warm paper;
+  by night the same chart is the sky. The text beside it carries every fact; the chart is the overview.
+*/
+.page-rowwad .sky--top {
+  display: none; /* the chart is this page's sky */
+}
+
+.rowwad {
+  --chart-paper: #efe7d3;
+  --chart-ink: #184b3a;
+  --chart-path: #c8862a;
+  position: relative;
+  padding-block: var(--space-5) var(--space-4);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--sky) 70%, var(--paper)), var(--paper));
+}
+
+[data-theme="dark"] .rowwad {
+  --chart-paper: #070d0b;
+  --chart-ink: #ece9e0;
+  --chart-path: #efb24f;
+}
+
+.rowwad-inner {
+  display: grid;
+  gap: var(--space-4) var(--space-6);
+}
+
+.rowwad-program {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.rowwad-title {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-editorial);
+  font-size: clamp(2.2rem, 1.5rem + 2.8vw, 3.6rem);
+  line-height: 1.4;
+}
+
+.rowwad-text .lead {
+  color: var(--ink);
+}
+
+.rowwad-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin-block: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+}
+
+.rowwad-status p {
+  margin: 0;
+}
+
+.rowwad-who {
+  flex-basis: 100%;
+  order: 2;
+}
+
+.rowwad-source {
+  margin-inline-start: auto !important;
+  font-size: var(--text-sm);
+}
+
+.rowwad-scope {
+  font-size: var(--text-sm);
+}
+
+.rowwad-chart {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-panel);
+  box-shadow: var(--lift);
+}
+
+.night-in,
+.night-out {
+  stop-color: var(--chart-paper);
+}
+
+[data-theme="dark"] .night-in {
+  stop-color: #0f1b16;
+}
+
+.chart-sky .st {
+  fill: var(--chart-ink);
+}
+
+.chart-grid path {
+  fill: none;
+  stroke: var(--chart-ink);
+  stroke-opacity: 0.09;
+  stroke-width: 1;
+}
+
+.chart-frame {
+  fill: none;
+  stroke: var(--chart-ink);
+  stroke-opacity: 0.28;
+  stroke-width: 1;
+}
+
+.chart-link {
+  stroke: var(--chart-ink);
+  stroke-opacity: 0.42;
+  stroke-width: 1.2;
+  transition: stroke-opacity 0.3s ease;
+}
+
+.chart-label {
+  fill: var(--chart-ink);
+  fill-opacity: 0.78;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.chart-label--home {
+  fill-opacity: 0.6;
+  font-size: 14px;
+}
+
+.chart-hit {
+  fill: transparent;
+}
+
+.chart-star-shape {
+  fill: var(--chart-ink);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease, fill 0.2s ease;
+}
+
+/* By night the stars glow a little; by day they are ink. */
+[data-theme="dark"] .chart-star-shape {
+  filter: drop-shadow(0 0 3px rgba(236, 233, 224, 0.55));
+}
+
+.chart-home .guide-star-shape {
+  stroke: var(--guide-edge);
+}
+
+/* The path of light from home to a chosen country: drawn only when that country is chosen. */
+.chart-path {
+  fill: none;
+  stroke: var(--chart-path);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1 2; /* a gap longer than the path, so no round cap shows before it's drawn */
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+.chart-star:hover .chart-star-shape,
+.chart-star:focus .chart-star-shape {
+  fill: var(--lime);
+  stroke: var(--guide-edge);
+  stroke-width: 1.2;
+  transform: scale(1.6);
+}
+
+/* A country chosen (in the chips or the «الدولة» filter): its constellation lights up, the others recede. */
+.rowwad-chart[data-active] .chart-country,
+.rowwad-chart[data-active] .chart-star {
+  opacity: 0.32;
+  transition: opacity 0.4s ease;
+}
+
+.rowwad-chart[data-active] .chart-country.is-active,
+.rowwad-chart[data-active] .chart-star.is-active {
+  opacity: 1;
+}
+
+.chart-country.is-active .chart-path {
+  stroke-dashoffset: 0;
+}
+
+.chart-country.is-active .chart-link {
+  stroke-opacity: 0.9;
+}
+
+.chart-readout {
+  margin-top: var(--space-2);
+  min-height: 1.8em;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.country-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.country-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.country-chip img {
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.country-chip-count {
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.country-chip:hover {
+  border-color: var(--heading);
+}
+
+.country-chip[aria-current] {
+  border-color: var(--heading);
+  background: var(--heading);
+  color: var(--on-heading);
+}
+
+.country-chip[aria-current] .country-chip-count {
+  color: var(--on-heading);
+}
+
+@media (min-width: 1024px) {
+  .rowwad-inner {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-areas: "text aside" "chart chart" "chips chips";
+    align-items: end;
+  }
+
+  .rowwad-text { grid-area: text; }
+  .rowwad-aside { grid-area: aside; }
+  .rowwad-chart { grid-area: chart; }
+  .country-chips { grid-area: chips; }
+
+  .rowwad-status {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  .chart-label { font-size: 20px; }
+  .chart-label--home { font-size: 18px; }
+}
+
+main:has(> .rowwad:not([hidden])) {
+  padding-top: 0;
+}
+
+/* Phones: the chart is an overview (too small to tap a star); the country chips do the choosing. */
+@media (max-width: 699px) {
+  .chart-label,
+  .chart-sky {
+    display: none;
+  }
+
+  .chart-star {
+    pointer-events: none;
+  }
+
+  /* One swipeable row of countries, so the search isn't pushed far down. */
+  .country-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--space-3) * -1);
+    padding: 2px var(--space-3) var(--space-2);
+    scrollbar-width: none;
+  }
+
+  .country-chips li {
+    flex-shrink: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-path,
+  .chart-star-shape,
+  .rowwad-chart[data-active] .chart-country {
+    transition: none;
+  }
+}
+
+/* The grade switch carries the homepage's constellation: one star per year, the current one lit (decision 060). */
+.grade-journey a {
+  position: relative;
+}
+
+.journey-star {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  width: 14px;
+  height: 14px;
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  opacity: 0.6;
+}
+
+.grade-journey a[aria-current] .journey-star {
+  fill: var(--lime);
+  stroke: var(--on-heading);
+  stroke-width: 1.2;
+  opacity: 1;
+}
+
+@media (max-width: 899px) {
+  .sky--top .sky-stars {
+    -webkit-mask-image: linear-gradient(#000 40px, transparent 96px);
+    mask-image: linear-gradient(#000 40px, transparent 96px);
+  }
 }

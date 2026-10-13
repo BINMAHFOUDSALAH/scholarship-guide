@@ -1,53 +1,75 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
 {% import "partials/path-art.html" as art %}
+{% import "partials/sky.html" as sky %}
 
 {#
   The homepage (decision 035): say what واضح is, then one main way in (your grade) and one
   second way in (search the official lists); then what's open now; then the programs.
 #}
 
+{% block body_class %}page-home{% endblock %}
+{# The homepage draws its own, larger sky inside the opening section. #}
+{% block sky %}{% endblock %}
+
 {% block hero %}
 <section class="hero" aria-labelledby="hero-title">
+  {{ sky.hero() }}
   <div class="container hero-grid">
     <div class="hero-text">
-      <p class="hero-kicker">{{ site.descriptor }}</p>
-      <h1 id="hero-title">{{ site.tagline }}</h1>
+      <h1 id="hero-title" class="hero-title">{{ site.tagline }}</h1>
       <p class="lead">{{ home.lead_ar }}</p>
 
+      {# The main way in: your grade. The three grades are a real sequence, so they're drawn as one
+         constellation rising towards the light (decision 060); each star is a large link. #}
       <nav id="grades" class="hero-grades" aria-labelledby="grade-picker-title">
         <p id="grade-picker-title" class="start-title">ابدأ من صفك: في أي صف أنت؟</p>
-        <ul class="grade-choices">
-          {% for g in home.grades %}
-          <li><a href="{{ url_for('grade_page', slug=g.slug) }}"><span class="grade-name">{{ g.label_ar }}</span><span class="grade-hint">{{ g.hint_ar }}</span></a></li>
-          {% endfor %}
-        </ul>
+        <div class="constellation">
+          <svg class="constellation-line" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <polyline points="250,36 150,24 50,12" pathLength="1" vector-effect="non-scaling-stroke"/>
+          </svg>
+          <ul class="grade-choices">
+            {% for g in home.grades %}
+            <li style="--step: {{ loop.index0 }}"><a href="{{ url_for('grade_page', slug=g.slug) }}">
+              <svg class="grade-star" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false"><path d="M0 -10 Q1.6 -1.6 10 0 Q1.6 1.6 0 10 Q-1.6 1.6 -10 0 Q-1.6 -1.6 0 -10Z"/></svg>
+              <span class="grade-name">{{ g.label_ar }}</span><span class="grade-hint">{{ g.hint_ar }}</span>
+            </a></li>
+            {% endfor %}
+          </ul>
+        </div>
       </nav>
     </div>
+  </div>
 
-    {# The second way in: the official lists, searchable. Same suggestions as the explorer (universities.js). #}
+  {# The second way in: the official lists, searchable. It sits on the horizon line, under the grades.
+     Same suggestions as the explorer (universities.js). #}
+  <div class="container">
     <form class="hero-search" method="get" action="{{ url_for('universities_page') }}" role="search" aria-labelledby="home-search-title">
-      <h2 id="home-search-title" class="hero-search-title">أو ابحث في جامعات قوائم الابتعاث</h2>
-      <label class="field-label" for="home-q">اسم جامعة أو تخصص</label>
-      <p class="field-hint" id="home-q-hint">بالعربية أو الإنجليزية.</p>
-      <div class="search-box">
-        <input class="input" id="home-q" name="q" type="search" autocomplete="off"
-               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="home-q-suggest"
-               aria-describedby="home-q-hint" data-suggest="{{ url_for('suggestions_api') }}">
-        <button class="btn btn--primary search-submit" type="submit">ابحث</button>
-        <div id="home-q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" tabindex="-1" hidden></div>
+      <div class="hero-search-head">
+        <h2 id="home-search-title" class="hero-search-title">أو ابحث في جامعات قوائم الابتعاث</h2>
+        <p class="hero-search-meta">{{ explorer.universities | length | count_ar("universities") }} في {{ explorer.country_options() | length | count_ar("countries") }}، من الدليل الاسترشادي الرسمي <span class="nowrap" dir="ltr">{{ explorer.source.academic_year | replace("-", "–") }}</span>.</p>
       </div>
-      <p class="hero-search-examples">
-        <span class="hero-search-examples-label">جرّب:</span>
-        {% for ex in home.search_examples %}
-        {% if ex.university %}<a href="{{ url_for('university_page', uid=ex.university) }}" lang="en" dir="ltr">{{ ex.label_ar }}</a>
-        {% elif ex.track %}<a href="{{ url_for('universities_page') }}?track={{ ex.track }}">{{ ex.label_ar }}</a>
-        {% else %}<a href="{{ url_for('universities_page') }}?q={{ ex.q | urlencode }}">{{ ex.label_ar }}</a>{% endif %}
-        {% endfor %}
-      </p>
-      <p class="hero-search-meta">{{ explorer.universities | length | count_ar("universities") }} في {{ explorer.country_options() | length | count_ar("countries") }}، من الدليل الاسترشادي الرسمي {{ explorer.source.academic_year | replace("-", "–") }}.</p>
+      <div class="hero-search-field">
+        <label class="field-label" for="home-q">اسم جامعة أو تخصص</label>
+        <p class="field-hint" id="home-q-hint">بالعربية أو الإنجليزية.</p>
+        <div class="search-box">
+          <input class="input" id="home-q" name="q" type="search" autocomplete="off"
+                 role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="home-q-suggest"
+                 aria-describedby="home-q-hint" data-suggest="{{ url_for('suggestions_api') }}">
+          <button class="btn btn--primary search-submit" type="submit">ابحث</button>
+          <div id="home-q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" tabindex="-1" hidden></div>
+        </div>
+        <p class="hero-search-examples">
+          <span class="hero-search-examples-label">جرّب:</span>
+          {% for ex in home.search_examples %}
+          {% if ex.university %}<a href="{{ url_for('university_page', uid=ex.university) }}" lang="en" dir="ltr">{{ ex.label_ar }}</a>
+          {% elif ex.track %}<a href="{{ url_for('universities_page') }}?track={{ ex.track }}">{{ ex.label_ar }}</a>
+          {% else %}<a href="{{ url_for('universities_page') }}?q={{ ex.q | urlencode }}">{{ ex.label_ar }}</a>{% endif %}
+          {% endfor %}
+        </p>
+      </div>
       {# Site search (decision 045): for questions about the guide itself, not universities. #}
-      <p class="hero-guide-search">تبحث عن معلومة، مثل آيلتس أو القبول المشروط؟ <a href="{{ url_for('search_page') }}">ابحث في الدليل ←</a></p>
+      <p class="hero-guide-search">تبحث عن معلومة، مثل آيلتس أو القبول المشروط؟ <a class="nowrap" href="{{ url_for('search_page') }}">ابحث في الدليل ←</a></p>
     </form>
   </div>
 </section>
