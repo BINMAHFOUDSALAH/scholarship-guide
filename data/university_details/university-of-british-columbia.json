@@ -1,0 +1,51 @@
+{
+  "id": "university-of-british-columbia",
+  "name_en": "University of British Columbia",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://you.ubc.ca/applying-ubc/requirements/international-high-schools/",
+  "platform": {
+    "value_ar": "موقع EducationPlannerBC (EPBC).",
+    "source_url": "https://you.ubc.ca/apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 ولا تقل أي مهارة عن 6.0.",
+      "source_url": "https://you.ubc.ca/applying-ubc/requirements/english-language-competency/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "المقياس 1–6: 4.5 (القراءة 4.5، الاستماع 5، الكتابة 4.5، التحدث 4). المقياس 0–120: 90. رمز UBC: 0965.",
+      "source_url": "https://you.ubc.ca/applying-ubc/requirements/english-language-competency/"
+    },
+    "duolingo": {
+      "min": 125,
+      "note_ar": "125، مع 115 للقراءة والاستماع و120 للكتابة والتحدث.",
+      "source_url": "https://you.ubc.ca/applying-ubc/requirements/english-language-competency/"
+    },
+    "note_ar": "للتقديم لعام 2027/2028 تُقبل نتائج الاختبارات من 1 يناير 2025 فما بعد."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "note_ar": "11:59 مساءً بتوقيت المحيط الهادئ، للفصل الشتوي (سبتمبر 2027 إلى أبريل 2028).",
+      "source_url": "https://you.ubc.ca/applying-ubc/dates-deadlines/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": "https://you.ubc.ca/applying-ubc/requirements/international-high-schools/"
+  },
+  "not_found_ar": [
+    "شروط الثانوية السعودية: تظهر في صفحة UBC بعد اختيار الدولة، ولم نتمكن من قراءتها مباشرة للتحقق"
+  ]
+}

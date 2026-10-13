@@ -1,0 +1,43 @@
+{
+  "id": "university-of-calgary",
+  "name_en": "University of Calgary",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.ucalgary.ca/future-students/undergraduate/admissions/requirements",
+  "platform": {
+    "value_ar": "نموذج الجامعة عبر حساب UCalgary eID (رسوم 145 دولارًا للتعليم الدولي).",
+    "source_url": "https://www.ucalgary.ca/future-students/undergraduate/admissions/how-to-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5. التمريض والتربية يطلبان أعلى.",
+      "source_url": "https://www.ucalgary.ca/future-students/undergraduate/admissions/how-to-apply/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5. قبل ذلك: 86. رمز Calgary: 0813.",
+      "source_url": "https://www.ucalgary.ca/future-students/undergraduate/admissions/how-to-apply/english-language-requirements"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120.",
+      "source_url": "https://www.ucalgary.ca/future-students/undergraduate/admissions/how-to-apply/english-language-requirements"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": "https://www.ucalgary.ca/future-students/undergraduate/admissions/requirements"
+  },
+  "not_found_ar": [
+    "شروط الثانوية السعودية: تظهر بعد اختيار الدولة في صفحة الشروط، ولم نتمكن من قراءتها",
+    "موعد التقديم: صفحتان رسميتان تختلفان (1 أبريل للطلاب الدوليين، و1 مارس لقبول الخريف)، فلم نعرض موعدًا"
+  ]
+}

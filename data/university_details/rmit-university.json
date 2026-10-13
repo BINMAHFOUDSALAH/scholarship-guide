@@ -1,0 +1,40 @@
+{
+  "id": "rmit-university",
+  "name_en": "RMIT University",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
+  "admissions_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/entry-requirements",
+  "platform": {
+    "value_ar": "بوابة RMIT للتقديم، مباشرة أو عبر وكيل معتمد. VTAC غير متاح لمن درس الثانوية خارج أستراليا.",
+    "source_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/application-methods"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "أدنى مستوى للبكالوريوس: 6.5 ولا تقل أي مهارة عن 6.0. بعض البرامج تطلب 7.0 أو أعلى.",
+      "source_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/entry-requirements/english-requirements/english-language-proficiency-tests"
+    },
+    "toefl_ibt": {
+      "min": 79,
+      "note_ar": "أدنى مستوى: 79، مع 13 للقراءة و12 للاستماع و18 للتحدث و21 للكتابة. الاختبارات من 21 يناير 2026 يجب أن تكون TOEFL iBT Australia.",
+      "source_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/entry-requirements/english-requirements/english-language-proficiency-tests"
+    },
+    "duolingo": null,
+    "note_ar": "الاختبار يجب أن يكون خلال سنتين من بداية الدراسة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "Bachelor degrees | 65% | Not applicable",
+    "source_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/entry-requirements/country-equivalency/saudi-arabia"
+  },
+  "not_found_ar": [
+    "جدول RMIT للسعودية يقابل الثانوية العامة بـ 60% لبرنامج Foundation Studies، وصف البكالوريوس فيه «Not applicable». لا تقول الصفحة صراحة هل تكفي الثانوية للسنة الأولى",
+    "مواعيد الفصل الثاني 2027 لم تُنشر بعد",
+    "Duolingo غير مذكور ضمن الاختبارات المقبولة"
+  ]
+}

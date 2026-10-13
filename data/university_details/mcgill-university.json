@@ -1,0 +1,51 @@
+{
+  "id": "mcgill-university",
+  "name_en": "McGill University",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.mcgill.ca/undergraduate-admissions/apply/requirements/international/other",
+  "platform": {
+    "value_ar": "بوابة McGill للتقديم ورفع المستندات (Applicant Portal).",
+    "source_url": "https://www.mcgill.ca/undergraduate-admissions/apply/submit-documents"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 ولا تقل أي مهارة عن 6.0. لا يُقبل IELTS One Skill Retake.",
+      "source_url": "https://www.mcgill.ca/undergraduate-admissions/apply/english-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5 لأغلب البرامج، و5.0 لـ Education (TESL) وManagement. المقياس القديم: 90.",
+      "source_url": "https://www.mcgill.ca/undergraduate-admissions/apply/english-proficiency"
+    },
+    "duolingo": {
+      "min": 125,
+      "note_ar": "125، و130 لـ B.Ed. (TESL) وB.Com.",
+      "source_url": "https://www.mcgill.ca/undergraduate-admissions/apply/english-proficiency"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "note_ar": "للمدارس خارج كندا والولايات المتحدة. المستندات حتى 1 مارس.",
+      "source_url": "https://www.mcgill.ca/undergraduate-admissions/apply/requirements/international/other"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": true,
+    "note_ar": "الثانوية العامة مدرجة في قائمة McGill للشهادات الدولية المقبولة. لا تذكر الصفحة معدلًا، وشروط كل برنامج تختلف.",
+    "quote": "Saudi Arabia Tawjihiyah (General Secondary. Education Certificate)",
+    "source_url": "https://www.mcgill.ca/undergraduate-admissions/apply/requirements/international/other"
+  },
+  "not_found_ar": [
+    "المعدل المطلوب في الثانوية: غير مذكور، ويختلف حسب البرنامج"
+  ]
+}

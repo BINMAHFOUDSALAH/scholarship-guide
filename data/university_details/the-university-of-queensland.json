@@ -1,0 +1,50 @@
+{
+  "id": "the-university-of-queensland",
+  "name_en": "The University of Queensland",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
+  "admissions_url": "https://study.uq.edu.au/admissions/undergraduate/submit-your-application",
+  "platform": {
+    "value_ar": "التقديم مباشرة إلى UQ أو عبر وكيل معتمد من UQ. QTAC لطلاب الثانوية الأسترالية أو IB داخل أستراليا فقط.",
+    "source_url": "https://study.uq.edu.au/admissions/undergraduate/submit-your-application"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "لأغلب البرامج: 6.5 مع 6.0 في كل مهارة. بعض البرامج أعلى.",
+      "source_url": "https://study.uq.edu.au/admissions/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 87,
+      "note_ar": "الحد العام: 87، مع 19 للاستماع والقراءة والتحدث و21 للكتابة. UQ تقبل TOEFL بمقياس الأقسام 1–30 فقط.",
+      "source_url": "https://policies.uq.edu.au/download.php?associated=1&id=172"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "الفصل الثاني 2027 (يوليو)",
+      "date": "2027-05-31",
+      "year_stated": false,
+      "note_ar": "الصفحة تقول «31 May of the same year». بعض البرامج لها مواعيد أخرى.",
+      "source_url": "https://study.uq.edu.au/admissions/undergraduate/submit-your-application",
+      "round_ar": "التقديم المباشر"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "If you're currently completing your senior schooling overseas, you must achieve the equivalent of the required entry score for your preferred UQ program.",
+    "source_url": "https://study.uq.edu.au/admissions/undergraduate/review-entry-requirements"
+  },
+  "not_found_ar": [
+    "الثانوية السعودية غير مذكورة بالاسم: الصفحة تقول إن من يدرس الثانوية خارج أستراليا يحتاج ما يعادل درجة القبول في برنامجه",
+    "مواعيد الفصل الأول 2027 (فبراير) لم نعرضها لأن الدراسة فيه تبدأ قبل تخرج طالب ثالث ثانوي",
+    "Duolingo غير مذكور في جدول UQ"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "university-of-saskatchewan",
+  "name_en": "University of Saskatchewan",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.usask.ca/requirements/deadlines.php",
+  "platform": {
+    "value_ar": "حساب قبول في apply.usask.ca.",
+    "source_url": "https://admissions.usask.ca/requirements/apply.php"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 ولا تقل أي مهارة عن 6.",
+      "source_url": "https://admissions.usask.ca/requirements/english-language-proficiency.php"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 ولا تقل أي مهارة عن 4. رمز الجامعة: 0980.",
+      "source_url": "https://admissions.usask.ca/requirements/english-language-proficiency.php"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120 ولا يقل أي قسم عن 100 (من 1 يناير 2026).",
+      "source_url": "https://admissions.usask.ca/requirements/english-language-proficiency.php"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-05-01",
+      "year_stated": true,
+      "note_ar": "المستندات حتى 1 يونيو 2027.",
+      "source_url": "https://admissions.usask.ca/requirements/deadlines.php",
+      "round_ar": "لطلاب الثانوية خارج كندا"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": "https://admissions.usask.ca/requirements/marks.php"
+  },
+  "not_found_ar": [
+    "الثانوية السعودية غير مذكورة. الصفحة تقول إن درجات طلاب الثانوية الدوليين تُحوَّل إلى النظام الكندي"
+  ]
+}

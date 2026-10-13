@@ -1,0 +1,31 @@
+{
+  "id": "nanyang-technological-university-singapore-ntu",
+  "name_en": "Nanyang Technological University, Singapore (NTU)",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لعام 2027–2028 (يبدأ عادةً أواخر يوليو 2027)",
+  "admissions_url": "https://www.ntu.edu.sg/admissions/undergraduate/admission-guide/international-qualifications",
+  "platform": {
+    "value_ar": "نموذج التقديم الإلكتروني في موقع NTU (بالإنجليزية، في جلسة واحدة).",
+    "source_url": "https://www.ntu.edu.sg/admissions/undergraduate/admissions/general-admission-requirements/international-qualifications/other-international-qualifications"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "صفحتان من NTU تختلفان: IELTS 6 في صفحة الشهادات الدولية الأخرى، و6.5 في الصفحة العامة. لم نعتمد رقمًا."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "تحتاج مؤهلًا إضافيًا: 3 مواد AP أو أكثر بدرجة 4 أو 5 (وAP Calculus BC للهندسة ومعظم العلوم)، أو 3 مواد A-Level على الأقل.",
+    "quote": "High School Certificate (Saudi Arabia) | No, required additional qualification (see below)",
+    "source_url": "https://www.ntu.edu.sg/admissions/undergraduate/admissions/general-admission-requirements/international-qualifications/other-international-qualifications"
+  },
+  "not_found_ar": [
+    "موعد التقديم: نافذة «الشهادات الدولية الأخرى» من 15 أكتوبر 2026 إلى 20 يناير 2027، لكن الجدول يكتب بجانبها «Closed»، ولم نتأكد أي فئة تنطبق على حامل الثانوية مع AP",
+    "حد IELTS: صفحتان من NTU تختلفان (6 و6.5)"
+  ]
+}

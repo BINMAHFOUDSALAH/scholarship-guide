@@ -1,0 +1,52 @@
+{
+  "id": "university-of-guelph",
+  "name_en": "University of Guelph",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.uoguelph.ca/admission/undergraduate/international/requirements",
+  "platform": {
+    "value_ar": "التقديم المباشر لجامعة Guelph (رسوم 100 دولار كندي) أو عبر Common App (75 دولارًا أمريكيًا).",
+    "source_url": "https://www.uoguelph.ca/admission/undergraduate/international/apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 ولا تقل أي مهارة عن 6.",
+      "source_url": "https://www.uoguelph.ca/admission/undergraduate/international/english-proficiency/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5 ولا تقل أي مهارة عن 4.0. رمز Guelph: 0892.",
+      "source_url": "https://www.uoguelph.ca/admission/undergraduate/international/english-proficiency/"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110، وقد يُنظر في الدرجات الفرعية.",
+      "source_url": "https://www.uoguelph.ca/admission/undergraduate/international/english-proficiency/"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-05-15",
+      "year_stated": false,
+      "note_ar": "المستندات حتى 22 مايو.",
+      "source_url": "https://admission.uoguelph.ca/impdate",
+      "round_ar": "لطلاب الثانوية خارج كندا"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": true,
+    "note_ar": "تُقبل الثانوية العامة بنتائج «جيد جدًا/ممتاز» إجمالًا وفي المواد المناسبة للبرنامج. لا تذكر الصفحة معدلًا رقميًا.",
+    "quote": "Applicants from Bahrain, Jordan, Palestine, Kuwait, Oman, Qatar, Saudi Arabia, Syria, and Yemen must present the National Secondary School Education/Leaving Certificate (Tawjihiyah) with very good/excellent results overall and in appropriate subjects.",
+    "source_url": "https://www.uoguelph.ca/admission/undergraduate/international/requirements"
+  },
+  "not_found_ar": [
+    "المعدل الرقمي المطلوب: غير مذكور، والصفحة تقول «very good/excellent»"
+  ]
+}

@@ -209,10 +209,11 @@ def test_every_researched_university_page_renders(path):
 
 
 def test_next_deadline_skips_past_dates():
-    uid = next(iter(ex.details))
-    dated = sorted(d["date"] for d in ex.details[uid]["dates"] if d.get("date"))
-    if not dated:
-        pytest.skip("no dated items")
+    def deadlines(uid):
+        return sorted(d["date"] for d in ex.details[uid]["dates"]
+                      if d.get("date") and d["event_ar"] == "آخر موعد للتقديم" and not d.get("reference_only"))
+    uid = next(u for u in ex.details if deadlines(u))
+    dated = deadlines(uid)
     assert ex.next_deadline(uid, today="2000-01-01")["date"] == dated[0]
     assert ex.next_deadline(uid, today="2999-01-01") is None
 
@@ -472,7 +473,7 @@ def test_results_show_key_facts_or_say_they_are_not_collected():
     emdad = client.get("/universities?track=emdad&field=ict").text
     assert "لم نجمع متطلبات جامعات هذه القائمة" not in emdad  # removed at the owner's request (2026-10-12)
     assert "لم نجمعها بعد" not in emdad
-    assert "لم نجمعها بعد" in client.get("/my-list?partial=1&ids=adelaide-university").text
+    assert "لم نجمعها بعد" in client.get(f"/my-list?partial=1&ids={unknown}").text
 
 
 def test_explorer_says_being_on_a_list_is_not_admission():

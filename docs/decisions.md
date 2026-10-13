@@ -750,3 +750,18 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Every UK file carries the UCAS equal-consideration deadline (13 Jan 2027, read on ucas.com). Course-only deadlines (medicine, LNAT) use a different `event_ar`, so they never become «أقرب موعد».
 - SAT/ACT and acceptance rate are left out for the UK: the agents didn't search for them, so "not published" would overclaim.
 **Alternative:** keep using `language_note_ar` (wrong label), or record "false" when a page implies it (more answers, but some invented).
+
+## 055 — Wave 3 (Australia, Canada, Singapore); repo instructions follow the current Claude Code docs
+**Date:** 2026-10-13
+**Wave 3:**
+- 16 of 23 saved, same rules and checks as decision 054 (every quote re-fetched with `scripts/check_quote.py`). Saudi certificate: accepted for year 1 at McGill and Guelph; not enough at NTU, Université de Montréal, UNSW and Adelaide; not stated at the other 10.
+- Not saved (every page refused automated reads, 403): Melbourne, Griffith, Monash, Deakin, Macquarie, Alberta, Singapore Management University.
+- **Australian deadlines:** only Semester 2 (July) 2027 dates are shown. Semester 1 2027 starts in February, before a grade-12 student graduates, so its deadlines would mislead «أقرب موعد».
+- Université de Montréal teaches in French; `language_note_ar` says so.
+- When two official pages of one university disagree on a deadline (Calgary, Montréal) or a score (NTU), no date or number is shown.
+**Repo instructions (checked against code.claude.com docs, 2026-10-13):**
+- CLAUDE.md stays short (target under 200 lines; it's ~58).
+- Instructions that only matter for part of the code move to path-scoped rules: `.claude/rules/design.md` loads only when Claude edits `app/templates/` or `app/static/`.
+- Repeated workflows become skills: `.claude/skills/research-wave/SKILL.md`.
+- No `goal.md` / `spec.md` / `TODO.md`: CLAUDE.md, `docs/specs/` and the roadmap already do those jobs.
+**Alternative:** keep everything in CLAUDE.md (loads every session, even for unrelated work).

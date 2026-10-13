@@ -509,3 +509,15 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** 399 tests (schema for 26 new files, a page test for the new row). In the browser at 375px: Exeter (row shown) and Bristol (row hidden), no sideways scroll.
 
 **Understood?** Not yet checked.
+
+## 25. Wave 3 and tidy instructions (2026-10-13)
+**Built / why:** requirements for 16 universities in Australia, Canada and Singapore (decision 055), the first with Saudi certificates accepted directly (McGill, Guelph). Also a repo tidy-up checked against the current Claude Code docs: a path-scoped design rule, a `research-wave` skill, a corrected README.
+
+**Key concepts:**
+- **Tests shouldn't depend on which data happens to exist.** Two tests picked "a university we haven't researched" or "the first details file" by name or position, and broke when the data grew. They now pick one that fits.
+- **Context is a budget.** CLAUDE.md loads in every session; a path-scoped rule loads only when its files are touched; a skill loads only when its task comes up.
+- **"Relevant" beats "published".** An Australian deadline for a February 2027 start is real, but useless to a student graduating in June 2027, so it isn't shown.
+
+**Tested:** 431 tests. Browser at 375px: McGill (row «مقبولة للسنة الأولى مباشرة»).
+
+**Understood?** Not yet checked.

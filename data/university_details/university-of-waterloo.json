@@ -1,0 +1,61 @@
+{
+  "id": "university-of-waterloo",
+  "name_en": "University of Waterloo",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://uwaterloo.ca/future-students/admissions/how-to-apply",
+  "platform": {
+    "value_ar": "OUAC (Ontario Universities' Application Centre)، ثم بوابة Waterloo.",
+    "source_url": "https://uwaterloo.ca/future-students/admissions/how-to-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5، مع 6.5 للكتابة والتحدث و6.0 للقراءة والاستماع.",
+      "source_url": "https://uwaterloo.ca/future-students/admissions/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5، مع 5 للكتابة والتحدث. قبل ذلك: 90. رمز Waterloo: 0996.",
+      "source_url": "https://uwaterloo.ca/future-students/admissions/english-language-requirements"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120، مع 125 في Literacy وProduction.",
+      "source_url": "https://uwaterloo.ca/future-students/admissions/english-language-requirements"
+    },
+    "note_ar": "تُقبل النتائج من 1 مايو 2025 فما بعد."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-02-01",
+      "year_stated": true,
+      "note_ar": "الطلاب الدوليون لهم المواعيد نفسها. المستندات حتى 15 فبراير 2027.",
+      "source_url": "https://uwaterloo.ca/future-students/admissions/deadlines",
+      "round_ar": "البرامج غير الهندسية"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم للهندسة (ما عدا العمارة)",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "note_ar": "المستندات حتى 1 فبراير 2027، ومقابلة أونلاين مطلوبة.",
+      "source_url": "https://uwaterloo.ca/future-students/admissions/deadlines",
+      "round_ar": "الهندسة"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": "https://uwaterloo.ca/future-students/admissions/admission-requirements"
+  },
+  "not_found_ar": [
+    "شروط الثانوية السعودية: تظهر في نموذج بحث في موقع Waterloo لم نتمكن من قراءته"
+  ]
+}
