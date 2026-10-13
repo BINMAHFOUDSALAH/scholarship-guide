@@ -1,14 +1,18 @@
-// Theme toggle: light (the default for everyone) ↔ dark.
-// The choice is saved in localStorage, which stays on this device and is never sent anywhere.
+// Theme toggle: light ↔ dark (decision 060).
+// Until the student picks one, the site follows the device's setting (and changes with it).
+// Their choice is saved in localStorage, which stays on this device and is never sent anywhere.
 // Without JavaScript the button stays hidden and the site is shown in light mode.
 
-const THEME_COLORS = { light: "#F6F4EE", dark: "#101713" };
+const THEME_COLORS = { light: "#F6F4EE", dark: "#0c1310" };
+const system = window.matchMedia("(prefers-color-scheme: dark)");
+const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-function savedTheme() {
+function chosenTheme() {
   try {
-    return localStorage.getItem("theme") === "dark" ? "dark" : "light";
+    const t = localStorage.getItem("theme");
+    return t === "dark" || t === "light" ? t : null;
   } catch {
-    return "light"; // storage can be blocked (e.g. private mode)
+    return null; // storage can be blocked (e.g. private mode)
   }
 }
 
@@ -24,11 +28,7 @@ function applyTheme(theme) {
 
 function saveTheme(theme) {
   try {
-    if (theme === "dark") {
-      localStorage.setItem("theme", "dark");
-    } else {
-      localStorage.removeItem("theme");
-    }
+    localStorage.setItem("theme", theme);
   } catch {
     // Not saved, but the theme still changes for this visit.
   }
@@ -38,7 +38,7 @@ const button = document.querySelector(".theme-toggle");
 
 if (button) {
   const label = button.querySelector(".theme-toggle-label");
-  let current = savedTheme();
+  let current = chosenTheme() || (system.matches ? "dark" : "light");
 
   // The label names the mode you'll switch TO, which is clearer for a two-state switch.
   const render = () => {
@@ -48,11 +48,29 @@ if (button) {
     button.setAttribute("aria-pressed", current === "dark" ? "true" : "false");
   };
 
+  // The whole page cross-fades while the sky's own pieces (sun to moon, the stars) move on their own.
+  // Short, never blocks a click, and skipped for anyone who asked for less motion.
+  const switchTo = (theme) => {
+    current = theme;
+    const change = () => { applyTheme(theme); render(); };
+    if (document.startViewTransition && !calm.matches) {
+      document.documentElement.classList.add("theme-changing");
+      const t = document.startViewTransition(change);
+      t.finished.finally(() => document.documentElement.classList.remove("theme-changing"));
+    } else {
+      change();
+    }
+  };
+
   button.addEventListener("click", () => {
-    current = current === "dark" ? "light" : "dark";
-    applyTheme(current);
-    saveTheme(current);
-    render();
+    const next = current === "dark" ? "light" : "dark";
+    saveTheme(next);
+    switchTo(next);
+  });
+
+  // The device switched (e.g. at sunset): follow it, unless the student chose a theme here.
+  system.addEventListener("change", () => {
+    if (!chosenTheme()) switchTo(system.matches ? "dark" : "light");
   });
 
   applyTheme(current);

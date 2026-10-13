@@ -119,12 +119,16 @@ def test_every_internal_link_works(page):
             assert f'id="{anchor}"' in target.text, f"{href}: missing section #{anchor}"
 
 
-def test_light_is_the_default_theme():
-    """Dark mode only when chosen: no automatic switch from the device setting."""
+def test_theme_follows_the_device_until_the_student_chooses():
+    """Decision 060 (replaces 023): the device's setting until the student picks a theme; their choice wins.
+    Set before the page is drawn (no flash); without JavaScript the site is light."""
     head = client.get("/").text.split("</head>")[0]
-    assert 'localStorage.getItem("theme") === "dark"' in head
+    assert 'localStorage.getItem("theme")' in head
+    assert 'matchMedia("(prefers-color-scheme: dark)")' in head
+    js = client.get("/static/theme.js").text
+    assert 'localStorage.setItem("theme", theme)' in js  # light is saved too, so it beats a dark device
     css = client.get("/static/style.css").text
-    assert "prefers-color-scheme" not in css
+    assert "prefers-color-scheme" not in css  # dark comes only from data-theme, so the choice is never overridden
     assert ':root[data-theme="dark"]' in css
 
 
@@ -353,7 +357,7 @@ def test_grade_journey_shows_each_years_job_and_marks_the_current_one():
     journey = html.split('class="grade-journey"')[1].split("</nav>")[0]
     assert journey.count("<a ") == 3 and "اكتشف واستعد" in journey and "قدّم وتابع" in journey
     assert journey.count('aria-current="page"') == 1
-    assert 'aria-current="page"><span class="grade-journey-name">ثاني ثانوي' in journey
+    assert re.search(r'aria-current="page">(<svg class="journey-star".*?</svg>)?<span class="grade-journey-name">ثاني ثانوي', journey)
     assert "ماذا ينتظرك في ثالث ثانوي؟" in html
     assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text
 
@@ -681,3 +685,42 @@ def test_css_and_js_links_carry_a_content_version():
     for name in ("style.css", "universities.js", "mylist.js"):
         m = re.search(r'/static/' + re.escape(name) + r'\?v=([0-9a-f]{8})"', html)
         assert m and m.group(1) == main.asset_version(name), name
+
+
+def test_rowwad_chart_places_every_university_once():
+    """Decision 060: «خريطة الثلاثين» has one star per university in the الرواد list, inside the chart,
+    none drawn on top of another, and each country's constellation where the drawing expects it."""
+    import math
+    from app.sky import CLUSTER_AT, rowwad_chart
+
+    chart = rowwad_chart(main.explorer)
+    listed = {u["id"] for _, u in main.explorer.listings("arruaad")}
+    assert {s["id"] for s in chart["stars"]} == listed
+    assert len(chart["stars"]) == len(listed)
+    assert sum(k["count"] for k in chart["countries"]) == len(listed)
+    for s in chart["stars"]:
+        assert 20 < s["x"] < chart["w"] - 20 and 20 < s["y"] < chart["h"] - 20, s
+    points = [(s["x"], s["y"]) for s in chart["stars"]]
+    closest = min(math.dist(a, b) for i, a in enumerate(points) for b in points[i + 1:])
+    assert closest > 14, closest  # a star (8 units) never overlaps another
+    # A new country in the list would be placed automatically; this flags it so its place can be chosen.
+    assert {k["code"] for k in chart["countries"]} <= set(CLUSTER_AT)
+
+
+def test_rowwad_destination_only_on_its_track():
+    """The الرواد opening shows on ?track=arruaad, with its status from data; elsewhere it's in the page but hidden."""
+    html = client.get("/universities?track=arruaad").text
+    opening = html[html.index("data-rowwad"):html.index("</section>", html.index("data-rowwad"))]
+    assert "hidden" not in opening.split(">")[0]
+    assert 'data-explorer-header hidden' in html
+    track = next(t for t in main.paths_by_id["custodian-scholarship"]["tracks"] if t["id"] == "arruaad")
+    assert track["note_ar"] in opening and track["levels_ar"] in opening
+    if track.get("status_source"):
+        assert track["status_source"] in opening
+    assert "لا يعني قبولك فيها" in opening  # what the list doesn't answer (decision 038)
+    # The country chips are plain links, so they work without JavaScript.
+    assert '/universities?track=arruaad&amp;country=US"' in opening
+
+    other = client.get("/universities?track=emdad").text
+    assert 'data-rowwad aria-labelledby="rowwad-title" hidden' in other
+    assert 'data-explorer-header hidden' not in other

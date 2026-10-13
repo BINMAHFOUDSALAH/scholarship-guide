@@ -3,10 +3,15 @@
 {% block title %}الجامعات في قوائم الابتعاث | {{ site.name }}{% endblock %}
 {% block description %}ابحث باسم الجامعة أو بالتخصص، واعرف ترتيبها في قوائم مسارات الرواد وإمداد والبحث والتطوير لبرنامج خادم الحرمين الشريفين للابتعاث 2026–2027.{% endblock %}
 
+{% block body_class %}{% if result.track == "arruaad" %}page-rowwad{% endif %}{% endblock %}
+
+{# الرواد gets its own opening (decision 060); the page's usual header returns when the track changes. #}
+{% block hero %}{% include "partials/rowwad.html" %}{% endblock %}
+
 {% block content %}
 {% set r = result %}
 <div class="explorer page-wide">
-  <header class="explorer-header">
+  <header class="explorer-header" data-explorer-header{% if r.track == "arruaad" %} hidden{% endif %}>
     <h1>الجامعات في قوائم الابتعاث</h1>
     <p class="lead">هل الجامعة في قوائم برنامج خادم الحرمين الشريفين للابتعاث؟ وماذا تطلب للقبول؟</p>
     {# What the tool answers, and what it doesn't (decision 038). #}

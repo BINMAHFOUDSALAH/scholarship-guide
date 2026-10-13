@@ -14,6 +14,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.content import SLUG_PATTERN, list_slugs, load_page
 from app.search import SiteSearch
+from app.sky import rowwad_chart, star_field
 from app.universities import COUNT_FORMS, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
 
 APP_DIR = Path(__file__).parent
@@ -211,6 +212,14 @@ templates.env.globals["tracks"] = TRACKS
 explorer.waaid = waaid  # the explorer lists واعد programs from the same data as the homepage
 templates.env.globals["waaid"] = waaid
 templates.env.globals["track_status"] = track_status
+# The sky drawings (decision 060): fixed star fields and the الرواد chart, computed once.
+templates.env.globals["sky_stars"] = {
+    "hero": star_field(70, 1440, 560, seed=7, keep_clear=(300, 170, 150)),
+    "top": star_field(34, 1440, 300, seed=11),
+    "band": star_field(46, 1440, 420, seed=23),
+    "chart": star_field(90, 1000, 520, seed=5),
+}
+templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
 templates.env.globals["waiver_ar"] = WAIVER_AR
 templates.env.filters["arabic_date"] = arabic_date
@@ -294,7 +303,9 @@ def universities_page(request: Request, q: str = "", track: str = "", field: str
     # The King scholarship's tracks (name, who it's for, levels) for «ما الفرق بين المسارات؟».
     scholarship_tracks = [t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("id") in TRACKS]
     context = {"result": result, "explorer": explorer, "view": explorer.describe(result),
-               "scholarship_tracks": scholarship_tracks}
+               "scholarship_tracks": scholarship_tracks,
+               # The الرواد destination at the top of the page (decision 060).
+               "arruaad_track": next(t for t in scholarship_tracks if t["id"] == "arruaad")}
     template = "partials/uni_results.html" if partial else "universities.html"
     return templates.TemplateResponse(request, template, context)
 

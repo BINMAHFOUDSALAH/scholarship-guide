@@ -3,7 +3,10 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-13; latest cloud session on branch `claude/brave-hopper-2a6fg7`, decision 058, not merged yet):**
+> **Next session (as of 2026-10-13; latest cloud session on branch `claude/wadih-design-overhaul-ahizpb`, decision 060, draft PR, not merged yet):**
+> **Design overhaul (decision 060):** one visual language, the sky (dawn in light mode, night in dark; the sun turns into a crescent when the theme switches); the theme follows the device until the student picks; the homepage title in Naskh, the grades as a constellation, a closing night band; `/universities?track=arruaad` opens with «خريطة الثلاثين» (30 stars in 8 country constellations; country chips filter the table). **Owner to-do:** look at it on a real phone (Safari especially) in both themes before merging; that hasn't been checked.
+>
+> Earlier (branch `claude/brave-hopper-2a6fg7`, decisions 058–059, merged in PR #16):
 > **Requirements audit + explorer fixes (decision 058, `docs/research/requirements-audit-2026-10-13.md`):** all 129 files checked against their sources; English scores now separate «الحد الأدنى» from «الموصى به» (the Georgia Tech 6-vs-7 case: 7.0 is the graduate requirement); the filter-✕ bug (suggestions floating over the tags) fixed; إمداد asks for a field first; formal Arabic rule + test.
 > **Owner to-dos from it (browser, ~15 min):** confirm Oxford and UCL (hidden as drafts until then; exact pages in the audit), Michigan's deadlines and SAT policy, NYU's fee/dates, Saskatchewan's deadline. Then remove `"draft": true` or fix the values.
 > **Repo tidy (decision 059):** layout checked against the current Claude Code docs; `LEARNING_LOG.md` removed; every subagent forced onto Haiku; `scripts/check_sources.py` (facts vs their pages) and `scripts/check_explorer.mjs` (explorer JS in a browser) added.
@@ -144,6 +147,7 @@ Teaches data extraction, data modeling + validation (Pydantic), a JSON API, and 
 Teaches responsive/RTL polish, content workflow, CI, and shipping.
 - Full government scholarship path page, verified by the owner, with live track status (each with a source link).
 - A subtle visual theme per path, based on place (decision 016): world/cities (scholarship), eastern desert (Aramco), Red Sea coast (KAUST). No logos.
+- [x] Visual identity: the sky, two designed themes, the homepage opening, the الرواد destination (decision 060). Real-phone check still to do.
 - Privacy-friendly visitor counting on our own server (decision 015).
 - CI basics: GitHub Actions runs the tests on every push.
 - Domain check/purchase (ask first), then **Launch 1**.

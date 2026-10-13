@@ -23,10 +23,15 @@
 
   <meta name="theme-color" content="#F6F4EE">
   <script>
-    // Light is the default for everyone. Runs before the page is drawn, so someone who
-    // chose dark never sees a white flash.
+    // The theme (decision 060): the student's own choice if they made one, otherwise the device's setting.
+    // Runs before the page is drawn, so nobody sees a flash of the other theme.
     try {
-      if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark";
+      var t = localStorage.getItem("theme");
+      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t === "dark") {
+        document.documentElement.dataset.theme = "dark";
+        document.querySelector('meta[name="theme-color"]').content = "#0c1310";
+      }
     } catch (e) {}
   </script>
   <link rel="icon" href="{{ url_for('static', path='favicon.svg') }}" type="image/svg+xml">
@@ -36,7 +41,10 @@
   <script src="{{ url_for('static', path='theme.js') }}?v={{ asset_version('theme.js') }}" defer></script>
   {% block head_extra %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
+  {# The sky behind the top of every page (decision 060): light at dawn, stars at night. Decorative only. #}
+  {% import "partials/sky.html" as sky %}
+  {% block sky %}{{ sky.top() }}{% endblock %}
   <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
   {#
     One list of links, used by the desktop nav and the phone menu:
@@ -84,8 +92,15 @@
           <span class="mylist-label">قائمتي</span>
           <span class="mylist-count" data-mylist-count></span>
         </a>
+        {# Sun by day, crescent by night: the same disc, with a shadow that slides across it (decision 060). #}
         <button class="theme-toggle" type="button" hidden>
-          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg>
+          <svg class="theme-icon" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false">
+            <defs><mask id="theme-icon-bite"><rect x="-12" y="-12" width="24" height="24" fill="#fff"/><circle class="theme-icon-shadow" r="4.8" fill="#000"/></mask></defs>
+            <g class="theme-icon-rays" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <path d="M0 -10.5v2.4M0 8.1v2.4M-10.5 0h2.4M8.1 0h2.4M-7.4 -7.4l1.7 1.7M5.7 5.7l1.7 1.7M-7.4 7.4l1.7-1.7M5.7 -5.7l1.7-1.7"/>
+            </g>
+            <circle class="theme-icon-disc" r="5.2" fill="currentColor" mask="url(#theme-icon-bite)"/>
+          </svg>
           <span class="theme-toggle-label">داكن</span>
         </button>
         {# Phone menu: a native open/close element, so it works without JavaScript. #}
