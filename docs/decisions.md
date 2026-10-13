@@ -721,3 +721,8 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
   - `scrollRestoration` is now always `manual` on the list pages, so the browser can't jump to the top after we scroll.
   - The return is repeated while the page settles (next frame, `load`, fonts ready, 0.4 s and 1.2 s), and stops as soon as the student touches the page.
   - The "instant back" case (back-forward cache: the page comes back without running the script) is handled through `pageshow`. Not testable in the dev browser, which always reloaded.
+- **Amended again (the owner saw a small "shake"):**
+  - Instead of re-centering several times, the tapped university goes back to the exact height it had on the screen (saved at the tap).
+  - It moves only if it's off by more than 4 px: once on load and once after the fonts are ready.
+  - When the browser has already restored the place, nothing moves.
+  - Tested in the dev browser: #26 and #8 returned to the same pixel row (643 px and 150 px).

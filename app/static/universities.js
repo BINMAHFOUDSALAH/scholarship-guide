@@ -358,14 +358,24 @@
     results.addEventListener("click", (event) => {
       const link = event.target.closest('a[href*="/universities/"]');
       const match = link && new URL(link.href).pathname.match(/^\/universities\/([a-z0-9-]+)$/);
-      if (match) store.set({ list: location.pathname + location.search, id: match[1], y: window.scrollY, at: Date.now() });
+      if (match) {
+        // Where the tapped university sat on the screen, so it can come back to exactly the same spot.
+        store.set({ list: location.pathname + location.search, id: match[1], y: window.scrollY,
+                    top: link.getBoundingClientRect().top, at: Date.now() });
+      }
     });
 
+    // Puts the university back where it was on the screen. Moves only when it's off by more than a few
+    // pixels, so calling it again (or when the browser already restored the place) causes no jump.
     function bringBack(saved) {
       const row = [...results.querySelectorAll('a[href*="/universities/"]')]
         .find((a) => new URL(a.href).pathname === "/universities/" + saved.id);
-      if (row) row.scrollIntoView({ block: "center" });
-      else window.scrollTo(0, saved.y);
+      if (!row) {
+        if (Math.abs(window.scrollY - saved.y) > 4) window.scrollTo(0, saved.y);
+        return;
+      }
+      const off = row.getBoundingClientRect().top - (typeof saved.top === "number" ? saved.top : window.innerHeight / 3);
+      if (Math.abs(off) > 4) window.scrollTo(0, window.scrollY + off);
     }
 
     // Returns true when this visit is a return to the list the student left.
@@ -374,19 +384,14 @@
       const fresh = saved && Date.now() - saved.at < 30 * 60 * 1000;
       if (!fresh || saved.list !== location.pathname + location.search || !(isBack || saved.returning)) return false;
       store.clear();
-      // Fonts and the folding filter panel can shift rows after the first scroll, so repeat it a few
-      // times while the page settles, and stop as soon as the student touches or scrolls the page.
+      // Once now, and once more after the fonts are ready (they can change row heights), but only if the
+      // row is actually off and the student hasn't touched the page yet. No repeated re-centering.
       let moved = false;
       for (const type of ["touchstart", "wheel", "keydown", "mousedown"]) {
         window.addEventListener(type, () => { moved = true; }, { once: true, passive: true });
       }
-      const again = () => { if (!moved) bringBack(saved); };
-      again();
-      requestAnimationFrame(again);
-      window.addEventListener("load", again, { once: true });
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(again);
-      setTimeout(again, 400);
-      setTimeout(again, 1200);
+      bringBack(saved);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (!moved) bringBack(saved); });
       return true;
     }
 
