@@ -14,7 +14,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. update the guide link and year everywhere it appears
 >
 > **Next steps:**
-> 1. **Testers:** share https://wadihguide.com; feedback comes through the footer's X link (decision 043). Render's paid instance (about $7/month) stops the free plan's sleep; the owner is upgrading for the test month.
+> 1. **Testers:** share https://wadihguide.com; feedback comes through the footer's X link (decision 043). **Done 2026-10-12:** the service is on Render's $7/month compute plan (0.5 CPU, 512 MB), so it never sleeps. It is billed by the second; to stop, switch Compute back to Free.
 >    - **Launch ad «الشلة» (decision 044, guide in `docs/marketing/launch-ad.md`):** the pipeline and the real site footage are done.
 >    - **Paused (2026-10-12): no budget for paid tools yet.** Missing: the 4 AI clips (the Higgsfield free plan has no credits or commercial use; Starter $19, or the Veo API ~$5) and the voices (the ElevenLabs free plan has no commercial licence; Starter $6).
 >    - A $0 route exists if wanted: the owner's own phone shots + the owner's own voice, or caption cards instead of AI shots.
