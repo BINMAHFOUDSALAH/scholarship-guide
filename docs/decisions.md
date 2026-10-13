@@ -726,3 +726,15 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
   - It moves only if it's off by more than 4 px: once on load and once after the fonts are ready.
   - When the browser has already restored the place, nothing moves.
   - Tested in the dev browser: #26 and #8 returned to the same pixel row (643 px and 150 px).
+
+## 053 — Stale facts: a report script, not a failing test
+**Date:** 2026-10-13
+**Problem:** the roadmap planned a test that fails when a fact's `last_checked` is over 90 days. Two issues:
+- Render deploys only after CI passes, so a test based on today's date would turn CI red the day a fact ages, with no code change, and block an urgent fix.
+- Every fact was checked 2026-10-09 to 10-12, so a 90-day rule stays silent until January, after Launch 1 (~2026-12-09).
+**Decision:**
+- `scripts/stale_facts.py` lists every checked item (132 today: program facts and track statuses, guide pages, university detail files, test and timeline rows, the PDF guide, واعد, the quote) by check date, oldest first, with its source link and whether the owner reviewed it. It reads all four date names in the data (`last_checked`, `read_on`, `checked`, `retrieved`); logos are left out.
+- Options: `--as-of` (e.g. launch day), `--days` (default 90), `--all`. It always exits 0.
+- `tests/test_stale_facts.py` fails if a check date exists in `data/` or `content/` that the script doesn't read, so the report can't silently miss a new file. It never depends on today's date.
+- **Before Launch 1:** one full re-check pass. Run `--as-of 2026-12-09 --days 45`, re-check from the top, update each date, run again until empty.
+**Alternative:** the failing test (above), or a scheduled CI job that warns without blocking deploys. The scheduled job can come later; the script is what it would run.

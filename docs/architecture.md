@@ -62,6 +62,7 @@ Server-rendered pages, no frontend framework. GitHub → Render deploys on push 
 
 ## Scripts and specs
 - `scripts/extract_universities.py` (+ `flag_countries.json`, `university_aliases.json`, `list_overrides.json`): rebuilds `data/universities.json` from the PDF in `data/raw/`. Run: `.venv\Scripts\python.exe scripts\extract_universities.py`. `pdfplumber` is dev only.
+- `scripts/stale_facts.py` (decision 053): lists every checked fact by its check date, oldest first; a report, never a CI failure. Run: `.venv\Scripts\python.exe scripts\stale_facts.py --as-of 2026-12-09 --days 45`. `tests/test_stale_facts.py` fails if a check date in `data/` or `content/` isn't read by it.
 - `docs/specs/universities-explorer.md`: the explorer spec and the requirements schema.
 - `marketing/src/` (decision 044): the launch ad, kept apart from the app. `capture_site.mjs` records the live site in headless Edge; `make_voice.py` calls ElevenLabs; `build_ad.py` assembles the videos with ffmpeg. Media lives in `marketing/assets/` and `marketing/out/` (git-ignored). Guide: `docs/marketing/launch-ad.md`.
 
