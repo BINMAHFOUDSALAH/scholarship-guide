@@ -54,7 +54,7 @@
 {% endblock %}
 
 {% block content %}
-{# What a student can apply to today, soonest deadline first. The full board is on /news. #}
+{# What is open today, soonest deadline first, each with who can apply («لمن»). The full board is on /news. #}
 <section id="open-now" class="section" aria-labelledby="open-title">
   <div class="section-head">
     <h2 id="open-title" class="section-title">مفتوح للتقديم الآن</h2>
@@ -68,6 +68,7 @@
       <div class="open-main">
         <p class="open-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
         <p class="open-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">لخريجي الثانوية</span>{% endif %}</p>
+        {% if item.who_ar %}<p class="open-who">لمن: {{ item.who_ar }}</p>{% endif %}
       </div>
       <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
       {% if item.source_url %}<p class="open-source"><a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر الرسمي ↗</a></p>{% endif %}

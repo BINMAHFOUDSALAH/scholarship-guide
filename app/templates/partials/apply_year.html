@@ -16,9 +16,9 @@
       <p class="year-title">{{ r.title_ar }}</p>
       <p class="year-action">{{ r.action_ar }}</p>
       {% if r.computed == "early" %}
-      <p class="year-fact"><span class="tag">من بياناتنا</span> في {{ timeline_stats.early }} من {{ timeline_stats.with_deadlines }} جامعة في مسار الرواد جمعنا مواعيدها، يوجد موعد تقديم في أكتوبر أو نوفمبر.</p>
+      <p class="year-fact"><span class="tag">من بياناتنا</span> في {{ timeline_stats.early }} من {{ timeline_stats.with_deadlines }} جامعة من قوائم الابتعاث جمعنا مواعيدها، يوجد موعد تقديم في أكتوبر أو نوفمبر.</p>
       {% elif r.computed == "regular" %}
-      <p class="year-fact"><span class="tag">من بياناتنا</span> {{ timeline_stats.january }} من {{ timeline_stats.with_deadlines }} جامعة في مسار الرواد جمعنا مواعيدها لها موعد تقديم في يناير.</p>
+      <p class="year-fact"><span class="tag">من بياناتنا</span> {{ timeline_stats.january }} من {{ timeline_stats.with_deadlines }} جامعة من قوائم الابتعاث جمعنا مواعيدها لها موعد تقديم في يناير.</p>
       {% endif %}
       {% for f in r.facts %}
       <p class="year-fact"><span class="tag">موعد رسمي</span> {{ f.text_ar }}

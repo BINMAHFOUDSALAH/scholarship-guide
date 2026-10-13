@@ -1,7 +1,7 @@
 {# The news board (decision 033). Set board_limit to show only the first few items per group. #}
 {% import "components.html" as c %}
 {% set groups = [
-  ("open", "مفتوح الآن", "يمكنك التقديم عليه اليوم."),
+  ("open", "مفتوح الآن", "مفتوح اليوم لمن تنطبق عليه شروطه."),
   ("waiting", "مغلق أو لم يفتح بعد", "تابع حساباته الرسمية لمعرفة موعد الفتح."),
   ("recent", "فُتح وأُغلق مؤخرًا", "أُغلق في آخر " ~ recent_days ~ " يومًا."),
 ] %}
@@ -16,6 +16,7 @@
       <li class="board-item">
         <p class="board-name">{{ item.title_ar }}</p>
         <p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">لخريجي الثانوية</span>{% endif %}</p>
+        {% if item.who_ar %}<p class="board-who">لمن: {{ item.who_ar }}</p>{% endif %}
         <p class="board-when">
           {{ c.status_tag(item.status, item.until, label=None if key != "recent" else "أُغلق") }}
           {% if item.opens %}يفتح في <time datetime="{{ item.opens }}">{{ item.opens | arabic_date }}</time>{% endif %}

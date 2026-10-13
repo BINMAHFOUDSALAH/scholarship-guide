@@ -23,5 +23,7 @@
     </div>
     {% endfor %}
   </dl>
-  <p class="fact-note">جامعات مسار إمداد: لم نجمع متطلباتها بعد، فابحث في صفحة القبول الدولي (International admissions) في موقع كل جامعة. تعريف كل اختبار وموقعه الرسمي في صفحاته: <a href="{{ url_for('resource_page', slug='ielts') }}">آيلتس</a>، <a href="{{ url_for('resource_page', slug='toefl') }}">توفل</a>، <a href="{{ url_for('resource_page', slug='sat') }}">SAT</a>، <a href="{{ url_for('resource_page', slug='qudurat-tahsili') }}">القدرات والتحصيلي</a>.</p>
+  {# Counted from the requirement files, like the الرواد row, so it can't go stale as waves are added. #}
+  {% set emdad = explorer.sat_summary("emdad") %}
+  <p class="fact-note" data-emdad-count>جامعات مسار إمداد: جمعنا متطلبات {{ emdad.researched }} من {{ emdad.total }}، وتجدها في صفحة كل جامعة. وللبقية ابحث في صفحة القبول الدولي (International admissions) في موقع الجامعة. تعريف كل اختبار وموقعه الرسمي في صفحاته: <a href="{{ url_for('resource_page', slug='ielts') }}">آيلتس</a>، <a href="{{ url_for('resource_page', slug='toefl') }}">توفل</a>، <a href="{{ url_for('resource_page', slug='sat') }}">SAT</a>، <a href="{{ url_for('resource_page', slug='qudurat-tahsili') }}">القدرات والتحصيلي</a>.</p>
 </section>

@@ -83,6 +83,7 @@
         {% endfor %}
       </tbody>
     </table>
+    {% for track in program.tracks if track.id in ("arruaad", "emdad") %}{{ c.window_note(track) }}{% endfor %}
 
     {% for track in program.tracks if track.latest_programs %}{% include "partials/waaid_programs.html" %}{% endfor %}
 

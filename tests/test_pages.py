@@ -205,6 +205,61 @@ def test_home_shows_whats_open_now_and_links_the_full_board():
         assert title in news
 
 
+def test_open_items_say_who_can_apply():
+    """«مفتوح الآن» alone read as "apply today" to grade 12 students who can't yet (الرواد needs an admission,
+    SDAIA a scholarship), so every open track carries its «لمن» line on the homepage and /news."""
+    tracks = [t for p in main.paths for t in p["tracks"] if t.get("for_high_school") is not False]
+    for t in tracks:
+        if not t.get("latest_programs"):  # واعد: each program has its own conditions
+            assert t.get("apply_with_ar"), t.get("id") or t["name_ar"]
+    home = client.get("/").text.split('id="open-now"')[1].split("</section>")[0]
+    news = client.get("/news").text
+    for item in main.status_board()["open"]:
+        if item.get("who_ar"):
+            assert f"لمن: {item['who_ar']}" in news
+    for item in main.status_board()["open"][:4]:
+        if item.get("who_ar"):
+            assert f"لمن: {item['who_ar']}" in home
+    assert "يمكنك التقديم عليه اليوم" not in news
+
+
+def test_open_window_warns_grade_12_students_on_program_and_university_pages(monkeypatch):
+    """The window open now is for students who already hold an admission (audit 2026-10-13)."""
+    import datetime
+
+    class Day(datetime.date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 10, 13)  # الرواد open until 15 Nov 2026
+    monkeypatch.setattr(main, "date", Day)
+    for url in ("/programs/custodian-scholarship", "/universities/massachusetts-institute-of-technology-mit"):
+        html = client.get(url).text
+        assert 'class="window-note"' in html and "هذه النافذة لمن معه قبول جامعي اليوم" in html, url
+        assert "15 نوفمبر 2026" in html.split('class="window-note"')[1].split("</p>")[0], url
+
+    class Later(datetime.date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 11, 20)  # closed by its own deadline: no note
+    monkeypatch.setattr(main, "date", Later)
+    assert 'class="window-note"' not in client.get("/programs/custodian-scholarship").text
+
+
+def test_foundation_year_conditions_show_where_the_saudi_certificate_is_not_enough():
+    fact = main.PREP_YEAR_FACT
+    assert fact and "90%" in fact["text_ar"] and fact["sources"]
+    not_enough = [uid for uid, d in main.explorer.details.items()
+                  if (d.get("saudi_certificate") or {}).get("direct_entry") is False]
+    enough_or_unknown = [uid for uid, d in main.explorer.details.items()
+                         if (d.get("saudi_certificate") or {}).get("direct_entry") is not False]
+    assert not_enough
+    for uid in not_enough:
+        html = client.get(f"/universities/{uid}").text
+        assert "data-foundation-note" in html and fact["text_ar"] in html, uid
+    for uid in enough_or_unknown[:10]:
+        assert "data-foundation-note" not in client.get(f"/universities/{uid}").text, uid
+
+
 def test_theme_toggle_is_present_but_hidden_without_js():
     response = client.get("/")
     assert 'class="theme-toggle" type="button" hidden' in response.text
@@ -578,6 +633,23 @@ def test_year_patterns_are_counted_from_the_university_files():
     html = client.get("/grades/grade-12").text
     assert f"في {s['early']} من {s['with_deadlines']} جامعة" in html
     assert "والابتعاث؟ لا يتبع هذه الأشهر" in html and "عدم التأكيد يسقط حق الطالب في الترشيح" in html
+
+
+def test_year_patterns_never_name_a_track_they_dont_count():
+    # timeline_stats() counts every researched university (الرواد and إمداد), so the sentence must not
+    # say «مسار الرواد»: it once read «102 جامعة في مسار الرواد», and الرواد has 30.
+    year = client.get("/grades/grade-12").text.split('id="year"')[1].split("year-scholarship")[0]
+    assert "جامعة في مسار الرواد جمعنا" not in year
+    assert "جامعة من قوائم الابتعاث جمعنا مواعيدها" in year
+
+
+def test_emdad_research_count_comes_from_the_files():
+    # The grade 11 tests table once said «لم نجمع متطلباتها بعد» after 99 إمداد universities were researched.
+    s = main.explorer.sat_summary("emdad")
+    assert 0 < s["researched"] <= s["total"]
+    html = client.get("/grades/grade-11").text
+    assert f"جمعنا متطلبات {s['researched']} من {s['total']}" in html
+    assert "لم نجمع متطلباتها بعد" not in html
 
 
 def test_year_is_linked_from_the_university_and_program_pages():

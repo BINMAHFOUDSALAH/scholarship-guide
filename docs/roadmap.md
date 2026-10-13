@@ -3,7 +3,7 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-13, moving from cloud sessions to Claude Code on the owner's laptop):**
+> **Next session (as of 2026-10-13; the audit session ran in the cloud on branch `claude/clever-bardeen-bei0zs`):**
 > Live on `main` at **https://wadihguide.com** (decision 042; the old onrender address and www redirect with a 301): decisions 035–043, including the finder trust fixes (041), the footer feedback line (043), and the iPhone header fix (header icons only up to 479px).
 > Owner's laptop: `git checkout main` then `git pull`, and work on `main` or a new branch. The cloud branch `claude/loving-hopper-sai8de` is fully merged.
 >
@@ -14,6 +14,19 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. update the guide link and year everywhere it appears
 >
 > **Next steps:**
+> 0. **Product audit (decision 057, `docs/research/product-audit-2026-10-13.md`):** direction = a deep study-abroad core plus thin doors to official tools («لسه ما قررت؟», «الدراسة في السعودية»). **Milestone L, items 1–2 done 2026-10-13 (not yet committed or deployed when this was written):**
+>    - false and stale counts on grades 11/12
+>    - «لمن» on open items
+>    - the explorer's focus bug after clearing filters
+>    - the timing note on program and university pages
+>    - foundation-year conditions on the 19 «لا تكفي» university pages
+>
+>    **Still open, in order:**
+>    1. the «لسه ما قررت؟» guide (Markdown, sourced; check the Ministry's interest-measure and HRDF «سبل» pages from the laptop: cloud reads are blocked)
+>    2. the usability test (item 3 below), adding "can you apply to الرواد today?" and "Duolingo or IELTS?"
+>    3. then P1 from the audit: «الدراسة في السعودية», Duolingo `accepted` field + page, alternatives section, fee-waiver class split
+>
+>    The remaining 143 logos are **deferred** (audit F).
 > 1. **Testers:** share https://wadihguide.com; feedback comes through the footer's X link (decision 043). **Done 2026-10-12:** the service is on Render's $7/month compute plan (0.5 CPU, 512 MB), so it never sleeps. It is billed by the second; to stop, switch Compute back to Free.
 >    - **Launch ad «الشلة» (decision 044, guide in `docs/marketing/launch-ad.md`):** the pipeline and the real site footage are done.
 >    - **Paused (2026-10-12): no budget for paid tools yet.** Missing: the 4 AI clips (the Higgsfield free plan has no credits or commercial use; Starter $19, or the Veo API ~$5) and the voices (the ElevenLabs free plan has no commercial licence; Starter $6).

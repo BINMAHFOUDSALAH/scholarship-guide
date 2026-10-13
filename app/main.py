@@ -123,6 +123,9 @@ def status_board():
                 "program_ar": path["name_ar"] if len(path["tracks"]) > 1 else path["provider_ar"],
                 "status": status, "page": page, "source_url": track.get("status_source"),
                 "until": track.get("status_until") if status == "open" else None,
+                # Who can act on it: «مفتوح الآن» alone read as "apply today" to students who can't yet
+                # (الرواد needs a university admission first; SDAIA needs a scholarship).
+                "who_ar": track.get("apply_with_ar"),
             }
             until = track.get("status_until")
             if status == "open":
@@ -296,6 +299,11 @@ def universities_page(request: Request, q: str = "", track: str = "", field: str
     return templates.TemplateResponse(request, template, context)
 
 
+# The scholarship's extra conditions for a foundation year (a sourced fact in paths.json), or None if unpublished.
+PREP_YEAR_FACT = next((f for f in paths_by_id["custodian-scholarship"].get("facts", [])
+                       if f["id"] == "prep-year" and f["status"] == "sourced" and f.get("sources")), None)
+
+
 @app.get("/universities/{uid}", response_class=HTMLResponse)
 def university_page(request: Request, uid: str, from_: str | None = Query(None, alias="from")):
     profile = explorer.profile(uid) if SLUG_PATTERN.match(uid) else None
@@ -308,7 +316,9 @@ def university_page(request: Request, uid: str, from_: str | None = Query(None, 
                                        "back_url": explorer.back_url(from_),
                                        # The scholarship's own dates, shown apart from the university's (decision 038).
                                        "scholarship": {t["id"]: t for t in paths_by_id["custodian-scholarship"]["tracks"]
-                                                       if t.get("id")}})
+                                                       if t.get("id")},
+                                       # Shown where the Saudi certificate isn't enough for year 1 (foundation year).
+                                       "prep_year_fact": PREP_YEAR_FACT})
 
 
 @app.get("/my-list", response_class=HTMLResponse)

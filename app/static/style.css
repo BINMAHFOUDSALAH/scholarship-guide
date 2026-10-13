@@ -1324,6 +1324,22 @@ main:has(> .hero) {
   color: var(--ink-muted);
 }
 
+/* The timing note under an open scholarship track, and the foundation-year line under «لا تكفي». */
+.window-note,
+.foundation-note {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+
+/* «لمن: …» under an open item: who can act on it today (full text colour, it changes the decision). */
+.open-who,
+.board-who {
+  margin: 2px 0 0;
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+
 @media (min-width: 760px) {
   .open-item {
     grid-template-columns: minmax(0, 1fr) auto auto;
