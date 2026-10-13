@@ -1,0 +1,41 @@
+{
+  "id": "university-of-surrey",
+  "name_en": "University of Surrey",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.surrey.ac.uk/apply/undergraduate/how-to-apply-through-ucas",
+  "platform": {
+    "value_ar": "UCAS (الرمز S85)",
+    "source_url": "https://www.surrey.ac.uk/apply/undergraduate/how-to-apply-through-ucas"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "لا يوجد حد عام: الجامعة تقول إن المستوى المطلوب «يختلف بين الدورات»، وتحيل إلى صفحة كل دورة. لذلك لم نعرض رقمًا."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "البديل: برنامج International Foundation Year في مركز Surrey الدولي، ثم الانتقال إلى البكالوريوس بعد إتمامه.",
+    "quote": "We do not accept the Tawjihiyah (General Secondary Education Certificate).",
+    "source_url": "https://www.surrey.ac.uk/saudi-arabia/entry-requirements"
+  },
+  "not_found_ar": [
+    "الحد الأدنى لـ IELTS أو TOEFL أو Duolingo: يختلف حسب الدورة، ولم نقرأ صفحات الدورات",
+    "صفحة مركز Surrey الدولي (isc.surrey.ac.uk) رفضت الفتح، لذلك لم نتحقق من شروط برنامج التأسيس للتوجيهية"
+  ]
+}

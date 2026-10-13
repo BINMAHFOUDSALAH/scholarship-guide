@@ -1,0 +1,53 @@
+{
+  "id": "university-of-greenwich",
+  "name_en": "University of Greenwich",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.gre.ac.uk/international/countries/saudi-arabia",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://www.gre.ac.uk/international/countries/saudi-arabia"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "لمعظم البكالوريوس (BA وBSc وBEng): 6.0 مع 5.5 في كل مهارة. بعض التخصصات أعلى، مثل LLB (6.5) وBSc Nursing (7.0).",
+      "source_url": "https://www.gre.ac.uk/international/help-and-support/courses"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "المقابل لـ IELTS 6.0 على المقياس الجديد: 4.5 مع 4.0 في كل مهارة، والاختبار الحضوري فقط. المقياس القديم: 72.",
+      "source_url": "https://www.gre.ac.uk/international/help-and-support/courses"
+    },
+    "duolingo": {
+      "min": 105,
+      "note_ar": "المقابل لـ IELTS 6.0: 105 مع 95 في كل مهارة، للاختبارات من 1 يوليو 2024.",
+      "source_url": "https://www.gre.ac.uk/international/help-and-support/courses"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": "الصفحة تقول إن من أنهى النظام المدرسي الوطني يحتاج عادةً سنة تأسيسية، دون ذكر الثانوية السعودية بالاسم.",
+    "quote": "Applicants who have completed the national schooling system typically require foundation, please refer to UGIC",
+    "source_url": "https://www.gre.ac.uk/international/countries/saudi-arabia"
+  },
+  "not_found_ar": [
+    "صفحة Greenwich للسعودية تقول إن من أنهى النظام المدرسي الوطني يحتاج «عادةً» سنة تأسيسية، دون ذكر الثانوية السعودية بالاسم أو نسبة لها",
+    "رمز Greenwich في UCAS غير مذكور في الصفحات التي قرأناها"
+  ]
+}

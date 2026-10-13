@@ -1,0 +1,49 @@
+{
+  "id": "university-of-york",
+  "name_en": "University of York",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.york.ac.uk/study/undergraduate/applying/",
+  "platform": {
+    "value_ar": "UCAS (الرمز Y50)",
+    "source_url": "https://www.york.ac.uk/study/undergraduate/applying/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الجامعة تقبل IELTS وTOEFL iBT وDuolingo وغيرها، لكن الحد الأدنى يختلف حسب القسم ويظهر في صفحة كل دورة."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للطب",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "للطب فقط",
+      "source_url": "https://www.york.ac.uk/study/undergraduate/applying/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حامل التوجيهية يحتاج دراسة إضافية قبل التقديم للبكالوريوس، مثل A levels أو IB أو برنامج تأسيس. لا تذكر الصفحة نسبة للتوجيهية.",
+    "quote": "If you're studying the Tawjihiyah General Certificate of Secondary Education or achieve below 84% in the International Arab Baccalaureate, you will need to take an additional course before being able to apply for an undergraduate course at York.",
+    "source_url": "https://www.york.ac.uk/study/international/your-country/saudi-arabia/"
+  },
+  "not_found_ar": [
+    "الحد الأدنى للإنجليزية: في صفحة كل دورة فقط، ولم نقرأها"
+  ]
+}

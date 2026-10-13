@@ -1,0 +1,49 @@
+{
+  "id": "lancaster-university",
+  "name_en": "Lancaster University",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.lancaster.ac.uk/study/undergraduate/how-to-apply/",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://www.lancaster.ac.uk/study/undergraduate/how-to-apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "الشرط العام لمعظم البكالوريوس: 6.5 مع 5.5 في كل مهارة. الطب وبعض برامج العلوم والرياضيات والخدمة الاجتماعية تختلف.",
+      "source_url": "https://www.lancaster.ac.uk/study/entry-requirements/undergraduate-english-requirements/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5 مع 4 على الأقل في كل مهارة. لا تُجمع نتائج اختبارات مختلفة.",
+      "source_url": "https://www.lancaster.ac.uk/study/entry-requirements/undergraduate-english-requirements/"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "يجب إكمال مؤهل إضافي مثل سنة تأسيسية. الصفحة تقول إن معلوماتها لدخول 2026 أساسًا.",
+    "quote": "The Tawjihiyah is not sufficient for entry; applicants must complete an additional qualification such as a Foundation Year.",
+    "source_url": "https://www.lancaster.ac.uk/study/entry-requirements/undergraduate-qualifications/"
+  },
+  "not_found_ar": [
+    "رمز Lancaster في UCAS غير مذكور في الصفحات التي قرأناها",
+    "صفحة المؤهلات تخص دخول 2026 أساسًا، ولم نجد نسخة 2027"
+  ]
+}

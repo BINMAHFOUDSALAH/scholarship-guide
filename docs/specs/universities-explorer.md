@@ -71,6 +71,7 @@ Rules:
   - `cycle_ar`: the intake, e.g. «خريف 2027».
   - `year_stated`: false when the official page gives only the day and month, so we inferred the year. The site then shows «السنة غير مذكورة في الصفحة».
   - Optional `note_ar` (time zone, who it applies to) and `reference_only: true` for an older cycle shown for reference. Reference dates never count as the next deadline.
+- `saudi_certificate` (optional, decision 054; mainly UK): `{"direct_entry": true | false | null, "note_ar", "quote", "source_url"}`. Whether the Saudi secondary certificate alone gets a student into year 1, from the university's own Saudi Arabia / country page, with the exact English `quote`. Shown as «الشهادة الثانوية السعودية» only when `direct_entry` is true or false; `null` means the page doesn't say (and the gap goes in `not_found_ar`).
 - Non-English-speaking countries: `language_note_ar` says what the language of instruction is and whether English-taught undergraduate programs exist (with source).
 
 ## Pages

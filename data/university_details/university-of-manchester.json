@@ -1,0 +1,54 @@
+{
+  "id": "university-of-manchester",
+  "name_en": "University of Manchester",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.manchester.ac.uk/study/undergraduate/applying/how-to-apply/",
+  "platform": {
+    "value_ar": "UCAS (الرمز M20 MANU)",
+    "source_url": "https://www.manchester.ac.uk/study/undergraduate/applying/how-to-apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "الجامعة تقول إن الشرط «عادةً يعادل IELTS 6.0–7.0» ويختلف حسب القسم (و5.5 لدورات التأسيس). 6.0 هو أدنى رقم في هذا النطاق، والحد الفعلي في صفحة كل برنامج.",
+      "source_url": "https://www.manchester.ac.uk/study/international/admissions/undergraduate-application-process/undergraduate-entry-requirements/"
+    },
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للطب وطب الأسنان",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "لهذين التخصصين فقط، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.manchester.ac.uk/study/undergraduate/applying/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حامل الثانوية العامة يحتاج دورة تأسيس دولية معتمدة قبل السنة الأولى. في الدورات التي فيها سنة تأسيسية مدمجة تطلب الصفحة نسبًا في الثانوية: 90% للهندسة الفضائية والمدنية والكيميائية والكهربائية والميكاترونية، و91% للعلوم الحيوية، و93% للهندسة الميكانيكية وعلوم الحاسب.",
+    "quote": "Due to differences in the UK and Saudi education systems, students with the Thanaweyyah A’ama/Tawjihi/General Secondary Education Certificate will be required to follow an approved international foundation course.",
+    "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/saudi-arabia/entry-requirements/"
+  },
+  "not_found_ar": [
+    "درجات TOEFL وDuolingo غير مذكورة في الصفحة العامة",
+    "الحد الأدنى لكل مهارة في IELTS غير مذكور في الصفحة العامة"
+  ]
+}

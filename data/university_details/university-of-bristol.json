@@ -1,0 +1,48 @@
+{
+  "id": "university-of-bristol",
+  "name_en": "University of Bristol",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.bristol.ac.uk/international/countries/saudi-arabia.html",
+  "platform": {
+    "value_ar": "UCAS (الرمز B78)",
+    "source_url": "https://www.bristol.ac.uk/international/countries/saudi-arabia.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "أدنى مستوى (Profile F): 6.0 مع 6.5 في الاستماع أو التحدث، ولا تقل أي مهارة عن 6.0. أعلى مستوى (Profile A): 7.5 مع 7.0 في كل مهارة. مستوى كل دورة في صفحتها.",
+      "source_url": "https://www.bristol.ac.uk/study/language-requirements/profile-f/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "Profile F للاختبارات من 21 يناير 2026: 4.5 مع 4.5 في كل مهارة.",
+      "source_url": "https://www.bristol.ac.uk/study/language-requirements/profile-f/"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": "الثانوية السعودية بمعدل 85% مذكورة لبرنامج التأسيس الدولي (IFP) فقط.",
+    "quote": "High School Certificate with minimum grade average of 85%.",
+    "source_url": "https://www.bristol.ac.uk/media-library/sites/international/documents/Saudi%20Arabia%20Country%20Guide%202027-28.pdf"
+  },
+  "not_found_ar": [
+    "دليل Bristol للسعودية 2027–28 يذكر الثانوية السعودية (معدل 85%) لبرنامج التأسيس IFP فقط، ويذكر للقبول المباشر A-levels أو IB أو برنامج تأسيس أو الدبلوم الأمريكي مع 3 مواد AP. لا يقول صراحة هل تكفي الثانوية للسنة الأولى"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "the-university-of-edinburgh",
+  "name_en": "The University of Edinburgh",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://study.ed.ac.uk/undergraduate/applying",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://study.ed.ac.uk/undergraduate/applying/making-application/apply-through-ucas"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الشروط تختلف حسب الدرجة، وتظهر في صفحة كل درجة في Degree Finder. يجب تحقيقها في اختبار واحد، ولا يُقبل IELTS One Skill Retake."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للطب والطب البيطري",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "لهذين التخصصين فقط",
+      "source_url": "https://study.ed.ac.uk/undergraduate/applying/making-application/when-apply"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "عادةً يُطلب من حامل الثانوية إكمال سنة تأسيسية. لا تذكر الصفحة نسبة.",
+    "quote": "The University of Edinburgh does not currently accept the above national qualification for direct entry to undergraduate study.",
+    "source_url": "https://www.ed.ac.uk/studying/international/country/middle-east/saudi-arabia"
+  },
+  "not_found_ar": [
+    "حدود IELTS وTOEFL وDuolingo: تظهر في صفحة كل درجة فقط، ولم نقرأها",
+    "رمز Edinburgh في UCAS غير مذكور في الصفحات التي قرأناها"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "the-university-of-sheffield",
+  "name_en": "The University of Sheffield",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://sheffield.ac.uk/undergraduate/apply/application",
+  "platform": {
+    "value_ar": "UCAS (الرمز S18 SHEFD)",
+    "source_url": "https://sheffield.ac.uk/undergraduate/apply/application"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "صفحتان رسميتان للجامعة تختلفان: صفحة السعودية تقول IELTS 6.0 للبكالوريوس، وصفحة متطلبات الإنجليزية تقول 6.5 مع 6.0 في كل مهارة. لم نعتمد أحد الرقمين، فتحقق من صفحة دورتك."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للطب وطب الأسنان",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "لـ MBChB Medicine وBDS Dental Surgery فقط",
+      "source_url": "https://sheffield.ac.uk/undergraduate/apply/application"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "If your qualification is not listed here, please contact us.",
+    "source_url": "https://sheffield.ac.uk/international/entry-requirements/saudi-arabia"
+  },
+  "not_found_ar": [
+    "الثانوية السعودية غير مذكورة في صفحة Sheffield للسعودية، والصفحة تقول: إن لم يكن مؤهلك مذكورًا فتواصل معنا",
+    "حد IELTS: صفحتان رسميتان تختلفان (6.0 و6.5)"
+  ]
+}

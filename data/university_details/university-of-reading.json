@@ -1,0 +1,49 @@
+{
+  "id": "university-of-reading",
+  "name_en": "University of Reading",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.reading.ac.uk/ready-to-study/study/how-to-apply/how-to-apply-ug",
+  "platform": {
+    "value_ar": "UCAS (الرمز R12)",
+    "source_url": "https://www.reading.ac.uk/ready-to-study/study/how-to-apply/how-to-apply-ug"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "لكل البكالوريوس: 6.5 مع 5.5 في كل مهارة. الصيدلة والتغذية: 6.5 مع 6.0. علاج النطق واللغة: 8.0 مع 7.5.",
+      "source_url": "https://www.reading.ac.uk/ready-to-study/international-and-eu/english-language-requirements"
+    },
+    "toefl_ibt": null,
+    "duolingo": {
+      "min": 125,
+      "note_ar": "125 مع 100 في كل مهارة. ويُقبل 120 أو 115 بشرط دورة إنجليزي تحضيرية أونلاين (6 أو 10 أسابيع).",
+      "source_url": "https://www.reading.ac.uk/ready-to-study/international-and-eu/english-language-requirements"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": "الثانوية السعودية بمعدل 75% مذكورة لبرنامج التأسيس الدولي (IFP) فقط.",
+    "quote": "Thanawiyah with an overall score of 75%",
+    "source_url": "https://www.reading.ac.uk/ready-to-study/international-and-eu/country-specific-information/country-specific-saudiarabia"
+  },
+  "not_found_ar": [
+    "صفحة Reading للسعودية تذكر الثانوية (معدل 75%) لبرنامج التأسيس الدولي IFP فقط، ولا تقول صراحة هل تكفي للسنة الأولى",
+    "TOEFL iBT: الرقم المنشور (88) بصيغة المقياس القديم، ولم نجد رقم المقياس الجديد"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "id": "university-of-birmingham",
+  "name_en": "University of Birmingham",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.birmingham.ac.uk/study/undergraduate/apply",
+  "platform": {
+    "value_ar": "UCAS (الرمز B32)",
+    "source_url": "https://www.birmingham.ac.uk/study/undergraduate/apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "أدنى مجموعة (Group A، مثل Computer Science وMathematics وChemistry): 6.0 مع 5.5 في كل مهارة. Group B: 6.5 مع 6.0، وGroup C: 7.0 مع 6.5، وGroup D (الطب وطب الأسنان): 7.0 مع 7.0. IELTS Academic فقط.",
+      "source_url": "https://www.birmingham.ac.uk/study/undergraduate/apply/entry-requirements/international-entry-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "Group A للاختبارات من يناير 2026: 4.5 مع 4 على الأقل في كل مهارة. قبل ذلك: 80 إجمالًا.",
+      "source_url": "https://www.birmingham.ac.uk/study/undergraduate/apply/entry-requirements/international-entry-requirements"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حامل الثانوية عادةً لا يُقبل مباشرة دون برنامج تأسيس مناسب. لمسارات التأسيس في الجامعة: معدل 85% فأكثر، و85% في الرياضيات لمسار الهندسة والعلوم الفيزيائية.",
+    "quote": "Holders of the Thanawiyah are not normally eligible for direct entry onto our undergraduate courses without the completion of a suitable foundation programme, such as one of our foundation pathways.",
+    "source_url": "https://www.birmingham.ac.uk/international/students/country/saudi-arabia"
+  },
+  "not_found_ar": [
+    "موعد الطب وطب الأسنان (15 أكتوبر 2026): الصفحة تنسبه مرة لدخول 2027 ومرة لدخول 2026، لذلك لم نعرضه"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "university-of-st-andrews",
+  "name_en": "University of St Andrews",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.st-andrews.ac.uk/study/undergraduate/apply/",
+  "platform": {
+    "value_ar": "UCAS (الرمز S36)",
+    "source_url": "https://www.st-andrews.ac.uk/study/undergraduate/apply/ucas/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "أدنى مستوى (العلوم، 7-D): 6.5 مع 6.0 في كل مهارة. الفنون واللاهوت (3-D): 7.0 مع 6.5. الطب (2-M): 7.0 في كل مهارة.",
+      "source_url": "https://www.st-andrews.ac.uk/subjects/entry/language-requirements/profiles/7-d/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 2026 (العلوم، 7-D): 4.5 مع 4.0 في كل مهارة.",
+      "source_url": "https://www.st-andrews.ac.uk/subjects/entry/language-requirements/profiles/7-d/"
+    },
+    "duolingo": {
+      "min": 130,
+      "note_ar": "العلوم (7-D): 130 مع 115 في كل مهارة.",
+      "source_url": "https://www.st-andrews.ac.uk/subjects/entry/language-requirements/profiles/7-d/"
+    },
+    "note_ar": "المستوى المطلوب يحدده التخصص."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "من تخرج بشهادة ثانوية وطنية تتوقع الجامعة أن يكون معه أيضًا أحد هذه: برنامج تأسيس دولي، أو مناهج أمريكية، أو IB، أو A-levels، أو SQA Highers. لا تذكر الصفحة نسبة.",
+    "quote": "If you have graduated from a high school with a national school leaving certificate, we would also expect you to have one of the following:",
+    "source_url": "https://www.st-andrews.ac.uk/subjects/entry/saudi-arabia/"
+  },
+  "not_found_ar": []
+}

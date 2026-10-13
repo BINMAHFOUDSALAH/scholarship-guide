@@ -189,6 +189,10 @@
       {% if d.platform %}
       <div class="summary-row"><dt>منصة التقديم</dt><dd>{{ d.platform.value_ar }} <a class="src" href="{{ d.platform.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd></div>
       {% endif %}
+      {% if d.saudi_certificate and d.saudi_certificate.direct_entry is not none %}
+      {% set sc = d.saudi_certificate %}
+      <div class="summary-row"><dt>الشهادة الثانوية السعودية</dt><dd><strong>{{ "مقبولة للسنة الأولى مباشرة" if sc.direct_entry else "لا تكفي للسنة الأولى مباشرة" }}</strong>{% if sc.note_ar %} · {{ sc.note_ar }}{% endif %} <a class="src" href="{{ sc.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd></div>
+      {% endif %}
       {% if d.application_fee %}
       <div class="summary-row"><dt>رسوم التقديم</dt><dd>{{ um.app_fee(u, d, source=true) }}</dd></div>
       {% endif %}

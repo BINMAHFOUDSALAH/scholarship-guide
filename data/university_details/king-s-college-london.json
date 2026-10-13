@@ -1,0 +1,59 @@
+{
+  "id": "king-s-college-london",
+  "name_en": "King's College London",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "أدنى مستوى للبكالوريوس (Band D، لكلية العلوم الطبيعية والرياضيات والهندسة مع استثناءات): 6.5 مع 6.0 في كل مهارة. Band B (الآداب والعلوم الاجتماعية وKing's Business School والطب): 7.0 مع 6.5. Band A: 7.5 مع 7.0. في جلسة واحدة، ولا يُقبل IELTS One Skill.",
+      "source_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "Band D للاختبارات من 21 يناير 2026: 4.5 مع 4 على الأقل في كل مهارة. قبل ذلك: 92 إجمالًا.",
+      "source_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply/english-language-requirements"
+    },
+    "duolingo": null,
+    "note_ar": "القائمة معلنة لدخول 2027/28."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للطب وطب الأسنان",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "لهذين التخصصين فقط، 6 مساءً بتوقيت المملكة المتحدة. King's تعتبر أي طلب بعد مواعيدها متأخرًا.",
+      "source_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": "https://www.kcl.ac.uk/study/international/region/turkey-and-the-middle-east"
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: موجود في قائمة المؤهلات داخل دليل البرامج، وهي قائمة تفاعلية لم نتمكن من قراءتها",
+    "رمز King's في UCAS غير مذكور في الصفحات التي قرأناها",
+    "Duolingo غير مذكور"
+  ]
+}
