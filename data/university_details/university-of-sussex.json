@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "أدنى مستوى (Standard): 6.0 مع 5.5 في كل مهارة. High: 6.5 مع 6.0، وAdvanced: 7.0 مع 6.5 لبعض البرامج. الطب (BMBS): 7.5 مع 7.0.",
       "source_url": "https://www.sussex.ac.uk/study/undergraduate/apply/international-qualifications/english-language-requirements"
     },

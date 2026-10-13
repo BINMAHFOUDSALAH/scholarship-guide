@@ -78,7 +78,7 @@ home_text = load_json("home.json")
 news = sort_news([item for item in load_json("news.json") if is_confirmed(item)])
 path_names = {path["id"]: path["name_ar"] for path in paths}
 paths_by_id = {path["id"]: path for path in paths}
-explorer = Explorer()
+explorer = Explorer(show_drafts=SHOW_DRAFTS)
 waaid_data = load_json("waaid_programs.json")
 
 

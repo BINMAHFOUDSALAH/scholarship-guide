@@ -156,8 +156,12 @@
       el.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
     }
 
+    let quietClear = false;
     input.addEventListener("focus", render);
-    input.addEventListener("input", render);
+    input.addEventListener("input", () => {
+      if (quietClear) { quietClear = false; return; }
+      render();
+    });
     input.addEventListener("keydown", (event) => {
       if (event.key === "ArrowDown") {
         event.preventDefault();
@@ -169,10 +173,41 @@
         event.preventDefault();
         options[active].choose();
       } else if (event.key === "Escape") {
-        close();
+        // First Escape closes the list and keeps the text (ARIA combobox pattern). Without
+        // preventDefault, a search box also clears itself, and that "input" reopened all 157 majors.
+        // A second Escape lets the browser clear the box, without reopening the list.
+        if (!panel.hidden) {
+          event.preventDefault();
+          close();
+        } else if (input.value) {
+          quietClear = true; // an empty box fires no "input", so only flag a real clear
+        }
       }
     });
-    input.addEventListener("blur", () => setTimeout(close, 150));
+    // Closing the list moves what's under it (on the explorer it takes its own space), so it never closes
+    // in the middle of a press: the click must reach what the student pressed (decision 058).
+    let pressing = false;
+    let closeAfterPress = false;
+    document.addEventListener("pointerdown", () => { pressing = true; }, true);
+    // A press can end without a click (released elsewhere, or a touch that became a scroll): close
+    // then, a moment later, after any click from it has been delivered.
+    function released() {
+      pressing = false;
+      if (closeAfterPress) {
+        closeAfterPress = false;
+        setTimeout(() => { if (document.activeElement !== input) close(); }, 400);
+      }
+    }
+    document.addEventListener("pointerup", released, true);
+    document.addEventListener("pointercancel", released, true);
+    // A tap anywhere else closes the list, once the tap is done. Needed on iPhones too, where tapping a
+    // non-focusable spot (a tag's label, the page background) doesn't blur the input.
+    document.addEventListener("click", (event) => {
+      if (!panel.hidden && event.target !== input && !panel.contains(event.target)) close();
+    });
+    input.addEventListener("blur", () => setTimeout(() => {
+      if (pressing) closeAfterPress = true; else close();
+    }, 150));
     return { close };
   }
 
@@ -318,23 +353,43 @@
     // in the live form, and keep everything else. Never copy the link's href into the form: it was
     // drawn with the previous results, so a second ✕ pressed before the new results arrive would
     // bring back the filter removed a moment earlier (decision 048).
+    let removals = 0;
     results.addEventListener("click", (event) => {
       const link = event.target.closest("a[data-applied]");
       if (!link) return;
       event.preventDefault();
-      // Where the removed tag sat, so focus can land on the one that takes its place.
-      const position = [...results.querySelectorAll("a[data-applied]")].indexOf(link);
+      combobox.close();
+      // Where the removed tag sat, so focus can land on the one that takes its place. Tags only: landing
+      // on «مسح الكل» meant a second Enter would clear every filter.
+      const tags = () => [...results.querySelectorAll("a.applied-x")];
+      const position = tags().indexOf(link);
       for (const name of (link.dataset.remove || "").split(" ")) {
         if (name === "q") input.value = "";
         else if (form.elements[name]) form.elements[name].value = "";
       }
       syncFields();
+      const mine = ++removals;
       update().then(() => {
+        // Two ✕ pressed quickly: only the last one moves focus, once its results are in. (Otherwise the
+        // first focused a tag in the old results, which were then replaced, and focus fell to the page.)
+        if (mine !== removals) return;
         // The tag now in the same place (or the last one); with none left, the results themselves.
         // Never the search box: focusing it opened the suggestions (157 majors) over the results.
-        const left = [...results.querySelectorAll("a[data-applied]")];
-        (left[Math.min(position, left.length - 1)] || results).focus();
+        const left = tags();
+        ((position >= 0 && left[Math.min(position, left.length - 1)]) || results).focus();
       });
+    });
+
+    // «اختر المجال» under إمداد (decision 058): set the field in the live form instead of reloading the page.
+    results.addEventListener("click", (event) => {
+      const link = event.target.closest("a[data-pick-field]");
+      if (!link) return;
+      event.preventDefault();
+      const params = new URL(link.href).searchParams;
+      track.value = params.get("track");
+      syncFields();
+      field.value = params.get("field");
+      update().then(() => results.focus());
     });
 
     syncFields();

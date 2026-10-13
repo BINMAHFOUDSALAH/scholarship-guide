@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "أدنى مستوى للبكالوريوس (Band D، لكلية العلوم الطبيعية والرياضيات والهندسة مع استثناءات): 6.5 مع 6.0 في كل مهارة. Band B (الآداب والعلوم الاجتماعية وKing's Business School والطب): 7.0 مع 6.5. Band A: 7.5 مع 7.0. في جلسة واحدة، ولا يُقبل IELTS One Skill.",
       "source_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply/english-language-requirements"
     },
@@ -19,7 +21,12 @@
       "note_ar": "Band D للاختبارات من 21 يناير 2026: 4.5 مع 4 على الأقل في كل مهارة. قبل ذلك: 92 إجمالًا.",
       "source_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply/english-language-requirements"
     },
-    "duolingo": null,
+    "duolingo": {
+      "accepted": false,
+      "min": null,
+      "note_ar": "تقول الجامعة إن أي اختبار غير مذكور في قائمتها غير مقبول، وDuolingo ليس فيها.",
+      "source_url": "https://www.kcl.ac.uk/study/undergraduate/how-to-apply/english-language-requirements"
+    },
     "note_ar": "القائمة معلنة لدخول 2027/28."
   },
   "sat_act": null,

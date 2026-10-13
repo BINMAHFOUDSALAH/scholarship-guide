@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "لكل البكالوريوس: 6.5 مع 5.5 في كل مهارة. الصيدلة والتغذية: 6.5 مع 6.0. علاج النطق واللغة: 8.0 مع 7.5.",
       "source_url": "https://www.reading.ac.uk/ready-to-study/international-and-eu/english-language-requirements"
     },

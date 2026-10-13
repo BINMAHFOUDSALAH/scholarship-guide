@@ -807,3 +807,23 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **A full career and domestic platform:** too much to verify and maintain at ~5 h/week.
 - **For «لمن», reuse the long `audience_ar`:** too long for a status row. The new field is a short restatement, and the full sourced conditions stay on the program page.
 **Next:** the «لسه ما قررت؟» guide (official-measure links checked from a laptop), then the 3–5 student usability test. P1/P2 lists are in the audit.
+
+## 058 — Requirements audit: a minimum is not a recommended score; explorer and Arabic fixes
+**Date:** 2026-10-13 · **Audit:** [requirements-audit-2026-10-13.md](research/requirements-audit-2026-10-13.md)
+**Problem:**
+- The owner saw Georgia Tech's IELTS as 6 on واضح and 7 elsewhere. The 7.0 is Georgia Tech's *graduate* requirement; first-year applicants meet the University System of Georgia floor (6, recommended 6.5). The number was right, the presentation wasn't.
+- An audit of all 129 files found the same pattern widely: one `min` field held stated minimums, competitive scores (UCLA, Cornell, Purdue, USC), system floors (Georgia Tech, UCLA) and program-dependent levels, while the same kind of competitive score was hidden in a note elsewhere (NYU, Yale, Penn…). TOEFL mixed the old 0–120 and new 1–6 scales without saying which. Some notes came from search snippets (Oxford, UCL, Michigan, Columbia, NUS) and were published with "check before publishing" caveats, against decision 028.
+- On a phone, the explorer's suggestions panel floated over the live results, so a tap aimed at an applied filter's ✕ could pick a suggestion instead.
+**Decision:**
+- **English model** (`english.<test>`): `min` = the stated minimum for full admission; `recommended` = recommended / competitive / expected (never a cut-off), with `recommended_source_url` when another official page states it; `each_min` = a uniform per-skill IELTS minimum; `varies: true` = the level depends on the program (`min` is the general or lowest); `accepted: false` = the university doesn't accept the test (only on an explicit statement or an exhaustive list without it). `Explorer.english_rows()` and `english_compact()` turn these into words, so templates never print a bare number.
+- **Display:** the university page shows each test on its own line («الحد الأدنى 6.0 · الموصى به 6.5 · ولا تقل أي مهارة عن …», «يختلف حسب التخصص», «لا تقبله الجامعة»), says which TOEFL scale a score is on (linked to the TOEFL guide), and defines «الحد الأدنى» and «الموصى به» once. Result rows show the same distinction in short form.
+- **Unverified research is hidden, not caveated:** a details file with `"draft": true` is loaded only with `WADIH_SHOW_DRAFTS=1` (Oxford and UCL, until the owner checks them in a browser). Snippet-based facts in published files were removed. A test fails if a published file mentions a search snippet.
+- **Rows that held the wrong thing:** the Saudi certificate goes in `saudi_certificate` (Cambridge, Toronto), English pathways in the English note, and a new optional `admission_tests` row (Cambridge, Imperial). `language_note_ar` is only for the language of teaching.
+- **Fees:** an optional `waiver_source_url` when the fee and the waiver are stated on different pages.
+- **Explorer:** on the explorer, the suggestions take their own space instead of floating over the results; they close on a click outside, but never in the middle of a press (closing mid-press moved the page under the pointer); only the last of several quick ✕ presses moves focus, and never onto «مسح الكل». A track ranked per field (إمداد, البحث والتطوير) without a field now asks for the field first, with the alphabetical list folded below (49.5 → 2.1 phone screens). Flags load lazily.
+- **Formal Arabic everywhere on the site** (owner, 2026-10-13): الفصحى, no dialect. The planned door is «لم تقرر بعد؟», not «لسه ما قررت؟». Test parts are «مهارات» (Listening, Reading, Writing, Speaking = الاستماع، القراءة، الكتابة، التحدث). A test fails on common dialect words in templates, content and data.
+**Alternatives:**
+- **Keep one `min` and explain in notes:** less data, but the number in a result row would still read as a cut-off. Rejected; this is the error the owner hit.
+- **A `kind` field on one number** (minimum / recommended / floor): can't express "minimum 6, recommended 6.5", the most common case.
+- **Show a "last verified" date next to each fact:** decision 028 keeps check dates in the data, not on the page; still right (dates add clutter and invite "outdated?" doubts without helping a decision).
+- **Keep the floating suggestions and only close them on outside taps:** a tap on the panel still picks a suggestion when the ✕ is under it.

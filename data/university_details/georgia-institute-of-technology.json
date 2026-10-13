@@ -11,17 +11,20 @@
   "english": {
     "ielts": {
       "min": 6,
-      "note_ar": "حد نظام جامعات جورجيا (USG) الذي تحيل إليه Georgia Tech، والموصى به 6.5.",
+      "recommended": 6.5,
+      "note_ar": "الحد الأدنى في نظام جامعات جورجيا (USG) الذي تحيل إليه Georgia Tech، والموصى به 6.5، ولا تنشر Georgia Tech حدًا خاصًا بها للبكالوريوس. أما 7.0 المنشور في دليل Georgia Tech فهو شرط الدراسات العليا، ولا ينطبق على طلاب البكالوريوس.",
       "source_url": "https://www.usg.edu/international_education/esl_programs/english_proficiency_requirements"
     },
     "toefl_ibt": {
       "min": 3.5,
-      "note_ar": "3.5 على المقياس الجديد (69 قبل 2026)، والموصى به 4.0 (79 قبل 2026). من صفحة USG.",
+      "recommended": 4.0,
+      "note_ar": "على المقياس الجديد (1–6). وعلى المقياس القديم (0–120): الحد الأدنى 69 والموصى به 79.",
       "source_url": "https://www.usg.edu/international_education/esl_programs/english_proficiency_requirements"
     },
     "duolingo": {
+      "accepted": false,
       "min": null,
-      "note_ar": "Duolingo لا يحقق شرط اللغة في USG.",
+      "note_ar": "تنظر فيه Georgia Tech مادةً داعمة للطلب، لكنه لا يحقق شرط اللغة في USG، فيلزمك اختبار آخر من القائمة.",
       "source_url": "https://admission.gatech.edu/international/first-year"
     },
     "note_ar": "شرط اللغة يحدده نظام جامعات جورجيا (USG). تُقبل أيضًا PTE Academic ‏53، وSAT قراءة وكتابة 480، وACT English ‏17."

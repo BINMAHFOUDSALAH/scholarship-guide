@@ -10,19 +10,24 @@
   },
   "english": {
     "ielts": {
-      "min": null,
-      "note_ar": "تعارض في المصادر الرسمية: صفحة القبول الجامعية تذكر 7.0 كدرجة يُنصح بها، وصفحة مكتب الطلاب الدوليين (OISS) تذكر 6.5 حدًا أدنى لعموم الطلاب الدوليين، لذلك لم ننشر رقمًا.",
-      "source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
+      "min": 6.5,
+      "recommended": 7.0,
+      "note_ar": "6.5 هو الحد الأدنى في سياسة الجامعة (مكتب الطلاب الدوليين OISS)، و7.0 هي درجة المتقدمين الأكثر تنافسية حسب صفحة القبول.",
+      "source_url": "https://oiss.washu.edu/english-proficiency-requirements/",
+      "recommended_source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
     },
     "toefl_ibt": {
-      "min": 5.0,
-      "note_ar": "للاختبارات من 21 يناير 2026 فصاعدًا: 5.0 يُنصح بها، وتذكر صفحة OISS الدرجة نفسها. الرقم من مقياس 1–6 (الصفحة لا تذكر المقياس صراحة). للاختبارات قبل ذلك تذكر الصفحة الجامعية 100، وتذكر OISS 90، فلم ننشر رقمًا لها بسبب التعارض.",
+      "min": null,
+      "recommended": 5.0,
+      "note_ar": "5.0 على المقياس الجديد هي الدرجة الموصى بها في صفحة القبول. وصفحة OISS تذكر الحد الأدنى بصيغة غير واضحة، فلم ننشر حدًا أدنى.",
       "source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
     },
     "duolingo": {
-      "min": null,
-      "note_ar": "تعارض في المصادر الرسمية: صفحة القبول الجامعية تذكر 130 كدرجة يُنصح بها، وصفحة OISS تذكر 125 حدًا أدنى، لذلك لم ننشر رقمًا.",
-      "source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
+      "min": 125,
+      "recommended": 130,
+      "note_ar": "125 هو الحد الأدنى في سياسة الجامعة (OISS)، و130 هي درجة المتقدمين الأكثر تنافسية حسب صفحة القبول.",
+      "source_url": "https://oiss.washu.edu/english-proficiency-requirements/",
+      "recommended_source_url": "https://admissions.washu.edu/how-to-apply/english-testing-requirements/"
     },
     "note_ar": "إثبات الإنجليزية مطلوب لمن لغته الأولى ليست الإنجليزية، ويمكن الإعفاء لمن درس ثلاث سنوات أو أكثر في برنامج أكاديمي بالإنجليزية أو في مدرسة أمريكية مع أداء أكاديمي قوي، وتُراجع الحالات الأخرى فرديًا. لا تُقبل SAT أو ACT بدلًا من اختبار الإنجليزية لمتقدمي خريف 2027."
   },

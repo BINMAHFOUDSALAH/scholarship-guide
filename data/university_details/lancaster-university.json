@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "الشرط العام لمعظم البكالوريوس: 6.5 مع 5.5 في كل مهارة. الطب وبعض برامج العلوم والرياضيات والخدمة الاجتماعية تختلف.",
       "source_url": "https://www.lancaster.ac.uk/study/entry-requirements/undergraduate-english-requirements/"
     },

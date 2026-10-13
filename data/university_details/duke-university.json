@@ -11,16 +11,19 @@
   "english": {
     "ielts": {
       "min": null,
-      "note_ar": "الصفحة تذكر أن الدرجة المتوقعة 7، وتقول أيضًا إن اختبار اللغة موصى به وغير مطلوب.",
+      "recommended": 7,
+      "note_ar": "تذكر الصفحة أن الدرجة المتوقعة 7، وتقول إن اختبار اللغة موصى به وغير مطلوب.",
       "source_url": "https://admissions.duke.edu/apply/"
     },
     "toefl_ibt": {
       "min": null,
-      "note_ar": "الدرجة المتوقعة 100 (المقياس القديم)، والاختبار موصى به وغير مطلوب.",
+      "recommended": 100,
+      "note_ar": "الدرجة المتوقعة 100 على المقياس القديم (0–120)، ولا تذكر الصفحة درجة على المقياس الجديد.",
       "source_url": "https://admissions.duke.edu/apply/"
     },
     "duolingo": {
       "min": null,
+      "recommended": 130,
       "note_ar": "الدرجة المتوقعة 130، والاختبار موصى به وغير مطلوب.",
       "source_url": "https://admissions.duke.edu/apply/"
     },

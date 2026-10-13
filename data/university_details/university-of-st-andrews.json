@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "أدنى مستوى (العلوم، 7-D): 6.5 مع 6.0 في كل مهارة. الفنون واللاهوت (3-D): 7.0 مع 6.5. الطب (2-M): 7.0 في كل مهارة.",
       "source_url": "https://www.st-andrews.ac.uk/subjects/entry/language-requirements/profiles/7-d/"
     },

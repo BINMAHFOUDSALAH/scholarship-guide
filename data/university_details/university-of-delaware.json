@@ -24,7 +24,7 @@
       "note_ar": "110 فأكثر للقبول المباشر، و95–109 لمسار Academic Transitions.",
       "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
     },
-    "note_ar": "الحد الأدنى لا يضمن القبول المباشر. تُقبل أيضًا TOEFL Essentials ‏8، وPTE Academic ‏53، وCambridge B2 First ‏171، وSAT Reading and Writing ‏550 أو ACT English ‏24."
+    "note_ar": "الحد الأدنى لا يضمن القبول المباشر. تُقبل أيضًا TOEFL Essentials ‏8، وPTE Academic ‏53، وCambridge B2 First ‏171، وSAT Reading and Writing ‏550 أو ACT English ‏24. القبول المشروط عبر Academic Transitions لا يشترط TOEFL أو IELTS للتقديم."
   },
   "sat_act": {
     "policy": "optional",
@@ -65,7 +65,7 @@
     "international_percent": null,
     "source_url": "https://ire.udel.edu/files/2025/10/09-admis_2025-26.pdf"
   },
-  "language_note_ar": "القبول المشروط عبر Academic Transitions لا يشترط TOEFL أو IELTS للتقديم.",
+  "language_note_ar": null,
   "not_found_ar": [
     "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
     "نسبة قبول الدوليين غير منشورة."

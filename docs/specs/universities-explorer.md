@@ -71,6 +71,17 @@ Rules:
   - `cycle_ar`: the intake, e.g. «خريف 2027».
   - `year_stated`: false when the official page gives only the day and month, so we inferred the year. The site then shows «السنة غير مذكورة في الصفحة».
   - Optional `note_ar` (time zone, who it applies to) and `reference_only: true` for an older cycle shown for reference. Reference dates never count as the next deadline.
+- English tests (decision 058), each of `english.ielts` / `toefl_ibt` / `duolingo`:
+  - `min`: the score the page states as the minimum for full admission, or `null`. A recommended, competitive, expected or "typical" score is **never** a `min`.
+  - `recommended` (optional): that recommended / competitive / expected score; `recommended_source_url` when a different official page states it (e.g. a state-system minimum plus the campus's competitive score).
+  - `each_min` (optional, IELTS): a uniform minimum in every skill; uneven per-skill minimums stay in `note_ar`.
+  - `varies: true` (optional): the level depends on the program; `min` is the general or lowest one.
+  - `accepted: false` (optional): the university doesn't accept the test, from an explicit statement or an exhaustive list without it. No score then.
+  - TOEFL: a value ≤ 6 is on the new 1–6 scale (since 21 January 2026), larger values on 0–120; the page says which.
+- `admission_tests` (optional): `{note_ar, source_url}` for admission tests some programmes require (ESAT, TMUA, UCAT, LNAT…).
+- `application_fee.waiver_source_url` (optional): when the waiver is on a different page from the amount.
+- `draft: true` (optional): research not yet verified on the official page (a 403, a snippet). Hidden on the site; shown with `WADIH_SHOW_DRAFTS=1`.
+- Never record a number from a search snippet or a third-party site. `language_note_ar` is only for the language of teaching.
 - `saudi_certificate` (optional, decision 054; mainly UK): `{"direct_entry": true | false | null, "note_ar", "quote", "source_url"}`. Whether the Saudi secondary certificate alone gets a student into year 1, from the university's own Saudi Arabia / country page, with the exact English `quote`. Shown as «الشهادة الثانوية السعودية» only when `direct_entry` is true or false; `null` means the page doesn't say (and the gap goes in `not_found_ar`).
 - Non-English-speaking countries: `language_note_ar` says what the language of instruction is and whether English-taught undergraduate programs exist (with source).
 

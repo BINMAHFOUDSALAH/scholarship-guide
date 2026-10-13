@@ -11,12 +11,13 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
       "note_ar": "6.5 ولا تقل أي مهارة عن 6.0.",
       "source_url": "https://www.curtin.edu.au/study/applying/english-language-requirements/accepted-english-qualifications/"
     },
     "toefl_ibt": {
-      "min": 81,
-      "note_ar": "للاختبارات من يونيو 2026: 81 (16 للقراءة والاستماع، 19 للتحدث والكتابة). قبل ذلك: 79.",
+      "min": 4.5,
+      "note_ar": "على المقياس الجديد (1–6): 4.5 مع 4 في القراءة والاستماع والتحدث و4.5 في الكتابة. وعلى القديم: 81 للاختبارات من يونيو 2026.",
       "source_url": "https://www.curtin.edu.au/study/applying/english-language-requirements/accepted-english-qualifications/"
     },
     "duolingo": null,

@@ -72,6 +72,7 @@
     "fee_usd": 95,
     "waiver": "accepts_common_app",
     "note_ar": "عبر Common App إن انطبقت عليك مؤشرات الحاجة الاقتصادية، وإلا فبطريقة Harvard الخاصة",
-    "source_url": "https://college.harvard.edu/admissions/apply/international-applicants"
+    "source_url": "https://college.harvard.edu/admissions/apply",
+    "waiver_source_url": "https://college.harvard.edu/admissions/apply/international-applicants"
   }
 }

@@ -10,19 +10,25 @@
   },
   "english": {
     "ielts": {
-      "min": 7.5,
-      "note_ar": "صفحة UCLA تذكر 7.5 كدرجة «تنافسية» وليست حدًا أدنى مسمّى. الصفحة لا تحدد إن كانت الدرجة الكلية. الحد العام لجامعات UC هو 6.5.",
-      "source_url": "https://admission.ucla.edu/apply/international-applicants"
+      "min": 6.5,
+      "recommended": 7.5,
+      "note_ar": "6.5 هو الحد الأدنى في جامعات كاليفورنيا (UC). وتقول UCLA إنها تبحث عن درجات «تنافسية»، منها 7.5 فأكثر.",
+      "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/english-language-proficiency-toefl-ielts.html",
+      "recommended_source_url": "https://admission.ucla.edu/apply/international-applicants"
     },
     "toefl_ibt": {
-      "min": 5,
-      "note_ar": "5 فأكثر (مع أقسام 5 فأكثر) على المقياس الجديد المعمول به من 21 يناير 2026، والذي يعرض بدرجات 1–6. على المقياس القديم 0–120 تذكر الصفحة «أكثر من 100» مع أقسام فوق 24. تُذكر كدرجة «تنافسية». الحد العام لجامعات UC هو 4.5.",
-      "source_url": "https://admission.ucla.edu/apply/international-applicants"
+      "min": 4.5,
+      "recommended": 5,
+      "note_ar": "4.5 هو الحد الأدنى في جامعات UC على المقياس الجديد (80 على القديم). والدرجة التنافسية في UCLA: ‏5 فأكثر مع 5 في كل مهارة، أو أكثر من 100 مع أكثر من 24 في كل مهارة على المقياس القديم.",
+      "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/english-language-proficiency-toefl-ielts.html",
+      "recommended_source_url": "https://admission.ucla.edu/apply/international-applicants"
     },
     "duolingo": {
-      "min": 135,
-      "note_ar": "135 فأكثر حسب الصفحة، وتُذكر كدرجة «تنافسية». الحد العام لجامعات UC هو 115.",
-      "source_url": "https://admission.ucla.edu/apply/international-applicants"
+      "min": 115,
+      "recommended": 135,
+      "note_ar": "115 هو الحد الأدنى في جامعات UC، و135 فأكثر هي الدرجة التنافسية في UCLA.",
+      "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/english-language-proficiency-toefl-ielts.html",
+      "recommended_source_url": "https://admission.ucla.edu/apply/international-applicants"
     },
     "note_ar": "صفحة UCLA تقول: «نبحث عن درجات لغة إنجليزية تنافسية». من أكمل تعليمه الثانوي بالإنجليزية كله يُعتبر متمكنًا ولا يحتاج امتحانًا. من درس أقل من 3 سنوات بالإنجليزية في بلد لا تُدرَّس فيه بالإنجليزية عليه إثبات الكفاءة. تقبل UCLA TOEFL وIELTS وDuolingo فقط، ولا تعتبر SAT أو ACT بديلًا. يجب تسجيل كل نتائج الاختبار في الطلب بحلول يناير. قد تطلب UCLA امتحان ESLPE بعد القبول."
   },

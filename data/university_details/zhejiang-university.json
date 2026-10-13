@@ -11,12 +11,14 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.0,
+      "varies": true,
       "note_ar": "6.0 (ولا تقل أي مهارة عن 5.0) للطب MBBS والهندسة الطبية الحيوية، و6.5 لبرنامج Global Communication and Management (دليل 2026)",
       "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf"
     },
     "toefl_ibt": {
       "min": 75,
-      "note_ar": "75 (ولا يقل أي قسم عن 15) للطب والهندسة الطبية الحيوية، و80 لبرنامج Global Communication and Management",
+      "note_ar": "75 (ولا تقل أي مهارة عن 15) للطب والهندسة الطبية الحيوية، و80 لبرنامج Global Communication and Management",
       "source_url": "https://iczu.zju.edu.cn/_upload/article/files/e7/8c/1be7b2df433fb9427df707571d84/f8f1cb33-05a5-4fec-a602-3eac6caf8e14.pdf"
     },
     "duolingo": {

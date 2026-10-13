@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
       "note_ar": "6.5 ولا تقل أي مهارة عن 6.0.",
       "source_url": "https://you.ubc.ca/applying-ubc/requirements/english-language-competency/"
     },

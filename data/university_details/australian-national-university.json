@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
       "note_ar": "6.5 مع 6.0 في كل مهارة، في مركز اختبار IELTS (الاختبار الأونلاين غير مقبول).",
       "source_url": "https://policies.anu.edu.au/ppl/pdfdownload/1801"
     },

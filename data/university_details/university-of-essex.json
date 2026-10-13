@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "للسنة الأولى: 6.0 مع 5.5 في كل مهارة (وسنة التأسيس 5.5). بعض التخصصات الصحية مثل التمريض والعلاج الطبيعي تطلب أعلى.",
       "source_url": "https://www1.essex.ac.uk/documents/admissions/englishInternational.pdf"
     },

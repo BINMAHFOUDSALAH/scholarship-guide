@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 7.0,
+      "each_min": 7.0,
       "note_ar": "7.0 إجمالًا و7.0 في كل مهارة، في جلسة واحدة.",
       "source_url": "https://www.lse.ac.uk/study-at-lse/Undergraduate/Prospective-Students/How-to-Apply/English-language-requirements"
     },

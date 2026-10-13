@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
       "note_ar": "6.5 ولا تقل أي مهارة عن 6.",
       "source_url": "https://admissions.usask.ca/requirements/english-language-proficiency.php"
     },
@@ -21,7 +22,7 @@
     },
     "duolingo": {
       "min": 120,
-      "note_ar": "120 ولا يقل أي قسم عن 100 (من 1 يناير 2026).",
+      "note_ar": "120 ولا تقل أي مهارة عن 100 (من 1 يناير 2026).",
       "source_url": "https://admissions.usask.ca/requirements/english-language-proficiency.php"
     },
     "note_ar": null

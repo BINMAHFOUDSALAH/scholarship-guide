@@ -24,7 +24,7 @@
       "note_ar": "105 للقبول المباشر.",
       "source_url": "https://ip.wsu.edu/future-students/requirements/"
     },
-    "note_ar": "الدرجات يجب ألا يزيد عمرها على سنتين."
+    "note_ar": "الدرجات يجب ألا يزيد عمرها على سنتين. من لا يبلغ الحد قد يُقبل في برنامج تأسيسي (Undergraduate Foundation)."
   },
   "sat_act": {
     "policy": "unknown",
@@ -38,7 +38,7 @@
     "international_percent": 82.0,
     "source_url": "https://wpcdn.web.wsu.edu/wsuwp/uploads/sites/3447/2025/04/CDS_2024-2025.pdf"
   },
-  "language_note_ar": "من لا يبلغ الحد قد يُقبل في برنامج تأسيسي (Undergraduate Foundation).",
+  "language_note_ar": null,
   "not_found_ar": [
     "صفحتان رسميتان تختلفان في موعد الأولوية لخريف (15 أبريل و15 يونيو)، فلم ننشر موعدًا. القبول متجدد (rolling)."
   ],

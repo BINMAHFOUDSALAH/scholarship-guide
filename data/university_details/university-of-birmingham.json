@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "أدنى مجموعة (Group A، مثل Computer Science وMathematics وChemistry): 6.0 مع 5.5 في كل مهارة. Group B: 6.5 مع 6.0، وGroup C: 7.0 مع 6.5، وGroup D (الطب وطب الأسنان): 7.0 مع 7.0. IELTS Academic فقط.",
       "source_url": "https://www.birmingham.ac.uk/study/undergraduate/apply/entry-requirements/international-entry-requirements"
     },

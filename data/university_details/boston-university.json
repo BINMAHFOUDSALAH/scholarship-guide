@@ -38,12 +38,22 @@
   "english": {
     "ielts": {
       "min": 7.0,
-      "note_ar": "7.0 يكفي لكل البرامج.",
+      "note_ar": "تقول الجامعة إن 7 فأكثر تحقق شرط اللغة في كل البرامج، وتراجع درجات المهارات أيضًا.",
       "source_url": "https://www.bu.edu/admissions/apply/international/"
     },
-    "toefl_ibt": null,
-    "duolingo": null,
-    "note_ar": "لا حد أدنى منشورًا لـ TOEFL وDuolingo. «الأكثر تنافسية»: TOEFL ‏5.0 (المقياس الجديد) وDuolingo من 125 إلى 135."
+    "toefl_ibt": {
+      "min": null,
+      "recommended": 5.0,
+      "note_ar": "الأكثر تنافسية يحصلون على 5.0 فأكثر على المقياس الجديد، أو 90–100 مع 20 في كل مهارة على القديم. لا تنشر الجامعة حدًا أدنى.",
+      "source_url": "https://www.bu.edu/admissions/apply/international/"
+    },
+    "duolingo": {
+      "min": null,
+      "recommended": 125,
+      "note_ar": "الأكثر تنافسية يحصلون على 125–135. لا تنشر الجامعة حدًا أدنى.",
+      "source_url": "https://www.bu.edu/admissions/apply/international/"
+    },
+    "note_ar": null
   },
   "application_fee": {
     "fee_usd": 80,

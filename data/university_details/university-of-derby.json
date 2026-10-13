@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "أغلب البكالوريوس يطلب من 6.0 إلى 7.0 مع حد لكل مهارة. أدنى مستوى في الجدول: 6.0 مع 5.5.",
       "source_url": "https://www.derby.ac.uk/life/international-students/applicants/english-language-tests/"
     },

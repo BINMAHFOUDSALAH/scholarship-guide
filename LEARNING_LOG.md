@@ -551,3 +551,21 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Understood?** Not yet checked.
 
 **Optional check question:** why does the grade 12 sentence now say «من قوائم الابتعاث» instead of computing a الرواد-only number? *Answer: the sentence describes a pattern across every university we've collected dates for. Either the words describe what's counted, or the count changes to match the words. Both are fine; a mismatch isn't.*
+
+## 28. A number is not a requirement: the requirements audit (2026-10-13)
+**Built / why:** the owner saw Georgia Tech's IELTS as 6 here and 7 elsewhere. The audit (`docs/research/requirements-audit-2026-10-13.md`, decision 058) checked all 129 requirement files against their official pages, changed the data model so a minimum and a recommended score can't be confused, fixed the filter-✕ bug on phones, made إمداد ask for a field first, and made formal Arabic a tested rule.
+
+**Key concepts:**
+- **The right number in the wrong frame is still misleading.** 6 was Georgia Tech's real undergraduate floor (set by its state system); 7.0 was the graduate requirement. A bare «6» hid both facts. The fix was a data model that can say «الحد الأدنى 6.0 · الموصى به 6.5».
+- **One field, many meanings, is a bug factory.** `min` held minimums, competitive scores, system floors and program-dependent levels. Separate fields (`min`, `recommended`, `each_min`, `varies`, `accepted`) make the difference visible in data, templates and tests.
+- **Check mechanically, then read.** A script compared 638 displayed facts with their cited pages; the misses were then read by hand. Most were the checker's fault (tables, embedded data), a few were real (a 404, a removed SAT threshold, a TOEFL format UNSW stopped accepting).
+- **Hidden beats caveated.** Oxford and UCL were published with "from a search snippet, check before publishing". They're now drafts: kept for the owner, invisible to students until verified.
+- **What you see must be what you tap.** The suggestions panel floated over the filter tags, so a tap on a ✕ picked a suggestion. Closing the panel mid-press was no better: the page moved under the finger. The panel now takes its own space, and closes only after the click lands.
+
+**Tested:** 490 tests (10 new: the English model rules, Georgia Tech and UCLA pages, TOEFL scale, drafts hidden, unverified SAT wording, Saudi-certificate and admission-test rows, fee source, the field picker, formal Arabic). In Chromium at 390 and 1280px: 32 filter checks (single, track+field, two quick removals, clear all, keyboard, field picker, no JS errors), no broken internal links across 1,625 pages, page weight and LCP on emulated slow 4G.
+
+**Who did what:** the owner reported the Georgia Tech case and asked for formal Arabic. Claude did the audit, the research, the code and the tests. Oxford, UCL, NYU, Michigan's deadlines and Saskatchewan still need the owner's browser check.
+
+**Understood?** Not yet checked.
+
+**Optional check question:** Cornell says "minimum competitive score: 7.5". Is that `min` or `recommended`? *Answer: `recommended`. Cornell's own page says these aren't automatic cut-offs; a student with 7.0 can still apply. `min` is only for a score the university says it requires.*

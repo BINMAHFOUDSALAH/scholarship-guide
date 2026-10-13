@@ -40,6 +40,7 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
       "note_ar": "6.0 ولا تقل أي مهارة عن 5.5.",
       "source_url": "https://www.unlv.edu/admissions/international/undergraduate/english-proficiency"
     },
@@ -50,7 +51,7 @@
     },
     "duolingo": {
       "min": 100,
-      "note_ar": "100 ولا يقل أي قسم عن 95.",
+      "note_ar": "100 ولا تقل أي مهارة عن 95.",
       "source_url": "https://www.unlv.edu/admissions/international/undergraduate/english-proficiency"
     },
     "note_ar": "النتيجة لا تكون أقدم من سنتين وقت التقديم."
