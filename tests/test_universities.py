@@ -117,6 +117,10 @@ def test_requirement_files_follow_the_schema(path):
         if item.get("recommended_source_url"):
             assert item["recommended_source_url"].startswith("https://"), (path.stem, key)
         assert item.get("varies", True) is True, (path.stem, key)  # stored only when true
+        # A score and "this test isn't on the page" can't both be true (the reviewer found one, decision 058).
+        if item["min"] is not None or item.get("recommended") is not None:
+            name = {"ielts": "IELTS", "toefl_ibt": "TOEFL", "duolingo": "Duolingo"}[key]
+            assert f"{name} غير مذكور" not in (d["english"].get("note_ar") or ""), (path.stem, key)
     if d.get("sat_act"):
         assert d["sat_act"]["policy"] in SAT_POLICY_AR, path.stem
         sourced(d["sat_act"])
@@ -148,6 +152,7 @@ def test_requirement_files_follow_the_schema(path):
         if certificate["direct_entry"] is not None:
             sourced(certificate)
             assert certificate["note_ar"] is None or certificate["note_ar"].strip(), path.stem
+            assert certificate.get("note_source_url", "https://").startswith("https://"), path.stem
     fee = d.get("application_fee")
     if fee:  # decision 050
         sourced(fee)
@@ -665,8 +670,8 @@ def test_english_at_a_glance_keeps_the_distinctions():
     assert english_compact("ielts", {"min": 6, "recommended": 6.5}) == "6.0 · الموصى به 6.5"
     assert english_compact("ielts", {"min": 6.0, "varies": True, "each_min": 5.5}) == "من 6.0 حسب التخصص"
     assert english_compact("ielts", {"min": None, "recommended": 7.5}) == "لا حد أدنى معلن · الموصى به 7.5"
-    assert english_compact("ielts", {"min": None, "note_ar": "x"}) == "لا حد أدنى منشور"
-    assert english_compact("duolingo", {"accepted": False, "min": None}) == "لا تقبله الجامعة"
+    assert english_compact("ielts", {"min": None, "note_ar": "x"}) == "لا يوجد حد أدنى منشور"
+    assert english_compact("duolingo", {"accepted": False, "min": None}) == "لا يُقبل لإثبات اللغة"
     assert english_compact("ielts", None) == "لم نتحقق منه"
 
 
@@ -677,7 +682,7 @@ def test_georgia_tech_shows_the_undergraduate_floor_not_the_graduate_score():
     html = client.get("/universities/georgia-institute-of-technology").text
     assert "الحد الأدنى <strong>6.0</strong>" in html and "الموصى به <strong>6.5</strong>" in html
     assert "شرط الدراسات العليا" in html
-    assert "لا تقبله الجامعة" in html  # Duolingo doesn't meet the USG requirement
+    assert "لا يُقبل لإثبات اللغة" in html  # Duolingo is read as extra material but doesn't meet the USG requirement
 
 
 def test_competitive_scores_never_read_as_minimums():
@@ -710,7 +715,8 @@ def test_a_missing_sat_policy_reads_as_unverified_not_unpublished():
     assert ex.details["university-of-michigan-ann-arbor"]["sat_act"] is None
     assert ex.key_facts("university-of-michigan-ann-arbor")["sat_ar"] == "لم نتحقق منه"
     html = client.get("/universities/university-of-michigan-ann-arbor").text
-    assert "لم نجد مواعيد مؤكدة لهذه الدورة" in html and "لم تنشر الجامعة مواعيد" not in html
+    assert "لا توجد لدينا مواعيد مؤكدة لهذه الدورة" in html and "لم تنشر الجامعة مواعيد" not in html
+    assert main.explorer.sat_summary()["counts"].get("unverified", 0) >= 1  # counted apart from "غير محدد"
 
 
 def test_saudi_certificate_and_admission_tests_have_their_own_rows():

@@ -55,9 +55,10 @@
   ],
   "saudi_certificate": {
     "direct_entry": false,
-    "note_ar": "تقول الجامعة إن التوجيهية وحدها «لن تكون منافسة». ومن المؤهلات المناسبة عندها: A Levels، أو IB، أو خمسة اختبارات AP بدرجة 5 مع 90% على الأقل في التوجيهية، وربما السنة الأولى في جامعة خارج بريطانيا.",
+    "note_ar": "تقول الجامعة إن التوجيهية وحدها «لن تكون منافسة». ومن المؤهلات المناسبة عندها: A Levels، أو IB، أو خمسة اختبارات AP بدرجة 5 مع 90% على الأقل في التوجيهية، وربما السنة الأولى في جامعة خارج بريطانيا. وسنة التأسيس المستقلة قد تُقبل لبعض تخصصات الآداب، ولا تُقبل عادةً لتخصصات العلوم.",
     "quote": "Applicants with the Tawjihiyah alone will not be competitive and are unlikely to be successful.",
-    "source_url": "https://www.undergraduate.study.cam.ac.uk/international-students/international-entry-requirements"
+    "source_url": "https://www.undergraduate.study.cam.ac.uk/international-students/international-entry-requirements",
+    "note_source_url": "https://www.undergraduate.study.cam.ac.uk/apply/before/accepted-qualifications"
   },
   "admission_tests": {
     "note_ar": "بعض التخصصات تطلب اختبارًا قبل المقابلة: UCAT للطب، وLNAT للقانون، وESAT للهندسة والعلوم، واختبار الرياضيات TMUA لتخصصات أخرى، وتقيّم الكليات بقية المتقدمين. التفاصيل في صفحة تخصصك.",

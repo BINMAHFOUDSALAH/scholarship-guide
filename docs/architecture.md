@@ -62,6 +62,7 @@ Server-rendered pages, no frontend framework. GitHub → Render deploys on push 
 
 ## Scripts and specs
 - `scripts/extract_universities.py` (+ `flag_countries.json`, `university_aliases.json`, `list_overrides.json`): rebuilds `data/universities.json` from the PDF in `data/raw/`. Run: `.venv\Scripts\python.exe scripts\extract_universities.py`. `pdfplumber` is dev only.
+- `scripts/check_sources.py` (decision 059): fetches every page cited in `data/university_details/` and reports facts it can't find on them (scores, fees, dates, Saudi-certificate quotes) and pages that didn't open. A report, never a CI failure. `scripts/check_explorer.mjs`: the explorer's filters, ✕, field picker and suggestions in Chromium at 390 and 1280px (Playwright; preinstalled in cloud sessions).
 - `scripts/check_quote.py`: fetches an official page (HTML or PDF) and checks that the quotes a research agent gave are really on it. Used before saving researched facts (skill `research-wave`).
 - `scripts/stale_facts.py` (decision 053): lists every checked fact by its check date, oldest first; a report, never a CI failure. Run: `.venv\Scripts\python.exe scripts\stale_facts.py --as-of 2026-12-09 --days 45`. `tests/test_stale_facts.py` fails if a check date in `data/` or `content/` isn't read by it.
 - `docs/specs/universities-explorer.md`: the explorer spec and the requirements schema.

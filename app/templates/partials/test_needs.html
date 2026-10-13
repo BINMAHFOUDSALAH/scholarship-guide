@@ -12,7 +12,7 @@
       <dd>
         {% if row.computed %}
         {% set s = sat_summary %}
-        <span lang="en" dir="ltr">SAT</span> أو <span lang="en" dir="ltr">ACT</span>: مطلوب في {{ s.counts.get("required", 0) }} من {{ s.researched }}، واختياري في {{ s.counts.get("optional", 0) }}، ولا يُنظر فيه في {{ s.counts.get("not_considered", 0) }}، وغير منشور في {{ s.counts.get("unknown", 0) }}.
+        <span lang="en" dir="ltr">SAT</span> أو <span lang="en" dir="ltr">ACT</span>: مطلوب في {{ s.counts.get("required", 0) }} من {{ s.researched }}، واختياري في {{ s.counts.get("optional", 0) }}، ولا يُنظر فيه في {{ s.counts.get("not_considered", 0) }}{% if s.counts.get("unknown") %}، وغير محدد في {{ s.counts.unknown }}{% endif %}{% if s.counts.get("unverified") %}، ولم نتحقق منه في {{ s.counts.unverified }}{% endif %}.
         واختبار الإنجليزية ودرجته تحددهما كل جامعة.
         <a href="{{ row.source.url }}">{{ row.source.title }} ←</a>
         {% else %}

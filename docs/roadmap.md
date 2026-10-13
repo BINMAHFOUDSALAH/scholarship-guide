@@ -6,7 +6,8 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > **Next session (as of 2026-10-13; latest cloud session on branch `claude/brave-hopper-2a6fg7`, decision 058, not merged yet):**
 > **Requirements audit + explorer fixes (decision 058, `docs/research/requirements-audit-2026-10-13.md`):** all 129 files checked against their sources; English scores now separate «الحد الأدنى» from «الموصى به» (the Georgia Tech 6-vs-7 case: 7.0 is the graduate requirement); the filter-✕ bug (suggestions floating over the tags) fixed; إمداد asks for a field first; formal Arabic rule + test.
 > **Owner to-dos from it (browser, ~15 min):** confirm Oxford and UCL (hidden as drafts until then; exact pages in the audit), Michigan's deadlines and SAT policy, NYU's fee/dates, Saskatchewan's deadline. Then remove `"draft": true` or fix the values.
-> **Ask before installing:** a small Playwright smoke test in CI for the explorer (the filter checks used in this session); otherwise filters stay checked by hand.
+> **Repo tidy (decision 059):** layout checked against the current Claude Code docs; `LEARNING_LOG.md` removed; every subagent forced onto Haiku; `scripts/check_sources.py` (facts vs their pages) and `scripts/check_explorer.mjs` (explorer JS in a browser) added.
+> **Ask before installing:** run `scripts/check_explorer.mjs` in CI (Playwright install); today it runs in cloud sessions only.
 >
 > Earlier (the audit session ran in the cloud on branch `claude/clever-bardeen-bei0zs`):
 > Live on `main` at **https://wadihguide.com** (decision 042; the old onrender address and www redirect with a 301): decisions 035–043, including the finder trust fixes (041), the footer feedback line (043), and the iPhone header fix (header icons only up to 479px).
@@ -95,7 +96,7 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] CI: GitHub Actions runs pytest on every push (`.github/workflows/tests.yml`)
 - [ ] Owner: Render → wadih → Settings → Auto-Deploy → "After CI Checks Pass" (after the first CI run is green)
 - [x] `.env` permission lock (`.claude/settings.json`)
-- [x] `docs/CLAUDE_WORKFLOW_GUIDE.md`, `LEARNING_LOG.md`, `docs/architecture.md`; CLAUDE.md trimmed
+- [x] `docs/claude-workflow-guide.md`, `docs/architecture.md`; CLAUDE.md trimmed (a `LEARNING_LOG.md` too, removed 2026-10-13, decision 059)
 - [x] Stale-facts report `scripts/stale_facts.py` (decision 053; a report, not a failing test)
 - [ ] Later: weekly broken-link check, pin the server's Python version
 

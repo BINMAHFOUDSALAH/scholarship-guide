@@ -44,7 +44,8 @@ ARABIC_LETTER = "؀-ۿ"
 
 def test_site_text_is_formal_arabic():
     root = Path(__file__).parent.parent
-    files = [*root.glob("app/templates/**/*.html"), *root.glob("content/**/*.md"), *root.glob("data/**/*.json")]
+    files = [*root.glob("app/templates/**/*.html"), *root.glob("content/**/*.md"), *root.glob("data/**/*.json"),
+             *root.glob("app/*.py"), *root.glob("app/static/*.js")]
     pattern = re.compile(rf"(?<![{ARABIC_LETTER}])({'|'.join(DIALECT)})(?![{ARABIC_LETTER}])")
     found = [(f.name, m.group(1)) for f in files for m in pattern.finditer(f.read_text(encoding="utf-8"))]
     assert not found, found

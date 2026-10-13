@@ -76,7 +76,7 @@ Rules:
   - `recommended` (optional): that recommended / competitive / expected score; `recommended_source_url` when a different official page states it (e.g. a state-system minimum plus the campus's competitive score).
   - `each_min` (optional, IELTS): a uniform minimum in every skill; uneven per-skill minimums stay in `note_ar`.
   - `varies: true` (optional): the level depends on the program; `min` is the general or lowest one.
-  - `accepted: false` (optional): the university doesn't accept the test, from an explicit statement or an exhaustive list without it. No score then.
+  - `accepted: false` (optional): the test doesn't count as proof of English there (an explicit statement, or an exhaustive list without it), shown as «لا يُقبل لإثبات اللغة». No score then. A university may still read it as extra material (Georgia Tech).
   - TOEFL: a value ≤ 6 is on the new 1–6 scale (since 21 January 2026), larger values on 0–120; the page says which.
 - `admission_tests` (optional): `{note_ar, source_url}` for admission tests some programmes require (ESAT, TMUA, UCAT, LNAT…).
 - `application_fee.waiver_source_url` (optional): when the waiver is on a different page from the amount.

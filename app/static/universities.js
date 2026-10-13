@@ -93,6 +93,8 @@
       } catch (e) {
         return; // no suggestions; the search itself still works
       }
+      // The first load can finish after the student left the box; opening then would push the results down.
+      if (document.activeElement !== input) return;
       const q = normalize(input.value);
       panel.replaceChildren();
       options = [];

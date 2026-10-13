@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Launch 1 (~2026-12-09): public guides + the government scholarship path, fully verified. Launch 2: accounts + guided start. Later: a chatbot and agents that answer only from verified content, with sources.
 - The owner is building this to become an AI-focused Forward Deployed Engineer: ship a real product **and** understand it well enough to explain, debug, and improve it.
 
-**Read first:** [docs/roadmap.md](docs/roadmap.md) (current step), [docs/decisions.md](docs/decisions.md) (why), [docs/architecture.md](docs/architecture.md) (how the code fits together). Also: [docs/CLAUDE_WORKFLOW_GUIDE.md](docs/CLAUDE_WORKFLOW_GUIDE.md), [docs/project-files-guide.md](docs/project-files-guide.md) (check before adding a new kind of project file), [LEARNING_LOG.md](LEARNING_LOG.md).
+**Read first:** [docs/roadmap.md](docs/roadmap.md) (current step), [docs/decisions.md](docs/decisions.md) (why), [docs/architecture.md](docs/architecture.md) (how the code fits together). Also: [docs/claude-workflow-guide.md](docs/claude-workflow-guide.md) (which Claude Code feature to use when), [docs/project-files-guide.md](docs/project-files-guide.md) (check before adding a new kind of project file).
 
 ## Rules
 - A student guide: NOT the Ministry of Education, NOT Safeer, not affiliated with Aramco or KAUST.
@@ -32,8 +32,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   2. Verify with tests (and the browser for UI); say clearly what's untested.
   3. Report briefly: **what changed**, **how I can test it myself**, **the key concept**.
   4. **Recommend the next step** (fix, commit, push, or move on).
-- After a meaningful feature, update `LEARNING_LOG.md` accurately. Never mark something as understood just because it was explained. At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
-- **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Every subagent runs on **Haiku 5.5** (`claude-haiku-5-5`, set in each `.claude/agents/*.md` and in `.claude/settings.json` for built-in agents); never pass another model. If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
+- The key concept goes in the report itself (no separate learning log, decision 059). At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
+- **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Every subagent runs on **Haiku 5.5** (`claude-haiku-5-5`, enforced by `.claude/settings.json`: `CLAUDE_CODE_SUBAGENT_MODEL` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`, which also covers the built-in Explore and Plan agents; decision 059); never pass another model. If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
   - `source-researcher`: new facts from official sources, ~5 items per agent, in parallel, with a strict schema + a finished example file.
   - `fact-checker`: checks what's already published against its cited sources.
   - `reviewer`: an independent check of a big or risky diff.
@@ -54,6 +54,8 @@ pytest tests/test_data.py -v                    # one file
 pytest tests/test_pages.py::test_about_loads    # one test
 python scripts/stale_facts.py --as-of 2026-12-09 --days 45   # facts to re-check before launch
 python scripts/check_quote.py URL "quote"       # does an official page really say this?
+python scripts/check_sources.py                 # every university fact still on its cited page?
+node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
 ```
 
 ## Deploy

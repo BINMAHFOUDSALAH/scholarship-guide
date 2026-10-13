@@ -191,7 +191,7 @@
       {% endif %}
       {% if d.saudi_certificate and d.saudi_certificate.direct_entry is not none %}
       {% set sc = d.saudi_certificate %}
-      <div class="summary-row"><dt>الشهادة الثانوية السعودية</dt><dd><strong>{{ "مقبولة للسنة الأولى مباشرة" if sc.direct_entry else "لا تكفي للسنة الأولى مباشرة" }}</strong>{% if sc.note_ar %} · {{ sc.note_ar }}{% endif %} <a class="src" href="{{ sc.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
+      <div class="summary-row"><dt>الشهادة الثانوية السعودية</dt><dd><strong>{{ "مقبولة للسنة الأولى مباشرة" if sc.direct_entry else "لا تكفي للسنة الأولى مباشرة" }}</strong>{% if sc.note_ar %} · {{ sc.note_ar }}{% endif %} <a class="src" href="{{ sc.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% if sc.note_source_url %} <a class="src" href="{{ sc.note_source_url }}" target="_blank" rel="noopener">مصدر آخر ↗</a>{% endif %}
         {#- Not enough for year 1 usually means a foundation year, which the scholarship funds only on extra
             conditions: shown here, where the UK student decides (the fact and its source come from paths.json). #}
         {% if sc.direct_entry == false and prep_year_fact %}
@@ -217,11 +217,11 @@
           <li class="req-score">
             <p class="req-score-line">
               <span class="req-score-test" lang="en" dir="ltr">{{ t.label }}</span>
-              {% if not t.accepted %}<strong>لا تقبله الجامعة</strong>
+              {% if not t.accepted %}<strong>لا يُقبل لإثبات اللغة</strong>
               {% else %}
               {% if t.min %}<span>الحد الأدنى <strong>{{ t.min }}</strong>{% if t.each_min %}، ولا تقل أي مهارة عن {{ t.each_min }}{% endif %}</span>{% endif %}
               {% if t.recommended %}<span>الموصى به <strong>{{ t.recommended }}</strong></span>{% endif %}
-              {% if not t.min and not t.recommended %}<span>لا يوجد حد أدنى منشور</span>{% endif %}
+              {% if not t.min and not t.recommended %}<span>{{ t.none_ar }}</span>{% endif %}
               {% if t.varies %}<span class="tag">يختلف حسب التخصص</span>{% endif %}
               {% if t.scale %}<a class="req-scale" href="{{ url_for('resource_page', slug='toefl') }}#scale">مقياس {{ t.scale }}</a>{% endif %}
               {% endif %}
@@ -327,7 +327,7 @@
       <p class="fact-note">«السنة غير مذكورة في الصفحة»: الصفحة الرسمية تذكر اليوم والشهر فقط، والسنة من الدورة الحالية.</p>
       {% endif %}
       {% else %}
-      <p class="result-note">{% if d %}لم نجد مواعيد مؤكدة لهذه الدورة في المصادر الرسمية التي راجعناها.{% else %}لم نجمع مواعيد هذه الجامعة بعد.{% endif %} {% if d and d.admissions_url %}<a href="{{ d.admissions_url }}" target="_blank" rel="noopener">صفحة القبول في موقع الجامعة ↗</a>{% endif %}</p>
+      <p class="result-note">{% if d %}لا توجد لدينا مواعيد مؤكدة لهذه الدورة؛ راجعها في موقع الجامعة.{% else %}لم نجمع مواعيد هذه الجامعة بعد.{% endif %} {% if d and d.admissions_url %}<a href="{{ d.admissions_url }}" target="_blank" rel="noopener">صفحة القبول في موقع الجامعة ↗</a>{% endif %}</p>
       {% endif %}
     </div>
   </section>

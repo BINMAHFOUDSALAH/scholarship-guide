@@ -55,12 +55,12 @@ def english_compact(test, item):
     """One English test at a glance, for result rows and «باختصار» (decision 058).
 
     Keeps the distinctions a bare number hides: a hard minimum, a recommended or competitive score,
-    a level that depends on the program, a per-skill minimum, and a test the university refuses.
+    a level that depends on the program, a per-skill minimum, and a test that doesn't count as proof of English.
     """
     if not item:
         return "لم نتحقق منه"
     if item.get("accepted") is False:
-        return "لا تقبله الجامعة"
+        return "لا يُقبل لإثبات اللغة"
     low, rec, each = item.get("min"), item.get("recommended"), item.get("each_min")
     if low is not None:
         text = f"من {score_text(test, low)} حسب التخصص" if item.get("varies") else score_text(test, low)
@@ -71,7 +71,12 @@ def english_compact(test, item):
         return text
     if rec is not None:
         return f"لا حد أدنى معلن · الموصى به {score_text(test, rec)}"
-    return "لا حد أدنى منشور" if item.get("note_ar") else "لم نتحقق منه"
+    return no_score_ar(item)
+
+
+def no_score_ar(item):
+    """No minimum and no recommended score: say whether the university page told us so."""
+    return "لا يوجد حد أدنى منشور" if item.get("note_ar") else "لم نتحقق منه"
 # Application-fee waivers (decision 050): what the university's own page says about waiving its fee.
 WAIVER_AR = {
     "accepts_common_app": "تقبل إعفاء Common App",
@@ -508,7 +513,7 @@ class Explorer:
                 "min": score_text(test, item.get("min")), "recommended": score_text(test, item.get("recommended")),
                 "each_min": score_text(test, item.get("each_min")), "varies": bool(item.get("varies")),
                 "scale": toefl_scale(shown) if test == "toefl_ibt" else None,
-                "note_ar": item.get("note_ar"), "source_url": item["source_url"],
+                "none_ar": no_score_ar(item), "note_ar": item.get("note_ar"), "source_url": item["source_url"],
                 "recommended_source_url": item.get("recommended_source_url"),
             })
         return rows
@@ -523,7 +528,7 @@ class Explorer:
         researched = [uid for uid in on_track if uid in self.details]
         counts = {}
         for uid in researched:
-            policy = (self.details[uid].get("sat_act") or {}).get("policy") or "unknown"
+            policy = (self.details[uid].get("sat_act") or {}).get("policy") or "unverified"
             counts[policy] = counts.get(policy, 0) + 1
         return {"total": len(on_track), "researched": len(researched), "counts": counts}
 

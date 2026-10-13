@@ -11,17 +11,17 @@
   "english": {
     "ielts": {
       "min": 8.0,
-      "note_ar": "8.0 «في أغلب الحالات». لا يُقبل IELTS Indicator.",
+      "note_ar": "تسميه الجامعة «الحد الأدنى المتوقع في أغلب الحالات»، أي أن له استثناءات. لا يُقبل IELTS Indicator.",
       "source_url": "https://admission.brown.edu/international/english-proficiency"
     },
     "toefl_ibt": {
       "min": 5.5,
-      "note_ar": "للاختبارات من يناير 2026: 5.5 (المقياس الجديد). قبل ذلك: 105 (المقياس القديم 0–120).",
+      "note_ar": "للاختبارات من يناير 2026: 5.5 (المقياس الجديد). قبل ذلك: 105 (المقياس القديم 0–120). وهو «الحد الأدنى المتوقع في أغلب الحالات».",
       "source_url": "https://admission.brown.edu/international/english-proficiency"
     },
     "duolingo": {
       "min": 130,
-      "note_ar": "130 فأكثر «في أغلب الحالات».",
+      "note_ar": "تسميه الجامعة «الحد الأدنى المتوقع في أغلب الحالات»، أي أن له استثناءات.",
       "source_url": "https://admission.brown.edu/international/english-proficiency"
     },
     "note_ar": "لا تقبل Brown طلابًا بشكل مؤقت إن كانت إنجليزيتهم ضعيفة، فالإنجليزية شرط قبل القبول."

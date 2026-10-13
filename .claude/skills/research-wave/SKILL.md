@@ -35,5 +35,5 @@ Done three times (US wave 1, UK wave 2, AU/CA/SG wave 3; decision 054). Follow t
 ## 5. Save and check
 - Write the files (`checked` = today, `name_en` exactly as in `data/universities.json`).
 - `pytest` (schema tests cover every file), `scripts/stale_facts.py` (count rises by the number saved), and a look at 2 pages in the browser at 375px (one with the Saudi-certificate row, one without).
-- Update: the brief's status, `docs/roadmap.md` (what's left), a decision only if a rule changed, `LEARNING_LOG.md` if something new was learned.
+- Update: the brief's status, `docs/roadmap.md` (what's left), a decision only if a rule changed.
 - Report: counts (saved / true / false / null / skipped and why), what wasn't checked, then ask before committing.

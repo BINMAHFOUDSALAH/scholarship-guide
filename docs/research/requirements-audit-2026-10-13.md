@@ -45,7 +45,7 @@ And the reverse: NYU, Duke, JHU (IELTS), Yale, Penn and UNC showed «لا حد �
 - **UWA, Curtin:** only the old 0–120 TOEFL score was shown; both publish the new 1–6 requirement (4.5). Now shown, with the old score in the note.
 - **Toronto:** publishes a Duolingo minimum (120, with 120 in Production) that wasn't shown; its country table lists "Saudi Arabia — Minimum Admission Requirements: General Secondary Education Certificate" ([UofT](https://future.utoronto.ca/international-high-school-requirements-country?page=5)), now the Saudi-certificate row (was under «لغة الدراسة»).
 - **Boston University:** competitive TOEFL (5.0) and Duolingo (125–135) now shown as recommended.
-- **Duolingo not accepted** (now «لا تقبله الجامعة»): Georgia Tech (doesn't satisfy the USG requirement), Michigan, RMIT, UNSW, King's College London (exhaustive lists without it).
+- **Duolingo not accepted as proof of English** (now «لا يُقبل لإثبات اللغة»): Georgia Tech (read as extra material, but doesn't satisfy the USG requirement), Michigan, RMIT, UNSW, King's College London (exhaustive lists without it).
 - **Cambridge SAT:** the 1500/750 and 1460/730 thresholds are no longer on Cambridge's page (it now says "a high score on the SAT or ACT"); the numbers were removed. Its Saudi guidance ("Applicants with the Tawjihiyah alone will not be competitive", updated June 2026) moved from «لغة الدراسة» to the Saudi-certificate row; admission tests got their own row.
 - **Imperial:** a published TOEFL note said "we'll check this before publishing"; the page does map Standard → 92 / 4.5 and Higher → 100 / 5.0. Its SAT note quoted an unverified search result; removed.
 - **Fees:** Harvard ($95) and MIT ($75) were right but cited pages that don't state the amount; now cite [Harvard](https://college.harvard.edu/admissions/apply) and [MIT](https://mitadmissions.org/apply/firstyear/deadlines-requirements/) (the waiver pages stay as a second link). UW's fee page was a 404; now [UW how to apply](https://admit.washington.edu/apply/first-year/how-to-apply/) ($95, no waiver for international students).
@@ -74,4 +74,5 @@ And the reverse: NYU, Duke, JHU (IELTS), Yale, Penn and UNC showed «لا حد �
 ## Repeatable checks
 - `tests/test_universities.py` now enforces the model (recommended > min, per-skill ≤ overall, refused tests have no score) and fails if a published file mentions a search snippet («مقتطف», «ملخص البحث», «نتيجة البحث», «قبل النشر») or puts the Saudi certificate under «لغة الدراسة».
 - `scripts/stale_facts.py` still lists every check date.
-- The fetch + check scripts used here were one-off (scratch); worth turning into `scripts/check_sources.py` if this audit is repeated (P2).
+- `scripts/check_sources.py` repeats the mechanical part of this audit (decision 059); `scripts/check_explorer.mjs` repeats the browser checks.
+- An independent `reviewer` pass on the change found 11 issues; the fixes are listed in decision 059.
