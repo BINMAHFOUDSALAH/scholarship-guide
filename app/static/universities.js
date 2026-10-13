@@ -322,14 +322,18 @@
       const link = event.target.closest("a[data-applied]");
       if (!link) return;
       event.preventDefault();
+      // Where the removed tag sat, so focus can land on the one that takes its place.
+      const position = [...results.querySelectorAll("a[data-applied]")].indexOf(link);
       for (const name of (link.dataset.remove || "").split(" ")) {
         if (name === "q") input.value = "";
         else if (form.elements[name]) form.elements[name].value = "";
       }
       syncFields();
       update().then(() => {
-        const next = results.querySelector("a[data-applied]");
-        (next || input).focus();
+        // The tag now in the same place (or the last one); with none left, the results themselves.
+        // Never the search box: focusing it opened the suggestions (157 majors) over the results.
+        const left = [...results.querySelectorAll("a[data-applied]")];
+        (left[Math.min(position, left.length - 1)] || results).focus();
       });
     });
 

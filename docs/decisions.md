@@ -775,3 +775,35 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - SAT next date (7 Nov 2026, register by 23 Oct), واعد IELTS range (5.5–7), SDAIA overlap (28 of 95 in الرواد, 82 in الرواد or إمداد), KGSP wording, "government" universities on the unified-admission platform, documents list, guide scope (no واعد), moved links (Harvard, SAT, TOEFL, Aramco).
 - **Aramco:** the owner read the official page on 2026-10-13 (new URL). Requirements unchanged; registration closed; next cycle to be announced. Age limit (22 Hijri years) added to the audience line.
 **Not added:** SABIC's university scholarship (in-Kingdom; students are nominated through four universities; owner: not for now, 2026-10-13), NEOM's scholarship (Tabuk region only; portal offline; no official requirements or current cycle), the Ministry's 2021 health-specialties track (superseded by the four current tracks), the full واعد list (all closed).
+
+## 057 — Product audit: a deep core plus thin doors; trust fixes first
+**Date:** 2026-10-13 · **Audit:** [product-audit-2026-10-13.md](research/product-audit-2026-10-13.md)
+**Context:**
+- A full product audit: the code, the live site in a headless browser at 390 and 1280px, all 129 requirement files, and primary sources.
+- واضح serves one path well: studying abroad on a scholarship. The tagline («مستقبلك بعد الثانوية») promises more:
+  - The undecided student has no starting point (site search for «مهارات» or «وظائف» finds nothing).
+  - Neither does the student who'll study in Saudi Arabia. In SPA's 2019 figures, government seats covered about 87% of graduates.
+- It also found published text that was wrong, stale or easy to misread.
+**Decision:**
+- **Positioning:** a deep, verified core (study abroad: scholarships plus applying to listed universities), plus thin doors that route to official tools instead of rebuilding them:
+  - «لسه ما قررت؟»
+  - «الدراسة في السعودية»
+  - the grade pages
+  - Keep the tagline; the doors make it honest.
+  - No own interest quiz: official measures exist (the Ministry's in grade 10, HRDF «سبل»), O\*NET has no Arabic version and modified versions must be validated, and interests predict weakly.
+  - Defer accounts, the chatbot, and the remaining 143 logos.
+- **Fixed now (milestone L, items 1–2):**
+  1. **Grade 12:** the timeline counts said «… جامعة في مسار الرواد» while counting every researched university (102, not 30). Now «من قوائم الابتعاث», with a test that the sentence never names a track it doesn't count.
+  2. **Grade 11:** «إمداد: لم نجمع متطلباتها بعد» is now computed from the files («جمعنا متطلبات N من 223»).
+  3. **«لمن» on open items:**
+     - Every high-school track has `apply_with_ar` in `paths.json`. `status_board()` passes it as `who_ar`, and the homepage and /news show «لمن: …».
+     - The board's "you can apply today" hint became «مفتوح اليوم لمن تنطبق عليه شروطه».
+     - Why: «مفتوح الآن» alone read as "apply today" to grade 12 students who can't yet.
+  4. **Explorer:** after «مسح الكل» or removing the last filter, focus went to the search box, which opened 157 suggestions over the results. Focus now goes to the tag that takes the removed one's place, or to `#results`, never the combobox. Checked in Chromium at 390 and 1280px, including the decision 048 race.
+  5. **Timing note** (`window_note` macro) under an open, dated الرواد/إمداد track on the program and university pages: the window is for students who already hold an admission, and later results mean a later window.
+  6. **Foundation year:** where `saudi_certificate.direct_entry` is false (19 universities), the university page shows the scholarship's foundation-year conditions (the sourced `prep-year` fact) next to «لا تكفي للسنة الأولى مباشرة».
+**Alternatives:**
+- **Stay a scholarship-only guide and narrow the tagline:** cheaper. It's the fallback if the usability test shows students only come for the scholarship.
+- **A full career and domestic platform:** too much to verify and maintain at ~5 h/week.
+- **For «لمن», reuse the long `audience_ar`:** too long for a status row. The new field is a short restatement, and the full sourced conditions stay on the program page.
+**Next:** the «لسه ما قررت؟» guide (official-measure links checked from a laptop), then the 3–5 student usability test. P1/P2 lists are in the audit.

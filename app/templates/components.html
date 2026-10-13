@@ -65,3 +65,14 @@
   {% if link_url %}<a class="next-step-link" href="{{ link_url }}">{{ link_text }} ←</a>{% endif %}
 </aside>
 {% endmacro %}
+
+{#
+  The timing trap (audit 2026-10-13): a track that is open now is for students who already hold an
+  admission. A grade 12 student whose results arrive after the deadline applies in a later window.
+  Shown under an open track that has an end date; says nothing it can't know (no fixed next date).
+#}
+{% macro window_note(track) %}
+{% if track and track_status(track) == "open" and track.status_until %}
+<p class="window-note"><strong>في ثالث ثانوي الآن؟</strong> هذه النافذة لمن معه قبول جامعي اليوم. إن كانت نتائج جامعاتك ستصل بعد {{ track.status_until | arabic_date }}، فستقدّم في نافذة لاحقة يُعلن موعدها. <a href="/grades/grade-12#year">كيف ترتّب ذلك ←</a></p>
+{% endif %}
+{% endmacro %}

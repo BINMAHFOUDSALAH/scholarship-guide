@@ -533,3 +533,21 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** 475 tests; every fix re-checked against its source with `scripts/check_quote.py`.
 
 **Understood?** Not yet checked.
+
+## 27. A product audit, and fixing what was wrong first (2026-10-13)
+**Built / why:** a full audit of واضح as a product (`docs/research/product-audit-2026-10-13.md`, decision 057), then the small fixes it found. The site's value is trust, so wrong or misleading text on a live page comes before new features.
+
+**Key concepts:**
+- **Compute, don't type.** Two sentences went wrong without anyone touching them: a hard-coded «مسار الرواد» next to a number that grew when إمداد data was added (102, not 30), and a hard-coded «لم نجمع بعد». Numbers in a sentence should come from the data, with a test that the words match what's counted.
+- **True but misleading.** «مفتوح الآن» was correct, but a grade 12 student read it as "apply today". Saying *who* it's for («لمن») fixes the reading without changing the fact.
+- **Focus is behaviour.** Moving focus to the search box after clearing filters looked harmless, but that box opens its suggestions on focus. Programmatic focus must go somewhere passive.
+- **Put a rule where the decision happens.** The foundation-year conditions were on the program page; the student deciding about a UK university is on the university page. The same sourced fact now shows in both places, from one entry in the data.
+- **Audit before you add.** Most of the audit's value was in what *not* to build: an own career quiz, accounts, a chatbot, the remaining logos.
+
+**Tested:** 480 tests (5 new: the timeline wording, the computed إمداد count, «لمن» on open items, the timing note before and after the deadline, the foundation-year line on all 19 pages). In Chromium at 390 and 1280px: the filter-removal checks (clear all, last tag, middle tag, two quick removals, keyboard), and no sideways scroll on the changed pages.
+
+**Who did what:** the owner asked for the audit and approved its direction and milestone. Claude did the audit and research, and wrote the fixes and tests. Not yet reviewed on a real phone.
+
+**Understood?** Not yet checked.
+
+**Optional check question:** why does the grade 12 sentence now say «من قوائم الابتعاث» instead of computing a الرواد-only number? *Answer: the sentence describes a pattern across every university we've collected dates for. Either the words describe what's counted, or the count changes to match the words. Both are fine; a mismatch isn't.*

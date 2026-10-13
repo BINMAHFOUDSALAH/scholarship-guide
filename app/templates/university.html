@@ -191,7 +191,12 @@
       {% endif %}
       {% if d.saudi_certificate and d.saudi_certificate.direct_entry is not none %}
       {% set sc = d.saudi_certificate %}
-      <div class="summary-row"><dt>الشهادة الثانوية السعودية</dt><dd><strong>{{ "مقبولة للسنة الأولى مباشرة" if sc.direct_entry else "لا تكفي للسنة الأولى مباشرة" }}</strong>{% if sc.note_ar %} · {{ sc.note_ar }}{% endif %} <a class="src" href="{{ sc.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd></div>
+      <div class="summary-row"><dt>الشهادة الثانوية السعودية</dt><dd><strong>{{ "مقبولة للسنة الأولى مباشرة" if sc.direct_entry else "لا تكفي للسنة الأولى مباشرة" }}</strong>{% if sc.note_ar %} · {{ sc.note_ar }}{% endif %} <a class="src" href="{{ sc.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
+        {#- Not enough for year 1 usually means a foundation year, which the scholarship funds only on extra
+            conditions: shown here, where the UK student decides (the fact and its source come from paths.json). #}
+        {% if sc.direct_entry == false and prep_year_fact %}
+        <p class="foundation-note" data-foundation-note>والابتعاث؟ {{ prep_year_fact.text_ar }} <a class="src" href="{{ prep_year_fact.sources[0].url }}" target="_blank" rel="noopener">المصدر ↗</a> <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى يُقبل القبول المشروط؟ ←</a></p>
+        {% endif %}</dd></div>
       {% endif %}
       {% if d.application_fee %}
       <div class="summary-row"><dt>رسوم التقديم</dt><dd>{{ um.app_fee(u, d, source=true) }}</dd></div>
@@ -268,6 +273,7 @@
         </li>
         {% endfor %}
       </ul>
+      {% for tid in hs_tracks if p.by_track[tid] %}{{ c.window_note(scholarship[tid]) }}{% endfor %}
       <p class="result-note">كل مواعيد الابتعاث والبرامج في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>. وكيف تتوافق مواعيد الجامعة مع الابتعاث: <a href="{{ url_for('grade_page', slug='grade-12') }}#year">سنة التقديم شهرًا بشهر ←</a></p>
     </div>
 
