@@ -3,7 +3,7 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-12, moving from cloud sessions to Claude Code on the owner's laptop):**
+> **Next session (as of 2026-10-13, moving from cloud sessions to Claude Code on the owner's laptop):**
 > Live on `main` at **https://wadihguide.com** (decision 042; the old onrender address and www redirect with a 301): decisions 035–043, including the finder trust fixes (041), the footer feedback line (043), and the iPhone header fix (header icons only up to 479px).
 > Owner's laptop: `git checkout main` then `git pull`, and work on `main` or a new branch. The cloud branch `claude/loving-hopper-sai8de` is fully merged.
 >
@@ -19,7 +19,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 >    - **Paused (2026-10-12): no budget for paid tools yet.** Missing: the 4 AI clips (the Higgsfield free plan has no credits or commercial use; Starter $19, or the Veo API ~$5) and the voices (the ElevenLabs free plan has no commercial licence; Starter $6).
 >    - A $0 route exists if wanted: the owner's own phone shots + the owner's own voice, or caption cards instead of AI shots.
 >    - Then rebuild, review, and post organically with `?src=` links.
-> 2. **Stale-facts check** (the audit's single best next task): a test that fails when `last_checked` is over 90 days, plus a re-check list before Launch 1.
+> 2. **Stale-facts check: done 2026-10-13 (decision 053).** `scripts/stale_facts.py` lists all 132 checked items by date; not a CI test, so it can't block a deploy. **Before Launch 1:** run it with `--as-of 2026-12-09 --days 45`, re-check from the top, update dates, repeat until empty. Later, optionally: a weekly CI job that runs it as a warning.
 > 3. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes), then act on feedback before the full launch (~one month).
 > 4. **Aramco:** re-checked 2026-10-12 with WebFetch, unchanged (still the 2025–2026 cycle, registration closed). `curl` to aramco.com times out even from the laptop. Watch for the 2026–2027 cycle; the owner may spot-check the numbers in a browser.
 > 5. **RAG learning path (decision 045, `docs/specs/search.md`):** step 1 done 2026-10-12, keyword search at `/search` and `/api/search`, linked under the homepage search and on the 404 page (decision 046). **KGSP** now has its own page and «يفتح قريبًا» (decision 046): watch the Prospective Students page for Cohort 19 dates, and review its 8 facts (`owner_reviewed`). **Also 2026-10-12 (decision 047):** test pages for SAT, TOEFL, القدرات/التحصيلي; 3 more scholarship FAQ answers; Aramco re-checked. **Filters fixed (decision 048); logos + flags on university pages (decision 049): 147/290 logos done, next the other 143 from the universities' own sites (Haiku agents, batches, reviewed on a contact sheet).** **إمداد wave 1 done (2026-10-12): 35 US universities researched (65 detail files).** Next: waves 2–3, the other 70 English-speaking universities (UK 29, Australia 13, Canada 8, Singapore 2), same prompt and save checks. **US applications (decision 050):** guide at `/resources/us-applications`, fee + waiver on 50 US university pages. **Cleanup iteration 1 (decision 051).** **Known small issue (decision 052):** on the owner's phone, Back to a list can still move slightly before settling. Low priority; to look at, note the phone, browser and how Back was done (swipe, button, link). **Owner to-do:** copy القدرات/التحصيلي details (duration, scale, fee, attempts) from etec.gov.sa in a browser, and the Saudi TOEFL price from the ETS fee page. Next: step 2 (chunks with `last_checked`/`owner_reviewed`), then search by meaning (embeddings, ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
@@ -78,7 +78,8 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [ ] Owner: Render → wadih → Settings → Auto-Deploy → "After CI Checks Pass" (after the first CI run is green)
 - [x] `.env` permission lock (`.claude/settings.json`)
 - [x] `docs/CLAUDE_WORKFLOW_GUIDE.md`, `LEARNING_LOG.md`, `docs/architecture.md`; CLAUDE.md trimmed
-- [ ] Later: stale-facts test (fail when `last_checked` > 90 days), weekly broken-link check, pin the server's Python version
+- [x] Stale-facts report `scripts/stale_facts.py` (decision 053; a report, not a failing test)
+- [ ] Later: weekly broken-link check, pin the server's Python version
 
 ## Stage 1c: Wide editorial redesign (decisions 022–023)
 - [x] Light-first theme, two-state toggle

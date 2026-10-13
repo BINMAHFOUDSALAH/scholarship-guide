@@ -486,3 +486,14 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** 267 pytest tests (two new). In the browser: the double removal that failed before, removing the middle filter (the others stay), track + its field, a click on the label (nothing happens), the ✕ size (36 × 36), the screen-reader label, and phone width (no sideways scroll).
 
 **Understood?** Not yet checked.
+
+## 23. Stale facts: a report, not a test (2026-10-13)
+**Built / why:** `scripts/stale_facts.py` lists every checked fact (132) by the date we last read its source, oldest first (decision 053). A guide is only trustworthy while its facts are fresh.
+
+**Key concepts:**
+- **Tests must not depend on the clock.** A test that fails "when a fact is 91 days old" goes red on its own one morning. Here CI gates deploys, so it would also block an urgent fix. Rules that change with time belong in a report or a scheduled job.
+- **Guard the report itself.** The data names its check date four ways (`last_checked`, `read_on`, `checked`, `retrieved`). A test counts every such field and fails if the script reads fewer, so a new data file can't be missed. Checked by deleting one line from the script: the test failed (131 ≠ 132).
+
+**Tested:** 2 new tests (346 in all). Ran the script as of today (0 stale) and as of launch day with `--days 45` (all 132 listed).
+
+**Understood?** Not yet checked.
