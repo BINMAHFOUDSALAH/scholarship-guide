@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "أدنى مستوى (Band A): 6.0 مع 5.5 على الأقل في كل مهارة. Band B وC أعلى، وكل دورة تحدد مستواها.",
       "source_url": "https://warwick.ac.uk/study/undergraduate/applying/english-language-requirements/"
     },

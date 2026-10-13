@@ -11,12 +11,13 @@
   "english": {
     "ielts": {
       "min": 6.5,
-      "note_ar": "6.5 فأكثر، وكل قسم 6.0 فأكثر.",
+      "each_min": 6.0,
+      "note_ar": "6.5 فأكثر، وكل مهارة 6.0 فأكثر.",
       "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
     },
     "toefl_ibt": {
       "min": 4.5,
-      "note_ar": "4.5 من 21 يناير 2026 (كل قسم 4 فأكثر)، أو 80 قبل ذلك.",
+      "note_ar": "4.5 من 21 يناير 2026 (كل مهارة 4 فأكثر)، أو 80 قبل ذلك.",
       "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
     },
     "duolingo": {

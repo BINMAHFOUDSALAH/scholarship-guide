@@ -11,17 +11,20 @@
   "english": {
     "ielts": {
       "min": null,
-      "note_ar": "IELTS مقبول. صفحة Yale تذكر أن أقوى المتقدمين عادةً يحصلون على 7 أو أكثر، وهذا ليس حدًا أدنى منشورًا.",
+      "recommended": 7,
+      "note_ar": "تقول Yale إن أقوى المتقدمين يحصلون على 7 أو أكثر، ولا تنشر حدًا أدنى.",
       "source_url": "https://admissions.yale.edu/standardized-testing"
     },
     "toefl_ibt": {
       "min": null,
-      "note_ar": "أقوى المتقدمين عادةً يحصلون على 5 أو أكثر على المقياس 1–6 للاختبارات بعد 21 يناير 2026، أو 100 على الأقل على المقياس 0–120 للاختبارات قبل ذلك. ليس حدًا أدنى منشورًا.",
+      "recommended": 5,
+      "note_ar": "أقوى المتقدمين يحصلون على 5 أو أكثر على المقياس الجديد، أو 100 على الأقل على المقياس القديم.",
       "source_url": "https://admissions.yale.edu/standardized-testing"
     },
     "duolingo": {
       "min": null,
-      "note_ar": "أقوى المتقدمين عادةً يحصلون على 120 أو أكثر في Duolingo English Test. ليس حدًا أدنى منشورًا.",
+      "recommended": 120,
+      "note_ar": "أقوى المتقدمين يحصلون عادةً على 120 أو أكثر.",
       "source_url": "https://admissions.yale.edu/standardized-testing"
     },
     "note_ar": "تشترط Yale اختبار لغة إنجليزية من غير الناطقين الذين لم يدرسوا سنتين على الأقل في مدرسة تُدرَّس بالإنجليزية. الاختبار لا يغني عن SAT أو ACT. تقبل TOEFL وIELTS وCambridge وDuolingo وInitialView، ولا تنشر حدًا أدنى رسميًا."

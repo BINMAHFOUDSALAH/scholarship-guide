@@ -16,7 +16,7 @@
     },
     "toefl_ibt": {
       "min": 4.0,
-      "note_ar": "4.0 على المقياس الجديد بلا قسم أقل من 4.0، أو 79 على القديم.",
+      "note_ar": "4.0 على المقياس الجديد بلا مهارة أقل من 4.0، أو 79 على القديم.",
       "source_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students"
     },
     "duolingo": {
@@ -24,7 +24,7 @@
       "note_ar": "110 للقبول المباشر.",
       "source_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students"
     },
-    "note_ar": "يُقبل أيضًا PTE ‏53 وSAT قراءة وكتابة 550."
+    "note_ar": "يُقبل أيضًا PTE ‏53 وSAT قراءة وكتابة 550. من يقل قليلًا عن الحد قد يُقبل عبر برنامج Bridge."
   },
   "sat_act": {
     "policy": "optional",
@@ -55,7 +55,7 @@
     "international_percent": null,
     "source_url": "https://ira.temple.edu/sites/ira/files/media/document/CDS%202025-26_Temple%20University_0.pdf"
   },
-  "language_note_ar": "من يقل قليلًا عن الحد قد يُقبل عبر برنامج Bridge.",
+  "language_note_ar": null,
   "not_found_ar": [
     "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
   ],

@@ -15,6 +15,7 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 | **Permission rule** | Allows or blocks specific actions for Claude (in `.claude/settings.json`). Wadih blocks reading `.env`. |
 | **MCP** | Model Context Protocol: a standard way to plug external tools and data (databases, Notion, Figma…) into Claude. |
 | **Slash command** | A shortcut you type, like `/clear` or `/code-review`. |
+| **`/goal`** | Tells Claude to keep working until a condition you state is true; a separate model checks it after each turn. For one session only. |
 | **Checkpoint / rewind** | Claude saves your files before each change; you can roll back. Not a replacement for git. |
 | **CI (GitHub Actions)** | A robot on GitHub that runs the tests on every push. Wadih only goes live when it passes. |
 
@@ -30,11 +31,12 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 | Talking to GitHub, Render, etc. | Command-line tools (`gh`) | MCP when a CLI already works |
 | Connecting a database or other system to Claude, or giving Wadih's AI its data later | **MCP** | Adding servers "just in case" |
 | Switching to an unrelated task | **`/clear`** (fresh context) | One endless session mixing everything |
+| A long task with a checkable end ("until all tests pass and…") | **`/goal`** | A goal file in the repo: the plan lives in `docs/roadmap.md` |
 | An attempt went wrong | **Rewind** (Esc Esc or `/rewind`), or "undo that" | Correcting the same mistake 3+ times; instead, `/clear` and write a better prompt |
 
 ## Best practices (Anthropic + experienced developers)
 
-1. **Give Claude a way to check its work.** Tests, a screenshot, a command that passes or fails. Wadih has about 400 tests, and every task ends with `pytest`.
+1. **Give Claude a way to check its work.** Tests, a screenshot, a command that passes or fails. Wadih has about 490 tests, and every task ends with `pytest`.
 2. **Explore → Plan → Code → Commit.** Skip planning only for tiny, clear changes.
 3. **Be specific.** Name the file, the situation, and what "done" looks like.
 4. **Ask for evidence, not "it works."** Test output, a screenshot, the command and its result.
@@ -57,7 +59,7 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 
 ## What Wadih uses today vs later
 
-- **Today:** CLAUDE.md, plan mode, tests, CI (GitHub Actions + Render deploy-after-checks), the `.env` permission rule, checkpoints, three subagents (`source-researcher`, `fact-checker`, `reviewer`), and one skill, `research-wave` (university requirements, done three times before it was written down).
+- **Today:** CLAUDE.md, one path-scoped rule (`.claude/rules/design.md`), plan mode, tests, CI (GitHub Actions + Render deploy-after-checks), the `.env` permission rule, every subagent forced onto Haiku 5.5 (settings), checkpoints, three subagents (`source-researcher`, `fact-checker`, `reviewer`), one skill, `research-wave`, and two checking scripts (`scripts/stale_facts.py` for dates, `scripts/check_sources.py` for values). No MCP servers and no hooks: nothing needs them yet.
 - **Later:** more skills once a task repeats (news items, a new program), maybe a Stop hook that runs tests, a weekly link-check workflow, and building an **MCP server** for Wadih's verified data during the AI stages (a strong FDE portfolio piece).
 - Which project files exist and when to add them: [project-files-guide.md](project-files-guide.md).
 
@@ -71,6 +73,8 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 - Permissions: https://code.claude.com/docs/en/permissions
 - Plan mode and permission modes: https://code.claude.com/docs/en/permission-modes
 - MCP: https://code.claude.com/docs/en/mcp
+- The `.claude` directory (what goes where): https://code.claude.com/docs/en/claude-directory
+- `/goal`: https://code.claude.com/docs/en/goal
 - Checkpointing: https://code.claude.com/docs/en/checkpointing
 - Render, *Deploys* (Auto-Deploy "After CI Checks Pass"): https://render.com/docs/deploys and https://render.com/changelog/skip-auto-deploying-if-ci-checks-fail
 - GitHub Actions documentation: https://docs.github.com/en/actions

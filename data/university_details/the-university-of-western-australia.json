@@ -11,12 +11,14 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "الحد العام: 6.5 ولا تقل أي مهارة عن 6.0. بعض الدورات تطلب 7.0.",
       "source_url": "https://www.uwa.edu.au/study/how-to-apply/pathways-and-eligibility/english-language-requirements"
     },
     "toefl_ibt": {
-      "min": 82,
-      "note_ar": "82، مع 20 للتحدث والكتابة و17 للاستماع والقراءة.",
+      "min": 4.5,
+      "note_ar": "على المقياس الجديد (1–6): 4.5 مع 4.5 في الكتابة و4 في بقية المهارات. وعلى القديم (0–120): ‏82. لا تُقبل نسخة Home Edition.",
       "source_url": "https://www.uwa.edu.au/study/how-to-apply/pathways-and-eligibility/english-language-requirements"
     },
     "duolingo": {

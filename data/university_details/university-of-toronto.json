@@ -11,7 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.5,
-      "note_ar": "IELTS Academic بمجموع 6.5 مع 6.0 على الأقل في كل قسم، وتحقق الدرجات في اختبار واحد لا يُقبل فيه إعادة قسم واحد. IELTS Indicator وOne Skill Retake غير مقبولين.",
+      "each_min": 6.0,
+      "note_ar": "IELTS Academic بمجموع 6.5 مع 6.0 على الأقل في كل مهارة، وتحقق الدرجات في اختبار واحد لا يُقبل فيه إعادة مهارة واحدة. IELTS Indicator وOne Skill Retake غير مقبولين.",
       "source_url": "https://future.utoronto.ca/english-language-requirements"
     },
     "toefl_ibt": {
@@ -19,12 +20,16 @@
       "note_ar": "المقياس 1–6 للاختبارات بعد 21 يناير 2026: 4.5 إجمالًا، مع 4.5 في الكتابة و4.0 في التحدث. للاختبارات قبل 21 يناير 2026 كان المقياس 0–120: 89 إجمالًا مع 22 على الأقل في التحدث والكتابة. رمز المؤسسة 0982-00، ولا تُقبل MyBest.",
       "source_url": "https://future.utoronto.ca/english-language-requirements"
     },
-    "duolingo": null,
-    "note_ar": "صفحة اللغة لا تذكر السعودية ضمن الدول التي قد يُعفى طلابها من اختبار اللغة بعد دراسة سنوات كافية بالإنجليزية، فلا نفترض الإعفاء. Duolingo غير مذكور في الصفحة."
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120 مع 120 في مهارة Production، للاختبارات من 1 يوليو 2024.",
+      "source_url": "https://future.utoronto.ca/english-language-requirements"
+    },
+    "note_ar": "صفحة اللغة لا تذكر السعودية ضمن الدول التي قد يُعفى طلابها من اختبار اللغة بعد دراسة سنوات كافية بالإنجليزية، فلا نفترض الإعفاء."
   },
   "sat_act": {
     "policy": "optional",
-    "note_ar": "للطلاب من المدارس الدولية، جامعة تورنتو تقبل SAT أو ACT اختياريًا، ويُنظر إليها إن أُرسلت، ولا يُعاقب من لم يقدّمها. كلية الهندسة (Engineering) مختلفة: تطلب الإفصاح عن كل النتائج، وتتوقع درجات قياسية، وتعارض صفحتها نفسها بين «اختياري» و«مطلوب». إذا كنت تقدّم للهندسة، تحقق منها مباشرة. تفاصيل من مقتطف بحث، والصفحة لا تحدد الدورة.",
+    "note_ar": "اختياري لطلاب المدارس الدولية: يُنظر فيه إن أُرسل. ومتقدمو كلية الهندسة (Engineering) يجب أن يفصحوا عن كل نتائجهم.",
     "source_url": "https://future.utoronto.ca/apply/requirements/international-high-school-secondary/usa/us-admissions/"
   },
   "dates": [
@@ -55,11 +60,17 @@
     }
   ],
   "acceptance_rate": null,
-  "language_note_ar": "السعودية في جدول تورنتو للمدارس الدولية مدرجة بالعبارة «Minimum Admission Requirements: General Secondary Education Certificate»، أي أن التوجيهية هي الحد الأدنى للقبول حسب الجدول، دون ذكر درجة أو امتحانات إضافية. الجدول لا يحدد شروط البرامج، فتحقق من صفحة برنامجك، لأن القبول يتطلب مؤهلات مسبقة وقد يكون التنافس عاليًا. المصدر: https://future.utoronto.ca/international-high-school-requirements-country?page=5",
+  "language_note_ar": null,
   "not_found_ar": [
     "نسبة القبول العامة أو للطلاب الدوليين لدورة 2025 غير منشورة في ما وجدناه",
     "شروط البرامج التفصيلية (مثل مواد الإعداد والدرجات المطلوبة) غير مفصلة هنا؛ انظر صفحة البرنامج",
     "اختبار CAEL وELDA/COPE ليسا مذكورين في الصفحات التي فتحناها، وإن كانا مقبولين فيجب التحقق",
     "صفحة الهندسة تعارض صفحات أخرى بشأن SAT وACT، ولم نحسم ذلك؛ اتصل بمكتب الهندسة إن كنت تقدّم لها"
-  ]
+  ],
+  "saudi_certificate": {
+    "direct_entry": true,
+    "note_ar": "يذكر الجدول الحد الأدنى للقبول فقط؛ لكل برنامج مواد مطلوبة، والقبول تنافسي.",
+    "quote": "Saudi Arabia Minimum Admission Requirements: General Secondary Education Certificate",
+    "source_url": "https://future.utoronto.ca/international-high-school-requirements-country?page=5"
+  }
 }

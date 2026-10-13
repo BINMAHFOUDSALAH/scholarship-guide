@@ -11,40 +11,25 @@
   "english": {
     "ielts": {
       "min": 7.0,
-      "note_ar": "صفحة UM تعرض نطاق 7.0 مع أقسام 6.5 فأكثر لكل قسم. لا تحدد الصفحة في المقتطف إن كانت الدرجة الكلية. تُقبل IELTS Indicator.",
+      "each_min": 6.5,
+      "note_ar": "7.0 مع 6.5 فأكثر في كل مهارة (تسميه الجامعة «نطاقًا مقبولًا»). يُقبل IELTS Indicator.",
       "source_url": "https://admissions.umich.edu/apply/international-applicants/exams-visas"
     },
     "toefl_ibt": {
       "min": 5,
-      "note_ar": "على المقياس الجديد المعمول به من 21 يناير 2026 (1–6): نطاق 5–6 مع أقسام 5 فأكثر، وتصفه الصفحة بأنه قريب من CEFR C1. على المقياس القديم 0–120: نطاق 100 مع أقسام 23 فأكثر للاستماع والقراءة و21 فأكثر للتحدث والكتابة. تُقبل نسخة TOEFL Home Edition.",
+      "note_ar": "على المقياس الجديد المعمول به من 21 يناير 2026 (1–6): نطاق 5–6 مع 5 فأكثر في كل مهارة، وتصفه الصفحة بأنه قريب من CEFR C1. على المقياس القديم 0–120: نطاق 100 مع 23 فأكثر في الاستماع والقراءة و21 فأكثر للتحدث والكتابة. تُقبل نسخة TOEFL Home Edition.",
       "source_url": "https://admissions.umich.edu/apply/international-applicants/exams-visas"
     },
-    "duolingo": null,
-    "note_ar": "جامعة Ann Arbor لا تقبل Duolingo English Test للقبول الجامعي. لا تُستعمل MyBest في TOEFL، ويجب إرسال كل المحاولات. عند إعادة الاختبار تُعاد كل الأقسام. مدرسة الموسيقى لها حدودها الخاصة. هناك استثناء من امتحان الإنجليزية مرتبط بدرجات SAT أو ACT وبسنوات دراسة في دول محددة، وتفاصيله في الصفحة."
-  },
-  "sat_act": {
-    "policy": "optional",
-    "note_ar": "UM test-optional لدورة 2027: لا عقوبة إن لم ترسل SAT أو ACT، وتُنظر الدرجات إن أُرسلت. من يختار الإرسال يسجلها ذاتيًا قبل 1 نوفمبر (Early Decision وEarly Action) أو قبل 1 فبراير (Regular Decision). وإن قُبل الطالب وسجّل يُطلب منه إرسال الدرجات الرسمية.",
-    "source_url": "https://admissions.umich.edu/apply/first-year-applicants/requirements-deadlines"
-  },
-  "dates": [
-    {
-      "event_ar": "آخر موعد للتقديم",
-      "round_ar": "Early Decision / Early Action",
-      "cycle_ar": "خريف 2027",
-      "date": "2026-11-01",
-      "year_stated": true,
-      "source_url": "https://admissions.umich.edu/apply/first-year-applicants/requirements-deadlines"
+    "duolingo": {
+      "accepted": false,
+      "min": null,
+      "note_ar": "لا يرد في قائمة الاختبارات التي تقبلها الجامعة للقبول الجامعي.",
+      "source_url": "https://admissions.umich.edu/apply/international-applicants/exams-visas"
     },
-    {
-      "event_ar": "آخر موعد للتقديم",
-      "round_ar": "Regular Decision",
-      "cycle_ar": "خريف 2027",
-      "date": "2027-02-01",
-      "year_stated": true,
-      "source_url": "https://admissions.umich.edu/apply/first-year-applicants/requirements-deadlines"
-    }
-  ],
+    "note_ar": "لا تُستعمل MyBest في TOEFL، ويجب إرسال كل المحاولات. عند إعادة الاختبار تُعاد كل المهارات. مدرسة الموسيقى لها حدودها الخاصة. هناك استثناء من امتحان الإنجليزية مرتبط بدرجات SAT أو ACT وبسنوات دراسة في دول محددة، وتفاصيله في الصفحة."
+  },
+  "sat_act": null,
+  "dates": [],
   "acceptance_rate": {
     "percent": 16.4,
     "scope_ar": "القبول العام لدفعة خريف 2025 (CDS 2025–2026 لحرم Ann Arbor، القسم C1: قُبل 17,915 من 109,112)",
@@ -53,10 +38,9 @@
   },
   "language_note_ar": null,
   "not_found_ar": [
-    "صفحات admissions.umich.edu رفضت الوصول المباشر (خطأ 403)، فالقيم الخاصة بالاختبارات والمواعيد والمنصة مأخوذة من مقتطفات بحث لصفحات UM الرسمية. يجب التحقق منها قبل النشر.",
+    "مواعيد التقديم وسياسة SAT/ACT: صفحات الجامعة ترفض القراءة الآلية، فلم ننشرها حتى نتحقق منها في موقع الجامعة.",
     "لم نتحقق من قبول Coalition Application.",
-    "نسبة قبول الدوليين غير منشورة كنسبة، وقيم جدول الإقامة في CDS لم تظهر في الملف المقروء.",
-    "موعد 1 فبراير للتقديم العادي مأخوذ من مقتطف الصفحة، ويطابق موعد 1 فبراير لاستلام درجات SAT/ACT في CDS 2025–2026 (دورة خريف 2025)، ولم نجد تأكيدًا مباشرًا له لدورة 2027."
+    "نسبة قبول الدوليين غير منشورة كنسبة، وقيم جدول الإقامة في CDS لم تظهر في الملف المقروء."
   ],
   "application_fee": {
     "fee_usd": 75,

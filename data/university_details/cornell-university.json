@@ -10,18 +10,21 @@
   },
   "english": {
     "ielts": {
-      "min": 7.5,
-      "note_ar": "أدنى درجة تنافسية 7.5 حسب الصفحة (minimum competitive). الصفحة تقول إن النتائج الرسمية لازمة للمقبولين.",
+      "min": null,
+      "recommended": 7.5,
+      "note_ar": "تسميها الجامعة «أدنى درجة تنافسية» (minimum competitive score)، وليست حدًا تلقائيًا للرفض.",
       "source_url": "https://admissions.cornell.edu/resources/submit-english-language-proficiency"
     },
     "toefl_ibt": {
       "min": 5.0,
-      "note_ar": "للاختبارات من يناير 2026 فصاعدًا: الحد الأدنى 5.0 والموصى به 5.5، وهو مقياس 1–6 حسب الرقم (الصفحة لا تذكر المقياس صراحة). للاختبارات قبل يناير 2026: 100 (مقياس 0–120).",
+      "recommended": 5.5,
+      "note_ar": "للاختبارات من يناير 2026: الحد الأدنى 5.0 والموصى به 5.5. وقبل ذلك: 100 على المقياس القديم.",
       "source_url": "https://admissions.cornell.edu/resources/submit-english-language-proficiency"
     },
     "duolingo": {
-      "min": 130,
-      "note_ar": "أدنى درجة تنافسية 130 حسب الصفحة (minimum competitive).",
+      "min": null,
+      "recommended": 130,
+      "note_ar": "تسميها الجامعة «أدنى درجة تنافسية».",
       "source_url": "https://admissions.cornell.edu/resources/submit-english-language-proficiency"
     },
     "note_ar": "إثبات الإنجليزية مطلوب من غير الأمريكيين وغير المقيمين، ومن لم تكن الإنجليزية لغته الأم أو لغة تدريسه الأساسية لأربع سنوات. الأرقام السابقة هي 'أدنى درجة تنافسية' للمراجعة، وليست حدًا تلقائيًا للرفض حسب الصفحة. الصفحة تذكر أيضًا Cambridge C1 Advanced أو C2 Proficiency بدرجة تنافسية 191."

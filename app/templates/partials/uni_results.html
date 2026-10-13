@@ -112,6 +112,7 @@
     <p class="notice">هذه الجامعة في قوائم الابتعاث، لكنها خارج الفلاتر التي اخترتها. <a href="{{ url_for('universities_page') }}?q={{ r.q | urlencode }}">اعرضها دون الفلاتر</a></p>
     {% endif %}
     {% if s.universities %}
+    {% set uni_items %}
     <ul class="uni-list">
       {% for u in s.universities %}
       <li class="uni-item">
@@ -121,6 +122,25 @@
       </li>
       {% endfor %}
     </ul>
+    {% endset %}
+    {% if s.pick_fields %}
+    {# A track ranked per field (decision 058): choose the field first; the long alphabetical list is folded. #}
+    <p class="result-note">{{ tracks[s.track].name_ar }} يرتّب الجامعات داخل كل مجال، فابدأ باختيار المجال لترى ترتيبها فيه:</p>
+    <ul class="field-picker">
+      {% for f in s.pick_fields %}
+      <li><a class="field-pick" href="{{ url_for('universities_page') }}?track={{ s.track }}&amp;field={{ f.id }}" data-pick-field="{{ f.id }}">
+        <span class="field-pick-name">{{ f.name_ar }}</span>
+        <span class="field-pick-count">{{ f.count | count_ar("universities") }}</span>
+      </a></li>
+      {% endfor %}
+    </ul>
+    <details class="all-unis">
+      <summary>أو اعرض كل جامعات {{ tracks[s.track].short_ar }} مرتبة أبجديًا ({{ s.universities | length }})</summary>
+      {{ uni_items }}
+    </details>
+    {% else %}
+    {{ uni_items }}
+    {% endif %}
     {% else %}
     <div class="result-empty">
       <p>لا توجد جامعة بهذا الاسم في قوائم {{ explorer.source.academic_year | replace("-", "–") }}{% if view.applied | length > 1 %} مع الفلاتر الحالية{% endif %}.</p>

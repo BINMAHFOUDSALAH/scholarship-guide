@@ -11,12 +11,14 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "لأغلب البرامج: 6.5 مع 6.0 في كل مهارة. بعض البرامج أعلى.",
       "source_url": "https://study.uq.edu.au/admissions/english-language-requirements"
     },
     "toefl_ibt": {
       "min": 87,
-      "note_ar": "الحد العام: 87، مع 19 للاستماع والقراءة والتحدث و21 للكتابة. UQ تقبل TOEFL بمقياس الأقسام 1–30 فقط.",
+      "note_ar": "الحد العام: 87، مع 19 للاستماع والقراءة والتحدث و21 للكتابة. UQ تقبل TOEFL بمقياس المهارات 1–30 فقط.",
       "source_url": "https://policies.uq.edu.au/download.php?associated=1&id=172"
     },
     "duolingo": null,

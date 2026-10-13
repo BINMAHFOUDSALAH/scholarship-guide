@@ -1,6 +1,6 @@
 # Project Files Guide
 
-A reference for the "special" files a project like this can have: what each one does, whether we use it yet, and when it's worth adding.
+A reference for the "special" files a project like this can have: what each one does, whether we use it yet, and when it's worth adding. Checked against Anthropic's [.claude directory reference](https://code.claude.com/docs/en/claude-directory) on 2026-10-13 (decision 059).
 
 **Golden rule:** every file should have **one job**. Two files doing the same job means one of them will quietly go out of date and mislead you (or the next AI session).
 
@@ -17,9 +17,14 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `.claude/skills/<name>/SKILL.md` | A reusable recipe Claude follows for a **repeated** task. You can trigger it by name. | ✅ | `research-wave` (university requirements, decision 054). Write one only after doing the task once or twice by hand. |
 | `.claude/agents/<name>.md` | A specialized Claude helper (subagent) with its own instructions and tools, e.g. a "content checker" that reviews pages for missing sources. | ✅ | `source-researcher`, `fact-checker`, `reviewer` (decision 037), all read-only, on Haiku 5.5. Add one only for a job we repeat. Not the same as the AI agents in Stage 8, which are website features for students. |
 | `.claude/rules/<topic>.md` | Instructions that load only when Claude works on matching files (`paths:` in the frontmatter), so CLAUDE.md stays short. | ✅ | `design.md` (decision 035's design rules, loads for `app/templates/` and `app/static/`). Add one when a CLAUDE.md rule only matters for part of the code. |
-| `.claude/settings.json` | Project settings for Claude Code: allowed/blocked actions (permissions) and hooks (actions that run automatically). Shared via git. | ✅ | Today it blocks Claude from reading `.env` and sets subagents to Haiku 5.5. Add to it when you keep approving the same safe command, or want something automated (e.g. "run tests after each change"). |
+| `.claude/settings.json` | Project settings for Claude Code: allowed/blocked actions (permissions) and hooks (actions that run automatically). Shared via git. Unlike CLAUDE.md (advice), these are enforced. | ✅ | Today it blocks Claude from reading `.env` and forces every subagent onto Haiku 5.5 (`CLAUDE_CODE_SUBAGENT_MODEL` + `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`; without FORCE the built-in Explore and Plan agents ignore it). Add to it when you keep approving the same safe command, or want something automated. No hooks yet: a hook must work in your Windows setup too. |
 | `.claude/settings.local.json` | The same, but personal to your machine. Not committed (already in `.gitignore`). | as needed | Personal preferences you don't want in the repo. |
 | `.claude/launch.json` | Tells the Claude desktop app how to start the dev server in its browser pane. | ✅ | Already set up. Update it if the start command changes. |
+| `.claude/commands/<name>.md` | Older form of a `/name` shortcut. | ❌ | Skills replaced it (same `/name`, plus supporting files). Use a skill. |
+| `.claude/workflows/`, `.claude/agent-memory/`, `.claude/output-styles/` | Saved multi-agent workflow scripts; memory for subagents that set `memory:`; shared response styles. | ❌ | Created only when you use those features. None needed now. |
+| `.mcp.json` (repo root) | MCP servers shared with everyone who opens the project (databases, APIs, browsers). | ❌ for now | When the project needs an external tool that has no CLI, or in the AI stages when we build an MCP server for واضح's verified data. Personal servers go in `~/.claude.json`, not here. |
+| `/goal` | Not a file: a command that keeps Claude working until a condition you state is true (e.g. `/goal all tests pass and the Oxford file has no draft flag`). | as needed | Long tasks with a checkable end. Lasts one session; the plan itself stays in `docs/roadmap.md`. |
+| `CLAUDE.local.md` | Personal notes Claude reads only on your machine. | ❌ | Only for private preferences; project rules belong in `CLAUDE.md`. |
 | Claude's memory | Notes Claude keeps about you and the project, stored on **your computer**, outside the repo. | automatic | It helps across sessions, but it isn't in git. Anything important for the project belongs in `CLAUDE.md` or `docs/`. |
 
 ## Planning and documentation
@@ -33,8 +38,8 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `goal.md`, `PRD.md`, `TODO.md` | Common in other projects: the goal, product requirements, a task list. | ❌ | Same jobs as CLAUDE.md's "Project" section (goal), `docs/specs/` (requirements) and `docs/roadmap.md` (tasks). A second copy would drift. |
 | `docs/project-files-guide.md` | This file. | ✅ | Look things up here. |
 | `docs/architecture.md` | How the code fits together (moved out of CLAUDE.md to keep it short). | ✅ | Update when the structure changes. |
-| `docs/CLAUDE_WORKFLOW_GUIDE.md` | How to work with Claude Code: subagents, skills, hooks, MCP, best practices, example prompts. | ✅ | Read when unsure which Claude feature to use. |
-| `LEARNING_LOG.md` | What we built, the concepts, decisions, tests, limits, interview pitches, and who did what. | ✅ | Updated after every meaningful feature. |
+| `docs/claude-workflow-guide.md` | How to work with Claude Code: subagents, skills, hooks, MCP, `/goal`, best practices, example prompts. | ✅ | Read when unsure which Claude feature to use. |
+| `LEARNING_LOG.md` | A diary of what was built and learned. | ❌ removed (decision 059) | The owner didn't read it. The key concept is in each task's report; the why is in `docs/decisions.md`. The old file is in git history. |
 | `README.md` | The front page of the repo on GitHub: what the project is, how to run it, the live link. | ✅ | Update it when how to run the project changes, and at launch (add the live URL + screenshots). |
 | `CHANGELOG.md` | A list of what changed in each release, written for users. | ❌ for now | Useful once the site is live and you ship updates people care about. |
 | `CONTRIBUTING.md` | How other people can contribute (style rules, how to submit changes). | ❌ | Only if others start contributing. |

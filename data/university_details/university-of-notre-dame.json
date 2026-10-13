@@ -38,12 +38,12 @@
   "english": {
     "ielts": {
       "min": 7.5,
-      "note_ar": "7.5 (الجامعة «توصي بشدة» بهذه الدرجات).",
+      "note_ar": "7.5 على الأقل. تعرضها الجامعة في جدول بعنوان «الدرجة المطلوبة» وتقول إنها «توصي بشدة» بهذه الدرجات.",
       "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
     },
     "toefl_ibt": {
       "min": 5.5,
-      "note_ar": "المقياس الجديد: 5.5 ولا يقل أي قسم عن 5.0. القديم: 100 مع 25 في التحدث.",
+      "note_ar": "المقياس الجديد: 5.5 ولا تقل أي مهارة عن 5.0. القديم: 100 مع 25 في التحدث.",
       "source_url": "https://admissions.nd.edu/apply/resources-for/international-applicants/application-information/"
     },
     "duolingo": {

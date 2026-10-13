@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "varies": true,
       "note_ar": "الجامعة تقول إن الشرط «عادةً يعادل IELTS 6.0–7.0» ويختلف حسب القسم (و5.5 لدورات التأسيس). 6.0 هو أدنى رقم في هذا النطاق، والحد الفعلي في صفحة كل برنامج.",
       "source_url": "https://www.manchester.ac.uk/study/international/admissions/undergraduate-application-process/undergraduate-entry-requirements/"
     },

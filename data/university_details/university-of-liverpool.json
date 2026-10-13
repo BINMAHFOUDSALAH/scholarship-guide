@@ -11,11 +11,17 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "أغلب البكالوريوس يطلب أحد هذه: 6.0 مع 5.5، أو 6.5 مع 5.5، أو 7.0 مع 6.5. الطب وطب الأسنان والطب البيطري أعلى. تحقق من دورتك.",
       "source_url": "https://www.liverpool.ac.uk/international/applying/entry-requirements/english-language-requirements/international-english-language-tests/"
     },
     "toefl_ibt": null,
-    "duolingo": null,
+    "duolingo": {
+      "min": null,
+      "note_ar": "تقبله الجامعة بديلًا عن IELTS، والدرجة المطلوبة في صفحة كل دورة.",
+      "source_url": "https://www.liverpool.ac.uk/international/applying/entry-requirements/english-language-requirements/international-english-language-tests/"
+    },
     "note_ar": "تقبل الجامعة Duolingo وTOEFL iBT، لكن الصفحة لا تذكر درجاتهما."
   },
   "sat_act": null,

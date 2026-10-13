@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "varies": true,
       "note_ar": "أدنى مستوى (Profile F): 6.0 مع 6.5 في الاستماع أو التحدث، ولا تقل أي مهارة عن 6.0. أعلى مستوى (Profile A): 7.5 مع 7.0 في كل مهارة. مستوى كل دورة في صفحتها.",
       "source_url": "https://www.bristol.ac.uk/study/language-requirements/profile-f/"
     },

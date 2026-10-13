@@ -11,15 +11,22 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "حسب الكلية: 6.5 (ولا تقل أي مهارة عن 6.0) للآداب والهندسة والطب والصحة والعلوم، و7.0 للأعمال والقانون. IELTS Academic فقط.",
       "source_url": "https://www.unsw.edu.au/study/how-to-apply/english-language-requirements"
     },
     "toefl_ibt": {
       "min": 90,
-      "note_ar": "90 مع 23 للكتابة و22 لباقي المهارات (الآداب والهندسة والطب والعلوم). الأعمال والقانون: 94. لا يُقبل MyBest.",
+      "note_ar": "تقول الجامعة إن صيغة TOEFL الجديدة (مقياس 1–6) قيد المراجعة و«غير مقبولة حتى إشعار آخر». الرقم 90 للصيغة القديمة (مقياس 0–120) مع 23 في الكتابة و22 في بقية المهارات، للآداب والهندسة والطب والعلوم؛ والأعمال والقانون 94. لا يُقبل MyBest.",
       "source_url": "https://www.unsw.edu.au/study/how-to-apply/english-language-requirements"
     },
-    "duolingo": null,
+    "duolingo": {
+      "accepted": false,
+      "min": null,
+      "note_ar": "لا يرد في قائمة الاختبارات التي تقبلها الجامعة.",
+      "source_url": "https://www.unsw.edu.au/study/how-to-apply/english-language-requirements"
+    },
     "note_ar": null
   },
   "sat_act": null,

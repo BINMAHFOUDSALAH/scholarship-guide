@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
       "note_ar": "للقبول المباشر: 6.5 مع 6.0 في كل مهارة (IELTS Academic أو for UKVI أو Online).",
       "source_url": "https://www.soas.ac.uk/international/english-language-requirements"
     },

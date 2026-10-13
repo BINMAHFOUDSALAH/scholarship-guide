@@ -24,7 +24,7 @@
       "note_ar": "120 كلي و120 في الكتابة.",
       "source_url": "https://admissions.tc.umn.edu/admissions/international-admission/english-proficiency-information"
     },
-    "note_ar": "يُقبل أيضًا PTE Academic ‏59 وCambridge C1 ‏180."
+    "note_ar": "يُقبل أيضًا PTE Academic ‏59 وCambridge C1 ‏180. من لا يبلغ الحد قد يُقبل مشروطًا مع سنة إنجليزية مكثفة: TOEFL ‏3.5، IELTS ‏5.5، Duolingo ‏95."
   },
   "sat_act": {
     "policy": "optional",
@@ -63,7 +63,7 @@
     "international_percent": 76.4,
     "source_url": "https://idr.umn.edu/sites/idr.umn.edu/files/cds_2025_2026_tc.pdf"
   },
-  "language_note_ar": "من لا يبلغ الحد قد يُقبل مشروطًا مع سنة إنجليزية مكثفة: TOEFL ‏3.5، IELTS ‏5.5، Duolingo ‏95.",
+  "language_note_ar": null,
   "not_found_ar": [
     "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
   ],

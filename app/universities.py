@@ -28,8 +28,55 @@ SAT_POLICY_AR = {
     "optional": "اختياري",
     "not_considered": "لا يُنظر فيه",
     "not_applicable": "لا ينطبق",
-    "unknown": "غير منشور",
+    "unknown": "غير محدد",
 }
+# Shown when a file has no SAT/ACT policy at all: we did not verify it (never "not published").
+SAT_UNVERIFIED_AR = "لم نتحقق منه"
+
+# English tests in the order the university page lists them (decision 058).
+ENGLISH_TESTS = (("ielts", "IELTS"), ("toefl_ibt", "TOEFL iBT"), ("duolingo", "Duolingo"))
+
+
+def score_text(test, value):
+    """How a score reads: IELTS bands and TOEFL's 1–6 scale with one decimal (6.0, 4.5), the rest whole (90, 120)."""
+    if value is None:
+        return None
+    if test == "ielts" or (test == "toefl_ibt" and value <= 6):
+        return f"{value:.1f}"
+    return f"{value:g}"
+
+
+def toefl_scale(value):
+    """TOEFL iBT has two scales (decision 058): 1–6 since 21 January 2026, 0–120 before. The value says which."""
+    return None if value is None else ("1–6" if value <= 6 else "0–120")
+
+
+def english_compact(test, item):
+    """One English test at a glance, for result rows and «باختصار» (decision 058).
+
+    Keeps the distinctions a bare number hides: a hard minimum, a recommended or competitive score,
+    a level that depends on the program, a per-skill minimum, and a test that doesn't count as proof of English.
+    """
+    if not item:
+        return "لم نتحقق منه"
+    if item.get("accepted") is False:
+        return "لا يُقبل لإثبات اللغة"
+    low, rec, each = item.get("min"), item.get("recommended"), item.get("each_min")
+    if low is not None:
+        text = f"من {score_text(test, low)} حسب التخصص" if item.get("varies") else score_text(test, low)
+        if rec is not None:
+            text += f" · الموصى به {score_text(test, rec)}"
+        elif each is not None and not item.get("varies"):
+            text += f" · ولا تقل مهارة عن {score_text(test, each)}"
+        return text
+    if rec is not None:
+        return f"لا حد أدنى معلن · الموصى به {score_text(test, rec)}"
+    return no_score_ar(item)
+
+
+def no_score_ar(item):
+    """No minimum and no recommended score: say whether the university page told us so."""
+    return "لا يوجد حد أدنى منشور" if item.get("note_ar") else "لم نتحقق منه"
 # Application-fee waivers (decision 050): what the university's own page says about waiving its fee.
 WAIVER_AR = {
     "accepts_common_app": "تقبل إعفاء Common App",
@@ -98,7 +145,7 @@ def _load(name, default=None):
 
 
 class Explorer:
-    def __init__(self):
+    def __init__(self, show_drafts=False):
         guide = _load("universities.json")
         self.source = guide["source"]
         names_ar = _load("university_names_ar.json", {})
@@ -121,6 +168,10 @@ class Explorer:
         self.details = {}
         for path in sorted((DATA_DIR / "university_details").glob("*.json")):
             d = json.loads(path.read_text(encoding="utf-8"))
+            # A draft file holds research we couldn't verify from the official page yet (decision 058):
+            # kept for the owner to check, shown only with WADIH_SHOW_DRAFTS=1.
+            if d.get("draft") and not show_drafts:
+                continue
             if d.get("id") in self.universities:
                 self.details[d["id"]] = d
 
@@ -255,7 +306,15 @@ class Explorer:
         elif track in ("emdad", "rnd"):
             rows = [u for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())
                     if keep(u) and any(l["track"] == track for l in u["listings"])]
-            result["sections"].append({"track": track, "field": None, "universities": rows})
+            section = {"track": track, "field": None, "universities": rows}
+            if not (country or language):
+                # The track ranks universities per field, so the useful first step is a field (decision 058):
+                # 223 unranked names were 49 phone screens. The full list stays one tap away.
+                section["pick_fields"] = [
+                    {**f, "count": sum(1 for l in self.listings(track, f["id"]))}
+                    for f in sorted((f for (t, _), f in self.fields.items() if t == track),
+                                    key=lambda f: min(f["list_pages"]))]
+            result["sections"].append(section)
         else:
             rows = [(l, u) for l, u in self.listings("arruaad") if keep(u)]
             result["sections"].append({"track": "arruaad", "field": None, "rows": rows, "note_ar": ARRUAAD_NOTE})
@@ -433,17 +492,31 @@ class Explorer:
         d = self.details.get(uid)
         if not d:
             return {"researched": False}
-        sat = (d.get("sat_act") or {}).get("policy") or "unknown"
-        ielts = (d.get("english") or {}).get("ielts") or {}
-        if ielts.get("min") is not None:
-            ielts_ar = str(ielts["min"])
-        elif ielts.get("note_ar"):
-            ielts_ar = "الجامعة لا تنشر حدًا أدنى"
-        else:
-            ielts_ar = "لم نتحقق منه"
-        return {"researched": True, "sat_ar": SAT_POLICY_AR.get(sat, SAT_POLICY_AR["unknown"]),
-                "ielts_ar": ielts_ar, "next": self.next_deadline(uid, today),
-                "admissions_url": d.get("admissions_url")}
+        sat = (d.get("sat_act") or {}).get("policy")
+        sat_ar = SAT_POLICY_AR.get(sat, SAT_POLICY_AR["unknown"]) if sat else SAT_UNVERIFIED_AR
+        return {"researched": True, "sat_ar": sat_ar,
+                "ielts_ar": english_compact("ielts", (d.get("english") or {}).get("ielts")),
+                "next": self.next_deadline(uid, today), "admissions_url": d.get("admissions_url")}
+
+    def english_rows(self, uid):
+        """The English tests for a university page (decision 058): one row per test the file covers,
+        with the minimum, the recommended score, the per-skill minimum and the TOEFL scale kept apart."""
+        english = (self.details.get(uid) or {}).get("english") or {}
+        rows = []
+        for test, label in ENGLISH_TESTS:
+            item = english.get(test)
+            if not item:
+                continue
+            shown = item.get("min") if item.get("min") is not None else item.get("recommended")
+            rows.append({
+                "test": test, "label": label, "accepted": item.get("accepted") is not False,
+                "min": score_text(test, item.get("min")), "recommended": score_text(test, item.get("recommended")),
+                "each_min": score_text(test, item.get("each_min")), "varies": bool(item.get("varies")),
+                "scale": toefl_scale(shown) if test == "toefl_ibt" else None,
+                "none_ar": no_score_ar(item), "note_ar": item.get("note_ar"), "source_url": item["source_url"],
+                "recommended_source_url": item.get("recommended_source_url"),
+            })
+        return rows
 
     def sat_summary(self, track="arruaad"):
         """How many researched universities of a track require SAT/ACT, make it optional, etc.
@@ -455,7 +528,7 @@ class Explorer:
         researched = [uid for uid in on_track if uid in self.details]
         counts = {}
         for uid in researched:
-            policy = (self.details[uid].get("sat_act") or {}).get("policy") or "unknown"
+            policy = (self.details[uid].get("sat_act") or {}).get("policy") or "unverified"
             counts[policy] = counts.get(policy, 0) + 1
         return {"total": len(on_track), "researched": len(researched), "counts": counts}
 

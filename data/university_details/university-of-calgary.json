@@ -11,6 +11,7 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "varies": true,
       "note_ar": "6.5. التمريض والتربية يطلبان أعلى.",
       "source_url": "https://www.ucalgary.ca/future-students/undergraduate/admissions/how-to-apply/english-language-requirements"
     },

@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "6.5 مع 6.0 في كل مهارة. بعض الكليات والبرامج تختلف.",
       "source_url": "https://www.sydney.edu.au/study/applying/how-to-apply/international-students/english-language-requirements.html"
     },

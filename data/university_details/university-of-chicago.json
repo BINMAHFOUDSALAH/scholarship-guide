@@ -5,7 +5,7 @@
   "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
   "admissions_url": "https://collegeadmissions.uchicago.edu/",
   "platform": {
-    "value_ar": "Common App أو Apply Coalition (Scoir) أو QuestBridge، مع UChicago Supplement إضافي",
+    "value_ar": "Common App أو Apply Coalition (Scoir)، مع مقالات UChicago Supplement",
     "source_url": "https://collegeadmissions.uchicago.edu/apply/application/"
   },
   "english": {
@@ -58,7 +58,6 @@
   "language_note_ar": null,
   "not_found_ar": [
     "نسبة قبول الطلاب الدوليين غير منشورة (جدول الإقامة في C1 فارغ)",
-    "صفحات الجامعة الرسمية تُحمَّل بالجافاسكربت ولم تُقرأ مباشرة. تواريخ التقديم والمنصات وسياسة الإنجليزية مأخوذة من مقتطفات بحث من موقع الجامعة، وتحتاج تأكيدًا قبل الاعتماد عليها",
     "دليل المرشدين التعليميين يذكر 1 نوفمبر و6 يناير، وهذا يتعارض مع 2 نوفمبر و4 يناير في صفحة التقديم، فاعتمدنا الصفحة الرسمية",
     "مواعيد الإعلان عن القرار والرد غير مؤكدة لأن الصفحة الرسمية لم تُفتح مباشرة"
   ],

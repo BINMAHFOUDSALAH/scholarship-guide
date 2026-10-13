@@ -81,6 +81,8 @@ def test_countries_say_whether_english_is_official():
 # ---------- researched requirements ----------
 
 DETAIL_FILES = sorted((DATA / "university_details").glob("*.json"))
+ENGLISH_KEYS = {"accepted", "min", "recommended", "each_min", "varies", "note_ar", "source_url", "recommended_source_url"}
+SNIPPET_MARKERS = ("مقتطف", "ملخص البحث", "نتيجة البحث", "قبل النشر")
 
 
 @pytest.mark.parametrize("path", DETAIL_FILES, ids=[p.stem for p in DETAIL_FILES])
@@ -96,9 +98,45 @@ def test_requirement_files_follow_the_schema(path):
 
     sourced(d.get("platform"))
     for key in ("ielts", "toefl_ibt", "duolingo"):
-        sourced((d.get("english") or {}).get(key))
+        item = (d.get("english") or {}).get(key)
+        sourced(item)
+        if item is None:
+            continue
+        # Decision 058: a minimum, a recommended score and a per-skill minimum are different things.
+        assert set(item) <= ENGLISH_KEYS, (path.stem, key, set(item) - ENGLISH_KEYS)
+        assert "min" in item, (path.stem, key)
+        numbers = [item.get(k) for k in ("min", "recommended", "each_min")]
+        assert all(n is None or isinstance(n, (int, float)) for n in numbers), (path.stem, key)
+        if item.get("accepted") is False:  # a refused test has no score to show
+            assert item["min"] is None and item.get("recommended") is None and item.get("note_ar"), (path.stem, key)
+        assert item.get("accepted", False) is False, (path.stem, key)  # only an explicit "not accepted" is stored
+        if item["min"] is not None and item.get("recommended") is not None:
+            assert item["recommended"] > item["min"], (path.stem, key)
+        if item.get("each_min") is not None:
+            assert key == "ielts" and (item["min"] is None or item["each_min"] <= item["min"]), (path.stem, key)
+        if item.get("recommended_source_url"):
+            assert item["recommended_source_url"].startswith("https://"), (path.stem, key)
+        assert item.get("varies", True) is True, (path.stem, key)  # stored only when true
+        # A score and "this test isn't on the page" can't both be true (the reviewer found one, decision 058).
+        if item["min"] is not None or item.get("recommended") is not None:
+            name = {"ielts": "IELTS", "toefl_ibt": "TOEFL", "duolingo": "Duolingo"}[key]
+            assert f"{name} غير مذكور" not in (d["english"].get("note_ar") or ""), (path.stem, key)
     if d.get("sat_act"):
         assert d["sat_act"]["policy"] in SAT_POLICY_AR, path.stem
+        sourced(d["sat_act"])
+    if d.get("admission_tests"):
+        sourced(d["admission_tests"])
+        assert d["admission_tests"]["note_ar"].strip(), path.stem
+    assert d.get("draft", True) is True, path.stem  # stored only when true
+
+    # Decision 028: what isn't read on the official page is hidden, never published with a caveat.
+    # Search snippets and "check before publishing" notes must not reach a published file.
+    if not d.get("draft"):
+        text = json.dumps(d, ensure_ascii=False)
+        for marker in SNIPPET_MARKERS:
+            assert marker not in text, (path.stem, marker)
+        # «لغة الدراسة» is for the language of teaching; the Saudi certificate has its own row (decision 054).
+        assert "التوجيهية" not in (d.get("language_note_ar") or ""), path.stem
     for date in d.get("dates") or []:
         sourced(date)
         assert date["date"] is None or ISO_DATE.match(date["date"]), (path.stem, date)
@@ -114,6 +152,7 @@ def test_requirement_files_follow_the_schema(path):
         if certificate["direct_entry"] is not None:
             sourced(certificate)
             assert certificate["note_ar"] is None or certificate["note_ar"].strip(), path.stem
+            assert certificate.get("note_source_url", "https://").startswith("https://"), path.stem
     fee = d.get("application_fee")
     if fee:  # decision 050
         sourced(fee)
@@ -205,7 +244,9 @@ def test_explorer_loads_nothing_from_third_parties():
 def test_every_researched_university_page_renders(path):
     html = client.get(f"/universities/{path.stem}").text
     assert "متطلبات القبول في الجامعة" in html
-    assert "لم نجمع متطلبات هذه الجامعة بعد" not in html
+    draft = json.loads(path.read_text(encoding="utf-8")).get("draft")
+    # A draft (research not verified on the official page yet) stays hidden on the live site (decision 058).
+    assert ("لم نجمع متطلبات هذه الجامعة بعد" in html) == bool(draft)
 
 
 def test_next_deadline_skips_past_dates():
@@ -619,3 +660,83 @@ def test_saudi_certificate_row_shows_only_a_sourced_yes_or_no():
     html = client.get(f"/universities/{shown[0]}").text
     assert "الشهادة الثانوية السعودية" in html and ex.details[shown[0]]["saudi_certificate"]["source_url"] in html
     assert "الشهادة الثانوية السعودية" not in client.get(f"/universities/{hidden[0]}").text
+
+
+# ---------- English requirements: minimum vs recommended (decision 058) ----------
+
+def test_english_at_a_glance_keeps_the_distinctions():
+    from app.universities import english_compact
+    assert english_compact("ielts", {"min": 6.5, "each_min": 6.0, "note_ar": "x"}) == "6.5 · ولا تقل مهارة عن 6.0"
+    assert english_compact("ielts", {"min": 6, "recommended": 6.5}) == "6.0 · الموصى به 6.5"
+    assert english_compact("ielts", {"min": 6.0, "varies": True, "each_min": 5.5}) == "من 6.0 حسب التخصص"
+    assert english_compact("ielts", {"min": None, "recommended": 7.5}) == "لا حد أدنى معلن · الموصى به 7.5"
+    assert english_compact("ielts", {"min": None, "note_ar": "x"}) == "لا يوجد حد أدنى منشور"
+    assert english_compact("duolingo", {"accepted": False, "min": None}) == "لا يُقبل لإثبات اللغة"
+    assert english_compact("ielts", None) == "لم نتحقق منه"
+
+
+def test_georgia_tech_shows_the_undergraduate_floor_not_the_graduate_score():
+    """The owner saw 7.0 elsewhere: that is Georgia Tech's graduate requirement. First-year applicants
+    meet the USG floor (6, recommended 6.5), and the page must say both, plus why 7.0 differs."""
+    assert ex.key_facts("georgia-institute-of-technology")["ielts_ar"] == "6.0 · الموصى به 6.5"
+    html = client.get("/universities/georgia-institute-of-technology").text
+    assert "الحد الأدنى <strong>6.0</strong>" in html and "الموصى به <strong>6.5</strong>" in html
+    assert "شرط الدراسات العليا" in html
+    assert "لا يُقبل لإثبات اللغة" in html  # Duolingo is read as extra material but doesn't meet the USG requirement
+
+
+def test_competitive_scores_never_read_as_minimums():
+    for uid in ("university-of-california-los-angeles-ucla", "cornell-university", "new-york-university-nyu",
+                "university-of-southern-california", "purdue-university"):
+        assert "الموصى به" in ex.key_facts(uid)["ielts_ar"], uid
+    html = client.get("/universities/university-of-california-los-angeles-ucla").text
+    assert "الحد الأدنى <strong>6.5</strong>" in html and "الموصى به <strong>7.5</strong>" in html
+    assert "مصدر الدرجة الموصى بها" in html
+    assert "ولا يعني ذلك رفض من يقل عنها" in html  # the two words are explained where they appear
+
+
+def test_toefl_says_which_scale_and_links_to_the_explainer():
+    html = client.get("/universities/the-university-of-new-south-wales-unsw-sydney").text
+    assert "مقياس 0–120" in html and "/resources/toefl#scale" in html
+    assert "غير مقبولة حتى إشعار آخر" in html  # UNSW refuses the new TOEFL format for now
+    assert "مقياس 1–6" in client.get("/universities/the-university-of-western-australia").text
+
+
+def test_unverified_research_stays_hidden_on_the_live_site():
+    from app.universities import Explorer
+    drafts = [p.stem for p in DETAIL_FILES if json.loads(p.read_text(encoding="utf-8")).get("draft")]
+    assert "university-of-oxford" in drafts and "ucl-university-college-london" in drafts
+    assert not any(uid in ex.details for uid in drafts)
+    assert all(uid in Explorer(show_drafts=True).details for uid in drafts)  # still there for the owner
+    assert ex.key_facts("university-of-oxford") == {"researched": False}
+
+
+def test_a_missing_sat_policy_reads_as_unverified_not_unpublished():
+    assert ex.details["university-of-michigan-ann-arbor"]["sat_act"] is None
+    assert ex.key_facts("university-of-michigan-ann-arbor")["sat_ar"] == "لم نتحقق منه"
+    html = client.get("/universities/university-of-michigan-ann-arbor").text
+    assert "لا توجد لدينا مواعيد مؤكدة لهذه الدورة" in html and "لم تنشر الجامعة مواعيد" not in html
+    assert main.explorer.sat_summary()["counts"].get("unverified", 0) >= 1  # counted apart from "غير محدد"
+
+
+def test_saudi_certificate_and_admission_tests_have_their_own_rows():
+    cambridge = client.get("/universities/university-of-cambridge").text
+    assert "الشهادة الثانوية السعودية" in cambridge and "اختبارات القبول" in cambridge
+    assert "لغة الدراسة" not in cambridge.split('id="requirements"')[1].split("</section>")[0]
+    assert ex.details["university-of-toronto"]["saudi_certificate"]["direct_entry"] is True
+
+
+def test_fee_links_the_page_that_states_the_amount():
+    html = client.get("/universities/harvard-university").text
+    assert 'href="https://college.harvard.edu/admissions/apply"' in html and "مصدر الإعفاء" in html
+
+
+def test_a_track_ranked_per_field_asks_for_the_field_first():
+    """Decision 058: إمداد without a field used to list 223 unranked names (49 phone screens)."""
+    section = ex.search(track="emdad")["sections"][0]
+    assert len(section["pick_fields"]) == 8 and all(f["count"] > 0 for f in section["pick_fields"])
+    html = client.get("/universities?track=emdad").text
+    assert "فابدأ باختيار المجال" in html and 'data-pick-field="ict"' in html
+    assert '<details class="all-unis">' in html  # the full list is still there, folded
+    # With a country the list is short, so it's shown directly.
+    assert "pick_fields" not in ex.search(track="emdad", country="CA")["sections"][0]

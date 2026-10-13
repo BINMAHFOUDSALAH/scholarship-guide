@@ -11,16 +11,19 @@
   "english": {
     "ielts": {
       "min": null,
+      "recommended": 7.5,
       "note_ar": "لا يوجد حد أدنى. المستوى التنافسي المنشور: 7.5 فأكثر في IELTS Academic.",
       "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/standardized-tests/english-language-testing.html"
     },
     "toefl_ibt": {
       "min": null,
-      "note_ar": "لا يوجد حد أدنى. المستوى التنافسي: 5 فأكثر للاختبار بعد 21 يناير 2026 (المقياس الجديد)، و100 قبله (المقياس القديم).",
+      "recommended": 5,
+      "note_ar": "لا يوجد حد أدنى. المستوى التنافسي: 5 فأكثر على المقياس الجديد، و100 على القديم.",
       "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/standardized-tests/english-language-testing.html"
     },
     "duolingo": {
       "min": null,
+      "recommended": 135,
       "note_ar": "لا يوجد حد أدنى. المستوى التنافسي: 135 فأكثر.",
       "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/standardized-tests/english-language-testing.html"
     },

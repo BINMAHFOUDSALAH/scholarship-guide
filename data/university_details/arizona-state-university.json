@@ -22,6 +22,7 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "varies": true,
       "note_ar": "للبرامج العامة. التمريض وهندسة Fulton ‏6.5، والصحافة 7.0.",
       "source_url": "https://admission.asu.edu/apply/international/undergrad/english-proficiency"
     },

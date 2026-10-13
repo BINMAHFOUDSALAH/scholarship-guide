@@ -10,18 +10,20 @@
   },
   "english": {
     "ielts": {
-      "min": 7,
-      "note_ar": "7.",
+      "min": null,
+      "recommended": 7,
+      "note_ar": "تسميها الجامعة «الحد الأدنى الموصى به»، وتقول إن المتقدم قد يُقبل بدرجة أقل لكن بنسبة أقل.",
       "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/"
     },
     "toefl_ibt": {
-      "min": 5,
-      "note_ar": "5 فأكثر وكل قسم 4 فأكثر (من 21 يناير 2026)، أو 100 قبل ذلك.",
+      "min": null,
+      "recommended": 5,
+      "note_ar": "5 فأكثر مع 4 على الأقل في كل مهارة على المقياس الجديد، أو 100 مع 20 في كل مهارة على القديم. تسميها الجامعة «الحد الأدنى الموصى به»، وتقول إن المتقدم قد يُقبل بدرجة أقل لكن بنسبة أقل.",
       "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/"
     },
     "duolingo": {
       "min": 130,
-      "note_ar": "130.",
+      "note_ar": "يُقبل فقط لمن لا يستطيع أداء أحد الاختبارات المعتمدة في USC، والحد الأدنى فيه إلزامي. ومن يُقبل بنتيجة Duolingo وحدها يؤدي اختبار الطلاب الدوليين (ISE) في معهد USC للغة عند الالتحاق.",
       "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/"
     },
     "note_ar": "لا استثناءات من شرط اللغة."

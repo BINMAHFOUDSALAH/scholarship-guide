@@ -1,5 +1,8 @@
 """The Markdown page loader."""
 
+import re
+from pathlib import Path
+
 import pytest
 
 from app.content import load_page
@@ -28,3 +31,21 @@ def test_missing_page_returns_none():
 @pytest.mark.parametrize("slug", ["../../.env", "..", "Grade-10", "grade_10", "a/b", ""])
 def test_unsafe_or_invalid_slugs_are_rejected(slug):
     assert load_page("grades", slug) is None
+
+
+# ---------- formal Arabic (decision 058) ----------
+
+# Words that are unambiguously colloquial (Gulf/Saudi dialect). Formal Arabic (الفصحى) on every page:
+# «لم تقرر بعد؟», not «لسه ما قررت؟»; «لأن», not «عشان»; «الذي», not «اللي».
+DIALECT = ("لسه", "عشان", "علشان", "اللي", "هذي", "وين", "ليش", "الحين", "دحين", "يمديك", "شلون",
+           "وايد", "احنا", "إحنا", "ماهو", "أبغى", "ابغى", "تبغى", "يبغى", "وش", "ايش", "إيش", "مره")
+ARABIC_LETTER = "؀-ۿ"
+
+
+def test_site_text_is_formal_arabic():
+    root = Path(__file__).parent.parent
+    files = [*root.glob("app/templates/**/*.html"), *root.glob("content/**/*.md"), *root.glob("data/**/*.json"),
+             *root.glob("app/*.py"), *root.glob("app/static/*.js")]
+    pattern = re.compile(rf"(?<![{ARABIC_LETTER}])({'|'.join(DIALECT)})(?![{ARABIC_LETTER}])")
+    found = [(f.name, m.group(1)) for f in files for m in pattern.finditer(f.read_text(encoding="utf-8"))]
+    assert not found, found

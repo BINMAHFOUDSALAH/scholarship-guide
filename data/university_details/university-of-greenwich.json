@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "لمعظم البكالوريوس (BA وBSc وBEng): 6.0 مع 5.5 في كل مهارة. بعض التخصصات أعلى، مثل LLB (6.5) وBSc Nursing (7.0).",
       "source_url": "https://www.gre.ac.uk/international/help-and-support/courses"
     },

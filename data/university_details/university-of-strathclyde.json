@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
       "note_ar": "6.0 مع 5.5 في كل مهارة لكلية العلوم وبكالوريوس الهندسة. الشرط العام 6.5 مع 5.5. بعض البرامج تختلف.",
       "source_url": "https://www.strath.ac.uk/studywithus/englishlanguagerequirements/"
     },

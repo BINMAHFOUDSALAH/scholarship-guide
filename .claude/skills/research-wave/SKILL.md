@@ -23,15 +23,17 @@ Done three times (US wave 1, UK wave 2, AU/CA/SG wave 3; decision 054). Follow t
 - For every university, check at least the Saudi-certificate quote and one number with `scripts/check_quote.py URL "quote" ...`. Anything MISSING is not saved.
 - Decide the agents' open questions with the rules, not by preference:
   - `false` only on an explicit statement; foundation-only mentions → `null`, finding in `not_found_ar`.
+  - English scores (decision 058): `min` only for a stated minimum. "Competitive", "recommended", "expected", "typically", "most admitted students" → `recommended`. A state-system floor the university defers to → `min` from the system page plus the campus's own `recommended`. Program-dependent levels → `varies: true`. Not accepted → `accepted: false`. Undergraduate pages only: a graduate catalog's score is never a bachelor's requirement.
+  - A page you couldn't read (403 everywhere) → nothing from it is published.
   - Two official pages disagree → no number, both in the note.
   - A deadline without a year on the page → leave it out (or use an official source that states the year, e.g. UCAS).
   - `event_ar` is exactly «آخر موعد للتقديم» only for the general bachelor's deadline; course-only dates get other wording.
   - Drop "not published" claims for things nobody searched (acceptance rate).
-  - No file at all for a university with nothing verified (403 everywhere).
+  - No published file for a university with nothing verified (403 everywhere); research worth keeping for the owner goes in a `"draft": true` file (hidden on the site).
 - Notes: plain Arabic, don't repeat what the row label already says.
 
 ## 5. Save and check
 - Write the files (`checked` = today, `name_en` exactly as in `data/universities.json`).
 - `pytest` (schema tests cover every file), `scripts/stale_facts.py` (count rises by the number saved), and a look at 2 pages in the browser at 375px (one with the Saudi-certificate row, one without).
-- Update: the brief's status, `docs/roadmap.md` (what's left), a decision only if a rule changed, `LEARNING_LOG.md` if something new was learned.
+- Update: the brief's status, `docs/roadmap.md` (what's left), a decision only if a rule changed.
 - Report: counts (saved / true / false / null / skipped and why), what wasn't checked, then ask before committing.

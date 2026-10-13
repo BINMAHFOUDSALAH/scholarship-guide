@@ -65,6 +65,7 @@
     "fee_usd": 75,
     "waiver": "own_waiver",
     "note_ar": "متاح للدوليين من قسم طلب الإعفاء داخل طلب MIT",
-    "source_url": "https://mitadmissions.org/help/faq/application-fee-fee-waiver/"
+    "source_url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/",
+    "waiver_source_url": "https://mitadmissions.org/help/faq/application-fee-fee-waiver/"
   }
 }

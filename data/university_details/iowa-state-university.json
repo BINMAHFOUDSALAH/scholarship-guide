@@ -11,12 +11,13 @@
   "english": {
     "ielts": {
       "min": 6.0,
-      "note_ar": "6.0 كلي، وكل قسم 5.5 فأكثر.",
+      "each_min": 5.5,
+      "note_ar": "6.0 كلي، وكل مهارة 5.5 فأكثر.",
       "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-admissions/english-proficiency-requirement"
     },
     "toefl_ibt": {
       "min": 4.0,
-      "note_ar": "4.0 على المقياس الجديد (من 21 يناير 2026) بحد أدنى 3.5 لكل قسم، أو 71 على القديم.",
+      "note_ar": "4.0 على المقياس الجديد (من 21 يناير 2026) بحد أدنى 3.5 لكل مهارة، أو 71 على القديم.",
       "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-admissions/english-proficiency-requirement"
     },
     "duolingo": {

@@ -11,17 +11,20 @@
   "english": {
     "ielts": {
       "min": null,
-      "note_ar": "لا يوجد حد أدنى. المتقدمون الأقوياء عادة 7.5 فأكثر.",
+      "recommended": 7.5,
+      "note_ar": "تقول الجامعة إن المتقدمين الأقوياء يحصلون عادةً على 7.5 فأكثر، وإنها ليست حدًا أدنى.",
       "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
     },
     "toefl_ibt": {
       "min": null,
-      "note_ar": "لا يوجد حد أدنى. المتقدمون الأقوياء عادة 5 فأكثر (بعد 21 يناير 2026) أو 100 قبل ذلك.",
+      "recommended": 5,
+      "note_ar": "المتقدمون الأقوياء يحصلون عادةً على 5 فأكثر على المقياس الجديد، أو 100 على القديم.",
       "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
     },
     "duolingo": {
       "min": null,
-      "note_ar": "لا يوجد حد أدنى. المتقدمون الأقوياء عادة 130 فأكثر.",
+      "recommended": 130,
+      "note_ar": "المتقدمون الأقوياء يحصلون عادةً على 130 فأكثر.",
       "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
     },
     "note_ar": "SAT وACT لا تحقق شرط اللغة."

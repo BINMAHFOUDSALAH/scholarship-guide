@@ -11,6 +11,8 @@
   "english": {
     "ielts": {
       "min": 6.0,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "أدنى مستوى (Profile A): 6.0 ولا تقل أي مهارة عن 6.0. مستويات أعلى لبرامج أخرى، مثل Profile B1 (6.5).",
       "source_url": "https://www.exeter.ac.uk/study/englishlanguagerequirements/profile-a/"
     },

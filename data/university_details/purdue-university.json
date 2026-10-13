@@ -10,18 +10,20 @@
   },
   "english": {
     "ielts": {
-      "min": 6.5,
-      "note_ar": "عادة 6.5 فأكثر، وكل قسم 6.0 فأكثر.",
+      "min": null,
+      "recommended": 6.5,
+      "note_ar": "تقول الجامعة إن المتقدمين «عادةً» يحصلون على 6.5 فأكثر، مع 6.0 على الأقل في كل مهارة. أما TOEFL فله حد أدنى صريح.",
       "source_url": "https://admissions.purdue.edu/become-student/english-proficiency/"
     },
     "toefl_ibt": {
       "min": 4.5,
-      "note_ar": "4.5 من 21 يناير 2026 (كل قسم 4.0)، أو 88 قبل ذلك (كل قسم 20).",
+      "note_ar": "4.5 من 21 يناير 2026 (كل مهارة 4.0)، أو 88 قبل ذلك (كل مهارة 20).",
       "source_url": "https://admissions.purdue.edu/become-student/english-proficiency/"
     },
     "duolingo": {
-      "min": 115,
-      "note_ar": "عادة 115، وكل مهارة 110 فأكثر.",
+      "min": null,
+      "recommended": 115,
+      "note_ar": "تقول الجامعة إن المتقدمين «عادةً» يحصلون على 115، مع 110 فأكثر في كل مهارة.",
       "source_url": "https://admissions.purdue.edu/become-student/english-proficiency/"
     },
     "note_ar": "النتيجة خلال آخر سنتين. بدائل: ACT English ‏26 أو SAT قراءة وكتابة 600."

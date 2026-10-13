@@ -11,15 +11,22 @@
   "english": {
     "ielts": {
       "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
       "note_ar": "أدنى مستوى للبكالوريوس: 6.5 ولا تقل أي مهارة عن 6.0. بعض البرامج تطلب 7.0 أو أعلى.",
       "source_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/entry-requirements/english-requirements/english-language-proficiency-tests"
     },
     "toefl_ibt": {
       "min": 79,
-      "note_ar": "أدنى مستوى: 79، مع 13 للقراءة و12 للاستماع و18 للتحدث و21 للكتابة. الاختبارات من 21 يناير 2026 يجب أن تكون TOEFL iBT Australia.",
+      "note_ar": "على المقياس القديم (0–120): ‏79 مع 13 في القراءة و12 في الاستماع و18 في التحدث و21 في الكتابة. نتائج المقياس الجديد (1–6) غير مقبولة، والاختبار من 21 يناير 2026 يجب أن يكون TOEFL iBT Australia.",
       "source_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/entry-requirements/english-requirements/english-language-proficiency-tests"
     },
-    "duolingo": null,
+    "duolingo": {
+      "accepted": false,
+      "min": null,
+      "note_ar": "تقول الجامعة إنها تقبل قائمة محددة من الاختبارات ليس منها Duolingo، ولا تقبل الاختبارات المنزلية أو الإلكترونية للطلاب الدوليين.",
+      "source_url": "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/entry-requirements/english-requirements/english-language-proficiency-tests"
+    },
     "note_ar": "الاختبار يجب أن يكون خلال سنتين من بداية الدراسة."
   },
   "sat_act": null,

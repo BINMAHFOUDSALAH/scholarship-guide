@@ -3,7 +3,13 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-13; the audit session ran in the cloud on branch `claude/clever-bardeen-bei0zs`):**
+> **Next session (as of 2026-10-13; latest cloud session on branch `claude/brave-hopper-2a6fg7`, decision 058, not merged yet):**
+> **Requirements audit + explorer fixes (decision 058, `docs/research/requirements-audit-2026-10-13.md`):** all 129 files checked against their sources; English scores now separate «الحد الأدنى» from «الموصى به» (the Georgia Tech 6-vs-7 case: 7.0 is the graduate requirement); the filter-✕ bug (suggestions floating over the tags) fixed; إمداد asks for a field first; formal Arabic rule + test.
+> **Owner to-dos from it (browser, ~15 min):** confirm Oxford and UCL (hidden as drafts until then; exact pages in the audit), Michigan's deadlines and SAT policy, NYU's fee/dates, Saskatchewan's deadline. Then remove `"draft": true` or fix the values.
+> **Repo tidy (decision 059):** layout checked against the current Claude Code docs; `LEARNING_LOG.md` removed; every subagent forced onto Haiku; `scripts/check_sources.py` (facts vs their pages) and `scripts/check_explorer.mjs` (explorer JS in a browser) added.
+> **Ask before installing:** run `scripts/check_explorer.mjs` in CI (Playwright install); today it runs in cloud sessions only.
+>
+> Earlier (the audit session ran in the cloud on branch `claude/clever-bardeen-bei0zs`):
 > Live on `main` at **https://wadihguide.com** (decision 042; the old onrender address and www redirect with a 301): decisions 035–043, including the finder trust fixes (041), the footer feedback line (043), and the iPhone header fix (header icons only up to 479px).
 > Owner's laptop: `git checkout main` then `git pull`, and work on `main` or a new branch. The cloud branch `claude/loving-hopper-sai8de` is fully merged.
 >
@@ -14,7 +20,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > 4. update the guide link and year everywhere it appears
 >
 > **Next steps:**
-> 0. **Product audit (decision 057, `docs/research/product-audit-2026-10-13.md`):** direction = a deep study-abroad core plus thin doors to official tools («لسه ما قررت؟», «الدراسة في السعودية»). **Milestone L, items 1–2 done 2026-10-13 (not yet committed or deployed when this was written):**
+> 0. **Product audit (decision 057, `docs/research/product-audit-2026-10-13.md`):** direction = a deep study-abroad core plus thin doors to official tools («لم تقرر بعد؟», «الدراسة في السعودية»). **Milestone L, items 1–2 done 2026-10-13 (not yet committed or deployed when this was written):**
 >    - false and stale counts on grades 11/12
 >    - «لمن» on open items
 >    - the explorer's focus bug after clearing filters
@@ -22,7 +28,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 >    - foundation-year conditions on the 19 «لا تكفي» university pages
 >
 >    **Still open, in order:**
->    1. the «لسه ما قررت؟» guide (Markdown, sourced; check the Ministry's interest-measure and HRDF «سبل» pages from the laptop: cloud reads are blocked)
+>    1. the «لم تقرر بعد؟» guide (Markdown, sourced; check the Ministry's interest-measure and HRDF «سبل» pages from the laptop: cloud reads are blocked)
 >    2. the usability test (item 3 below), adding "can you apply to الرواد today?" and "Duolingo or IELTS?"
 >    3. then P1 from the audit: «الدراسة في السعودية», Duolingo `accepted` field + page, alternatives section, fee-waiver class split
 >
@@ -90,7 +96,7 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] CI: GitHub Actions runs pytest on every push (`.github/workflows/tests.yml`)
 - [ ] Owner: Render → wadih → Settings → Auto-Deploy → "After CI Checks Pass" (after the first CI run is green)
 - [x] `.env` permission lock (`.claude/settings.json`)
-- [x] `docs/CLAUDE_WORKFLOW_GUIDE.md`, `LEARNING_LOG.md`, `docs/architecture.md`; CLAUDE.md trimmed
+- [x] `docs/claude-workflow-guide.md`, `docs/architecture.md`; CLAUDE.md trimmed (a `LEARNING_LOG.md` too, removed 2026-10-13, decision 059)
 - [x] Stale-facts report `scripts/stale_facts.py` (decision 053; a report, not a failing test)
 - [ ] Later: weekly broken-link check, pin the server's Python version
 

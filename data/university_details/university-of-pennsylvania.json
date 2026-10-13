@@ -11,17 +11,20 @@
   "english": {
     "ielts": {
       "min": null,
-      "note_ar": "لا يوجد حد أدنى للقبول حسب الصفحة. المعيار التنافسي للمتقدمين: 7 أو أعلى (مقياس 0–9). لا تقبل الجامعة IELTS Indicator أو IELTS One Retake.",
+      "recommended": 7,
+      "note_ar": "لا تشترط الجامعة حدًا أدنى. المتقدم المنافس يحصل على 7 أو أعلى. لا تقبل IELTS Indicator ولا IELTS One Skill Retake.",
       "source_url": "https://admissions.upenn.edu/apply/international-applicants"
     },
     "toefl_ibt": {
       "min": null,
-      "note_ar": "لا يوجد حد أدنى للقبول حسب الصفحة. المعيار التنافسي: 5 أو أعلى للاختبارات الجديدة (مقياس 1–6)، و100 أو أعلى للاختبارات بالنظام القديم (مقياس 0–120). لا تقبل الجامعة TOEFL MyBest.",
+      "recommended": 5,
+      "note_ar": "لا يوجد حد أدنى. المتقدم المنافس يحصل على 5 أو أعلى على المقياس الجديد، و100 على القديم. لا تقبل TOEFL MyBest.",
       "source_url": "https://admissions.upenn.edu/apply/international-applicants"
     },
     "duolingo": {
       "min": null,
-      "note_ar": "لا يوجد حد أدنى للقبول حسب الصفحة. المعيار التنافسي: 130 أو أعلى (مقياس 10–160).",
+      "recommended": 130,
+      "note_ar": "لا يوجد حد أدنى. المتقدم المنافس يحصل على 130 أو أعلى.",
       "source_url": "https://admissions.upenn.edu/apply/international-applicants"
     },
     "note_ar": "إثبات الإنجليزية مطلوب إلا لمن كانت الإنجليزية لغته الأم، أو لغة تدريسه الأساسية لثلاث سنوات على الأقل قبل الالتحاق. الصفحة تقول إن الجامعة لا تشترط حدًا أدنى في المراجعة الشاملة. يُقبل فقط ما يصل مباشرة من جهة الاختبار، ولا تُقبل النتائج المنتهية."
