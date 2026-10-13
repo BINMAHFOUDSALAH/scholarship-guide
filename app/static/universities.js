@@ -352,22 +352,49 @@
     clear() { try { sessionStorage.removeItem(RETURN_KEY); } catch (e) { /* ignore */ } },
   };
   if (results) {
+    // We restore the place ourselves, so the browser's own restore can't jump to the top after us.
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
     results.addEventListener("click", (event) => {
       const link = event.target.closest('a[href*="/universities/"]');
       const match = link && new URL(link.href).pathname.match(/^\/universities\/([a-z0-9-]+)$/);
       if (match) store.set({ list: location.pathname + location.search, id: match[1], y: window.scrollY, at: Date.now() });
     });
-    const saved = store.get();
-    const nav = (performance.getEntriesByType("navigation")[0] || {}).type;
-    const fresh = saved && Date.now() - saved.at < 30 * 60 * 1000;
-    if (fresh && saved.list === location.pathname + location.search && (nav === "back_forward" || saved.returning)) {
-      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+    function bringBack(saved) {
       const row = [...results.querySelectorAll('a[href*="/universities/"]')]
         .find((a) => new URL(a.href).pathname === "/universities/" + saved.id);
       if (row) row.scrollIntoView({ block: "center" });
       else window.scrollTo(0, saved.y);
     }
-    store.clear();
+
+    // Returns true when this visit is a return to the list the student left.
+    function tryReturn(isBack) {
+      const saved = store.get();
+      const fresh = saved && Date.now() - saved.at < 30 * 60 * 1000;
+      if (!fresh || saved.list !== location.pathname + location.search || !(isBack || saved.returning)) return false;
+      store.clear();
+      // Fonts and the folding filter panel can shift rows after the first scroll, so repeat it a few
+      // times while the page settles, and stop as soon as the student touches or scrolls the page.
+      let moved = false;
+      for (const type of ["touchstart", "wheel", "keydown", "mousedown"]) {
+        window.addEventListener(type, () => { moved = true; }, { once: true, passive: true });
+      }
+      const again = () => { if (!moved) bringBack(saved); };
+      again();
+      requestAnimationFrame(again);
+      window.addEventListener("load", again, { once: true });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(again);
+      setTimeout(again, 400);
+      setTimeout(again, 1200);
+      return true;
+    }
+
+    const nav = (performance.getEntriesByType("navigation")[0] || {}).type;
+    if (!tryReturn(nav === "back_forward") && nav !== "back_forward") store.clear();
+    // Instant Back (the browser's back-forward cache) shows the page as it was without running this
+    // script again; pageshow still fires, with persisted = true.
+    window.addEventListener("pageshow", (event) => { if (event.persisted) tryReturn(true); });
   }
 
   const back = document.querySelector("a[data-back-link]");

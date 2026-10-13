@@ -717,3 +717,7 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Flags load normally: the same 15 small files repeat, so lazy loading saved nothing. The gap is now 8 px.
 - CSS/JS links carry `?v=<content hash>`, so a deploy reaches returning visitors at once. This resolves decision 048's cache note.
 **Alternative:** rely on the browser (`scrollRestoration = auto`). That is what failed.
+- **Amended the same day (still at the top on the owner's phone):**
+  - `scrollRestoration` is now always `manual` on the list pages, so the browser can't jump to the top after we scroll.
+  - The return is repeated while the page settles (next frame, `load`, fonts ready, 0.4 s and 1.2 s), and stops as soon as the student touches the page.
+  - The "instant back" case (back-forward cache: the page comes back without running the script) is handled through `pageshow`. Not testable in the dev browser, which always reloaded.
