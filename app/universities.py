@@ -44,9 +44,9 @@ LANGUAGE_AR = {"english": "الإنجليزية", "other": "غير الإنجل�
 
 # The search parameters a results link may carry back from a university page (decision 035).
 SEARCH_PARAMS = ("q", "track", "field", "country", "lang")
-# What الرواد's list means for a major: it names universities, not majors. Not "available to you":
-# admission is still the university's decision (decision 041).
-ARRUAAD_NOTE = "قائمة الرواد لا تحدد تخصصات: أي تخصص في هذه الجامعات يدخل في المسار، والقبول تقرره الجامعة."
+# What الرواد's list means for a major: every major at these universities is covered (owner, 2026-10-12;
+# shortened from decision 041's wording).
+ARRUAAD_NOTE = "مسار الرواد يقبل كل التخصصات في هذه الجامعات."
 
 
 def count_ar(n, forms):

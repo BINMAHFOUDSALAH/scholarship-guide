@@ -162,6 +162,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', path='universities.js') }}" defer></script>
-{% if quote and quote.youtube_id %}<script src="{{ url_for('static', path='video.js') }}" defer></script>{% endif %}
+<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>
+{% if quote and quote.youtube_id %}<script src="{{ url_for('static', path='video.js') }}?v={{ asset_version('video.js') }}" defer></script>{% endif %}
 {% endblock %}

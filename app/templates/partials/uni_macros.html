@@ -96,7 +96,7 @@
 
 {# The flag is decorative (alt=""): the country's name follows it (decision 049). #}
 {% macro country(u) %}
-<span class="uni-country"><img class="uni-flag" src="{{ url_for('static', path='img/flags/' ~ (u.country | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">لغة الدولة: {{ u.country_info.language_ar }}</span>{% endif %}</span>
+<span class="uni-country"><img class="uni-flag" src="{{ url_for('static', path='img/flags/' ~ (u.country | lower) ~ '.svg') }}" alt="" width="20" height="15">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">لغة الدولة: {{ u.country_info.language_ar }}</span>{% endif %}</span>
 {% endmacro %}
 
 {# One university's place in the lists, as short tags: «الرواد · المرتبة 12»، «إمداد · 4 مجالات». #}

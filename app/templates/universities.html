@@ -108,4 +108,4 @@
 </div>
 {% endblock %}
 
-{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>{% endblock %}

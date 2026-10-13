@@ -341,7 +341,44 @@
 
   // ---------- 3. back to results ----------
 
+  // Coming back to the list puts the student where they were (owner, 2026-10-12). Phone browsers often
+  // reload the page on Back, and the filter panel folding on load shifts it, so the browser's own scroll
+  // restore lands in the wrong place or at the top. We remember which university was opened and bring
+  // that row back into view. sessionStorage: this tab only, cleared when it closes; ids only.
+  const RETURN_KEY = "wadih:return";
+  const store = {
+    get() { try { return JSON.parse(sessionStorage.getItem(RETURN_KEY) || "null"); } catch (e) { return null; } },
+    set(v) { try { sessionStorage.setItem(RETURN_KEY, JSON.stringify(v)); } catch (e) { /* storage blocked: browser default */ } },
+    clear() { try { sessionStorage.removeItem(RETURN_KEY); } catch (e) { /* ignore */ } },
+  };
+  if (results) {
+    results.addEventListener("click", (event) => {
+      const link = event.target.closest('a[href*="/universities/"]');
+      const match = link && new URL(link.href).pathname.match(/^\/universities\/([a-z0-9-]+)$/);
+      if (match) store.set({ list: location.pathname + location.search, id: match[1], y: window.scrollY, at: Date.now() });
+    });
+    const saved = store.get();
+    const nav = (performance.getEntriesByType("navigation")[0] || {}).type;
+    const fresh = saved && Date.now() - saved.at < 30 * 60 * 1000;
+    if (fresh && saved.list === location.pathname + location.search && (nav === "back_forward" || saved.returning)) {
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      const row = [...results.querySelectorAll('a[href*="/universities/"]')]
+        .find((a) => new URL(a.href).pathname === "/universities/" + saved.id);
+      if (row) row.scrollIntoView({ block: "center" });
+      else window.scrollTo(0, saved.y);
+    }
+    store.clear();
+  }
+
   const back = document.querySelector("a[data-back-link]");
+  if (back) {
+    // Our «الرجوع إلى نتائج البحث» link: mark the return, so the list restores the place even when the
+    // link opens the list fresh (no referrer, or a new tab's first page).
+    back.addEventListener("click", () => {
+      const saved = store.get();
+      if (saved) store.set({ ...saved, returning: true });
+    });
+  }
   if (back && document.referrer && history.length > 1) {
     let from = null;
     try { from = new URL(document.referrer); } catch (e) { from = null; }

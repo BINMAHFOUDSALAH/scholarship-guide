@@ -113,7 +113,7 @@
     {% set l = p.by_track.arruaad[0] %}
     <div class="uni-track">
       <h3>مسار الرواد <span class="uni-track-rank">المرتبة {{ l.rank }} من 30</span></h3>
-      <p>قائمة الرواد لا تحدد تخصصات: <strong>أي تخصص</strong> في هذه الجامعة يدخل في المسار (للبكالوريوس والماجستير)، والقبول تقرره الجامعة.</p>
+      <p>مسار الرواد يقبل <strong>كل التخصصات</strong> في هذه الجامعة (للبكالوريوس والماجستير).</p>
       {{ c.source_stamp([
         {"title": "الدليل الاسترشادي، صفحة " ~ l.pdf_page, "url": explorer.source.url},
         {"title": "صفحة مسار الرواد: «يدعم جميع التخصصات»", "url": "https://sites.moe.gov.sa/scholarship-program/paths/path-arruaad/"}
@@ -298,4 +298,4 @@
 </article>
 {% endblock %}
 
-{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>{% endblock %}

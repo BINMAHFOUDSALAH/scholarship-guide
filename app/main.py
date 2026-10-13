@@ -1,5 +1,7 @@
+import hashlib
 import json
 import os
+from functools import cache
 from datetime import date
 from pathlib import Path
 
@@ -189,8 +191,17 @@ async def redirect_to_canonical_host(request: Request, call_next):
     return await call_next(request)
 
 app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
+
+
+@cache
+def asset_version(path):
+    """A short hash of a static file's contents, added as ?v= to CSS/JS links. It changes only when
+    the file changes, so browsers fetch a new version right after a deploy instead of a cached one."""
+    data = (APP_DIR / "static" / path).read_bytes()
+    return hashlib.sha256(data).hexdigest()[:8]
 templates = Jinja2Templates(directory=APP_DIR / "templates")
 templates.env.globals["site"] = site
+templates.env.globals["asset_version"] = asset_version
 templates.env.globals["show_drafts"] = SHOW_DRAFTS
 templates.env.globals["track_status_labels"] = TRACK_STATUS_LABELS
 templates.env.globals["tracks"] = TRACKS

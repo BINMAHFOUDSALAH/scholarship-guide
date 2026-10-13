@@ -47,8 +47,9 @@ def test_each_path_row_has_its_theme_and_facts():
 def test_header_nav_on_desktop_and_phone_menu():
     html = client.get("/about").text
     header = html.split("</header>")[0]
-    for label in ("حسب صفك", "البرامج", "مواعيد التقديم", "عن الدليل"):
+    for label in ("حسب صفك", "البرامج", "مواعيد التقديم"):
         assert header.count(f">{label}</a>") == 2, label  # desktop nav + phone menu
+    assert ">عن الدليل</a>" not in header  # removed from the menu (owner, 2026-10-12); the footer links to /about
     assert '<details class="menu">' in header
 
 
@@ -56,7 +57,6 @@ def test_header_nav_on_desktop_and_phone_menu():
     ("/universities", "الجامعات", "page"),
     ("/universities/stanford-university", "الجامعات", "true"),  # a page inside the section
     ("/news", "مواعيد التقديم", "page"),
-    ("/about", "عن الدليل", "page"),
     ("/grades/grade-11", "حسب صفك", "true"),
     ("/programs/custodian-scholarship", "البرامج", "true"),
 ])
@@ -76,11 +76,12 @@ def test_home_marks_no_nav_item_and_every_page_has_a_skip_link():
         assert '<main id="main" tabindex="-1">' in html
 
 
-def test_footer_says_we_are_independent_and_links_how_we_verify():
+def test_footer_says_we_are_independent_and_links_the_image_credits():
+    """The credits on /about must stay reachable (CC BY-SA licences), from every page's footer."""
     footer = client.get("/universities").text.split('<footer class="site-footer">')[1]
     assert "لا يتبع وزارة التعليم" in footer
-    assert "/about#verify" in footer
-    assert 'id="verify"' in client.get("/about").text
+    assert "/about#credits" in footer and "كيف نتحقق" not in footer
+    assert 'id="credits"' in client.get("/about").text
 
 
 def test_homepage_order():
@@ -599,3 +600,12 @@ def test_the_domain_itself_and_local_runs_are_not_redirected():
     for host in ("wadihguide.com", "testserver", "127.0.0.1:8000"):
         assert client.get("/", headers={"host": host}, follow_redirects=False).status_code == 200, host
     assert "https://wadihguide.com/grades/grade-10" in client.get("/sitemap.xml").text
+
+
+def test_css_and_js_links_carry_a_content_version():
+    """After a deploy, browsers fetch the new CSS/JS instead of a cached copy (?v= changes with the file)."""
+    import re
+    html = client.get("/universities").text
+    for name in ("style.css", "universities.js", "mylist.js"):
+        m = re.search(r'/static/' + re.escape(name) + r'\?v=([0-9a-f]{8})"', html)
+        assert m and m.group(1) == main.asset_version(name), name

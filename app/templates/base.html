@@ -31,9 +31,9 @@
   </script>
   <link rel="icon" href="{{ url_for('static', path='favicon.svg') }}" type="image/svg+xml">
   <link rel="preload" href="{{ url_for('static', path='fonts/ibm-plex-sans-arabic-arabic-400.woff2') }}" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="{{ url_for('static', path='fonts.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
-  <script src="{{ url_for('static', path='theme.js') }}" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', path='fonts.css') }}?v={{ asset_version('fonts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}?v={{ asset_version('style.css') }}">
+  <script src="{{ url_for('static', path='theme.js') }}?v={{ asset_version('theme.js') }}" defer></script>
   {% block head_extra %}{% endblock %}
 </head>
 <body>
@@ -48,15 +48,13 @@
     ("programs", "البرامج", "home", "#programs"),
     ("universities", "الجامعات", "universities_page", ""),
     ("news", "مواعيد التقديم", "news_page", ""),
-    ("about", "عن الدليل", "about", ""),
   ] %}
   {% set path = request.url.path %}
   {% set current_section = (
     "grades" if path.startswith("/grades/") else
     "programs" if path.startswith("/programs/") else
     "universities" if path.startswith("/universities") else
-    "news" if path == "/news" else
-    "about" if path == "/about" else "") %}
+    "news" if path == "/news" else "") %}
   {% macro nav_items() %}
   {% for key, label, route, anchor in nav_links %}
   {% set href = url_for(route) ~ anchor %}
@@ -120,7 +118,8 @@
         <p class="footer-brand">{{ site.name }}</p>
         {# Independence on every page, because pages show official logos and data (decision 035). #}
         <p class="footer-promise">{{ site.name }} دليل طلابي مستقل ومجاني، لا يتبع وزارة التعليم ولا أي جهة رسمية.</p>
-        <p>كل معلومة رسمية مع رابط مصدرها. <a href="{{ url_for('about') }}#verify">كيف نتحقق؟</a></p>
+        {# Keeps /about reachable: its credits are required by the CC BY-SA photo and logo licences (owner, 2026-10-12). #}
+        <p><a href="{{ url_for('about') }}#credits">حقوق الصور والشعارات</a></p>
         {# The owner's X account, also the way to send feedback (decision 043): footer only, one link (icon + text),
            opens in a new tab without giving X access to this page. #}
         <a class="footer-x" href="https://x.com/salahmetaverse" target="_blank" rel="noopener noreferrer">
@@ -132,7 +131,7 @@
   </footer>
   {# Announces «حُفظت» / «أُزيلت» after a save button is used, on any page (mylist.js). #}
   <p class="sr-only" role="status" data-save-status></p>
-  <script src="{{ url_for('static', path='mylist.js') }}" defer></script>
+  <script src="{{ url_for('static', path='mylist.js') }}?v={{ asset_version('mylist.js') }}" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

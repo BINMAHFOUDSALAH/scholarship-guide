@@ -705,3 +705,15 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
   - The search hint is shorter, and the X link label lost its bracket.
 - **Kept on purpose:** every source link, the "not affiliated" lines, and the admission ≠ scholarship notice.
 **Next iterations:** program pages and the explorer's intro, measured the same way (words per page, one idea per block).
+
+## 052 — Back to the same place in a list; versioned CSS/JS; flags load normally
+**Date:** 2026-10-12
+**Problem (owner, on a phone):**
+- After opening a university from the الرواد list and pressing Back, the list jumped to the top. Phone browsers often reload the page on Back, and the filter panel folding on load shifts it, so the browser's own scroll restore misses.
+- Some flags didn't show: they were lazy-loaded, and lazy images can stay blank after a Back.
+- On desktop, the flag sat too close to the country name.
+**Decision:**
+- `universities.js` remembers the opened university (`sessionStorage`, this tab only, id + position, 30 minutes). On return by Back or by «الرجوع إلى نتائج البحث», it scrolls that row into view, or to the saved position if the row is gone. A fresh visit starts at the top.
+- Flags load normally: the same 15 small files repeat, so lazy loading saved nothing. The gap is now 8 px.
+- CSS/JS links carry `?v=<content hash>`, so a deploy reaches returning visitors at once. This resolves decision 048's cache note.
+**Alternative:** rely on the browser (`scrollRestoration = auto`). That is what failed.
