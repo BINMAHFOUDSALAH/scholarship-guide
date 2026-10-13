@@ -1,0 +1,63 @@
+{
+  "id": "purdue-university",
+  "name_en": "Purdue University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.purdue.edu/become-student/international/",
+  "platform": {
+    "value_ar": "Common App",
+    "source_url": "https://admissions.purdue.edu/become-student/guide/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "عادة 6.5 فأكثر، وكل قسم 6.0 فأكثر.",
+      "source_url": "https://admissions.purdue.edu/become-student/english-proficiency/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 من 21 يناير 2026 (كل قسم 4.0)، أو 88 قبل ذلك (كل قسم 20).",
+      "source_url": "https://admissions.purdue.edu/become-student/english-proficiency/"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "عادة 115، وكل مهارة 110 فأكثر.",
+      "source_url": "https://admissions.purdue.edu/become-student/english-proficiency/"
+    },
+    "note_ar": "النتيجة خلال آخر سنتين. بدائل: ACT English ‏26 أو SAT قراءة وكتابة 600."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تتوقع Purdue درجة SAT أو ACT أو CLT، مع استثناء للحالات الاستثنائية.",
+    "source_url": "https://admissions.purdue.edu/become-student/guide/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.purdue.edu/deadlines/first-year-college-student/",
+      "note_ar": "وهو موعد النظر في المنح"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://admissions.purdue.edu/deadlines/first-year-college-student/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 43.4,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏37,881 من 87,220",
+    "international_percent": 22.5,
+    "source_url": "https://www.purdue.edu/idata/wp-content/uploads/2026/04/CDS-2025-2026.xlsx"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ]
+}

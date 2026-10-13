@@ -1,0 +1,68 @@
+{
+  "id": "the-ohio-state-university",
+  "name_en": "The Ohio State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://undergrad.osu.edu/apply/international-freshmen",
+  "platform": {
+    "value_ar": "Common App",
+    "source_url": "https://undergrad.osu.edu/apply/international-freshmen/apply-step-by-step"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 فأكثر.",
+      "source_url": "https://undergrad.osu.edu/apply/international-freshmen/apply-step-by-step"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "4.0 فأكثر من 21 يناير 2026، و79 قبل ذلك.",
+      "source_url": "https://undergrad.osu.edu/apply/international-freshmen/apply-step-by-step"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120 فأكثر.",
+      "source_url": "https://undergrad.osu.edu/apply/international-freshmen/apply-step-by-step"
+    },
+    "note_ar": "بدائل: ACT English ‏21 أو SAT قراءة وكتابة 550. السعودية ليست في قائمة الدول المعفاة."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "مطلوب لطلاب السنة الأولى في حرم Columbus، ولا يوجد حد أدنى.",
+    "source_url": "https://undergrad.osu.edu/apply/international-freshmen/apply-step-by-step"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": true,
+      "source_url": "https://undergrad.osu.edu/apply/international-freshmen/apply-step-by-step"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "source_url": "https://undergrad.osu.edu/apply/international-freshmen/apply-step-by-step"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 50.8,
+    "scope_ar": "طلاب السنة الأولى خريف 2023 (CDS 2023–2024، C1): ‏35,588 من 70,028، أحدث ملف فيه أرقام",
+    "international_percent": 57.3,
+    "source_url": "https://irp.osu.edu/sites/default/files/documents/2025/07/CDS-2023-2024-The%20Ohio%20State%20University-Columbus.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "ملفات CDS الأحدث منشورة فارغة، فالنسبة من خريف 2023."
+  ],
+  "application_fee": {
+    "fee_usd": 70,
+    "waiver": "domestic_only",
+    "note_ar": "المتقدمون الدوليون غير مؤهلين للإعفاء",
+    "source_url": "https://undergrad.osu.edu/apply/international-freshmen/common-app"
+  }
+}

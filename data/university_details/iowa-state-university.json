@@ -1,0 +1,51 @@
+{
+  "id": "iowa-state-university",
+  "name_en": "Iowa State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.iastate.edu/admission-and-aid/admissions/international-students/international-undergraduate-application-information",
+  "platform": {
+    "value_ar": "بوابة التقديم الخاصة بالجامعة",
+    "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-students/international-undergraduate-application-information"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 كلي، وكل قسم 5.5 فأكثر.",
+      "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-admissions/english-proficiency-requirement"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "4.0 على المقياس الجديد (من 21 يناير 2026) بحد أدنى 3.5 لكل قسم، أو 71 على القديم.",
+      "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-admissions/english-proficiency-requirement"
+    },
+    "duolingo": {
+      "min": 105,
+      "note_ar": "105.",
+      "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-admissions/english-proficiency-requirement"
+    },
+    "note_ar": "يُقبل أيضًا PTE ‏48."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب لمن درس خارج أمريكا، وقد يساعد إرساله.",
+    "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-students/international-undergraduate-application-information"
+  },
+  "dates": [],
+  "acceptance_rate": {
+    "percent": 87.9,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–26، C1): ‏21,652 من 24,625",
+    "international_percent": 64.9,
+    "source_url": "https://www.ir.iastate.edu/files/documents/cds/CDS-25-26.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "لا توجد مواعيد محددة: القبول متجدد (rolling)، والجامعة تنصح بالتقديم قبل 6–8 أسابيع على الأقل من بدء الدراسة."
+  ],
+  "application_fee": {
+    "fee_usd": 65,
+    "waiver": "none",
+    "note_ar": null,
+    "source_url": "https://www.iastate.edu/admission-and-aid/admissions/international-students/international-undergraduate-application-information"
+  }
+}

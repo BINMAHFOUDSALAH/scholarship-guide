@@ -67,5 +67,11 @@
   "not_found_ar": [
     "نسبة قبول الطلاب الدوليين غير منشورة رسميًا (جدول الإقامة في C1 فارغ)",
     "صفحات المواعيد لا تذكر السنة صراحة، فالسنوات أعلاه مستنتجة من الدورة الحالية"
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 95,
+    "waiver": "accepts_common_app",
+    "note_ar": "عبر Common App إن انطبقت عليك مؤشرات الحاجة الاقتصادية، وإلا فبطريقة Harvard الخاصة",
+    "source_url": "https://college.harvard.edu/admissions/apply/international-applicants"
+  }
 }

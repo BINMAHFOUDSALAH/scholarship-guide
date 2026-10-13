@@ -1,0 +1,79 @@
+{
+  "id": "new-york-university-nyu",
+  "name_en": "New York University (NYU)",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/international-applicants.html",
+  "platform": {
+    "value_ar": "Common Application للمتقدمين المحليين والدوليين",
+    "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/international-applicants.html"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى. المستوى التنافسي المنشور: 7.5 فأكثر في IELTS Academic.",
+      "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/standardized-tests/english-language-testing.html"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى. المستوى التنافسي: 5 فأكثر للاختبار بعد 21 يناير 2026 (المقياس الجديد)، و100 قبله (المقياس القديم).",
+      "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/standardized-tests/english-language-testing.html"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى. المستوى التنافسي: 135 فأكثر.",
+      "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/standardized-tests/english-language-testing.html"
+    },
+    "note_ar": "تُقبل أيضًا PTE Academic وCambridge C1/C2. SAT وACT لا تغني عن اختبار اللغة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية حتى دورة 2027–2028 حسب الصفحة.",
+    "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/standardized-tests.html"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision I",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/all-freshmen-applicants.html",
+      "note_ar": "ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision II",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-01",
+      "year_stated": false,
+      "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/all-freshmen-applicants.html",
+      "note_ar": "ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-05",
+      "year_stated": false,
+      "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/all-freshmen-applicants.html"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 9.1,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏10,340 من 114,125",
+    "international_percent": null,
+    "source_url": "https://www.nyu.edu/content/dam/nyu/institutionalResearch/documents/cds-2025-2026/CDS%202025-2026%20FINAL%20(no%20G).pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "نسبة قبول الدوليين لم تُقرأ بشكل موثوق."
+  ],
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "accepts_common_app",
+    "note_ar": "إن كانت الرسوم ضائقة مالية على أسرتك",
+    "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/application-fee-information.html"
+  }
+}

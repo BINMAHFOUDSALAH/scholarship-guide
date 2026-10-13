@@ -1,0 +1,68 @@
+{
+  "id": "temple-university",
+  "name_en": "Temple University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students",
+  "platform": {
+    "value_ar": "Common App فقط",
+    "source_url": "https://admissions.temple.edu/apply/first-year-students"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 للقبول المباشر، و5.5 لبرنامج Bridge.",
+      "source_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "4.0 على المقياس الجديد بلا قسم أقل من 4.0، أو 79 على القديم.",
+      "source_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110 للقبول المباشر.",
+      "source_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students"
+    },
+    "note_ar": "يُقبل أيضًا PTE ‏53 وSAT قراءة وكتابة 550."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "Temple اختيارية الاختبارات.",
+    "source_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.temple.edu/apply/first-year-students"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-02-01",
+      "year_stated": false,
+      "source_url": "https://admissions.temple.edu/apply/first-year-students"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 86.2,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏36,922 من 42,824",
+    "international_percent": null,
+    "source_url": "https://ira.temple.edu/sites/ira/files/media/document/CDS%202025-26_Temple%20University_0.pdf"
+  },
+  "language_note_ar": "من يقل قليلًا عن الحد قد يُقبل عبر برنامج Bridge.",
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 55,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://admissions.temple.edu/apply/international-students/first-year-international-students"
+  }
+}

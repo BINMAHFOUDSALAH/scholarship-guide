@@ -31,7 +31,9 @@
 
     {# On phones (with JavaScript) the filters fold behind «الفلاتر»; the active ones stay visible as tags above the results. #}
     <button class="btn btn--secondary filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel" hidden data-filters-toggle>
-      الفلاتر <span class="filters-count" data-filters-count></span>
+      <span class="filters-toggle-label">الفلاتر <span class="filters-count" data-filters-count></span></span>
+      {# Says what the filters do, so students know they can narrow the lists (owner, 2026-10-12). #}
+      <span class="filters-toggle-hint">حسب المسار · المجال · الدولة · اللغة</span>
     </button>
     <fieldset class="filters" id="filters-panel">
       <legend class="sr-only">تصفية النتائج</legend>

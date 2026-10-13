@@ -10,17 +10,18 @@
 <div class="results-meta" data-summary="{{ view.summary_ar }}" hidden></div>
 
 {#
-  The applied filters, each removable on its own, plus «مسح الكل» (decision 035).
-  Plain links, so they work without JavaScript; universities.js turns them into live updates.
+  The applied filters, each removable on its own, plus «مسح الكل» (decisions 035, 048).
+  The chip's text is a label; only its ✕ removes it, with a large target. Plain links, so they work
+  without JavaScript; universities.js clears just the fields in data-remove from the live form.
 #}
 {% if view.applied %}
 <div class="applied">
   <p class="applied-label" id="applied-label">تبحث في:</p>
   <ul class="applied-list" aria-labelledby="applied-label">
     {% for a in view.applied %}
-    <li><a class="applied-chip" href="{{ a.href }}" data-applied>{{ a.label_ar }}: <bdi>{{ a.value_ar }}</bdi><span class="applied-x" aria-hidden="true">✕</span><span class="sr-only"> (إزالة)</span></a></li>
+    <li class="applied-chip"><span class="applied-text">{{ a.label_ar }}: <bdi>{{ a.value_ar }}</bdi></span><a class="applied-x" href="{{ a.href }}" data-applied data-remove="{{ a.remove | join(' ') }}" aria-label="إزالة {{ a.label_ar }}: {{ a.value_ar }}"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9m0-9l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a></li>
     {% endfor %}
-    {% if view.applied | length > 1 %}<li><a class="applied-clear" href="{{ url_for('universities_page') }}" data-applied>مسح الكل</a></li>{% endif %}
+    {% if view.applied | length > 1 %}<li><a class="applied-clear" href="{{ url_for('universities_page') }}" data-applied data-remove="q track field country lang">مسح الكل</a></li>{% endif %}
   </ul>
 </div>
 {% endif %}
@@ -62,10 +63,6 @@
     </p>
   </header>
   {% if s.note_ar %}<p class="result-note">{{ s.note_ar }}</p>{% endif %}
-  {# Said once per list, not on every row (decision 041). #}
-  {% set listed = (s.rows | map(attribute=1) | list) if s.rows is defined else (s.universities if s.universities is defined else []) %}
-  {% set unknown = listed | rejectattr("id", "in", explorer.details) | list %}
-  {% if unknown %}<p class="result-note result-note--unknown">{% if unknown | length == listed | length %}لم نجمع متطلبات جامعات هذه القائمة ومواعيدها بعد، فتحقق منها في صفحة القبول الدولي (International admissions) في موقع كل جامعة.{% else %}الجامعات التي ليس لها «باختصار» لم نجمع متطلباتها بعد.{% endif %}</p>{% endif %}
 
   {% if s.waaid is defined %}
     <p class="result-note">واعد لا يعتمد على قوائم الجامعات: كل برنامج مرتبط بجهة توظيف ويحدد مؤسسته التعليمية وشروطه، وفترة التقديم قصيرة غالبًا. المصدر: <a href="https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/" target="_blank" rel="noopener">صفحة مسار واعد ↗</a></p>
@@ -86,11 +83,7 @@
     {% if s.rows %}
     {% if not ns.explained %}{% set ns.explained = true %}
     {# What the rank means, once, above the first ranked list. #}
-    <p class="result-explain">«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا. و«المتطلبات والمواعيد» من موقع الجامعة الرسمي، للجامعات التي جمعنا متطلباتها.
-      {% if view.non_english %}
-      في دولة لغتها الرسمية غير الإنجليزية قد يُقبل قبول مشروط بدراسة لغتها، والسنة التحضيرية مقبولة بشروط: <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى؟</a>
-      {% endif %}
-    </p>
+    <p class="result-explain">«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا.</p>
     {% endif %}
     <table class="uni-table">
       <caption class="sr-only">{{ tracks[s.track].name_ar }}{% if s.field %}: {{ s.field.name_ar }}{% endif %}</caption>

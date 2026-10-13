@@ -1,0 +1,76 @@
+{
+  "id": "university-of-minnesota-twin-cities",
+  "name_en": "University of Minnesota Twin Cities",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.tc.umn.edu/apply/application-checklist/application-checklist-international-freshman",
+  "platform": {
+    "value_ar": "Common App",
+    "source_url": "https://admissions.tc.umn.edu/apply/application-checklist/application-checklist-international-freshman"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 كلي و6.5 في الكتابة.",
+      "source_url": "https://admissions.tc.umn.edu/admissions/international-admission/english-proficiency-information"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 كلي و4.5 في الكتابة (المقياس الجديد). لا تُقبل MyBest.",
+      "source_url": "https://admissions.tc.umn.edu/admissions/international-admission/english-proficiency-information"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120 كلي و120 في الكتابة.",
+      "source_url": "https://admissions.tc.umn.edu/admissions/international-admission/english-proficiency-information"
+    },
+    "note_ar": "يُقبل أيضًا PTE Academic ‏59 وCambridge C1 ‏180."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب لقبول خريف 2027.",
+    "source_url": "https://admissions.tc.umn.edu/apply/application-checklist/application-checklist-freshman"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action I",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.tc.umn.edu/apply/application-checklist/application-checklist-freshman"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action II",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-01",
+      "year_stated": false,
+      "source_url": "https://admissions.tc.umn.edu/apply/application-checklist/application-checklist-freshman"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-01",
+      "year_stated": false,
+      "source_url": "https://admissions.tc.umn.edu/apply/application-checklist/application-checklist-freshman"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 78.9,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏34,648 من 43,929",
+    "international_percent": 76.4,
+    "source_url": "https://idr.umn.edu/sites/idr.umn.edu/files/cds_2025_2026_tc.pdf"
+  },
+  "language_note_ar": "من لا يبلغ الحد قد يُقبل مشروطًا مع سنة إنجليزية مكثفة: TOEFL ‏3.5، IELTS ‏5.5، Duolingo ‏95.",
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 55,
+    "waiver": "own_waiver",
+    "note_ar": "إعفاء تلقائي حسب إجاباتك في نموذج الطلب",
+    "source_url": "https://admissions.tc.umn.edu/node/241"
+  }
+}

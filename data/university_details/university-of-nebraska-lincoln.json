@@ -1,0 +1,69 @@
+{
+  "id": "university-of-nebraska-lincoln",
+  "name_en": "University of Nebraska - Lincoln",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.unl.edu/apply/admission-requirements/international",
+  "platform": {
+    "value_ar": "Common Application أو طلب جامعة Nebraska",
+    "source_url": "https://admissions.unl.edu/apply/admission-requirements/international"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 كلي و6.0 لكل مهارة. كلية الصحافة تطلب 7.0.",
+      "source_url": "https://admissions.unl.edu/apply/admission-requirements/international"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "المقياس الجديد: 4.0 كلي و4.0 لكل مهارة. القديم: 79 كلي و18 لكل مهارة.",
+      "source_url": "https://admissions.unl.edu/apply/admission-requirements/international"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110 كلي و105 لكل مهارة.",
+      "source_url": "https://admissions.unl.edu/apply/admission-requirements/international"
+    },
+    "note_ar": "يُقبل أيضًا اختبار الجامعة ELT بدرجة 80."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب للقبول العام، وقد يُطلب لكليتي العمارة والهندسة.",
+    "source_url": "https://admissions.unl.edu/apply/admission-requirements/international"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Priority Deadline",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.unl.edu/apply/admission-requirements/international",
+      "note_ar": "بعده قد يوضع الطلب على قائمة الانتظار"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Final Deadline",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-05-01",
+      "year_stated": false,
+      "source_url": "https://admissions.unl.edu/apply/admission-requirements/international"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 87.8,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): 16,372 من 18,648",
+    "international_percent": 52.7,
+    "source_url": "https://iea.unl.edu/common-data-set-2025-2026/c-first-time-first-year-admission/applications/"
+  },
+  "language_note_ar": "من لم يحقق شرط اللغة يُقبل مشروطًا في برنامج اللغة المكثف بالجامعة.",
+  "not_found_ar": [
+    "الصفحة تذكر «Fall 2027» ولا تكتب السنة بجانب كل تاريخ."
+  ],
+  "application_fee": {
+    "fee_usd": 45,
+    "waiver": "domestic_only",
+    "note_ar": "الإعفاء مرتبط ببرنامج الوجبات المدرسية الأمريكي أو الخدمة العسكرية",
+    "source_url": "https://admissions.unl.edu/apply/admission-requirements/first-year/"
+  }
+}

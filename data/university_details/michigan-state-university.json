@@ -1,0 +1,77 @@
+{
+  "id": "michigan-state-university",
+  "name_en": "Michigan State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.msu.edu/apply/international",
+  "platform": {
+    "value_ar": "طلب MSU أو Common App أو Coalition مع Scoir، بلا تفضيل",
+    "source_url": "https://admissions.msu.edu/apply/international/how-to-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 للقبول العادي، و6.0 للقبول المؤقت.",
+      "source_url": "https://admissions.msu.edu/apply/international/language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "4 من 21 يناير 2026 (كل قسم 4 إلا المحادثة 3.5)، أو 79 قبل ذلك.",
+      "source_url": "https://admissions.msu.edu/apply/international/language-requirements"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110 للقبول العادي، و95–105 للمؤقت.",
+      "source_url": "https://admissions.msu.edu/apply/international/language-requirements"
+    },
+    "note_ar": "يمكن استخدام SAT أو ACT لإثبات اللغة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية للقبول والمنح.",
+    "source_url": "https://admissions.msu.edu/apply/international/act-sat-test-optional"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.msu.edu/apply/international/dates-and-deadlines",
+      "note_ar": "أقصى نظر في المنح"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision (أولوية)",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-02-01",
+      "year_stated": false,
+      "source_url": "https://admissions.msu.edu/apply/international/dates-and-deadlines"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-04-01",
+      "year_stated": false,
+      "source_url": "https://admissions.msu.edu/apply/international/dates-and-deadlines"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 83.2,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏52,411 من 62,965",
+    "international_percent": 88.2,
+    "source_url": "https://edge.sitecorecloud.io/michiganstab57e-msustrategi129d-prod9868-7e5e/media/project/msu/ir/docs/cds/cds-2025-2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من دورة خريف 2027."
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://admissions.msu.edu/apply/international/how-to-apply"
+  }
+}

@@ -6,6 +6,13 @@
 <div class="measure">
 <h1>الصفحة غير موجودة</h1>
 <p class="lead">ربما تغيّر الرابط أو كُتب بشكل خاطئ.</p>
+<form class="not-found-search" method="get" action="{{ url_for('search_page') }}" role="search" aria-label="البحث في الدليل">
+  <label class="field-label" for="nf-q">ابحث في الدليل</label>
+  <div class="site-search-row">
+    <input class="input" type="search" id="nf-q" name="q" maxlength="200">
+    <button class="btn btn--primary" type="submit">ابحث</button>
+  </div>
+</form>
 <p><a href="{{ url_for('home') }}">→ الرجوع إلى الرئيسية</a></p>
 </div>
 {% endblock %}

@@ -1,0 +1,51 @@
+{
+  "id": "washington-state-university",
+  "name_en": "Washington State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://ip.wsu.edu/future-students/about-wsu-programs/international-first-year/",
+  "platform": {
+    "value_ar": "طلب WSU أو Common App أو Cialfo",
+    "source_url": "https://ip.wsu.edu/future-students/about-wsu-programs/international-first-year/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 للقبول المباشر.",
+      "source_url": "https://ip.wsu.edu/future-students/requirements/"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "4 للقبول المباشر (المقياس الجديد).",
+      "source_url": "https://ip.wsu.edu/future-students/requirements/"
+    },
+    "duolingo": {
+      "min": 105,
+      "note_ar": "105 للقبول المباشر.",
+      "source_url": "https://ip.wsu.edu/future-students/requirements/"
+    },
+    "note_ar": "الدرجات يجب ألا يزيد عمرها على سنتين."
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "صفحات القبول الدولي لا تذكر سياسة SAT أو ACT.",
+    "source_url": "https://ip.wsu.edu/future-students/requirements/"
+  },
+  "dates": [],
+  "acceptance_rate": {
+    "percent": 86.6,
+    "scope_ar": "طلاب السنة الأولى خريف 2024 (CDS 2024–2025، C1): ‏22,060 من 25,462",
+    "international_percent": 82.0,
+    "source_url": "https://wpcdn.web.wsu.edu/wsuwp/uploads/sites/3447/2025/04/CDS_2024-2025.pdf"
+  },
+  "language_note_ar": "من لا يبلغ الحد قد يُقبل في برنامج تأسيسي (Undergraduate Foundation).",
+  "not_found_ar": [
+    "صفحتان رسميتان تختلفان في موعد الأولوية لخريف (15 أبريل و15 يونيو)، فلم ننشر موعدًا. القبول متجدد (rolling)."
+  ],
+  "application_fee": {
+    "fee_usd": 70,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://admission.wsu.edu/first-year/"
+  }
+}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "components.html" as c %}
+
+{% block title %}{% if q %}{{ q }}: {% endif %}البحث في الدليل | {{ site.name }}{% endblock %}
+{% block description %}ابحث في صفحات {{ site.name }} ومعلوماتها الرسمية، مع مصدر كل نتيجة.{% endblock %}
+{# Result pages change with every query: nothing for search engines to index. #}
+{% block head_extra %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+<div class="measure site-search">
+  <header class="page-header">
+    <h1>البحث في الدليل</h1>
+    <p class="lead">ابحث في صفحات الدليل ومعلوماته الرسمية. كل نتيجة معها مصدرها.</p>
+  </header>
+
+  <form method="get" action="{{ url_for('search_page') }}" role="search" aria-label="البحث في الدليل">
+    <label class="field-label" for="search-q">ماذا تريد أن تعرف؟</label>
+    <p class="field-hint" id="search-hint">مثل: آيلتس، القبول المشروط، القدرات. للجامعات والتخصصات استخدم <a href="{{ url_for('universities_page') }}">البحث في الجامعات</a>.</p>
+    <div class="site-search-row">
+      <input class="input" type="search" id="search-q" name="q" value="{{ q }}" maxlength="200" aria-describedby="search-hint">
+      <button class="btn btn--primary" type="submit">ابحث</button>
+    </div>
+  </form>
+
+  {% if q %}
+  <p class="site-search-count" role="status">
+    {% if results %}{{ results | length | count_ar("results") }} عن «{{ q }}»{% else %}لا نتائج عن «{{ q }}»{% endif %}
+  </p>
+  {% if results %}
+  <ol class="rows site-search-results">
+    {% for r in results %}
+    <li>
+      <h2 class="site-search-title"><a href="{{ r.url }}">{{ r.title }}{% if r.heading %}: {{ r.heading }}{% endif %}</a></h2>
+      <p class="site-search-snippet">{{ r.snippet }}</p>
+      {{ c.source_stamp(r.sources) }}
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <div class="notice">
+    <p>جرّب كلمة أخرى بنفس المعنى (مثل «ابتعاث» بدل «منحة»)، أو كلمة واحدة فقط. البحث هنا يجد الكلمات المكتوبة في الدليل، لا معناها.</p>
+  </div>
+  {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -29,7 +29,7 @@
     <form class="hero-search" method="get" action="{{ url_for('universities_page') }}" role="search" aria-labelledby="home-search-title">
       <h2 id="home-search-title" class="hero-search-title">أو ابحث في جامعات قوائم الابتعاث</h2>
       <label class="field-label" for="home-q">اسم جامعة أو تخصص</label>
-      <p class="field-hint" id="home-q-hint">بالعربية أو الإنجليزية، واعرف أين تقع في قوائم الابتعاث.</p>
+      <p class="field-hint" id="home-q-hint">بالعربية أو الإنجليزية.</p>
       <div class="search-box">
         <input class="input" id="home-q" name="q" type="search" autocomplete="off"
                role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="home-q-suggest"
@@ -46,6 +46,8 @@
         {% endfor %}
       </p>
       <p class="hero-search-meta">{{ explorer.universities | length | count_ar("universities") }} في {{ explorer.country_options() | length | count_ar("countries") }}، من الدليل الاسترشادي الرسمي {{ explorer.source.academic_year | replace("-", "–") }}.</p>
+      {# Site search (decision 045): for questions about the guide itself, not universities. #}
+      <p class="hero-guide-search">تبحث عن معلومة، مثل آيلتس أو القبول المشروط؟ <a href="{{ url_for('search_page') }}">ابحث في الدليل ←</a></p>
     </form>
   </div>
 </section>
@@ -118,7 +120,7 @@
           {% if path.id in program_pages %}<a href="{{ url_for('program_page', slug=path.id) }}">{{ path.name_ar }}</a>{% else %}{{ path.name_ar }}{% endif %}
         </h3>
         <p class="path-item-en" lang="en" dir="ltr">{{ path.name_en }}</p>
-        <p class="path-provider">{{ path.provider_ar }}</p>
+        {% if path.provider_ar != path.name_ar %}<p class="path-provider">{{ path.provider_ar }}</p>{% endif %}
 
         <dl class="fact-list">
           <div class="fact"><dt>لمن؟</dt><dd>{{ path.audience_ar }}</dd></div>

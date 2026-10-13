@@ -27,6 +27,8 @@
     {{ page.html | safe }}
   </div>
 
+  {% if page.tool == "us_fees" %}{% include "partials/us_fees.html" %}{% endif %}
+
   {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
 
 </article>

@@ -1,0 +1,64 @@
+{
+  "id": "georgetown-university",
+  "name_en": "Georgetown University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://uadmissions.georgetown.edu/apply/international-applicants/",
+  "platform": {
+    "value_ar": "Georgetown Application أو Common Application",
+    "source_url": "https://uadmissions.georgetown.edu/apply/first-year-applicants/application-requirements-and-forms/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "تُقبل بدون حد أدنى منشور.",
+      "source_url": "https://uadmissions.georgetown.edu/apply/international-applicants/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "تُقبل بدون حد أدنى منشور.",
+      "source_url": "https://uadmissions.georgetown.edu/apply/international-applicants/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "يُقبل بدون حد أدنى منشور.",
+      "source_url": "https://uadmissions.georgetown.edu/apply/international-applicants/"
+    },
+    "note_ar": "اختبار اللغة موصى به وغير مطلوب لمن لم يدرس بالإنجليزية، ولا توجد درجات دنيا منشورة."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "تشترط Georgetown تقديم SAT أو ACT، ومنهم الطلاب الدوليون، إلا في حالات استثنائية يتعذر فيها الوصول إلى مركز اختبار.",
+    "source_url": "https://uadmissions.georgetown.edu/apply/international-applicants/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://uadmissions.georgetown.edu/apply/international-applicants/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-01",
+      "year_stated": false,
+      "source_url": "https://uadmissions.georgetown.edu/apply/international-applicants/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة القبول: ملف Common Data Set على Box لم يُقرأ.",
+    "لا توجد درجات دنيا منشورة لاختبارات اللغة."
+  ],
+  "application_fee": {
+    "fee_usd": null,
+    "waiver": "accepts_common_app",
+    "note_ar": "تقبل طلبات الإعفاء من المتقدمين الدوليين أيضًا إن كانت الرسوم عبئًا كبيرًا",
+    "source_url": "https://uadmissions.georgetown.edu/faq/faq-application-process/"
+  }
+}

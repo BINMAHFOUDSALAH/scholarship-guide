@@ -1,0 +1,70 @@
+{
+  "id": "university-of-illinois-at-urbana-champaign",
+  "name_en": "University of Illinois at Urbana-Champaign",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.admissions.illinois.edu/international-requirements/",
+  "platform": {
+    "value_ar": "Common App",
+    "source_url": "https://www.admissions.illinois.edu/first-year-apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "مطلوب اختبار لغة لمن لم يدرس الصفوف 10–12 في بلد ناطق بالإنجليزية، بلا حد أدنى منشور للسنة الأولى.",
+      "source_url": "https://www.admissions.illinois.edu/international-requirements/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "بلا حد أدنى منشور للسنة الأولى.",
+      "source_url": "https://www.admissions.illinois.edu/international-requirements/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "مقبول، بلا حد أدنى منشور للسنة الأولى.",
+      "source_url": "https://www.admissions.illinois.edu/international-requirements/"
+    },
+    "note_ar": "النتيجة يجب أن تكون خلال سنتين من بداية الدراسة، ولا إعفاء من هذا الشرط."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختياري لكل طلاب السنة الأولى، ومنهم الدوليون.",
+    "source_url": "https://www.admissions.illinois.edu/first-year-apply/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://www.admissions.illinois.edu/apply/freshman/dates",
+      "note_ar": "كل المواد حتى 7 نوفمبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-05",
+      "year_stated": false,
+      "source_url": "https://www.admissions.illinois.edu/apply/freshman/dates",
+      "note_ar": "كل المواد حتى 11 يناير"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 38.1,
+    "scope_ar": "Total Admit Rate المنشورة لطلاب السنة الأولى 2026",
+    "international_percent": null,
+    "source_url": "https://www.admissions.illinois.edu/apply/freshman/admit-rate"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "لا يوجد حد أدنى منشور لاختبارات اللغة لطلاب السنة الأولى."
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "domestic_only",
+    "note_ar": "الإعفاء للمتقدمين المحليين فقط",
+    "source_url": "https://admissions.illinois.edu/general-admission-policies/"
+  }
+}

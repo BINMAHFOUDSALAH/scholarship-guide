@@ -1,0 +1,22 @@
+{#
+  «رسوم التقديم والإعفاء في الجامعات الأمريكية» (decision 050): built from each university's own page
+  (application_fee in data/university_details/). Folded groups, so the guide stays short on phones.
+#}
+{% set groups = explorer.fee_groups() %}
+{% if groups %}
+<section class="us-fees" aria-labelledby="us-fees-title">
+  <h2 id="us-fees-title">الإعفاء في الجامعات الأمريكية في القوائم</h2>
+  <p class="result-note">حسب صفحة كل جامعة الرسمية. «تقبل إعفاء Common App» لا يعني دائمًا أنه يشمل الطلاب الدوليين، فتأكد من صفحة الجامعة.</p>
+  {% for g in groups %}
+  <details class="us-fees-group">
+    <summary>{{ g.title_ar }} ({{ g.rows | length | count_ar("universities") }})</summary>
+    <ul class="rows">
+      {% for r in g.rows %}
+      <li><a href="{{ url_for('university_page', uid=r.id) }}">{{ r.name_ar }}</a>
+        <span class="us-fees-fee">{% if r.fee_usd == 0 %}بلا رسوم{% elif r.fee_usd %}<span lang="en" dir="ltr">${{ r.fee_usd }}</span>{% else %}الرسوم غير منشورة{% endif %}</span></li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endfor %}
+</section>
+{% endif %}

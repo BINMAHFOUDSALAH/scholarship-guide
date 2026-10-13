@@ -1,0 +1,70 @@
+{
+  "id": "florida-state-university",
+  "name_en": "Florida State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.fsu.edu/international/first-year",
+  "platform": {
+    "value_ar": "Common App أو بوابة FSU",
+    "source_url": "https://admissions.fsu.edu/international/first-year"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5.",
+      "source_url": "https://admissions.fsu.edu/international/english-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "4.0 للاختبارات من 21 يناير 2026، و80 قبل ذلك.",
+      "source_url": "https://admissions.fsu.edu/international/english-proficiency"
+    },
+    "duolingo": {
+      "min": 125,
+      "note_ar": "125.",
+      "source_url": "https://admissions.fsu.edu/international/english-proficiency"
+    },
+    "note_ar": "الدرجات صالحة سنتين وتُرسل مباشرة من جهة الاختبار."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "مطلوب SAT أو ACT أو CLT حسب لائحة ولاية فلوريدا.",
+    "source_url": "https://admissions.fsu.edu/international/first-year"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-01",
+      "year_stated": false,
+      "source_url": "https://admissions.fsu.edu/first-year/apply",
+      "note_ar": "المواد حتى 8 ديسمبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Rolling",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-03-01",
+      "year_stated": false,
+      "source_url": "https://admissions.fsu.edu/first-year/apply"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 24.2,
+    "scope_ar": "طلاب السنة الأولى صيف/خريف 2025 (Fact Book 2025–26): ‏18,954 من 78,272",
+    "international_percent": null,
+    "source_url": "https://www.ir.fsu.edu/Factbooks/2025-26/Admission_Statistics.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "Early Decision وEarly Action لطلاب أمريكا وفلوريدا فقط."
+  ],
+  "application_fee": {
+    "fee_usd": 30,
+    "waiver": "not_stated",
+    "note_ar": "التقديم عبر Common App يضيف 5 دولارات رسوم معالجة",
+    "source_url": "https://admissions.fsu.edu/deadlines"
+  }
+}

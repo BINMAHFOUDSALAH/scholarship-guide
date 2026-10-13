@@ -30,5 +30,17 @@
   {% endif %}
   {% endfor %}
 </ul>
+
+{# University logos and flags (decision 049): shown on each university's page, credited here. #}
+<details class="credits-more">
+  <summary>شعارات الجامعات ({{ explorer.logos | length }}) والأعلام</summary>
+  <p>شعارات الجامعات من صفحاتها في ويكيميديا كومنز، ونعرضها للتعريف بالجامعة فقط، و{{ site.name }} لا يتبع أي جامعة. أعلام الدول من مجموعة <a href="https://github.com/lipis/flag-icons" target="_blank" rel="noopener" lang="en" dir="ltr">flag-icons</a> (رخصة MIT).</p>
+  <ul class="credits">
+    {% for uid, logo in explorer.logos | dictsort %}
+    {% set u = explorer.universities[uid] %}
+    <li>{{ u.name_ar or u.name_en }}: <a href="{{ logo.source_url }}" target="_blank" rel="noopener">المصدر</a>، <span lang="en" dir="ltr">{{ logo.licence }}</span></li>
+    {% endfor %}
+  </ul>
+</details>
 </div>
 {% endblock %}

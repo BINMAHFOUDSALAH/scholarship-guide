@@ -21,8 +21,9 @@ Why each choice was made lives in [decisions.md](decisions.md).
 >    - Then rebuild, review, and post organically with `?src=` links.
 > 2. **Stale-facts check** (the audit's single best next task): a test that fails when `last_checked` is over 90 days, plus a re-check list before Launch 1.
 > 3. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes), then act on feedback before the full launch (~one month).
-> 4. **Owner re-checks Aramco** from the laptop (the cloud environment couldn't reach aramco.com; its facts are from 2026-10-11, previous cycle).
-> 5. **Optional:** page-view counts without trackers (a small counter of our own); for now, Render's Metrics tab.
+> 4. **Aramco:** re-checked 2026-10-12 with WebFetch, unchanged (still the 2025–2026 cycle, registration closed). `curl` to aramco.com times out even from the laptop. Watch for the 2026–2027 cycle; the owner may spot-check the numbers in a browser.
+> 5. **RAG learning path (decision 045, `docs/specs/search.md`):** step 1 done 2026-10-12, keyword search at `/search` and `/api/search`, linked under the homepage search and on the 404 page (decision 046). **KGSP** now has its own page and «يفتح قريبًا» (decision 046): watch the Prospective Students page for Cohort 19 dates, and review its 8 facts (`owner_reviewed`). **Also 2026-10-12 (decision 047):** test pages for SAT, TOEFL, القدرات/التحصيلي; 3 more scholarship FAQ answers; Aramco re-checked. **Filters fixed (decision 048); logos + flags on university pages (decision 049): 147/290 logos done, next the other 143 from the universities' own sites (Haiku agents, batches, reviewed on a contact sheet).** **إمداد wave 1 done (2026-10-12): 35 US universities researched (65 detail files).** Next: waves 2–3, the other 70 English-speaking universities (UK 29, Australia 13, Canada 8, Singapore 2), same prompt and save checks. **US applications (decision 050):** guide at `/resources/us-applications`, fee + waiver on 50 US university pages. **Cleanup iteration 1 (decision 051).** **Owner to-do:** copy القدرات/التحصيلي details (duration, scale, fee, attempts) from etec.gov.sa in a browser, and the Saudi TOEFL price from the ETS fee page. Next: step 2 (chunks with `last_checked`/`owner_reviewed`), then search by meaning (embeddings, ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
+> 6. **Optional:** page-view counts without trackers (a small counter of our own); for now, Render's Metrics tab.
 >
 > Resolved 2026-10-12: «ثلاث قبولات كحد أقصى» (on the site); the age rule contradicts itself on the conditions page (not published).
 >
@@ -140,6 +141,6 @@ Teaches databases, authentication (incl. OAuth), email delivery, security, priva
 ## Later stages
 5. Operations: broken-source-link checker, stale-content warnings, security headers, backups
 6. More paths (Aramco, KAUST) and resources, one at a time, each verified
-7. Search + RAG over verified content only, eval question set
+7. Search + RAG over verified content only, eval question set. **Started early (decision 045):** keyword search done; the steps are in `docs/specs/search.md`
 8. Chatbot with citations (paid API, ask first), refuses when unsure
 9. Agents with tool use + evals, e.g. an **update monitor** that watches official pages, drafts changes with links, and waits for the owner's approval (never auto-publishes). Once approved, the change can trigger the email alerts from Stage 4.

@@ -60,5 +60,11 @@
     "ملف Common Data Set 2025–2026 منشور على Box، ولم نتمكن من فتحه، لذلك جاءت الأرقام من صفحة الحقائق الرسمية في Penn",
     "تاريخ فتح التقديم غير مذكور في الصفحة الرسمية",
     "تاريخ الإعلان عن القرار في Regular Decision غير محدد بيوم بعينه في الصفحة الرسمية (تُذكر ديسمبر لـED وأبريل لـRD في صفحة، ومارس في صفحة أخرى)"
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "accepts_common_app",
+    "note_ar": "إن كانت الرسوم عبئًا ماليًا كبيرًا، اطلب الإعفاء في قسم fee waiver",
+    "source_url": "https://admissions.upenn.edu/how-to-apply/first-year-applicants/application-requirements"
+  }
 }

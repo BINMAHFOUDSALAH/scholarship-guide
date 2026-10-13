@@ -61,5 +61,11 @@
     "تاريخ فتح التقديم غير مذكور في صفحة التقديم الرسمية",
     "صفحة Cornell الخاصة بالطلاب الدوليين (international-applicants) أعادت خطأ 404، فاعتمدنا صفحة إثبات الإنجليزية الرسمية",
     "علامات اختيارات قسم C8 في CDS غير مقروءة في الملف، فاعتمدنا صفحة سياسة الاختبارات الرسمية"
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "accepts_common_app",
+    "note_ar": "بشرط أن تتقدم بطلب مساعدة مالية",
+    "source_url": "https://admissions.cornell.edu/how-to-apply/first-year-applicants"
+  }
 }

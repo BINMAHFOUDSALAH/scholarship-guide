@@ -11,7 +11,8 @@ from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.content import SLUG_PATTERN, list_slugs, load_page
-from app.universities import COUNT_FORMS, SAT_POLICY_AR, TRACKS, Explorer, count_ar
+from app.search import SiteSearch
+from app.universities import COUNT_FORMS, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
 
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR.parent / "data"
@@ -29,6 +30,7 @@ TRACK_STATUS_LABELS = {
     "open": "مفتوح الآن",
     "closed": "مغلق حتى إشعار آخر",
     "not_open": "لم يفتح بعد",
+    "opening_soon": "يفتح قريبًا",  # the official page says so, with no date yet
     "invitation": "بالترشيح والدعوة",
     "none_open": "لا يوجد برنامج مفتوح الآن",
 }
@@ -164,6 +166,10 @@ def program_slugs():
     """Programs that have their own page: an entry in paths.json plus content/programs/<id>.md."""
     return [slug for slug in list_slugs("programs") if slug in paths_by_id]
 
+
+# Site search (decision 045): built once at startup from the published pages and facts.
+site_search = SiteSearch(program_slugs(), paths_by_id, test_needs)
+
 app = FastAPI(title=site["name"])
 
 # One public address (decision 042): visits to the old Render address or to www are sent, with the same
@@ -192,6 +198,7 @@ explorer.waaid = waaid  # the explorer lists واعد programs from the same dat
 templates.env.globals["waaid"] = waaid
 templates.env.globals["track_status"] = track_status
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
+templates.env.globals["waiver_ar"] = WAIVER_AR
 templates.env.filters["arabic_date"] = arabic_date
 # {{ 5 | count_ar("universities") }} → «5 جامعات» (Arabic counting rules, see universities.count_ar).
 templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun])
@@ -224,7 +231,7 @@ def news_page(request: Request):
 
 @app.get("/about", response_class=HTMLResponse)
 def about(request: Request):
-    return templates.TemplateResponse(request, "about.html", {"paths": paths})
+    return templates.TemplateResponse(request, "about.html", {"paths": paths, "explorer": explorer})
 
 
 @app.get("/grades/{slug}", response_class=HTMLResponse)
@@ -251,7 +258,7 @@ def resource_page(request: Request, slug: str):
     page = load_page("resources", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html", {"page": page})
+    return templates.TemplateResponse(request, "page.html", {"page": page, "explorer": explorer})
 
 
 @app.get("/programs/{slug}", response_class=HTMLResponse)
@@ -307,6 +314,20 @@ def my_list(request: Request, ids: str = "", partial: bool = False):
             wanted.append(uid)
     return templates.TemplateResponse(request, "partials/my_list_rows.html",
                                       {"unis": [explorer.universities[uid] for uid in wanted], "explorer": explorer})
+
+
+@app.get("/search", response_class=HTMLResponse)
+def search_page(request: Request, q: str = ""):
+    # Works without JavaScript: the form reloads this page with ?q=.
+    q = q.strip()[:200]
+    return templates.TemplateResponse(request, "search.html", {"q": q, "results": site_search.search(q) if q else []})
+
+
+@app.get("/api/search")
+def search_api(q: str = ""):
+    # The same results as /search, as JSON: the retrieval step the future chatbot will call.
+    q = q.strip()[:200]
+    return JSONResponse({"query": q, "results": site_search.search(q) if q else []})
 
 
 @app.get("/api/suggestions")

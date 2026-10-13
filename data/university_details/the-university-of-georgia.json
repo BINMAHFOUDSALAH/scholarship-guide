@@ -1,0 +1,65 @@
+{
+  "id": "the-university-of-georgia",
+  "name_en": "The University of Georgia",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.uga.edu/apply/other-applicants/international-students/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://admissions.uga.edu/apply/start-application/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى منشور. متوسط المقبولين الدوليين 2019–2023: ‏7.5 (متوسط وليس حدًا أدنى).",
+      "source_url": "https://admissions.uga.edu/apply/other-applicants/international-students/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى منشور. متوسط المقبولين: 102، ويعادل 5.0 في المقياس الجديد.",
+      "source_url": "https://admissions.uga.edu/apply/other-applicants/international-students/"
+    },
+    "duolingo": null,
+    "note_ar": "أغلب الطلاب يثبتون اللغة بدرجات SAT أو ACT المطلوبة، ويمكن تقديم IELTS أو TOEFL."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "كل المتقدمين للسنة الأولى يقدّمون SAT أو ACT، ولا يوجد مسار اختياري. الحد الأدنى للنظر: SAT ‏480 قراءة وكتابة و440 رياضيات، أو ACT ‏17 و17.",
+    "source_url": "https://admissions.uga.edu/apply/first-year-applicants/first-year-criteria/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": false,
+      "source_url": "https://admissions.uga.edu/apply/deadlines/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-01",
+      "year_stated": false,
+      "source_url": "https://admissions.uga.edu/apply/deadlines/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 34.3,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): 16,257 من 47,464",
+    "international_percent": 29.2,
+    "source_url": "https://oir.uga.edu/wp-content/uploads/UGA_CDS_2025-2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "حدود اختبارات اللغة الدنيا غير منشورة."
+  ],
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "domestic_only",
+    "note_ar": "الطلاب الدوليون غير مؤهلين للإعفاء",
+    "source_url": "https://admissions.uga.edu/apply/start-application/application-fee-fee-waivers/"
+  }
+}

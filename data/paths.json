@@ -16,13 +16,13 @@
     "name_ar": "برنامج خادم الحرمين الشريفين للابتعاث",
     "name_en": "Custodian of the Two Holy Mosques Scholarship Program",
     "provider_ar": "وزارة التعليم",
-    "audience_ar": "من خريجي الثانوية: من حصل على قبول من جامعة ضمن قائمة المسار. القبول غير مشروط، إلا في حالتين: في الدول غير الناطقة بالإنجليزية يمكن أن يكون مشروطًا بدراسة لغة الدولة، والسنة التحضيرية للبكالوريوس مقبولة بشروط إضافية (معدل 90% وآيلتس 5.5).",
+    "audience_ar": "من حصل على قبول من جامعة ضمن قائمة المسار. متى يُقبل القبول المشروط؟ في صفحة البرنامج.",
     "summary_ar": "ابتعاث حكومي بأربعة مسارات. في الرواد وإمداد تحصل على قبول من جامعة في قائمة المسار أولًا، ثم تقدّم على الابتعاث، ويُختار طلب واحد لكل متقدم بالمفاضلة.",
     "official_url": "https://sites.moe.gov.sa/scholarship-program/",
     "apply_url": "https://www.moe.gov.sa/ar/knowledgecenter/eservices/Pages/scholarshipprog.aspx",
     "universities_guide_url": "https://object.moe.gov.sa/nasaq/cm/files/aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf",
     "social_url": "https://x.com/SA_Scholarships",
-    "social_label_ar": "حساب البرنامج الرسمي على X (أول من ينشر المستجدات)",
+    "social_label_ar": "حساب البرنامج الرسمي على X",
     "verified": false,
     "tracks": [
       {
@@ -339,7 +339,7 @@
     "name_ar": "برنامج الابتعاث في الذكاء الاصطناعي",
     "name_en": "SDAIA AI Scholarship Program",
     "provider_ar": "الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا)",
-    "audience_ar": "ليس ابتعاثًا مستقلًا: تتقدم عليه فقط إذا كان لديك ابتعاث قائم من برنامج خادم الحرمين الشريفين، في تخصص من تخصصات الذكاء الاصطناعي وعلوم الحاسب، وفي جامعة من قائمة سدايا.",
+    "audience_ar": "من لديه ابتعاث قائم من برنامج خادم الحرمين الشريفين، في تخصص ذكاء اصطناعي أو علوم حاسب، وفي جامعة من قائمة سدايا.",
     "summary_ar": "برنامج من سدايا يُضاف إلى ابتعاثك إن كنت تدرس الذكاء الاصطناعي: إرشاد أكاديمي وفرص بحثية وتدريب. لا يمكن التقديم عليه مباشرة دون ابتعاث.",
     "official_url": "https://sdaia.gov.sa/ar/Sectors/BuildingCapacity/Pages/ScholarshipProgram.aspx",
     "apply_url": "https://sdaia.gov.sa/ar/scholarship/Pages/form.aspx",
@@ -916,7 +916,7 @@
         "note_ar": "يُعلن موعده لاحقًا",
         "status": "not_open",
         "status_source": "https://aramco.com/en/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne",
-        "last_checked": "2026-10-09"
+        "last_checked": "2026-10-12"
       }
     ]
   },
@@ -938,17 +938,157 @@
     "name_ar": "كاوست",
     "name_en": "KAUST Gifted Student Program (KGSP)",
     "provider_ar": "جامعة الملك عبدالله للعلوم والتقنية",
-    "audience_ar": "طلاب السنة الأخيرة من الثانوية المتميزون في العلوم والتقنية",
-    "summary_ar": "منحة لدراسة البكالوريوس في تخصصات العلوم والتقنية في جامعات أمريكية، والاختيار بالترشيح والدعوة.",
+    "audience_ar": "طلاب الصف الثالث الثانوي السعوديون المتميزون في العلوم والرياضيات",
+    "summary_ar": "منحة من كاوست لدراسة البكالوريوس في تخصصات العلوم والتقنية والهندسة والرياضيات في جامعات قوية خارج المملكة. تتقدم بنفسك وأنت في ثالث ثانوي، ثم مقابلة.",
     "official_url": "https://kgsp.kaust.edu.sa/",
     "verified": false,
     "tracks": [
       {
-        "name_ar": "الاختيار",
-        "note_ar": "عبر جهات ترشيح أو نموذج إبداء اهتمام",
-        "status": "invitation",
-        "status_source": "https://kgsp.kaust.edu.sa/about-kgsp/scholarship-details",
-        "last_checked": "2026-10-09"
+        "id": "kgsp",
+        "name_ar": "برنامج كاوست للطلبة الموهوبين",
+        "name_en": "KAUST Gifted Student Program",
+        "note_ar": "الدفعة 19: لم تُعلن المواعيد بعد",
+        "levels_ar": "بكالوريوس",
+        "for_high_school": true,
+        "high_school_ar": "نعم، تتقدم وأنت في ثالث ثانوي",
+        "admission_ar": "طلب إلكتروني بلا رسوم مع درجات SAT واختبار الإنجليزية، ثم مقابلة",
+        "status": "opening_soon",
+        "status_source": "https://kgsp.kaust.edu.sa/prospective-students",
+        "owner_confirmed": true,
+        "last_checked": "2026-10-12",
+        "facts": [],
+        "status_note": "Prospective Students page, read 2026-10-12: «Applications for Cohort 19 will open soon», no dates. Its FAQ still shows the Cohort 18 dates. Owner asked to show «يفتح قريبًا» (2026-10-12)."
+      }
+    ],
+    "apply_url": "https://kgsp.kaust.edu.sa/prospective-students",
+    "facts": [
+      {
+        "id": "kgsp-cohort-19",
+        "text_ar": "أعلنت كاوست أن التقديم على الدفعة 19 سيفتح قريبًا، ولم تُعلن مواعيده بعد. في الدورة الماضية (الدفعة 18) فُتح التقديم في 12 يناير 2026 وأُغلق في 11 فبراير 2026.",
+        "sources": [
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          }
+        ],
+        "last_checked": "2026-10-12",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "kgsp-who",
+        "text_ar": "يتقدم الطالب السعودي وهو في الصف الثالث الثانوي. التقديم إلكتروني وبلا رسوم، ويمكنك تحديث درجاتك ونتائج قبولك الجامعي بعد إرسال الطلب.",
+        "sources": [
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          }
+        ],
+        "last_checked": "2026-10-12",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "kgsp-scores",
+        "text_ar": "الحد الأدنى في الدورة الماضية: SAT ‏1350 (والرياضيات 700 على الأقل)، وTOEFL iBT ‏90 أو IELTS Academic ‏7.0 أو SAT English ‏650. من يبلغها تُضمن له مقابلة، ومن لم يبلغها قد يُنظر في طلبه.",
+        "sources": [
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          }
+        ],
+        "last_checked": "2026-10-12",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "kgsp-arruaad",
+        "text_ar": "يُتوقع أن تكون قد قدّمت بنفسك على جامعة من جامعات مسار الرواد الثلاثين، أو حصلت على قبول منها. يمكنك التقديم بدون ذلك، لكن الأولوية لمن قدّم عليها.",
+        "sources": [
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          }
+        ],
+        "last_checked": "2026-10-12",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "kgsp-abroad",
+        "text_ar": "لم يعد البرنامج مقصورًا على أمريكا: تقبل كاوست جامعات في دول أخرى. طلاب الدفعة 18 (2026) يدرسون في أمريكا وكندا وبريطانيا.",
+        "sources": [
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          },
+          {
+            "title": "أخبار كاوست: تجهيز 70 طالبًا من KGSP للدراسة في الخارج (2 يوليو 2026)",
+            "url": "https://www.kaust.edu.sa/news/kaust-prepares-70-gifted-student-program-scholars-for-study-abroad"
+          }
+        ],
+        "last_checked": "2026-10-11",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "kgsp-stages",
+        "text_ar": "في الدورة الماضية: المقابلات من منتصف فبراير إلى أوائل أبريل، ومن لم يُدعَ إلى مقابلة حتى أوائل أبريل لن يتقدم طلبه. العروض حتى 23 أبريل، وقد يوضع بعض الطلاب على قائمة انتظار.",
+        "sources": [
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          }
+        ],
+        "last_checked": "2026-10-12",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "kgsp-offer",
+        "text_ar": "تفاصيل المزايا المالية لا تُعلن إلا لمن يحصل على عرض. ولا يموّل البرنامج سنة ماجستير رابعة إذا كان البكالوريوس ثلاث سنوات.",
+        "sources": [
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          }
+        ],
+        "last_checked": "2026-10-12",
+        "academic_year": null,
+        "status": "sourced",
+        "owner_reviewed": false,
+        "note_ar": null
+      },
+      {
+        "id": "kgsp-how-selected",
+        "text_ar": "صفحتان رسميتان لكاوست تختلفان في طريقة الاختيار: صفحة تفاصيل المنحة تقول إن الاختيار «بالدعوة فقط»، وصفحة الطلاب المتقدمين تشرح تقديمًا مفتوحًا لكل طالب سعودي في ثالث ثانوي.",
+        "sources": [
+          {
+            "title": "KGSP: Scholarship Details",
+            "url": "https://kgsp.kaust.edu.sa/about-kgsp/scholarship-details"
+          },
+          {
+            "title": "KGSP: Prospective Students",
+            "url": "https://kgsp.kaust.edu.sa/prospective-students"
+          }
+        ],
+        "last_checked": "2026-10-12",
+        "academic_year": null,
+        "status": "conflict",
+        "owner_reviewed": false,
+        "note_ar": "صفحة تفاصيل المنحة نفسها تحيل إلى صفحة الطلاب المتقدمين لمعرفة طريقة القبول. تابع صفحة الطلاب المتقدمين عند فتح التقديم."
       }
     ]
   }

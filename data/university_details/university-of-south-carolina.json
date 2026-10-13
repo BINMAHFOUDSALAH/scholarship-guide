@@ -1,0 +1,60 @@
+{
+  "id": "university-of-south-carolina",
+  "name_en": "University of South Carolina",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/",
+  "platform": {
+    "value_ar": "طلب الجامعة أو Common App",
+    "source_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5.",
+      "source_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/"
+    },
+    "toefl_ibt": {
+      "min": 77,
+      "note_ar": "77 (الصفحة لا تذكر المقياس الجديد).",
+      "source_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115.",
+      "source_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/"
+    },
+    "note_ar": "يُقبل أيضًا PTE ‏53، أو SAT قراءة وكتابة 560، أو ACT English ‏22."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية لدورات 2027 للطلاب الدوليين، مع بقاء شرط إثبات الإنجليزية.",
+    "source_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": false,
+      "source_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/",
+      "note_ar": "المستندات حتى 1 نوفمبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-01",
+      "year_stated": false,
+      "source_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/",
+      "note_ar": "المستندات حتى 15 يناير"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "نسبة القبول: ملف CDS متاح فقط عبر رابط غير آمن (http)."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "id": "brown-university",
+  "name_en": "Brown University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.brown.edu/international",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://admission.brown.edu/apply/how-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 8.0,
+      "note_ar": "8.0 «في أغلب الحالات». لا يُقبل IELTS Indicator.",
+      "source_url": "https://admission.brown.edu/international/english-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 5.5,
+      "note_ar": "للاختبارات من يناير 2026: 5.5 (المقياس الجديد). قبل ذلك: 105 (المقياس القديم 0–120).",
+      "source_url": "https://admission.brown.edu/international/english-proficiency"
+    },
+    "duolingo": {
+      "min": 130,
+      "note_ar": "130 فأكثر «في أغلب الحالات».",
+      "source_url": "https://admission.brown.edu/international/english-proficiency"
+    },
+    "note_ar": "لا تقبل Brown طلابًا بشكل مؤقت إن كانت إنجليزيتهم ضعيفة، فالإنجليزية شرط قبل القبول."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "SAT أو ACT مطلوب للسنة الأولى منذ دورة 2024–2025، ولا يوجد حد أدنى.",
+    "source_url": "https://admission.brown.edu/ask/standardized-tests"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admission.brown.edu/apply/how-apply",
+      "note_ar": "ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-05",
+      "year_stated": false,
+      "source_url": "https://admission.brown.edu/apply/how-apply"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 5.6,
+    "scope_ar": "دفعة Class of 2030: ‏2,687 من 47,944",
+    "international_percent": null,
+    "source_url": "https://admission.brown.edu/explore/brown-admission-numbers"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة قبول الدوليين غير منشورة."
+  ],
+  "application_fee": {
+    "fee_usd": 80,
+    "waiver": "not_stated",
+    "note_ar": "الإعفاء التلقائي لبرامج أمريكية للدخل المحدود، والصفحة لا تذكر الدوليين",
+    "source_url": "https://admission.brown.edu/apply/how-apply"
+  }
+}

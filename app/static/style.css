@@ -803,7 +803,8 @@ main:has(> .hero) {
   color: var(--on-lime);
 }
 
-.status--not_open {
+.status--not_open,
+.status--opening_soon {
   --chip: var(--amber);
 }
 
@@ -1948,6 +1949,17 @@ main:has(> .hero) {
 
 .filters-toggle {
   justify-self: start;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding-block: 6px;
+  text-align: start;
+}
+
+.filters-toggle-hint {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-muted);
 }
 
 .filters-count {
@@ -2036,12 +2048,14 @@ main:has(> .hero) {
   list-style: none;
 }
 
+/* A chip is a label plus its own ✕ (decision 048): only the ✕ removes the filter. */
 .applied-chip {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  min-height: 36px;
-  padding: 2px 14px;
+  gap: var(--space-1);
+  min-height: 44px;
+  padding-block: 2px;
+  padding-inline: 14px 4px;
   border: 1.5px solid var(--heading);
   border-radius: 999px;
   background: var(--surface-strong);
@@ -2051,17 +2065,31 @@ main:has(> .hero) {
   text-decoration: none;
 }
 
-.applied-chip:hover {
-  background: color-mix(in srgb, var(--heading) 10%, var(--surface-strong));
+/* The ✕: a 36px circle inside the 44px chip, so the target is easy to hit (WCAG 2.5.8 asks for 24px). */
+.applied-x {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--heading);
 }
 
-.applied-x {
-  font-size: var(--text-xs);
+.applied-x:hover {
+  background: color-mix(in srgb, var(--heading) 12%, var(--surface-strong));
+}
+
+.applied-x:focus-visible {
+  border-radius: 50%; /* the focus ring follows the circle */
 }
 
 .applied-clear {
-  display: inline-block;
-  padding: 6px 4px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--space-2);
   font-size: var(--text-sm);
   font-weight: 700;
 }
@@ -2338,6 +2366,39 @@ a.uni-name:hover .uni-name-en:only-child {
   align-items: center;
   margin-bottom: var(--space-3);
 }
+
+/* Logo and flag (decision 049), on the university's own page only. The logo sits on a white plate
+   so dark logos stay visible in dark mode; it never grows past 64px tall or 220px wide. */
+.uni-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 220px;
+  max-height: 64px;
+  margin-block-end: var(--space-3);
+  padding: var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-sizing: content-box;
+}
+
+.uni-flag {
+  flex: none;
+  width: 20px;
+  height: 15px;
+  margin-inline-end: 6px;
+  vertical-align: -2px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--line);  /* white flags (JP, KR) keep their edge */
+}
+
+.uni-header-meta .uni-flag {
+  width: 24px;
+  height: 18px;
+  vertical-align: -3px;
+}
+
 
 /* «احفظ في قائمتي»: an outlined button beside the facts, never louder than them. */
 .save-area {
@@ -2969,4 +3030,69 @@ a.uni-name:hover .uni-name-en:only-child {
   .path-item-name {
     font-size: 1.65rem;
   }
+}
+
+/* ---------- Site search (/search, decision 045) ---------- */
+
+.hero-guide-search {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-sm);
+}
+
+.not-found-search {
+  margin-block: var(--space-4);
+}
+
+.site-search-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.site-search-row .input {
+  flex: 1;
+  min-width: 0;
+}
+
+.site-search-count {
+  margin-block: var(--space-4) var(--space-2);
+  font-weight: 700;
+}
+
+.site-search-title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-lg);
+}
+
+.site-search-snippet {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+/* ---------- US applications guide: fee waivers by university (decision 050) ---------- */
+
+.us-fees {
+  margin-block: var(--space-5);
+}
+
+.us-fees-group {
+  border-bottom: 1px solid var(--line);
+}
+
+.us-fees-group > summary {
+  min-height: 44px;
+  padding-block: var(--space-2);
+  font-weight: 700;
+  color: var(--heading);
+  cursor: pointer;
+}
+
+.us-fees-group .rows > li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.us-fees-fee {
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
 }

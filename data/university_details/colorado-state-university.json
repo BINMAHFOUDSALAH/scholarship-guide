@@ -1,0 +1,70 @@
+{
+  "id": "colorado-state-university",
+  "name_en": "Colorado State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.colostate.edu/apply/international-freshmen/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://admissions.colostate.edu/apply/international-freshmen/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 في IELTS Academic للقبول المباشر.",
+      "source_url": "https://international.colostate.edu/iec/international-admissions/english-language-proficiency/"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "4.0 للاختبارات بعد يناير 2026، و72 قبل ذلك.",
+      "source_url": "https://international.colostate.edu/iec/international-admissions/english-language-proficiency/"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110.",
+      "source_url": "https://international.colostate.edu/iec/international-admissions/english-language-proficiency/"
+    },
+    "note_ar": "من لا يحقق شرط اللغة قد يُقبل مشروطًا مع برنامج الإنجليزية المكثف."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "الجامعة لا تشترط SAT أو ACT، ولا تعطيها وزنًا كبيرًا.",
+    "source_url": "https://admissions.colostate.edu/apply/international-freshmen/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-15",
+      "year_stated": false,
+      "source_url": "https://admissions.colostate.edu/apply/international-freshmen/",
+      "note_ar": "الملف كاملًا"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://admissions.colostate.edu/apply/international-freshmen/",
+      "note_ar": "الملف كاملًا"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 88.6,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS، C1): ‏34,004 من 38,365",
+    "international_percent": null,
+    "source_url": "https://www.ir.colostate.edu/wp-content/uploads/sites/21/2026/03/CSU_CDS_FY2026_Access.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 65,
+    "waiver": "own_waiver",
+    "note_ar": "لمن تشكل الرسوم عليه صعوبة مالية، ويُطلب داخل طلب القبول",
+    "source_url": "https://admissions.colostate.edu/apply/international-freshmen/"
+  }
+}

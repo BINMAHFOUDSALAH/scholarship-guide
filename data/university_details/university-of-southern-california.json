@@ -1,0 +1,70 @@
+{
+  "id": "university-of-southern-california",
+  "name_en": "University of Southern California",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/first-year-students/"
+  },
+  "english": {
+    "ielts": {
+      "min": 7,
+      "note_ar": "7.",
+      "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/"
+    },
+    "toefl_ibt": {
+      "min": 5,
+      "note_ar": "5 فأكثر وكل قسم 4 فأكثر (من 21 يناير 2026)، أو 100 قبل ذلك.",
+      "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/"
+    },
+    "duolingo": {
+      "min": 130,
+      "note_ar": "130.",
+      "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/"
+    },
+    "note_ar": "لا استثناءات من شرط اللغة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب للمتقدمين للعام 2027–2028.",
+    "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision / Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/first-year-students/",
+      "note_ar": "Early Decision ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-10",
+      "year_stated": false,
+      "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/first-year-students/",
+      "note_ar": "تخصصات الفنون الأدائية: 1 ديسمبر"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 11.2,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–26، C1): ‏9,345 من 83,488",
+    "international_percent": 13.7,
+    "source_url": "https://oir.usc.edu/wp-content/uploads/sites/3/2026/10/CDS_2025-26_FINAL.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": null,
+    "waiver": "accepts_common_app",
+    "note_ar": "يُطلب من قسم Profile في Common App إن كانت الرسوم عبئًا ماليًا",
+    "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/first-year-students/"
+  }
+}

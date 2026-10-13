@@ -1,0 +1,1475 @@
+{
+  "_note": "Official university logos, shown only on each university's own page (decision 049). Keyed by university id. file: path under app/static/ (SVG or PNG, self-hosted); source_url: the page where the logo was found (the university's own site or its Wikimedia Commons file page); asset_url: the file downloaded; licence: as stated on the source (Commons licence, or 'official website, trademark'); retrieved: date downloaded. A university with no entry shows no logo.",
+  "logos": {
+    "arizona-state-university": {
+      "file": "img/universities/arizona-state-university.png",
+      "width": 220,
+      "height": 42,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Arizona_State_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Arizona_State_University_logo.svg/500px-Arizona_State_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q670897",
+      "retrieved": "2026-10-12"
+    },
+    "boston-university": {
+      "file": "img/universities/boston-university.png",
+      "width": 142,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Boston_University_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Boston_University_wordmark.svg/330px-Boston_University_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49110",
+      "retrieved": "2026-10-12"
+    },
+    "brown-university": {
+      "file": "img/universities/brown-university.png",
+      "width": 220,
+      "height": 40,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Brown_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Brown_University_logo.svg/500px-Brown_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49114",
+      "retrieved": "2026-10-12"
+    },
+    "ca-foscari-university-of-venice": {
+      "file": "img/universities/ca-foscari-university-of-venice.png",
+      "width": 50,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Universit%C3%A0_Ca%27_Foscari_Venezia.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Logo_Universit%C3%A0_Ca%27_Foscari_Venezia.svg/120px-Logo_Universit%C3%A0_Ca%27_Foscari_Venezia.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1546906",
+      "retrieved": "2026-10-12"
+    },
+    "california-institute-of-technology-caltech": {
+      "file": "img/universities/california-institute-of-technology-caltech.png",
+      "width": 220,
+      "height": 53,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Caltech_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Caltech_Logo.svg/500px-Caltech_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q161562",
+      "retrieved": "2026-10-12"
+    },
+    "cardiff-university": {
+      "file": "img/universities/cardiff-university.png",
+      "width": 66,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cardiff_University_(logo).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Cardiff_University_%28logo%29.svg/250px-Cardiff_University_%28logo%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1035745",
+      "retrieved": "2026-10-12"
+    },
+    "carnegie-mellon-university": {
+      "file": "img/universities/carnegie-mellon-university.png",
+      "width": 220,
+      "height": 20,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Carnegie_Mellon_University_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Carnegie_Mellon_University_wordmark.svg/500px-Carnegie_Mellon_University_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q190080",
+      "retrieved": "2026-10-12"
+    },
+    "case-western-reserve-university": {
+      "file": "img/universities/case-western-reserve-university.png",
+      "width": 220,
+      "height": 22,
+      "source_url": "https://commons.wikimedia.org/wiki/File:CWRU_Two-line_horizontal_logo_Blue.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/CWRU_Two-line_horizontal_logo_Blue.svg/500px-CWRU_Two-line_horizontal_logo_Blue.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1047060",
+      "retrieved": "2026-10-12"
+    },
+    "colorado-school-of-mines": {
+      "file": "img/universities/colorado-school-of-mines.png",
+      "width": 209,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Colorado_school_mines_logo.png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Colorado_school_mines_logo.png/500px-Colorado_school_mines_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1111367",
+      "retrieved": "2026-10-12"
+    },
+    "colorado-state-university": {
+      "file": "img/universities/colorado-state-university.png",
+      "width": 148,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Colorado_State_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Colorado_State_University_logo.svg/330px-Colorado_State_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1111640",
+      "retrieved": "2026-10-12"
+    },
+    "columbia-university": {
+      "file": "img/universities/columbia-university.png",
+      "width": 49,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Columbia_University.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Coat_of_Arms_of_Columbia_University.svg/120px-Coat_of_Arms_of_Columbia_University.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC0",
+      "wikidata": "https://www.wikidata.org/wiki/Q49088",
+      "retrieved": "2026-10-12"
+    },
+    "complutense-university-of-madrid": {
+      "file": "img/universities/complutense-university-of-madrid.png",
+      "width": 56,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Universidad_Complutense_de_Madrid.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Escudo_de_la_Universidad_Complutense_de_Madrid.svg/120px-Escudo_de_la_Universidad_Complutense_de_Madrid.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 3.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q219694",
+      "retrieved": "2026-10-12"
+    },
+    "curtin-university": {
+      "file": "img/universities/curtin-university.png",
+      "width": 183,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:CurtinUni_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/CurtinUni_Logo.svg/500px-CurtinUni_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1145497",
+      "retrieved": "2026-10-12"
+    },
+    "dalhousie-university": {
+      "file": "img/universities/dalhousie-university.png",
+      "width": 165,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Dalhousie_University_Wordmark_2014.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Dalhousie_University_Wordmark_2014.svg/500px-Dalhousie_University_Wordmark_2014.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q579321",
+      "retrieved": "2026-10-12"
+    },
+    "delft-university-of-technology": {
+      "file": "img/universities/delft-university-of-technology.png",
+      "width": 63,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Zegel_Technische_Universiteit_Delft.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Zegel_Technische_Universiteit_Delft.svg/250px-Zegel_Technische_Universiteit_Delft.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q752663",
+      "retrieved": "2026-10-12"
+    },
+    "digipen-institute-of-technology": {
+      "file": "img/universities/digipen-institute-of-technology.png",
+      "width": 136,
+      "height": 38,
+      "source_url": "https://commons.wikimedia.org/wiki/File:DigiPen_web_logo.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/DigiPen_web_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1027869",
+      "retrieved": "2026-10-12"
+    },
+    "duke-university": {
+      "file": "img/universities/duke-university.png",
+      "width": 146,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Duke_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Duke_University_logo.svg/330px-Duke_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q168751",
+      "retrieved": "2026-10-12"
+    },
+    "eindhoven-university-of-technology": {
+      "file": "img/universities/eindhoven-university-of-technology.png",
+      "width": 192,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Eindhoven_University_of_Technology_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Eindhoven_University_of_Technology_logo.svg/500px-Eindhoven_University_of_Technology_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q280824",
+      "retrieved": "2026-10-12"
+    },
+    "erasmus-university-rotterdam": {
+      "file": "img/universities/erasmus-university-rotterdam.png",
+      "width": 216,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Erasmus_Universiteit_Rotterdam.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Logo_Erasmus_Universiteit_Rotterdam.svg/500px-Logo_Erasmus_Universiteit_Rotterdam.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Copyrighted free use",
+      "wikidata": "https://www.wikidata.org/wiki/Q633529",
+      "retrieved": "2026-10-12"
+    },
+    "eth-zurich": {
+      "file": "img/universities/eth-zurich.png",
+      "width": 220,
+      "height": 37,
+      "source_url": "https://commons.wikimedia.org/wiki/File:ETH_Z%C3%BCrich_Logo_black.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/ETH_Z%C3%BCrich_Logo_black.svg/500px-ETH_Z%C3%BCrich_Logo_black.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q11942",
+      "retrieved": "2026-10-12"
+    },
+    "florida-state-university": {
+      "file": "img/universities/florida-state-university.png",
+      "width": 220,
+      "height": 47,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Florida_State_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Florida_State_University_logo.svg/500px-Florida_State_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q861548",
+      "retrieved": "2026-10-12"
+    },
+    "freie-universitaet-berlin": {
+      "file": "img/universities/freie-universitaet-berlin.png",
+      "width": 190,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Freie_Universit%C3%A4t_Berlin_Logo_05.2024.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Freie_Universit%C3%A4t_Berlin_Logo_05.2024.svg/500px-Freie_Universit%C3%A4t_Berlin_Logo_05.2024.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q153006",
+      "retrieved": "2026-10-12"
+    },
+    "fudan-university": {
+      "file": "img/universities/fudan-university.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Fudan_University_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Fudan_University_Logo.svg/250px-Fudan_University_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q495015",
+      "retrieved": "2026-10-12"
+    },
+    "gallaudet-university": {
+      "file": "img/universities/gallaudet-university.png",
+      "width": 160,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Gallaudet_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Gallaudet_University_logo.svg/330px-Gallaudet_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1056373",
+      "retrieved": "2026-10-12"
+    },
+    "george-washington-university": {
+      "file": "img/universities/george-washington-university.png",
+      "width": 84,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:George_Washington_University_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/George_Washington_University_wordmark.svg/250px-George_Washington_University_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q432637",
+      "retrieved": "2026-10-12"
+    },
+    "georgetown-university": {
+      "file": "img/universities/georgetown-university.png",
+      "width": 220,
+      "height": 46,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Georgetown_University_Logotype.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Georgetown_University_Logotype.svg/500px-Georgetown_University_Logotype.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q333886",
+      "retrieved": "2026-10-12"
+    },
+    "georgia-institute-of-technology": {
+      "file": "img/universities/georgia-institute-of-technology.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Georgia_Tech_seal.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Georgia_Tech_seal.svg/250px-Georgia_Tech_seal.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q864855",
+      "retrieved": "2026-10-12"
+    },
+    "harvard-university": {
+      "file": "img/universities/harvard-university.png",
+      "width": 220,
+      "height": 60,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Harvard_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Harvard_University_logo.svg/500px-Harvard_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q13371",
+      "retrieved": "2026-10-12"
+    },
+    "hokkaido-university": {
+      "file": "img/universities/hokkaido-university.png",
+      "width": 220,
+      "height": 60,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hokkaido_University_logo,_2.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Hokkaido_University_logo%2C_2.svg/500px-Hokkaido_University_logo%2C_2.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1057199",
+      "retrieved": "2026-10-12"
+    },
+    "humboldt-universitat-zu-berlin": {
+      "file": "img/universities/humboldt-universitat-zu-berlin.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Huberlin-logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Huberlin-logo.svg/250px-Huberlin-logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q152087",
+      "retrieved": "2026-10-12"
+    },
+    "imperial-college-london": {
+      "file": "img/universities/imperial-college-london.png",
+      "width": 220,
+      "height": 24,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Imperial_College_London_new_logo.png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Imperial_College_London_new_logo.png/1280px-Imperial_College_London_new_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q189022",
+      "retrieved": "2026-10-12"
+    },
+    "indian-institute-of-technology-madras-iitm": {
+      "file": "img/universities/indian-institute-of-technology-madras-iitm.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:IIT_Madras_Logo_(Black_and_White).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/IIT_Madras_Logo_%28Black_and_White%29.svg/250px-IIT_Madras_Logo_%28Black_and_White%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q858662",
+      "retrieved": "2026-10-12"
+    },
+    "indiana-university-bloomington": {
+      "file": "img/universities/indiana-university-bloomington.png",
+      "width": 220,
+      "height": 34,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Indiana_University_logotype.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Indiana_University_logotype.svg/500px-Indiana_University_logotype.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1079140",
+      "retrieved": "2026-10-12"
+    },
+    "iowa-state-university": {
+      "file": "img/universities/iowa-state-university.png",
+      "width": 194,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Iowa_State_University_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Iowa_State_University_wordmark.svg/500px-Iowa_State_University_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1136919",
+      "retrieved": "2026-10-12"
+    },
+    "johns-hopkins-university": {
+      "file": "img/universities/johns-hopkins-university.png",
+      "width": 220,
+      "height": 54,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Johns_Hopkins_University_logo.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/5/51/Johns_Hopkins_University_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q193727",
+      "retrieved": "2026-10-12"
+    },
+    "kansas-state-university": {
+      "file": "img/universities/kansas-state-university.png",
+      "width": 220,
+      "height": 52,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kansas_State_University_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Kansas_State_University_wordmark.svg/500px-Kansas_State_University_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q31249",
+      "retrieved": "2026-10-12"
+    },
+    "karlsruhe-institute-of-technology-kit": {
+      "file": "img/universities/karlsruhe-institute-of-technology-kit.png",
+      "width": 128,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_KIT.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Logo_KIT.svg/330px-Logo_KIT.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q309988",
+      "retrieved": "2026-10-12"
+    },
+    "king-s-college-london": {
+      "file": "img/universities/king-s-college-london.png",
+      "width": 96,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kcl-logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Kcl-logo.svg/250px-Kcl-logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q245247",
+      "retrieved": "2026-10-12"
+    },
+    "korea-university": {
+      "file": "img/universities/korea-university.png",
+      "width": 141,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Korea_University_logotype_(English_version).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Korea_University_logotype_%28English_version%29.svg/330px-Korea_University_logotype_%28English_version%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q39997",
+      "retrieved": "2026-10-12"
+    },
+    "kyoto-university": {
+      "file": "img/universities/kyoto-university.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kyoto_University_emblem.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Kyoto_University_emblem.svg/250px-Kyoto_University_emblem.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q336264",
+      "retrieved": "2026-10-12"
+    },
+    "leiden-university": {
+      "file": "img/universities/leiden-university.png",
+      "width": 144,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:UniversiteitLeidenLogo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/UniversiteitLeidenLogo.svg/330px-UniversiteitLeidenLogo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 3.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q156598",
+      "retrieved": "2026-10-12"
+    },
+    "london-business-school": {
+      "file": "img/universities/london-business-school.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:London_Business_School_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/London_Business_School_logo.svg/250px-London_Business_School_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1481050",
+      "retrieved": "2026-10-12"
+    },
+    "ludwig-maximilians-universitat-munchen": {
+      "file": "img/universities/ludwig-maximilians-universitat-munchen.png",
+      "width": 122,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:LMU_Muenchen_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/LMU_Muenchen_Logo.svg/250px-LMU_Muenchen_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q55044",
+      "retrieved": "2026-10-12"
+    },
+    "macquarie-university": {
+      "file": "img/universities/macquarie-university.png",
+      "width": 214,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Macquarie_University_International_brandmark_%E2%80%93_Horizontal_configuration.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Macquarie_University_International_brandmark_%E2%80%93_Horizontal_configuration.svg/500px-Macquarie_University_International_brandmark_%E2%80%93_Horizontal_configuration.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC0",
+      "wikidata": "https://www.wikidata.org/wiki/Q741082",
+      "retrieved": "2026-10-12"
+    },
+    "massachusetts-institute-of-technology-mit": {
+      "file": "img/universities/massachusetts-institute-of-technology-mit.png",
+      "width": 114,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:MIT_2023_red_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/MIT_2023_red_logo.svg/250px-MIT_2023_red_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49108",
+      "retrieved": "2026-10-12"
+    },
+    "mcgill-university": {
+      "file": "img/universities/mcgill-university.png",
+      "width": 220,
+      "height": 53,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Mcgill_univ_ca_logo.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/1/11/Mcgill_univ_ca_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q201492",
+      "retrieved": "2026-10-12"
+    },
+    "michigan-state-university": {
+      "file": "img/universities/michigan-state-university.png",
+      "width": 220,
+      "height": 52,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Michigan_State_University_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/Michigan_State_University_wordmark.svg/500px-Michigan_State_University_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q270222",
+      "retrieved": "2026-10-12"
+    },
+    "murdoch-university": {
+      "file": "img/universities/murdoch-university.png",
+      "width": 220,
+      "height": 45,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Murdoch_University_extended_logo.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Murdoch_University_extended_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q1375146",
+      "retrieved": "2026-10-12"
+    },
+    "nagoya-university": {
+      "file": "img/universities/nagoya-university.png",
+      "width": 220,
+      "height": 50,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Nagoya_University_logo,_type_1.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Nagoya_University_logo%2C_type_1.svg/500px-Nagoya_University_logo%2C_type_1.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1191132",
+      "retrieved": "2026-10-12"
+    },
+    "new-york-university-nyu": {
+      "file": "img/universities/new-york-university-nyu.png",
+      "width": 187,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Nyu_short_color.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Nyu_short_color.svg/500px-Nyu_short_color.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49210",
+      "retrieved": "2026-10-12"
+    },
+    "north-carolina-state-university": {
+      "file": "img/universities/north-carolina-state-university.png",
+      "width": 220,
+      "height": 20,
+      "source_url": "https://commons.wikimedia.org/wiki/File:North_Carolina_State_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/North_Carolina_State_University_logo.svg/500px-North_Carolina_State_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1132346",
+      "retrieved": "2026-10-12"
+    },
+    "northeastern-university": {
+      "file": "img/universities/northeastern-university.png",
+      "width": 200,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Northeastern_Wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Northeastern_Wordmark.svg/500px-Northeastern_Wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q37548",
+      "retrieved": "2026-10-12"
+    },
+    "northwestern-university": {
+      "file": "img/universities/northwestern-university.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Northwestern_University.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Northwestern_University.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q309350",
+      "retrieved": "2026-10-12"
+    },
+    "oregon-state-university": {
+      "file": "img/universities/oregon-state-university.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Oregon_State_University_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Oregon_State_University_wordmark.svg/250px-Oregon_State_University_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q861888",
+      "retrieved": "2026-10-12"
+    },
+    "pennsylvania-state-university": {
+      "file": "img/universities/pennsylvania-state-university.png",
+      "width": 220,
+      "height": 32,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Penn_state_university_textlogo.png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Penn_state_university_textlogo.png/960px-Penn_state_university_textlogo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q739627",
+      "retrieved": "2026-10-12"
+    },
+    "pohang-university-of-science-and-technology-postech": {
+      "file": "img/universities/pohang-university-of-science-and-technology-postech.png",
+      "width": 220,
+      "height": 19,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Postech_Logotype.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Postech_Logotype.svg/500px-Postech_Logotype.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q40018",
+      "retrieved": "2026-10-12"
+    },
+    "princeton-university": {
+      "file": "img/universities/princeton-university.png",
+      "width": 220,
+      "height": 57,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Princeton_text_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Princeton_text_logo.svg/500px-Princeton_text_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q21578",
+      "retrieved": "2026-10-12"
+    },
+    "purdue-university": {
+      "file": "img/universities/purdue-university.png",
+      "width": 220,
+      "height": 40,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Purdue_University_system_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Purdue_University_system_logo.svg/500px-Purdue_University_system_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q217741",
+      "retrieved": "2026-10-12"
+    },
+    "queen-mary-university-of-london": {
+      "file": "img/universities/queen-mary-university-of-london.png",
+      "width": 76,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Queen_Mary_University_of_London_coat_of_arms.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Queen_Mary_University_of_London_coat_of_arms.svg/250px-Queen_Mary_University_of_London_coat_of_arms.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 3.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q195668",
+      "retrieved": "2026-10-12"
+    },
+    "rice-university": {
+      "file": "img/universities/rice-university.png",
+      "width": 126,
+      "height": 49,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rice_University_Logo.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Rice_University_Logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q842909",
+      "retrieved": "2026-10-12"
+    },
+    "rmit-university": {
+      "file": "img/universities/rmit-university.png",
+      "width": 182,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:RMIT_University_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/RMIT_University_Logo.svg/500px-RMIT_University_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1057890",
+      "retrieved": "2026-10-12"
+    },
+    "rutgers-universitynew-brunswick": {
+      "file": "img/universities/rutgers-universitynew-brunswick.png",
+      "width": 72,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rutgers_Scarlet_Knights_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Rutgers_Scarlet_Knights_logo.svg/250px-Rutgers_Scarlet_Knights_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q7382826",
+      "retrieved": "2026-10-12"
+    },
+    "rwth-aachen-university": {
+      "file": "img/universities/rwth-aachen-university.png",
+      "width": 220,
+      "height": 60,
+      "source_url": "https://commons.wikimedia.org/wiki/File:RWTH_Logo_3.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/RWTH_Logo_3.svg/500px-RWTH_Logo_3.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q273263",
+      "retrieved": "2026-10-12"
+    },
+    "sapienza-university-of-rome": {
+      "file": "img/universities/sapienza-university-of-rome.png",
+      "width": 212,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Uniroma1.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Uniroma1.svg/500px-Uniroma1.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q209344",
+      "retrieved": "2026-10-12"
+    },
+    "sejong-university": {
+      "file": "img/universities/sejong-university.png",
+      "width": 166,
+      "height": 60,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sejong_univ.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Sejong_univ.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q491711",
+      "retrieved": "2026-10-12"
+    },
+    "seoul-national-university": {
+      "file": "img/universities/seoul-national-university.png",
+      "width": 220,
+      "height": 56,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Seoul_national_university_logotype.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Seoul_national_university_logotype.svg/500px-Seoul_national_university_logotype.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q39913",
+      "retrieved": "2026-10-12"
+    },
+    "sorbonne-university": {
+      "file": "img/universities/sorbonne-university.png",
+      "width": 158,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_of_Sorbonne_University.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Logo_of_Sorbonne_University.svg/330px-Logo_of_Sorbonne_University.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q41497113",
+      "retrieved": "2026-10-12"
+    },
+    "southeast-university": {
+      "file": "img/universities/southeast-university.png",
+      "width": 156,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Southeast_University_Name.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Southeast_University_Name.svg/330px-Southeast_University_Name.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q3551770",
+      "retrieved": "2026-10-12"
+    },
+    "stanford-university": {
+      "file": "img/universities/stanford-university.png",
+      "width": 220,
+      "height": 46,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Stanford_wordmark_(2012).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Stanford_wordmark_%282012%29.svg/500px-Stanford_wordmark_%282012%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q41506",
+      "retrieved": "2026-10-12"
+    },
+    "sungkyunkwan-university-skku": {
+      "file": "img/universities/sungkyunkwan-university-skku.png",
+      "width": 220,
+      "height": 49,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sungkyunkwan_University_-_logotype_(ko%2Ben).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Sungkyunkwan_University_-_logotype_%28ko%2Ben%29.svg/500px-Sungkyunkwan_University_-_logotype_%28ko%2Ben%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q41085",
+      "retrieved": "2026-10-12"
+    },
+    "technical-university-of-munich": {
+      "file": "img/universities/technical-university-of-munich.png",
+      "width": 196,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:TU_Muenchen_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/TU_Muenchen_Logo.svg/500px-TU_Muenchen_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q157808",
+      "retrieved": "2026-10-12"
+    },
+    "technische-universitat-berlin-tu-berlin": {
+      "file": "img/universities/technische-universitat-berlin-tu-berlin.png",
+      "width": 114,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_der_Technischen_Universit%C3%A4t_Berlin.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Logo_der_Technischen_Universit%C3%A4t_Berlin.svg/250px-Logo_der_Technischen_Universit%C3%A4t_Berlin.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q51985",
+      "retrieved": "2026-10-12"
+    },
+    "temple-university": {
+      "file": "img/universities/temple-university.png",
+      "width": 220,
+      "height": 61,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Temple_University_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/67/Temple_University_Logo.svg/500px-Temple_University_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1420239",
+      "retrieved": "2026-10-12"
+    },
+    "texas-a-m-university": {
+      "file": "img/universities/texas-a-m-university.png",
+      "width": 78,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Texas_A%26M_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Texas_A%26M_University_logo.svg/250px-Texas_A%26M_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49212",
+      "retrieved": "2026-10-12"
+    },
+    "the-ohio-state-university": {
+      "file": "img/universities/the-ohio-state-university.png",
+      "width": 220,
+      "height": 33,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ohio_State_University_horizontal_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Ohio_State_University_horizontal_logo.svg/500px-Ohio_State_University_horizontal_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q309331",
+      "retrieved": "2026-10-12"
+    },
+    "the-university-of-adelaide": {
+      "file": "img/universities/the-university-of-adelaide.png",
+      "width": 68,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_the_University_of_Adelaide.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Arms_of_the_University_of_Adelaide.svg/250px-Arms_of_the_University_of_Adelaide.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q15574",
+      "retrieved": "2026-10-12"
+    },
+    "the-university-of-osaka": {
+      "file": "img/universities/the-university-of-osaka.png",
+      "width": 220,
+      "height": 56,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Osaka_logo,_B_(2009-2025).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/University_of_Osaka_logo%2C_B_%282009-2025%29.svg/500px-University_of_Osaka_logo%2C_B_%282009-2025%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 3.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q651233",
+      "retrieved": "2026-10-12"
+    },
+    "the-university-of-sheffield": {
+      "file": "img/universities/the-university-of-sheffield.png",
+      "width": 52,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Shield_of_the_University_of_Sheffield.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Shield_of_the_University_of_Sheffield.svg/120px-Shield_of_the_University_of_Sheffield.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q823917",
+      "retrieved": "2026-10-12"
+    },
+    "the-university-of-tokyo": {
+      "file": "img/universities/the-university-of-tokyo.png",
+      "width": 220,
+      "height": 53,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Tokyo_logo_(2024).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/University_of_Tokyo_logo_%282024%29.svg/500px-University_of_Tokyo_logo_%282024%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q7842",
+      "retrieved": "2026-10-12"
+    },
+    "tilburg-university": {
+      "file": "img/universities/tilburg-university.png",
+      "width": 112,
+      "height": 38,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tilburg_University_logo.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Tilburg_University_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q595668",
+      "retrieved": "2026-10-12"
+    },
+    "tokyo-institute-of-technology-tokyo-tech": {
+      "file": "img/universities/tokyo-institute-of-technology-tokyo-tech.png",
+      "width": 220,
+      "height": 46,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tokyo_Institute_of_Technology_logo,_4.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Tokyo_Institute_of_Technology_logo%2C_4.svg/500px-Tokyo_Institute_of_Technology_logo%2C_4.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q587326",
+      "retrieved": "2026-10-12"
+    },
+    "universitat-de-barcelona": {
+      "file": "img/universities/universitat-de-barcelona.png",
+      "width": 134,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Barcelona.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Universit%C3%A4t_Barcelona.svg/330px-Universit%C3%A4t_Barcelona.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q219615",
+      "retrieved": "2026-10-12"
+    },
+    "universitat-hamburg": {
+      "file": "img/universities/universitat-hamburg.png",
+      "width": 196,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:UHH_Universit%C3%A4t_Hamburg_Logo_mit_Schrift_2010_Farbe_CMYK.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/UHH_Universit%C3%A4t_Hamburg_Logo_mit_Schrift_2010_Farbe_CMYK.svg/500px-UHH_Universit%C3%A4t_Hamburg_Logo_mit_Schrift_2010_Farbe_CMYK.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q156725",
+      "retrieved": "2026-10-12"
+    },
+    "universitat-konstanz": {
+      "file": "img/universities/universitat-konstanz.png",
+      "width": 126,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Universitat_Konstanz_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Universitat_Konstanz_logo.svg/330px-Universitat_Konstanz_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q835440",
+      "retrieved": "2026-10-12"
+    },
+    "universitat-mannheim": {
+      "file": "img/universities/universitat-mannheim.png",
+      "width": 220,
+      "height": 62,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Uni-mannheim.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/Uni-mannheim.svg/500px-Uni-mannheim.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q317070",
+      "retrieved": "2026-10-12"
+    },
+    "universite-de-montreal": {
+      "file": "img/universities/universite-de-montreal.png",
+      "width": 165,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Montreal_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/Universit%C3%A4t_Montreal_Logo.svg/500px-Universit%C3%A4t_Montreal_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q392189",
+      "retrieved": "2026-10-12"
+    },
+    "universite-paris-1-pantheon-sorbonne": {
+      "file": "img/universities/universite-paris-1-pantheon-sorbonne.png",
+      "width": 141,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Universit%C3%A9_Paris_1_Panth%C3%A9on-Sorbonne_2024.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Logo_Universit%C3%A9_Paris_1_Panth%C3%A9on-Sorbonne_2024.svg/330px-Logo_Universit%C3%A9_Paris_1_Panth%C3%A9on-Sorbonne_2024.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q999763",
+      "retrieved": "2026-10-12"
+    },
+    "universite-paris-cite": {
+      "file": "img/universities/universite-paris-cite.png",
+      "width": 168,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Universit%C3%A9_Paris-Cit%C3%A9_(partenariat_Wikim%C3%A9dia).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Logo_Universit%C3%A9_Paris-Cit%C3%A9_%28partenariat_Wikim%C3%A9dia%29.svg/500px-Logo_Universit%C3%A9_Paris-Cit%C3%A9_%28partenariat_Wikim%C3%A9dia%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q55849612",
+      "retrieved": "2026-10-12"
+    },
+    "universite-paris-saclay": {
+      "file": "img/universities/universite-paris-saclay.png",
+      "width": 188,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Universit%C3%A9_Paris-Saclay_(ComUE).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Logo_Universit%C3%A9_Paris-Saclay_%28ComUE%29.svg/500px-Logo_Universit%C3%A9_Paris-Saclay_%28ComUE%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q109409389",
+      "retrieved": "2026-10-12"
+    },
+    "universite-psl": {
+      "file": "img/universities/universite-psl.png",
+      "width": 156,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:LOGO-PSL-juin-2026.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/LOGO-PSL-juin-2026.svg/330px-LOGO-PSL-juin-2026.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1163431",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-amsterdam": {
+      "file": "img/universities/university-of-amsterdam.png",
+      "width": 220,
+      "height": 24,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Amsterdam_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/University_of_Amsterdam_logo.svg/500px-University_of_Amsterdam_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q214341",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-arizona": {
+      "file": "img/universities/university-of-arizona.png",
+      "width": 220,
+      "height": 54,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Arizona_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/University_of_Arizona_logo.svg/500px-University_of_Arizona_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q503419",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-basel": {
+      "file": "img/universities/university-of-basel.png",
+      "width": 202,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Basel_Logo.png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/University_of_Basel_Logo.png/500px-University_of_Basel_Logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q372608",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-bern": {
+      "file": "img/universities/university-of-bern.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Universit%C3%A4t_Bern.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Logo_Universit%C3%A4t_Bern.svg/250px-Logo_Universit%C3%A4t_Bern.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q659080",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-bordeaux": {
+      "file": "img/universities/university-of-bordeaux.png",
+      "width": 183,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Bordeaux_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Universit%C3%A4t_Bordeaux_Logo.svg/500px-Universit%C3%A4t_Bordeaux_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q13344",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-british-columbia": {
+      "file": "img/universities/university-of-british-columbia.png",
+      "width": 220,
+      "height": 49,
+      "source_url": "https://commons.wikimedia.org/wiki/File:British_columbia_ca_univ_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/British_columbia_ca_univ_logo.svg/500px-British_columbia_ca_univ_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q391028",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-california-berkeley-ucb": {
+      "file": "img/universities/university-of-california-berkeley-ucb.png",
+      "width": 202,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_California,_Berkeley_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/University_of_California%2C_Berkeley_logo.svg/500px-University_of_California%2C_Berkeley_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q168756",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-california-davis": {
+      "file": "img/universities/university-of-california-davis.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:The_University_of_California_Davis.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/The_University_of_California_Davis.svg/250px-The_University_of_California_Davis.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q129421",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-california-irvine": {
+      "file": "img/universities/university-of-california-irvine.png",
+      "width": 148,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_California,_Irvine_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/University_of_California%2C_Irvine_logo.svg/330px-University_of_California%2C_Irvine_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q868421",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-california-los-angeles-ucla": {
+      "file": "img/universities/university-of-california-los-angeles-ucla.png",
+      "width": 195,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_California,_Los_Angeles_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/University_of_California%2C_Los_Angeles_logo.svg/500px-University_of_California%2C_Los_Angeles_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q174710",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-california-riverside": {
+      "file": "img/universities/university-of-california-riverside.png",
+      "width": 220,
+      "height": 44,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_California,_Riverside_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/University_of_California%2C_Riverside_logo.svg/500px-University_of_California%2C_Riverside_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1075148",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-california-san-diego-ucsd": {
+      "file": "img/universities/university-of-california-san-diego-ucsd.png",
+      "width": 220,
+      "height": 43,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_California,_San_Diego_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cc/University_of_California%2C_San_Diego_logo.svg/500px-University_of_California%2C_San_Diego_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q622664",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-california-santa-barbara-ucsb": {
+      "file": "img/universities/university-of-california-santa-barbara-ucsb.png",
+      "width": 220,
+      "height": 18,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_California,_Santa_Barbara_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/University_of_California%2C_Santa_Barbara_logo.svg/500px-University_of_California%2C_Santa_Barbara_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q263064",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-cambridge": {
+      "file": "img/universities/university-of-cambridge.png",
+      "width": 220,
+      "height": 48,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Cambridge_logo.png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/University_of_Cambridge_logo.png/960px-University_of_Cambridge_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q35794",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-chicago": {
+      "file": "img/universities/university-of-chicago.png",
+      "width": 220,
+      "height": 56,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Chicago_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/University_of_Chicago_wordmark.svg/500px-University_of_Chicago_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q131252",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-cologne": {
+      "file": "img/universities/university-of-cologne.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Siegel_Uni_K%C3%B6ln_(grau).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Siegel_Uni_K%C3%B6ln_%28grau%29.svg/250px-Siegel_Uni_K%C3%B6ln_%28grau%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q54096",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-colorado-boulder": {
+      "file": "img/universities/university-of-colorado-boulder.png",
+      "width": 220,
+      "height": 34,
+      "source_url": "https://commons.wikimedia.org/wiki/File:UC_Boulder_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/UC_Boulder_logo.svg/500px-UC_Boulder_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q736674",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-delaware": {
+      "file": "img/universities/university-of-delaware.png",
+      "width": 151,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Delaware_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/University_of_Delaware_wordmark.svg/330px-University_of_Delaware_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1068072",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-essex": {
+      "file": "img/universities/university-of-essex.png",
+      "width": 126,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Essex_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/University_of_Essex_logo.svg/330px-University_of_Essex_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1075104",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-florida": {
+      "file": "img/universities/university-of-florida.png",
+      "width": 220,
+      "height": 42,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Florida_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/University_of_Florida_logo.svg/500px-University_of_Florida_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q501758",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-geneva": {
+      "file": "img/universities/university-of-geneva.png",
+      "width": 220,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Uni_GE_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Uni_GE_logo.svg/500px-Uni_GE_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q503473",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-gottingen": {
+      "file": "img/universities/university-of-gottingen.png",
+      "width": 220,
+      "height": 44,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Georg-August-Universit%C3%A4t_G%C3%B6ttingen_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Georg-August-Universit%C3%A4t_G%C3%B6ttingen_Logo.svg/500px-Georg-August-Universit%C3%A4t_G%C3%B6ttingen_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q152838",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-guelph": {
+      "file": "img/universities/university-of-guelph.png",
+      "width": 196,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Guelph_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/University_of_Guelph_logo.svg/500px-University_of_Guelph_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q795988",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-hohenheim": {
+      "file": "img/universities/university-of-hohenheim.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Uni_Hohenheim-Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Uni_Hohenheim-Logo.svg/250px-Uni_Hohenheim-Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q690912",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-houston": {
+      "file": "img/universities/university-of-houston.png",
+      "width": 220,
+      "height": 57,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Houston_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/University_of_Houston_logo.svg/500px-University_of_Houston_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1472358",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-illinois-at-urbana-champaign": {
+      "file": "img/universities/university-of-illinois-at-urbana-champaign.png",
+      "width": 220,
+      "height": 40,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Illinois_at_Urbana%E2%80%93Champaign_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/University_of_Illinois_at_Urbana%E2%80%93Champaign_logo.svg/500px-University_of_Illinois_at_Urbana%E2%80%93Champaign_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q457281",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-lausanne": {
+      "file": "img/universities/university-of-lausanne.png",
+      "width": 170,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Universit%C3%A9_de_Lausanne.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Logo_Universit%C3%A9_de_Lausanne.svg/500px-Logo_Universit%C3%A9_de_Lausanne.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q658975",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-macau": {
+      "file": "img/universities/university-of-macau.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Macau_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/University_of_Macau_logo.svg/250px-University_of_Macau_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1563050",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-manchester": {
+      "file": "img/universities/university-of-manchester.png",
+      "width": 205,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Manchester_University_Logo_(2).png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Manchester_University_Logo_%282%29.png/500px-Manchester_University_Logo_%282%29.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q230899",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-massachusetts-amherst": {
+      "file": "img/universities/university-of-massachusetts-amherst.png",
+      "width": 220,
+      "height": 28,
+      "source_url": "https://commons.wikimedia.org/wiki/File:UMassAmherst_logo.png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/UMassAmherst_logo.png/1280px-UMassAmherst_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q15142",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-oxford": {
+      "file": "img/universities/university-of-oxford.png",
+      "width": 216,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Oxford.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/University_of_Oxford.svg/500px-University_of_Oxford.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q34433",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-pennsylvania": {
+      "file": "img/universities/university-of-pennsylvania.png",
+      "width": 57,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Shield_of_the_University_of_Pennsylvania.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Shield_of_the_University_of_Pennsylvania.svg/120px-Shield_of_the_University_of_Pennsylvania.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49117",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-pisa": {
+      "file": "img/universities/university-of-pisa.png",
+      "width": 62,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Emblem_of_University_of_Pisa.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Emblem_of_University_of_Pisa.svg/250px-Emblem_of_University_of_Pisa.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q645663",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-pittsburgh": {
+      "file": "img/universities/university-of-pittsburgh.png",
+      "width": 142,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Pittsburgh_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/University_of_Pittsburgh_wordmark.svg/330px-University_of_Pittsburgh_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q235034",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-reading": {
+      "file": "img/universities/university-of-reading.png",
+      "width": 52,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Reading_arms.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/University_of_Reading_arms.svg/120px-University_of_Reading_arms.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1432632",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-rochester": {
+      "file": "img/universities/university-of-rochester.png",
+      "width": 206,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Rochester_2025_logo_text-only_center.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/University_of_Rochester_2025_logo_text-only_center.svg/500px-University_of_Rochester_2025_logo_text-only_center.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q149990",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-south-carolina": {
+      "file": "img/universities/university-of-south-carolina.png",
+      "width": 220,
+      "height": 42,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Usc_logo_simple.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Usc_logo_simple.svg/500px-Usc_logo_simple.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1024426",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-south-florida": {
+      "file": "img/universities/university-of-south-florida.png",
+      "width": 220,
+      "height": 36,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_South_Florida_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/University_of_South_Florida_wordmark.svg/500px-University_of_South_Florida_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q500606",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-southampton": {
+      "file": "img/universities/university-of-southampton.png",
+      "width": 220,
+      "height": 49,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Southampton_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/University_of_Southampton_Logo.svg/500px-University_of_Southampton_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q76473",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-southern-california": {
+      "file": "img/universities/university-of-southern-california.png",
+      "width": 220,
+      "height": 39,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Southern_California_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/University_of_Southern_California_logo.svg/500px-University_of_Southern_California_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q4614",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-st-gallen-hsg": {
+      "file": "img/universities/university-of-st-gallen-hsg.png",
+      "width": 220,
+      "height": 48,
+      "source_url": "https://commons.wikimedia.org/wiki/File:HSG_Logo_DE_RGB.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/HSG_Logo_DE_RGB.svg/500px-HSG_Logo_DE_RGB.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q673354",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-sussex": {
+      "file": "img/universities/university-of-sussex.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Sussex_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/University_of_Sussex_Logo.svg/250px-University_of_Sussex_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1161297",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-texas-at-austin": {
+      "file": "img/universities/university-of-texas-at-austin.png",
+      "width": 220,
+      "height": 63,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Texas_at_Austin_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/University_of_Texas_at_Austin_logo.svg/500px-University_of_Texas_at_Austin_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49213",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-turin": {
+      "file": "img/universities/university-of-turin.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Turin_Sigil.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/University_of_Turin_Sigil.svg/250px-University_of_Turin_Sigil.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q499911",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-virginia": {
+      "file": "img/universities/university-of-virginia.png",
+      "width": 62,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Virginia_Rotunda_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/University_of_Virginia_Rotunda_logo.svg/250px-University_of_Virginia_Rotunda_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC0",
+      "wikidata": "https://www.wikidata.org/wiki/Q213439",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-washington": {
+      "file": "img/universities/university-of-washington.png",
+      "width": 220,
+      "height": 48,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Washington_signature.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/University_of_Washington_signature.svg/500px-University_of_Washington_signature.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q219563",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-waterloo": {
+      "file": "img/universities/university-of-waterloo.png",
+      "width": 220,
+      "height": 28,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Uwaterloo_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Uwaterloo_wordmark.svg/500px-Uwaterloo_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1049470",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-wisconsin-madison": {
+      "file": "img/universities/university-of-wisconsin-madison.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Seal_of_the_University_of_Wisconsin.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Seal_of_the_University_of_Wisconsin.svg/250px-Seal_of_the_University_of_Wisconsin.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q838330",
+      "retrieved": "2026-10-12"
+    },
+    "university-of-zurich": {
+      "file": "img/universities/university-of-zurich.png",
+      "width": 142,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Z%C3%BCrich_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Universit%C3%A4t_Z%C3%BCrich_logo.svg/330px-Universit%C3%A4t_Z%C3%BCrich_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q206702",
+      "retrieved": "2026-10-12"
+    },
+    "utrecht-university": {
+      "file": "img/universities/utrecht-university.png",
+      "width": 220,
+      "height": 60,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Utrecht-univesrsity-logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Utrecht-univesrsity-logo.svg/500px-Utrecht-univesrsity-logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q221653",
+      "retrieved": "2026-10-12"
+    },
+    "vanderbilt-university": {
+      "file": "img/universities/vanderbilt-university.png",
+      "width": 220,
+      "height": 48,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Vanderbilt_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Vanderbilt_University_logo.svg/500px-Vanderbilt_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q29052",
+      "retrieved": "2026-10-12"
+    },
+    "washington-university-in-st-louis": {
+      "file": "img/universities/washington-university-in-st-louis.png",
+      "width": 220,
+      "height": 54,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Washu_textlogo.png",
+      "asset_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Washu_textlogo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q777403",
+      "retrieved": "2026-10-12"
+    },
+    "western-sydney-university": {
+      "file": "img/universities/western-sydney-university.png",
+      "width": 164,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Western_Sydney_University_logo.png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Western_Sydney_University_logo.png/330px-Western_Sydney_University_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1141452",
+      "retrieved": "2026-10-12"
+    },
+    "western-university": {
+      "file": "img/universities/western-university.png",
+      "width": 214,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Western_ontario_univ_textlogo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Western_ontario_univ_textlogo.svg/500px-Western_ontario_univ_textlogo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1144262",
+      "retrieved": "2026-10-12"
+    },
+    "xiamen-university": {
+      "file": "img/universities/xiamen-university.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Xiamen_University_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Xiamen_University_logo.svg/250px-Xiamen_University_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q1153539",
+      "retrieved": "2026-10-12"
+    },
+    "yale-university": {
+      "file": "img/universities/yale-university.png",
+      "width": 61,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Yale_University_Shield_1.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Yale_University_Shield_1.svg/250px-Yale_University_Shield_1.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q49112",
+      "retrieved": "2026-10-12"
+    },
+    "yonsei-university": {
+      "file": "img/universities/yonsei-university.png",
+      "width": 171,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Yonsei_University_logotype(ko).png",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Yonsei_University_logotype%28ko%29.png/500px-Yonsei_University_logotype%28ko%29.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q39988",
+      "retrieved": "2026-10-12"
+    }
+  }
+}

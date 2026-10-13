@@ -455,3 +455,34 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** ffprobe (30.00s / 15.01s / 6.01s at 1080×1920, video + audio); a contact sheet of frames checked by eye; the audio path checked with test tones (−12.7 LUFS integrated, lines start on time). **Not tested yet:** real AI clips, real voices, playback on a phone, and the platforms' upload checks.
 
 **Understood?** Not yet checked.
+
+## 21. Site search: the "R" in RAG (2026-10-12)
+**Built / why:** `/search` and `/api/search` (decision 045), the first step toward a chatbot that answers only from verified content. A chatbot is only as good as the passages it retrieves, so retrieval comes first.
+- **Indexing (at startup):** the guide pages are split into **chunks** (one per section), plus the program facts and the tests table. Each chunk keeps its link and official sources, and is stored in **SQLite FTS5**, a full-text index built into Python.
+- **Searching (each request):** the question is cleaned the same way as the chunks (أ/ا, ة/ه, «ال» dropped), FTS5 finds the chunks containing every word, and **bm25** ranks them.
+
+**Key concepts:**
+- **RAG = retrieve → augment → generate.** The model reads retrieved passages fresh for every question, like an open-book exam.
+- **Ingestion vs. serving:** sources are collected and reviewed ahead of time, never fetched live while a student waits.
+- **Inverted index:** word → the chunks that contain it, which makes search instant.
+- **bm25:** rare words and short chunks count more. We weigh heading matches most.
+- **Keyword search's limit:** it matches words, not meaning. «منحة» finds nothing because the guide says «ابتعاث», and «مشروط» also matches «غير مشروط». Embeddings (step 3) fix this.
+
+**Tested:** 15 new tests (264 in all). In the browser: Arabic and English queries, no-results message, phone width 375px. Not tested: real student questions (that's the step 4 eval set).
+
+**Understood?** Not yet checked.
+
+## 22. A "ghost filter" bug: stale snapshots (2026-10-12)
+**What happened:** removing a university filter sometimes brought another filter back.
+- **Cause:** each chip was a link holding "the current search without me", computed when the results were drawn. The script copied that link into the form. If you removed a second chip before the new results arrived, its link was out of date and still contained the filter you had just removed.
+- **Fix:** each ✕ says *which* fields it clears (`data-remove="country"`). The script clears only those in the live form and keeps everything else. The ✕ also became its own 36 px button, so near-misses stop hitting the neighbouring chip.
+
+**Key concepts:**
+- **Stale state:** data copied from an earlier moment (here, a link) can contradict the current state. Act on the current state (the form), and send *intentions* ("remove country"), not snapshots.
+- **Reproduce before fixing:** the bug only showed with two quick removals, so I scripted the clicks in the browser to see it happen.
+- **Touch targets:** WCAG 2.5.8 asks for at least 24 × 24 px; 44 px is the usual mobile guidance.
+- **Browser cache:** the old `universities.js` stayed cached during testing. Real visitors can see the same after a deploy.
+
+**Tested:** 267 pytest tests (two new). In the browser: the double removal that failed before, removing the middle filter (the others stay), track + its field, a click on the label (nothing happens), the ✕ size (36 × 36), the screen-reader label, and phone width (no sideways scroll).
+
+**Understood?** Not yet checked.

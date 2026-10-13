@@ -62,5 +62,11 @@
     "تاريخ فتح التقديم غير مذكور في الصفحات التي قرأناها.",
     "صفحة المواعيد تذكر تاريخ رد الطلاب المقبولين في RD بـ1 مايو 2026، وهو يتعارض مع 1 مايو 2027 المذكور لـREA، فلم نستخدمه.",
     "مواعيد الإعلان عن القرار (منتصف ديسمبر لـREA ومنتصف مارس لـRD) غير محددة بيوم بعينه، فلم نضفها."
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "own_waiver",
+    "note_ar": "إن كنت تطلب مساعدة مالية والرسوم عبء عليك، املأ نموذج Caltech Active Transport Pass",
+    "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/first-year-application-fee-and-waiver"
+  }
 }

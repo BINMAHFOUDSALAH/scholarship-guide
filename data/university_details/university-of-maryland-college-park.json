@@ -1,0 +1,68 @@
+{
+  "id": "university-of-maryland-college-park",
+  "name_en": "University of Maryland, College Park",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.umd.edu/apply/international-applicants",
+  "platform": {
+    "value_ar": "Common App أو ApplyWeb",
+    "source_url": "https://admissions.umd.edu/apply/international-applicants"
+  },
+  "english": {
+    "ielts": {
+      "min": 7,
+      "note_ar": "7.",
+      "source_url": "https://admissions.umd.edu/apply/english-language-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 5,
+      "note_ar": "5 على المقياس الجديد 1–6، أو 95 على القديم 0–120.",
+      "source_url": "https://admissions.umd.edu/apply/english-language-proficiency"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120.",
+      "source_url": "https://admissions.umd.edu/apply/english-language-proficiency"
+    },
+    "note_ar": "الدرجات يجب ألا يزيد عمرها على سنتين."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية حتى دورتي ربيع وخريف 2027.",
+    "source_url": "https://admissions.umd.edu/apply/international-applicants"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.umd.edu/apply/application-deadlines"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-20",
+      "year_stated": false,
+      "source_url": "https://admissions.umd.edu/apply/application-deadlines"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 45.1,
+    "scope_ar": "تقرير الجامعة لخريف 2025 (كل الطلاب الجدد): ‏30,282 من 67,178",
+    "international_percent": null,
+    "source_url": "https://irpa.umd.edu/CampusCounts/Admissions/apps_ug.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 80,
+    "waiver": "own_waiver",
+    "note_ar": "يُطلب ببريد إلى ApplyMaryland@umd.edu قبل إرسال الطلب",
+    "source_url": "https://admissions.umd.edu/persona/fee-waiver"
+  }
+}

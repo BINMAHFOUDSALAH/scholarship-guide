@@ -78,3 +78,15 @@ next_step: افتح الدليل الاسترشادي 2026–2027، وتأكد �
 ### هل يُشترط وجود مرافق أو محرم؟
 
 لا، لا يُشترط.
+
+### هل هناك نسبة دنيا في الثانوية؟
+
+لا توجد نسبة محددة حسب [الأسئلة الشائعة للبرنامج](https://sites.moe.gov.sa/scholarship-program/faqs/). المهم أن تنطبق عليك الشروط العامة وشروط المسار، وأن يكون معك قبول غير مشروط. الاستثناء: من يُقبل في سنة تحضيرية يحتاج معدلًا لا يقل عن 90% ([الشروط الإضافية](https://sites.moe.gov.sa/scholarship-program/conditions/info-4/)).
+
+### هل يمكن أن أدرس عن بُعد أو بدوام جزئي؟
+
+لا. الرواد وإمداد للدراسة الحضورية ([الرواد](https://sites.moe.gov.sa/scholarship-program/paths/path-arruaad/)، [إمداد](https://sites.moe.gov.sa/scholarship-program/paths/path-emdad/))، ومن الشروط العامة أن تكون الدراسة بانتظام كامل مع الإقامة في بلد الابتعاث ([الشروط](https://sites.moe.gov.sa/scholarship-program/conditions/)).
+
+### كم قبولًا جامعيًا أرفع في طلبي؟
+
+ثلاثة قبولات كحد أقصى، ويُختار طلب واحد منها حسب نتائج المفاضلة والمقاعد المتاحة ([الشروط وسياسات التقديم](https://sites.moe.gov.sa/scholarship-program/conditions/)).

@@ -1,0 +1,69 @@
+{
+  "id": "duke-university",
+  "name_en": "Duke University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.duke.edu/apply/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://admissions.duke.edu/apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "الصفحة تذكر أن الدرجة المتوقعة 7، وتقول أيضًا إن اختبار اللغة موصى به وغير مطلوب.",
+      "source_url": "https://admissions.duke.edu/apply/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "الدرجة المتوقعة 100 (المقياس القديم)، والاختبار موصى به وغير مطلوب.",
+      "source_url": "https://admissions.duke.edu/apply/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "الدرجة المتوقعة 130، والاختبار موصى به وغير مطلوب.",
+      "source_url": "https://admissions.duke.edu/apply/"
+    },
+    "note_ar": "صفحة Duke تقول «نوصي ولا نشترط» اختبار لغة، وتذكر في الوقت نفسه درجات متوقعة، فلم ننشر حدًا أدنى."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية في دورة 2026–2027.",
+    "source_url": "https://admissions.duke.edu/resources/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-02",
+      "year_stated": false,
+      "source_url": "https://admissions.duke.edu/checklist/",
+      "note_ar": "ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-04",
+      "year_stated": false,
+      "source_url": "https://admissions.duke.edu/checklist/"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 5.2,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏2,910 من 55,541",
+    "international_percent": null,
+    "source_url": "https://ir.provost.duke.edu/sites/default/files/CDS_PDF_2025-2026-20260622-website-published-version.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من دورة 2026–2027."
+  ],
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "accepts_common_app",
+    "note_ar": "تعفي في حالات كثيرة لمن لديهم حاجة مالية مرتفعة",
+    "source_url": "https://admissions.duke.edu/apply/"
+  }
+}

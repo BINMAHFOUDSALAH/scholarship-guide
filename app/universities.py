@@ -13,6 +13,7 @@ from pathlib import Path
 from urllib.parse import parse_qsl, urlencode
 
 DATA_DIR = Path(__file__).parent.parent / "data"
+STATIC_DIR = Path(__file__).parent / "static"
 
 # In the order a high-school student needs them: the doctorate-only track comes last (decision 038).
 TRACKS = {
@@ -28,6 +29,14 @@ SAT_POLICY_AR = {
     "not_considered": "لا يُنظر فيه",
     "not_applicable": "لا ينطبق",
     "unknown": "غير منشور",
+}
+# Application-fee waivers (decision 050): what the university's own page says about waiving its fee.
+WAIVER_AR = {
+    "accepts_common_app": "تقبل إعفاء Common App",
+    "own_waiver": "لها طلب إعفاء خاص بها",
+    "domestic_only": "الإعفاء للطلاب الأمريكيين فقط",
+    "none": "لا تمنح إعفاءً من الرسوم",
+    "not_stated": None,
 }
 # The country's official language, used by the scholarship's rule on conditional offers. It is not
 # the language a program is taught in: many universities in other countries teach in English.
@@ -62,8 +71,9 @@ UNIVERSITIES_AR = ("جامعة واحدة", "جامعتان", "جامعات", "�
 PROGRAMS_AR = ("برنامج واحد", "برنامجان", "برامج", "برنامجًا", "برنامج")
 FIELDS_AR = ("مجال واحد", "مجالان", "مجالات", "مجالًا", "مجال")
 COUNTRIES_AR = ("دولة واحدة", "دولتان", "دول", "دولة", "دولة")
+RESULTS_AR = ("نتيجة واحدة", "نتيجتان", "نتائج", "نتيجة", "نتيجة")
 COUNT_FORMS = {"universities": UNIVERSITIES_AR, "programs": PROGRAMS_AR, "fields": FIELDS_AR,
-               "countries": COUNTRIES_AR}
+               "countries": COUNTRIES_AR, "results": RESULTS_AR}
 
 ARABIC_DIACRITICS = re.compile(r"[\u064b-\u0652\u0640]")  # short vowels + tatweel, as escapes (the marks are invisible)
 
@@ -102,6 +112,11 @@ class Explorer:
             u["country_info"] = self.countries[u["country"]]
             u["search_key"] = normalize(f"{u['name_en']} {u['name_ar'] or ''}")
             self.universities[u["id"]] = u
+
+        # Official logos (decision 049): only for universities we know, only when the file exists.
+        logos = (_load("university_logos.json", {}) or {}).get("logos", {})
+        self.logos = {uid: logo for uid, logo in logos.items()
+                      if uid in self.universities and (STATIC_DIR / logo["file"]).is_file()}
 
         self.details = {}
         for path in sorted((DATA_DIR / "university_details").glob("*.json")):
@@ -303,9 +318,11 @@ class Explorer:
     def describe(self, result):
         """What the student is looking at, in words.
 
-        Returns {"applied": [{label_ar, value_ar, href}], "summary_ar": str, "query": str, "non_english": bool}:
+        Returns {"applied": [{label_ar, value_ar, href, remove}], "summary_ar": str, "query": str, "non_english": bool}:
         - applied: one entry per active filter, each with a link to the same search without it
-          (removing the track also removes its field)
+          (removing the track also removes its field). `remove` names the parameters it clears, so
+          universities.js can clear just those in the live form (a link's href is a snapshot, and a
+          stale one would bring back a filter removed a moment earlier).
         - summary_ar: one line for the screen-reader status message, e.g. «مسار الرواد: 30 جامعة»
         - query: the cleaned query string, carried on result links as `from`
         - non_english: a ranked list shows a university in a non-English-speaking country
@@ -317,22 +334,22 @@ class Explorer:
             rest = {k: v for k, v in params.items() if k not in names}
             return "/universities" + ("?" + urlencode(rest) if rest else "")
 
+        def chip(label_ar, value_ar, *names):
+            return {"label_ar": label_ar, "value_ar": value_ar, "href": without(*names), "remove": list(names)}
+
         applied = []
         if "q" in params:
             is_major = result["mode"] == "major" and any(
                 normalize(params["q"]) in (normalize(m["name_ar"]), normalize(m["name_en"])) for m in result["majors"])
-            applied.append({"label_ar": "التخصص" if is_major else "البحث", "value_ar": params["q"], "href": without("q")})
+            applied.append(chip("التخصص" if is_major else "البحث", params["q"], "q"))
         if "track" in params:
-            applied.append({"label_ar": "المسار", "value_ar": TRACKS[params["track"]]["short_ar"],
-                            "href": without("track", "field")})
+            applied.append(chip("المسار", TRACKS[params["track"]]["short_ar"], "track", "field"))
         if "field" in params:
-            applied.append({"label_ar": "المجال", "value_ar": self.field(params["track"], params["field"])["name_ar"],
-                            "href": without("field")})
+            applied.append(chip("المجال", self.field(params["track"], params["field"])["name_ar"], "field"))
         if "country" in params:
-            applied.append({"label_ar": "الدولة", "value_ar": self.countries[params["country"]]["name_ar"],
-                            "href": without("country")})
+            applied.append(chip("الدولة", self.countries[params["country"]]["name_ar"], "country"))
         if "lang" in params:
-            applied.append({"label_ar": "لغة الدولة", "value_ar": LANGUAGE_AR[params["lang"]], "href": without("lang")})
+            applied.append(chip("لغة الدولة", LANGUAGE_AR[params["lang"]], "lang"))
 
         parts = []
         for s in result["sections"]:
@@ -473,6 +490,26 @@ class Explorer:
             january += "01" in months
         return {"with_deadlines": total, "early": early, "january": january}
 
+    def fee_groups(self):
+        """US universities with a researched application fee, grouped by what their own page says about
+        fee waivers (decision 050), for the guide «التقديم على الجامعات الأمريكية». Names in Arabic order."""
+        groups = [
+            ("accepts_common_app", "تقبل إعفاء Common App"),
+            ("own_waiver", "لها إعفاء خاص بها"),
+            ("not_stated", "لم تذكر صفحتها إعفاءً للطلاب الدوليين"),
+            ("closed", "لا إعفاء للطلاب الدوليين"),
+        ]
+        rows = {key: [] for key, _ in groups}
+        for uid, d in self.details.items():
+            fee = d.get("application_fee")
+            u = self.universities[uid]
+            if not fee or u["country"] != "US":
+                continue
+            key = "closed" if fee["waiver"] in ("domestic_only", "none") else fee["waiver"]
+            rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"], "fee_usd": fee["fee_usd"]})
+        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: r["name_ar"])}
+                for key, title in groups if rows[key]]
+
     def profile(self, uid):
         u = self.universities.get(uid)
         if u is None:
@@ -483,7 +520,8 @@ class Explorer:
         details = self.details.get(uid)
         # Dated items in order; items the university hasn't dated yet go last.
         dates = sorted((details or {}).get("dates") or [], key=lambda d: (d.get("date") is None, d.get("date") or ""))
-        return {"university": u, "by_track": by_track, "details": details, "dates": dates}
+        return {"university": u, "by_track": by_track, "details": details, "dates": dates,
+                "logo": self.logos.get(uid)}
 
     def api(self):
         """Everything as plain data, for /api/universities."""

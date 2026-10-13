@@ -9,10 +9,12 @@ from fastapi.testclient import TestClient
 
 import app.main as main
 from app.content import SLUG_PATTERN
-from app.universities import SAT_POLICY_AR, TRACKS, normalize
+from app.universities import SAT_POLICY_AR, TRACKS, WAIVER_AR, normalize
 
 client = TestClient(main.app)
 ex = main.explorer
+ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+SVG_UNSAFE = re.compile(r"<script|javascript:|\son[a-z]+\s*=|<foreignobject", re.I)
 DATA = Path(main.DATA_DIR)
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 GAPS = json.loads((DATA.parent / "scripts" / "list_overrides.json").read_text(encoding="utf-8"))["_gaps"]
@@ -106,6 +108,11 @@ def test_requirement_files_follow_the_schema(path):
         assert isinstance(date["year_stated"], bool), (path.stem, date)
         assert "label_ar" not in date, (path.stem, date)
     sourced(d.get("acceptance_rate"))
+    fee = d.get("application_fee")
+    if fee:  # decision 050
+        sourced(fee)
+        assert fee["waiver"] in WAIVER_AR, path.stem
+        assert fee["fee_usd"] is None or (isinstance(fee["fee_usd"], (int, float)) and fee["fee_usd"] >= 0), path.stem
     assert d.get("admissions_url") is None or d["admissions_url"].startswith("https://")
 
 
@@ -268,6 +275,8 @@ def test_applied_filters_each_have_a_remove_link():
     assert "country=GB" in track["href"]
     country = view["applied"][3]
     assert "country=" not in country["href"] and "track=emdad" in country["href"]
+    # What universities.js clears in the live form (decision 048): only the chip's own parameters.
+    assert [a["remove"] for a in view["applied"]] == [["q"], ["track", "field"], ["field"], ["country"], ["lang"]]
     assert ex.describe(ex.search())["applied"] == []
 
 
@@ -279,8 +288,17 @@ def test_explorer_page_shows_applied_tags_clear_all_and_a_summary():
     assert 'role="status"' in html
     assert 'aria-live="polite"' not in html.split('id="results"')[1]  # the big region is not live
     assert "وليس تصنيفًا عالميًا" in html  # what the rank means
-    assert "/programs/custodian-scholarship#conditional" in html  # non-English countries in the list
     assert "<bdi>" in html  # filter values are isolated from the Arabic sentence
+
+
+def test_each_filter_has_its_own_labelled_remove_button():
+    """Decision 048: the chip text is not a link; only its ✕ removes it, and says what it removes."""
+    html = client.get("/universities?track=emdad&country=CN").text
+    applied = html.split('class="applied"')[1].split("</ul>")[0]
+    assert '<li class="applied-chip"><span class="applied-text">' in applied
+    assert 'data-remove="track field"' in applied and 'data-remove="country"' in applied
+    assert 'aria-label="إزالة الدولة: الصين"' in applied
+    assert 'data-remove="q track field country lang">مسح الكل' in applied
 
 
 def test_no_filter_tags_and_no_clear_all_by_default():
@@ -358,7 +376,9 @@ def test_scholarship_dates_are_separate_from_university_dates():
     assert "بعد</strong> أن يصلك قبول الجامعة" in dates
     # University dates: event, round and intake in words; the year flag when the page omits the year.
     assert "Restrictive Early Action" in dates and "لخريف 2027" in dates
-    assert "السنة غير مذكورة في الصفحة" in dates
+    # Every Stanford date omits the year, so it's said once under the list, not on each date.
+    assert "الصفحة الرسمية تذكر اليوم والشهر فقط" in dates
+    assert '<span class="tag">السنة غير مذكورة في الصفحة</span>' not in dates
 
 
 def test_reference_only_dates_never_count_as_the_next_deadline():
@@ -444,8 +464,7 @@ def test_results_show_key_facts_or_say_they_are_not_collected():
     html = client.get("/universities?track=arruaad").text
     assert "صفحة القبول الرسمية" in html
     emdad = client.get("/universities?track=emdad&field=ict").text
-    # Said once for the whole list (decision 041), not repeated on every row.
-    assert emdad.count("لم نجمع متطلبات جامعات هذه القائمة") == 1
+    assert "لم نجمع متطلبات جامعات هذه القائمة" not in emdad  # removed at the owner's request (2026-10-12)
     assert "لم نجمعها بعد" not in emdad
     assert "لم نجمعها بعد" in client.get("/my-list?partial=1&ids=adelaide-university").text
 
@@ -520,3 +539,66 @@ def test_finder_labels_are_plain():
     # The save button is not inside the row header cell (a cleaner screen-reader row name).
     th = rows.split('<th scope="row">')[1].split("</th>")[0]
     assert "save-mini" not in th
+
+
+# ---------- Logos and flags (decision 049): the university's own page only ----------
+
+def test_every_country_has_a_self_hosted_flag():
+    flags = Path("app/static/img/flags")
+    for code in {u["country"] for u in ex.universities.values()}:
+        svg = (flags / f"{code.lower()}.svg").read_text(encoding="utf-8")
+        assert not SVG_UNSAFE.search(svg) and "http" not in svg.replace("http://www.w3.org", ""), code
+
+
+def test_every_logo_has_its_source_and_is_safe():
+    data = json.loads(Path("data/university_logos.json").read_text(encoding="utf-8"))
+    for uid, logo in data["logos"].items():
+        assert uid in ex.universities, uid
+        path = Path("app/static") / logo["file"]
+        assert path.is_file(), uid
+        assert path.suffix in (".svg", ".png", ".webp"), uid
+        assert path.stat().st_size < 60_000, f"{uid}: logo over 60 KB"
+        if path.suffix == ".svg":
+            assert not SVG_UNSAFE.search(path.read_text(encoding="utf-8", errors="ignore")), uid
+        assert logo["source_url"].startswith("https://") and logo["asset_url"].startswith("https://"), uid
+        assert logo["licence"], uid
+        assert ISO_DATE.match(logo["retrieved"]), uid
+
+
+def test_university_page_shows_a_flag_and_no_logo_when_we_have_none():
+    html = client.get("/universities/massachusetts-institute-of-technology-mit").text
+    header = html.split('class="uni-header"')[1].split("</header>")[0]
+    assert 'class="uni-flag"' in header and "/static/img/flags/us.svg" in header and 'alt=""' in header
+    if "massachusetts-institute-of-technology-mit" not in ex.logos:
+        assert 'class="uni-logo"' not in header
+
+
+def test_lists_show_flags_but_no_logos():
+    """Owner's choice (2026-10-12): flags in list rows too; logos only on the university page."""
+    html = client.get("/universities?track=arruaad").text
+    assert html.count('class="uni-flag"') == 30 and 'class="uni-logo"' not in html
+    assert 'class="uni-flag"' in client.get("/my-list?partial=1&ids=harvard-university").text
+
+
+# ---------- US applications guide (decision 050) ----------
+
+def test_us_guide_loads_with_sources_and_the_waiver_steps():
+    html = client.get("/resources/us-applications").text
+    assert 'id="fee-waiver"' in html and "الإعفاء ليس مضمونًا" in html
+    assert "appsupport.commonapp.org" in html and "admission.universityofcalifornia.edu" in html
+    assert 'id="us-fees-title"' in html
+
+
+def test_fee_groups_only_list_us_universities_with_a_sourced_fee():
+    groups = ex.fee_groups()
+    ids = [r["id"] for g in groups for r in g["rows"]]
+    assert ids and len(ids) == len(set(ids))
+    for uid in ids:
+        assert ex.universities[uid]["country"] == "US" and ex.details[uid]["application_fee"]
+
+
+def test_waiver_howto_link_only_when_a_waiver_is_possible():
+    berkeley = client.get("/universities/university-of-california-berkeley-ucb").text
+    assert "رسوم التقديم" in berkeley and "#fee-waiver" not in berkeley  # UC: no waiver for international
+    stanford = client.get("/universities/stanford-university").text
+    assert "/resources/us-applications#fee-waiver" in stanford

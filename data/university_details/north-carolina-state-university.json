@@ -1,0 +1,70 @@
+{
+  "id": "north-carolina-state-university",
+  "name_en": "North Carolina State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.ncsu.edu/apply/international/first-year/",
+  "platform": {
+    "value_ar": "Common App أو Coalition on Scoir",
+    "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 فأكثر، وكل قسم 6.0 فأكثر.",
+      "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 من 21 يناير 2026 (كل قسم 4 فأكثر)، أو 80 قبل ذلك.",
+      "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110 فأكثر.",
+      "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
+    },
+    "note_ar": "السعودية ليست في قائمة الدول المعفاة. قد يُقبل مشروطًا مع برنامج الإنجليزية المكثف."
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "الصفحة لا تذكر SAT أو ACT لمن يدرس خارج أمريكا.",
+    "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.ncsu.edu/apply/dates-and-deadlines/",
+      "note_ar": "المواد حتى 10 نوفمبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://admissions.ncsu.edu/apply/dates-and-deadlines/",
+      "note_ar": "المواد حتى 1 فبراير"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 39.5,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏19,510 من 49,350",
+    "international_percent": null,
+    "source_url": "https://report.isa.ncsu.edu/ir/cds/pdfs/CDS_2025-26.v1.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 100,
+    "waiver": "none",
+    "note_ar": null,
+    "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
+  }
+}

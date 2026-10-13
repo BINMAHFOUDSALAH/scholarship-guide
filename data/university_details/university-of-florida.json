@@ -1,0 +1,73 @@
+{
+  "id": "university-of-florida",
+  "name_en": "University of Florida",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.ufl.edu/apply/freshman/international",
+  "platform": {
+    "value_ar": "Common App فقط",
+    "source_url": "https://admissions.ufl.edu/apply/freshman/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "مطلوب لمن لغته الأم غير الإنجليزية، بلا حد أدنى منشور للسنة الأولى.",
+      "source_url": "https://catalog.ufl.edu/UGRD/admission/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "مطلوب لمن لغته الأم غير الإنجليزية، بلا حد أدنى منشور للسنة الأولى.",
+      "source_url": "https://catalog.ufl.edu/UGRD/admission/"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "كل المتقدمين يقدّمون SAT أو ACT أو CLT.",
+    "source_url": "https://admissions.ufl.edu/apply/freshman/requirements"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": false,
+      "source_url": "https://admissions.ufl.edu/apply/freshman/deadlines",
+      "note_ar": "ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.ufl.edu/apply/freshman/deadlines"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://admissions.ufl.edu/apply/freshman/deadlines"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 20.3,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–26، C1): ‏18,403 من 90,523",
+    "international_percent": 10.4,
+    "source_url": "https://data-apps.ir.aa.ufl.edu/public/cds/CDS%202025-26_v8_08.14.2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "لا يوجد حد أدنى منشور لاختبارات اللغة لطلاب السنة الأولى."
+  ],
+  "application_fee": {
+    "fee_usd": 30,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://admissions.ufl.edu/apply/freshman/"
+  }
+}

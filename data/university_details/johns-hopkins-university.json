@@ -61,5 +61,11 @@
     "صفحة Fast Facts تعرض 49,112 متقدمًا للدفعة 2029 دون عدد المقبولين، وتعرض 13.5% دوليين من الدفعة (نسبة من الطلاب المسجلين لا من المتقدمين)",
     "تاريخ فتح التقديم غير مذكور في الصفحة الرسمية",
     "QuestBridge ذُكرت كبرنامج شريك للجامعة، لكنها ليست منصة تقديم في صفحة المتطلبات"
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 70,
+    "waiver": "accepts_common_app",
+    "note_ar": "عبر Common App أو Coalition on Scoir",
+    "source_url": "https://apply.jhu.edu/apply/"
+  }
 }

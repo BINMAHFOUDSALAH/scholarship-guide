@@ -1,0 +1,68 @@
+{
+  "id": "university-of-california-davis",
+  "name_en": "University of California, Davis",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.ucdavis.edu/admissions/undergraduate/international",
+  "platform": {
+    "value_ar": "طلب جامعات كاليفورنيا (UC undergraduate application)، وليس Common App",
+    "source_url": "https://www.ucdavis.edu/admissions/undergraduate/first-year/timeline"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 فأكثر، من صفحة جامعات كاليفورنيا (UC).",
+      "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/english-language-proficiency-toefl-ielts.html"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 فأكثر من يناير 2026 (المقياس الجديد)، و80 قبل ذلك.",
+      "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/english-language-proficiency-toefl-ielts.html"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115 فأكثر.",
+      "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/english-language-proficiency-toefl-ielts.html"
+    },
+    "note_ar": "شروط اللغة تحددها جامعات كاليفورنيا (UC) لكل فروعها."
+  },
+  "sat_act": {
+    "policy": "not_considered",
+    "note_ar": "جامعات كاليفورنيا لا تنظر في SAT أو ACT في قرار القبول أو المنح.",
+    "source_url": "https://admission.universityofcalifornia.edu/counselors/preparing-freshman-students/freshman-requirements.html"
+  },
+  "dates": [
+    {
+      "event_ar": "فتح التقديم",
+      "round_ar": "UC application",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-01",
+      "year_stated": false,
+      "source_url": "https://www.ucdavis.edu/admissions/undergraduate/first-year/timeline"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UC application",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-30",
+      "year_stated": false,
+      "source_url": "https://www.ucdavis.edu/admissions/undergraduate/first-year/timeline"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 44.3,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS، C1): ‏45,674 من 102,988",
+    "international_percent": 55.9,
+    "source_url": "https://aggiedata.ucdavis.edu/sites/g/files/dgvnsk1841/files/media/documents/CDS_UCD_0.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة UC Davis لا تذكر أرقام اللغة ولا SAT؛ المصدر صفحة جامعات كاليفورنيا (UC)."
+  ],
+  "application_fee": {
+    "fee_usd": 95,
+    "waiver": "domestic_only",
+    "note_ar": "لكل حرم من جامعات UC تقدّم عليه",
+    "source_url": "https://www.ucdavis.edu/admissions/undergraduate/apply"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "university-of-wisconsin-madison",
+  "name_en": "University of Wisconsin-Madison",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.wisc.edu/international/",
+  "platform": {
+    "value_ar": "Common Application أو طلب جامعات Wisconsin",
+    "source_url": "https://admissions.wisc.edu/apply-as-a-freshman/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 فأكثر في IELTS Academic.",
+      "source_url": "https://admissions.wisc.edu/international/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 من 21 يناير 2026، و80 قبل ذلك. لا تُقبل MyBest.",
+      "source_url": "https://admissions.wisc.edu/international/"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115 فأكثر مع الدرجات الفرعية.",
+      "source_url": "https://admissions.wisc.edu/international/"
+    },
+    "note_ar": "النتائج صالحة سنتين. لا تُقبل SAT أو ACT بديلًا عن اختبار اللغة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية حتى ربيع 2028، وقرارك عند التقديم نهائي.",
+    "source_url": "https://admissions.wisc.edu/apply-as-a-freshman/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://admissions.wisc.edu/apply-as-a-freshman/",
+      "note_ar": "المستندات حتى 9 نوفمبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://admissions.wisc.edu/apply-as-a-freshman/",
+      "note_ar": "المستندات حتى 22 يناير"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 40.8,
+    "scope_ar": "الطلاب الجدد خريف 2025 (صفحة الحقائق الرسمية): ‏30,167 من 73,912",
+    "international_percent": null,
+    "source_url": "https://www.wisc.edu/about/facts/"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 80,
+    "waiver": "own_waiver",
+    "note_ar": "لمن يواجه ضائقة مالية، بنموذج يوقّعه مسؤول في المدرسة",
+    "source_url": "https://admissions.wisc.edu/apply-as-a-freshman/"
+  }
+}

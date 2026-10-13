@@ -81,8 +81,22 @@
   Country, with its official language when it isn't English (the scholarship's rule on conditional
   offers depends on it). That's the country's language, not necessarily the language of teaching.
 #}
+{#
+  The application fee for international first-year applicants and its waiver policy, from the
+  university's own page (decision 050). US universities link to the guide «التقديم على الجامعات الأمريكية».
+#}
+{% macro app_fee(u, d, source=false) %}
+{% set f = d.application_fee %}
+{% if f.fee_usd == 0 %}بلا رسوم تقديم{% elif f.fee_usd %}<span lang="en" dir="ltr">${{ f.fee_usd }}</span> للطلاب الدوليين{% else %}الرسوم غير منشورة{% endif %}
+{%- if waiver_ar[f.waiver] %} · {{ waiver_ar[f.waiver] }}{% endif %}
+{%- if f.note_ar %} · {{ f.note_ar }}{% endif %}
+{% if source %} <a class="src" href="{{ f.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}
+{% if u.country == "US" and f.waiver in ("accepts_common_app", "own_waiver") %} · <a href="{{ url_for('resource_page', slug='us-applications') }}#fee-waiver">كيف تطلب الإعفاء؟</a>{% endif %}
+{% endmacro %}
+
+{# The flag is decorative (alt=""): the country's name follows it (decision 049). #}
 {% macro country(u) %}
-<span class="uni-country">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">لغة الدولة: {{ u.country_info.language_ar }}</span>{% endif %}</span>
+<span class="uni-country"><img class="uni-flag" src="{{ url_for('static', path='img/flags/' ~ (u.country | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">لغة الدولة: {{ u.country_info.language_ar }}</span>{% endif %}</span>
 {% endmacro %}
 
 {# One university's place in the lists, as short tags: «الرواد · المرتبة 12»، «إمداد · 4 مجالات». #}

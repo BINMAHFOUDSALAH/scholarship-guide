@@ -57,5 +57,11 @@
     "لم نتحقق من قبول Coalition Application.",
     "نسبة قبول الدوليين غير منشورة كنسبة، وقيم جدول الإقامة في CDS لم تظهر في الملف المقروء.",
     "موعد 1 فبراير للتقديم العادي مأخوذ من مقتطف الصفحة، ويطابق موعد 1 فبراير لاستلام درجات SAT/ACT في CDS 2025–2026 (دورة خريف 2025)، ولم نجد تأكيدًا مباشرًا له لدورة 2027."
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "domestic_only",
+    "note_ar": "الطلاب الدوليون غير مؤهلين عادةً للإعفاء",
+    "source_url": "https://teamdynamix.umich.edu/TDClient/154/Portal/KB/Article/7507/Application-Fee-Payment-or-Waiver"
+  }
 }

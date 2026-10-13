@@ -314,16 +314,19 @@
       update();
     });
 
-    // Removing a filter tag (or «مسح الكل»): apply the link's search to the form, then update.
+    // Removing a filter (its ✕, or «مسح الكل»): clear only the fields the link names (data-remove)
+    // in the live form, and keep everything else. Never copy the link's href into the form: it was
+    // drawn with the previous results, so a second ✕ pressed before the new results arrive would
+    // bring back the filter removed a moment earlier (decision 048).
     results.addEventListener("click", (event) => {
       const link = event.target.closest("a[data-applied]");
       if (!link) return;
       event.preventDefault();
-      const params = new URL(link.href).searchParams;
-      input.value = params.get("q") || "";
-      for (const name of filterNames) form.elements[name].value = params.get(name) || "";
+      for (const name of (link.dataset.remove || "").split(" ")) {
+        if (name === "q") input.value = "";
+        else if (form.elements[name]) form.elements[name].value = "";
+      }
       syncFields();
-      if (params.get("field")) field.value = params.get("field");
       update().then(() => {
         const next = results.querySelector("a[data-applied]");
         (next || input).focus();

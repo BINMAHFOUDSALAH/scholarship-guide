@@ -1,0 +1,64 @@
+{
+  "id": "university-of-south-florida",
+  "name_en": "University of South Florida",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-academic-requirements.aspx",
+  "platform": {
+    "value_ar": "طلب الجامعة الإلكتروني أو Common App",
+    "source_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-how-to-apply.aspx"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الجامعة لا تقبل TOEFL أو IELTS أو Duolingo بديلًا عن SAT أو ACT أو CLT؛ إثبات الإنجليزية يكون بدرجة القراءة والكتابة فيها."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "مطلوب SAT أو ACT أو CLT. لمن هم من دول غير ناطقة بالإنجليزية: SAT قراءة وكتابة 490، أو ACT English ‏17 وReading ‏19، أو CLT ‏38.",
+    "source_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-academic-requirements.aspx"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-02",
+      "year_stated": true,
+      "source_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-dates-deadlines.aspx",
+      "note_ar": "المستندات حتى 16 نوفمبر 2026"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-16",
+      "year_stated": true,
+      "source_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-dates-deadlines.aspx",
+      "note_ar": "المستندات حتى 15 يناير 2027"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Rolling",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-03-01",
+      "year_stated": true,
+      "source_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-dates-deadlines.aspx"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 40.7,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏29,196 من 71,722",
+    "international_percent": 88.2,
+    "source_url": "https://www.usf.edu/ods/documents/cds/usf-cds-2025-2026-final-v2.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [],
+  "application_fee": {
+    "fee_usd": 30,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-how-to-apply.aspx"
+  }
+}

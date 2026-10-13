@@ -1,0 +1,66 @@
+{
+  "id": "university-of-texas-at-austin",
+  "name_en": "University of Texas at Austin",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.utexas.edu/apply/international-students/",
+  "platform": {
+    "value_ar": "Common App",
+    "source_url": "https://admissions.utexas.edu/apply/freshman/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 في IELTS Academic.",
+      "source_url": "https://admissions.utexas.edu/info-for/international-students/"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "4 على المقياس الجديد 1–6، أو 79 على القديم 0–120.",
+      "source_url": "https://admissions.utexas.edu/info-for/international-students/"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115.",
+      "source_url": "https://admissions.utexas.edu/info-for/international-students/"
+    },
+    "note_ar": null
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "أرسل درجة SAT أو ACT رسمية واحدة على الأقل، ويُقبل CLT.",
+    "source_url": "https://admissions.utexas.edu/apply/freshman/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": false,
+      "source_url": "https://admissions.utexas.edu/apply/freshman/",
+      "note_ar": "المواد حتى 22 أكتوبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-01",
+      "year_stated": false,
+      "source_url": "https://admissions.utexas.edu/apply/freshman/",
+      "note_ar": "المواد حتى 10 ديسمبر"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "نسبة القبول: ملف CDS لم يُفتح."
+  ],
+  "application_fee": {
+    "fee_usd": 90,
+    "waiver": "domestic_only",
+    "note_ar": "الإعفاء غير متاح للطلاب الدوليين",
+    "source_url": "https://admissions.utexas.edu/apply/international-students/"
+  }
+}

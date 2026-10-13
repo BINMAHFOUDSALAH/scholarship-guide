@@ -1,0 +1,69 @@
+{
+  "id": "indiana-university-bloomington",
+  "name_en": "Indiana University Bloomington",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://bloomington.iu.edu/admissions/apply/international/freshman/index.html",
+  "platform": {
+    "value_ar": "Common Application أو Apply IU",
+    "source_url": "https://bloomington.iu.edu/admissions/apply/international/freshman/index.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 للقبول، و7.5 لتبدأ الدراسة دون مقررات إنجليزية إضافية.",
+      "source_url": "https://bloomington.iu.edu/admissions/apply/international/english-proficiency.html"
+    },
+    "toefl_ibt": {
+      "min": 79,
+      "note_ar": "79 (المقياس القديم 0–120)، و100 لتبدأ دون مقررات إضافية.",
+      "source_url": "https://bloomington.iu.edu/admissions/apply/international/english-proficiency.html"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115، و130 لتبدأ دون مقررات إضافية.",
+      "source_url": "https://bloomington.iu.edu/admissions/apply/international/english-proficiency.html"
+    },
+    "note_ar": "النتيجة خلال آخر سنتين."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "تختار عند التقديم إن كانت درجاتك تُحتسب.",
+    "source_url": "https://bloomington.iu.edu/admissions/apply/international/freshman/admission-standards.html"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://bloomington.iu.edu/admissions/apply/international/deadlines.html",
+      "note_ar": "أفضل فرصة للقبول والمنح"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-02-01",
+      "year_stated": false,
+      "source_url": "https://bloomington.iu.edu/admissions/apply/international/deadlines.html"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 75.9,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS، C1): ‏56,218 من 74,077",
+    "international_percent": 63.6,
+    "source_url": "https://iuapps.iu.edu/cds/?p=index&i=home&section=C.+First-Time%2C+%28Freshman%29+Admission&year=2025"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 65,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://bloomington.iu.edu/admissions/apply/steps.html?description=freshman&location=international"
+  }
+}

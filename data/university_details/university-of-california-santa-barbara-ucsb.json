@@ -1,0 +1,63 @@
+{
+  "id": "university-of-california-santa-barbara-ucsb",
+  "name_en": "University of California, Santa Barbara",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.sa.ucsb.edu/international",
+  "platform": {
+    "value_ar": "طلب جامعات كاليفورنيا (UC Application)",
+    "source_url": "https://admissions.sa.ucsb.edu/how-to-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 فأكثر.",
+      "source_url": "https://admissions.sa.ucsb.edu/english-language-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 فأكثر من يناير 2026، و80 قبل ذلك.",
+      "source_url": "https://admissions.sa.ucsb.edu/english-language-proficiency"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115 فأكثر.",
+      "source_url": "https://admissions.sa.ucsb.edu/english-language-proficiency"
+    },
+    "note_ar": "الدرجات صالحة سنتين."
+  },
+  "sat_act": {
+    "policy": "not_considered",
+    "note_ar": "UCSB لا تستخدم SAT أو ACT في قرار القبول أو المنح.",
+    "source_url": "https://admissions.sa.ucsb.edu/how-to-apply"
+  },
+  "dates": [
+    {
+      "event_ar": "فتح التقديم",
+      "round_ar": "UC application",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-01",
+      "year_stated": true,
+      "source_url": "https://admissions.sa.ucsb.edu/international"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UC application",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-30",
+      "year_stated": true,
+      "source_url": "https://admissions.sa.ucsb.edu/international"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "نسبة القبول غير منشورة على موقع الجامعة نفسه."
+  ],
+  "application_fee": {
+    "fee_usd": 95,
+    "waiver": "not_stated",
+    "note_ar": "لكل حرم من جامعات UC تقدّم عليه",
+    "source_url": "https://admissions.sa.ucsb.edu/faq"
+  }
+}

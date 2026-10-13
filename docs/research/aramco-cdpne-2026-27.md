@@ -15,6 +15,8 @@ Verdicts: ✅ verified (on the official page today) · 🕓 outdated (official, 
 
 ---
 
+**Re-checked 2026-10-12** (Haiku agent, WebFetch; `curl` to aramco.com timed out from the laptop too): **no change**. The page still shows 1447–1448 H (2025–2026), «باب التسجيل مغلق في الوقت الحالي، وسوف يتم الإعلان لاحقًا عن الفترة المخصصة للتسجيل», the same numbers and dates; the 2027 PDF is still 404. New small details: the AR requirements write the years «2026/2025م» (the AR FAQ: «2025-2026م»); the AR "registration guide" section shows «قد تم حظر هذا المحتوى»; only the AR page says «التواريخ المعلنة أعلاه قابلة للتغيير».
+
 ## 0. The key point: which cycle is online?
 
 The official page (EN + AR) still shows the **1447–1448 H (2025–2026 G)** cycle: applicants were in grade 12 in 2025–2026, tested in May 2026, and started on 2 August 2026. Registration status today: «Registration is currently closed», with the period «announced later» ([EN](https://www.aramco.com/en/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne); [AR](https://www.aramco.com/ar/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne): «باب التسجيل مغلق في الوقت الحالي، وسوف يتم الإعلان لاحقًا»).

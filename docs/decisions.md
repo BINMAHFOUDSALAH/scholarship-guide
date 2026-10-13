@@ -566,3 +566,142 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **Higgsfield's free plan:** rejected, because it has 0 credits and no commercial use.
 - **Assembling only in CapCut:** manual and hard to repeat; kept as an optional polish step.
 - **Playwright for the screen capture:** a package install; Edge over the DevTools protocol needs nothing new.
+
+## 045 — Site search first, as the retrieval step of a future RAG chatbot
+**Date:** 2026-10-12
+**Context:** the owner wants an AI chatbot that answers students from verified content (roadmap later stages 7–9), and wants to learn RAG, vector databases, API design and scaling along the way. A chatbot is only as good as its retrieval, so retrieval comes first, as a free feature that is useful on its own.
+**Decision:**
+- **The RAG plan, in steps:** (1) keyword search, (2) chunks with source tracking, (3) search by meaning (embeddings + a vector index), (4) an eval set of real student questions, (5) the chatbot «اسأل واضح» (paid API, ask first), (6) operations (rate limits, spend cap, caching, logs without personal data), (7) the update-monitor agent. Spec: `docs/specs/search.md`.
+- **Sources are fetched ahead of time, never live while answering.** The owner's chosen official pages are read, reviewed, and stored with their link and date; answers come only from that store.
+- **Step 1 (this decision):** `/search` and `/api/search`, using **SQLite FTS5** (built into Python's standard library, nothing to install) in memory, rebuilt at startup.
+  - **Chunks:** guide pages split by h2 section; the program facts the program pages show; the «الاختبارات: من يطلب ماذا؟» rows. Each chunk carries its link and official sources.
+  - **Only published, sourced content** is indexed: pages with `status: sourced` and sources, facts with status `sourced`/`conflict`.
+  - **Arabic:** the explorer's `normalize()` (أ/إ/آ, ة/ه, ى/ي, short vowels), plus dropping «ال» and joined «وال/بال/فال/كال/لل» from longer words. Prefix matching (`تقدي` → `تقديم`).
+  - **Ranking:** bm25, with a heading match weighing most.
+  - `/search` is `noindex` and not in the nav yet.
+**Alternatives:**
+- **A vector database now:** skips the basics and needs a package and an embeddings model; it's step 3.
+- **Search in the browser (JavaScript):** the chatbot will need retrieval on the server anyway.
+- **Postgres full-text search:** needs a database server we don't have yet.
+- **Live web search at answer time:** unreviewed and possibly unofficial sources (breaks the trust rule), slower, costs more.
+**Why:** free, no new dependency, and it builds the exact pipeline RAG needs (chunk → index → retrieve → cite). Its known limit, matching words and not meaning («منحة» finds nothing, «مشروط» also matches «غير مشروط»), is the reason for step 3.
+
+## 046 — KGSP: its own page, «يفتح قريبًا», search linked from the homepage
+**Date:** 2026-10-12
+**Decision:**
+- **New status `opening_soon` («يفتح قريبًا»):** for a program whose official page says applications "will open soon" with no dates. It is shown in amber like «لم يفتح بعد» and sits in the news board's waiting group.
+- **KGSP** (`kaust-kgsp`): status `opening_soon` from the [Prospective Students](https://kgsp.kaust.edu.sa/prospective-students) page, re-read 2026-10-12 («Applications for Cohort 19 will open soon»). The owner asked for it.
+  - It replaces `invitation`.
+  - Its own program page (`content/programs/kaust-kgsp.md`) and 8 sourced facts, from `docs/research/kgsp-2026-27.md` re-checked against the page. Last cycle's (Cohort 18) rules are labelled as such.
+  - «بالدعوة فقط» vs. open application is shown as a `conflict` with both pages.
+  - Summary corrected: abroad, not only the US, and you apply yourself.
+- **Site search links:** one line under the homepage's university search («تبحث عن معلومة…؟ ابحث في الدليل») and a search box on the 404 page. Not in the header yet: that spot may become «اسأل واضح» later.
+**Alternatives:**
+- **Keep `not_open`:** true, but «يفتح قريبًا» is what the official page says and tells students to watch it.
+- **A search box in the header:** too tight on phones (the iPhone header fix).
+
+## 047 — Test resource pages (SAT, TOEFL, القدرات/التحصيلي) and three more FAQ answers
+**Date:** 2026-10-12
+**Decision:**
+- **Three new resource pages, built like the IELTS page:** `/resources/sat`, `/resources/toefl`, `/resources/qudurat-tahsili`. They are linked from «الاختبارات: من يطلب ماذا؟», the KGSP page and the IELTS page. Research: `docs/research/tests-resources-2026-10.md`.
+- **TOEFL page:** explains the new 1–6 scale (since 21 January 2026) and the comparable 0–120 score on reports, because programs still state old-scale minimums.
+- **القدرات/التحصيلي page:** short on purpose. ETEC's test pages couldn't be read, so it has only what each test measures, who asks for it, and where to register. Duration, scale, fees and attempts wait for the owner's check.
+- **Not published:** a total SAT fee (the page gives two parts), the Saudi TOEFL price (a per-country widget), and the conflicting TOEFL score-delivery times.
+- **King's scholarship FAQ:** three more answers (no fixed high school percentage, in-person full-time study only, up to three offers). The age rule stays unpublished (the official pages conflict). Research: `docs/research/custodian-faq-2026-10.md`.
+- **Aramco:** re-checked, unchanged (`docs/research/aramco-cdpne-2026-27.md`).
+**Alternatives:**
+- **Fill القدرات from prep-course sites:** rejected; not official.
+- **One combined "tests" page:** the per-test pages match the IELTS page and are easier to link and search.
+**Why:** students search for these tests by name. Each page answers "what is it, who needs it, how do I start", with the official link, and gives search and the future chatbot more verified content.
+
+## 048 — Applied filters: a separate, large ✕ that clears only its own filter
+**Date:** 2026-10-12
+**Problem (reproduced in the browser):**
+- The whole chip was one link; its ✕ was a 10 × 23 px glyph, 8 px from the next chip.
+- The link's href was a snapshot ("this search without me"), and `universities.js` copied it into the form.
+- Two removals in quick succession (country, then track) brought the country back: the second chip's href was drawn before the first removal and still contained it.
+- The same happened when a near-miss on the tiny ✕ hit the neighbouring chip, or when the chips shifted after an update and a second tap landed on another chip.
+**Decision:**
+- **Each filter in `describe()` names the parameters it clears** (`remove`: `["country"]`, `["track", "field"]`…). `universities.js` clears only those in the **live form** and keeps every other filter. The href stays for no-JavaScript use.
+- **The chip text is a plain label;** only the ✕ removes.
+- **The ✕ is its own link:** a 36 × 36 px circle in a 44 px chip, an SVG cross, and `aria-label` «إزالة الدولة: الصين». WCAG 2.5.8 asks for at least 24 × 24 px; 44 px matches common mobile guidance.
+- The focus ring follows the circle. After a removal, focus moves to the next ✕, or to the search box.
+- **«مسح الكل»** stays a separate link, now 44 px tall.
+**Alternatives:**
+- **Keep the whole chip clickable:** a tap on the label removes the filter by surprise, and the chip looks like a selected value, not a button.
+- **Disable the chips while results load:** hides the cause instead of fixing it.
+**Note:** browsers cache `universities.js`. After this deploy, a returning visitor may run the old script until their cache refreshes (it still works, without the race fix). Cache-busting the static files is a separate task.
+
+## 049 — University logo and country flag, on the university's own page only (updates 017, 020, CLAUDE.md "no flags"; amended below)
+**Date:** 2026-10-12
+**Decision (the owner's choice):**
+- **Where:** each university's page (`/universities/<id>`) shows the official logo above the name (on a white plate, at most 64 × 220 px), plus a small flag before the country name. Never in result lists, «قائمتي», or on the homepage, which stay text-only for scanning and speed.
+- **Flag:** decorative (`alt=""`), because the country's name is written next to it. 15 SVGs from [flag-icons](https://github.com/lipis/flag-icons) 7.2.3 (MIT), self-hosted in `app/static/img/flags/`, licence file included.
+- **Logo:**
+  - `alt` «شعار <name>», with the line «الشعار لتعريف الجامعة فقط، وواضح لا يتبعها».
+  - No logo → the page looks as before (no placeholder).
+  - Credits are listed on /about.
+- **Sources for the first batch (147 of 290):**
+  - Wikidata's "logo image" (P154) → the Wikimedia Commons file and its licence: 132 public domain (mostly text logos), 11 CC BY-SA, 3 CC0, 1 "copyrighted free use".
+  - A script matched each university by name (the label must share most of its distinctive words) and rejected photos. Every candidate was reviewed by eye on a contact sheet.
+  - Caught before publishing: UCL matched UCLouvain (dropped); Cornell's "logo" was a photo of a sign (dropped).
+  - Files are Commons' PNG renderings, resized to ≤ 128 px tall and ≤ 440 px wide, then re-encoded by Pillow (pixels only, no metadata). 20 KB on average, at most 51 KB; only one loads per page.
+- **Data:** `data/university_logos.json` (file, size, `source_url`, `asset_url`, `licence`, `wikidata`, `retrieved`).
+- **Tests:** every country has a flag; every logo has a source, a licence and a date, is under 60 KB, and has no script; the lists show no logos or flags.
+- **Remaining 143:** 107 have no logo on Wikidata, 22 had no confident match, 14 had only a photo. Next: Haiku agents find each official logo on the university's own site, in batches, with the same review.
+**Alternatives:**
+- **Neither (the earlier rule):** the owner wants recognition on the page students open.
+- **Logos and flags in lists:** busier rows on phones and heavier pages; the country name already scans well.
+- **Load logos from the universities' sites:** third-party requests (privacy rule) and links that break.
+- **Emoji flags:** Windows shows letters ("US") instead of flags.
+**Why:** the logo confirms "this is the university I meant" on the page where a student decides. Showing it only there keeps lists fast and calm. Self-hosting keeps the no-third-party-requests rule.
+- **Amended the same day (owner):**
+  - Flags also appear in list rows and «قائمتي». They are drawn by the shared `country()` macro, 20 × 15 px, lazy-loaded; the same 15 files are cached.
+  - Logos stay on the university page until all 290 have one.
+  - The line «الشعار لتعريف الجامعة فقط…» was removed. /about still says the logos only identify the universities.
+  - In the lists, the «لم نجمع متطلبات…» note and the conditional-language sentence were removed. Only «الترتيب… وليس تصنيفًا عالميًا» remains. The language rule is still explained on each non-English university's page and on the scholarship page.
+
+## 050 — US applications: fee + waiver on each US university page, and one short guide
+**Date:** 2026-10-12
+**Context:** students applying to the US ask which system to use (Common App, the UC application, a university portal) and whether they can avoid application fees. The site had only one line about platforms.
+**Decision:**
+- **Per university (data):** `application_fee` in `data/university_details/<id>.json`.
+  - The international fee: `fee_usd` (`0` = no fee, `null` = not published).
+  - The waiver class from the university's own page: `accepts_common_app` / `own_waiver` / `domestic_only` / `none` / `not_stated`. Labels are in `WAIVER_AR`.
+  - A short note and the source.
+  - 50 of 53 researched US universities so far.
+- **On the university page:** «رسوم التقديم» under «منصة التقديم», in «باختصار» and in the requirements, plus «كيف أقدّم؟» next to the platform. «كيف تطلب الإعفاء؟» appears only when the university offers a waiver an international student can request.
+- **One guide, `/resources/us-applications`:**
+  - Which system, and what an application contains.
+  - A five-question fee-waiver guide: system → international → does the programme cover you → does the university accept it → alternatives.
+  - A folded table of the US universities in the lists, grouped by waiver policy (`Explorer.fee_groups()`, `partials/us_fees.html`).
+  - Linked from the grade 12 page and every US university page.
+- **Rules:**
+  - Never "guaranteed"; answer with your real circumstances.
+  - UC's $80 is a reduced fee, not a waiver.
+  - The Common App essay word limit isn't published, because the official page doesn't state it.
+  - Research: `docs/research/us-applications-2026-10.md`.
+**Alternatives:**
+- **Step-by-step Common App and UC walkthroughs:** the screens change every year and the official guides already exist, so ours would go stale. We link to them instead.
+- **A progress tracker or separate FAQ:** site search covers the questions, and tracking needs accounts (Stage 4).
+**Why:** the decision happens university by university, so the fee lives on the university page. The guide answers the general questions once, with the official link at every step.
+
+## 051 — Cleanup, iteration 1: say each thing once
+**Date:** 2026-10-12
+**Research:**
+- [NN/g, How users read on the web](https://www.nngroup.com/articles/how-users-read-on-the-web/): 79% of test users scanned.
+- [NN/g, concise, scannable, objective](https://www.nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web/): concise text scored 58% higher in measured usability.
+- [NN/g, progressive disclosure](https://www.nngroup.com/articles/progressive-disclosure/): defer secondary information.
+**Decision:**
+- **University page:**
+  - The «تحققنا منها في…» date is removed (check dates aren't shown, CLAUDE.md).
+  - «السنة غير مذكورة في الصفحة» appears once under the list when it applies to every date.
+  - An English-test note that repeats on every test is shown once.
+  - «ما لم نجده في المصادر الرسمية» is folded.
+  - The requirements intro is one line.
+- **Homepage:**
+  - The program row hides the provider when it equals the name (Aramco).
+  - Shorter «لمن؟» for the King scholarship and SDAIA. SDAIA said "not standalone" three times.
+  - The search hint is shorter, and the X link label lost its bracket.
+- **Kept on purpose:** every source link, the "not affiliated" lines, and the admission ≠ scholarship notice.
+**Next iterations:** program pages and the explorer's intro, measured the same way (words per page, one idea per block).

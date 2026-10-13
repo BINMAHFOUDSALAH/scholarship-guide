@@ -7,7 +7,7 @@ import app.main as main
 STATIC = main.APP_DIR / "static"
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 YOUTUBE_ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
-TRACK_STATUSES = {"open", "closed", "not_open", "invitation", "none_open"}
+TRACK_STATUSES = {"open", "closed", "not_open", "opening_soon", "invitation", "none_open"}
 FACT_STATUSES = {"sourced", "unverified", "conflict", "outdated"}
 NEWS_TYPES = {"opening", "closing", "deadline", "announcement"}
 PATH_THEMES = {"world", "desert", "sea"}

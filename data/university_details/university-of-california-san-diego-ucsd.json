@@ -74,5 +74,11 @@
   "language_note_ar": null,
   "not_found_ar": [
     "نسبة قبول الدوليين محسوبة من أرقام CDS (قُبل 7,496 من 24,254 متقدمًا دوليًا)، ولا تنشر الجامعة النسبة نفسها"
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 95,
+    "waiver": "domestic_only",
+    "note_ar": "لكل حرم من جامعات UC تقدّم عليه (من صفحة جامعات UC)",
+    "source_url": "https://admission.universityofcalifornia.edu/apply-now.html"
+  }
 }

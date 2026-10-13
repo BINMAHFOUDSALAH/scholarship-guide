@@ -1,0 +1,79 @@
+{
+  "id": "university-of-delaware",
+  "name_en": "University of Delaware",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students",
+  "platform": {
+    "value_ar": "Common Application للقبول المباشر، وUD Online Application للقبول المشروط (Academic Transitions)",
+    "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 للقبول المباشر، و5.5–6.0 لمسار Academic Transitions.",
+      "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4 للقبول المباشر (المقياس الجديد 1–6). قبل ذلك: 79 (المقياس القديم 0–120).",
+      "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110 فأكثر للقبول المباشر، و95–109 لمسار Academic Transitions.",
+      "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
+    },
+    "note_ar": "الحد الأدنى لا يضمن القبول المباشر. تُقبل أيضًا TOEFL Essentials ‏8، وPTE Academic ‏53، وCambridge B2 First ‏171، وSAT Reading and Writing ‏550 أو ACT English ‏24."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "الطلاب الدوليون غير مطالبين بتقديم SAT أو ACT.",
+    "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Priority (القبول المباشر)",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students",
+      "note_ar": "بعده يُنظر في الطلب حسب توفر المقاعد."
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Academic Transitions (القبول المشروط)",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-06-01",
+      "year_stated": false,
+      "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "التمريض وأولوية كلية الموسيقى",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-01",
+      "year_stated": false,
+      "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students",
+      "note_ar": "لبرامج محددة فقط"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 74.1,
+    "scope_ar": "نسبة العروض لكل طلاب السنة الأولى، خريف 2025: 30,773 من 41,505",
+    "international_percent": null,
+    "source_url": "https://ire.udel.edu/files/2025/10/09-admis_2025-26.pdf"
+  },
+  "language_note_ar": "القبول المشروط عبر Academic Transitions لا يشترط TOEFL أو IELTS للتقديم.",
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "نسبة قبول الدوليين غير منشورة."
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://www.udel.edu/apply/undergraduate-admissions/requirements/international-students"
+  }
+}

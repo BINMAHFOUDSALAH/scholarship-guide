@@ -1,0 +1,71 @@
+{
+  "id": "university-of-north-carolina-at-chapel-hill",
+  "name_en": "University of North Carolina at Chapel Hill",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى. المتقدمون الأقوياء عادة 7.5 فأكثر.",
+      "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى. المتقدمون الأقوياء عادة 5 فأكثر (بعد 21 يناير 2026) أو 100 قبل ذلك.",
+      "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "لا يوجد حد أدنى. المتقدمون الأقوياء عادة 130 فأكثر.",
+      "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
+    },
+    "note_ar": "SAT وACT لا تحقق شرط اللغة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب لمن معدله المرجح 2.8 فأكثر من 4.0؛ ومن معدله أقل يقدّم ACT ‏17 أو SAT ‏930 فأكثر.",
+    "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": false,
+      "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/",
+      "note_ar": "المستندات حتى 7 نوفمبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/",
+      "note_ar": "المستندات حتى 15 فبراير"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 16.7,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–26، C1): ‏12,751 من 76,247",
+    "international_percent": 15.0,
+    "source_url": "https://oira.unc.edu/wp-content/uploads/sites/297/2026/06/CDS_UNCCH_2025-26_20260615.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "لا توجد حدود دنيا منشورة لاختبارات اللغة."
+  ],
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "own_waiver",
+    "note_ar": "اطلب من مرشدك المدرسي أن يطلب الإعفاء من الجامعة",
+    "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
+  }
+}

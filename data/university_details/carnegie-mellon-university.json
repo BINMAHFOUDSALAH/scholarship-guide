@@ -70,5 +70,11 @@
     "صفحات CMU لا تذكر سنة الدخول لسياسة SAT/ACT ولمتطلبات اللغة، والمواعيد المنشورة هي للدورة المعروضة حاليًا (خريف 2027)، ويجب التأكد من ذلك عند التقديم.",
     "نسبة قبول الدوليين غير منشورة في CDS.",
     "الأرقام لحرم بيتسبرغ فقط، وCMU-Qatar لها قواعد خاصة بها لم تُفحص هنا."
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "accepts_common_app",
+    "note_ar": "لمن تنطبق عليه مؤشرات الحاجة الاقتصادية في Common App",
+    "source_url": "https://www.cmu.edu/admission/admission/undergraduate-admission-requirements"
+  }
 }

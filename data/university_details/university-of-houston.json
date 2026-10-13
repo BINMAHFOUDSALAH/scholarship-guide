@@ -1,0 +1,68 @@
+{
+  "id": "university-of-houston",
+  "name_en": "University of Houston",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/",
+  "platform": {
+    "value_ar": "Common App أو ApplyTexas",
+    "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 كلي، صالحة سنتين.",
+      "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/english-language-requirements/"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "4.0، صالحة سنتين.",
+      "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/english-language-requirements/"
+    },
+    "duolingo": {
+      "min": 105,
+      "note_ar": "105، صالحة سنتين.",
+      "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/english-language-requirements/"
+    },
+    "note_ar": null
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "تختار في الطلب المراجعة مع درجات SAT أو ACT أو بدونها. بعض التخصصات قد تطلبها.",
+    "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "أولوية المنح",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-02",
+      "year_stated": true,
+      "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/",
+      "note_ar": "المستندات حتى 9 نوفمبر 2026"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Fall 2027",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-05-03",
+      "year_stated": true,
+      "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/",
+      "note_ar": "المستندات حتى 10 مايو 2027"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 75.8,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026): ‏26,312 من 34,728",
+    "international_percent": 85.3,
+    "source_url": "https://www.uh.edu/ir/reports/common-data-sets/cds-data/common_data_set_2025-2026_final.xlsx"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [],
+  "application_fee": {
+    "fee_usd": 90,
+    "waiver": "not_stated",
+    "note_ar": "إعفاء الطلاب الجدد بنموذج NACAC، والصفحة لا تذكر الدوليين",
+    "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/"
+  }
+}

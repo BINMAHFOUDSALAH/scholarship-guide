@@ -1,0 +1,70 @@
+{
+  "id": "georgia-institute-of-technology",
+  "name_en": "Georgia Institute of Technology",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.gatech.edu/international/first-year",
+  "platform": {
+    "value_ar": "Common Application فقط",
+    "source_url": "https://admission.gatech.edu/first-year/deadlines"
+  },
+  "english": {
+    "ielts": {
+      "min": 6,
+      "note_ar": "حد نظام جامعات جورجيا (USG) الذي تحيل إليه Georgia Tech، والموصى به 6.5.",
+      "source_url": "https://www.usg.edu/international_education/esl_programs/english_proficiency_requirements"
+    },
+    "toefl_ibt": {
+      "min": 3.5,
+      "note_ar": "3.5 على المقياس الجديد (69 قبل 2026)، والموصى به 4.0 (79 قبل 2026). من صفحة USG.",
+      "source_url": "https://www.usg.edu/international_education/esl_programs/english_proficiency_requirements"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "Duolingo لا يحقق شرط اللغة في USG.",
+      "source_url": "https://admission.gatech.edu/international/first-year"
+    },
+    "note_ar": "شرط اللغة يحدده نظام جامعات جورجيا (USG). تُقبل أيضًا PTE Academic ‏53، وSAT قراءة وكتابة 480، وACT English ‏17."
+  },
+  "sat_act": {
+    "policy": "required",
+    "note_ar": "يجب إرسال نتيجة SAT أو ACT واحدة على الأقل، ويمكن التصريح بها ذاتيًا.",
+    "source_url": "https://admission.gatech.edu/first-year/standardized-tests"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action 2 (لغير سكان جورجيا والدوليين)",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-02",
+      "year_stated": false,
+      "source_url": "https://admission.gatech.edu/first-year/deadlines",
+      "note_ar": "آخر موعد للوثائق 16 نوفمبر"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-06",
+      "year_stated": false,
+      "source_url": "https://admission.gatech.edu/first-year/deadlines",
+      "note_ar": "آخر موعد للوثائق 22 يناير"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 13.3,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏8,921 من 66,881",
+    "international_percent": 7.3,
+    "source_url": "https://irp.gatech.edu/sites/default/files/CDS/CDS_2025-2026_FINAL_R4_03JUN2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة Georgia Tech لا تذكر أرقام اللغة؛ الأرقام من صفحة نظام جامعات جورجيا (USG)."
+  ],
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "accepts_common_app",
+    "note_ar": "الإعفاء من أسئلة الإعفاء في قسم Profile بـ Common App، وشروطه المذكورة برامج أمريكية",
+    "source_url": "https://admission.gatech.edu/first-year/application-fees"
+  }
+}

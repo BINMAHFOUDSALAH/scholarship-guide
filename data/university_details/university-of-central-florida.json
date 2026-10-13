@@ -1,0 +1,51 @@
+{
+  "id": "university-of-central-florida",
+  "name_en": "University of Central Florida",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.ucf.edu/admissions/undergraduate/international/",
+  "platform": {
+    "value_ar": "طلب UCF أو Common App",
+    "source_url": "https://www.ucf.edu/admissions/undergraduate/international/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5.",
+      "source_url": "https://www.ucf.edu/admissions/undergraduate/international/"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "4 من يناير 2026، و80 قبل ذلك.",
+      "source_url": "https://www.ucf.edu/admissions/undergraduate/international/"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120.",
+      "source_url": "https://www.ucf.edu/admissions/undergraduate/international/"
+    },
+    "note_ar": "بدائل: SAT قراءة وكتابة 520، أو ACT English ‏20."
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "قائمة مستندات الطلاب الجدد تذكر SAT أو ACT أو CLT، والصفحة لا تقول صراحة إنها مطلوبة للدوليين.",
+    "source_url": "https://www.ucf.edu/admissions/undergraduate/international/"
+  },
+  "dates": [],
+  "acceptance_rate": {
+    "percent": 32.9,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (صفحة الحقائق الرسمية): ‏17,027 من 51,692",
+    "international_percent": null,
+    "source_url": "https://www.ucf.edu/about-ucf/facts/"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة الدوليين تعطي مواعيد مختلفة لخريف (1 مارس و1 أبريل)، فلم ننشر موعدًا."
+  ],
+  "application_fee": {
+    "fee_usd": 30,
+    "waiver": "accepts_common_app",
+    "note_ar": "لأسباب مالية، عبر Common App بتأكيد المرشد المدرسي",
+    "source_url": "https://www.ucf.edu/question/how-can-i-request-a-waiver-of-the-application-fee"
+  }
+}

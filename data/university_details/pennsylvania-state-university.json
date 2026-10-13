@@ -1,0 +1,69 @@
+{
+  "id": "pennsylvania-state-university",
+  "name_en": "Pennsylvania State University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.psu.edu/resources/international-students/admission-requirements",
+  "platform": {
+    "value_ar": "Common App أو MyPennState",
+    "source_url": "https://www.psu.edu/admission/undergraduate/how-to-apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 في IELTS Academic.",
+      "source_url": "https://www.psu.edu/resources/international-students/admission-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 من 21 يناير 2026، و80 قبل ذلك. لا تُقبل MyBest.",
+      "source_url": "https://www.psu.edu/resources/international-students/admission-requirements"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120.",
+      "source_url": "https://www.psu.edu/resources/international-students/admission-requirements"
+    },
+    "note_ar": "النتائج صالحة سنتين. بدائل: SAT قراءة وكتابة 570 أو ACT English ‏24."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية للقبول.",
+    "source_url": "https://www.psu.edu/resources/international-students/admission-requirements"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "source_url": "https://www.psu.edu/admission/undergraduate/how-to-apply",
+      "note_ar": "بعده تُراجع الطلبات تباعًا (rolling)"
+    },
+    {
+      "event_ar": "الموعد الموصى به للتقديم",
+      "round_ar": "لكل الطلبات",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-01",
+      "year_stated": false,
+      "source_url": "https://www.psu.edu/admission/undergraduate/how-to-apply"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 55.3,
+    "scope_ar": "حرم University Park، طلاب السنة الأولى خريف 2025 (CDS 2025–2026): ‏58,952 من 106,547",
+    "international_percent": 64.8,
+    "source_url": "https://opair.psu.edu/files/2026/06/UniversityPark_CDS_2025_2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://www.psu.edu/admission/undergraduate/how-to-apply"
+  }
+}

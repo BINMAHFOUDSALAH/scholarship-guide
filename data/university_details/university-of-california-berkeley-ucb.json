@@ -75,5 +75,11 @@
   "not_found_ar": [
     "نسبة قبول الدوليين غير منشورة (الصفحة لا تقسم الأرقام حسب الإقامة)",
     "لم نتمكن من قراءة جدول القبول في Common Data Set لبيركلي (الملف على Google Sheets)، لذلك استخدمنا لقطة UC لخريف 2026. إحصاءات OPA في بيركلي تذكر 14,451 مقبولًا من 126,842 متقدمًا لدورة 2025–26 (نحو 11.4%)."
-  ]
+  ],
+  "application_fee": {
+    "fee_usd": 95,
+    "waiver": "domestic_only",
+    "note_ar": "لكل حرم من جامعات UC تقدّم عليه",
+    "source_url": "https://admissions.berkeley.edu/apply-to-berkeley/"
+  }
 }

@@ -1,0 +1,70 @@
+{
+  "id": "northwestern-university",
+  "name_en": "Northwestern University",
+  "checked": "2026-10-12",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.northwestern.edu/apply/identities/international.html",
+  "platform": {
+    "value_ar": "Common Application أو Coalition مع Scoir",
+    "source_url": "https://admissions.northwestern.edu/apply/application-deadlines.html"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "مقبول، بلا حد أدنى منشور.",
+      "source_url": "https://admissions.northwestern.edu/faqs/international-applicants/index.html"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "مقبول، بلا حد أدنى منشور. لا تُقبل MyBest.",
+      "source_url": "https://admissions.northwestern.edu/faqs/international-applicants/index.html"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "مقبول، بلا حد أدنى منشور.",
+      "source_url": "https://admissions.northwestern.edu/faqs/international-applicants/index.html"
+    },
+    "note_ar": "المتقدمون التنافسيون يحصلون عادة على درجات عالية. لا تُقبل الدرجات المبلّغة ذاتيًا."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختيارية لطلاب السنة الأولى.",
+    "source_url": "https://admissions.northwestern.edu/faqs/standardized-testing-policy/index.html"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": true,
+      "source_url": "https://admissions.northwestern.edu/apply/application-deadlines.html",
+      "note_ar": "ملزم: إن قُبلت فيه تلتزم بالالتحاق بالجامعة"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-04",
+      "year_stated": true,
+      "source_url": "https://admissions.northwestern.edu/apply/application-deadlines.html"
+    }
+  ],
+  "acceptance_rate": {
+    "percent": 7.5,
+    "scope_ar": "طلاب السنة الأولى خريف 2025 (CDS 2025–2026، C1): ‏3,933 من 52,676",
+    "international_percent": null,
+    "source_url": "https://enrollment.northwestern.edu/data/2025-2026.pdf"
+  },
+  "language_note_ar": null,
+  "not_found_ar": [
+    "لا توجد حدود دنيا منشورة لاختبارات اللغة.",
+    "نسبة قبول الدوليين غير منشورة."
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "accepts_common_app",
+    "note_ar": null,
+    "source_url": "https://admissions.northwestern.edu/apply/fee-waiver.html"
+  }
+}

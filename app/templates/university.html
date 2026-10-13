@@ -13,6 +13,11 @@
   {% if back_url %}{{ c.back_link(back_url, "الرجوع إلى نتائج البحث") }}{% else %}{{ c.back_link(url_for('universities_page'), "كل الجامعات") }}{% endif %}
 
   <header class="uni-header">
+    {# The university's official logo, to recognise it (decision 049); none when we have no reliable file. #}
+    {% if p.logo %}
+    <img class="uni-logo" src="{{ url_for('static', path=p.logo.file) }}" alt="شعار {{ u.name_ar or u.name_en }}"
+         {% if p.logo.width %}width="{{ p.logo.width }}" height="{{ p.logo.height }}"{% endif %}>
+    {% endif %}
     <h1>{{ u.name_ar or u.name_en }}</h1>
     {% if u.name_ar %}<p class="uni-header-en" lang="en" dir="ltr">{{ u.name_en }}</p>{% endif %}
     <p class="uni-header-meta">{{ um.country(u) }}</p>
@@ -52,7 +57,13 @@
       {% if d and d.platform %}
       <div class="summary-row">
         <dt>منصة التقديم</dt>
-        <dd>{{ d.platform.value_ar }}</dd>
+        <dd>{{ d.platform.value_ar }}{% if u.country == "US" %} · <a href="{{ url_for('resource_page', slug='us-applications') }}">كيف أقدّم؟</a>{% endif %}</dd>
+      </div>
+      {% endif %}
+      {% if d and d.application_fee %}
+      <div class="summary-row">
+        <dt>رسوم التقديم</dt>
+        <dd>{{ um.app_fee(u, d) }}</dd>
       </div>
       {% endif %}
       {% set k = explorer.key_facts(u.id) %}
@@ -173,20 +184,27 @@
   <section class="uni-section" id="requirements" aria-labelledby="req-title">
     <h2 id="req-title">متطلبات القبول في الجامعة</h2>
     {% if d %}
-    <p class="result-note">من موقع الجامعة الرسمي{% if d.entry_ar %}، {{ d.entry_ar }}{% endif %}. الجامعة هي التي تقرر القبول، فتأكد من صفحتها قبل التقديم.</p>
+    <p class="result-note">من موقع الجامعة الرسمي{% if d.entry_ar %}، {{ d.entry_ar }}{% endif %}.</p>
     <dl class="summary-list">
       {% if d.platform %}
       <div class="summary-row"><dt>منصة التقديم</dt><dd>{{ d.platform.value_ar }} <a class="src" href="{{ d.platform.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></dd></div>
       {% endif %}
+      {% if d.application_fee %}
+      <div class="summary-row"><dt>رسوم التقديم</dt><dd>{{ um.app_fee(u, d, source=true) }}</dd></div>
+      {% endif %}
 
       {% if d.english %}
       <div class="summary-row"><dt>اللغة الإنجليزية</dt><dd>
+        {% set notes = [] %}
+        {% for key in ("ielts", "toefl_ibt", "duolingo") if d.english[key] and d.english[key].note_ar %}{% if notes.append(d.english[key].note_ar) %}{% endif %}{% endfor %}
+        {% set shared_note = notes | length > 1 and notes | unique | list | length == 1 and notes[0] %}
         <ul class="req-scores">
           {% for key, label in (("ielts", "IELTS"), ("toefl_ibt", "TOEFL iBT"), ("duolingo", "Duolingo")) if d.english[key] %}
           {% set e = d.english[key] %}
-          <li><span lang="en" dir="ltr">{{ label }}</span>: {% if e.min is not none %}<strong>{{ e.min }}</strong>{% else %}لا يوجد حد أدنى منشور{% endif %}{% if e.note_ar %} · {{ e.note_ar }}{% endif %} <a class="src" href="{{ e.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>
+          <li><span lang="en" dir="ltr">{{ label }}</span>: {% if e.min is not none %}<strong>{{ e.min }}</strong>{% else %}لا يوجد حد أدنى منشور{% endif %}{% if e.note_ar and not shared_note %} · {{ e.note_ar }}{% endif %} <a class="src" href="{{ e.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></li>
           {% endfor %}
         </ul>
+        {% if shared_note %}<p class="fact-note">{{ notes[0] }}</p>{% endif %}
         {% if d.english.note_ar %}<p class="fact-note">{{ d.english.note_ar }}</p>{% endif %}
       </dd></div>
       {% endif %}
@@ -208,8 +226,10 @@
       {% endif %}
     </dl>
     {% if d.not_found_ar %}
-    <p class="uni-majors-title">لم نجده في مصدر رسمي:</p>
-    <ul class="major-list">{% for x in d.not_found_ar %}<li>{{ x }}</li>{% endfor %}</ul>
+    <details class="not-found">
+      <summary>ما لم نجده في المصادر الرسمية ({{ d.not_found_ar | length }})</summary>
+      <ul class="major-list">{% for x in d.not_found_ar %}<li>{{ x }}</li>{% endfor %}</ul>
+    </details>
     {% endif %}
     {% if d.admissions_url %}<p><a href="{{ d.admissions_url }}" target="_blank" rel="noopener">صفحة القبول في موقع الجامعة ↗</a></p>{% endif %}
     {% else %}
@@ -250,20 +270,24 @@
     <div class="date-block">
       <h3>مواعيد التقديم على الجامعة</h3>
       {% if p.dates %}
-      <p class="result-note">مواعيد الجامعة نفسها، من موقعها الرسمي{% if d.checked %}، تحققنا منها في {{ d.checked | arabic_date }}{% endif %}. قد تختلف حسب التخصص، فتأكد من صفحة الجامعة.</p>
+      <p class="result-note">من موقع الجامعة الرسمي، وقد تختلف حسب التخصص.</p>
+      {% set dated = p.dates | selectattr("date") | list %}
+      {% set all_inferred = dated and not (dated | selectattr("year_stated") | list) %}
       <ul class="rows uni-dates">
         {% for x in p.dates %}
         {% set past = x.date and x.date < today %}
         <li{% if past or x.reference_only %} class="req-past"{% endif %}>
           <span class="uni-date">{% if x.date %}{{ x.date | arabic_date }}{% else %}لم يُنشر بعد{% endif %}</span>
           {% if x.reference_only %}<span class="tag">دورة سابقة، للاسترشاد</span>{% elif past %}<span class="tag">انتهى</span>{% endif %}
-          {% if x.date and not x.year_stated %}<span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}
+          {% if x.date and not x.year_stated and not all_inferred %}<span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}
           <span class="uni-date-label">{{ um.date_words(x) }}{% if x.note_ar %}. {{ x.note_ar }}{% endif %}</span>
           <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
         </li>
         {% endfor %}
       </ul>
-      {% if p.dates | selectattr("year_stated", "equalto", false) | list %}
+      {% if all_inferred %}
+      <p class="fact-note">الصفحة الرسمية تذكر اليوم والشهر فقط، والسنة من الدورة الحالية.</p>
+      {% elif p.dates | selectattr("year_stated", "equalto", false) | list %}
       <p class="fact-note">«السنة غير مذكورة في الصفحة»: الصفحة الرسمية تذكر اليوم والشهر فقط، والسنة من الدورة الحالية.</p>
       {% endif %}
       {% else %}
