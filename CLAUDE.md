@@ -20,7 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Never collect sensitive data (no national ID, GPA, test scores, passport). Users are mostly minors: privacy and security are requirements. No third-party requests until the user acts (self-hosted fonts, no trackers; the only embed is click-to-play video).
 - Never read, edit, or print `.env` (also enforced by `.claude/settings.json`).
 - Arabic first, RTL, mobile first. One Arabic site with English names inline.
-- Design (decision 035): ivory `#F6F4EE`, charcoal `#101713`, forest `#184B3A` (headings, links, the main button), lime `#D8ED9B` only for «مفتوح الآن» and the next step, never as small text. Light mode first (dark via toggle). Plex Sans Arabic Bold headlines; Naskh only for the wordmark and quotes. Wide grid for the homepage, `.page-wide` for tool pages, 720px `.measure` for reading. Build with the shared components (buttons, `status_tag`, tags, notices, summary list, back link) instead of one-off styles; nothing under 13px. Panels yes; no gradients, grids of identical cards, stock photos, or decorative animation. Logos: the programs' official ones (decision 028), and a country flag beside the country name (pages and lists), and each university's official logo on its own page only, self-hosted with source and licence (decision 049). Real licensed photos with credit. Contrast is checked by `tests/test_design.py` (≥ 4.5:1 text, ≥ 3:1 borders and focus).
+- Design (decision 035): ivory, charcoal, forest, lime only for «مفتوح الآن» and the next step; Arabic RTL, light mode first, shared components, nothing under 13px. Full rules in `.claude/rules/design.md` (loads when editing `app/templates/` or `app/static/`).
 - Nothing official is hard-coded in templates: data in `data/`, page text in `content/`.
 
 ## How to work with me
@@ -35,6 +35,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `source-researcher`: new facts from official sources, ~5 items per agent, in parallel, with a strict schema + a finished example file.
   - `fact-checker`: checks what's already published against its cited sources.
   - `reviewer`: an independent check of a big or risky diff.
+  - University requirements: follow the `research-wave` skill (`.claude/skills/research-wave/SKILL.md`).
   - Research agents are read-only: they read pages directly, with WebFetch or, where it can't reach a site (e.g. in a cloud session), with `curl`, and return results, and the main session saves them, validates them with tests, makes the decisions, writes the code, and flags anything an agent couldn't verify. Quick lookups and small edits stay in the main session.
 - Ask before installing packages, downloading files, or spending money. Never commit or push unless I ask.
 - Record design choices (with alternatives) in `docs/decisions.md`; tick progress in `docs/roadmap.md`.
@@ -49,7 +50,9 @@ $env:WADIH_SHOW_DRAFTS="1"; uvicorn app.main:app --reload   # also show unverifi
 pytest                                          # all tests (run before every commit)
 pytest tests/test_data.py -v                    # one file
 pytest tests/test_pages.py::test_about_loads    # one test
+python scripts/stale_facts.py --as-of 2026-12-09 --days 45   # facts to re-check before launch
+python scripts/check_quote.py URL "quote"       # does an official page really say this?
 ```
 
 ## Deploy
-Live at https://wadihguide.com (domain at Cloudflare, DNS only; hosted on Render free tier, Frankfurt). The old address https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042). GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. Render installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Never set `WADIH_SHOW_DRAFTS` on Render. Free instances sleep when idle.
+Live at https://wadihguide.com (domain at Cloudflare, DNS only; hosted on Render, Frankfurt, on the $7/month compute plan so it never sleeps). The old address https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042). GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. Render installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Never set `WADIH_SHOW_DRAFTS` on Render.

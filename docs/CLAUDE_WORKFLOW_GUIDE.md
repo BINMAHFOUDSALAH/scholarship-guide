@@ -34,7 +34,7 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 
 ## Best practices (Anthropic + experienced developers)
 
-1. **Give Claude a way to check its work.** Tests, a screenshot, a command that passes or fails. Wadih has 51 tests, and every task ends with `pytest`.
+1. **Give Claude a way to check its work.** Tests, a screenshot, a command that passes or fails. Wadih has about 400 tests, and every task ends with `pytest`.
 2. **Explore → Plan → Code → Commit.** Skip planning only for tiny, clear changes.
 3. **Be specific.** Name the file, the situation, and what "done" looks like.
 4. **Ask for evidence, not "it works."** Test output, a screenshot, the command and its result.
@@ -57,8 +57,8 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 
 ## What Wadih uses today vs later
 
-- **Today:** CLAUDE.md, plan mode, tests, CI (GitHub Actions + Render deploy-after-checks), the `.env` permission rule, checkpoints, and subagents only when worth it.
-- **Later:** skills for repeated content tasks (news, paths), maybe a Stop hook that runs tests, a weekly link-check workflow, and building an **MCP server** for Wadih's verified data during the AI stages (a strong FDE portfolio piece).
+- **Today:** CLAUDE.md, plan mode, tests, CI (GitHub Actions + Render deploy-after-checks), the `.env` permission rule, checkpoints, three subagents (`source-researcher`, `fact-checker`, `reviewer`), and one skill, `research-wave` (university requirements, done three times before it was written down).
+- **Later:** more skills once a task repeats (news items, a new program), maybe a Stop hook that runs tests, a weekly link-check workflow, and building an **MCP server** for Wadih's verified data during the AI stages (a strong FDE portfolio piece).
 - Which project files exist and when to add them: [project-files-guide.md](project-files-guide.md).
 
 ## Sources
