@@ -1,0 +1,79 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لا يوجد حد أدنى.",
+    "source_url": "https://www.digipen.edu/admissions/how-to-apply/undergraduate-admissions-requirements"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action I",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-15",
+      "year_stated": true,
+      "source_url": "https://www.digipen.edu/admissions/how-to-apply/admissions-timeline",
+      "note_ar": "11:59 مساءً بتوقيت المحيط الهادئ"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action II",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "source_url": "https://www.digipen.edu/admissions/how-to-apply/admissions-timeline"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "General Priority",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-03-01",
+      "year_stated": true,
+      "source_url": "https://www.digipen.edu/admissions/how-to-apply/admissions-timeline"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Final",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-07-01",
+      "year_stated": true,
+      "source_url": "https://www.digipen.edu/admissions/how-to-apply/admissions-timeline",
+      "note_ar": "للمقاعد المتبقية"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "digipen-institute-of-technology",
+  "name_en": "DigiPen Institute of Technology",
+  "admissions_url": "https://www.digipen.edu/admissions/how-to-apply/for-international-applicants",
+  "platform": {
+    "value_ar": "بوابة التقديم الخاصة بالمعهد",
+    "source_url": "https://www.digipen.edu/admissions/how-to-apply/admissions-timeline"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "ولا تقل أي مهارة عن 6.0.",
+      "source_url": "https://www.digipen.edu/admissions/how-to-apply/for-international-applicants"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "المقياس الجديد: 4 ولا تقل أي مهارة عن 4. القديم: 80.",
+      "source_url": "https://www.digipen.edu/admissions/how-to-apply/for-international-applicants"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115.",
+      "source_url": "https://www.digipen.edu/admissions/how-to-apply/for-international-applicants"
+    },
+    "note_ar": null
+  },
+  "application_fee": {
+    "fee_usd": 60,
+    "waiver": "own_waiver",
+    "note_ar": "تُعفى إن بدأت الطلب بين 15 سبتمبر و15 نوفمبر 2026، أو حضرت فعالية قبول.",
+    "source_url": "https://www.digipen.edu/admissions/how-to-apply/undergraduate-admissions-requirements"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": null,
+  "dates": [],
+  "not_found_ar": [
+    "لا يوجد آخر موعد لخريف 2027، فقط موعد أولوية للمنح (1 مايو) والطلبات تُقبل بعده"
+  ],
+  "id": "kansas-state-university",
+  "name_en": "Kansas State University",
+  "admissions_url": "https://www.k-state.edu/admissions/undergrad/manhattan/apply/international/requirements.html",
+  "platform": {
+    "value_ar": "بوابة K-State أو Common App",
+    "source_url": "https://www.k-state.edu/admissions/undergrad/manhattan/apply/international/guide.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "للإعفاء من دروس الإنجليزية قبل الدراسة.",
+      "source_url": "https://www.k-state.edu/admissions/undergrad/manhattan/apply/international/english-proficiency.html"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5. قبل ذلك: 79.",
+      "source_url": "https://www.k-state.edu/admissions/undergrad/manhattan/apply/international/english-proficiency.html"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "110.",
+      "source_url": "https://www.k-state.edu/admissions/undergrad/manhattan/apply/international/english-proficiency.html"
+    },
+    "note_ar": "الإنجليزية ليست شرطًا للقبول. هذه الدرجات تعفيك من برنامج اللغة، ومن لا يقدمها يبدأ به."
+  },
+  "application_fee": {
+    "fee_usd": 80,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://www.k-state.edu/admissions/undergrad/manhattan/apply/international/guide.html"
+  }
+}

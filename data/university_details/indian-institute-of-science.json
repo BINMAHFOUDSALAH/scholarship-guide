@@ -1,0 +1,20 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": null,
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": null,
+  "dates": [],
+  "not_found_ar": [
+    "دورة 2027 لم تُنشر بعد. آخر دورة منشورة (2026–2027) أُغلقت في 7 يونيو 2026",
+    "الشهادة الثانوية السعودية غير مذكورة، ويلزم للأجانب شهادة معادلة من Association of Indian Universities"
+  ],
+  "id": "indian-institute-of-science",
+  "name_en": "Indian Institute of Science",
+  "admissions_url": "https://bs-ug.iisc.ac.in/admissions/selection-process",
+  "platform": {
+    "value_ar": "بوابة القبول في IISc. للأجانب مساران لبرنامج BS (Research): درجات SAT أو ACT ثم مقابلة، أو IAT أو JEE (Advanced). المقاعد للأجانب 5 من 125.",
+    "source_url": "https://bs-ug.iisc.ac.in/admissions/selection-process"
+  },
+  "english": null
+}

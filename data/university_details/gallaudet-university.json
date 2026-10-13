@@ -1,0 +1,26 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": "جامعة للصم وضعاف السمع، والتعليم فيها بلغتين: لغة الإشارة الأمريكية (ASL) والإنجليزية.",
+  "acceptance_rate": null,
+  "sat_act": null,
+  "dates": [],
+  "not_found_ar": [
+    "شروط الطلاب الدوليين (الإنجليزية، لغة الإشارة، SAT): صفحة القبول الدولي تحجب القراءة الآلية",
+    "القبول للخريف «rolling» (حسب الطلبات)، ولا توجد مواعيد محددة في البوابة"
+  ],
+  "id": "gallaudet-university",
+  "name_en": "Gallaudet University",
+  "admissions_url": "https://apply.gallaudet.edu/apply/?undergrad=",
+  "platform": {
+    "value_ar": "بوابة التقديم الخاصة بالجامعة",
+    "source_url": "https://apply.gallaudet.edu/apply/?undergrad="
+  },
+  "english": null,
+  "application_fee": {
+    "fee_usd": 50,
+    "waiver": "own_waiver",
+    "note_ar": "تُعفى من الرسوم إن أكملت الطلب وأرسلته قبل 1 ديسمبر.",
+    "source_url": "https://apply.gallaudet.edu/apply/?undergrad="
+  }
+}

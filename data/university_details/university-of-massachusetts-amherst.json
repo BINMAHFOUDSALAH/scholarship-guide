@@ -1,0 +1,61 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": null,
+    "source_url": "https://www.umass.edu/admissions/test-optional-policy"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-05",
+      "year_stated": false,
+      "source_url": "https://www.umass.edu/admissions/undergraduate-admissions/apply/international-students/international-first-year"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://www.umass.edu/admissions/undergraduate-admissions/apply/international-students/international-first-year"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "university-of-massachusetts-amherst",
+  "name_en": "University of Massachusetts Amherst",
+  "admissions_url": "https://www.umass.edu/admissions/undergraduate-admissions/apply/international-students/international-first-year",
+  "platform": {
+    "value_ar": "Common Application (مع أسئلة UMass)",
+    "source_url": "https://www.umass.edu/admissions/undergraduate-admissions/apply/international-students/international-admissions"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 ولا تقل أي مهارة عن 6.0. لا يُقبل IELTS Indicator.",
+      "source_url": "https://www.umass.edu/admissions/english-language-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات بعد 21 يناير 2026: 4.5 ولا يقل أي قسم عن 4. قبل ذلك: 80.",
+      "source_url": "https://www.umass.edu/admissions/english-language-proficiency"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115.",
+      "source_url": "https://www.umass.edu/admissions/english-language-proficiency"
+    },
+    "note_ar": null
+  },
+  "application_fee": {
+    "fee_usd": 85,
+    "waiver": "domestic_only",
+    "note_ar": "لا تُعفى للطلاب الدوليين.",
+    "source_url": "https://www.umass.edu/admissions/undergraduate-admissions/apply/international-students/international-admissions"
+  }
+}

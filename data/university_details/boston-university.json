@@ -1,0 +1,60 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختياري حتى قبول خريف 2028.",
+    "source_url": "https://www.bu.edu/admissions/apply/international/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-02",
+      "year_stated": false,
+      "source_url": "https://www.bu.edu/admissions/apply/deadlines/",
+      "note_ar": "ملزم"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-05",
+      "year_stated": false,
+      "source_url": "https://www.bu.edu/admissions/apply/deadlines/"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "boston-university",
+  "name_en": "Boston University",
+  "admissions_url": "https://www.bu.edu/admissions/apply/international/",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://www.bu.edu/admissions/apply/international/"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.0,
+      "note_ar": "7.0 يكفي لكل البرامج.",
+      "source_url": "https://www.bu.edu/admissions/apply/international/"
+    },
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "لا حد أدنى منشورًا لـ TOEFL وDuolingo. «الأكثر تنافسية»: TOEFL ‏5.0 (المقياس الجديد) وDuolingo من 125 إلى 135."
+  },
+  "application_fee": {
+    "fee_usd": 80,
+    "waiver": "accepts_common_app",
+    "note_ar": null,
+    "source_url": "https://www.bu.edu/admissions/apply/first-year/"
+  },
+  "saudi_certificate": {
+    "direct_entry": true,
+    "note_ar": "الثانوية العامة مدرجة في قائمة BU للشهادات المقبولة للقبول، دون حد للدرجة.",
+    "quote": "Saudi Arabia General Secondary Education Certificate (Shahadat Al-Marhalat Al-Thanawiyyat)",
+    "source_url": "https://www.bu.edu/admissions/apply/international/school-credentials/"
+  }
+}

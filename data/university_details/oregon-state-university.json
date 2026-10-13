@@ -1,0 +1,63 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "الدرجات لا تكون السبب الوحيد أو الأساسي لقرار القبول.",
+    "source_url": "https://admissions.oregonstate.edu/admission-requirements"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-02",
+      "year_stated": true,
+      "note_ar": "لحرم Corvallis",
+      "source_url": "https://admissions.oregonstate.edu/undergraduate-admission-deadlines"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Priority",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-02-01",
+      "year_stated": true,
+      "note_ar": "لحرم Corvallis. المستندات حتى 12 فبراير 2027.",
+      "source_url": "https://admissions.oregonstate.edu/undergraduate-admission-deadlines"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "oregon-state-university",
+  "name_en": "Oregon State University",
+  "admissions_url": "https://admissions.oregonstate.edu/international/programs/undergraduate-degree-programs/first-year-freshman",
+  "platform": {
+    "value_ar": "طلب OSU أو Common App (عبر مكتب القبول الدولي لمن يحتاج تأشيرة)",
+    "source_url": "https://admissions.oregonstate.edu/apply-choose-application"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0.",
+      "source_url": "https://admissions.oregonstate.edu/international/programs/undergraduate-degree-programs/first-year-freshman"
+    },
+    "toefl_ibt": {
+      "min": 70,
+      "note_ar": "70 (الصفحة لا تحدد المقياس).",
+      "source_url": "https://admissions.oregonstate.edu/international/programs/undergraduate-degree-programs/first-year-freshman"
+    },
+    "duolingo": {
+      "min": 100,
+      "note_ar": "100.",
+      "source_url": "https://admissions.oregonstate.edu/international/programs/undergraduate-degree-programs/first-year-freshman"
+    },
+    "note_ar": "النتيجة لا تكون أقدم من سنتين عند بداية الفصل."
+  },
+  "application_fee": {
+    "fee_usd": 65,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://catalog.oregonstate.edu/tuition-fees-payment/"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب للطلاب الدوليين.",
+    "source_url": "https://www.unlv.edu/admissions/international/undergraduate"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Priority",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-15",
+      "year_stated": false,
+      "source_url": "https://www.unlv.edu/admissions/international/undergraduate"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Final",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-06-01",
+      "year_stated": false,
+      "note_ar": "التقديم يفتح في 1 أكتوبر.",
+      "source_url": "https://www.unlv.edu/admissions/international/undergraduate"
+    }
+  ],
+  "not_found_ar": [
+    "إعفاء رسوم التقديم للدوليين غير مذكور"
+  ],
+  "id": "university-of-nevada-las-vegas",
+  "name_en": "University of Nevada - Las Vegas",
+  "admissions_url": "https://www.unlv.edu/admissions/international/undergraduate",
+  "platform": {
+    "value_ar": "Common Application أو طلب UNLV",
+    "source_url": "https://www.unlv.edu/admissions/international/undergraduate"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 ولا تقل أي مهارة عن 5.5.",
+      "source_url": "https://www.unlv.edu/admissions/international/undergraduate/english-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "المقياس الجديد (من يناير 2026): 4.0 ولا تقل أي مهارة عن 3.5. المقياس القديم: 72.",
+      "source_url": "https://www.unlv.edu/admissions/international/undergraduate/english-proficiency"
+    },
+    "duolingo": {
+      "min": 100,
+      "note_ar": "100 ولا يقل أي قسم عن 95.",
+      "source_url": "https://www.unlv.edu/admissions/international/undergraduate/english-proficiency"
+    },
+    "note_ar": "النتيجة لا تكون أقدم من سنتين وقت التقديم."
+  },
+  "application_fee": {
+    "fee_usd": 95,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://www.unlv.edu/admissions/international/undergraduate"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "غير مطلوب، ويمكن إدخال درجتك بنفسك.",
+    "source_url": "https://www.colorado.edu/admissions/process/first-year/plan"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-15",
+      "year_stated": false,
+      "source_url": "https://www.colorado.edu/admissions/process/international/apply"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "source_url": "https://www.colorado.edu/admissions/process/international/apply"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "university-of-colorado-boulder",
+  "name_en": "University of Colorado Boulder",
+  "admissions_url": "https://www.colorado.edu/admissions/process/international/apply",
+  "platform": {
+    "value_ar": "Common Application",
+    "source_url": "https://www.colorado.edu/admissions/process/first-year/apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5.",
+      "source_url": "https://www.colorado.edu/admissions/process/international/plan/english-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "للاختبارات بعد يناير 2026: 4.0. قبل ذلك: 80.",
+      "source_url": "https://www.colorado.edu/admissions/process/international/plan/english-proficiency"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "115.",
+      "source_url": "https://www.colorado.edu/admissions/process/international/plan/english-proficiency"
+    },
+    "note_ar": "يمكن القبول المشروط مع برنامج Pathway to CU."
+  },
+  "application_fee": {
+    "fee_usd": 70,
+    "waiver": "accepts_common_app",
+    "note_ar": "للدوليين. طلب الإعفاء عبر Common App.",
+    "source_url": "https://www.colorado.edu/admissions/process/first-year/apply"
+  }
+}

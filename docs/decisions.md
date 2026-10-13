@@ -765,3 +765,13 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Repeated workflows become skills: `.claude/skills/research-wave/SKILL.md`.
 - No `goal.md` / `spec.md` / `TODO.md`: CLAUDE.md, `docs/specs/` and the roadmap already do those jobs.
 **Alternative:** keep everything in CLAUDE.md (loads every session, even for unrelated work).
+
+## 056 — Wave 4 (last English-speaking universities) and a full verification pass
+**Date:** 2026-10-13
+**Wave 4:** 22 of 25 saved (US 15, India 7), same rules and checks as decisions 054–055. Boston University lists the Saudi certificate as accepted for admission. Not saved (admissions sites block automated reads): University of Virginia, University of Pittsburgh, Colorado School of Mines. India: the five IITs share one route (foreign nationals sit JEE (Advanced) directly, supernumerary seats up to 10%, from the official JEE Advanced and JoSAA 2026 rules); 2027 rules aren't published yet.
+**Verification pass:** four `fact-checker` agents re-read about 200 published claims against their sources. Every fix below was re-checked by the main session:
+- **Preparatory year is not a second exception.** The Ministry lists one exception to "final, unconditional admission" (a non-English-speaking country). The preparatory year has separate extra conditions (90% average, IELTS 5.5). Fixed on the scholarship page, its facts and tracks, the grade-12 timeline and the tests table.
+- China bachelor's: added the age limit (30) from the 2025–2026 extra conditions. The general "bachelor's ≤ 30 except الرواد" line stays unpublished: the general-conditions page and the FAQ ("لا يشترط عمر محدد") contradict it.
+- SAT next date (7 Nov 2026, register by 23 Oct), واعد IELTS range (5.5–7), SDAIA overlap (28 of 95 in الرواد, 82 in الرواد or إمداد), KGSP wording, "government" universities on the unified-admission platform, documents list, guide scope (no واعد), moved links (Harvard, SAT, TOEFL, Aramco).
+- **Aramco:** the owner read the official page on 2026-10-13 (new URL). Requirements unchanged; registration closed; next cycle to be announced. Age limit (22 Hijri years) added to the audience line.
+**Not added:** SABIC's university scholarship (in-Kingdom; students are nominated through four universities; owner: not for now, 2026-10-13), NEOM's scholarship (Tabuk region only; portal offline; no official requirements or current cycle), the Ministry's 2021 health-specialties track (superseded by the four current tracks), the full واعد list (all closed).

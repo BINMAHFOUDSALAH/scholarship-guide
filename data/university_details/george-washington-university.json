@@ -1,0 +1,63 @@
+{
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "language_note_ar": null,
+  "acceptance_rate": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لا يوجد حد أدنى للمعدل أو SAT/ACT.",
+    "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision I",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "note_ar": "ملزم",
+      "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Decision II / Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-05",
+      "year_stated": false,
+      "note_ar": "ED II ملزم",
+      "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+    }
+  ],
+  "not_found_ar": [],
+  "id": "george-washington-university",
+  "name_en": "George Washington University",
+  "admissions_url": "https://undergraduate.admissions.gwu.edu/international-application-process",
+  "platform": {
+    "value_ar": "Common Application أو Coalition Application",
+    "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5.",
+      "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات بعد 26 يناير 2026: 4.5. قبل ذلك: 90.",
+      "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120.",
+      "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+    },
+    "note_ar": "يُعفى من حصل على 650 في SAT EBRW أو 29 في ACT English، أو درس الثانوية كاملة بالإنجليزية."
+  },
+  "application_fee": {
+    "fee_usd": 80,
+    "waiver": "not_stated",
+    "note_ar": null,
+    "source_url": "https://undergraduate.admissions.gwu.edu/international-application-process"
+  }
+}
