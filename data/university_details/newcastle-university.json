@@ -1,0 +1,52 @@
+{
+  "id": "newcastle-university",
+  "name_en": "Newcastle University",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.ncl.ac.uk/undergraduate/applications-offers/international/",
+  "platform": {
+    "value_ar": "UCAS (الرمز N21)",
+    "source_url": "https://www.ncl.ac.uk/undergraduate/applications-offers/international/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "في أغلب الحالات: 6.5 مع 5.5 في كل مهارة. بعض الدورات أعلى، وتذكرها صفحة الدورة.",
+      "source_url": "https://www.ncl.ac.uk/international/language/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "من 21 يناير 2026: 4.5، مع 3.5 في القراءة و3 في الكتابة والاستماع والتحدث. قبل ذلك: 90.",
+      "source_url": "https://www.ncl.ac.uk/international/language/"
+    },
+    "duolingo": {
+      "min": 125,
+      "note_ar": "125 مع 100 في كل مهارة، وقد يختلف لبعض الدورات.",
+      "source_url": "https://www.ncl.ac.uk/international/language/"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "Find out the qualifications from Saudi Arabia that we accept for entry onto our undergraduate and postgraduate course pages at Newcastle.",
+    "source_url": "https://www.ncl.ac.uk/international/country/saudi-arabia/"
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: الصفحة تحيل إلى صفحات الدورات، ولم نقرأها"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "the-london-school-of-economics-and-political-science-lse",
+  "name_en": "The London School of Economics and Political Science -LSE",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.lse.ac.uk/study-at-lse/Undergraduate/Prospective-Students/How-to-Apply",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://www.lse.ac.uk/study-at-lse/international-students/saudi-arabia"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.0,
+      "note_ar": "7.0 إجمالًا و7.0 في كل مهارة، في جلسة واحدة.",
+      "source_url": "https://www.lse.ac.uk/study-at-lse/Undergraduate/Prospective-Students/How-to-Apply/English-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 5.5,
+      "note_ar": "للاختبارات من يناير 2026: 5.5 مع 5 على الأقل في كل مهارة. المقياس القديم: 100 إجمالًا.",
+      "source_url": "https://www.lse.ac.uk/study-at-lse/Undergraduate/Prospective-Students/How-to-Apply/English-language-requirements"
+    },
+    "duolingo": null,
+    "note_ar": "لا تطلب LSE إثبات الإنجليزية عند التقديم، بل بعد الحصول على عرض قبول."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد لاختبار LNAT (لتخصص القانون LLB)",
+      "round_ar": "LNAT",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-31",
+      "year_stated": true,
+      "note_ar": "لمتقدمي LLB فقط: يجب أن تكون قد جلست للاختبار بحلول هذا التاريخ",
+      "source_url": "https://www.lse.ac.uk/study-at-lse/Undergraduate/Prospective-Students/How-to-Apply/Entry-Requirements"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "LSE لا تقبل الشهادات المدرسية السعودية كمؤهل قبول أصلًا.",
+    "quote": "The school-leaving qualifications from Saudi Arabia aren't acceptable as an entry qualification for LSE.",
+    "source_url": "https://www.lse.ac.uk/study-at-lse/international-students/saudi-arabia"
+  },
+  "not_found_ar": [
+    "رمز LSE في UCAS غير مذكور في الصفحات التي قرأناها",
+    "Duolingo غير مذكور"
+  ]
+}

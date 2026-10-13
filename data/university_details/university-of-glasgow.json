@@ -1,0 +1,41 @@
+{
+  "id": "university-of-glasgow",
+  "name_en": "University of Glasgow",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.gla.ac.uk/undergraduate/how-to-apply-for-an-undergraduate-degree/ucas/",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://www.gla.ac.uk/undergraduate/how-to-apply-for-an-undergraduate-degree/ucas/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "لا يوجد حد عام: الحد مكتوب في صفحة كل برنامج."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "المطلوب A-levels أو IB أو Glasgow International College (برنامج تأسيس شريك) أو مؤهل مقبول آخر.",
+    "quote": "Country qualifications not accepted, A-levels, IB, Glasgow International College or other accepted qualification required.",
+    "source_url": "https://www.gla.ac.uk/international/country/saudiarabia/"
+  },
+  "not_found_ar": [
+    "حدود IELTS وTOEFL وDuolingo: في صفحة كل برنامج فقط، ولم نقرأها",
+    "رمز Glasgow في UCAS غير مؤكد في الصفحات التي قرأناها"
+  ]
+}

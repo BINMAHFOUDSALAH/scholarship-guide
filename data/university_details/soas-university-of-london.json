@@ -1,0 +1,50 @@
+{
+  "id": "soas-university-of-london",
+  "name_en": "SOAS University of London",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.soas.ac.uk/how-apply-undergraduate-study",
+  "platform": {
+    "value_ar": "UCAS (الرمز S09)",
+    "source_url": "https://www.soas.ac.uk/how-apply-undergraduate-study"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "للقبول المباشر: 6.5 مع 6.0 في كل مهارة (IELTS Academic أو for UKVI أو Online).",
+      "source_url": "https://www.soas.ac.uk/international/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 5.0,
+      "note_ar": "المقياس الجديد: 5.0، مع 4.5 في الكتابة والاستماع و4.0 في القراءة والتحدث. المقياس القديم: 95. لا يُقبل MyBest.",
+      "source_url": "https://www.soas.ac.uk/international/english-language-requirements"
+    },
+    "duolingo": {
+      "min": 120,
+      "note_ar": "120 مع 110 في كل مهارة.",
+      "source_url": "https://www.soas.ac.uk/international/english-language-requirements"
+    },
+    "note_ar": "الصفحة تذكر دخول سبتمبر 2026 في جزء من الشروط، ولم نجد نسخة 2027. تحقق من صفحة برنامجك."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حامل الثانوية العامة السعودية يجب أن يكمل سنة تأسيسية قبل التقديم للبكالوريوس.",
+    "quote": "Applicants from Saudi Arabia who have completed the General Secondary Education Certificate will be required to complete a Foundation Year before applying for undergraduate study.",
+    "source_url": "https://www.soas.ac.uk/international/information-region/information-prospective-students-saudi-arabia"
+  },
+  "not_found_ar": []
+}

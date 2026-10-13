@@ -1,0 +1,49 @@
+{
+  "id": "university-of-derby",
+  "name_en": "University of Derby",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.derby.ac.uk/undergraduate/apply/",
+  "platform": {
+    "value_ar": "UCAS (الرمز D39)",
+    "source_url": "https://www.derby.ac.uk/undergraduate/apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "أغلب البكالوريوس يطلب من 6.0 إلى 7.0 مع حد لكل مهارة. أدنى مستوى في الجدول: 6.0 مع 5.5.",
+      "source_url": "https://www.derby.ac.uk/life/international-students/applicants/english-language-tests/"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "المقابل لـ IELTS 6.0، للاختبارات من 21 يناير 2026: 4، مع 3.5 في القراءة و3 في الاستماع والكتابة والتحدث. المقياس القديم: 79.",
+      "source_url": "https://www.derby.ac.uk/life/international-students/applicants/english-language-tests/"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": "الثانوية السعودية بمعدل 70% مذكورة لسنة التأسيس الدولية فقط.",
+    "quote": "Students with an overall score of 70% in the General Secondary Education Certificate would usually be eligible for the International Foundation Year",
+    "source_url": "https://www.derby.ac.uk/life/international-students/middle-east/"
+  },
+  "not_found_ar": [
+    "صفحة Derby للشرق الأوسط تذكر الثانوية السعودية (معدل 70%) لسنة التأسيس الدولية فقط، وقائمة البكالوريوس للسعودية لا تذكرها",
+    "Duolingo غير مذكور في صفحة اختبارات اللغة"
+  ]
+}

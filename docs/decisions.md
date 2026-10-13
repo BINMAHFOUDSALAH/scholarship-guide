@@ -738,3 +738,15 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - `tests/test_stale_facts.py` fails if a check date exists in `data/` or `content/` that the script doesn't read, so the report can't silently miss a new file. It never depends on today's date.
 - **Before Launch 1:** one full re-check pass. Run `--as-of 2026-12-09 --days 45`, re-check from the top, update each date, run again until empty.
 **Alternative:** the failing test (above), or a scheduled CI job that warns without blocking deploys. The scheduled job can come later; the script is what it would run.
+
+## 054 — UK requirements (إمداد wave 2) and a «الشهادة الثانوية السعودية» row
+**Date:** 2026-10-13
+**Problem:** for a Saudi student, the most useful fact about a UK university is whether the Saudi secondary certificate alone gets them into year 1, or only after a foundation year. We had no field for it; UCL's answer sat in `language_note_ar`, which the page labels «لغة الدراسة».
+**Decision:**
+- New optional `saudi_certificate` in `data/university_details/<id>.json`: `direct_entry` (true / false / null), `note_ar`, the exact English `quote`, `source_url`. Shown as «الشهادة الثانوية السعودية» only for true or false.
+- **`false` only when the university's own page says so** (for example "not sufficient for direct entry", "must complete a foundation course", "not considered for entry"). When the page names the certificate only as a route into its foundation programme (Reading, Derby, Southampton, Bristol), or doesn't name it at all, it is `null`, and the finding goes in `not_found_ar`. Inferring "no" from a page's structure would be inventing a requirement.
+- Wave 2: 26 of 29 UK إمداد universities researched by 6 `source-researcher` agents (Haiku, `curl`), every saved fact spot-checked by the main session against the live page. Results: 15 say the certificate is not enough for year 1; 11 are `null`; none accept it directly.
+- Not saved: Durham and Bournemouth (their sites refuse automated reads, 403), and London Business School (only master's/MBA programmes listed, but no page says it has no bachelor's).
+- Every UK file carries the UCAS equal-consideration deadline (13 Jan 2027, read on ucas.com). Course-only deadlines (medicine, LNAT) use a different `event_ar`, so they never become «أقرب موعد».
+- SAT/ACT and acceptance rate are left out for the UK: the agents didn't search for them, so "not published" would overclaim.
+**Alternative:** keep using `language_note_ar` (wrong label), or record "false" when a page implies it (more answers, but some invented).

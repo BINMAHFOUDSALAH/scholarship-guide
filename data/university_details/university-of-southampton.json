@@ -1,0 +1,42 @@
+{
+  "id": "university-of-southampton",
+  "name_en": "University of Southampton",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.southampton.ac.uk/study/undergraduate/apply",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://www.southampton.ac.uk/study/undergraduate/apply"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "لا يوجد حد عام: لكل برنامج مستوى من A إلى I، ورقم IELTS المقابل في صفحة البرنامج."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": "الثانوية السعودية بمعدل 85% مذكورة لبرامج التأسيس فقط.",
+    "quote": "a General Secondary Certificate (Al Thanawiya Al Aama) with an overall average of 85%",
+    "source_url": "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/saudi-arabia"
+  },
+  "not_found_ar": [
+    "صفحة Southampton للسعودية تذكر الثانوية العامة (معدل 85%) لبرامج التأسيس فقط، وللبكالوريوس تذكر A levels أو IB أو برنامج تأسيس. لا تقول صراحة هل تكفي الثانوية للسنة الأولى",
+    "حد IELTS: في صفحة كل برنامج فقط، ولم نقرأها",
+    "رمز Southampton في UCAS غير مذكور في الصفحة"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "university-of-sussex",
+  "name_en": "University of Sussex",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.sussex.ac.uk/study/undergraduate/apply",
+  "platform": {
+    "value_ar": "UCAS (الرمز S90)",
+    "source_url": "https://www.sussex.ac.uk/study/undergraduate/apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "أدنى مستوى (Standard): 6.0 مع 5.5 في كل مهارة. High: 6.5 مع 6.0، وAdvanced: 7.0 مع 6.5 لبعض البرامج. الطب (BMBS): 7.5 مع 7.0.",
+      "source_url": "https://www.sussex.ac.uk/study/undergraduate/apply/international-qualifications/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "Standard للاختبارات من 21 يناير 2026: 4 مع 4 في كل مهارة.",
+      "source_url": "https://www.sussex.ac.uk/study/undergraduate/apply/international-qualifications/english-language-requirements"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "Standard: 110 مع 105 على الأقل في كل مهارة.",
+      "source_url": "https://www.sussex.ac.uk/study/undergraduate/apply/international-qualifications/english-language-requirements"
+    },
+    "note_ar": "المستوى يحدده التخصص، فتحقق من صفحة دورتك."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "To make our entry requirements easy to understand, we have listed the typical qualifications we accept by country on our course pages.",
+    "source_url": "https://www.sussex.ac.uk/study/undergraduate/apply/international-qualifications/overseas-qualifications"
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: Sussex تذكر المؤهلات المقبولة حسب الدولة في صفحة كل دورة، ولم نقرأها"
+  ]
+}

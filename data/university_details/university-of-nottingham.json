@@ -1,0 +1,49 @@
+{
+  "id": "university-of-nottingham",
+  "name_en": "University of Nottingham",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.nottingham.ac.uk/ugstudy/applying/applying.aspx",
+  "platform": {
+    "value_ar": "UCAS (الرمز N84)",
+    "source_url": "https://www.nottingham.ac.uk/ugstudy/applying/applying.aspx"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "حد IELTS منشور لكل دورة في قائمة الدورات، ولا يوجد رقم عام. تقبل الجامعة أيضًا PTE وTOEFL iBT."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للطب والطب البيطري",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "لهذين التخصصين فقط",
+      "source_url": "https://www.nottingham.ac.uk/ugstudy/applying/applying.aspx"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حامل الثانوية يجب أن يكمل برنامج تأسيس قبل البكالوريوس. لا تذكر الصفحة نسبة، وتقول إن سنة أو سنتين في جامعة سعودية في مجال قريب قد تكفي للقبول المباشر.",
+    "quote": "If you have taken the Thanawaya (Secondary School Leaving Certificate), you must complete a foundation course for entry to our undergraduate programmes.",
+    "source_url": "https://www.nottingham.ac.uk/studywithus/international-applicants/country-info/countryinformation/saudi-arabia.aspx"
+  },
+  "not_found_ar": [
+    "حد IELTS: في صفحة كل دورة فقط، ولم نقرأها"
+  ]
+}

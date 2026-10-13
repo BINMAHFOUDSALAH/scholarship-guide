@@ -1,0 +1,58 @@
+{
+  "id": "university-of-leeds",
+  "name_en": "University of Leeds",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.leeds.ac.uk/undergraduate-how-to-apply/doc/apply",
+  "platform": {
+    "value_ar": "UCAS",
+    "source_url": "https://www.leeds.ac.uk/undergraduate-how-to-apply/doc/apply"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 مع 5.5 على الأقل في كل مهارة (IELTS Academic أو IELTS for UKVI). بعض الدورات تطلب أعلى.",
+      "source_url": "https://www.leeds.ac.uk/international-applying/doc/entry-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "4 مع 4 على الأقل في كل مهارة، للاختبارات بعد 21 يناير 2026. قبل ذلك كان المقياس القديم 80.",
+      "source_url": "https://www.leeds.ac.uk/international-applying/doc/entry-requirements"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للطب وطب الأسنان والطب البيطري",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-15",
+      "year_stated": true,
+      "note_ar": "لهذه التخصصات فقط",
+      "source_url": "https://www.leeds.ac.uk/undergraduate-how-to-apply/doc/application-timetable"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": "صفحة Leeds للسعودية تذكر البكالوريا العربية الدولية (IAB) بنسبة 84% إلى 96%، ومن لا يحملها يحتاج برنامج تأسيس أو A-levels أو IB. لا تذكر الثانوية العامة بالاسم.",
+    "quote": "If you don't have the International Arab Baccalaureate, you will need to complete a foundation programme, such as the University of Leeds International Foundation Year, or other level 3 qualifications such as A-levels or the International Baccalaureate.",
+    "source_url": "https://www.leeds.ac.uk/admissions-qualifications/21763/saudi-arabia"
+  },
+  "not_found_ar": [
+    "الثانوية العامة السعودية غير مذكورة بالاسم. الصفحة تقبل البكالوريا العربية الدولية (IAB) بنسبة 84% إلى 96%، ومن لا يحملها يحتاج برنامج تأسيس أو A-levels أو IB",
+    "رمز Leeds في UCAS غير مذكور في الصفحات التي قرأناها"
+  ]
+}

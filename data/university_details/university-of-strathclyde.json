@@ -1,0 +1,50 @@
+{
+  "id": "university-of-strathclyde",
+  "name_en": "University of Strathclyde",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.strath.ac.uk/studywithus/undergraduate/howtoapply/",
+  "platform": {
+    "value_ar": "UCAS (الرمز S78)",
+    "source_url": "https://www.strath.ac.uk/studywithus/undergraduate/howtoapply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "6.0 مع 5.5 في كل مهارة لكلية العلوم وبكالوريوس الهندسة. الشرط العام 6.5 مع 5.5. بعض البرامج تختلف.",
+      "source_url": "https://www.strath.ac.uk/studywithus/englishlanguagerequirements/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "المقابل لـ IELTS 6.0، للاختبارات من 21 يناير 2026: 4.5 مع 4.0 في كل مهارة.",
+      "source_url": "https://www.strath.ac.uk/studywithus/englishlanguagerequirements/recognisedenglishlanguagequalifications/"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "المقابل لـ IELTS 6.0: 115، مع 105 في القراءة والتحدث والكتابة و100 في الاستماع.",
+      "source_url": "https://www.strath.ac.uk/studywithus/englishlanguagerequirements/recognisedenglishlanguagequalifications/"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حامل الثانوية السعودية يدخل عبر برنامج تأسيس في مركز الجامعة الدولي (ISC). لا تذكر الصفحة نسبة.",
+    "quote": "Students who have studied the Tawjihiyya/Thanawiya General School Certificate are eligible for entry via a foundation programme from the ISC.",
+    "source_url": "https://www.strath.ac.uk/studywithus/internationalstudents/entryrequirements/"
+  },
+  "not_found_ar": []
+}

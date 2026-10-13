@@ -108,6 +108,12 @@ def test_requirement_files_follow_the_schema(path):
         assert isinstance(date["year_stated"], bool), (path.stem, date)
         assert "label_ar" not in date, (path.stem, date)
     sourced(d.get("acceptance_rate"))
+    certificate = d.get("saudi_certificate")
+    if certificate:  # decision 054: shown only with a yes/no from the official page
+        assert certificate["direct_entry"] in (True, False, None), path.stem
+        if certificate["direct_entry"] is not None:
+            sourced(certificate)
+            assert certificate["note_ar"] is None or certificate["note_ar"].strip(), path.stem
     fee = d.get("application_fee")
     if fee:  # decision 050
         sourced(fee)
@@ -602,3 +608,13 @@ def test_waiver_howto_link_only_when_a_waiver_is_possible():
     assert "رسوم التقديم" in berkeley and "#fee-waiver" not in berkeley  # UC: no waiver for international
     stanford = client.get("/universities/stanford-university").text
     assert "/resources/us-applications#fee-waiver" in stanford
+
+
+def test_saudi_certificate_row_shows_only_a_sourced_yes_or_no():
+    """Decision 054: «الشهادة الثانوية السعودية» appears only when the official page says yes or no."""
+    shown = [uid for uid, d in ex.details.items() if (d.get("saudi_certificate") or {}).get("direct_entry") is not None]
+    hidden = [uid for uid, d in ex.details.items() if d.get("saudi_certificate") and d["saudi_certificate"]["direct_entry"] is None]
+    assert shown and hidden
+    html = client.get(f"/universities/{shown[0]}").text
+    assert "الشهادة الثانوية السعودية" in html and ex.details[shown[0]]["saudi_certificate"]["source_url"] in html
+    assert "الشهادة الثانوية السعودية" not in client.get(f"/universities/{hidden[0]}").text

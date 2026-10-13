@@ -1,0 +1,52 @@
+{
+  "id": "the-university-of-warwick",
+  "name_en": "The University of Warwick",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://warwick.ac.uk/study/undergraduate/applying/how-to-apply/",
+  "platform": {
+    "value_ar": "UCAS (الرمز W20)",
+    "source_url": "https://warwick.ac.uk/study/undergraduate/applying/how-to-apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "أدنى مستوى (Band A): 6.0 مع 5.5 على الأقل في كل مهارة. Band B وC أعلى، وكل دورة تحدد مستواها.",
+      "source_url": "https://warwick.ac.uk/study/undergraduate/applying/english-language-requirements/"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "Band A للاختبارات بعد 21 يناير 2026: 4.5 مع 4.5 على الأقل في كل مهارة. لا تُقبل نتائج MyBest.",
+      "source_url": "https://warwick.ac.uk/study/undergraduate/applying/english-language-requirements/"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "Band A: 110 مع 100 على الأقل في كل مهارة.",
+      "source_url": "https://warwick.ac.uk/study/undergraduate/applying/english-language-requirements/"
+    },
+    "note_ar": "الصفحة تقول إن هذه الأرقام «لدخول سبتمبر 2026 فقط»، ولم تنشر بعد أرقام 2027. تحقق منها قبل التقديم."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "المطلوب برنامج تأسيس دولي معتمد مثل Warwick International Foundation Programme، أو IB أو A-Levels أو AP الأمريكية.",
+    "quote": "High School qualification is not considered for entry.",
+    "source_url": "https://warwick.ac.uk/study/undergraduate/courses/ug-international-qualifications/"
+  },
+  "not_found_ar": [
+    "أي دورة تحتاج Band B أو C: لم نفحص صفحات الدورات"
+  ]
+}

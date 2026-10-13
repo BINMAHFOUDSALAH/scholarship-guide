@@ -1,0 +1,52 @@
+{
+  "id": "the-university-of-exeter",
+  "name_en": "The University of Exeter",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.exeter.ac.uk/undergraduate-degrees/apply/",
+  "platform": {
+    "value_ar": "UCAS (الرمز E84 EXETR)",
+    "source_url": "https://www.exeter.ac.uk/undergraduate-degrees/apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "أدنى مستوى (Profile A): 6.0 ولا تقل أي مهارة عن 6.0. مستويات أعلى لبرامج أخرى، مثل Profile B1 (6.5).",
+      "source_url": "https://www.exeter.ac.uk/study/englishlanguagerequirements/profile-a/"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "note_ar": "Profile A للاختبارات من 21 يناير 2026: 4.0 ولا تقل أي مهارة عن 4.0. المقياس القديم: 87 مع 21 لكل مهارة.",
+      "source_url": "https://www.exeter.ac.uk/study/englishlanguagerequirements/profile-a/"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "Profile A: 110 ولا يقل أي Integrated Subscore عن 110، للاختبارات من 1 يوليو 2024.",
+      "source_url": "https://www.exeter.ac.uk/study/englishlanguagerequirements/profile-a/"
+    },
+    "note_ar": "كل برنامج يحدد مستواه (Profile)، والأرقام أعلاه لأدنى مستوى."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "البديل: برنامج تأسيس معترف به، مثل International Study Centre في Exeter. القبول المباشر لحاملي A levels أو IB أو الشهادات الأمريكية.",
+    "quote": "The Al-Thanawayaa or Tawjihyah General Secondary Education Certificate is not sufficient for direct entry to our undergraduate programmes.",
+    "source_url": "https://www.exeter.ac.uk/international-students/saudi-arabia/"
+  },
+  "not_found_ar": [
+    "أي مستوى (Profile) يطلبه كل برنامج: غير مذكور في الصفحة العامة"
+  ]
+}

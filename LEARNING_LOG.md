@@ -497,3 +497,15 @@ The whole journey is the grade bar at the top. Pages are about half as long.
 **Tested:** 2 new tests (346 in all). Ran the script as of today (0 stale) and as of launch day with `--days 45` (all 132 listed).
 
 **Understood?** Not yet checked.
+
+## 24. UK research: "not found" vs "no" (2026-10-13)
+**Built / why:** requirements for 26 UK universities (إمداد wave 2) and a new «الشهادة الثانوية السعودية» row (decision 054). Six research agents read the official pages; the main session re-fetched every page and searched it for the agent's quote before saving.
+
+**Key concepts:**
+- **Three states, not two.** `true` / `false` / `null`. A page that lists the Saudi certificate only for its foundation programme hasn't said "no", so it's `null`. Turning silence into "no" would be inventing a requirement.
+- **Trust, then verify cheaply.** The agents gave an exact quote for each fact, so checking was one fetch plus a text search per page, not a re-research.
+- **Agents break rules too.** Two agents wrote downloaded pages into the repo despite being read-only. `git status` after every agent run catches that.
+
+**Tested:** 399 tests (schema for 26 new files, a page test for the new row). In the browser at 375px: Exeter (row shown) and Bristol (row hidden), no sideways scroll.
+
+**Understood?** Not yet checked.

@@ -1,0 +1,49 @@
+{
+  "id": "university-of-essex",
+  "name_en": "University of Essex",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.essex.ac.uk/undergraduate/applying-to-essex",
+  "platform": {
+    "value_ar": "UCAS (الرمز E70)",
+    "source_url": "https://www.essex.ac.uk/undergraduate/applying-to-essex"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "للسنة الأولى: 6.0 مع 5.5 في كل مهارة (وسنة التأسيس 5.5). بعض التخصصات الصحية مثل التمريض والعلاج الطبيعي تطلب أعلى.",
+      "source_url": "https://www1.essex.ac.uk/documents/admissions/englishInternational.pdf"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "للسنة الأولى، للاختبارات من 21 يناير 2026: 4 مع 4 في كل مهارة.",
+      "source_url": "https://www1.essex.ac.uk/documents/admissions/englishInternational.pdf"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "UCAS",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": "لمعظم التخصصات (equal consideration)، 6 مساءً بتوقيت المملكة المتحدة",
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "For students from most countries in the region, we require a foundation programme, previous university/college study or international high school qualifications for entry into our undergraduate Bachelor degree courses.",
+    "source_url": "https://www.essex.ac.uk/international/country-specific-information/middle-east-and-north-africa"
+  },
+  "not_found_ar": [
+    "الثانوية السعودية غير مذكورة بالاسم للبكالوريوس. صفحة الشرق الأوسط تقول إن «أغلب دول المنطقة» تحتاج برنامج تأسيس أو دراسة جامعية سابقة أو شهادة ثانوية دولية",
+    "Duolingo غير مذكور في جدول الطلاب الدوليين"
+  ]
+}
