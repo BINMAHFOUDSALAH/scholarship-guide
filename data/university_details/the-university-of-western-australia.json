@@ -1,0 +1,53 @@
+{
+  "id": "the-university-of-western-australia",
+  "name_en": "The University of Western Australia",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
+  "admissions_url": "https://www.uwa.edu.au/study/how-to-apply/international-applicants",
+  "platform": {
+    "value_ar": "التقديم مباشرة من موقع الجامعة أو عبر وكيل معتمد.",
+    "source_url": "https://www.uwa.edu.au/study/how-to-apply/international-applicants"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "الحد العام: 6.5 ولا تقل أي مهارة عن 6.0. بعض الدورات تطلب 7.0.",
+      "source_url": "https://www.uwa.edu.au/study/how-to-apply/pathways-and-eligibility/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 82,
+      "note_ar": "82، مع 20 للتحدث والكتابة و17 للاستماع والقراءة.",
+      "source_url": "https://www.uwa.edu.au/study/how-to-apply/pathways-and-eligibility/english-language-requirements"
+    },
+    "duolingo": {
+      "min": 125,
+      "note_ar": "125، مع 115 للتحدث والقراءة و125 للكتابة و110 للاستماع.",
+      "source_url": "https://www.uwa.edu.au/study/how-to-apply/pathways-and-eligibility/english-language-requirements"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "من خارج أستراليا",
+      "cycle_ar": "الفصل الثاني 2027 (يوليو)",
+      "date": "2027-06-07",
+      "year_stated": true,
+      "note_ar": "قابل للتغيير، وبعض الدورات لها مواعيد أبكر في صفحاتها.",
+      "source_url": "https://www.uwa.edu.au/study/how-to-apply/international-applicants"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "Saudi Arabia / UAE: General Secondary Education Certificate",
+    "source_url": "https://www.uwa.edu.au/study/how-to-apply/pathways-and-eligibility/international-and-overseas-qualifications"
+  },
+  "not_found_ar": [
+    "الثانوية العامة السعودية مدرجة ضمن الشهادات المدرسية المعترف بها للتقديم «إذا تحققت بمستوى معين»، لكن الصفحة لا تذكر المستوى المطلوب",
+    "مواعيد الفصل الأول 2027 (فبراير) لم نعرضها لأن الدراسة فيه تبدأ قبل تخرج طالب ثالث ثانوي"
+  ]
+}

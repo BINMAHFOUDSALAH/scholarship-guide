@@ -1,0 +1,50 @@
+{
+  "id": "australian-national-university",
+  "name_en": "Australian National University",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
+  "admissions_url": "https://study.anu.edu.au/apply/international-applications",
+  "platform": {
+    "value_ar": "التقديم المباشر عبر بوابة ANU (رسوم 150 دولارًا أستراليًا). UAC لمن يدرس الثانوية الأسترالية أو IB أو NCEA.",
+    "source_url": "https://study.anu.edu.au/apply/international-applications"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 مع 6.0 في كل مهارة، في مركز اختبار IELTS (الاختبار الأونلاين غير مقبول).",
+      "source_url": "https://policies.anu.edu.au/ppl/pdfdownload/1801"
+    },
+    "toefl_ibt": {
+      "min": 81,
+      "note_ar": "للدراسة من 1 يناير 2027: 81، مع 16 للقراءة والاستماع و19 للكتابة والتحدث. يُقبل TOEFL iBT Australia فقط (المقياس 0–120).",
+      "source_url": "https://policies.anu.edu.au/ppl/pdfdownload/1801"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "الفصل الثاني 2027 (يوليو)",
+      "date": "2027-05-15",
+      "year_stated": true,
+      "note_ar": "لأغلب البرامج. برامج Crawford School of Public Policy: 15 أبريل 2027.",
+      "source_url": "https://study.anu.edu.au/apply/international-applications",
+      "round_ar": "التقديم المباشر"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "Completion of the General Secondary Education Certificate (Tawjihi) in Kuwait, the United Arab Emirates, Saudi Arabia, or Qatar, when presented alongside a completed Scholastic Aptitude Test (SAT).",
+    "source_url": "https://policies.anu.edu.au/ppl/pdfdownload/1518"
+  },
+  "not_found_ar": [
+    "الثانوية السعودية غير موجودة في قائمة ANU لمؤهلات البكالوريوس. سياسة القبول تذكرها مع SAT لبرامج Pathway Diploma فقط",
+    "مواعيد الفصل الأول 2027 (فبراير) لم نعرضها لأن الدراسة فيه تبدأ قبل تخرج طالب ثالث ثانوي",
+    "Duolingo غير مذكور في سياسة اللغة"
+  ]
+}

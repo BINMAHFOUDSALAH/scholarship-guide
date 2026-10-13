@@ -1,0 +1,40 @@
+{
+  "id": "curtin-university",
+  "name_en": "Curtin University",
+  "checked": "2026-10-13",
+  "entry_ar": null,
+  "admissions_url": "https://www.curtin.edu.au/study/international-students/",
+  "platform": {
+    "value_ar": "التقديم مباشرة من موقع Curtin أو عبر وكيل مسجل.",
+    "source_url": "https://www.curtin.edu.au/study/international-students/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 ولا تقل أي مهارة عن 6.0.",
+      "source_url": "https://www.curtin.edu.au/study/applying/english-language-requirements/accepted-english-qualifications/"
+    },
+    "toefl_ibt": {
+      "min": 81,
+      "note_ar": "للاختبارات من يونيو 2026: 81 (16 للقراءة والاستماع، 19 للتحدث والكتابة). قبل ذلك: 79.",
+      "source_url": "https://www.curtin.edu.au/study/applying/english-language-requirements/accepted-english-qualifications/"
+    },
+    "duolingo": null,
+    "note_ar": "الحد العام، وبعض الدورات تطلب أعلى."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "الثانوية السعودية غير مذكورة في الصفحات التي قرأناها",
+    "مواعيد التقديم الدولية: تظهر في صفحة تفاعلية لم نتمكن من قراءتها",
+    "Duolingo غير مذكور"
+  ]
+}

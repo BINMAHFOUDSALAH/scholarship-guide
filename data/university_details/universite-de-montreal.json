@@ -1,0 +1,31 @@
+{
+  "id": "universite-de-montreal",
+  "name_en": "Université de Montréal",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.umontreal.ca/admission/vous-etes/etudiant-international/",
+  "platform": {
+    "value_ar": "طلب القبول الإلكتروني في موقع الجامعة، ثم رفع المستندات في Centre étudiant.",
+    "source_url": "https://admission.umontreal.ca/admission/depot-de-la-demande/demande-dadmission/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "الدراسة بالفرنسية. يجب إثبات مستوى الفرنسية الشفهي والكتابي الذي يطلبه البرنامج، والمطلوب مذكور في صفحة كل برنامج.",
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "المطلوب مع الثانوية: سنة جامعية ناجحة، أو السنة التحضيرية في الجامعة، أو السنة الأولى من بكالوريوس 4 سنوات فيها، أو برنامج ACCÈS - FAC، مع إثبات الفرنسية.",
+    "quote": "Tawjihiyah : Certificat de fin d’études secondaires, Shahadat Al-Marhalat Al-Thanawiyyat Et une année d’études universitaires réussie",
+    "source_url": "https://admission.umontreal.ca/admission/vous-etes/etudiant-international/equivalence-pays.html?tx_lboudemprogrammes_equivalencespays%5Baction%5D=show&tx_lboudemprogrammes_equivalencespays%5Bcontroller%5D=PaysEquivalence&tx_lboudemprogrammes_equivalencespays%5Bpays%5D=5&cHash=7ecd4c36ebcaf9c6cbe1eeaf60fcbe6f"
+  },
+  "not_found_ar": [
+    "مواعيد التقديم: الصفحة تذكر 1 فبراير لمن درس خارج كيبيك و1 أبريل للمتقدمين الدوليين، بلا سنة، فلم نعرض موعدًا",
+    "مستوى الفرنسية المطلوب: يُذكر في صفحة كل برنامج، ولم نقرأه"
+  ]
+}

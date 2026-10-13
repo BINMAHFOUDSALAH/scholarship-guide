@@ -1,0 +1,35 @@
+{
+  "id": "adelaide-university",
+  "name_en": "Adelaide University",
+  "checked": "2026-10-13",
+  "entry_ar": null,
+  "admissions_url": "https://adelaide.edu.au/study/international-students/how-to-apply/",
+  "platform": {
+    "value_ar": "نظام التقديم الدولي للجامعة. الصفحة تقول إن طلاب الشرق الأوسط يقدّمون عبر وكيل تعليمي معتمد.",
+    "source_url": "https://adelaide.edu.au/study/international-students/how-to-apply/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "الحد الأدنى العام للبكالوريوس: 6.0، وبعض البرامج أعلى.",
+      "source_url": "https://adelaide.edu.au/study/international-students/how-to-apply/entry-requirements/"
+    },
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "جدول القبول حسب الدولة يقول إن الثانوية العامة السعودية غير مقبولة للقبول المباشر في الجامعة.",
+    "quote": "Saudi Arabia General Secondary Education Certificate See Note A ... Note A Not accepted for direct entry to the University.",
+    "source_url": "https://adelaide.edu.au/content/dam/adelaideuniversity/documents/study/pdfs/AU_Undergraduate_Admission_By_Country.pdf"
+  },
+  "not_found_ar": [
+    "مواعيد التقديم: في صفحة كل برنامج، ولم نقرأها",
+    "TOEFL وDuolingo غير مذكورين في صفحة الشروط العامة"
+  ]
+}

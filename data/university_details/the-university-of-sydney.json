@@ -1,0 +1,46 @@
+{
+  "id": "the-university-of-sydney",
+  "name_en": "The University of Sydney",
+  "checked": "2026-10-13",
+  "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
+  "admissions_url": "https://www.sydney.edu.au/study/applying/how-to-apply/international-students.html",
+  "platform": {
+    "value_ar": "التقديم المباشر من صفحة البرنامج أو عبر وكيل معتمد، مع رسوم. UAC لطلاب الثانوية الأسترالية أو IB داخل أستراليا فقط.",
+    "source_url": "https://www.sydney.edu.au/study/applying/how-to-apply/international-students.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 مع 6.0 في كل مهارة. بعض الكليات والبرامج تختلف.",
+      "source_url": "https://www.sydney.edu.au/study/applying/how-to-apply/international-students/english-language-requirements.html"
+    },
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الجامعة تحوّل شرط IELTS إلى TOEFL بجدول معادلة، ولا تنشر حدًا مستقلًا لـ TOEFL."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "الفصل الثاني 2027 (يوليو)",
+      "date": "2027-05-29",
+      "year_stated": false,
+      "note_ar": "الصفحة تقول «29 May of the commencing year».",
+      "source_url": "https://www.sydney.edu.au/study/applying/application-dates.html",
+      "round_ar": "التقديم المباشر"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": "To be eligible for admission into one of our undergraduate degrees, you need to have completed one of the qualifications listed on this page.",
+    "source_url": "https://www.sydney.edu.au/study/applying/how-to-apply/undergraduate/recognised-qualifications.html"
+  },
+  "not_found_ar": [
+    "الثانوية السعودية غير موجودة في قائمة Sydney للمؤهلات المقبولة، والصفحة تقول إن القبول يتطلب مؤهلًا من القائمة. لا تقول صراحة إنها مرفوضة",
+    "مواعيد الفصل الأول 2027 (فبراير) لم نعرضها لأن الدراسة فيه تبدأ قبل تخرج طالب ثالث ثانوي",
+    "Duolingo غير مذكور"
+  ]
+}

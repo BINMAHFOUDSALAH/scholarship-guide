@@ -1,0 +1,39 @@
+{
+  "id": "the-university-of-new-south-wales-unsw-sydney",
+  "name_en": "The University of New South Wales (UNSW Sydney)",
+  "checked": "2026-10-13",
+  "entry_ar": null,
+  "admissions_url": "https://www.unsw.edu.au/study/how-to-apply/international",
+  "platform": {
+    "value_ar": "بوابة UNSW Applicant Portal مباشرة أو عبر وكيل معتمد. UAC لطلاب الثانوية الأسترالية وIB وNCEA فقط.",
+    "source_url": "https://www.unsw.edu.au/study/how-to-apply/international"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "حسب الكلية: 6.5 (ولا تقل أي مهارة عن 6.0) للآداب والهندسة والطب والصحة والعلوم، و7.0 للأعمال والقانون. IELTS Academic فقط.",
+      "source_url": "https://www.unsw.edu.au/study/how-to-apply/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 90,
+      "note_ar": "90 مع 23 للكتابة و22 لباقي المهارات (الآداب والهندسة والطب والعلوم). الأعمال والقانون: 94. لا يُقبل MyBest.",
+      "source_url": "https://www.unsw.edu.au/study/how-to-apply/english-language-requirements"
+    },
+    "duolingo": null,
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "لا تقبل UNSW الشهادات الثانوية من السعودية، وقد تقبل إكمال السنة الأولى من بكالوريوس في جامعة معترف بها.",
+    "quote": "We do not accept secondary qualifications from this country. We may accept tertiary study results (see below).",
+    "source_url": "https://www.unsw.edu.au/content/dam/pdfs/future-students/2021-10-qualifications/20220331-FSR-accepted-qualifications_4.csv"
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية من ملف بيانات تعرضه صفحة UNSW، واسم الملف يحمل تاريخ 2022",
+    "مواعيد الفصل الثاني 2027: جولات البكالوريوس المنشورة كلها للفصل الأول 2027 وانتهت"
+  ]
+}
