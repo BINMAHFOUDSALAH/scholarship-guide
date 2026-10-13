@@ -18,7 +18,7 @@
           "sources": [
             {
               "title": "Harvard",
-              "url": "https://college.harvard.edu/admissions/apply/application-timeline"
+              "url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
             }
           ]
         },
@@ -67,7 +67,7 @@
             },
             {
               "title": "Harvard",
-              "url": "https://college.harvard.edu/admissions/apply/application-timeline"
+              "url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
             },
             {
               "title": "MIT",
@@ -146,7 +146,7 @@
             },
             {
               "title": "Harvard",
-              "url": "https://college.harvard.edu/admissions/apply/application-timeline"
+              "url": "https://college.harvard.edu/admissions/apply/first-year-applicants"
             },
             {
               "title": "UC",
@@ -188,7 +188,7 @@
           "sources": [
             {
               "title": "أرامكو",
-              "url": "https://www.aramco.com/ar/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne"
+              "url": "https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program"
             }
           ]
         }
@@ -221,10 +221,10 @@
   ],
   "scholarship": {
     "title_ar": "والابتعاث؟ لا يتبع هذه الأشهر",
-    "rule_ar": "في مساري الرواد وإمداد تحتاج قبولًا «نهائيًا غير مشروط» من جامعة في قائمة المسار قبل أن تقدّم، إلا في حالتين محددتين (لغة الدولة، والسنة التحضيرية).",
-    "rule_source": "https://sites.moe.gov.sa/scholarship-program/paths/path-arruaad/info-path_terms/",
-    "conflict_ar": "لن يكون معك قبول تقدّم به في تلك المرة. البرنامج يسمح للطالب الدارس على حسابه الخاص بالتقديم، أي يمكنك التقديم حين يُفتح مرة أخرى، لكن المصادر الرسمية لا تذكر هل تُغطّى الفترة التي تسبق الترشيح. اسأل البرنامج قبل أن تقرر.",
+    "rule_ar": "في مساري الرواد وإمداد تحتاج قبولًا «نهائيًا غير مشروط» من جامعة في قائمة المسار قبل أن تقدّم، إلا في دولة غير ناطقة بالإنجليزية حيث يكفي قبول مشروط بدراسة لغتها. ولدراسة سنة تحضيرية شروط إضافية (معدل 90% وآيلتس 5.5).",
+    "rule_source": "https://sites.moe.gov.sa/scholarship-program/conditions/",
+    "conflict_ar": "لن يكون معك قبول تقدّم به في تلك المرة. البرنامج يسمح للطالب الدارس على حسابه الخاص بالتقديم إذا انطبقت عليه الشروط، لكن المصادر الرسمية لا تذكر هل تُغطّى الفترة التي تسبق الترشيح. اسأل البرنامج قبل أن تقرر.",
     "conflict_source": "https://sites.moe.gov.sa/scholarship-program/faqs/question-31/",
-    "read_on": "2026-10-12"
+    "read_on": "2026-10-13"
   }
 }

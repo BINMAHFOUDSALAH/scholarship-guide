@@ -3,7 +3,7 @@ title: القدرات والتحصيلي
 description: ما يقيسه اختبار القدرات العامة والاختبار التحصيلي، ومن يطلبهما من الجامعات وبرامج الابتعاث، وأين تسجّل. من المصادر الرسمية.
 status: sourced
 owner_reviewed: false
-last_checked: 2026-10-12
+last_checked: 2026-10-13
 sources:
   - title: منتجات المركز الوطني للقياس (قياس)، هيئة تقويم التعليم والتدريب
     url: https://etec.gov.sa/ar/centers/qiy/p?id=4aea1743-5b9c-4833-bda8-5430b00dd2fa
@@ -14,7 +14,7 @@ sources:
   - title: الشروط والأسئلة الشائعة، برنامج خادم الحرمين الشريفين للابتعاث
     url: https://sites.moe.gov.sa/scholarship-program/conditions/
   - title: برنامج الابتعاث الجامعي لخريجي الثانوية، أرامكو السعودية
-    url: https://www.aramco.com/ar/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne
+    url: https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program
 next_step: اعرف أولًا هل تطلب الجهة التي تستهدفها القدرات أو التحصيلي، وبأي نسبة، ثم سجّل من منصة التسجيل الرسمية.
 ---
 
@@ -30,7 +30,7 @@ next_step: اعرف أولًا هل تطلب الجهة التي تستهدفه�
 
 - **الجامعات السعودية:** كل جامعة تحدد الاختبارات التي تطلبها «مثل اختبار القدرات والاختبار التحصيلي»، وتفاضل بين المتقدمين بالنسبة الموزونة أو المركبة ([وزارة التعليم](https://www.moe.gov.sa/ar/knowledgecenter/eservices/pages/unified-admission.aspx)).
 - **برنامج خادم الحرمين الشريفين للابتعاث:** التقديم متاح **دون اشتراط** درجة قدرات أو تحصيلي ([المصدر](https://sites.moe.gov.sa/scholarship-program/conditions/)).
-- **أرامكو (الدورة السابقة 2025–2026):** القدرات 90% أو أكثر، وشروط الدورة الجديدة لم تُعلن بعد ([المصدر](https://www.aramco.com/ar/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne)).
+- **أرامكو (الدورة السابقة 2025–2026):** القدرات 90% أو أكثر، وشروط الدورة الجديدة لم تُعلن بعد ([المصدر](https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program)).
 
 لذلك حتى لو كان هدفك الابتعاث، قد تحتاج القدرات والتحصيلي إن أردت أن تبقى الجامعات السعودية خيارًا لك أيضًا. المقارنة الكاملة في [الاختبارات: من يطلب ماذا؟](/grades/grade-11#tests-title)
 

@@ -3,7 +3,7 @@ title: آيلتس (IELTS)
 description: ما هو اختبار آيلتس، وكيف تُحسب درجته، وكم درجة تطلبها برامج الابتعاث، وكيف تبدأ الاستعداد. من المصادر الرسمية.
 status: sourced
 owner_reviewed: false
-last_checked: 2026-10-11
+last_checked: 2026-10-13
 sources:
   - title: IELTS Academic (الموقع الرسمي)
     url: https://ielts.org/take-a-test/test-types/ielts-academic-test
@@ -46,7 +46,7 @@ next_step: افتح نماذج الاختبار الرسمية المجانية�
 
 - **برنامج خادم الحرمين الشريفين للابتعاث، السنة التحضيرية (بكالوريوس):** 5.5 على الأقل، مع معدل ثانوية 90% فأعلى. [المصدر](https://sites.moe.gov.sa/scholarship-program/conditions/info-4/)
 - **برنامج خادم الحرمين الشريفين، الدراسة في الصين (بكالوريوس):** 4.5 على الأقل. [المصدر](https://sites.moe.gov.sa/scholarship-program/conditions/info-4/)
-- **مسار واعد:** لكل برنامج درجته. البرامج المعلنة في 2026 طلبت بين 5.5 و6.5. [المصدر](https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/)
+- **مسار واعد:** لكل برنامج درجته. البرامج المعلنة في 2026 طلبت من 5.5 إلى 7 (أو TOEFL 100). [المصدر](https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/)
 - **كاوست (KGSP)، آخر دفعة معلنة:** 7.0 في IELTS Academic (أو 90 في TOEFL iBT) تضمن لك مقابلة، ومن لم يبلغها قد يُنظر في طلبه. [المصدر](https://kgsp.kaust.edu.sa/prospective-students)
 - **الجامعة نفسها:** كل جامعة تحدد درجتها، وهي التي تقرر قبولك. ابحث في صفحة القبول الدولي (International admissions) في موقع الجامعة.
 

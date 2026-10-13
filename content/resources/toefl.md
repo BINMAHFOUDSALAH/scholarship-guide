@@ -3,7 +3,7 @@ title: توفل (TOEFL iBT)
 description: ما هو اختبار TOEFL iBT، ومقياس درجاته الجديد من 1 إلى 6، وكم يبقى صالحًا، وكيف تتدرب. من المصادر الرسمية.
 status: sourced
 owner_reviewed: false
-last_checked: 2026-10-12
+last_checked: 2026-10-13
 sources:
   - title: TOEFL iBT Test Content (ETS)
     url: https://www.ets.org/toefl/test-takers/ibt/about/content.html
@@ -18,7 +18,7 @@ sources:
   - title: TOEFL iBT Fees (ETS)
     url: https://www.ets.org/toefl/test-takers/ibt/register/fees.html
   - title: Free Test Prep Planner (ETS)
-    url: https://www.ets.org/toefl/test-takers/ibt/prepare/tests
+    url: https://www.ets.org/toefl/test-takers/ibt/prepare.html
   - title: KGSP Prospective Students
     url: https://kgsp.kaust.edu.sa/prospective-students
 next_step: قبل أن تختار بين توفل وآيلتس، اعرف أي اختبار تقبله الجامعات التي تستهدفها، ثم ابدأ بخطة التحضير المجانية من ETS.
@@ -52,6 +52,6 @@ next_step: قبل أن تختار بين توفل وآيلتس، اعرف أي �
 
 ## كيف تبدأ؟
 
-1. اتبع **خطة التحضير المجانية** من ETS: ثمانية أسابيع، فيها نصائح وأنشطة وأسئلة نموذجية ([المصدر](https://www.ets.org/toefl/test-takers/ibt/prepare/tests)).
+1. اتبع **خطة التحضير المجانية** من ETS: ثمانية أسابيع، فيها نصائح وأنشطة وأسئلة نموذجية ([المصدر](https://www.ets.org/toefl/test-takers/ibt/prepare.html)).
 2. تأكد أن جامعاتك تقبل توفل، وبأي درجة.
 3. احجز موعدك قبل مواعيد التقديم بوقت كافٍ، حتى يبقى لك وقت للإعادة.

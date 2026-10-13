@@ -33,7 +33,7 @@
         "levels_ar": "بكالوريوس، ماجستير",
         "for_high_school": true,
         "high_school_ar": "نعم",
-        "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية، أو قبول في سنة تحضيرية للبكالوريوس بشروط إضافية (معدل 90% وآيلتس 5.5)",
+        "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية. ولدراسة سنة تحضيرية للبكالوريوس شروط إضافية (معدل 90% وآيلتس 5.5)",
         "status": "open",
         "status_source": "https://x.com/SA_Scholarships/status/2092689695088026059",
         "last_checked": "2026-10-09",
@@ -66,7 +66,7 @@
         "levels_ar": "بكالوريوس، ماجستير",
         "for_high_school": true,
         "high_school_ar": "نعم",
-        "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية، أو قبول في سنة تحضيرية للبكالوريوس بشروط إضافية (معدل 90% وآيلتس 5.5)",
+        "admission_ar": "قبول غير مشروط، أو مشروط بدراسة لغة الدولة في الدول غير الناطقة بالإنجليزية. ولدراسة سنة تحضيرية للبكالوريوس شروط إضافية (معدل 90% وآيلتس 5.5)",
         "status": "closed",
         "status_source": null,
         "last_checked": "2026-10-09",
@@ -192,15 +192,11 @@
             "url": "https://sites.moe.gov.sa/scholarship-program/conditions/"
           },
           {
-            "title": "سياسات التقديم والابتعاث",
-            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-2/"
-          },
-          {
             "title": "الأسئلة الشائعة للبرنامج",
             "url": "https://sites.moe.gov.sa/scholarship-program/faqs/"
           }
         ],
-        "last_checked": "2026-10-12",
+        "last_checked": "2026-10-13",
         "academic_year": null,
         "status": "sourced",
         "owner_reviewed": false,
@@ -223,14 +219,18 @@
       },
       {
         "id": "extra-2025",
-        "text_ar": "شروط إضافية منذ 2025–2026: لدراسة السنة التحضيرية (بكالوريوس): معدل الثانوية 90% فأعلى وآيلتس 5.5 فأعلى. للدراسة في الصين بقبول مشروط باللغة فقط (لا تنطبق على القبول المباشر في التخصص): للبكالوريوس معدل الثانوية 85% فأعلى وآيلتس 4.5 فأعلى، وللماجستير معدل البكالوريوس 2.75 من 4 أو 3.75 من 5 أو 80 من 100 فأعلى وآيلتس 4.5 فأعلى. للدراسة في ألمانيا: مستوى A2 في اللغة الألمانية.",
+        "text_ar": "شروط إضافية منذ 2025–2026: لدراسة السنة التحضيرية (بكالوريوس): معدل الثانوية 90% فأعلى وآيلتس 5.5 فأعلى. للدراسة في الصين بقبول مشروط باللغة فقط (لا تنطبق على القبول المباشر في التخصص): للبكالوريوس معدل الثانوية 85% فأعلى وآيلتس 4.5 فأعلى وألا يتجاوز العمر 30 عامًا، وللماجستير معدل البكالوريوس 2.75 من 4 أو 3.75 من 5 أو 80 من 100 فأعلى وآيلتس 4.5 فأعلى. للدراسة في ألمانيا: مستوى A2 في اللغة الألمانية.",
         "sources": [
           {
             "title": "شروط إضافية من العام الأكاديمي 2025–2026",
             "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-4/"
+          },
+          {
+            "title": "شروط برنامج خادم الحرمين الشريفين للابتعاث",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/"
           }
         ],
-        "last_checked": "2026-10-11",
+        "last_checked": "2026-10-13",
         "academic_year": "2025-2026",
         "status": "sourced",
         "owner_reviewed": true,
@@ -238,14 +238,18 @@
       },
       {
         "id": "prep-year",
-        "text_ar": "السنة التحضيرية: قبول الجامعة في سنة تحضيرية لمرحلة البكالوريوس قبول مشروط، ويقبله البرنامج بشروط إضافية: معدل الثانوية 90% فأعلى وآيلتس 5.5 فأعلى (أو ما يعادله). ينطبق هذا في الدول الناطقة بالإنجليزية أيضًا.",
+        "text_ar": "السنة التحضيرية: لدراسة سنة تحضيرية لمرحلة البكالوريوس شروط إضافية منذ 2025–2026: معدل الثانوية 90% فأعلى وآيلتس 5.5 فأعلى (أو ما يعادله). لا تحدد الشروط دولة بعينها.",
         "sources": [
           {
             "title": "شروط إضافية من العام الأكاديمي 2025–2026",
             "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-4/"
+          },
+          {
+            "title": "شروط برنامج خادم الحرمين الشريفين للابتعاث",
+            "url": "https://sites.moe.gov.sa/scholarship-program/conditions/"
           }
         ],
-        "last_checked": "2026-10-11",
+        "last_checked": "2026-10-13",
         "academic_year": "2025-2026",
         "status": "sourced",
         "owner_reviewed": true,
@@ -268,14 +272,14 @@
       },
       {
         "id": "documents",
-        "text_ar": "المستندات المطلوبة: جواز سفر ساري، وشهادة المؤهل السابق، وخطاب قبول رسمي يوضح التخصص وتاريخ بدء الدراسة واسم الجامعة، وكشف الدرجات، وعنوان وطني مسجل.",
+        "text_ar": "المستندات المطلوبة: جواز سفر ساري، وشهادة المؤهل السابق، وخطاب القبول الرسمي غير المشروط يوضح التخصص وتاريخ بدء الدراسة واسم الجامعة، وكشف الدرجات، وعنوان وطني مسجل، وقرار المعادلة إن كانت شهادتك من خارج المملكة.",
         "sources": [
           {
             "title": "صفحة التقديم في موقع البرنامج",
             "url": "https://sites.moe.gov.sa/scholarship-program/submitting/"
           }
         ],
-        "last_checked": "2026-10-11",
+        "last_checked": "2026-10-13",
         "academic_year": null,
         "status": "sourced",
         "owner_reviewed": false,
@@ -302,7 +306,7 @@
       },
       {
         "id": "lists",
-        "text_ar": "قوائم الجامعات والتخصصات لكل مسار في الدليل الاسترشادي 2026–2027. موقع البرنامج يذكر أنه تحت التحديث ويحيل إلى هذا الدليل.",
+        "text_ar": "قوائم الجامعات والتخصصات لمسارات الرواد وإمداد والبحث والتطوير في الدليل الاسترشادي 2026–2027، أما برامج واعد فلكل منها إعلانه. موقع البرنامج يذكر أنه تحت التحديث ويحيل إلى هذا الدليل.",
         "sources": [
           {
             "title": "الدليل الاسترشادي لترتيب قوائم الجامعات 2026–2027 (PDF)",
@@ -313,7 +317,7 @@
             "url": "https://sites.moe.gov.sa/scholarship-program/"
           }
         ],
-        "last_checked": "2026-10-11",
+        "last_checked": "2026-10-13",
         "academic_year": "2026-2027",
         "status": "sourced",
         "owner_reviewed": false,
@@ -359,7 +363,7 @@
         "academic_year": null,
         "status": "sourced",
         "owner_reviewed": true,
-        "note_ar": "القائمة الكاملة في ملف سدايا: 95 جامعة في 15 دولة (صفحة البرنامج تعرض 28 فقط)."
+        "note_ar": "القائمة الكاملة في ملف سدايا: 95 جامعة في 15 دولة."
       },
       {
         "id": "sdaia-target-list",
@@ -906,17 +910,19 @@
     "name_ar": "أرامكو السعودية",
     "name_en": "College Degree Program (CDPNE)",
     "provider_ar": "أرامكو السعودية",
-    "audience_ar": "طلاب الفصل الثاني من ثالث ثانوي في المسار العام أو علوم الحاسب والهندسة أو الصحة والحياة",
+    "audience_ar": "طلاب الفصل الثاني من ثالث ثانوي في المسار العام أو علوم الحاسب والهندسة أو الصحة والحياة، بعمر لا يزيد عن 22 سنة هجرية",
     "summary_ar": "تتقدم على أرامكو نفسها، ثم سنة تحضيرية في الظهران، ثم ابتعاث في تخصص تحدده أرامكو، مع وظيفة مستهدفة بعد التخرج.",
-    "official_url": "https://aramco.com/en/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne",
+    "official_url": "https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program",
     "verified": false,
     "tracks": [
       {
         "name_ar": "التسجيل",
         "note_ar": "يُعلن موعده لاحقًا",
         "status": "not_open",
-        "status_source": "https://aramco.com/en/careers/saudi-applicants/non-employee-programs/high-school-and-diploma-graduates/cdpne",
-        "last_checked": "2026-10-12"
+        "status_source": "https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program",
+        "last_checked": "2026-10-13",
+        "owner_confirmed": true,
+        "status_note": "Owner pasted the official page on 2026-10-13 (new URL): cycle 1447-1448 (2025/2026), «باب التسجيل مغلق في الوقت الحالي، وسوف يتم الإعلان لاحقًا عن الفترة المخصصة للتسجيل». Requirements unchanged: Qudurat 90%, 85% average (G10, G11, G12 S1), 85% in maths/physics/chemistry/biology, age ≤ 22 Hijri years."
       }
     ]
   },
@@ -1024,7 +1030,7 @@
       },
       {
         "id": "kgsp-abroad",
-        "text_ar": "لم يعد البرنامج مقصورًا على أمريكا: تقبل كاوست جامعات في دول أخرى. طلاب الدفعة 18 (2026) يدرسون في أمريكا وكندا وبريطانيا.",
+        "text_ar": "البرنامج منفتح على إرسال الطلاب إلى دول غير أمريكا، وطلاب الدفعة 18 (2026) يدرسون في أمريكا وكندا وبريطانيا.",
         "sources": [
           {
             "title": "KGSP: Prospective Students",
