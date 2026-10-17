@@ -1,0 +1,8 @@
+# Opens a pull request when a GitHub Action used in CI has a new version (so CI never runs on a
+# deprecated runtime again). Monthly, Actions only; Python packages stay pinned and are updated by hand.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
