@@ -1,0 +1,32 @@
+{
+  "id": "rwth-aachen-university",
+  "name_en": "RWTH Aachen University",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.rwth-aachen.de/cms/root/studium/Vor-dem-Studium/Bewerbung-um-einen-Studienplatz/Bewerbung-Bachelor/~bqrn/Internationale-Studierende/lidx/1/",
+  "platform": {
+    "value_ar": "RWTHonline، مع التسجيل في DoSV للبرامج ذات المقاعد المحدودة",
+    "source_url": "https://www.rwth-aachen.de/cms/root/studium/Vor-dem-Studium/Bewerbung-um-einen-Studienplatz/~dedw/Bewerbung-Bachelor/lidx/1/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "لا يوجد بكالوريوس بالإنجليزية بالكامل، ولا شرط إنجليزية للبكالوريوس.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "لا يوجد بكالوريوس بالإنجليزية بالكامل، وبعضها بالألمانية والإنجليزية (مثل Computer Science). المطلوب DSH 2 أو TestDaF ‏4 أو Goethe C1 أو telc C1 Hochschule. ويُشترط للطلاب الدوليين معدل 2.5 أو أفضل (بالمقياس الألماني) في شهادة الثانوية.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية، وتحيل إلى anabin وDAAD. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "موعد التقديم (15 يوليو) منشور دون سنة لعام 2027"
+  ]
+}

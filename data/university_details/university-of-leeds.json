@@ -1,7 +1,7 @@
 {
   "id": "university-of-leeds",
   "name_en": "University of Leeds",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.leeds.ac.uk/undergraduate-how-to-apply/doc/apply",
   "platform": {
@@ -21,7 +21,12 @@
       "note_ar": "4 مع 4 على الأقل في كل مهارة، للاختبارات بعد 21 يناير 2026. قبل ذلك كان المقياس القديم 80.",
       "source_url": "https://www.leeds.ac.uk/international-applying/doc/entry-requirements"
     },
-    "duolingo": null,
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة اختبارات البكالوريوس لا تذكر Duolingo.",
+      "source_url": "https://www.leeds.ac.uk/international-applying/doc/entry-requirements"
+    },
     "note_ar": null
   },
   "sat_act": null,
@@ -56,5 +61,11 @@
   "not_found_ar": [
     "الثانوية العامة السعودية غير مذكورة بالاسم. الصفحة تقبل البكالوريا العربية الدولية (IAB) بنسبة 84% إلى 96%، ومن لا يحملها يحتاج برنامج تأسيس أو A-levels أو IB",
     "رمز Leeds في UCAS غير مذكور في الصفحات التي قرأناها"
-  ]
+  ],
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "ucas",
+    "summary_ar": "خطاب الدافع في UCAS (ثلاثة أسئلة، 4,000 حرف).",
+    "source_url": "https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement/how-to-write-your-personal-statement-for-2026-entry-onwards"
+  }
 }

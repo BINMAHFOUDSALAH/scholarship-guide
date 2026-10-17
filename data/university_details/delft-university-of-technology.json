@@ -1,0 +1,43 @@
+{
+  "id": "delft-university-of-technology",
+  "name_en": "Delft University of Technology",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس بشهادة من خارج هولندا",
+  "admissions_url": "https://www.tudelft.nl/en/education/admission-and-application/bsc-international-diploma/admission-requirements",
+  "platform": {
+    "value_ar": "Studielink",
+    "source_url": "https://www.tudelft.nl/en/education/admission-and-application/bsc-international-diploma/application-procedure"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "IELTS Academic. لا يُقبل IELTS Online ولا Indicator.",
+      "source_url": "https://www.tudelft.nl/en/education/admission-and-application/bsc-international-diploma/admission-requirements"
+    },
+    "toefl_ibt": {
+      "min": 5,
+      "note_ar": "للتقارير من 21 يناير 2026: 5. وقبل ذلك: 90. لا يُقبل MyBest.",
+      "source_url": "https://www.tudelft.nl/en/education/admission-and-application/bsc-international-diploma/admission-requirements"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "شروط الإنجليزية لا تذكر Duolingo.",
+      "source_url": "https://www.tudelft.nl/en/education/admission-and-application/bsc-international-diploma/admission-requirements"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "أربعة برامج بكالوريوس بالإنجليزية: Aerospace Engineering (English track) وComputer Science and Engineering (English track) وEarth, Climate and Technology وNanobiology. والبقية بالهولندية بمستوى B2.",
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "الثانوية السعودية لا تعادل VWO. المطلوب إنهاء السنة الأولى على الأقل (60 ECTS) من بكالوريوس علوم أو هندسة في جامعة معتمدة، في المجال نفسه أو قريب منه، بمعدل 75%.",
+    "quote": "This secondary school diploma is not considered equivalent to the Dutch pre-university (VWO) diploma.",
+    "source_url": "https://www.tudelft.nl/en/education/admission-and-application/bsc-international-diploma/admission-requirements/country-specific-requirements"
+  },
+  "not_found_ar": [
+    "مواعيد التقديم (1 أبريل، و15 يناير للمقاعد المحدودة) منشورة دون سنة"
+  ]
+}

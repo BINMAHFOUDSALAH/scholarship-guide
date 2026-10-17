@@ -1,0 +1,31 @@
+{
+  "id": "ludwig-maximilians-universitat-munchen",
+  "name_en": "Ludwig-Maximilians-Universität München",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.lmu.de/en/study/degree-students/applications-for-admission/",
+  "platform": {
+    "value_ar": "المكتب الدولي في الجامعة، مع وثيقة VPD من uni-assist ابتداءً من الفصل الصيفي 2027، والجامعة تعيد تصميم إجراءات التقديم",
+    "source_url": "https://www.lmu.de/en/study/degree-students/applications-for-admission/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "معظم البكالوريوس بالألمانية. تقول الجامعة إن لديها «بعض» برامج البكالوريوس بالإنجليزية دون أن تسميها."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "يُطلب لبرامج البكالوريوس اجتياز اختبار ألمانية معترف به: DSH 2، أو TestDaF ‏4 في كل الأقسام، أو telc C1 Hochschule، أو DSD II، أو Goethe C2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "موعد التقديم للفصل الشتوي (15 يوليو) منشور دون سنة"
+  ]
+}

@@ -2,6 +2,8 @@
 title: توفل (TOEFL iBT)
 description: ما هو اختبار TOEFL iBT، ومقياس درجاته الجديد من 1 إلى 6، وكم يبقى صالحًا، وكيف تتدرب. من المصادر الرسمية.
 status: sourced
+tool: english_test
+test: toefl_ibt
 owner_reviewed: false
 last_checked: 2026-10-13
 sources:

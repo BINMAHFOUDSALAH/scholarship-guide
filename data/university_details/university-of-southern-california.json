@@ -1,7 +1,7 @@
 {
   "id": "university-of-southern-california",
   "name_en": "University of Southern California",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admission.usc.edu/prospective-students/how-to-apply/international-students/",
   "platform": {
@@ -68,5 +68,10 @@
     "waiver": "accepts_common_app",
     "note_ar": "يُطلب من قسم Profile في Common App إن كانت الرسوم عبئًا ماليًا",
     "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/first-year-students/"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "summary_ar": "مقال Common App الشخصي، وإجابات قصيرة خاصة بالجامعة لا تذكر الصفحة عددها.",
+    "source_url": "https://admission.usc.edu/prospective-students/how-to-apply/what-we-look-for/"
   }
 }

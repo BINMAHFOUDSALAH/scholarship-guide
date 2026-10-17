@@ -1,7 +1,7 @@
 {
   "id": "university-of-california-san-diego-ucsd",
   "name_en": "University of California, San Diego (UCSD)",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.ucsd.edu/international/index.html",
   "platform": {
@@ -80,5 +80,11 @@
     "waiver": "domestic_only",
     "note_ar": "لكل حرم من جامعات UC تقدّم عليه (من صفحة جامعات UC)",
     "source_url": "https://admission.universityofcalifornia.edu/apply-now.html"
+  },
+  "essays": {
+    "personal_essay": "uc_piq",
+    "count": 4,
+    "summary_ar": "طلب جامعة كاليفورنيا الخاص (لا Common App): تجيب عن أربعة من ثمانية أسئلة شخصية (Personal Insight Questions)، كل إجابة 350 كلمة على الأكثر. الطلب نفسه لكل فروع الجامعة.",
+    "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/personal-insight-questions.html"
   }
 }

@@ -1,0 +1,52 @@
+{
+  "id": "universita-di-padova",
+  "name_en": "Università di Padova",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2027/2028",
+  "admissions_url": "https://www.unipd.it/en/ammissione-studenti-internazionali",
+  "platform": {
+    "value_ar": "بوابة apply.unipd.it، وUniversitaly للتسجيل المسبق والتأشيرة لغير الأوروبيين",
+    "source_url": "https://www.unipd.it/en/language-requirement-admission-degree-programmes"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "مستوى B2 لكل البرامج بالإنجليزية. يُقبل IELTS General وHome based أيضًا.",
+      "source_url": "https://wwwassets.unipd.it/sites/default/files/2026-10/ELENCO%20CERTIFICAZIONI%20DI%20LINGUA%20INGLESE%20.docx.pdf"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026، أو 86 قبل ذلك.",
+      "source_url": "https://wwwassets.unipd.it/sites/default/files/2026-10/ELENCO%20CERTIFICAZIONI%20DI%20LINGUA%20INGLESE%20.docx.pdf"
+    },
+    "duolingo": {
+      "min": 115,
+      "note_ar": "مستوى B2.",
+      "source_url": "https://wwwassets.unipd.it/sites/default/files/2026-10/ELENCO%20CERTIFICAZIONI%20DI%20LINGUA%20INGLESE%20.docx.pdf"
+    },
+    "note_ar": "البرامج بالإنجليزية تطلب B2 على الأقل."
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الدعوة الأولى",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-15",
+      "year_stated": true,
+      "note_ar": "لأغلب البرامج، والدعوة تفتح في 15 سبتمبر 2026",
+      "source_url": "https://www.unipd.it/en/ammissione-studenti-internazionali"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "من البكالوريوس بالإنجليزية: Psychological Science وInformation Engineering وEconomics, Governance and Decision-Making وEarth and Climate Dynamics. والبرامج بالإيطالية تطلب إيطالية B2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: جدول الجامعة للدول (2027/28) يذكر السعودية، لكن صف البكالوريوس لا يُقرأ بوضوح من الملف، فتحقق منه في الجدول"
+  ]
+}

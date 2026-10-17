@@ -60,15 +60,15 @@
 {% endmacro %}
 
 {#
-  At a glance: SAT/ACT, IELTS, the next university date, and the official admissions page. Says so
+  At a glance: SAT/ACT (where it applies), the English tests the file covers, the next university date, and the official admissions page. Says so
   plainly when we haven't collected a university's requirements yet (decision 038).
 #}
 {% macro key_facts(u, quiet=False) %}
 {% set k = explorer.key_facts(u.id) %}
 {% if k.researched %}
 <p class="key-facts">
-  <span><span lang="en" dir="ltr">SAT/ACT</span>: {{ k.sat_ar }}</span>
-  <span><span lang="en" dir="ltr">IELTS</span>: {{ k.ielts_ar }}</span>
+  {% if k.sat_ar %}<span><span lang="en" dir="ltr">SAT/ACT</span>: {{ k.sat_ar }}</span>{% endif %}
+  {% for t in k.english %}<span><span lang="en" dir="ltr">{{ t.label }}</span>: {{ t.text }}</span>{% else %}<span>اختبارات الإنجليزية: {{ k.english_none_ar }}</span>{% endfor %}
   {% if k.next %}<span>أقرب موعد في الجامعة: <strong>{{ k.next.date | arabic_date }}</strong>، {{ date_short(k.next) }}</span>{% else %}<span>أقرب موعد في الجامعة: لا يوجد لدينا موعد قادم مؤكد</span>{% endif %}
   {% if k.admissions_url %}<a class="src" href="{{ k.admissions_url }}" target="_blank" rel="noopener">صفحة القبول الرسمية ↗</a>{% endif %}
 </p>

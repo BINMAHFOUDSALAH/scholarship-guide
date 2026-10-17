@@ -1,0 +1,41 @@
+{
+  "id": "monash-university",
+  "name_en": "Monash University",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2027",
+  "admissions_url": "https://www.monash.edu/admissions/entry-requirements/english-language",
+  "platform": null,
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "each_min": 6.0,
+      "note_ar": "الحد الأدنى للجامعة: 6.5 ولا تقل مهارة عن 6.0، وبعض التخصصات تطلب أعلى. يُقبل IELTS Online وOne Skill Retake.",
+      "source_url": "https://www.monash.edu/admissions/entry-requirements/english-language"
+    },
+    "toefl_ibt": {
+      "min": 79,
+      "note_ar": "الحد الأدنى للجامعة: 79، مع القراءة 13 والاستماع 12 والكتابة 21 والتحدث 18.",
+      "source_url": "https://www.monash.edu/admissions/entry-requirements/english-language"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة الاختبارات المقبولة لا تذكر Duolingo، وتقول الجامعة إنها قد تقيّم اختبارات أخرى عند التقديم.",
+      "source_url": "https://www.monash.edu/admissions/entry-requirements/english-language"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية ومنصة التقديم والمواعيد: لم نقرأها في صفحة رسمية بعد"
+  ]
+}

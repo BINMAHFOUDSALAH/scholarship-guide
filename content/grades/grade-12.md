@@ -20,6 +20,9 @@ resources:
   - title_ar: الاختبارات، من يطلب ماذا؟
     url: /grades/grade-11#tests-title
     why_ar: إن لم تحدد اختباراتك بعد.
+  - title_ar: مقالات القبول وخطاب الدافع
+    url: /resources/application-essays
+    why_ar: ما تطلبه كل جامعة، ونصائح الجهات الرسمية.
 sources:
   - title: القبول الموحد في الجامعات والجهات التعليمية، وزارة التعليم
     url: https://www.moe.gov.sa/ar/knowledgecenter/eservices/pages/unified-admission.aspx
@@ -31,6 +34,6 @@ sources:
 
 ## ما يهم هذه السنة
 
-1. **الجامعات في الخارج:** تقدّم على كل جامعة بنفسك عبر منصتها (Common App، UCAS…)، و[دليل التقديم على الجامعات الأمريكية](/resources/us-applications) يشرح المنصات ورسوم التقديم والإعفاء منها، وبعض مواعيدها في أكتوبر ونوفمبر. الأشهر كلها في الجدول أدناه.
+1. **الجامعات في الخارج:** تقدّم على كل جامعة بنفسك عبر منصتها (Common App، UCAS…)، و[دليل الجامعات الأمريكية](/resources/us-applications) و[دليل الجامعات البريطانية](/resources/uk-applications) يشرحان المنصات والرسوم والمقالات، وبعض مواعيدها في أكتوبر ونوفمبر. الأشهر كلها في الجدول أدناه.
 2. **الجامعات الحكومية السعودية:** بعد شهادة الثانوية، عبر [المنصة الوطنية للقبول الموحد](https://www.uap.sa/). وبعد نتائج الفرز يجب أن تؤكد قبولك، لأن «عدم التأكيد يسقط حق الطالب في الترشيح» ([المصدر](https://www.moe.gov.sa/ar/knowledgecenter/eservices/pages/unified-admission.aspx)).
 3. **الابتعاث بعد القبول:** في الرواد وإمداد تحتاج قبولًا غير مشروط أولًا، ويمكنك رفع ثلاثة قبولات على الأكثر ([المصدر](https://sites.moe.gov.sa/scholarship-program/conditions/)). جهّز مستنداته مبكرًا: جواز سفر ساري، وشهادة الثانوية، وخطاب القبول، والسجل الأكاديمي، وعنوانك الوطني ([المصدر](https://sites.moe.gov.sa/scholarship-program/submitting/)).

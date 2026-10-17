@@ -1,0 +1,31 @@
+{
+  "id": "university-of-zurich",
+  "name_en": "University of Zurich",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، خريف 2027",
+  "admissions_url": "https://www.uzh.ch/en/studies/application/bachelor.html",
+  "platform": {
+    "value_ar": "بوابة التقديم الإلكتروني في موقع الجامعة",
+    "source_url": "https://www.uzh.ch/en/studies/application/bachelor.html"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الدراسة بالألمانية، وصفحات البكالوريوس لا تطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "لغة الدراسة الأساسية الألمانية، وقد تُدرَّس بعض المقررات بالإنجليزية. المطلوب ألمانية C1 على الأقل، مثل Goethe C1 أو TestDaF (متوسط 4) أو DSH2.",
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حسب قائمة swissuniversities لعام 2026/27، التي تحيل إليها الجامعة: شهادة جامعية لا تقل عن 3 سنوات.",
+    "quote": "University degree (at least 3 years)",
+    "source_url": "https://www.swissuniversities.ch/en/topics/studying/admission-to-universities/countries-1"
+  },
+  "not_found_ar": [
+    "فترة التقديم (1 يناير إلى 30 أبريل، و28 فبراير لمن يحتاج تأشيرة) منشورة دون سنة"
+  ]
+}

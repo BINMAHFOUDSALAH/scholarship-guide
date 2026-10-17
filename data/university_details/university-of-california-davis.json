@@ -1,7 +1,7 @@
 {
   "id": "university-of-california-davis",
   "name_en": "University of California, Davis",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.ucdavis.edu/admissions/undergraduate/international",
   "platform": {
@@ -64,5 +64,11 @@
     "waiver": "domestic_only",
     "note_ar": "لكل حرم من جامعات UC تقدّم عليه",
     "source_url": "https://www.ucdavis.edu/admissions/undergraduate/apply"
+  },
+  "essays": {
+    "personal_essay": "uc_piq",
+    "count": 4,
+    "summary_ar": "طلب جامعة كاليفورنيا الخاص (لا Common App): تجيب عن أربعة من ثمانية أسئلة شخصية (Personal Insight Questions)، كل إجابة 350 كلمة على الأكثر. الطلب نفسه لكل فروع الجامعة.",
+    "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/personal-insight-questions.html"
   }
 }

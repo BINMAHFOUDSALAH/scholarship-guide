@@ -1,7 +1,7 @@
 {
   "id": "yale-university",
   "name_en": "Yale University",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.yale.edu/timelines",
   "platform": {
@@ -71,5 +71,11 @@
     "waiver": "accepts_common_app",
     "note_ar": "لا تصدر إعفاءً خاصًا بها، وتقبل إعفاء Common App لكل من تنطبق عليه شروطه",
     "source_url": "https://admissions.yale.edu/first-gen"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 5,
+    "summary_ar": "لمن يقدّم عبر Common App أو Coalition: سؤال حتى 200 كلمة عن فكرة تثيرك في مجالك الأكاديمي، وثلاث إجابات قصيرة جدًا (200 حرف لكل منها)، ومقال حتى 400 كلمة من ثلاثة مواضيع.",
+    "source_url": "https://admissions.yale.edu/essay-topics"
   }
 }

@@ -1,0 +1,19 @@
+{#
+  «الثانوية السعودية في الجامعات البريطانية» (decision 061): the saudi_certificate row of every UK
+  university we researched (Explorer.certificate_groups), so the guide's answer can't drift from the pages.
+#}
+{% set groups = explorer.certificate_groups("GB") %}
+{% if groups %}
+<section class="test-unis" id="universities" aria-labelledby="uk-cert-title">
+  <h2 id="uk-cert-title">الثانوية السعودية في الجامعات البريطانية في القوائم</h2>
+  <p class="result-note">حسب صفحة كل جامعة الرسمية. التفاصيل والنسب المطلوبة في صفحة الجامعة.</p>
+  {% for g in groups %}
+  <details class="us-fees-group"{% if loop.first %} open{% endif %}>
+    <summary>{{ g.title_ar }} ({{ g.rows | length | count_ar("universities") }})</summary>
+    <ul class="rows">
+      {% for r in g.rows %}<li><a href="{{ url_for('university_page', uid=r.id) }}#requirements">{{ r.name_ar }}</a></li>{% endfor %}
+    </ul>
+  </details>
+  {% endfor %}
+</section>
+{% endif %}

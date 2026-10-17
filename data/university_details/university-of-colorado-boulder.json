@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -57,5 +57,12 @@
     "waiver": "accepts_common_app",
     "note_ar": "للدوليين. طلب الإعفاء عبر Common App.",
     "source_url": "https://www.colorado.edu/admissions/process/first-year/apply"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "common_app",
+    "count": 1,
+    "summary_ar": "مقال Common App الشخصي (250–650 كلمة)، وسؤال قصير إلزامي حتى 250 كلمة عمّا تريد دراسته في الجامعة ولماذا.",
+    "source_url": "https://www.colorado.edu/admissions/process/first-year/plan"
   }
 }

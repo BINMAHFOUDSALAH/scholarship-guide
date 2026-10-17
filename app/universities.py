@@ -32,6 +32,12 @@ SAT_POLICY_AR = {
 }
 # Shown when a file has no SAT/ACT policy at all: we did not verify it (never "not published").
 SAT_UNVERIFIED_AR = "لم نتحقق منه"
+# Where SAT/ACT is part of first-year admission. Elsewhere an empty SAT field is not shown at all.
+SAT_COUNTRIES = ("US", "CA")
+
+# The university's English page lists its accepted tests and this one isn't among them (decision 061).
+# Not the same as "not accepted", which needs the page to say so.
+NOT_LISTED_AR = "ليس ضمن الاختبارات التي تذكرها الجامعة"
 
 # English tests in the order the university page lists them (decision 058).
 ENGLISH_TESTS = (("ielts", "IELTS"), ("toefl_ibt", "TOEFL iBT"), ("duolingo", "Duolingo"))
@@ -61,6 +67,8 @@ def english_compact(test, item):
         return "لم نتحقق منه"
     if item.get("accepted") is False:
         return "لا يُقبل لإثبات اللغة"
+    if item.get("listed") is False:
+        return NOT_LISTED_AR
     low, rec, each = item.get("min"), item.get("recommended"), item.get("each_min")
     if low is not None:
         text = f"من {score_text(test, low)} حسب التخصص" if item.get("varies") else score_text(test, low)
@@ -71,6 +79,8 @@ def english_compact(test, item):
         return text
     if rec is not None:
         return f"لا حد أدنى معلن · الموصى به {score_text(test, rec)}"
+    if item.get("varies"):
+        return "يختلف حسب التخصص"
     return no_score_ar(item)
 
 
@@ -486,16 +496,33 @@ class Explorer:
     def key_facts(self, uid, today=None):
         """What a result row shows at a glance (decision 038). Unknowns are said, never left blank.
 
-        Returns {"researched": bool, "sat_ar", "ielts_ar", "next", "admissions_url"}; without
-        researched requirements, only researched=False.
+        Returns {"researched": bool, "sat_ar", "ielts_ar", "english", "next", "admissions_url"}; without
+        researched requirements, only researched=False. sat_ar is None where SAT doesn't apply and the
+        file says nothing about it (outside the US and Canada, decision 061). english lists the tests
+        the file covers, each as {"label", "text"} (decision 061).
         """
         d = self.details.get(uid)
         if not d:
             return {"researched": False}
         sat = (d.get("sat_act") or {}).get("policy")
-        sat_ar = SAT_POLICY_AR.get(sat, SAT_POLICY_AR["unknown"]) if sat else SAT_UNVERIFIED_AR
+        if sat:
+            sat_ar = SAT_POLICY_AR.get(sat, SAT_POLICY_AR["unknown"])
+        else:
+            sat_ar = SAT_UNVERIFIED_AR if self.universities[uid]["country"] in SAT_COUNTRIES else None
+        english = d.get("english") or {}
+        tests = [{"label": label, "text": english_compact(test, english[test])}
+                 for test, label in ENGLISH_TESTS if english.get(test)]
+        # The page says English isn't an admission requirement (e.g. French-taught programs, decision 061).
+        # No test rows: English isn't required, or the page sets it per programme (the note says how), or unknown.
+        if english.get("required") is False:
+            none_ar = "ليست شرطًا للقبول"
+        elif english.get("note_ar"):
+            none_ar = "حسب البرنامج (التفاصيل في صفحة الجامعة)"
+        else:
+            none_ar = "لم نتحقق منها"
         return {"researched": True, "sat_ar": sat_ar,
-                "ielts_ar": english_compact("ielts", (d.get("english") or {}).get("ielts")),
+                "ielts_ar": english_compact("ielts", english.get("ielts")), "english": tests,
+                "english_none_ar": none_ar,
                 "next": self.next_deadline(uid, today), "admissions_url": d.get("admissions_url")}
 
     def english_rows(self, uid):
@@ -510,6 +537,7 @@ class Explorer:
             shown = item.get("min") if item.get("min") is not None else item.get("recommended")
             rows.append({
                 "test": test, "label": label, "accepted": item.get("accepted") is not False,
+                "listed": item.get("listed") is not False,
                 "min": score_text(test, item.get("min")), "recommended": score_text(test, item.get("recommended")),
                 "each_min": score_text(test, item.get("each_min")), "varies": bool(item.get("varies")),
                 "scale": toefl_scale(shown) if test == "toefl_ibt" else None,
@@ -582,6 +610,86 @@ class Explorer:
             rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"], "fee_usd": fee["fee_usd"]})
         return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: r["name_ar"])}
                 for key, title in groups if rows[key]]
+
+    def certificate_groups(self, country="GB"):
+        """What each researched university in a country says about the Saudi secondary certificate
+        (decision 054), grouped for the UK applications guide (decision 061). Unstated ones are listed too,
+        so the counts add up."""
+        groups = [(True, "تقبلها للسنة الأولى مباشرة"), (False, "لا تكفي للسنة الأولى مباشرة"), (None, "لم تذكر صفحتها ذلك")]
+        rows = {key: [] for key, _ in groups}
+        for uid, d in self.details.items():
+            u = self.universities[uid]
+            if u["country"] != country:
+                continue
+            key = (d.get("saudi_certificate") or {}).get("direct_entry")
+            rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"]})
+        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: r["name_ar"])}
+                for key, title in groups if rows[key]]
+
+    def essay_groups(self):
+        """US universities by how much they ask applicants to write beyond the personal essay (decision 061),
+        for the essays guide. Computed from the essays field of each requirement file."""
+        groups = [("no_essay", "لا تطلب أي مقال"), ("none", "المقال الشخصي فقط"), ("some", "مقال إلى مقالين إضافيين"),
+                  ("many", "ثلاثة أسئلة إضافية أو أكثر"), ("other", "حسب الكلية أو المنصة")]
+        rows = {key: [] for key, _ in groups}
+        for uid, d in self.details.items():
+            e = d.get("essays")
+            u = self.universities[uid]
+            if not e or u["country"] != "US":
+                continue
+            n = e.get("count")
+            if n == 0 and e.get("personal_essay") == "none":
+                key = "no_essay"
+            else:
+                key = "other" if n is None else "none" if n == 0 else "some" if n <= 2 else "many"
+            rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"], "count": n})
+        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: r["name_ar"])}
+                for key, title in groups if rows[key]]
+
+    def test_summary(self, test):
+        """Where an English test stands across the researched universities (decision 061), for the test
+        pages (IELTS, TOEFL, Duolingo) and site search. Computed from the requirement files, so it can't
+        drift from them. Groups: a stated minimum (lowest first), a recommended score only, accepted with
+        the score set per course, not among the tests the page lists, not accepted.
+
+        Returns {"label", "researched", "groups": [{"key", "title_ar", "rows": [...]}]}.
+        """
+        label = dict(ENGLISH_TESTS)[test]
+        groups = [
+            ("min", "تذكر حدًا أدنى"),
+            ("recommended", "تذكر درجة موصى بها فقط"),
+            ("varies", "تقبله، والدرجة حسب التخصص"),
+            ("no_score", "تقبله دون درجة منشورة"),
+            ("not_listed", "ليس ضمن الاختبارات التي تذكرها"),
+            ("refused", "لا تقبله"),
+        ]
+        rows = {key: [] for key, _ in groups}
+        researched = 0
+        for uid, d in self.details.items():
+            item = (d.get("english") or {}).get(test)
+            if not item:
+                continue
+            researched += 1
+            u = self.universities[uid]
+            if item.get("accepted") is False:
+                key = "refused"
+            elif item.get("listed") is False:
+                key = "not_listed"
+            elif item.get("min") is not None:
+                key = "min"
+            elif item.get("recommended") is not None:
+                key = "recommended"
+            elif item.get("varies"):
+                key = "varies"
+            else:
+                key = "no_score"
+            rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"], "country": u["country"],
+                              "country_ar": u["country_info"]["name_ar"], "value": item.get("min") if key == "min" else item.get("recommended"),
+                              "text": english_compact(test, item), "source_url": item["source_url"]})
+        order = {"min": lambda r: (r["value"], r["name_ar"]), "recommended": lambda r: (r["value"], r["name_ar"])}
+        return {"label": label, "researched": researched,
+                "groups": [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=order.get(key, lambda r: r["name_ar"]))}
+                           for key, title in groups if rows[key]]}
 
     def profile(self, uid):
         u = self.universities.get(uid)

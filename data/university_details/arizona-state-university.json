@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -43,5 +43,12 @@
     "waiver": "not_stated",
     "note_ar": "للطلاب الدوليين.",
     "source_url": "https://admission.asu.edu/apply/international/first-year"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "none",
+    "count": 0,
+    "summary_ar": "لا تطلب الجامعة مقالًا ولا بيانًا شخصيًا لطلاب السنة الأولى، عبر طلبها أو عبر Common App. كلية الشرف (Barrett) لها طلب منفصل.",
+    "source_url": "https://admission.asu.edu/apply/first-year/admission"
   }
 }

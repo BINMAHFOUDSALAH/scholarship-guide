@@ -1,0 +1,66 @@
+{
+  "id": "universita-commerciale-luigi-bocconi-bocconi-university",
+  "name_en": "Università Commerciale Luigi Bocconi (Bocconi University)",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2027-2028",
+  "admissions_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/admissions",
+  "platform": {
+    "value_ar": "بوابة Apply2B في الجامعة",
+    "source_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/admissions"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "each_min": 6.0,
+      "note_ar": "للتسجيل بعد القبول في البرامج بالإنجليزية (لا للتقديم). يُقبل IELTS Online.",
+      "source_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/english-certificates-accepted-enrollment"
+    },
+    "toefl_ibt": {
+      "min": 88,
+      "note_ar": "للتسجيل بعد القبول.",
+      "source_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/english-certificates-accepted-enrollment"
+    },
+    "duolingo": {
+      "min": 110,
+      "note_ar": "للتسجيل بعد القبول.",
+      "source_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/english-certificates-accepted-enrollment"
+    },
+    "note_ar": "لا يُطلب اختبار إنجليزية لتقديم الطلب؛ الشرط (B2) عند التسجيل."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختبار القبول: اختبار Bocconi الإلكتروني أو SAT أو ACT.",
+    "source_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/admissions"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Session",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-09-29",
+      "year_stated": true,
+      "note_ar": "3 مساءً بتوقيت إيطاليا، والنتائج في منتصف نوفمبر 2026",
+      "source_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/admissions"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Winter Session",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-26",
+      "year_stated": true,
+      "note_ar": "3 مساءً بتوقيت إيطاليا، والنتائج في منتصف مارس 2027",
+      "source_url": "https://www.unibocconi.it/en/applying-bocconi/bachelor-and-law-programs/application-and-admissions/admissions"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "أغلب البكالوريوس بالإنجليزية، مثل Economics وFinance وManagement وManagement and Computer Science وWorld Bachelor in Business، وواحد بالإيطالية (Economia aziendale).",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة، والقاعدة العامة شهادة بعد 12 سنة دراسية على الأقل"
+  ]
+}

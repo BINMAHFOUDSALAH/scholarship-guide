@@ -1,0 +1,63 @@
+{
+  "id": "erasmus-university-rotterdam",
+  "name_en": "Erasmus University Rotterdam",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2027-2028",
+  "admissions_url": "https://www.eur.nl/en/education/practical-matters/bachelor-admission-and-application/diploma-overview",
+  "platform": {
+    "value_ar": "Studielink، ثم بوابة القبول في الجامعة (التسجيل في Studielink وحده لا يكفي)",
+    "source_url": "https://www.eur.nl/en/bachelor/international-bachelor-economics-and-business-economics/admission"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "varies": true,
+      "note_ar": "مثال: International Bachelor Economics and Business Economics (IBEB) يطلب 6.0، ولكل برنامج شرطه.",
+      "source_url": "https://www.eur.nl/en/bachelor/international-bachelor-economics-and-business-economics/admission"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "varies": true,
+      "note_ar": "IBEB: 4.5. ومن يحتاج تأشيرة يختبر في مركز؛ لا يُقبل Home Edition ولا MyBest.",
+      "source_url": "https://www.eur.nl/en/bachelor/international-bachelor-economics-and-business-economics/admission"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة الشهادات المقبولة في IBEB لا تذكر Duolingo.",
+      "source_url": "https://www.eur.nl/en/bachelor/international-bachelor-economics-and-business-economics/admission"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "note_ar": "لبرنامج IBEB (مقاعد محدودة)، 23:59 بتوقيت وسط أوروبا",
+      "source_url": "https://www.eur.nl/en/bachelor/international-bachelor-economics-and-business-economics/application"
+    },
+    {
+      "event_ar": "آخر موعد للتسجيل في Studielink",
+      "round_ar": "IBA",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "note_ar": "لبرنامج International Business Administration في RSM",
+      "source_url": "https://www.rsm.nl/education/bachelor/bsc-international-business-administration-iba/admission-application/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "برامج بكالوريوس بالإنجليزية بالكامل، مثل International Business Administration (IBA) وIBEB وInternational Bachelor Arts and Culture Studies (IBACS).",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: ليست في قائمة الجامعة للشهادات الدولية (2027)، والجامعة تطلب مراسلة مكتب القبول للشهادات غير المدرجة. وتضع Nuffic الثانوية السعودية بمستوى HAVO."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "eindhoven-university-of-technology",
+  "name_en": "Eindhoven University of Technology",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.tue.nl/en/education/become-a-tue-student/admission-and-enrollment",
+  "platform": {
+    "value_ar": "Studielink، ثم نموذج التقديم في OSIRIS",
+    "source_url": "https://www.tue.nl/en/education/become-a-tue-student/admission-and-enrollment/programtype/bachelor/program/computer-science-and-engineering/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "each_min": 6.0,
+      "note_ar": "لعام 2027–2028. لا يُقبل IELTS Online ولا One Skill Retake.",
+      "source_url": "https://www.tue.nl/en/education/become-a-tue-student/admission-and-enrollment/language-proficiency-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5 في كل قسم. وقبل ذلك: 90 (21 لكل قسم). لا يُقبل MyBest.",
+      "source_url": "https://www.tue.nl/en/education/become-a-tue-student/admission-and-enrollment/language-proficiency-requirements"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "تقول الجامعة: لا تُقبل اختبارات لغة أخرى غير المذكورة.",
+      "source_url": "https://www.tue.nl/en/education/become-a-tue-student/admission-and-enrollment/language-proficiency-requirements"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم لبرامج الانتقاء",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "note_ar": "مثل Computer Science and Engineering، 23:59 بتوقيت وسط أوروبا",
+      "source_url": "https://www.tue.nl/en/education/become-a-tue-student/admission-and-enrollment/programtype/bachelor/program/computer-science-and-engineering/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "أغلب البكالوريوس بالإنجليزية، مثل Applied Physics وComputer Science and Engineering وIndustrial Design. ومسار Biomedical Engineering يُدرَّس جزئيًا بالهولندية، فيُطلب معه شرط هولندي.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: أداة القبول تطلب شهادة تعادل VWO الهولندية مع الرياضيات، دون حكم صريح على الشهادة السعودية. وتضع Nuffic الثانوية السعودية بمستوى HAVO.",
+    "موعد البرامج بلا انتقاء (1 مايو) منشور دون سنة"
+  ]
+}

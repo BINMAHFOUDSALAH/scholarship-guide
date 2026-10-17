@@ -1,7 +1,7 @@
 {
   "id": "north-carolina-state-university",
   "name_en": "North Carolina State University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.ncsu.edu/apply/international/first-year/",
   "platform": {
@@ -67,5 +67,11 @@
     "waiver": "none",
     "note_ar": null,
     "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "count": 1,
+    "summary_ar": "مقال Common App أو Coalition الشخصي (حتى 650 كلمة)، وإجابة قصيرة إلزامية عن سبب اختيارك التخصص وNC State. وسؤال إضافي لمن يرغب في برنامج الشرف.",
+    "source_url": "https://admissions.ncsu.edu/apply/freshmen/application-process"
   }
 }

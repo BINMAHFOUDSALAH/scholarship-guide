@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": "جامعة للصم وضعاف السمع، والتعليم فيها بلغتين: لغة الإشارة الأمريكية (ASL) والإنجليزية.",
   "acceptance_rate": null,
@@ -16,7 +16,16 @@
     "value_ar": "بوابة التقديم الخاصة بالجامعة",
     "source_url": "https://apply.gallaudet.edu/apply/?undergrad="
   },
-  "english": null,
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "معيار الإنجليزية للبكالوريوس هو ACT، ويُقبل IELTS بديلًا فقط إذا تعذّر ACT وبموافقة الجامعة.",
+      "source_url": "https://gallaudet.smartcatalogiq.com/en/current/2026-2027-undergraduate-catalog/admissions/undergraduate-standard-admissions-procedures/student-classifications/international"
+    },
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": null
+  },
   "application_fee": {
     "fee_usd": 50,
     "waiver": "own_waiver",

@@ -1,0 +1,31 @@
+{
+  "id": "freie-universitaet-berlin",
+  "name_en": "Freie Universitaet Berlin",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.fu-berlin.de/en/studium/bewerbung/bachelor/allgemein/informationen/index.html",
+  "platform": {
+    "value_ar": "uni-assist لحاملي الشهادات من خارج ألمانيا",
+    "source_url": "https://www.fu-berlin.de/en/studium/bewerbung/bachelor/allgemein/informationen/index.html"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "معظم البكالوريوس بالألمانية. البرنامج الإنجليزي North American Studies يطلب إنجليزية C1 تُثبت باختبار في مركز اللغات في الجامعة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "للبرامج بالألمانية: مستوى C1 (مثل TestDaF ‏4/4/3/3 أو DSH 1 أو telc C1 Hochschule). ومن يحتاج Studienkolleg يكفيه B2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "مواعيد الفصل الشتوي 2027/28 تُنشر في مارس من كل عام"
+  ]
+}

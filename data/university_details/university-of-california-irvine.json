@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -50,5 +50,11 @@
     "waiver": "domestic_only",
     "note_ar": "95 دولارًا لكل جامعة UC. الإعفاء للمواطنين والمقيمين الأمريكيين فقط.",
     "source_url": "https://admission.universityofcalifornia.edu/admission-requirements/international-applicants/applying-for-admission/"
+  },
+  "essays": {
+    "personal_essay": "uc_piq",
+    "count": 4,
+    "summary_ar": "طلب جامعة كاليفورنيا الخاص (لا Common App): تجيب عن أربعة من ثمانية أسئلة شخصية (Personal Insight Questions)، كل إجابة 350 كلمة على الأكثر. الطلب نفسه لكل فروع الجامعة.",
+    "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/personal-insight-questions.html"
   }
 }

@@ -1,0 +1,46 @@
+{
+  "id": "universitat-hamburg",
+  "name_en": "Universität Hamburg",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.uni-hamburg.de/en/campuscenter/bewerbung/international/studium-mit-abschluss.html",
+  "platform": {
+    "value_ar": "بوابة STiNE في الجامعة (دون أوراق)، بعد الاعتراف بالشهادة",
+    "source_url": "https://www.uni-hamburg.de/en/campuscenter/bewerbung/bachelor-staatsexamen/bewerbungsverfahren/online-bewerbung.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 5.5,
+      "varies": true,
+      "note_ar": "لبرنامج Earth System Physics وحده (بالإنجليزية). بقية البرامج بالألمانية.",
+      "source_url": "https://www.uni-hamburg.de/en/campuscenter/bewerbung/bachelor-staatsexamen/fremdsprachenkenntnisse.html"
+    },
+    "toefl_ibt": {
+      "min": 72,
+      "varies": true,
+      "note_ar": "لبرنامج Earth System Physics وحده، على المقياس القديم.",
+      "source_url": "https://www.uni-hamburg.de/en/campuscenter/bewerbung/bachelor-staatsexamen/fremdsprachenkenntnisse.html"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "صفحة إثبات الإنجليزية لا تذكر Duolingo.",
+      "source_url": "https://www.uni-hamburg.de/en/campuscenter/bewerbung/bachelor-staatsexamen/fremdsprachenkenntnisse.html"
+    },
+    "note_ar": "معظم البكالوريوس بالألمانية، والبرنامج الإنجليزي الذي وجدناه Earth System Physics."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "معظم البكالوريوس بالألمانية. المطلوب لمن لم يدرس بالألمانية: DSH-2، أو TestDaF بمجموع 15، أو Goethe C1، أو telc C1 Hochschule، والشهادة لا يزيد عمرها على ثلاث سنوات.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وتقول uni-assist إن حامل شهادة ثانوية من مدرسة خاصة تُقيَّم شهادته حسب إرشادات ZAB، وإن سنة جامعية في جامعة معتمدة تؤهل لدخول Studienkolleg.",
+    "موعد التقديم للفصل الشتوي (1 يونيو إلى 15 يوليو) منشور دون سنة"
+  ]
+}

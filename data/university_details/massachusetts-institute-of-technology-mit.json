@@ -1,7 +1,7 @@
 {
   "id": "massachusetts-institute-of-technology-mit",
   "name_en": "Massachusetts Institute of Technology (MIT)",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/",
   "platform": {
@@ -67,5 +67,12 @@
     "note_ar": "متاح للدوليين من قسم طلب الإعفاء داخل طلب MIT",
     "source_url": "https://mitadmissions.org/apply/firstyear/deadlines-requirements/",
     "waiver_source_url": "https://mitadmissions.org/help/faq/application-fee-fee-waiver/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "own",
+    "count": 8,
+    "summary_ar": "طلب MIT الخاص (لا يستخدم Common App): أربعة مقالات قصيرة من 100 إلى 200 كلمة تقريبًا، وأربعة أسئلة من 40 إلى 50 كلمة، ومربع اختياري لمعلومات إضافية.",
+    "source_url": "https://mitadmissions.org/apply/firstyear/essays-activities-academics/"
   }
 }

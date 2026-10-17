@@ -1,0 +1,48 @@
+{
+  "id": "technische-universitat-berlin-tu-berlin",
+  "name_en": "Technische Universität Berlin (TU Berlin)",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027/2028",
+  "admissions_url": "https://www.tu.berlin/en/studierendensekretariat/bachelors-application-enrollment/prospective-students-with-an-international-higher-education-entrance-qualification",
+  "platform": {
+    "value_ar": "وثيقة VPD من uni-assist أولًا (إلزامية)، ثم بوابة التقديم في الجامعة",
+    "source_url": "https://www.tu.berlin/en/studierendensekretariat/bachelors-application-enrollment/prospective-students-with-an-international-higher-education-entrance-qualification/admission-requirements"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "البكالوريوس بالألمانية، وصفحة شروط اللغة لا تطلب الإنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للبرامج ذات المقاعد المحدودة",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-07-15",
+      "year_stated": true,
+      "note_ar": "لحاملي الشهادات الدولية، من 1 يونيو 2027، مع وثيقة VPD",
+      "source_url": "https://www.tu.berlin/en/studying/applying-and-enrolling/dates-deadlines"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم للبرامج المفتوحة",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-08-31",
+      "year_stated": true,
+      "note_ar": "لحاملي الشهادات الدولية، من 1 يونيو 2027، مع وثيقة VPD",
+      "source_url": "https://www.tu.berlin/en/studying/applying-and-enrolling/dates-deadlines"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "لغة البكالوريوس الألمانية. المطلوب: DSH-2، أو TestDaF ‏4 في كل الأجزاء، أو Goethe C2، أو ÖSD C2، أو telc C1 Hochschule، أو DSD II.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية، وتحيل إلى anabin وDAAD. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط."
+  ]
+}

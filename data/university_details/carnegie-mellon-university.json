@@ -1,7 +1,7 @@
 {
   "id": "carnegie-mellon-university",
   "name_en": "Carnegie Mellon University",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.cmu.edu/admission/admission/international-applicants",
   "platform": {
@@ -76,5 +76,11 @@
     "waiver": "accepts_common_app",
     "note_ar": "لمن تنطبق عليه مؤشرات الحاجة الاقتصادية في Common App",
     "source_url": "https://www.cmu.edu/admission/admission/undergraduate-admission-requirements"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "count": 3,
+    "summary_ar": "مقال Common App الشخصي، وثلاثة أسئلة قصيرة حتى 300 كلمة لكل منها. كليات العمارة والفنون والتصميم تطلب ملف أعمال أيضًا.",
+    "source_url": "https://www.cmu.edu/admission/admission/admission-consideration"
   }
 }

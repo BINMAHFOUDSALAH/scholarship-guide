@@ -1,7 +1,7 @@
 {
   "id": "california-institute-of-technology-caltech",
   "name_en": "California Institute of Technology (Caltech)",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
   "admissions_url": "https://www.admissions.caltech.edu/",
   "platform": {
@@ -69,5 +69,11 @@
     "waiver": "own_waiver",
     "note_ar": "إن كنت تطلب مساعدة مالية والرسوم عبء عليك، املأ نموذج Caltech Active Transport Pass",
     "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/first-year-application-fee-and-waiver"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 5,
+    "summary_ar": "خمس إجابات خاصة بالجامعة: سؤال عن اهتمامك في العلوم والتقنية (150–200 كلمة)، وثلاثة مقالات قصيرة حتى 200 كلمة لكل منها، وسؤال خفيف عن مجتمع Caltech (100–150 كلمة). وسؤال أكاديمي اختياري.",
+    "source_url": "https://www.admissions.caltech.edu/apply/first-year-applicants/supplemental-application-essays"
   }
 }

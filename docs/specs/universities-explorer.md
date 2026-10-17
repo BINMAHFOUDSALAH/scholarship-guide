@@ -83,6 +83,8 @@ Rules:
 - `draft: true` (optional): research not yet verified on the official page (a 403, a snippet). Hidden on the site; shown with `WADIH_SHOW_DRAFTS=1`.
 - Never record a number from a search snippet or a third-party site. `language_note_ar` is only for the language of teaching.
 - `saudi_certificate` (optional, decision 054; mainly UK): `{"direct_entry": true | false | null, "note_ar", "quote", "source_url"}`. Whether the Saudi secondary certificate alone gets a student into year 1, from the university's own Saudi Arabia / country page, with the exact English `quote`. Shown as «الشهادة الثانوية السعودية» only when `direct_entry` is true or false; `null` means the page doesn't say (and the gap goes in `not_found_ar`).
+- English tests, decision 061: `listed: false` = the university's English page lists its accepted tests and this one isn't among them (shown «ليس ضمن الاختبارات التي تذكرها الجامعة»; never with a score; not the same as `accepted: false`). `english.required: false` = the page says English isn't an admission requirement (e.g. French-taught bachelor's). Both are stored only as false.
+- `essays` (optional, decision 061): `{"cycle_ar", "personal_essay": "common_app" | "coalition" | "own" | "ucas" | "uc_piq" | "none" | null, "count": int | null, "summary_ar", "source_url"}`. `count` = required university-specific essays and short answers (the personal essay and optional prompts not counted). `summary_ar` summarises the prompts in Arabic; prompts are never copied. Shown as «المقالات».
 - Non-English-speaking countries: `language_note_ar` says what the language of instruction is and whether English-taught undergraduate programs exist (with source).
 
 ## Pages

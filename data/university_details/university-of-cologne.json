@@ -1,0 +1,32 @@
+{
+  "id": "university-of-cologne",
+  "name_en": "University of Cologne",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://uni-koeln.de/en/studium-lehre/international/studium-in-koeln/internationale-bewerbungen/bachelor-studium-staatsexamen/bewerbungsverfahren-fuer-nicht-eu-buergerinnen/application-procedure-for-non-eu-citizens-with-formal-university-entrance-qualification-studienstart-international-integrale",
+  "platform": {
+    "value_ar": "uni-assist (تقديم إلكتروني دون أوراق)، مع شهادة TestAS",
+    "source_url": "https://uni-koeln.de/en/studium-lehre/international/studium-in-koeln/internationale-bewerbungen/bachelor-studium-staatsexamen/bewerbungsverfahren-fuer-nicht-eu-buergerinnen/application-procedure-for-non-eu-citizens-with-formal-university-entrance-qualification-studienstart-international-integrale"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "كل برامج البكالوريوس بالألمانية، فلا يُطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "لغة الدراسة في كل برامج البكالوريوس الألمانية. الشهادات المقبولة: TestDaF ‏4 في كل الأجزاء، أو DSH-2، أو telc C1 Hochschule، أو Goethe C1، أو ÖSD C2. ويُطلب أيضًا اختبار TestAS للقدرات الدراسية.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وتقول uni-assist إن حامل شهادة ثانوية من مدرسة خاصة تُقيَّم شهادته حسب إرشادات ZAB، وإن سنة جامعية في جامعة معتمدة تؤهل لدخول Studienkolleg.",
+    "موعد التقديم للفصل الشتوي (15 يوليو) منشور دون سنة"
+  ]
+}

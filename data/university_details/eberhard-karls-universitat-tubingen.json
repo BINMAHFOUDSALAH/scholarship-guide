@@ -1,0 +1,31 @@
+{
+  "id": "eberhard-karls-universitat-tubingen",
+  "name_en": "Eberhard Karls Universität Tübingen",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://uni-tuebingen.de/en/international/study-in-tuebingen/degree-seeking-students/application-and-admission-of-international-students/undergraduate-courses/",
+  "platform": {
+    "value_ar": "بوابة ALMA في الجامعة (دون uni-assist)",
+    "source_url": "https://uni-tuebingen.de/en/international/study-in-tuebingen/degree-seeking-students/application-and-admission-of-international-students/undergraduate-courses/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "معظم البكالوريوس بالألمانية. البرامج بالإنجليزية بالكامل لا تطلب الألمانية، وBA Computational Linguistics يطلب إنجليزية B2 باختبار دولي دون درجة محددة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "للبرامج بالألمانية: DSH 2، أو TestDaF ‏4 في كل الأجزاء، أو Goethe C2، أو DSD II، أو telc C1 Hochschule. ومن البرامج بالإنجليزية بالكامل: BA Interdisciplinary American Studies وBA English and American Studies وBA Computational Linguistics.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية، وتحيل إلى anabin وDAAD. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "موعد التقديم للفصل الشتوي (15 يوليو) منشور دون سنة"
+  ]
+}

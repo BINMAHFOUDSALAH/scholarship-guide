@@ -1,0 +1,46 @@
+{
+  "id": "technical-university-of-munich",
+  "name_en": "Technical University of Munich",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.tum.de/en/studies/application/bachelor/application-bachelor/",
+  "platform": {
+    "value_ar": "بوابة TUMonline، مع وثيقة VPD من uni-assist (التقديم في uni-assist وحده لا يكفي)",
+    "source_url": "https://www.tum.de/en/studies/application/bachelor/application-bachelor/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "varies": true,
+      "note_ar": "للبرامج بالإنجليزية عمومًا. لكن بعضها (مثل Aerospace وManagement and Technology) لا يطلب شهادة عند التقديم ويتحقق من الإنجليزية في اختبار القبول.",
+      "source_url": "https://www.tum.de/en/studies/application/application-info-portal/admission-requirements/language-certificates"
+    },
+    "toefl_ibt": {
+      "min": 88,
+      "varies": true,
+      "note_ar": "للبرامج بالإنجليزية، مع الاستثناءات نفسها.",
+      "source_url": "https://www.tum.de/en/studies/application/application-info-portal/admission-requirements/language-certificates"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "صفحة شهادات اللغة لا تذكر Duolingo.",
+      "source_url": "https://www.tum.de/en/studies/application/application-info-portal/admission-requirements/language-certificates"
+    },
+    "note_ar": "معظم البكالوريوس بالألمانية، ومن البرامج بالإنجليزية Aerospace (مع ألمانية A2) وGeodesy and Earth Observation."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "للبرامج بالألمانية: DSH-2، أو TestDaF ‏4 في كل الأقسام، أو telc C1 Hochschule، أو Goethe C2، وتقول الجامعة إنها «الحد الأدنى الشكلي فقط».",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "موعد التقديم للفصل الشتوي (15 مايو إلى 15 يوليو) منشور دون سنة"
+  ]
+}

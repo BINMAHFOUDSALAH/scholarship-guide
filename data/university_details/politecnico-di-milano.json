@@ -1,0 +1,48 @@
+{
+  "id": "politecnico-di-milano",
+  "name_en": "Politecnico di Milano",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2026-2027 (لم تُنشر مواعيد 2027-2028 بعد)",
+  "admissions_url": "https://www.polimi.it/en/prospective-students/how-to-apply/admission-to-laurea-programmes",
+  "platform": {
+    "value_ar": "Online Services في الجامعة لاختبار القبول، وUniversitaly للتأشيرة",
+    "source_url": "https://www.polimi.it/en/prospective-students/how-to-apply/admission-to-laurea-programmes/how-to-apply-for-a-student-visa"
+  },
+  "english": {
+    "ielts": {
+      "min": 5.0,
+      "note_ar": "للبرامج بالإنجليزية في الهندسة والتصميم، قبل التسجيل.",
+      "source_url": "https://www.polimi.it/en/students/language-requirements/students-of-an-english-language-laurea-study-programme"
+    },
+    "toefl_ibt": {
+      "min": 59,
+      "note_ar": "المجموع، للبرامج بالإنجليزية.",
+      "source_url": "https://www.polimi.it/en/students/language-requirements/students-of-an-english-language-laurea-study-programme"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "جدول الشهادات المقبولة لا يذكر Duolingo.",
+      "source_url": "https://www.polimi.it/en/students/language-requirements/students-of-an-english-language-laurea-study-programme"
+    },
+    "note_ar": null
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختبار القبول في الهندسة: TOL أو بديل منه، وSAT أحد البدائل.",
+    "source_url": "https://www.polimi.it/en/prospective-students/how-to-apply/admission-to-laurea-programmes/engineering"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "من البكالوريوس بالإنجليزية: Engineering Science وIndustrial Engineering وProcess Engineering وInteraction Design. والبرامج بالإيطالية تطلب إيطالية B2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة، والقاعدة العامة شهادة بعد 12 سنة دراسية على الأقل",
+    "مواعيد القبول لعام 2027-2028 لم تُنشر بعد (المنشور لعام 2026-2027)"
+  ]
+}

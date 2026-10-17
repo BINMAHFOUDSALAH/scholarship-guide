@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -75,6 +75,11 @@
     "fee_usd": 60,
     "waiver": "own_waiver",
     "note_ar": "تُعفى إن بدأت الطلب بين 15 سبتمبر و15 نوفمبر 2026، أو حضرت فعالية قبول.",
+    "source_url": "https://www.digipen.edu/admissions/how-to-apply/undergraduate-admissions-requirements"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "summary_ar": "البيان الشخصي اختياري لكل برامج البكالوريوس، وبرامج علوم الحاسب لا تطلب أي إضافات. برامج التصميم والفن تطلب أسئلة كتابية قصيرة مع ملف الأعمال.",
     "source_url": "https://www.digipen.edu/admissions/how-to-apply/undergraduate-admissions-requirements"
   }
 }

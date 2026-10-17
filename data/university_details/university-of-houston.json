@@ -1,7 +1,7 @@
 {
   "id": "university-of-houston",
   "name_en": "University of Houston",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/",
   "platform": {
@@ -64,5 +64,11 @@
     "waiver": "not_stated",
     "note_ar": "إعفاء الطلاب الجدد بنموذج NACAC، والصفحة لا تذكر الدوليين",
     "source_url": "https://www.uh.edu/undergraduate-admissions/apply/international/international-freshman/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 1,
+    "summary_ar": "مقال قصير مطلوب من كل المتقدمين، مع سيرة ذاتية (resume). الصفحة لا تذكر سؤاله ولا حد كلماته.",
+    "source_url": "https://www.uh.edu/undergraduate-admissions/apply/incoming-freshman/freshman-admissions-process/"
   }
 }

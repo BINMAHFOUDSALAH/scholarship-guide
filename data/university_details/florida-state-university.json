@@ -1,7 +1,7 @@
 {
   "id": "florida-state-university",
   "name_en": "Florida State University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.fsu.edu/international/first-year",
   "platform": {
@@ -66,5 +66,11 @@
     "waiver": "not_stated",
     "note_ar": "التقديم عبر Common App يضيف 5 دولارات رسوم معالجة",
     "source_url": "https://admissions.fsu.edu/deadlines"
+  },
+  "essays": {
+    "personal_essay": "own",
+    "count": 0,
+    "summary_ar": "مقال واحد مطلوب حتى 650 كلمة، تختار موضوعه من قائمة الجامعة، ويمكن رفعه بعد إرسال الطلب.",
+    "source_url": "https://admissions.fsu.edu/first-year/wwlf"
   }
 }

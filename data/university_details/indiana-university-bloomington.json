@@ -1,7 +1,7 @@
 {
   "id": "indiana-university-bloomington",
   "name_en": "Indiana University Bloomington",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://bloomington.iu.edu/admissions/apply/international/freshman/index.html",
   "platform": {
@@ -65,5 +65,9 @@
     "waiver": "not_stated",
     "note_ar": null,
     "source_url": "https://bloomington.iu.edu/admissions/apply/steps.html?description=freshman&location=international"
+  },
+  "essays": {
+    "summary_ar": "مقال مطلوب على أي منصة: في Common App تختار أحد أسئلتها، وفي Apply IU تكتب مقال الجامعة (200–400 كلمة) عن خططك الأكاديمية والمهنية.",
+    "source_url": "https://bloomington.iu.edu/admissions/apply/application-faqs.html"
   }
 }

@@ -717,7 +717,7 @@ def test_rowwad_destination_only_on_its_track():
     assert track["note_ar"] in opening and track["levels_ar"] in opening
     if track.get("status_source"):
         assert track["status_source"] in opening
-    assert "لا يعني قبولك فيها" in opening  # what the list doesn't answer (decision 038)
+    assert "لا يعني قبولك فيها" not in opening  # removed at the owner's request (decision 061)
     # The country chips are plain links, so they work without JavaScript.
     assert '/universities?track=arruaad&amp;country=US"' in opening
 

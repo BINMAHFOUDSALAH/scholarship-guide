@@ -1,0 +1,31 @@
+{
+  "id": "university-of-naples-federico-ii",
+  "name_en": "University of Naples - Federico II",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2026-2027 (لم تُنشر مواعيد 2027-2028 بعد)",
+  "admissions_url": "https://www.international.unina.it/education/admission-regulation/",
+  "platform": {
+    "value_ar": "Universitaly للتسجيل المسبق، ثم التأشيرة عبر القنصلية",
+    "source_url": "https://www.international.unina.it/education/admission-regulation/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "البرامج بالإنجليزية لا تطلب الإيطالية، والجامعة تقول إن شهادة إنجليزية دولية (IELTS أو TOEFL أو Cambridge) مفيدة للتأشيرة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "من البكالوريوس بالإنجليزية: Biology for One Health وCivil and Environmental Engineering وElectrical Engineering and Information Technology. والبرامج بالإيطالية تطلب إيطالية B2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة، والقاعدة العامة شهادة بعد 12 سنة دراسية على الأقل",
+    "مواعيد القبول لعام 2027-2028 لم تُنشر بعد (المنشور لعام 2026-2027)"
+  ]
+}

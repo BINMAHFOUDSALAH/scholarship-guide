@@ -1,0 +1,49 @@
+{
+  "id": "sapienza-university-of-rome",
+  "name_en": "Sapienza University of Rome",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2026-2027 (لم تُنشر شروط 2027-2028 بعد)",
+  "admissions_url": "https://www.uniroma1.it/en/admissions",
+  "platform": {
+    "value_ar": "MoveIn للتقديم المسبق، ثم Universitaly للتسجيل المسبق والتأشيرة",
+    "source_url": "https://www.uniroma1.it/it/pagina/international-admissions-2026-2027"
+  },
+  "english": {
+    "ielts": {
+      "min": 5.5,
+      "varies": true,
+      "note_ar": "5.5 في أغلب البرامج الثمانية بالإنجليزية، وبعضها يطلب مستوى B2 دون درجة.",
+      "source_url": "https://www.uniroma1.it/sites/default/files/field_file_allegati/academic_requirements_movein_2026-2027_web_20260608.pdf"
+    },
+    "toefl_ibt": {
+      "min": 72,
+      "varies": true,
+      "note_ar": "72 في Applied Computer Science and AI، و80 في برامج أخرى.",
+      "source_url": "https://www.uniroma1.it/sites/default/files/field_file_allegati/academic_requirements_movein_2026-2027_web_20260608.pdf"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة الاختبارات المقبولة لا تذكر Duolingo.",
+      "source_url": "https://www.uniroma1.it/sites/default/files/field_file_allegati/language_requirements_sapienza_2026.pdf"
+    },
+    "note_ar": "المستوى B2 في كل البرامج بالإنجليزية، والدرجة حسب البرنامج."
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "في البرامج بالإنجليزية يُطلب اختبار واحد حسب البرنامج: SAT (أعلى من 960 لغير الأوروبيين في بعضها) أو CEnT-S أو TOLC.",
+    "source_url": "https://www.uniroma1.it/sites/default/files/field_file_allegati/academic_requirements_movein_2026-2027_web_20260608.pdf"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "ثمانية برامج بكالوريوس بالإنجليزية، مثل Applied Computer Science and Artificial Intelligence وEconomics and Finance وSustainable Building Engineering. ومن يحتاج تأشيرة للبرامج بالإيطالية يحتاج إيطالية B2.",
+  "saudi_certificate": {
+    "direct_entry": true,
+    "note_ar": "جدول Sapienza للشهادات المقبولة (يونيو 2026) يذكر الثانوية العامة السعودية مع كشوف الدرجات شهادةً للدخول إلى البكالوريوس.",
+    "quote": "Shahadat Itmam Al-Thanawiya Al-Ama",
+    "source_url": "https://www.uniroma1.it/sites/default/files/field_file_allegati/accepted_qualifications_2026_06_26.pdf"
+  },
+  "not_found_ar": [
+    "مواعيد القبول لعام 2027-2028 لم تُنشر بعد (المنشور لعام 2026-2027)"
+  ]
+}

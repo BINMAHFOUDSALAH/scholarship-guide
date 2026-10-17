@@ -2,6 +2,8 @@
 title: آيلتس (IELTS)
 description: ما هو اختبار آيلتس، وكيف تُحسب درجته، وكم درجة تطلبها برامج الابتعاث، وكيف تبدأ الاستعداد. من المصادر الرسمية.
 status: sourced
+tool: english_test
+test: ielts
 owner_reviewed: false
 last_checked: 2026-10-13
 sources:

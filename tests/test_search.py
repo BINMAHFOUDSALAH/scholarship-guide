@@ -25,6 +25,22 @@ def test_finds_a_guide_section_in_arabic_and_english():
         assert results and results[0]["url"].startswith("/resources/ielts"), q
 
 
+def test_test_names_match_in_arabic_and_english():
+    """Decision 061: «دولينجو» and «Duolingo» are the same word to search."""
+    assert search_form("دولينجو") == search_form("Duolingo") == search_form("الدولينجو")
+    assert search_form("التوفل") == search_form("TOEFL")
+    for q in ("duolingo", "Duolingo", "دولينجو"):
+        urls = [r["url"] for r in main.site_search.search(q)]
+        assert urls and urls[0].startswith("/resources/duolingo"), q
+
+
+def test_search_answers_which_universities_accept_a_test():
+    """One computed chunk per English test, from the requirement files (decision 061)."""
+    hit = next(r for r in main.site_search.search("Duolingo") if r["url"] == "/resources/duolingo#universities")
+    summary = main.explorer.test_summary("duolingo")
+    assert str(summary["researched"]) in hit["snippet"] and hit["sources"]
+
+
 def test_finds_facts_from_data():
     urls = [r["url"] for r in main.site_search.search("SAT")]
     assert "/grades/grade-11#tests-title" in urls

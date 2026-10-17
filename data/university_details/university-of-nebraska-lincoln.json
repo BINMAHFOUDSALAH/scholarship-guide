@@ -1,7 +1,7 @@
 {
   "id": "university-of-nebraska-lincoln",
   "name_en": "University of Nebraska - Lincoln",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.unl.edu/apply/admission-requirements/international",
   "platform": {
@@ -67,5 +67,11 @@
     "waiver": "domestic_only",
     "note_ar": "الإعفاء مرتبط ببرنامج الوجبات المدرسية الأمريكي أو الخدمة العسكرية",
     "source_url": "https://admissions.unl.edu/apply/admission-requirements/first-year/"
+  },
+  "essays": {
+    "personal_essay": "none",
+    "count": 0,
+    "summary_ar": "لا يُطلب مقال شخصي لطلاب السنة الأولى عبر Common App.",
+    "source_url": "https://www.commonapp.org/explore/university-nebraska-lincoln"
   }
 }

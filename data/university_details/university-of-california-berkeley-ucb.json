@@ -1,7 +1,7 @@
 {
   "id": "university-of-california-berkeley-ucb",
   "name_en": "University of California, Berkeley",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.berkeley.edu/requirements-for-international-students/",
   "platform": {
@@ -81,5 +81,11 @@
     "waiver": "domestic_only",
     "note_ar": "لكل حرم من جامعات UC تقدّم عليه",
     "source_url": "https://admissions.berkeley.edu/apply-to-berkeley/"
+  },
+  "essays": {
+    "personal_essay": "uc_piq",
+    "count": 4,
+    "summary_ar": "طلب جامعة كاليفورنيا الخاص (لا Common App): تجيب عن أربعة من ثمانية أسئلة شخصية (Personal Insight Questions)، كل إجابة 350 كلمة على الأكثر. الطلب نفسه لكل فروع الجامعة.",
+    "source_url": "https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/personal-insight-questions.html"
   }
 }

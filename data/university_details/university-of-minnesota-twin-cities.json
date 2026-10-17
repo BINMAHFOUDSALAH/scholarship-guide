@@ -1,7 +1,7 @@
 {
   "id": "university-of-minnesota-twin-cities",
   "name_en": "University of Minnesota Twin Cities",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.tc.umn.edu/apply/application-checklist/application-checklist-international-freshman",
   "platform": {
@@ -72,5 +72,12 @@
     "waiver": "own_waiver",
     "note_ar": "إعفاء تلقائي حسب إجاباتك في نموذج الطلب",
     "source_url": "https://admissions.tc.umn.edu/node/241"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "none",
+    "count": 0,
+    "summary_ar": "لا يُطلب مقال للقبول في السنة الأولى.",
+    "source_url": "https://admissions.tc.umn.edu/freshman/checklist.html"
   }
 }

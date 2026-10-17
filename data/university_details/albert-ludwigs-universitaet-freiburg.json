@@ -1,0 +1,31 @@
+{
+  "id": "albert-ludwigs-universitaet-freiburg",
+  "name_en": "Albert-Ludwigs-Universitaet Freiburg",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://uni-freiburg.de/en/studies/applying/international-applicants/full-time-studies",
+  "platform": {
+    "value_ar": "بوابة التقديم في الجامعة، ولبرنامج Liberal Arts and Sciences التسجيل أولًا في hochschulstart.de",
+    "source_url": "https://uni-freiburg.de/en/studies/applying/international-applicants/full-time-studies"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "كل البكالوريوس بالألمانية عدا Liberal Arts and Sciences (بالإنجليزية، ويطلب مستوى B2)."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "عدا Liberal Arts and Sciences، كل البكالوريوس بالألمانية. المطلوب للتسجيل: DSH 2، أو TestDaF ‏4 في الأجزاء الأربعة، أو Goethe C2، أو DSD II، أو telc C1 Hochschule.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية، وتحيل إلى anabin وDAAD. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "مواعيد 2027 لم تُنشر بعد (البوابة تفتح في 1 يونيو للفصل الشتوي)"
+  ]
+}
