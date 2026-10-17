@@ -1,4 +1,4 @@
-"""The design system's colour rules, written as code (decision 035).
+"""The design system's colour rules, written as code (decisions 035, 062).
 
 Every text colour must be readable on the backgrounds it's used on (WCAG 1.4.3: 4.5:1 for text),
 and borders and focus rings must stand out from the page (WCAG 1.4.11: 3:1). Both themes.
@@ -53,23 +53,29 @@ def test_contrast_formula():
 
 
 def text_pairs(t):
-    """(text colour, background, where it's used) for every text pair the CSS uses."""
+    """(text colour, background, where it's used) for every text pair the CSS uses (decision 062 names)."""
     return [
-        (t["ink"], t["paper"], "body text"),
+        (t["ink"], t["paper"], "body text and headings"),
         (t["ink"], t["surface"], "text on panels"),
-        (t["ink"], t["surface-strong"], "text in inputs and menus"),
+        (t["ink"], t["surface-strong"], "text in inputs, menus and the summary sheet"),
         (t["ink-muted"], t["paper"], "secondary text"),
-        (t["ink-muted"], t["surface"], "secondary text on panels and the footer"),
+        (t["ink-muted"], t["surface"], "secondary text on panels"),
         (t["ink-muted"], t["surface-strong"], "hints in the suggestions panel"),
-        (t["heading"], t["paper"], "headings and links"),
-        (t["heading"], t["surface"], "links on panels"),
-        (t["heading"], t["surface-strong"], "links in menus"),
-        (t["on-heading"], t["heading"], "primary button text"),
-        (t["on-lime"], t["lime"], "«مفتوح الآن» and the next step"),
-        (t["amber"], t["paper"], "restriction text"),
-        (t["amber"], mix(t["amber"], 13, t["paper"]), "«لم يفتح بعد» / «ماجستير فقط» tags"),
-        (t["ink-muted"], mix(t["ink-muted"], 13, t["paper"]), "«مغلق» status tag"),
-        (t["heading"], mix(t["heading"], 10, t["surface-strong"]), "a highlighted suggestion"),
+        (t["action"], t["paper"], "links"),
+        (t["action"], t["surface"], "links on panels"),
+        (t["action"], t["surface-strong"], "links in menus and the summary sheet"),
+        (t["on-action"], t["action"], "primary button text"),
+        (t["on-lime"], t["lime"], "«مفتوح الآن», the next step, the chosen country"),
+        (t["amber"], t["paper"], "restriction and «لم يفتح بعد» text"),
+        (t["amber"], mix(t["amber"], 12, t["paper"]), "«ماجستير فقط» tags"),
+        (t["action"], mix(t["action"], 10, t["surface-strong"]), "a highlighted suggestion"),
+        # The forest stage (the homepage's start, the universities search) and the footer.
+        (t["on-stage"], t["stage"], "titles and text on the stage"),
+        (t["on-stage-muted"], t["stage"], "secondary text on the stage"),
+        (t["stage-amber"], t["stage"], "«لم يفتح بعد» on the stage"),
+        (t["stage"], t["on-stage"], "a primary button on the stage (forest text on ivory)"),
+        (t["on-stage"], t["stage-deep"], "footer titles"),
+        (t["on-stage-muted"], t["stage-deep"], "footer links and the copyright line"),
     ]
 
 
@@ -86,17 +92,18 @@ def test_controls_and_focus_ring_stand_out(theme, t):
         (t["control-border"], t["paper"], "input border against the page"),
         (t["focus"], t["paper"], "focus ring"),
         (t["focus"], t["surface"], "focus ring on panels"),
-        (t["heading"], t["paper"], "secondary button border"),
+        (t["action"], t["paper"], "secondary button border"),
+        (t["lime"], t["stage"], "focus ring and the lit diamond on the stage"),
+        (t["lime"], t["stage-deep"], "focus ring in the footer"),
     ]:
         assert contrast(fg, bg) >= 3, f"{theme}: {where} ({fg} on {bg}) is {contrast(fg, bg):.2f}:1"
 
 
-def test_the_tuwaiq_band_text_is_readable():
-    """The band keeps its own light text on forest (light theme) and on the dark surface."""
-    for band in (LIGHT["band"], DARK["band"]):
-        for text in ("#ece9e0", "#c2cbc5"):
-            assert contrast(text, band) >= 4.5, (text, band)
-        assert contrast(LIGHT["lime"], band) >= 3  # the focus ring inside the band
+def test_fields_stand_out_on_the_stage():
+    """A search box on forest: white on forest by day; at night the field keeps its border (decision 062)."""
+    assert contrast(LIGHT["surface-strong"], LIGHT["stage"]) >= 3
+    assert "--stage-field-border: transparent" in CSS.split(':root[data-theme="dark"] {')[0]
+    assert contrast(DARK["stage-field-border"], DARK["stage"]) >= 3
 
 
 def test_no_text_smaller_than_the_scale_floor():

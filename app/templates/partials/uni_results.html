@@ -59,7 +59,7 @@
     </h2>
     <p class="result-count">
       {% if s.waaid is defined %}{{ s.waaid | length | count_ar("programs") }}{% elif s.rows is defined %}{{ s.rows | length | count_ar("universities") }}{% else %}{{ s.universities | length | count_ar("universities") }}{% endif %}
-      {% if s.track == "rnd" %} · للدكتوراه فقط{% endif %}
+      {% if s.track == "rnd" %}، للدكتوراه فقط{% endif %}
     </p>
   </header>
   {% if s.note_ar %}<p class="result-note">{{ s.note_ar }}</p>{% endif %}
@@ -78,7 +78,7 @@
       <li><span class="compact-rank">{{ l.rank }}</span> {{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</li>
       {% endfor %}
     </ol>
-    <p class="section-link"><a href="{{ s.full_href }}">الرواد بالتفاصيل: المتطلبات والمواعيد ←</a></p>
+    <p class="section-link"><a href="{{ s.full_href }}">الرواد بالتفاصيل: المتطلبات والمواعيد</a></p>
   {% elif s.rows is defined %}
     {% if s.rows %}
     {% if not ns.explained %}{% set ns.explained = true %}
@@ -94,7 +94,7 @@
           <td class="uni-rank"><span class="sr-only">المرتبة </span>{{ l.rank }}</td>
           <th scope="row">{{ um.uni_name(u, back=back) }}</th>
           <td class="uni-cell-country">{{ um.country(u) }}</td>
-          <td class="uni-cell-notes"><span class="tags">{{ um.listing_notes(l) }}</span>{{ um.key_facts(u, quiet=True) }}{{ um.save_button(u) }}</td>
+          <td class="uni-cell-notes"><div class="uni-notes-main">{% set notes = um.listing_notes(l) %}{% if notes | trim %}<span class="tags">{{ notes }}</span>{% endif %}{{ um.key_facts(u, quiet=True, link=False) }}</div><div class="uni-notes-side">{{ um.save_button(u) }}{{ um.admissions_link(u) }}</div></td>
         </tr>
         {% endfor %}
       </tbody>

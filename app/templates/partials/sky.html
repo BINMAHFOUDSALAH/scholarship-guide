@@ -1,11 +1,8 @@
 {#
-  The sky (decision 060): Wadih's one visual language. The sky as a way to find your direction,
-  as travellers in Arabia used it, not outer space. Its parts:
-  - the sun at dawn (light theme), which becomes a crescent at night (dark theme): one disc, with a shadow sliding across
-  - the plate: hairline circles with a graduated rim, like an astrolabe's
-  - the stars: hidden by day, out at night, except the guiding star (the lime diamond from the logo:
-    «your next step»), which shows in both, like the morning star at dawn
-  Decorative only: hidden from screen readers; colours come from CSS so both themes are designed, not inverted.
+  What's left of the sky (decisions 060, 062): the stars, out at night only, and the guiding star, the lime
+  diamond from the logo («your next step»). The sun, the astrolabe rings and the bands are gone: they took the
+  first screen without telling the student anything. Decorative only: hidden from screen readers; colours
+  come from CSS so both themes are designed, not inverted.
 #}
 
 {# The stars of one field. Each has a tier (faint / medium / bright) and a small delay so they come out one by one. #}
@@ -24,65 +21,9 @@
 </g>
 {% endmacro %}
 
-{# The astrolabe plate around the sun: a graduated rim, an inner circle, and a dotted path. #}
-{% macro plate(rim=560, ticks=true) %}
-<svg class="sky-plate" viewBox="-{{ rim + 40 }} -{{ rim + 40 }} {{ (rim + 40) * 2 }} {{ (rim + 40) * 2 }}" focusable="false">
-  <circle class="plate-line plate-rim" r="{{ rim }}" pathLength="1"/>
-  <circle class="plate-line plate-inner" r="{{ (rim * 0.71) | round(1) }}" pathLength="1"/>
-  <circle class="plate-line plate-dots" r="{{ (rim * 0.46) | round(1) }}"/>
-  {% if ticks %}
-  <g class="plate-ticks">
-    {% for a in range(0, 360, 5) %}<line x1="{{ rim }}" x2="{{ rim - (18 if a % 30 == 0 else 8) }}" transform="rotate({{ a }})"/>{% endfor %}
-  </g>
-  {% endif %}
-  {{ guide_star((rim * 0.819) | round(1), (-rim * 0.574) | round(1), 13, "plate-guide") }}
-</svg>
-{% endmacro %}
-
-{# The sun / moon. #}
-{% macro body() %}
-<svg class="sky-body" viewBox="-100 -100 200 200" focusable="false">
-  <defs>
-    <radialGradient id="sky-fill" cx="0.42" cy="0.38" r="0.7">
-      <stop offset="0" class="disc-in"/>
-      <stop offset="1" class="disc-out"/>
-    </radialGradient>
-    <radialGradient id="sky-glow">
-      <stop offset="0" class="glow-in"/>
-      <stop offset="1" class="glow-out"/>
-    </radialGradient>
-    <mask id="sky-bite"><rect x="-100" y="-100" width="200" height="200" fill="#fff"/><circle class="sky-shadow" r="37" fill="#000"/></mask>
-  </defs>
-  <circle class="sky-halo" r="100" fill="url(#sky-glow)"/>
-  <circle class="sky-disc" r="40" fill="url(#sky-fill)" mask="url(#sky-bite)"/>
-</svg>
-{% endmacro %}
-
-{# Every page but the homepage: a light glow and a slice of the rim by day; a few stars by night. #}
-{% macro top() %}
-<div class="sky sky--top" aria-hidden="true">
-  <svg class="sky-stars" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMin slice" focusable="false">{{ stars(sky_stars.top) }}</svg>
-  <div class="sky-anchor">{{ plate(520) }}</div>
-</div>
-{% endmacro %}
-
-{# The homepage: the whole sky, behind the header and the opening section. #}
-{% macro hero() %}
-<div class="sky sky--hero" aria-hidden="true">
+{# The homepage's start at night: the same forest, with the stars out (dark theme only). #}
+{% macro night() %}
+<div class="sky sky--night" aria-hidden="true">
   <svg class="sky-stars" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMin slice" focusable="false">{{ stars(sky_stars.hero) }}</svg>
-  <div class="sky-anchor">
-    {{ plate(560) }}
-    {{ body() }}
-  </div>
-</div>
-{% endmacro %}
-
-{# The closing band of the homepage: night falls in the light theme; first light rises in the dark one. #}
-{% macro band() %}
-<div class="sky sky--band" aria-hidden="true">
-  <svg class="sky-stars" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMin slice" focusable="false">{{ stars(sky_stars.band) }}</svg>
-  <svg class="band-horizon" viewBox="0 0 1440 200" preserveAspectRatio="none" focusable="false">
-    <path class="band-arc" d="M-40 200 Q720 40 1480 200" vector-effect="non-scaling-stroke"/>
-  </svg>
 </div>
 {% endmacro %}

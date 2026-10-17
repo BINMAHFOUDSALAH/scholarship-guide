@@ -1,21 +1,24 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
 
+{#
+  A guide (resources: IELTS, SAT, UCAS…). On wide screens «في هذه الصفحة» stays beside the text while you read
+  (decision 062); on phones it sits under the title.
+#}
+
 {% block title %}{{ page.title }} | {{ site.name }}{% endblock %}
 {% block description %}{{ page.description or site.description }}{% endblock %}
 
 {% block content %}
-<article class="measure">
-  <header class="page-header">
+<article class="doc{% if page.contents | length > 2 %} doc--with-contents{% endif %}">
+  <header class="page-header doc-header">
+    <p class="doc-kind"><a href="{{ url_for('home') }}#guides">الأدلة</a></p>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
   </header>
 
-  {# The answer first (decision 035): what to do next, then why. #}
-  {% if page.next_step %}{{ c.next_step(page.next_step) }}{% endif %}
-
   {% if page.contents | length > 2 %}
-  <nav class="page-contents" aria-label="في هذه الصفحة">
+  <nav class="page-contents doc-contents" aria-label="في هذه الصفحة">
     <p class="page-contents-title">في هذه الصفحة</p>
     <ul>
       {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
@@ -23,16 +26,20 @@
   </nav>
   {% endif %}
 
-  <div class="prose">
-    {{ page.html | safe }}
+  <div class="doc-body">
+    {# The answer first (decision 035): what to do next, then why. #}
+    {% if page.next_step %}{{ c.next_step(page.next_step) }}{% endif %}
+
+    <div class="prose">
+      {{ page.html | safe }}
+    </div>
+
+    {% if page.tool == "us_fees" %}{% include "partials/us_fees.html" %}{% endif %}
+    {% if page.tool == "english_test" %}{% include "partials/test_at_universities.html" %}{% endif %}
+    {% if page.tool == "us_essays" %}{% include "partials/us_essays.html" %}{% endif %}
+    {% if page.tool == "uk_certificate" %}{% include "partials/uk_certificate.html" %}{% endif %}
+
+    {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
   </div>
-
-  {% if page.tool == "us_fees" %}{% include "partials/us_fees.html" %}{% endif %}
-  {% if page.tool == "english_test" %}{% include "partials/test_at_universities.html" %}{% endif %}
-  {% if page.tool == "us_essays" %}{% include "partials/us_essays.html" %}{% endif %}
-  {% if page.tool == "uk_certificate" %}{% include "partials/uk_certificate.html" %}{% endif %}
-
-  {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
-
 </article>
 {% endblock %}

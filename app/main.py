@@ -141,7 +141,7 @@ def status_board():
     w = waaid()
     for p in w["programs"]:
         item = {
-            "title_ar": p["program_ar"], "program_ar": f"مسار واعد · {p['company_ar']}",
+            "title_ar": p["program_ar"], "program_ar": f"مسار واعد، {p['company_ar']}",
             "page": "/programs/custodian-scholarship#waaid-latest", "source_url": w["source_url"],
             "for_high_school": p["for_high_school"],
         }
@@ -212,17 +212,28 @@ templates.env.globals["tracks"] = TRACKS
 explorer.waaid = waaid  # the explorer lists واعد programs from the same data as the homepage
 templates.env.globals["waaid"] = waaid
 templates.env.globals["track_status"] = track_status
-# The sky drawings (decision 060): fixed star fields and the الرواد chart, computed once.
+# The sky drawings (decisions 060, 062): the homepage's night stars and the الرواد chart, computed once.
 templates.env.globals["sky_stars"] = {
-    "hero": star_field(70, 1440, 560, seed=7, keep_clear=(300, 170, 150)),
-    "top": star_field(34, 1440, 300, seed=11),
-    "band": star_field(46, 1440, 420, seed=23),
+    "hero": star_field(70, 1440, 560, seed=7),
     "chart": star_field(90, 1000, 520, seed=5),
 }
 templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
 templates.env.globals["waiver_ar"] = WAIVER_AR
 templates.env.globals["not_listed_ar"] = NOT_LISTED_AR
+# The shared ways around the site (decision 062): the homepage's guides section and every page's footer
+# list the same grades, program pages and guides. Guide titles come from their Markdown (read at startup).
+resource_titles = {slug: load_page("resources", slug)["title"] for slug in list_slugs("resources")}
+templates.env.globals["grade_links"] = home_text["grades"]
+templates.env.globals["program_links"] = [{"slug": p["id"], "name_ar": load_page("programs", p["id"])["title"]}
+                                          for p in paths if p["id"] in program_slugs()]
+templates.env.globals["guide_groups"] = [
+    {**group, "items": [{**item, "title_ar": resource_titles[item["slug"]]}
+                        for item in group["items"] if item["slug"] in resource_titles]}
+    for group in home_text["guides"]
+]
+# The copyright line runs from the first year of publication to this year, so it updates itself.
+templates.env.globals["current_year"] = lambda: date.today().year
 templates.env.filters["arabic_date"] = arabic_date
 # {{ 5 | count_ar("universities") }} → «5 جامعات» (Arabic counting rules, see universities.count_ar).
 templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun])

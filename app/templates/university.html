@@ -13,15 +13,17 @@
   {% if back_url %}{{ c.back_link(back_url, "الرجوع إلى نتائج البحث") }}{% else %}{{ c.back_link(url_for('universities_page'), "كل الجامعات") }}{% endif %}
 
   <header class="uni-header">
-    {# The university's official logo, to recognise it (decision 049); none when we have no reliable file. #}
-    {% if p.logo %}
-    <img class="uni-logo" src="{{ url_for('static', path=p.logo.file) }}" alt="شعار {{ u.name_ar or u.name_en }}"
-         {% if p.logo.width %}width="{{ p.logo.width }}" height="{{ p.logo.height }}"{% endif %}>
-    {% endif %}
-    <h1>{{ u.name_ar or u.name_en }}</h1>
-    {% if u.name_ar %}<p class="uni-header-en" lang="en" dir="ltr">{{ u.name_en }}</p>{% endif %}
-    <p class="uni-header-meta">{{ um.country(u) }}</p>
-    {% if u.country_note %}<p class="fact-note">ملاحظة: في الدليل يظهر بجانبها علم دولة أخرى، والجامعة في {{ u.country_info.name_ar }}.</p>{% endif %}
+    <div class="uni-header-id">
+      {# The university's official logo, to recognise it (decision 049); none when we have no reliable file. #}
+      {% if p.logo %}
+      <img class="uni-logo" src="{{ url_for('static', path=p.logo.file) }}" alt="شعار {{ u.name_ar or u.name_en }}"
+           {% if p.logo.width %}width="{{ p.logo.width }}" height="{{ p.logo.height }}"{% endif %}>
+      {% endif %}
+      <h1>{{ u.name_ar or u.name_en }}</h1>
+      {% if u.name_ar %}<p class="uni-header-en" lang="en" dir="ltr">{{ u.name_en }}</p>{% endif %}
+      <p class="uni-header-meta">{{ um.country(u) }}</p>
+      {% if u.country_note %}<p class="fact-note">ملاحظة: في الدليل يظهر بجانبها علم دولة أخرى، والجامعة في {{ u.country_info.name_ar }}.</p>{% endif %}
+    </div>
 
     {# «احفظ في قائمتي»: works with JavaScript only (mylist.js), so it starts hidden. #}
     <div class="save-area">
@@ -51,13 +53,14 @@
       </div>
       <div class="summary-row">
         <dt>أقرب موعد في الجامعة</dt>
-        <dd>{% if next %}<strong>{{ next.date | arabic_date }}</strong> · {{ um.date_words(next) }} <a class="src" href="{{ next.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% elif d %}لا يوجد لدينا موعد قادم مؤكد{% else %}لم نجمعه بعد{% endif %}
-          · <a href="#dates">موعد الابتعاث منفصل</a></dd>
+        <dd>{% if next %}<strong class="summary-date">{{ next.date | arabic_date }}</strong>
+          <span class="summary-sub">{{ um.date_words(next) }} <a class="src" href="{{ next.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></span>{% elif d %}لا يوجد لدينا موعد قادم مؤكد{% else %}لم نجمعه بعد{% endif %}
+          <span class="summary-sub"><a href="#dates">موعد الابتعاث منفصل عنه</a></span></dd>
       </div>
       {% if d and d.platform %}
       <div class="summary-row">
         <dt>منصة التقديم</dt>
-        <dd>{{ d.platform.value_ar }}{% if u.country == "US" %} · <a href="{{ url_for('resource_page', slug='us-applications') }}">كيف أقدّم؟</a>{% elif u.country == "GB" %} · <a href="{{ url_for('resource_page', slug='uk-applications') }}">كيف أقدّم؟</a>{% endif %}</dd>
+        <dd>{{ d.platform.value_ar }}{% if u.country == "US" %} <span class="summary-sub"><a href="{{ url_for('resource_page', slug='us-applications') }}">كيف أقدّم؟</a></span>{% elif u.country == "GB" %} <span class="summary-sub"><a href="{{ url_for('resource_page', slug='uk-applications') }}">كيف أقدّم؟</a></span>{% endif %}</dd>
       </div>
       {% endif %}
       {% if d and d.application_fee %}
@@ -76,8 +79,8 @@
       {% endif %}
       <div class="summary-row">
         <dt>اختبارات الإنجليزية</dt>
-        <dd>{% if k.english %}<ul class="glance-tests">{% for t in k.english %}<li><span lang="en" dir="ltr">{{ t.label }}</span>: {{ t.text }}</li>{% endfor %}</ul>{% else %}{{ k.english_none_ar }}{% endif %}
-          <a href="#requirements">التفاصيل</a></dd>
+        <dd>{% if k.english %}<ul class="glance-tests">{% for t in k.english %}<li><bdi class="glance-test" lang="en">{{ t.label }}</bdi> <span class="glance-val">{{ t.text }}</span></li>{% endfor %}</ul>{% else %}{{ k.english_none_ar }}{% endif %}
+          <span class="summary-sub"><a href="#requirements">التفاصيل والمصادر</a></span></dd>
       </div>
       {% endif %}
     </dl>
@@ -90,7 +93,7 @@
     {% if not u.country_info.english %}
     <div class="notice notice--warn">
       <p><strong>لغة {{ u.country_info.name_ar }} الرسمية {{ u.country_info.language_ar }}.</strong> في مسارات الرواد وإمداد والبحث والتطوير يمكن أن يكون القبول في دولة غير ناطقة بالإنجليزية مشروطًا بدراسة لغتها. هذا لا يشمل الشروط الأخرى، ولم يحدد المصدر الرسمي حكم البرامج التي تُدرَّس بالإنجليزية.
-        <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى يُقبل القبول المشروط؟ ←</a></p>
+        <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى يُقبل القبول المشروط؟</a></p>
     </div>
     {% endif %}
   </section>
@@ -189,11 +192,11 @@
       {% endif %}
       {% if d.saudi_certificate and d.saudi_certificate.direct_entry is not none %}
       {% set sc = d.saudi_certificate %}
-      <div class="summary-row"><dt>الشهادة الثانوية السعودية</dt><dd><strong>{{ "مقبولة للسنة الأولى مباشرة" if sc.direct_entry else "لا تكفي للسنة الأولى مباشرة" }}</strong>{% if sc.note_ar %} · {{ sc.note_ar }}{% endif %} <a class="src" href="{{ sc.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% if sc.note_source_url %} <a class="src" href="{{ sc.note_source_url }}" target="_blank" rel="noopener">مصدر آخر ↗</a>{% endif %}
+      <div class="summary-row"><dt>الشهادة الثانوية السعودية</dt><dd><strong>{{ "مقبولة للسنة الأولى مباشرة" if sc.direct_entry else "لا تكفي للسنة الأولى مباشرة" }}</strong>{% if sc.note_ar %}<span class="summary-sub">{{ sc.note_ar }}</span>{% endif %} <a class="src" href="{{ sc.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% if sc.note_source_url %} <a class="src" href="{{ sc.note_source_url }}" target="_blank" rel="noopener">مصدر آخر ↗</a>{% endif %}
         {#- Not enough for year 1 usually means a foundation year, which the scholarship funds only on extra
             conditions: shown here, where the UK student decides (the fact and its source come from paths.json). #}
         {% if sc.direct_entry == false and prep_year_fact %}
-        <p class="foundation-note" data-foundation-note>والابتعاث؟ {{ prep_year_fact.text_ar }} <a class="src" href="{{ prep_year_fact.sources[0].url }}" target="_blank" rel="noopener">المصدر ↗</a> <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى يُقبل القبول المشروط؟ ←</a></p>
+        <p class="foundation-note" data-foundation-note>والابتعاث؟ {{ prep_year_fact.text_ar }} <a class="src" href="{{ prep_year_fact.sources[0].url }}" target="_blank" rel="noopener">المصدر ↗</a> <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#conditional">متى يُقبل القبول المشروط؟</a></p>
         {% endif %}</dd></div>
       {% endif %}
       {% if d.application_fee %}
@@ -244,19 +247,19 @@
       {% endif %}
 
       {% if d.sat_act %}
-      <div class="summary-row"><dt><span lang="en" dir="ltr">SAT / ACT</span></dt><dd><strong>{{ sat_policy_ar.get(d.sat_act.policy, d.sat_act.policy) }}</strong>{% if d.sat_act.note_ar %} · {{ d.sat_act.note_ar }}{% endif %}{% if d.sat_act.source_url %} <a class="src" href="{{ d.sat_act.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}</dd></div>
+      <div class="summary-row"><dt><span lang="en" dir="ltr">SAT / ACT</span></dt><dd><strong>{{ sat_policy_ar.get(d.sat_act.policy, d.sat_act.policy) }}</strong>{% if d.sat_act.note_ar %}<span class="summary-sub">{{ d.sat_act.note_ar }}</span>{% endif %}{% if d.sat_act.source_url %} <a class="src" href="{{ d.sat_act.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}</dd></div>
       {% endif %}
 
       {% if d.essays %}
       {# What the university asks applicants to write (decision 061), summarised, with the guide one click away. #}
       {% set e = d.essays %}
       <div class="summary-row"><dt>المقالات</dt><dd>{{ e.summary_ar }}{% if e.cycle_ar %} (لـ{{ e.cycle_ar }}){% endif %} <a class="src" href="{{ e.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
-        · <a href="{{ url_for('resource_page', slug='application-essays') }}">كيف تكتب مقالات القبول؟</a></dd></div>
+        <span class="summary-sub"><a href="{{ url_for('resource_page', slug='application-essays') }}">كيف تكتب مقالات القبول؟</a></span></dd></div>
       {% endif %}
 
       {% if d.acceptance_rate %}
       <div class="summary-row"><dt>نسبة القبول</dt><dd>
-        {% if d.acceptance_rate.percent is not none %}<strong>{{ d.acceptance_rate.percent }}%</strong> · {% endif %}{{ d.acceptance_rate.scope_ar }}
+        {% if d.acceptance_rate.percent is not none %}<strong>{{ d.acceptance_rate.percent }}%</strong> {% endif %}<span class="summary-sub">{{ d.acceptance_rate.scope_ar }}</span>
         {% if d.acceptance_rate.international_percent is not none %}<br>للطلاب الدوليين: <strong>{{ d.acceptance_rate.international_percent }}%</strong>{% endif %}
         <a class="src" href="{{ d.acceptance_rate.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
       </dd></div>
@@ -306,7 +309,7 @@
         {% endfor %}
       </ul>
       {% for tid in hs_tracks if p.by_track[tid] %}{{ c.window_note(scholarship[tid]) }}{% endfor %}
-      <p class="result-note">كل مواعيد الابتعاث والبرامج في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>. وكيف تتوافق مواعيد الجامعة مع الابتعاث: <a href="{{ url_for('grade_page', slug='grade-12') }}#year">سنة التقديم شهرًا بشهر ←</a></p>
+      <p class="result-note">كل مواعيد الابتعاث والبرامج في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>. وكيف تتوافق مواعيد الجامعة مع الابتعاث: <a href="{{ url_for('grade_page', slug='grade-12') }}#year">سنة التقديم شهرًا بشهر</a></p>
     </div>
 
     <div class="date-block">

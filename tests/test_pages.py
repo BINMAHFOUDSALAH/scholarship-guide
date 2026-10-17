@@ -28,7 +28,7 @@ def test_home_has_grade_picker_links():
 def test_grade_buttons_are_visible_in_the_hero():
     """The grade question is in the hero itself, no click needed; «حسب صفك» points at it."""
     html = client.get("/").text
-    hero = html.split('<section class="hero"')[1].split("</section>")[0]
+    hero = html.split('<section class="hero')[1].split("</section>")[0]
     assert 'id="grades"' in hero
     assert "في أي صف أنت؟" in hero
     for slug in ("grade-10", "grade-11", "grade-12"):
@@ -95,7 +95,7 @@ def test_homepage_order():
 
 def test_homepage_search_goes_to_the_explorer_with_real_examples():
     html = client.get("/").text
-    hero = html.split('<section class="hero"')[1].split("</section>")[0]
+    hero = html.split('<section class="hero')[1].split("</section>")[0]
     assert 'action="http://testserver/universities"' in hero and 'name="q"' in hero
     assert 'data-suggest="http://testserver/api/suggestions"' in hero
     assert "/universities/stanford-university" in hero  # an example that opens a university
@@ -140,7 +140,7 @@ def test_path_images_load_and_are_credited_on_about():
     for path in main.paths:
         image, ext = (path["logo"], "png") if path.get("logo") else (path["photo"], "jpg")
         if image is None:
-            continue  # no image: the drawn scene is shown instead
+            continue  # no image: the row shows the program's name alone (decision 062)
         assert image["alt_ar"] in html
         for size in ("500", "960"):
             url = f"/static/{image['file']}-{size}.{ext}"
@@ -724,3 +724,71 @@ def test_rowwad_destination_only_on_its_track():
     other = client.get("/universities?track=emdad").text
     assert 'data-rowwad aria-labelledby="rowwad-title" hidden' in other
     assert 'data-explorer-header hidden' not in other
+
+
+# ---------- the redesign (decision 062) ----------
+
+def test_copyright_line_ends_every_footer_and_updates_itself(monkeypatch):
+    """The last line of the footer: © from the first year of publication to the current year, computed on
+    each request (never a hard-coded year), with the credits for what isn't ours on the same line."""
+    import datetime
+
+    class Fixed(datetime.date):
+        year_now = 2026
+
+        @classmethod
+        def today(cls):
+            return datetime.date(cls.year_now, 6, 1)
+
+    monkeypatch.setattr(main, "date", Fixed)
+    since = main.site["since"]
+    for year, shown in ((since, f"© {since} واضح. جميع الحقوق محفوظة."),
+                        (since + 2, f"© {since}–{since + 2} واضح. جميع الحقوق محفوظة.")):
+        Fixed.year_now = year
+        for page in ("/", "/universities", "/grades/grade-10", "/nope"):
+            footer = client.get(page).text.split('<footer class="site-footer">')[1]
+            legal = footer.split('class="footer-legal"')[1].split("</p>")[0]
+            assert shown in legal, (page, year)
+            assert "/about#credits" in legal and "لأصحابها" in legal
+            assert footer.index('class="footer-legal"') > footer.index('class="footer-nav"')  # the very end
+
+
+def test_logo_markup_is_exactly_the_favicon():
+    """The logo never changes (owner, 2026-10-17): the header draws the favicon's own tile, letter and diamond."""
+    header = client.get("/").text.split("</header>")[0]
+    favicon = client.get("/static/favicon.svg").text
+    mark = header.split('<svg class="brand-mark"')[1].split(">", 1)[1].split("</svg>")[0]
+    drawing = favicon.split("-->", 1)[1].split("</svg>")[0].strip()
+    assert mark == drawing
+
+
+def test_homepage_route_leads_from_the_grades_to_the_programs():
+    """The start (decision 062): one route of four stops, the three grades in order, then the programs."""
+    hero = client.get("/").text.split('<section class="hero')[1].split("</section>")[0]
+    route = hero.split('class="route-stops"')[1].split("</ol>")[0]
+    hrefs = re.findall(r'class="route-link" href="([^"]+)"', route)
+    assert hrefs == [f"http://testserver/grades/{g['slug']}" for g in main.home_text["grades"]] + ["#programs"]
+    assert route.count('class="route-mark" aria-hidden="true"') == 4
+
+
+def test_every_guide_is_in_the_homepage_index_and_the_footer():
+    """No guide without a way in: each page in content/resources is listed under «أدلة الاختبارات والتقديم»
+    on the homepage and in every footer (titles come from the pages themselves)."""
+    from app.content import list_slugs, load_page
+
+    listed = [item["slug"] for group in main.home_text["guides"] for item in group["items"]]
+    assert sorted(listed) == list_slugs("resources")
+    home = client.get("/").text
+    guides = home.split('id="guides"')[1].split("</section>")[0]
+    footer = client.get("/about").text.split('<footer class="site-footer">')[1]
+    for slug in listed:
+        title = load_page("resources", slug)["title"]
+        assert f"/resources/{slug}" in guides and title in guides, slug
+        assert f"/resources/{slug}" in footer, slug
+
+
+@pytest.mark.parametrize("page", ["/", "/universities?track=arruaad", "/universities/university-of-cambridge",
+                                  "/news", "/grades/grade-12", "/programs/custodian-scholarship"])
+def test_no_values_joined_by_dots(page):
+    """Values sit under their own labels or are joined by Arabic punctuation, never chained with «·» (decision 062)."""
+    assert "·" not in client.get(page).text

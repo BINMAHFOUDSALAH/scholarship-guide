@@ -14,7 +14,7 @@
     <ul class="rows">
       {% for r in g.rows %}
       <li><a href="{{ url_for('university_page', uid=r.id) }}">{{ r.name_ar }}</a>
-        <span class="us-fees-fee">{{ r.country_ar }}{% if g.key in ("min", "recommended") %} · {{ r.text }}{% endif %}</span></li>
+        <span class="us-fees-fee">{{ r.country_ar }}{% if g.key in ("min", "recommended") %}، {{ r.text }}{% endif %}</span></li>
       {% endfor %}
     </ul>
   </details>

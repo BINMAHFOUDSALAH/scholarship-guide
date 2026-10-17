@@ -36,15 +36,14 @@
   </script>
   <link rel="icon" href="{{ url_for('static', path='favicon.svg') }}" type="image/svg+xml">
   <link rel="preload" href="{{ url_for('static', path='fonts/ibm-plex-sans-arabic-arabic-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ url_for('static', path='fonts/noto-naskh-arabic-arabic-700.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ url_for('static', path='fonts.css') }}?v={{ asset_version('fonts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}?v={{ asset_version('style.css') }}">
   <script src="{{ url_for('static', path='theme.js') }}?v={{ asset_version('theme.js') }}" defer></script>
   {% block head_extra %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
-  {# The sky behind the top of every page (decision 060): light at dawn, stars at night. Decorative only. #}
-  {% import "partials/sky.html" as sky %}
-  {% block sky %}{{ sky.top() }}{% endblock %}
+  {% block sky %}{% endblock %}
   <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
   {#
     One list of links, used by the desktop nav and the phone menu:
@@ -56,13 +55,15 @@
     ("programs", "البرامج", "home", "#programs"),
     ("universities", "الجامعات", "universities_page", ""),
     ("news", "مواعيد التقديم", "news_page", ""),
+    ("guides", "الأدلة", "home", "#guides"),
   ] %}
   {% set path = request.url.path %}
   {% set current_section = (
     "grades" if path.startswith("/grades/") else
     "programs" if path.startswith("/programs/") else
     "universities" if path.startswith("/universities") else
-    "news" if path == "/news" else "") %}
+    "news" if path == "/news" else
+    "guides" if path.startswith("/resources/") else "") %}
   {% macro nav_items() %}
   {% for key, label, route, anchor in nav_links %}
   {% set href = url_for(route) ~ anchor %}
@@ -128,13 +129,11 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-grid">
+    <div class="container footer-inner">
       <div class="footer-about">
         <p class="footer-brand">{{ site.name }}</p>
         {# Independence on every page, because pages show official logos and data (decision 035). #}
-        <p class="footer-promise">{{ site.name }} دليل طلابي مستقل ومجاني، لا يتبع وزارة التعليم ولا أي جهة رسمية.</p>
-        {# Keeps /about reachable: its credits are required by the CC BY-SA photo and logo licences (owner, 2026-10-12). #}
-        <p><a href="{{ url_for('about') }}#credits">حقوق الصور والشعارات</a></p>
+        <p class="footer-promise">{{ site.name }} دليل طلابي مستقل ومجاني، لا يتبع وزارة التعليم ولا أي جهة رسمية. <a href="{{ url_for('about') }}">عن الدليل</a></p>
         {# The owner's X account, also the way to send feedback (decision 043): footer only, one link (icon + text),
            opens in a new tab without giving X access to this page. #}
         <a class="footer-x" href="https://x.com/salahmetaverse" target="_blank" rel="noopener noreferrer">
@@ -142,6 +141,41 @@
           <span>عندك ملاحظة أو اقتراح؟ راسلني على X<span class="sr-only"> (‎@salahmetaverse، يفتح في نافذة جديدة)</span></span>
         </a>
       </div>
+
+      {# The same grades, programs and guides as the homepage, so the end of any page leads somewhere. #}
+      <nav class="footer-nav" aria-label="أقسام الدليل">
+        <div class="footer-col">
+          <h2 class="footer-title">حسب صفك</h2>
+          <ul>
+            {% for g in grade_links %}<li><a href="{{ url_for('grade_page', slug=g.slug) }}">{{ g.label_ar }}</a></li>{% endfor %}
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">الابتعاث والجامعات</h2>
+          <ul>
+            {% for p in program_links %}<li><a href="{{ url_for('program_page', slug=p.slug) }}">{{ p.name_ar }}</a></li>{% endfor %}
+            <li><a href="{{ url_for('universities_page') }}">الجامعات في قوائم الابتعاث</a></li>
+            <li><a href="{{ url_for('news_page') }}">مواعيد التقديم</a></li>
+            <li><a href="{{ url_for('my_list') }}">قائمتي</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 class="footer-title">الأدلة</h2>
+          <ul>
+            {% for group in guide_groups %}{% for item in group["items"] %}<li><a href="{{ url_for('resource_page', slug=item.slug) }}">{{ item.title_ar }}</a></li>{% endfor %}{% endfor %}
+            <li><a href="{{ url_for('search_page') }}">البحث في الدليل</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      {#
+        The copyright notice (decision 062): our claim to the site's own words and design, from the year it was
+        first published to this year (computed on every request). Official logos, photos and flags belong to
+        their owners, so the line says so and links their credits (also required by the CC BY-SA licences).
+      #}
+      {% set year = current_year() %}
+      <p class="footer-legal"><span class="footer-copy">© {% if year > site.since %}{{ site.since }}–{% endif %}{{ year }} {{ site.name }}. جميع الحقوق محفوظة.</span>
+        <span>الشعارات والصور لأصحابها: <a href="{{ url_for('about') }}#credits">حقوق الصور والشعارات</a>.</span></p>
     </div>
   </footer>
   {# Announces «حُفظت» / «أُزيلت» after a save button is used, on any page (mylist.js). #}

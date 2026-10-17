@@ -63,7 +63,7 @@
           en.textContent = english;
           small.append(en);
         }
-        if (extra) small.append((english ? " · " : "") + extra);
+        if (extra) small.append((english ? "، " : "") + extra);
         el.append(small);
       }
       el.addEventListener("mousedown", (event) => event.preventDefault()); // keep focus in the input

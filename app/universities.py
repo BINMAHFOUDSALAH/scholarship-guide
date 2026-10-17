@@ -73,15 +73,29 @@ def english_compact(test, item):
     if low is not None:
         text = f"من {score_text(test, low)} حسب التخصص" if item.get("varies") else score_text(test, low)
         if rec is not None:
-            text += f" · الموصى به {score_text(test, rec)}"
+            text += f"، والموصى به {score_text(test, rec)}"
         elif each is not None and not item.get("varies"):
-            text += f" · ولا تقل مهارة عن {score_text(test, each)}"
+            text += f"، ولا تقل مهارة عن {score_text(test, each)}"
         return text
     if rec is not None:
-        return f"لا حد أدنى معلن · الموصى به {score_text(test, rec)}"
+        return f"لا حد أدنى معلن، والموصى به {score_text(test, rec)}"
     if item.get("varies"):
         return "يختلف حسب التخصص"
     return no_score_ar(item)
+
+
+def english_groups(tests):
+    """The tests of a result row, with the ones that share the same words joined (decision 062):
+    «IELTS / TOEFL iBT / Duolingo: لا يوجد حد أدنى منشور» once instead of three times. Scores are never
+    joined, even when equal, so two scales are never read as one."""
+    groups = []
+    for t in tests:
+        same = next((g for g in groups if g["text"] == t["text"] and not any(ch.isdigit() for ch in t["text"])), None)
+        if same:
+            same["labels"].append(t["label"])
+        else:
+            groups.append({"labels": [t["label"]], "text": t["text"]})
+    return groups
 
 
 def no_score_ar(item):
@@ -522,7 +536,7 @@ class Explorer:
             none_ar = "لم نتحقق منها"
         return {"researched": True, "sat_ar": sat_ar,
                 "ielts_ar": english_compact("ielts", english.get("ielts")), "english": tests,
-                "english_none_ar": none_ar,
+                "english_groups": english_groups(tests), "english_none_ar": none_ar,
                 "next": self.next_deadline(uid, today), "admissions_url": d.get("admissions_url")}
 
     def english_rows(self, uid):

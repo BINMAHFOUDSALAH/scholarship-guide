@@ -1,75 +1,69 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
-{% import "partials/path-art.html" as art %}
 {% import "partials/sky.html" as sky %}
 
 {#
-  The homepage (decision 035): say what واضح is, then one main way in (your grade) and one
-  second way in (search the official lists); then what's open now; then the programs.
+  The homepage (decision 062). It opens on the forest "start": what واضح is, then the route of the three
+  school years to the programs (the main way in), then a search of the official lists (the second way in).
+  Below, on paper: what's open now, the programs, and the guides.
 #}
 
 {% block body_class %}page-home{% endblock %}
-{# The homepage draws its own, larger sky inside the opening section. #}
-{% block sky %}{% endblock %}
 
 {% block hero %}
-<section class="hero" aria-labelledby="hero-title">
-  {{ sky.hero() }}
-  <div class="container hero-grid">
-    <div class="hero-text">
-      <h1 id="hero-title" class="hero-title">{{ site.tagline }}</h1>
-      <p class="lead">{{ home.lead_ar }}</p>
+<section class="hero stage" aria-labelledby="hero-title">
+  {# Stars over the start, at night only (dark theme). Decorative. #}
+  {{ sky.night() }}
+  <div class="container hero-inner">
+    <h1 id="hero-title" class="hero-title">{{ site.tagline }}</h1>
+    <p class="hero-lead">{{ home.lead_ar }}</p>
 
-      {# The main way in: your grade. The three grades are a real sequence, so they're drawn as one
-         constellation rising towards the light (decision 060); each star is a large link. #}
-      <nav id="grades" class="hero-grades" aria-labelledby="grade-picker-title">
-        <p id="grade-picker-title" class="start-title">ابدأ من صفك: في أي صف أنت؟</p>
-        <div class="constellation">
-          <svg class="constellation-line" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <polyline points="250,36 150,24 50,12" pathLength="1" vector-effect="non-scaling-stroke"/>
-          </svg>
-          <ul class="grade-choices">
-            {% for g in home.grades %}
-            <li style="--step: {{ loop.index0 }}"><a href="{{ url_for('grade_page', slug=g.slug) }}">
-              <svg class="grade-star" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false"><path d="M0 -10 Q1.6 -1.6 10 0 Q1.6 1.6 0 10 Q-1.6 1.6 -10 0 Q-1.6 -1.6 0 -10Z"/></svg>
-              <span class="grade-name">{{ g.label_ar }}</span><span class="grade-hint">{{ g.hint_ar }}</span>
-            </a></li>
-            {% endfor %}
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
+    {#
+      The main way in: your grade. The three years are a real sequence that ends where the programs begin,
+      so they're drawn as one route of the logo's diamonds; each stop is a large link.
+    #}
+    <nav id="grades" class="route" aria-labelledby="route-title">
+      <h2 id="route-title" class="route-title">في أي صف أنت؟</h2>
+      <ol class="route-stops">
+        {% for g in home.grades %}
+        <li class="route-stop" style="--step: {{ loop.index0 }}"><a class="route-link" href="{{ url_for('grade_page', slug=g.slug) }}">
+          <span class="route-mark" aria-hidden="true"></span>
+          <span class="route-name">{{ g.label_ar }}</span>
+          <span class="route-job">{{ g.hint_ar }}</span>
+          <span class="route-line">{{ g.route_ar }}</span>
+        </a></li>
+        {% endfor %}
+        {% set after = home.after_school %}
+        <li class="route-stop route-stop--end" style="--step: 3"><a class="route-link" href="#programs">
+          <span class="route-mark" aria-hidden="true"></span>
+          <span class="route-name">{{ after.label_ar }}</span>
+          <span class="route-job">{{ after.hint_ar }}</span>
+          <span class="route-line">{{ after.route_ar }}</span>
+        </a></li>
+      </ol>
+    </nav>
 
-  {# The second way in: the official lists, searchable. It sits on the horizon line, under the grades.
-     Same suggestions as the explorer (universities.js). #}
-  <div class="container">
+    {# The second way in: the official lists, searchable. Same suggestions as the explorer (universities.js). #}
     <form class="hero-search" method="get" action="{{ url_for('universities_page') }}" role="search" aria-labelledby="home-search-title">
-      <div class="hero-search-head">
-        <h2 id="home-search-title" class="hero-search-title">أو ابحث في جامعات قوائم الابتعاث</h2>
-        <p class="hero-search-meta">{{ explorer.universities | length | count_ar("universities") }} في {{ explorer.country_options() | length | count_ar("countries") }}، من الدليل الاسترشادي الرسمي <span class="nowrap" dir="ltr">{{ explorer.source.academic_year | replace("-", "–") }}</span>.</p>
+      <h2 id="home-search-title" class="hero-search-title"><label for="home-q">أو ابحث عن جامعة أو تخصص في قوائم الابتعاث</label></h2>
+      <div class="search-box">
+        <input class="input" id="home-q" name="q" type="search" autocomplete="off"
+               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="home-q-suggest"
+               aria-describedby="home-q-hint" data-suggest="{{ url_for('suggestions_api') }}">
+        <button class="btn btn--primary search-submit" type="submit">ابحث</button>
+        <div id="home-q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" tabindex="-1" hidden></div>
       </div>
-      <div class="hero-search-field">
-        <label class="field-label" for="home-q">اسم جامعة أو تخصص</label>
-        <p class="field-hint" id="home-q-hint">بالعربية أو الإنجليزية.</p>
-        <div class="search-box">
-          <input class="input" id="home-q" name="q" type="search" autocomplete="off"
-                 role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="home-q-suggest"
-                 aria-describedby="home-q-hint" data-suggest="{{ url_for('suggestions_api') }}">
-          <button class="btn btn--primary search-submit" type="submit">ابحث</button>
-          <div id="home-q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" tabindex="-1" hidden></div>
-        </div>
-        <p class="hero-search-examples">
-          <span class="hero-search-examples-label">جرّب:</span>
-          {% for ex in home.search_examples %}
-          {% if ex.university %}<a href="{{ url_for('university_page', uid=ex.university) }}" lang="en" dir="ltr">{{ ex.label_ar }}</a>
-          {% elif ex.track %}<a href="{{ url_for('universities_page') }}?track={{ ex.track }}">{{ ex.label_ar }}</a>
-          {% else %}<a href="{{ url_for('universities_page') }}?q={{ ex.q | urlencode }}">{{ ex.label_ar }}</a>{% endif %}
-          {% endfor %}
-        </p>
-      </div>
+      <p class="hero-search-meta" id="home-q-hint">بالعربية أو الإنجليزية: {{ explorer.universities | length | count_ar("universities") }} في {{ explorer.country_options() | length | count_ar("countries") }}، من الدليل الاسترشادي الرسمي <span class="nowrap" dir="ltr">{{ explorer.source.academic_year | replace("-", "–") }}</span>.</p>
+      <p class="hero-search-examples">
+        <span class="hero-search-examples-label">جرّب:</span>
+        {% for ex in home.search_examples %}
+        {% if ex.university %}<a href="{{ url_for('university_page', uid=ex.university) }}" lang="en" dir="ltr">{{ ex.label_ar }}</a>
+        {% elif ex.track %}<a href="{{ url_for('universities_page') }}?track={{ ex.track }}">{{ ex.label_ar }}</a>
+        {% else %}<a href="{{ url_for('universities_page') }}?q={{ ex.q | urlencode }}">{{ ex.label_ar }}</a>{% endif %}
+        {% endfor %}
+      </p>
       {# Site search (decision 045): for questions about the guide itself, not universities. #}
-      <p class="hero-guide-search">تبحث عن معلومة، مثل آيلتس أو القبول المشروط؟ <a class="nowrap" href="{{ url_for('search_page') }}">ابحث في الدليل ←</a></p>
+      <p class="hero-guide-search">تبحث عن معلومة، مثل آيلتس أو القبول المشروط؟ <a class="nowrap" href="{{ url_for('search_page') }}">ابحث في الدليل</a></p>
     </form>
   </div>
 </section>
@@ -80,24 +74,24 @@
 <section id="open-now" class="section" aria-labelledby="open-title">
   <div class="section-head">
     <h2 id="open-title" class="section-title">مفتوح للتقديم الآن</h2>
-    <p class="section-link"><a href="{{ url_for('news_page') }}">كل المواعيد والحالات ←</a></p>
+    <p class="section-link"><a href="{{ url_for('news_page') }}">كل المواعيد والحالات</a></p>
   </div>
   {% set open_items = board.open[:4] %}
   {% if open_items %}
-  <ul class="rows open-list">
+  <ul class="open-list">
     {% for item in open_items %}
     <li class="open-item">
       <div class="open-main">
         <p class="open-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
         <p class="open-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">لخريجي الثانوية</span>{% endif %}</p>
-        {% if item.who_ar %}<p class="open-who">لمن: {{ item.who_ar }}</p>{% endif %}
       </div>
+      {% if item.who_ar %}<p class="open-who">لمن: {{ item.who_ar }}</p>{% endif %}
       <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
       {% if item.source_url %}<p class="open-source"><a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر الرسمي ↗</a></p>{% endif %}
     </li>
     {% endfor %}
   </ul>
-  {% if board.open | length > 4 %}<p class="section-link"><a href="{{ url_for('news_page') }}">و{{ board.open | length - 4 }} غيرها ←</a></p>{% endif %}
+  {% if board.open | length > 4 %}<p class="section-link section-link--after"><a href="{{ url_for('news_page') }}">وغيرها ({{ board.open | length - 4 }}) في مواعيد التقديم</a></p>{% endif %}
   {% else %}
   <p class="result-empty">لا يوجد تقديم مفتوح الآن في البرامج التي نتابعها. <a href="{{ url_for('news_page') }}">ما المغلق، وما الذي فُتح وأُغلق مؤخرًا؟</a></p>
   {% endif %}
@@ -112,39 +106,40 @@
   <div class="path-list">
     {% for path in paths %}
     <article class="path-row theme-{{ path.theme }}"{% if path.not_standalone_ar %} data-addon{% endif %} aria-labelledby="program-{{ path.id }}">
-      {% if path.logo %}
-      {# The program's official logo, on a plate so its colours stay true in both themes. Source on /about. #}
-      {% set lg = path.logo %}
-      <figure class="path-logo{% if lg.plate == 'dark' %} path-logo--dark{% endif %}">
-        <img src="{{ url_for('static', path=lg.file ~ '-960.png') }}"
-             srcset="{{ url_for('static', path=lg.file ~ '-500.png') }} 500w, {{ url_for('static', path=lg.file ~ '-960.png') }} 960w"
-             sizes="(min-width: 900px) 220px, 240px"
-             width="{{ lg.width }}" height="{{ lg.height }}"
-             alt="{{ lg.alt_ar }}" loading="lazy" decoding="async">
-      </figure>
-      {% elif path.photo %}
-      {% set ph = path.photo %}
-      <figure class="path-photo">
-        {# The browser picks the 500px file on small screens and the 960px file on sharper ones. Credits are on /about. #}
-        <img src="{{ url_for('static', path=ph.file ~ '-960.jpg') }}"
-             srcset="{{ url_for('static', path=ph.file ~ '-500.jpg') }} 500w, {{ url_for('static', path=ph.file ~ '-960.jpg') }} 960w"
-             sizes="(min-width: 900px) 220px, calc(100vw - 32px)"
-             width="{{ ph.width }}" height="{{ ph.height }}"
-             alt="{{ ph.alt_ar }}" loading="lazy" decoding="async"
-             style="object-position: {{ ph.focus }}">
-      </figure>
-      {% else %}
-      <div class="path-art">{{ art.scene(path.theme) }}</div>
-      {% endif %}
+      <div class="path-id">
+        {% if path.logo %}
+        {# The program's official logo, on a plate so its colours stay true in both themes. Source on /about. #}
+        {% set lg = path.logo %}
+        <figure class="path-logo{% if lg.plate == 'dark' %} path-logo--dark{% endif %}">
+          <img src="{{ url_for('static', path=lg.file ~ '-500.png') }}"
+               srcset="{{ url_for('static', path=lg.file ~ '-500.png') }} 500w, {{ url_for('static', path=lg.file ~ '-960.png') }} 960w"
+               sizes="(min-width: 900px) 240px, 160px"
+               width="{{ lg.width }}" height="{{ lg.height }}"
+               alt="{{ lg.alt_ar }}" loading="lazy" decoding="async">
+        </figure>
+        {% elif path.photo %}
+        {% set ph = path.photo %}
+        <figure class="path-photo">
+          {# The browser picks the 500px file on small screens and the 960px file on sharper ones. Credits are on /about. #}
+          <img src="{{ url_for('static', path=ph.file ~ '-500.jpg') }}"
+               srcset="{{ url_for('static', path=ph.file ~ '-500.jpg') }} 500w, {{ url_for('static', path=ph.file ~ '-960.jpg') }} 960w"
+               sizes="(min-width: 900px) 240px, 160px"
+               width="{{ ph.width }}" height="{{ ph.height }}"
+               alt="{{ ph.alt_ar }}" loading="lazy" decoding="async"
+               style="object-position: {{ ph.focus }}">
+        </figure>
+        {% endif %}
+        <div class="path-names">
+          <h3 class="path-item-name" id="program-{{ path.id }}">
+            {% if path.id in program_pages %}<a href="{{ url_for('program_page', slug=path.id) }}">{{ path.name_ar }}</a>{% else %}{{ path.name_ar }}{% endif %}
+          </h3>
+          <p class="path-item-en" lang="en" dir="ltr">{{ path.name_en }}</p>
+          {% if path.provider_ar != path.name_ar %}<p class="path-provider">{{ path.provider_ar }}</p>{% endif %}
+        </div>
+      </div>
 
       <div class="path-facts">
         {% if path.not_standalone_ar %}<p class="path-addon"><span class="tag tag--warn">إضافة على برنامج خادم الحرمين، وليس ابتعاثًا مستقلًا</span></p>{% endif %}
-        <h3 class="path-item-name" id="program-{{ path.id }}">
-          {% if path.id in program_pages %}<a href="{{ url_for('program_page', slug=path.id) }}">{{ path.name_ar }}</a>{% else %}{{ path.name_ar }}{% endif %}
-        </h3>
-        <p class="path-item-en" lang="en" dir="ltr">{{ path.name_en }}</p>
-        {% if path.provider_ar != path.name_ar %}<p class="path-provider">{{ path.provider_ar }}</p>{% endif %}
-
         <dl class="fact-list">
           <div class="fact"><dt>لمن؟</dt><dd>{{ path.audience_ar }}</dd></div>
           <div class="fact"><dt>باختصار</dt><dd>{{ path.summary_ar }}</dd></div>
@@ -156,7 +151,7 @@
           <li class="track">
             <div class="track-main">
               <span class="track-name">{{ track.name_ar }}</span>
-              <span class="track-note">{{ track.note_ar }}{% if track.latest_programs and path.id in program_pages %} · <a href="{{ url_for('program_page', slug=path.id) }}#waaid-latest">آخر برامجه</a>{% endif %}</span>
+              <span class="track-note">{{ track.note_ar }}{% if track.latest_programs and path.id in program_pages %}، <a href="{{ url_for('program_page', slug=path.id) }}#waaid-latest">آخر برامجه</a>{% endif %}</span>
             </div>
             {# A status is shown only when it has an official source or the owner confirmed it (decision 028). #}
             {% set st = track_status(track) %}
@@ -167,14 +162,32 @@
           {% endfor %}
         </ul>
 
-        {# Two actions per program (decision 061): the details here, the official site there. The lists and
-           the official X account are one click further, on the program page. #}
+        {# Two actions per program (decision 061): the details here, the official site there. #}
         <p class="path-actions">
           {% if path.id in program_pages %}<a class="btn btn--secondary" href="{{ url_for('program_page', slug=path.id) }}">الشروط والتفاصيل</a>{% endif %}
           <a class="path-link" href="{{ path.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
         </p>
       </div>
     </article>
+    {% endfor %}
+  </div>
+</section>
+
+{# The guides had no index before (decision 062): the tests and the application systems, each in one line. #}
+<section id="guides" class="section" aria-labelledby="guides-title">
+  <div class="section-head">
+    <h2 id="guides-title" class="section-title">أدلة الاختبارات والتقديم</h2>
+  </div>
+  <div class="guide-groups">
+    {% for group in guide_groups %}
+    <div class="guide-group">
+      <h3 class="guide-group-title">{{ group.title_ar }}</h3>
+      <ul class="guide-list">
+        {% for item in group["items"] %}
+        <li><a class="guide-link" href="{{ url_for('resource_page', slug=item.slug) }}"><span class="guide-name">{{ item.title_ar }}</span><span class="guide-hint">{{ item.hint_ar }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
     {% endfor %}
   </div>
 </section>

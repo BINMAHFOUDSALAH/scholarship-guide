@@ -12,6 +12,7 @@
     {% for r in apply_year.rows %}
     {% set now = this_month in r.months %}
     <li class="year-row{% if now %} is-now{% endif %}"{% if now %} aria-current="date"{% endif %}>
+      <span class="year-mark" aria-hidden="true"></span>
       <p class="year-when">{{ r.when_ar }}{% if now %} <span class="tag tag--here">الآن</span>{% endif %}</p>
       <p class="year-title">{{ r.title_ar }}</p>
       <p class="year-action">{{ r.action_ar }}</p>
@@ -29,7 +30,7 @@
         <p class="year-upcoming-title">أقرب مواعيد الجامعات الآن</p>
         <ul class="year-upcoming-list">
           {% for x in deadlines[:4] %}
-          <li><strong>{{ x.date | arabic_date }}</strong> · <a href="{{ url_for('university_page', uid=x.university.id) }}#dates">{{ x.university.name_ar or x.university.name_en }}</a> · {{ um.date_short(x) }}{% if not x.year_stated %} <span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}</li>
+          <li><strong class="year-upcoming-date">{{ x.date | arabic_date }}</strong> <a href="{{ url_for('university_page', uid=x.university.id) }}#dates">{{ x.university.name_ar or x.university.name_en }}</a>، {{ um.date_short(x) }}{% if not x.year_stated %} <span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}</li>
           {% endfor %}
         </ul>
       </div>

@@ -3,19 +3,24 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-16, decision 061, local on `main`, not committed yet):**
-> **Done in this session:**
-> - Text about the site removed (the homepage lead's last sentence, the program-page independence line, the repeated admission ≠ scholarship notice, «SAT: لم نتحقق منه» outside the US/Canada).
-> - Every English test shown at a glance, with a new «ليس ضمن الاختبارات التي تذكرها الجامعة» state.
-> - New guides: `/resources/duolingo`, `/resources/uk-applications` (UCAS), `/resources/application-essays`; search matches دولينجو/Duolingo and answers "which universities accept it?".
-> - Essays for 62 US universities and every UK one; an English re-check of 33 universities; Oxford and UCL published from their official pages; Melbourne and Monash (English only).
-> - EU wave 5 done: 50 of 57 European universities (brief `docs/research/emdad-wave-5-eu-brief.md`). 181 universities now have requirements.
+> **Next session (as of 2026-10-17, decision 062, cloud branch `claude/clever-maxwell-yozhn1`, not merged yet):**
+> **Done in this session:** the «الطريق» redesign (decision 062; audit, references and checks in `docs/research/design-direction-2026-10-17.md`).
+> - Act on forest, read on paper, in the logo's own colours; Naskh titles. The sky is retired: stars stay only at night over the homepage and in the الرواد chart. The logo is unchanged, and a test checks it.
+> - Homepage: a forest start with the route of the three grades leading to the programs, then the search. Below: what's open, the programs, a new guides index, the Tuwaiq quote.
+> - Explorer rows, the university summary, grade pages, program pages, /news (one column) and the guides are redesigned. Every value sits under a label; no «·» chains.
+> - The nav gains «الأدلة». The footer lists the grades, programs and guides, then «© 2026 واضح. جميع الحقوق محفوظة.»; the year updates itself and becomes a range from 2027.
+> - 616 tests pass; the explorer's browser checks pass at 390 and 1280px.
 >
 > **Owner to-dos:**
-> - Look at the new guides and a few university pages on a phone.
-> - Check in a browser the sites that block scripts: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, Virginia, Pittsburgh, Colorado School of Mines, Columbia (English), NUS, Michigan's essays, Tilburg, Humboldt and Barcelona. Also look up the Saudi certificate for German universities on anabin (a form query).
+> - Run the branch locally and look at it on a real phone, Safari especially, in both themes. Not checked yet.
+> - Read the new copy: the route's lines and the guides' hints (`data/home.json`).
+> - Then open a PR and merge; Render deploys after CI.
+>
+> Earlier (decision 061, merged in PR #18): text about the site removed; every English test shown at a glance; new guides (Duolingo, UK applications, essays); essays for 62 US universities and every UK one; EU wave 5 (50 of 57).
+> **Owner to-dos from it:**
+> - Check in a browser the sites that block scripts: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, Virginia, Pittsburgh, Colorado School of Mines, Columbia (English), NUS, Michigan's essays, Tilburg, Humboldt and Barcelona.
+> - Look up the Saudi certificate for German universities on anabin (a form query).
 > - Decide on Toulouse (which member institution the list means) and L'Institut Agro.
-> - Then commit.
 >
 > Earlier (latest cloud session on branch `claude/wadih-design-overhaul-ahizpb`, decision 060, merged in PR #17):
 > **Design overhaul (decision 060):** one visual language, the sky (dawn in light mode, night in dark; the sun turns into a crescent when the theme switches); the theme follows the device until the student picks; the homepage title in Naskh, the grades as a constellation, a closing night band; `/universities?track=arruaad` opens with «خريطة الثلاثين» (30 stars in 8 country constellations; country chips filter the table). **Owner to-do:** look at it on a real phone (Safari especially) in both themes before merging; that hasn't been checked.
@@ -160,8 +165,9 @@ Teaches data extraction, data modeling + validation (Pydantic), a JSON API, and 
 ## Stage 3: Scholarship path content + design polish + Launch 1
 Teaches responsive/RTL polish, content workflow, CI, and shipping.
 - Full government scholarship path page, verified by the owner, with live track status (each with a source link).
-- A subtle visual theme per path, based on place (decision 016): world/cities (scholarship), eastern desert (Aramco), Red Sea coast (KAUST). No logos.
+- ~~A subtle visual theme per path, based on place (decision 016)~~: dropped. Programs show their official logos or licensed photos (decisions 028, 062).
 - [x] Visual identity: the sky, two designed themes, the homepage opening, the الرواد destination (decision 060). Real-phone check still to do.
+- [x] Redesign «الطريق» (decision 062): the logo's colours, act on forest and read on paper, the route of the grades, labelled facts, a guides index, a full footer with a self-updating copyright line. Real-phone check still to do.
 - Privacy-friendly visitor counting on our own server (decision 015).
 - CI basics: GitHub Actions runs the tests on every push.
 - Domain check/purchase (ask first), then **Launch 1**.
