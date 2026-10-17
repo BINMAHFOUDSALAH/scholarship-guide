@@ -891,3 +891,56 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Show «لم نتحقق منه» for unlisted Duolingo: rejected, because the page did answer (by its list).
 - An «تقبل Duolingo» filter: deferred (above).
 - A full restyle following the owner's references: rejected; the problems found were content and data, not the visual system.
+
+## 062 — «الطريق»: a redesign in the logo's colours, a way into the guides, a footer with a copyright line (updates 035, 060, 061)
+**Date:** 2026-10-17
+**Context:** the owner asked for a complete, justified UI/UX redesign. The brief: study the live site and nine references, choose a direction that is Wadih's own, redesign every page type and the footer (with a copyright line), and keep the logo exactly as it is; palette and type were open. The audit, the references and the verification are in [design-direction-2026-10-17.md](research/design-direction-2026-10-17.md). The audit found:
+- facts joined into run-on strings («·» chains, «label: value» runs mixing Arabic and English);
+- a flat hierarchy: headings, links and buttons all forest bold;
+- the first screen spent on the sun and the astrolabe;
+- statuses far from the names they describe;
+- a lopsided three-column /news;
+- eight guides with no index, nav item or footer link;
+- a footer with no navigation and no copyright.
+061 had judged the problems to be content, not the visual system; seen rendered at every width, several were visual.
+**Decision:**
+- **Direction: act on forest, read on paper.** The colours are the logo's own: paper `#F6F4EE` (its letter), forest `#184B3A` (its tile), lime `#D8ED9B` (its diamond).
+  - Headings and text are ink `#101713`. Forest now means "you can act": links, buttons, the current nav item.
+  - Forest is also the surface where you act (the homepage's start, the universities search) and the footer. Inside these "stages" the tokens are redefined (`--stage`, `--on-stage`, `--stage-amber`…), so shared components need no variants. Fields and menus keep paper colours through frozen tokens (`--field-bg`, `--brand`).
+  - Lime keeps «مفتوح الآن» and the next step, and adds "you are here" on the route (the current grade, «الآن», the chosen country). On forest it is also the focus ring.
+- **Type:** Noto Naskh Arabic Bold for page and section titles (was Plex Bold); IBM Plex Sans Arabic for text, labels and data, with tabular figures. Both were already self-hosted; no font was downloaded.
+- **The route is the one bold element.** The logo's diamond marks a step, never decoration.
+  - The homepage leads أول → ثاني → ثالث ثانوي → «بعد الثانوية» (the programs).
+  - The grade pages carry the same route with the current year lit; grade 12's year is a vertical route with «الآن» lit.
+  - It draws itself once on load; with reduced motion, nothing moves.
+- **The sky is retired (060).** The sun, the moon, the astrolabe rings, the bands and the drawn program scenes (`partials/path-art.html`) are gone.
+  - Kept from 060: a few stars over the homepage's start in the dark theme, and the الرواد star chart, now on the forest stage.
+  - Also kept: the theme rules (the device until the student picks), the sun-to-crescent toggle and its cross-fade.
+- **Structure over strings.**
+  - Every value sits under its own label (`dl.key-facts`, the summary list). English test names go in `<bdi lang="en">`.
+  - Words shared by several tests are said once (`english_groups`).
+  - Arabic commas replace «·» (a test checks every page type).
+  - Arrows: ↗ only for an official page in a new tab, → only for "back"; no decorative ←.
+- **Pages:**
+  - Homepage: the start (title, one line, the route, the search of the lists), then what's open (status beside the name), the programs as rows, a new guides index (`home.json` → `guides`), the Tuwaiq quote.
+  - Explorer: title and search on the stage. A row's facts are a labelled list with its actions under them; rows stack below 1024px.
+  - University page: a summary sheet of short lines (the date large; what it is and its source under it). The fee splits into amount, waiver, note and links.
+  - Program pages: facts with their sources in the margin on wide screens.
+  - /news: one column in the order a student acts: open, then not yet or closed, then recently closed (a compact dated list).
+  - Guides: a reading column, with «في هذه الصفحة» kept in view beside it on wide screens.
+  - Nav: five sections; «الأدلة» is added.
+- **Footer:** three groups from the data (grades; scholarships and universities; guides). The independence line and the X link (043) stay. The copyright notice comes last: «© 2026 واضح. جميع الحقوق محفوظة.», then «الشعارات والصور لأصحابها» with the credits link.
+  - The year is computed on every request (`current_year()`). From 2027 it reads as a range from `site.since` (2026).
+  - No second logo, no slogan.
+- **The logo is unchanged;** a test checks that the header's drawing equals the favicon's.
+**Alternatives:**
+- **Keep the sky and refine it (061):** rejected. The sky needed its own layers and tokens on every page, and none of them helped a task.
+- **A white, government-like look:** rejected. Wadih must not pass for the Ministry or Safeer.
+- **A new display typeface:** it would need a download (ask first), and Naskh against Plex already gives the contrast.
+- **Card grids** for programs and guides: rejected. Rows scan faster.
+- **A side column for a row's actions** in the explorer: tried. It squeezed the facts at 1024–1280px, so the actions sit under them.
+- **A forest header:** rejected. The logo is a forest tile and would vanish into it; changing its plate would change the logo.
+- **A hard-coded year:** rejected. It goes stale every January.
+**Limits:**
+- Not yet seen on a real iPhone (Safari) or with a screen reader, and no students have used it.
+- Phone pages are longer (the homepage 5,948 → 7,008px at 390px), mostly from the guides index, the fuller footer and the labelled facts.

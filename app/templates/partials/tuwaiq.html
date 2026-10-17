@@ -1,16 +1,18 @@
-{# Mount Tuwaiq band. Rendered only when data/featured_quote.json is verified (or drafts are shown locally). #}
-{% import "partials/sky.html" as sky %}
+{#
+  The Tuwaiq quote (decisions 011, 019, 028, 062): a quiet pull quote at the end of the homepage, on paper,
+  with the click-to-play video beside it. Rendered only when data/featured_quote.json is verified (or drafts
+  are shown locally).
+#}
 <section class="tuwaiq" aria-labelledby="tuwaiq-quote">
-  {{ sky.band() }}
   <div class="container tuwaiq-inner">
     <div class="tuwaiq-text">
       <blockquote id="tuwaiq-quote" class="tuwaiq-quote">
         <p>«{{ quote.quote_ar }}»</p>
-        <footer>— {{ quote.attribution_ar }}{% if quote.context_ar %} · {{ quote.context_ar }}{% endif %}</footer>
+        <footer>{{ quote.attribution_ar }}{% if quote.context_ar %}، {{ quote.context_ar }}{% endif %}</footer>
       </blockquote>
       <p class="tuwaiq-message">{{ quote.message_ar }}</p>
-      {# The page ends on a step, not a dead end (decision 060): back to the grades. #}
-      <p class="tuwaiq-next"><a class="btn btn--on-band" href="#grades"><svg viewBox="-12 -12 24 24" aria-hidden="true" focusable="false"><path d="M0 -10 Q1.6 -1.6 10 0 Q1.6 1.6 0 10 Q-1.6 1.6 -10 0 Q-1.6 -1.6 0 -10Z"/></svg>اختر صفك وابدأ</a></p>
+      {# The page ends on a step, not a dead end (decision 060): back to the route of the three years. #}
+      <p class="tuwaiq-next"><a class="btn btn--secondary" href="#grades">اختر صفك وابدأ</a></p>
     </div>
 
     <div class="video">

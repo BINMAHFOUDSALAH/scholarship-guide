@@ -1,4 +1,8 @@
-{# The news board (decision 033). Set board_limit to show only the first few items per group. #}
+{#
+  The news board (decisions 033, 062). One column, in the order a student acts on it: what's open now (full rows,
+  with who can apply and the deadline), then what's closed or not open yet, then what opened and closed
+  recently as a compact dated list. Set board_limit to show only the first few items per group.
+#}
 {% import "components.html" as c %}
 {% set groups = [
   ("open", "مفتوح الآن", "مفتوح اليوم لمن تنطبق عليه شروطه."),
@@ -9,27 +13,30 @@
   {% for key, title, hint in groups %}
   {% set items = board[key] %}
   <section class="board-group board-group--{{ key }}" aria-labelledby="board-{{ key }}">
-    <h3 id="board-{{ key }}" class="board-title">{{ title }} <span class="board-count">{{ items | length }}</span></h3>
+    <div class="board-head">
+      <h2 id="board-{{ key }}" class="board-title">{{ title }} <span class="board-count">{{ items | length }}</span></h2>
+      <p class="board-hint">{{ hint }}</p>
+    </div>
     {% if items %}
     <ul class="board-list">
       {% for item in (items[:board_limit] if board_limit else items) %}
       <li class="board-item">
-        <p class="board-name">{{ item.title_ar }}</p>
-        <p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">لخريجي الثانوية</span>{% endif %}</p>
-        {% if item.who_ar %}<p class="board-who">لمن: {{ item.who_ar }}</p>{% endif %}
+        <div class="board-main">
+          <p class="board-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
+          <p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">لخريجي الثانوية</span>{% endif %}</p>
+          {% if item.who_ar %}<p class="board-who">لمن: {{ item.who_ar }}</p>{% endif %}
+        </div>
         <p class="board-when">
-          {{ c.status_tag(item.status, item.until, label=None if key != "recent" else "أُغلق") }}
-          {% if item.opens %}يفتح في <time datetime="{{ item.opens }}">{{ item.opens | arabic_date }}</time>{% endif %}
-          {% if item.closed_on %}في <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time>{% endif %}
+          {% if key == "recent" %}<span class="board-date">أُغلق في <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time></span>
+          {% else %}{{ c.status_tag(item.status, item.until) }}
+          {% if item.opens %}<span class="board-date">يفتح في <time datetime="{{ item.opens }}">{{ item.opens | arabic_date }}</time></span>{% endif %}
+          {% if item.closed_on %}<span class="board-date">في <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time></span>{% endif %}{% endif %}
         </p>
-        <p class="board-links">
-          {% if item.page %}<a href="{{ item.page }}">التفاصيل ←</a>{% endif %}
-          {% if item.source_url %}<a href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}
-        </p>
+        {% if item.source_url %}<p class="board-links"><a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر ↗</a></p>{% endif %}
       </li>
       {% endfor %}
     </ul>
-    {% if board_limit and items | length > board_limit %}<p class="board-more"><a href="{{ url_for('news_page') }}">و{{ items | length - board_limit }} غيرها ←</a></p>{% endif %}
+    {% if board_limit and items | length > board_limit %}<p class="board-more"><a href="{{ url_for('news_page') }}">وغيرها ({{ items | length - board_limit }})</a></p>{% endif %}
     {% else %}
     <p class="board-empty">لا شيء الآن. {{ hint }}</p>
     {% endif %}

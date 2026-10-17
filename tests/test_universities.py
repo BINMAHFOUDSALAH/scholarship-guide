@@ -691,10 +691,10 @@ def test_saudi_certificate_row_shows_only_a_sourced_yes_or_no():
 
 def test_english_at_a_glance_keeps_the_distinctions():
     from app.universities import english_compact
-    assert english_compact("ielts", {"min": 6.5, "each_min": 6.0, "note_ar": "x"}) == "6.5 · ولا تقل مهارة عن 6.0"
-    assert english_compact("ielts", {"min": 6, "recommended": 6.5}) == "6.0 · الموصى به 6.5"
+    assert english_compact("ielts", {"min": 6.5, "each_min": 6.0, "note_ar": "x"}) == "6.5، ولا تقل مهارة عن 6.0"
+    assert english_compact("ielts", {"min": 6, "recommended": 6.5}) == "6.0، والموصى به 6.5"
     assert english_compact("ielts", {"min": 6.0, "varies": True, "each_min": 5.5}) == "من 6.0 حسب التخصص"
-    assert english_compact("ielts", {"min": None, "recommended": 7.5}) == "لا حد أدنى معلن · الموصى به 7.5"
+    assert english_compact("ielts", {"min": None, "recommended": 7.5}) == "لا حد أدنى معلن، والموصى به 7.5"
     assert english_compact("ielts", {"min": None, "note_ar": "x"}) == "لا يوجد حد أدنى منشور"
     assert english_compact("duolingo", {"accepted": False, "min": None}) == "لا يُقبل لإثبات اللغة"
     assert english_compact("ielts", None) == "لم نتحقق منه"
@@ -703,7 +703,7 @@ def test_english_at_a_glance_keeps_the_distinctions():
 def test_georgia_tech_shows_the_undergraduate_floor_not_the_graduate_score():
     """The owner saw 7.0 elsewhere: that is Georgia Tech's graduate requirement. First-year applicants
     meet the USG floor (6, recommended 6.5), and the page must say both, plus why 7.0 differs."""
-    assert ex.key_facts("georgia-institute-of-technology")["ielts_ar"] == "6.0 · الموصى به 6.5"
+    assert ex.key_facts("georgia-institute-of-technology")["ielts_ar"] == "6.0، والموصى به 6.5"
     html = client.get("/universities/georgia-institute-of-technology").text
     assert "الحد الأدنى <strong>6.0</strong>" in html and "الموصى به <strong>6.5</strong>" in html
     assert "شرط الدراسات العليا" in html
@@ -809,3 +809,15 @@ def test_university_page_shows_essays_and_uk_guide_link():
     stanford = client.get("/universities/stanford-university").text
     assert "المقالات" in stanford and "/resources/application-essays" in stanford
     assert "/resources/uk-applications" in client.get("/universities/university-of-manchester").text
+
+
+def test_result_rows_label_each_fact():
+    """Decision 062: a row's facts are a labelled list, and tests that share the same words are said once."""
+    html = client.get("/universities?track=arruaad").text
+    row = html.split('<th scope="row">')[1].split("</tr>")[0]
+    facts = row.split('<dl class="key-facts">')[1].split("</dl>")[0]
+    assert "<dt>الإنجليزية</dt>" in facts and "<dt>أقرب موعد في الجامعة</dt>" in facts
+    groups = ex.key_facts("harvard-university")["english_groups"]
+    assert len(groups) == 1 and groups[0]["labels"] == ["IELTS", "TOEFL iBT", "Duolingo"]
+    # Scores are never joined, so two scales are never read as one.
+    assert all(len(g["labels"]) == 1 for g in ex.key_facts("massachusetts-institute-of-technology-mit")["english_groups"])

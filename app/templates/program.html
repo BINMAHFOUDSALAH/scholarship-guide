@@ -95,7 +95,7 @@
   </section>
 
   {% if program.facts %}
-  <section class="program-section measure" aria-labelledby="facts-title">
+  <section class="program-section" aria-labelledby="facts-title">
     <h2 id="facts-title">ما يجب أن تعرفه قبل التقديم</h2>
     <ul class="fact-items">
       {% for f in program.facts %}{{ c.fact(f) }}{% endfor %}

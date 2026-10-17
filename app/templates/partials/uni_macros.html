@@ -35,78 +35,92 @@
     {{ c.status_tag('open' if p.is_open else 'closed', label=None if p.is_open else 'مغلق') }}
     {% if p.for_high_school %}<span class="tag">لخريجي الثانوية</span>{% endif %}
   </p>
-  <p class="waaid-meta">{{ p.company_ar }} · {% if p.university_id %}<a href="{{ url_for('university_page', uid=p.university_id) }}" lang="en" dir="ltr">{{ p.institution }}</a>{% else %}<span lang="en" dir="ltr">{{ p.institution }}</span>{% endif %} ({{ p.country_ar }}) · {{ p.level_ar }} · {{ p.duration_ar }}</p>
-  <p class="waaid-meta">التقديم: من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %} · بداية الدراسة: {{ p.start_ar }}{% endif %}</p>
+  <p class="waaid-meta">{{ p.company_ar }}، {% if p.university_id %}<a href="{{ url_for('university_page', uid=p.university_id) }}" lang="en" dir="ltr">{{ p.institution }}</a>{% else %}<bdi lang="en">{{ p.institution }}</bdi>{% endif %} ({{ p.country_ar }})</p>
+  <p class="waaid-meta">{{ p.level_ar }}، {{ p.duration_ar }}</p>
+  <p class="waaid-meta">التقديم من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %}، وبداية الدراسة {{ p.start_ar }}{% endif %}</p>
   {% if p.requirements_ar %}<ul class="waaid-req">{% for x in p.requirements_ar %}<li>{{ x }}</li>{% endfor %}</ul>{% endif %}
 </li>
 {% endmacro %}
 
 {#
-  One university date in words: «آخر موعد للتقديم · Early Decision · لخريف 2027». Shared by the
-  result rows, «قائمتي», and the university page (decision 038).
+  One university date in words: «آخر موعد للتقديم، Early Decision، لخريف 2027». Shared by the
+  result rows, «قائمتي», and the university page (decision 038). Arabic commas, not dots (decision 062).
 #}
-{% macro date_words(x) %}{{ x.event_ar }}{% if x.round_ar %} · <bdi>{{ x.round_ar }}</bdi>{% endif %} · ل{{ x.cycle_ar }}{% endmacro %}
+{% macro date_words(x) %}{{ x.event_ar }}{% if x.round_ar %}، <bdi>{{ x.round_ar }}</bdi>{% endif %}، ل{{ x.cycle_ar }}{% endmacro %}
 
-{# The short form for a result row: «آخر موعد للتقديم · Early Decision». No brackets: they flip around English text in RTL. #}
-{% macro date_short(x) %}{{ x.event_ar }}{% if x.round_ar %} · <bdi>{{ x.round_ar }}</bdi>{% endif %}{% endmacro %}
-
-{#
-  The university's own next date. Labelled as the university's, so it's never mistaken for a
-  scholarship deadline.
-#}
-{% macro next_deadline(u) %}
-{% set d = explorer.next_deadline(u.id) %}
-{% if d %}<span class="uni-deadline">أقرب موعد في الجامعة: <strong>{{ d.date | arabic_date }}</strong>، {{ date_short(d) }}</span>{% endif %}
-{% endmacro %}
+{# The short form for a result row: «آخر موعد للتقديم، Early Decision». No brackets: they flip around English text in RTL. #}
+{% macro date_short(x) %}{{ x.event_ar }}{% if x.round_ar %}، <bdi>{{ x.round_ar }}</bdi>{% endif %}{% endmacro %}
 
 {#
-  At a glance: SAT/ACT (where it applies), the English tests the file covers, the next university date, and the official admissions page. Says so
-  plainly when we haven't collected a university's requirements yet (decision 038).
+  At a glance (decisions 038, 062): the English tests the file covers, SAT/ACT (where it applies), the university's
+  next date, and its official admissions page. Each value under its own label, so a row scans down the page and
+  English names never sit in the middle of an Arabic sentence. Says so plainly when we haven't collected a
+  university's requirements yet.
 #}
-{% macro key_facts(u, quiet=False) %}
+{% macro key_facts(u, quiet=False, link=True) %}
 {% set k = explorer.key_facts(u.id) %}
 {% if k.researched %}
-<p class="key-facts">
-  {% if k.sat_ar %}<span><span lang="en" dir="ltr">SAT/ACT</span>: {{ k.sat_ar }}</span>{% endif %}
-  {% for t in k.english %}<span><span lang="en" dir="ltr">{{ t.label }}</span>: {{ t.text }}</span>{% else %}<span>اختبارات الإنجليزية: {{ k.english_none_ar }}</span>{% endfor %}
-  {% if k.next %}<span>أقرب موعد في الجامعة: <strong>{{ k.next.date | arabic_date }}</strong>، {{ date_short(k.next) }}</span>{% else %}<span>أقرب موعد في الجامعة: لا يوجد لدينا موعد قادم مؤكد</span>{% endif %}
-  {% if k.admissions_url %}<a class="src" href="{{ k.admissions_url }}" target="_blank" rel="noopener">صفحة القبول الرسمية ↗</a>{% endif %}
-</p>
+<dl class="key-facts">
+  <div class="kf-row">
+    <dt>الإنجليزية</dt>
+    <dd>{% if k.english_groups %}<ul class="kf-tests">{% for g in k.english_groups %}<li><bdi class="kf-test" lang="en">{{ g.labels | join(" / ") }}</bdi> <span class="kf-val">{{ g.text }}</span></li>{% endfor %}</ul>{% else %}{{ k.english_none_ar }}{% endif %}</dd>
+  </div>
+  {% if k.sat_ar %}
+  <div class="kf-row">
+    <dt><bdi lang="en">SAT/ACT</bdi></dt>
+    <dd>{{ k.sat_ar }}</dd>
+  </div>
+  {% endif %}
+  <div class="kf-row">
+    <dt>أقرب موعد في الجامعة</dt>
+    <dd>{% if k.next %}<strong class="kf-date">{{ k.next.date | arabic_date }}</strong> <span class="kf-date-what">{{ date_short(k.next) }}</span>{% else %}لا يوجد لدينا موعد قادم مؤكد{% endif %}</dd>
+  </div>
+</dl>
+{% if link %}{{ admissions_link(u) }}{% endif %}
 {% elif not quiet %}
 <p class="key-facts key-facts--unknown">المتطلبات والمواعيد: لم نجمعها بعد.</p>
 {% endif %}
 {% endmacro %}
 
-{#
-  Country, with its official language when it isn't English (the scholarship's rule on conditional
-  offers depends on it). That's the country's language, not necessarily the language of teaching.
-#}
+{# The university's official admissions page, from its requirements file (a result row puts it beside «احفظ»). #}
+{% macro admissions_link(u) %}
+{% set url = (explorer.details.get(u.id) or {}).get("admissions_url") %}
+{% if url %}<p class="kf-link"><a class="src" href="{{ url }}" target="_blank" rel="noopener">صفحة القبول الرسمية ↗</a></p>{% endif %}
+{% endmacro %}
+
 {#
   The application fee for international first-year applicants and its waiver policy, from the
-  university's own page (decision 050). US universities link to the guide «التقديم على الجامعات الأمريكية».
+  university's own page (decision 050). One line each: the fee, the waiver, the university's note, then the
+  links (decision 062). US universities link to the guide «التقديم على الجامعات الأمريكية».
 #}
 {% macro app_fee(u, d, source=false) %}
 {% set f = d.application_fee %}
-{% if f.fee_usd == 0 %}بلا رسوم تقديم{% elif f.fee_usd %}<span lang="en" dir="ltr">${{ f.fee_usd }}</span> للطلاب الدوليين{% else %}الرسوم غير منشورة{% endif %}
-{%- if waiver_ar[f.waiver] %} · {{ waiver_ar[f.waiver] }}{% endif %}
-{%- if f.note_ar %} · {{ f.note_ar }}{% endif %}
-{% if source %} <a class="src" href="{{ f.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% if f.waiver_source_url %} <a class="src" href="{{ f.waiver_source_url }}" target="_blank" rel="noopener">مصدر الإعفاء ↗</a>{% endif %}{% endif %}
-{% if u.country == "US" and f.waiver in ("accepts_common_app", "own_waiver") %} · <a href="{{ url_for('resource_page', slug='us-applications') }}#fee-waiver">كيف تطلب الإعفاء؟</a>{% endif %}
+<span class="fee-line fee-amount">{% if f.fee_usd == 0 %}بلا رسوم تقديم{% elif f.fee_usd %}<strong><bdi lang="en">${{ f.fee_usd }}</bdi></strong> للطلاب الدوليين{% else %}الرسوم غير منشورة{% endif %}</span>
+{%- if waiver_ar[f.waiver] %}<span class="fee-line">{{ waiver_ar[f.waiver] }}</span>{% endif %}
+{%- if f.note_ar %}<span class="fee-line fee-note">{{ f.note_ar }}</span>{% endif %}
+<span class="fee-line fee-links">
+{%- if source %}<a class="src" href="{{ f.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% if f.waiver_source_url %} <a class="src" href="{{ f.waiver_source_url }}" target="_blank" rel="noopener">مصدر الإعفاء ↗</a>{% endif %}{% endif %}
+{%- if u.country == "US" and f.waiver in ("accepts_common_app", "own_waiver") %}{% if source %} {% endif %}<a href="{{ url_for('resource_page', slug='us-applications') }}#fee-waiver">كيف تطلب الإعفاء؟</a>{% endif %}
+</span>
 {% endmacro %}
 
-{# The flag is decorative (alt=""): the country's name follows it (decision 049). #}
+{#
+  Country, with its official language when it isn't English (the scholarship's rule on conditional
+  offers depends on it). That's the country's language, not necessarily the language of teaching.
+  The flag is decorative (alt=""): the country's name follows it (decision 049).
+#}
 {% macro country(u) %}
 <span class="uni-country"><img class="uni-flag" src="{{ url_for('static', path='img/flags/' ~ (u.country | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">لغة الدولة: {{ u.country_info.language_ar }}</span>{% endif %}</span>
 {% endmacro %}
 
-{# One university's place in the lists, as short tags: «الرواد · المرتبة 12»، «إمداد · 4 مجالات». #}
+{# One university's place in the lists, as short tags: «الرواد: المرتبة 12»، «إمداد: 4 مجالات». #}
 {% macro memberships(u) %}
 {% set ar = u.listings | selectattr("track", "equalto", "arruaad") | list %}
 {% set em = u.listings | selectattr("track", "equalto", "emdad") | list %}
 {% set rd = u.listings | selectattr("track", "equalto", "rnd") | list %}
 <span class="memberships tags">
-  {% if ar %}<span class="tag">الرواد · المرتبة {{ ar[0].rank }}</span>{% endif %}
-  {% if em %}<span class="tag">إمداد · {{ em | length | count_ar("fields") }}</span>{% endif %}
-  {% if rd %}<span class="tag">البحث والتطوير (دكتوراه) · {{ rd | length | count_ar("fields") }}</span>{% endif %}
+  {% if ar %}<span class="tag">الرواد: المرتبة {{ ar[0].rank }}</span>{% endif %}
+  {% if em %}<span class="tag">إمداد: {{ em | length | count_ar("fields") }}</span>{% endif %}
+  {% if rd %}<span class="tag">البحث والتطوير (دكتوراه): {{ rd | length | count_ar("fields") }}</span>{% endif %}
 </span>
 {% endmacro %}

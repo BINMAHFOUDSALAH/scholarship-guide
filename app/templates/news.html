@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="news-page page-wide">
-  <header>
+  <header class="page-header">
     <h1>مواعيد التقديم والمستجدات</h1>
     <p class="lead">ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا، لكل برنامج ومسار. الحالة من مصدرها الرسمي، وتتغير وحدها مع مواعيد الفتح والإغلاق المعلنة.</p>
   </header>
@@ -15,23 +15,27 @@
   {% include "partials/status_board.html" %}
 
   {% if announcements %}
-  <section class="section" aria-labelledby="announcements-title">
-    <h2 id="announcements-title" class="section-title">إعلانات</h2>
-    <ul class="board-list board-list--plain">
+  <section class="board-group board-group--news" aria-labelledby="announcements-title">
+    <div class="board-head">
+      <h2 id="announcements-title" class="board-title">إعلانات</h2>
+    </div>
+    <ul class="board-list">
       {% for item in announcements %}
       <li class="board-item">
-        <p class="board-name">
-          {% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }} ←</a>
-          {% elif item.source_url %}<a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
-          {% else %}{{ item.title_ar }}{% endif %}
-        </p>
-        <p class="board-program">{{ path_names[item.path_id] }}</p>
+        <div class="board-main">
+          <p class="board-name">
+            {% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>
+            {% elif item.source_url %}<a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
+            {% else %}{{ item.title_ar }}{% endif %}
+          </p>
+          <p class="board-program">{{ path_names[item.path_id] }}</p>
+        </div>
       </li>
       {% endfor %}
     </ul>
   </section>
   {% endif %}
 
-  <p class="result-note">تابع أيضًا الحسابات الرسمية: <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">برنامج خادم الحرمين الشريفين للابتعاث على X ↗</a></p>
+  <p class="news-follow">تابع أيضًا الحسابات الرسمية: <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">برنامج خادم الحرمين الشريفين للابتعاث على X ↗</a></p>
 </div>
 {% endblock %}

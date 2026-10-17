@@ -20,7 +20,7 @@ async function drawShareImage() {
   ctx.fillStyle = "#f6f1e6";
   ctx.fillRect(0, 0, 1200, 630);
 
-  // Mount Tuwaiq on the horizon (same shapes as partials/path-art.html, 1200x160 at the bottom)
+  // Mount Tuwaiq on the horizon (the shapes of the former partials/path-art.html, removed in decision 062; 1200x160 at the bottom)
   ctx.save();
   ctx.translate(0, 470);
   const shape = (d, color) => { ctx.fillStyle = color; ctx.fill(new Path2D(d)); };

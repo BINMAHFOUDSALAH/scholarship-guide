@@ -17,8 +17,9 @@
         {{ c.status_tag('open' if p.is_open else 'closed', label=None if p.is_open else 'مغلق') }}
         {% if p.for_high_school %}<span class="tag">لخريجي الثانوية</span>{% endif %}
       </p>
-      <p class="waaid-meta">{{ p.company_ar }} · <span lang="en" dir="ltr">{{ p.institution }}</span> ({{ p.country_ar }}) · {{ p.level_ar }} · {{ p.duration_ar }}</p>
-      <p class="waaid-meta">التقديم: من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %} · بداية الدراسة: {{ p.start_ar }}{% endif %}</p>
+      <p class="waaid-meta">{{ p.company_ar }}، <bdi lang="en">{{ p.institution }}</bdi> ({{ p.country_ar }})</p>
+      <p class="waaid-meta">{{ p.level_ar }}، {{ p.duration_ar }}</p>
+      <p class="waaid-meta">التقديم من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %}، وبداية الدراسة {{ p.start_ar }}{% endif %}</p>
       {% if p.requirements_ar %}<ul class="waaid-req">{% for r in p.requirements_ar %}<li>{{ r }}</li>{% endfor %}</ul>{% endif %}
     </li>
     {% endfor %}
