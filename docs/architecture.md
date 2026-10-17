@@ -102,6 +102,7 @@ Server-rendered pages, no frontend framework. GitHub → Render deploys on push 
 - `marketing/src/` (decision 044): the launch ad, kept apart from the app. `capture_site.mjs` records the live site in headless Edge; `make_voice.py` calls ElevenLabs; `build_ad.py` assembles the videos with ffmpeg. Media lives in `marketing/assets/` and `marketing/out/` (git-ignored). Guide: `docs/marketing/launch-ad.md`.
 
 ## Tooling
-- `.github/workflows/tests.yml`: runs `pytest` on every push and pull request (CI). Render deploys only after it passes.
+- `.github/workflows/tests.yml`: runs `pytest` on every push and pull request (CI), with a read-only token. Render deploys only after it passes.
+- `.github/dependabot.yml`: a monthly pull request when an Action used in CI has a new version.
 - `.claude/settings.json`: a permission rule that blocks Claude from reading `.env`.
 - `.claude/launch.json`: starts the dev server in the Claude desktop app's browser pane.

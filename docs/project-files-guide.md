@@ -58,4 +58,5 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `content/**/*.md` | Page text in Markdown, with a frontmatter header (`title`, `status`, `sources`, `last_checked`). | ✅ | Every guide page. |
 | `tests/` | Automated tests (pytest). | ✅ | Every feature gets tests. CI runs them automatically. |
 | `.github/workflows/*.yml` | GitHub Actions (CI): runs tests on every push. | ✅ (`tests.yml`) | Render deploys only after it passes. Add workflows for scheduled checks later (e.g. a weekly link checker). |
+| `.github/dependabot.yml` | Dependabot: opens a pull request when an Action used in CI has a new version. | ✅ (Actions only, monthly) | Python packages stay pinned in `requirements.txt` and are updated by hand (ask first). |
 | `render.yaml` | Render's deployment config as a file ("infrastructure as code"). | ⏳ Step 7 (optional) | When the deploy settings should live in git instead of only in Render's dashboard. |

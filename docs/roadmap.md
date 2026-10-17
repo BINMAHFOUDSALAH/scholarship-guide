@@ -3,18 +3,16 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-17, decision 062, cloud branch `claude/clever-maxwell-yozhn1`, not merged yet):**
-> **Done in this session:** the «الطريق» redesign (decision 062; audit, references and checks in `docs/research/design-direction-2026-10-17.md`).
-> - Act on forest, read on paper, in the logo's own colours; Naskh titles. The sky is retired: stars stay only at night over the homepage and in the الرواد chart. The logo is unchanged, and a test checks it.
-> - Homepage: a forest start with the route of the three grades leading to the programs, then the search. Below: what's open, the programs, a new guides index, the Tuwaiq quote.
-> - Explorer rows, the university summary, grade pages, program pages, /news (one column) and the guides are redesigned. Every value sits under a label; no «·» chains.
-> - The nav gains «الأدلة». The footer lists the grades, programs and guides, then «© 2026 واضح. جميع الحقوق محفوظة.»; the year updates itself and becomes a range from 2027.
-> - 616 tests pass; the explorer's browser checks pass at 390 and 1280px.
+> **Next session (as of 2026-10-17):** the «الطريق» redesign (decision 062) is merged (PR #19) and live on wadihguide.com; 616 tests and a live check of every page type passed. Audit, references and checks: `docs/research/design-direction-2026-10-17.md`.
+> - Act on forest, read on paper, in the logo's own colours; Naskh titles; the route of the grades; values under labels; a guides index and «الأدلة» in the nav; a footer with a self-updating copyright line. The logo is unchanged (a test checks).
 >
 > **Owner to-dos:**
-> - Run the branch locally and look at it on a real phone, Safari especially, in both themes. Not checked yet.
+> - Look at the live site on a real phone, Safari especially, in both themes. Not checked yet.
 > - Read the new copy: the route's lines and the guides' hints (`data/home.json`).
-> - Then open a PR and merge; Render deploys after CI.
+> - GitHub: delete the six merged branches (`claude/brave-hopper-2a6fg7`, `claude/clever-bardeen-bei0zs`, `claude/funny-noether-nyj81u`, `claude/loving-hopper-sai8de`, `claude/wadih-design-overhaul-ahizpb`, `wadih-cleanup-requirements-guides`), and turn on Settings → General → "Automatically delete head branches" and Settings → Advanced Security → Dependabot security updates.
+> - Ask before installing: `httpx2` (the test client warns that `httpx` with it is deprecated).
+>
+> **Small fixes (2026-10-17 repo check):** CI moved to `actions/checkout@v7` and `actions/setup-python@v7` (v4/v5 ran on the deprecated Node 20) with read-only permissions; Dependabot keeps the Actions versions current (monthly).
 >
 > Earlier (decision 061, merged in PR #18): text about the site removed; every English test shown at a glance; new guides (Duolingo, UK applications, essays); essays for 62 US universities and every UK one; EU wave 5 (50 of 57).
 > **Owner to-dos from it:**
