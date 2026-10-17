@@ -1,0 +1,31 @@
+{
+  "id": "universitat-autonoma-de-barcelona",
+  "name_en": "Universitat Autònoma de Barcelona",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس (Grau)، خريف 2027",
+  "admissions_url": "https://www.uab.cat/web/estudiar/graus/acces-als-estudis/estudiants-internacionals-batxillerat-no-ue-1345721034360.html",
+  "platform": {
+    "value_ar": "مكتب التوجيه للوصول إلى الجامعة (Oficina d'Orientació per a l'Accés a la Universitat) بعد المعادلة",
+    "source_url": "https://www.uab.cat/web/estudiar/graus/acces-als-estudis/estudiants-internacionals-batxillerat-no-ue-1345721034360.html"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "البرامج بالإنجليزية تطلب مستوى B2، دون درجة اختبار محددة في الصفحات."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "برامج بكالوريوس بالإنجليزية، مثل Business Administration - English وEconomics - English وArtificial Intelligence. وصفحة كلية التربية تختلف في الحاجة إلى اختبار UNED بعد المعادلة.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة. وجدول وزارة التعليم الإسبانية للسعودية يربط الصف الثاني عشر بمعادلة البكالوريا، ويقول إنه للمعلومات فقط",
+    "مواعيد التقديم لعام 2027-2028 لم تُنشر بعد"
+  ]
+}

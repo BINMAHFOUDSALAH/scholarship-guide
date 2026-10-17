@@ -859,3 +859,35 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **A star chart ranked by brightness:** rejected. «الترتيب» is the list's order, not quality, and brighter stars would say otherwise. All 30 stars are equal.
 - **A theme per program:** rejected for now (above).
 **Career discovery (section 9 of the brief):** decision 057 still holds. No in-house interest quiz: official measures exist, and interests predict majors weakly. The next door is the «لم تقرر بعد؟» guide. A "skills worth building in high school" section could hang off it. WEF's *Future of Jobs Report 2025* says analytical thinking is the core skill "seven out of 10 companies" consider essential, and that "AI and big data top the list of fastest-growing skills" ([WEF digest](https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/), read 2026-10-13). Each Saudi programme it links to needs its own official source first. Not built in this pass.
+
+## 061 — Less text about the site; English tests, essays and the UK in full; EU research (updates 028, 038, 058, 060)
+**Date:** 2026-10-16
+**Context:** the owner asked to remove three texts (the homepage's «كل معلومة رسمية مع رابط مصدرها», the program page's independence line, and the explorer's «وجود الجامعة في القائمة لا يعني قبولك فيها») and any other unnecessary text. They also asked for correct IELTS (minimum vs recommended), TOEFL and Duolingo for every US/Canada/UK/Australia/EU university, Duolingo in site search, a UK guide, essay guidance, and a critical UX audit. The audit is in [ux-audit-2026-10-16.md](research/ux-audit-2026-10-16.md).
+**Decision:**
+- **Text rule:** no statements about the site itself on pages (how we verify, "every result has a source"). The independence line lives only in the footer and on /about, which still satisfies CLAUDE.md. Each explanation is said once:
+  - Admission ≠ scholarship: the program page, plus the dates block on each university page (with its source). It was removed from the explorer, the الرواد opening and the university summary.
+  - SAT/ACT shows only in the US and Canada, or when the file has a policy.
+  - The homepage program rows keep two actions.
+  - «قائمتي»'s storage note is one sentence.
+- **English at a glance:** result rows and «باختصار» list every test the file covers, not IELTS only. New states:
+  - `listed: false` («ليس ضمن الاختبارات التي تذكرها الجامعة»): the university's page lists its accepted tests and this one isn't among them. This is not «لا يُقبل», which still needs the page to say so.
+  - `varies` with no number: «يختلف حسب التخصص».
+  - `english.required: false`: «ليست شرطًا للقبول».
+- **Essays:** an optional `essays` field (summary in Arabic, never copied prompts), shown as «المقالات» on the university page. Filled for 56 US universities from their pages, the 6 UC campuses from UC's Personal Insight Questions page, and every UK university from UCAS.
+- **New guides, each with a list computed from the data so it can't drift:**
+  - `/resources/duolingo`
+  - `/resources/uk-applications` (UCAS, 2027 dates, the three-question personal statement, the Saudi certificate by university)
+  - `/resources/application-essays` (Common App, supplements, UC, UCAS, the official AI rules)
+  - The IELTS and TOEFL pages gain the same «في جامعات القوائم» list.
+- **Search:** Arabic and English spellings of test names are one word (`SYNONYMS`), and one computed chunk per English test answers "which universities accept it?". Arabic words with prefix search (القدرات) are deliberately not mapped, so prefix matching keeps working.
+- **Data:** a re-check of English tests and US essays by 14 `source-researcher` agents on Haiku (brief: [english-essays-recheck-brief.md](research/english-essays-recheck-brief.md)). Every saved value's quote was checked on its page (`check_quote.py`, or the browser where scripts are blocked).
+  - Oxford and UCL were read on their official pages in the built-in browser and published. Oxford lists the Saudi Tawjihiyah as "Not accepted", and TOEFL tests from 21 January 2026 aren't accepted there yet.
+  - Melbourne and Monash were published with English only.
+  - Rules applied: "typical"/"middle 50%" → `recommended`. Two official pages disagree → no number (Adelaide IELTS 6.0 vs 6.5, Surrey, Sheffield). A conversion table published by the university counts as its requirement (Sydney TOEFL 85, Nottingham TOEFL 4.5).
+- **EU (wave 5):** 50 of 57 European universities saved (status in the brief). Brief: [emdad-wave-5-eu-brief.md](research/emdad-wave-5-eu-brief.md). The language of teaching goes first. A national body's official page (uni-assist, DAAD, anabin, Nuffic, swissuniversities, Campus France, Universitaly, UNEDasiss) counts as official for the Saudi-certificate rule. English scores are recorded only for English-taught bachelor's.
+- **Design direction:** keep the sky (060) and refine. Rejected: a second motif, card grids for results, and a Duolingo filter in the explorer (it would hide unresearched universities and suggest "not accepted").
+**Alternatives:**
+- Keep the independence line on every program page: rejected at the owner's request; the footer carries it on every page.
+- Show «لم نتحقق منه» for unlisted Duolingo: rejected, because the page did answer (by its list).
+- An «تقبل Duolingo» filter: deferred (above).
+- A full restyle following the owner's references: rejected; the problems found were content and data, not the visual system.

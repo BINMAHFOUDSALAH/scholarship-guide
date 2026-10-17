@@ -1,7 +1,7 @@
 {
   "id": "university-of-wisconsin-madison",
   "name_en": "University of Wisconsin-Madison",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.wisc.edu/international/",
   "platform": {
@@ -66,5 +66,11 @@
     "waiver": "own_waiver",
     "note_ar": "لمن يواجه ضائقة مالية، بنموذج يوقّعه مسؤول في المدرسة",
     "source_url": "https://admissions.wisc.edu/apply-as-a-freshman/"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "count": 1,
+    "summary_ar": "مقالان: مقال Common App الشخصي (أو سؤال الجامعة إن قدّمت عبر طلب Universities of Wisconsin)، وسؤال إلزامي للجميع عن سبب اختيارك الجامعة وتخصصك. الصفحة لا تذكر حد الكلمات.",
+    "source_url": "https://admissions.wisc.edu/apply/freshman/"
   }
 }

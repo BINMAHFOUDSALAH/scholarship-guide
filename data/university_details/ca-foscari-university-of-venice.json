@@ -1,0 +1,44 @@
+{
+  "id": "ca-foscari-university-of-venice",
+  "name_en": "Ca' Foscari University of Venice",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.unive.it/pag/41327/?L=1",
+  "platform": {
+    "value_ar": "apply.unive.it للطلاب الدوليين، ثم Universitaly للتسجيل المسبق والتأشيرة",
+    "source_url": "https://www.unive.it/pag/12520/?L=1"
+  },
+  "english": {
+    "ielts": {
+      "min": 5.5,
+      "note_ar": "أدنى درجة في نطاق مستوى B2 في جدول الجامعة (5.5–6.5). الشهادة لا يزيد عمرها على 5 سنوات.",
+      "source_url": "https://www.unive.it/pag/40609/"
+    },
+    "toefl_ibt": {
+      "min": 4,
+      "note_ar": "أدنى درجة في نطاق B2 للاختبارات من 21 يناير 2026 (4–4.5)، أو 72–94 قبل ذلك.",
+      "source_url": "https://www.unive.it/pag/40609/"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة الشهادات المعتمدة لا تذكر Duolingo.",
+      "source_url": "https://www.unive.it/pag/40609/"
+    },
+    "note_ar": "البرامج بالإنجليزية تطلب B2 على الأقل بشهادة من قائمة الجامعة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "من البكالوريوس بالإنجليزية: Business Administration and Management وDigital Management وEconomics and Business وComputer Science (Data Science). والبرامج بالإيطالية تطلب إيطالية B2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة، والقاعدة العامة شهادة بعد 12 سنة دراسية على الأقل",
+    "التقديم لعام 2027/2028 يبدأ في ديسمبر 2026، وموعد الإغلاق لم يُنشر"
+  ]
+}

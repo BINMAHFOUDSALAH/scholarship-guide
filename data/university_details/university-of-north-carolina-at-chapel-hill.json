@@ -1,7 +1,7 @@
 {
   "id": "university-of-north-carolina-at-chapel-hill",
   "name_en": "University of North Carolina at Chapel Hill",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/",
   "platform": {
@@ -70,5 +70,12 @@
     "waiver": "own_waiver",
     "note_ar": "اطلب من مرشدك المدرسي أن يطلب الإعفاء من الجامعة",
     "source_url": "https://admissions.unc.edu/apply/types-of-applications/international-first-year-students/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "common_app",
+    "count": 0,
+    "summary_ar": "مقال Common App الشخصي فقط. ألغت الجامعة سؤاليها القصيرين لدورة 2026–2027.",
+    "source_url": "https://admissions.unc.edu/short-essays-removed-from-carolinas-2026-2027-application/"
   }
 }

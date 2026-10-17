@@ -1,0 +1,62 @@
+{
+  "id": "sciences-po",
+  "name_en": "Sciences Po",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس (Bachelor of Arts)، سبتمبر 2027",
+  "admissions_url": "https://www.sciencespo.fr/admissions/en/undergraduate/foreign-secondary-schools/",
+  "platform": {
+    "value_ar": "منصة القبول في Sciences Po (admission.sciencespo.fr)، خارج إجراء Campus France",
+    "source_url": "https://www.sciencespo.fr/admissions/en/undergraduate/foreign-secondary-schools/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "شهادات اللغة (IELTS وTOEFL وغيرهما) «موصى بها وليست إلزامية». وفرع Le Havre يطلب إنجليزية C1."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختياري لكنه مشجَّع.",
+    "source_url": "https://www.sciencespo.fr/admissions/en/undergraduate/foreign-secondary-schools/documents"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم للحصول على النتيجة في منتصف يناير",
+      "round_ar": "المسار الدولي",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-04",
+      "year_stated": true,
+      "note_ar": null,
+      "source_url": "https://www.sciencespo.fr/admissions/en/undergraduate/foreign-secondary-schools/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم للحصول على النتيجة في بداية أبريل",
+      "round_ar": "المسار الدولي",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-13",
+      "year_stated": true,
+      "note_ar": null,
+      "source_url": "https://www.sciencespo.fr/admissions/en/undergraduate/foreign-secondary-schools/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "المسار الدولي",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-03-01",
+      "year_stated": true,
+      "note_ar": "23:59 بتوقيت باريس، والقبول متدرج",
+      "source_url": "https://www.sciencespo.fr/admissions/en/undergraduate/foreign-secondary-schools/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "البكالوريوس بالفرنسية والإنجليزية. بعض الفروع بالإنجليزية، مثل Asia-Pacific في Le Havre (إنجليزية C1)، وأغلب الفروع الفرنسية تطلب فرنسية C1. فرع باريس لمن أنهى الثانوية الفرنسية فقط.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: المسار الدولي لحاملي الشهادات غير الفرنسية، والصفحة لا تذكر الشهادة السعودية باسمها"
+  ]
+}

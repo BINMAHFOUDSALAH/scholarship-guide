@@ -1,7 +1,7 @@
 {
   "id": "universite-de-montreal",
   "name_en": "Université de Montréal",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admission.umontreal.ca/admission/vous-etes/etudiant-international/",
   "platform": {
@@ -12,7 +12,9 @@
     "ielts": null,
     "toefl_ibt": null,
     "duolingo": null,
-    "note_ar": null
+    "note_ar": "الدراسة بالفرنسية. الإنجليزية ليست شرطًا للقبول، إلا في برامج الدراسات الإنجليزية والترجمة التي تطلب اختبارًا خاصًا بها.",
+    "required": false,
+    "source_url": "https://admission.umontreal.ca/admission/preparation-de-la-demande/prevoir-les-entrevues-et-les-tests/"
   },
   "sat_act": null,
   "dates": [],

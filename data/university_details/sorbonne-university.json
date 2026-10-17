@@ -1,0 +1,32 @@
+{
+  "id": "sorbonne-university",
+  "name_en": "Sorbonne University",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للسنة الأولى من الإجازة (Licence)، خريف 2027",
+  "admissions_url": "https://international-welcome-desk.sorbonne-universite.fr/join-sorbonne-university/study/admission-to-the-first-year/",
+  "platform": {
+    "value_ar": "«الدراسة في فرنسا» (Études en France) وطلب القبول المسبق DAP لحاملي الشهادات من خارج أوروبا",
+    "source_url": "https://international-welcome-desk.sorbonne-universite.fr/join-sorbonne-university/study/admission-to-the-first-year/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "لا توجد إجازة بالإنجليزية، وصفحات القبول لا تطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "السنة الأولى بالفرنسية في كل الكليات، ولا إجازة بالإنجليزية حاليًا. المطلوب فرنسية B2 على الأقل (مثل DELF أو TCF أو TEF).",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: تحيل الجامعة إلى قائمة للشهادات الأجنبية دون رابط",
+    "للمقيمين في السعودية، التقديم على السنة الأولى في الجامعات الفرنسية عبر «الدراسة في فرنسا» (Études en France)، وطلب القبول المسبق DAP لعام 2027-2028 من 1 أكتوبر إلى 15 ديسمبر 2026 حسب Campus France."
+  ]
+}

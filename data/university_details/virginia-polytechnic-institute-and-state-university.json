@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -42,18 +42,29 @@
       "note_ar": "6.5 ولا تقل أي مهارة عن 6.5.",
       "source_url": "https://www.vt.edu/admissions/international/requirements.html"
     },
-    "toefl_ibt": null,
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 4.5 ولا تقل أي مهارة عن 4.0 (مقياس 1–6)، وتعادلها على المقياس القديم 80 ولا تقل مهارة عن 16. لا تقبل My Best ولا TOEFL Essentials.",
+      "source_url": "https://www.vt.edu/admissions/international/requirements.html"
+    },
     "duolingo": {
       "min": 115,
       "note_ar": "115.",
       "source_url": "https://www.vt.edu/admissions/international/requirements.html"
     },
-    "note_ar": "TOEFL: الصفحة تذكر حدين مختلفين للاختبارات بعد 21 يناير 2026 (80 أو 4.5)، فلم نعتمد رقمًا. النتيجة خلال سنتين."
+    "note_ar": "النتيجة خلال سنتين."
   },
   "application_fee": {
     "fee_usd": 70,
     "waiver": "not_stated",
     "note_ar": "للمتقدمين الدوليين.",
     "source_url": "https://www.vt.edu/admissions/undergraduate/apply/freshman-checklist.html"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "own",
+    "count": 4,
+    "summary_ar": "أربعة أسئلة قصيرة في Ut Prosim Profile، إلزامية لكل المتقدمين، حتى 120 كلمة لكل منها: خدمة مجتمعك، وتجربة مع الإقصاء، والقيادة، وهدف وضعته وخطتك له.",
+    "source_url": "https://www.vt.edu/admissions/undergraduate/apply/ut-prosim-short-answer-questions.html"
   }
 }

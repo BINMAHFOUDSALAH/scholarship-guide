@@ -1,0 +1,46 @@
+{
+  "id": "universitat-ramon-llull",
+  "name_en": "Universitat Ramon Llull",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، خريف 2027",
+  "admissions_url": "https://www.url.edu/en/programmes/admissions/admissions-bachelors-degrees",
+  "platform": {
+    "value_ar": "قسم القبول في الكلية المختارة، والتقديم الإلكتروني في موقع IQS لبرامجها بالإنجليزية",
+    "source_url": "https://www.url.edu/en/programmes/admissions/admissions-bachelors-degrees"
+  },
+  "english": {
+    "ielts": {
+      "min": 7.0,
+      "varies": true,
+      "note_ar": "لبرامج IQS بالإنجليزية بالكامل (Business Administration وInternational Business وMarketing): مستوى C1.",
+      "source_url": "https://iqs.edu/en/bachelors-admissions"
+    },
+    "toefl_ibt": {
+      "min": 90,
+      "varies": true,
+      "note_ar": "لبرامج IQS نفسها.",
+      "source_url": "https://iqs.edu/en/bachelors-admissions"
+    },
+    "duolingo": {
+      "min": 130,
+      "varies": true,
+      "note_ar": "لبرامج IQS نفسها.",
+      "source_url": "https://iqs.edu/en/bachelors-admissions"
+    },
+    "note_ar": "القيم لبرامج IQS الثلاثة فقط، ومن لا يملك شهادة يؤدي اختبار مستوى داخليًا."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "بعض البرامج بالإنجليزية (مثل Business Administration في IQS وInternational Relations)، وأغلبها بالإسبانية والكتالونية والإنجليزية. ومن خارج الاتحاد الأوروبي يحتاج وثيقة معادلة الشهادة أو إثبات طلبها.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة. وجدول وزارة التعليم الإسبانية للسعودية يربط الصف الثاني عشر بمعادلة البكالوريا، ويقول إنه للمعلومات فقط",
+    "مواعيد التقديم لعام 2027-2028 لم تُنشر بعد"
+  ]
+}

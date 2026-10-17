@@ -1,0 +1,48 @@
+{
+  "id": "epfl",
+  "name_en": "EPFL",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، خريف 2027",
+  "admissions_url": "https://www.epfl.ch/education/admission/admission-2/bachelor-admission-criteria-and-application/",
+  "platform": {
+    "value_ar": "استمارة التقديم الإلكترونية في موقع EPFL",
+    "source_url": "https://www.epfl.ch/education/admission/admission-2/bachelor-admission-criteria-and-application/how-to-apply/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الدراسة بالفرنسية، وصفحات القبول لا تطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتسجيل في امتحان الدخول",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-12-01",
+      "year_stated": true,
+      "note_ar": "امتحان الدخول 2027، والتسجيل من 1 أكتوبر",
+      "source_url": "https://www.epfl.ch/education/admission/admission-2/bachelor-admission-criteria-and-application/admission-examination/"
+    },
+    {
+      "event_ar": "امتحان الدخول (المواد العلمية)",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-18",
+      "year_stated": true,
+      "note_ar": "من 18 إلى 22 يناير 2027، ومواد عامة في أغسطس وسبتمبر 2027",
+      "source_url": "https://www.epfl.ch/education/admission/admission-2/bachelor-admission-criteria-and-application/admission-examination/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "أغلب المقررات بالفرنسية، ومن السنة الثانية قد يصل الإنجليزي إلى نصف الخطة. المطلوب مستوى B2 في الفرنسية، وC1 «موصى به بشدة».",
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حامل الشهادة السعودية يُقبل بامتحان الدخول فقط (Entrance Examination)، حسب EPFL وقائمة swissuniversities لعام 2026/27.",
+    "quote": "Holders of an upper secondary school certificate from a country that is not a member of EU, EFTA, nor UK and does not appear in that document can only be accepted through the entrance exam.",
+    "source_url": "https://www.epfl.ch/education/admission/admission-2/bachelor-admission-criteria-and-application/"
+  },
+  "not_found_ar": [
+    "موعد التقديم للبكالوريوس (30 أبريل) منشور دون سنة"
+  ]
+}

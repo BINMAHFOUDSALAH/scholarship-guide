@@ -1,7 +1,7 @@
 {
   "id": "the-university-of-sydney",
   "name_en": "The University of Sydney",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
   "admissions_url": "https://www.sydney.edu.au/study/applying/how-to-apply/international-students.html",
   "platform": {
@@ -16,8 +16,18 @@
       "note_ar": "6.5 مع 6.0 في كل مهارة. بعض الكليات والبرامج تختلف.",
       "source_url": "https://www.sydney.edu.au/study/applying/how-to-apply/international-students/english-language-requirements.html"
     },
-    "toefl_ibt": null,
-    "duolingo": null,
+    "toefl_ibt": {
+      "min": 85,
+      "varies": true,
+      "note_ar": "معادل الشرط العام (IELTS 6.5) في جدول التحويل الرسمي للجامعة (يوليو 2026). لا تُقبل TOEFL Home Edition، وبعض الكليات تطلب أعلى.",
+      "source_url": "https://www.sydney.edu.au/content/dam/corporate/documents/study/how-to-apply/english-language-concordance-table-july-2026.pdf"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "جدول التحويل يذكر IELTS وTOEFL iBT وPTE وLanguageCert وCambridge، وليس منها Duolingo.",
+      "source_url": "https://www.sydney.edu.au/study/applying/how-to-apply/international-students/english-language-requirements.html"
+    },
     "note_ar": "الجامعة تحوّل شرط IELTS إلى TOEFL بجدول معادلة، ولا تنشر حدًا مستقلًا لـ TOEFL."
   },
   "sat_act": null,

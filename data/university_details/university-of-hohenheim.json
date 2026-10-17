@@ -1,0 +1,32 @@
+{
+  "id": "university-of-hohenheim",
+  "name_en": "University of Hohenheim",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://dein-studium.uni-hohenheim.de/en/applying-and-enrollment/applying/applying-as-a-non-eu-citizen",
+  "platform": {
+    "value_ar": "بوابة HohCampus في الجامعة (دون uni-assist)",
+    "source_url": "https://dein-studium.uni-hohenheim.de/en/applying-and-enrollment/applying/applying-as-a-non-eu-citizen"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "كل برامج البكالوريوس بالألمانية، فلا يُطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "كل البكالوريوس بالألمانية. المطلوب قبل موعد التقديم: TestDaF ‏4 في الأجزاء الأربعة، أو DSH-2، أو DSD II. ومن لا تؤهله شهادته مباشرة يمكنه دخول Studienkolleg لسنة.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وتقول uni-assist إن حامل شهادة ثانوية من مدرسة خاصة تُقيَّم شهادته حسب إرشادات ZAB، وإن سنة جامعية في جامعة معتمدة تؤهل لدخول Studienkolleg.",
+    "مواعيد التقديم (15 يوليو للفصل الشتوي) منشورة دون سنة"
+  ]
+}

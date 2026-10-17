@@ -1,0 +1,32 @@
+{
+  "id": "universitat-konstanz",
+  "name_en": "Universität Konstanz",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.uni-konstanz.de/en/study/before-you-study/application-and-enrolment/bachelors-degree-and-first-state-examination-in-law/higher-education-entrance-qualification-earned-outside-the-eu/",
+  "platform": {
+    "value_ar": "بوابة ZEuS في الجامعة",
+    "source_url": "https://www.uni-konstanz.de/en/study/before-you-study/application-and-enrolment/bachelors-degree-and-first-state-examination-in-law/higher-education-entrance-qualification-earned-outside-the-eu/"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "صفحات القبول لا تطلب اختبار إنجليزية، ولم نجد بكالوريوس بالإنجليزية كاملًا.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "البكالوريوس بالألمانية، وبعضها بالألمانية والإنجليزية (مثل Biological Sciences). المطلوب DSH-2 أو TestDaF ‏4، والجامعة لا تقدم دورات ألمانية تحضيرية.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وتقول uni-assist إن حامل شهادة ثانوية من مدرسة خاصة تُقيَّم شهادته حسب إرشادات ZAB، وإن سنة جامعية في جامعة معتمدة تؤهل لدخول Studienkolleg.",
+    "مواعيد التقديم (15 يوليو للبرامج المقيدة و15 سبتمبر لغيرها) منشورة دون سنة"
+  ]
+}

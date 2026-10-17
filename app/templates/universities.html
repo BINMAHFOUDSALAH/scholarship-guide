@@ -14,8 +14,6 @@
   <header class="explorer-header" data-explorer-header{% if r.track == "arruaad" %} hidden{% endif %}>
     <h1>الجامعات في قوائم الابتعاث</h1>
     <p class="lead">هل الجامعة في قوائم برنامج خادم الحرمين الشريفين للابتعاث؟ وماذا تطلب للقبول؟</p>
-    {# What the tool answers, and what it doesn't (decision 038). #}
-    <p class="explorer-scope"><strong>وجود الجامعة في القائمة لا يعني قبولك فيها:</strong> القائمة تحدد الجامعات التي يبتعث لها المسار، والجامعة هي التي تقرر قبولك. <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#admission-vs-scholarship">الفرق بين القبول والابتعاث ←</a></p>
   </header>
 
   <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" aria-label="البحث في الجامعات" data-explorer>

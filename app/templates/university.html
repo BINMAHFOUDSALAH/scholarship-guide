@@ -57,7 +57,7 @@
       {% if d and d.platform %}
       <div class="summary-row">
         <dt>منصة التقديم</dt>
-        <dd>{{ d.platform.value_ar }}{% if u.country == "US" %} · <a href="{{ url_for('resource_page', slug='us-applications') }}">كيف أقدّم؟</a>{% endif %}</dd>
+        <dd>{{ d.platform.value_ar }}{% if u.country == "US" %} · <a href="{{ url_for('resource_page', slug='us-applications') }}">كيف أقدّم؟</a>{% elif u.country == "GB" %} · <a href="{{ url_for('resource_page', slug='uk-applications') }}">كيف أقدّم؟</a>{% endif %}</dd>
       </div>
       {% endif %}
       {% if d and d.application_fee %}
@@ -68,13 +68,16 @@
       {% endif %}
       {% set k = explorer.key_facts(u.id) %}
       {% if k.researched %}
+      {% if k.sat_ar %}
       <div class="summary-row">
         <dt><span lang="en" dir="ltr">SAT / ACT</span></dt>
         <dd>{{ k.sat_ar }}</dd>
       </div>
+      {% endif %}
       <div class="summary-row">
-        <dt><span lang="en" dir="ltr">IELTS</span></dt>
-        <dd>{{ k.ielts_ar }} · <a href="#requirements">التفاصيل</a></dd>
+        <dt>اختبارات الإنجليزية</dt>
+        <dd>{% if k.english %}<ul class="glance-tests">{% for t in k.english %}<li><span lang="en" dir="ltr">{{ t.label }}</span>: {{ t.text }}</li>{% endfor %}</ul>{% else %}{{ k.english_none_ar }}{% endif %}
+          <a href="#requirements">التفاصيل</a></dd>
       </div>
       {% endif %}
     </dl>
@@ -83,11 +86,6 @@
       <a class="btn btn--primary" href="{{ d.admissions_url }}" target="_blank" rel="noopener">صفحة القبول في موقع الجامعة ↗</a>
     </div>
     {% endif %}
-
-    <div class="notice">
-      <p><strong>وجود الجامعة في قائمة المسار لا يعني قبولك فيها.</strong> تتقدم على الجامعة بنفسك وهي التي تقرر قبولك، ثم تقدّم على الابتعاث بخطاب القبول، والوزارة هي التي تقرر الترشيح.
-        <a href="{{ url_for('program_page', slug='custodian-scholarship') }}#admission-vs-scholarship">الفرق بين القبول والابتعاث ←</a></p>
-    </div>
 
     {% if not u.country_info.english %}
     <div class="notice notice--warn">
@@ -218,6 +216,7 @@
             <p class="req-score-line">
               <span class="req-score-test" lang="en" dir="ltr">{{ t.label }}</span>
               {% if not t.accepted %}<strong>لا يُقبل لإثبات اللغة</strong>
+              {% elif not t.listed %}<span>{{ not_listed_ar }}</span>
               {% else %}
               {% if t.min %}<span>الحد الأدنى <strong>{{ t.min }}</strong>{% if t.each_min %}، ولا تقل أي مهارة عن {{ t.each_min }}{% endif %}</span>{% endif %}
               {% if t.recommended %}<span>الموصى به <strong>{{ t.recommended }}</strong></span>{% endif %}
@@ -246,6 +245,13 @@
 
       {% if d.sat_act %}
       <div class="summary-row"><dt><span lang="en" dir="ltr">SAT / ACT</span></dt><dd><strong>{{ sat_policy_ar.get(d.sat_act.policy, d.sat_act.policy) }}</strong>{% if d.sat_act.note_ar %} · {{ d.sat_act.note_ar }}{% endif %}{% if d.sat_act.source_url %} <a class="src" href="{{ d.sat_act.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}</dd></div>
+      {% endif %}
+
+      {% if d.essays %}
+      {# What the university asks applicants to write (decision 061), summarised, with the guide one click away. #}
+      {% set e = d.essays %}
+      <div class="summary-row"><dt>المقالات</dt><dd>{{ e.summary_ar }}{% if e.cycle_ar %} (لـ{{ e.cycle_ar }}){% endif %} <a class="src" href="{{ e.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>
+        · <a href="{{ url_for('resource_page', slug='application-essays') }}">كيف تكتب مقالات القبول؟</a></dd></div>
       {% endif %}
 
       {% if d.acceptance_rate %}

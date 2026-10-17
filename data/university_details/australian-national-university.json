@@ -1,7 +1,7 @@
 {
   "id": "australian-national-university",
   "name_en": "Australian National University",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
   "admissions_url": "https://study.anu.edu.au/apply/international-applications",
   "platform": {
@@ -20,7 +20,12 @@
       "note_ar": "للدراسة من 1 يناير 2027: 81، مع 16 للقراءة والاستماع و19 للكتابة والتحدث. يُقبل TOEFL iBT Australia فقط (المقياس 0–120).",
       "source_url": "https://policies.anu.edu.au/ppl/pdfdownload/1801"
     },
-    "duolingo": null,
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "جدول الاختبارات المقبولة للبكالوريوس في سياسة الجامعة لا يذكر Duolingo.",
+      "source_url": "https://policies.anu.edu.au/ppl/pdfdownload/1801"
+    },
     "note_ar": null
   },
   "sat_act": null,

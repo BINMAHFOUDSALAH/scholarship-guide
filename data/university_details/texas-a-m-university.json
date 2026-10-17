@@ -1,7 +1,7 @@
 {
   "id": "texas-a-m-university",
   "name_en": "Texas A&M University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.tamu.edu/admissions/how-to-apply/apply-as-international.html",
   "platform": {
@@ -9,10 +9,23 @@
     "source_url": "https://www.tamu.edu/admissions/how-to-apply/apply-as-freshman.html"
   },
   "english": {
-    "ielts": null,
-    "toefl_ibt": null,
-    "duolingo": null,
-    "note_ar": "إثبات الإنجليزية مطلوب لمواطني الدول غير الناطقة بها، وصفحة الدرجات لم تُفتح."
+    "ielts": {
+      "min": 6.0,
+      "note_ar": "خلال سنتين من موعد الالتحاق. الصفحة لا تذكر حدًا لكل مهارة.",
+      "source_url": "https://catalog.tamu.edu/undergraduate/general-information/admission/"
+    },
+    "toefl_ibt": {
+      "min": 80,
+      "note_ar": "على مقياس 0–120، خلال سنتين من موعد الالتحاق. لا تقبل الجامعة MyBest TOEFL.",
+      "source_url": "https://catalog.tamu.edu/undergraduate/general-information/admission/"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "دليل البكالوريوس يعدّد طرق إثبات الإنجليزية (TOEFL وIELTS وغيرهما)، وليس منها Duolingo.",
+      "source_url": "https://catalog.tamu.edu/undergraduate/general-information/admission/"
+    },
+    "note_ar": "من لغته ليست الإنجليزية يلزمه إثبات الإنجليزية. الأرقام من دليل الجامعة للبكالوريوس 2026–2027."
   },
   "sat_act": {
     "policy": "optional",
@@ -33,7 +46,6 @@
   "acceptance_rate": null,
   "language_note_ar": null,
   "not_found_ar": [
-    "درجات اللغة الدنيا: صفحة القبول الدولي لم تُفتح (404).",
     "نسبة القبول غير متاحة."
   ],
   "application_fee": {
@@ -41,5 +53,11 @@
     "waiver": "domestic_only",
     "note_ar": "الإعفاء غير متاح للدوليين. صفحتان رسميتان تختلفان في قيمة الرسوم (90 و75 دولارًا)",
     "source_url": "https://catalog.tamu.edu/undergraduate/general-information/admission/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 1,
+    "summary_ar": "مقال واحد مطلوب مع الطلب. الصفحة لا تذكر سؤاله ولا حد كلماته.",
+    "source_url": "https://www.tamu.edu/admissions/how-to-apply/apply-as-freshman.html"
   }
 }

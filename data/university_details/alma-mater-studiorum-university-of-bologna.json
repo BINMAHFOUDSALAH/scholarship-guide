@@ -1,0 +1,35 @@
+{
+  "id": "alma-mater-studiorum-university-of-bologna",
+  "name_en": "Alma Mater Studiorum - University of Bologna",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2026-2027 (لم تُنشر مواعيد 2027-2028 بعد)",
+  "admissions_url": "https://www.unibo.it/en/study/first-and-single-cycle-degree",
+  "platform": {
+    "value_ar": "Studenti Online لاختبار القبول، وUniversitaly للتسجيل المسبق والتأشيرة",
+    "source_url": "https://www.unibo.it/en/study/enrolment-fees-and-other-procedures/degree-programmes/enrolling-in-first-or-single-cycle-degree-programme-foreign-qualification"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "البرامج بالإنجليزية تطلب مستوى B2 (مثل International Studies) دون درجة اختبار محددة في الصفحة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "في International Studies: TOLC-E مع إنجليزية B2، أو SAT في الجولة الثانية.",
+    "source_url": "https://corsi.unibo.it/1cycle/InternationalStudies/how-to-enrol"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "من البكالوريوس بالإنجليزية بالكامل: International Studies وEuropean Studies وBuilding Construction Engineering. والبرامج بالإيطالية تطلب إيطالية B2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة، والقاعدة العامة شهادة بعد 12 سنة دراسية على الأقل",
+    "مواعيد القبول لعام 2027-2028 لم تُنشر بعد (المنشور لعام 2026-2027)"
+  ]
+}

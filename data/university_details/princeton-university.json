@@ -1,7 +1,7 @@
 {
   "id": "princeton-university",
   "name_en": "Princeton University",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admission.princeton.edu/apply",
   "platform": {
@@ -66,5 +66,11 @@
     "waiver": "accepts_common_app",
     "note_ar": "وكل الطلاب ذوي الدخل المحدود مؤهلون لإعفاء Princeton الخاص",
     "source_url": "https://admission.princeton.edu/apply/application-checklist"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 6,
+    "summary_ar": "ست إجابات خاصة بالجامعة: مقال أكاديمي حتى 250 كلمة، ومقالان (400–500 كلمة، وحتى 250 كلمة)، وثلاث إجابات حتى 50 كلمة. وورقة مدرسية مصححة (graded written paper).",
+    "source_url": "https://admission.princeton.edu/apply/princeton-specific-questions"
   }
 }

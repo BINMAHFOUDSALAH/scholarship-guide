@@ -1,7 +1,7 @@
 {
   "id": "university-of-south-florida",
   "name_en": "University of South Florida",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-academic-requirements.aspx",
   "platform": {
@@ -60,5 +60,11 @@
     "waiver": "not_stated",
     "note_ar": null,
     "source_url": "https://www.usf.edu/admissions/international/admission-information/undergraduate/freshmen-how-to-apply.aspx"
+  },
+  "essays": {
+    "personal_essay": "none",
+    "count": 0,
+    "summary_ar": "لا يُطلب مقال ولا بيان شخصي، وما يُرسل منهما لا يُقرأ. كلية الشرف تطلب مقالًا في طلبها المنفصل.",
+    "source_url": "https://www.usf.edu/admissions/freshmen/admission-information/academic-requirements.aspx"
   }
 }

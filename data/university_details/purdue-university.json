@@ -1,7 +1,7 @@
 {
   "id": "purdue-university",
   "name_en": "Purdue University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.purdue.edu/become-student/international/",
   "platform": {
@@ -61,5 +61,11 @@
   "language_note_ar": null,
   "not_found_ar": [
     "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية."
-  ]
+  ],
+  "essays": {
+    "personal_essay": "common_app",
+    "count": 2,
+    "summary_ar": "مقال Common App الشخصي (250–650 كلمة)، وسؤالان إلزاميان حتى 250 كلمة: كيف ستدعم الجامعة اهتماماتك، ولماذا تخصصك. وسؤال ثالث لمن يختار تخصصًا بديلًا.",
+    "source_url": "https://admissions.purdue.edu/apply/essay.php"
+  }
 }

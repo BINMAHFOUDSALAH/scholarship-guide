@@ -1,32 +1,36 @@
 {
   "id": "ucl-university-college-london",
   "name_en": "UCL (University College London)",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
-  "admissions_url": "https://www.ucl.ac.uk/prospective-students/undergraduate/how-apply",
+  "admissions_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/guidance-international-applicants",
   "platform": {
-    "value_ar": "UCAS (الرمز U80)",
-    "source_url": "https://ucl.ac.uk/prospective-students/undergraduate/how-apply"
+    "value_ar": "UCAS",
+    "source_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/entry-requirements"
   },
   "english": {
     "ielts": {
       "min": 6.5,
-      "note_ar": "الحد الأدنى يعتمد على مستوى البرنامج من 5 مستويات: المستوى 1 يطلب 6.5 إجمالًا مع 6.0 لكل مهارة، والمستوى 4 يطلب 7.5 مع 7.0 لكل مهارة، والمستوى 5 يطلب 8.0. تحقق من مستوى برنامجك. IELTS Academic Online مقبول، وIELTS One Skill Retake غير مقبول. هذه القيم من مقتطف بحث رسمي، والصفحة تعذّر فتحها (403).",
-      "source_url": "https://www.ucl.ac.uk/prospective-students/undergraduate/application/entry-requirements/english-language-requirements"
+      "each_min": 6.0,
+      "varies": true,
+      "note_ar": "خمسة مستويات حسب التخصص: المستوى 1 يطلب 6.5 ولا تقل مهارة عن 6.0، والمستوى 4 يطلب 7.5 مع 7.0، والمستوى 5 يطلب 8.0. مستوى تخصصك في صفحته. IELTS Academic Online مقبول، وOne Skill Retake غير مقبول.",
+      "source_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/english-language-requirements"
     },
     "toefl_ibt": {
       "min": 4.5,
-      "note_ar": "المقياس العشري 1–6 للاختبارات بعد 21 يناير 2026: المستوى 1 يطلب 4.5 إجمالًا مع 4.0 لكل مهارة، والمستوى 4 يطلب 5.5 مع 5.0 لكل مهارة. قبل 21 يناير 2026 كان المقياس 0–120 (المستوى 1: 92 إجمالًا). لا تُجمع نتائج اختبارات مختلفة، ولا يُقبل MyBest. رمز UCL لـ TOEFL هو 9163. حدود المستويات الأعلى تتعارض بين مقتطفين لمستوى 3، لذلك لم نعتمدها.",
-      "source_url": "https://www.ucl.ac.uk/prospective-students/undergraduate/application/entry-requirements/english-language-requirements"
+      "varies": true,
+      "note_ar": "للاختبارات من 21 يناير 2026 (مقياس 1–6): المستوى 1 يطلب 4.5 ولا تقل مهارة عن 4.0، والمستوى 4 يطلب 5.5 مع 5.0.",
+      "source_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/english-language-requirements"
     },
-    "duolingo": null,
-    "note_ar": "تقول UCL إن الطالب يحتاج إثبات قدرته الإنجليزية حديثًا، وإن بعض البرامج لها شرط أعلى (مثل القانون: المستوى 4). الصفحة لم تُفتح، والأرقام من مقتطفات بحث."
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة UCL لكل الاختبارات المقبولة لا تذكر Duolingo.",
+      "source_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/english-language-requirements"
+    },
+    "note_ar": "يجب أن يكون الاختبار قبل الالتحاق بسنتين على الأكثر: لدخول سبتمبر 2027، من 1 سبتمبر 2025 فما بعد. والموعد الأخير لتحقيق الشرط 1 سبتمبر 2027."
   },
-  "sat_act": {
-    "policy": "optional",
-    "note_ar": "لا يُطلب SAT أو ACT من طلاب النظام السعودي. لمتقدمي النظام الأمريكي: مسار AP وحده (من 3 إلى 5 مواد AP)، أو مادتان AP مع SAT أو ACT. مثال: A*A*A تتطلب خمس AP بدرجة 5، أو درجتي 5 مع SAT 1500 أو ACT 34. الصفحة لا تحدد الدورة، والمقتطف من بحث.",
-    "source_url": "https://www.ucl.ac.uk/prospective-students/international/united-states-america"
-  },
+  "sat_act": null,
   "dates": [
     {
       "event_ar": "آخر موعد للتقديم",
@@ -39,12 +43,20 @@
     }
   ],
   "acceptance_rate": null,
-  "language_note_ar": "التوجيهية السعودية غير مقبولة للقبول المباشر في UCL حسب صفحة UCL الخاصة بالسعودية (من مقتطف بحث، والصفحة تعذّر فتحها 403). المسارات المقبولة: A levels أو IB أو البكالوريا الفرنسية أو AP، أو الدبلوم الأساس UPC (Undergraduate Preparatory Certificate) الذي تعتبره UCL دبلومًا أساسيًا دوليًا لمن لا تُقبل شهادته للقبول المباشر، أو سنة مكتملة في جامعة سعودية مع درجات تعادل مستوى الشرف المحدد. أرقام المعدل المطلوب مختلفة بين صفحات UCL (80% في صفحة و85% في أخرى)، لذلك لم نعرض رقمًا. تحقق من التخصص عبر قائمة المؤهلات في دليل البرامج (اختر Saudi Arabia من قائمة 'Other qualifications'). الطب لا يقبل المؤهلات الدولية إلا إذا ذُكر ذلك صراحة.",
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "ucas",
+    "summary_ar": "خطاب الدافع في UCAS (ثلاثة أسئلة، 4,000 حرف).",
+    "source_url": "https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement/how-to-write-your-personal-statement-for-2026-entry-onwards"
+  },
   "not_found_ar": [
-    "صفحات ucl.ac.uk الرسمية رفضت الفتح (403)، لذلك كل القيم أعلاه من مقتطفات بحث وتحتاج إلى تحقق قبل النشر",
-    "نسبة القبول العامة أو للطلاب الدوليين غير منشورة في ما وجدناه، ولم نحسب نسبة من أرقام تقريبية",
-    "Duolingo English Test غير مذكور في المقتطفات التي وجدناها",
-    "اختبارات القبول الخاصة بالتخصص مثل TARA لهندسة الميكانيكا وESAT للهندسة الكهربائية والإلكترونية مذكورة في مقتطفات، ويجب التحقق من صفحة التخصص قبل التقديم"
-  ],
-  "draft": true
+    "حكم الثانوية السعودية: تذكره UCL في صفحة كل تخصص (قائمة الدول في قسم المؤهلات الدولية)، وتقدّم سنة تأسيس دولية (UPC) لمن لا تقبل شهادته للقبول المباشر"
+  ]
 }

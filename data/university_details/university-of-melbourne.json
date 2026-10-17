@@ -1,0 +1,43 @@
+{
+  "id": "university-of-melbourne",
+  "name_en": "University of Melbourne",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2027",
+  "admissions_url": "https://study.unimelb.edu.au/how-to-apply/english-language-requirements",
+  "platform": null,
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
+      "note_ar": "المستوى 1 (أدنى مستوى): 6.5 ولا تقل مهارة عن 6.0. بعض التخصصات تطلب مستوى أعلى. يُقبل IELTS One Skill Retake.",
+      "source_url": "https://study.unimelb.edu.au/how-to-apply/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": 81,
+      "varies": true,
+      "note_ar": "المستوى 1 على مقياس 0–120: 81، مع الكتابة والتحدث 19 والقراءة والاستماع 16. تطلب الجامعة تقرير الدرجات بمقياس 0–120.",
+      "source_url": "https://study.unimelb.edu.au/how-to-apply/english-language-requirements"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة الاختبارات المقبولة لا تذكر Duolingo.",
+      "source_url": "https://study.unimelb.edu.au/how-to-apply/english-language-requirements"
+    },
+    "note_ar": "يجب أن يكون الاختبار في مركز اختبار، ولا تُقبل النسخ المنزلية أو عبر الإنترنت، وخلال 24 شهرًا من بدء الدراسة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية ومنصة التقديم والمواعيد: لم نقرأها في صفحة رسمية بعد"
+  ]
+}

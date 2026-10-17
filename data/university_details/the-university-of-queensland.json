@@ -1,7 +1,7 @@
 {
   "id": "the-university-of-queensland",
   "name_en": "The University of Queensland",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول للفصل الثاني 2027 (يوليو)",
   "admissions_url": "https://study.uq.edu.au/admissions/undergraduate/submit-your-application",
   "platform": {
@@ -21,7 +21,12 @@
       "note_ar": "الحد العام: 87، مع 19 للاستماع والقراءة والتحدث و21 للكتابة. UQ تقبل TOEFL بمقياس المهارات 1–30 فقط.",
       "source_url": "https://policies.uq.edu.au/download.php?associated=1&id=172"
     },
-    "duolingo": null,
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "جداول الاختبارات المعتمدة للقبول لا تذكر Duolingo.",
+      "source_url": "https://study.uq.edu.au/admissions/english-language-requirements"
+    },
     "note_ar": null
   },
   "sat_act": null,

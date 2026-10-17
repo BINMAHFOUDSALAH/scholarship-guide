@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -20,9 +20,21 @@
     "source_url": "https://www.babson.edu/undergraduate/how-to-apply/"
   },
   "english": {
-    "ielts": null,
-    "toefl_ibt": null,
-    "duolingo": null,
+    "ielts": {
+      "min": null,
+      "note_ar": "مقبول، والصفحة لا تذكر درجة.",
+      "source_url": "https://www.babson.edu/undergraduate/how-to-apply/international-applicants/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "مقبول، والصفحة لا تذكر درجة. رمز Babson في ETS هو 3075.",
+      "source_url": "https://www.babson.edu/undergraduate/how-to-apply/international-applicants/"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "مقبول، والصفحة لا تذكر درجة.",
+      "source_url": "https://www.babson.edu/undergraduate/how-to-apply/international-applicants/"
+    },
     "note_ar": "تقبل TOEFL وIELTS وDuolingo وCambridge، ولا تنشر حدًا أدنى."
   },
   "application_fee": {
@@ -30,5 +42,11 @@
     "waiver": "own_waiver",
     "note_ar": "يمكن طلب الإعفاء من مكتب القبول.",
     "source_url": "https://www.babson.edu/undergraduate/how-to-apply/"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "count": 2,
+    "summary_ar": "مقال Common App الشخصي، ومقالان تكميليان: الأول حتى 500 كلمة عن أثرك في مجال الأعمال الذي تختاره (أو فيديو مدته دقيقة)، والثاني حتى 250 كلمة عن التفاهم عبر الاختلاف أو مساهمتك في مجتمع الكلية.",
+    "source_url": "https://www.babson.edu/undergraduate/how-to-apply/evaluation-criteria/"
   }
 }

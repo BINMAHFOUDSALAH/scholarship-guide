@@ -1,0 +1,36 @@
+{
+  "id": "university-of-florence",
+  "name_en": "University of Florence",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.unifi.it/en/study-us/your-learning-path/start-your-enrolment/international-students/non-eu-students",
+  "platform": {
+    "value_ar": "بوابة GCS في الجامعة، وUniversitaly للتسجيل المسبق والتأشيرة",
+    "source_url": "https://www.unifi.it/en/study-us/your-learning-path/start-your-enrolment/international-students/non-eu-students"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "varies": true,
+      "note_ar": "لبرنامج Sustainable Business for Societal Challenges (البكالوريوس الوحيد بالإنجليزية)، في دعوة 2026/2027.",
+      "source_url": "https://www.economia.unifi.it/upload/sub/Bando%20test/2026-27_-_BANDO_Susbus_def_1_fto.pdf"
+    },
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "البرنامج بالإنجليزية يطلب B2، ويمكن إثباته أيضًا باختبار في مركز اللغات في الجامعة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "بكالوريوس واحد بالإنجليزية: Sustainable Business for Societal Challenges. والبقية بالإيطالية وتطلب إيطالية B2.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة، والقاعدة العامة شهادة بعد 12 سنة دراسية على الأقل",
+    "مواعيد التقديم لعام 2027-2028 لم تُنشر بعد في صفحات الجامعة"
+  ]
+}

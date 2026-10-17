@@ -1,7 +1,7 @@
 {
   "id": "university-of-derby",
   "name_en": "University of Derby",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.derby.ac.uk/undergraduate/apply/",
   "platform": {
@@ -21,7 +21,12 @@
       "note_ar": "المقابل لـ IELTS 6.0، للاختبارات من 21 يناير 2026: 4، مع 3.5 في القراءة و3 في الاستماع والكتابة والتحدث. المقياس القديم: 79.",
       "source_url": "https://www.derby.ac.uk/life/international-students/applicants/english-language-tests/"
     },
-    "duolingo": null,
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "صفحة اختبارات الإنجليزية لا تذكر Duolingo بين الاختبارات المقبولة.",
+      "source_url": "https://www.derby.ac.uk/life/international-students/applicants/english-language-tests/"
+    },
     "note_ar": null
   },
   "sat_act": null,
@@ -47,5 +52,11 @@
   "not_found_ar": [
     "صفحة Derby للشرق الأوسط تذكر الثانوية السعودية (معدل 70%) لسنة التأسيس الدولية فقط، وقائمة البكالوريوس للسعودية لا تذكرها",
     "Duolingo غير مذكور في صفحة اختبارات اللغة"
-  ]
+  ],
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "ucas",
+    "summary_ar": "خطاب الدافع في UCAS (ثلاثة أسئلة، 4,000 حرف).",
+    "source_url": "https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement/how-to-write-your-personal-statement-for-2026-entry-onwards"
+  }
 }

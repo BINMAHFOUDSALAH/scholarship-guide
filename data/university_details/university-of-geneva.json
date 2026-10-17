@@ -1,0 +1,31 @@
+{
+  "id": "university-of-geneva",
+  "name_en": "University of Geneva",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، خريف 2027",
+  "admissions_url": "https://www.unige.ch/immatriculations/conditions",
+  "platform": {
+    "value_ar": "بوابة الترشح الإلكترونية في موقع الجامعة",
+    "source_url": "https://www.unige.ch/immatriculations/etapes"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الدراسة بالفرنسية، وصفحات القبول لا تطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "الدراسة بالفرنسية، ومستوى B2 «مطلوب من حيث المبدأ»، وإلا فامتحان فرنسية تنظمه الجامعة. يُعفى حامل DELF B2 أو DALF أو TCF/TEF بمستوى B2.",
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حسب أداة الشروط في الجامعة: حامل الثانوية السعودية يحتاج شهادة جامعية أولى لا تقل عن 3 سنوات (180 ECTS)، وتوافقها قائمة swissuniversities.",
+    "quote": "Au vu du filtre choisi (Etudes secondaires supérieures), vous ne seriez à priori pas immatriculable pour la rentrée prochaine.",
+    "source_url": "https://www.unige.ch/immatriculations/conditions"
+  },
+  "not_found_ar": [
+    "موعد التقديم (28 فبراير أو 30 أبريل حسب الحالة) منشور دون سنة"
+  ]
+}

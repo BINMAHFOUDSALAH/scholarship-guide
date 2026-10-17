@@ -1,7 +1,7 @@
 {
   "id": "university-of-texas-at-austin",
   "name_en": "University of Texas at Austin",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.utexas.edu/apply/international-students/",
   "platform": {
@@ -62,5 +62,11 @@
     "waiver": "domestic_only",
     "note_ar": "الإعفاء غير متاح للطلاب الدوليين",
     "source_url": "https://admissions.utexas.edu/apply/international-students/"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "count": 2,
+    "summary_ar": "مقال من 500 إلى 650 كلمة (يكفي مقال Common App)، وإجابتان قصيرتان إلزاميتان نحو 250–300 كلمة: لماذا تخصصك، والنشاط الذي تفخر به. وإجابة اختيارية عن ظروفك.",
+    "source_url": "https://admissions.utexas.edu/apply/application-materials/essays-and-short-answers/"
   }
 }

@@ -15,7 +15,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.content import SLUG_PATTERN, list_slugs, load_page
 from app.search import SiteSearch
 from app.sky import rowwad_chart, star_field
-from app.universities import COUNT_FORMS, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
+from app.universities import COUNT_FORMS, NOT_LISTED_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
 
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR.parent / "data"
@@ -174,7 +174,7 @@ def program_slugs():
 
 
 # Site search (decision 045): built once at startup from the published pages and facts.
-site_search = SiteSearch(program_slugs(), paths_by_id, test_needs)
+site_search = SiteSearch(program_slugs(), paths_by_id, test_needs, explorer)
 
 app = FastAPI(title=site["name"])
 
@@ -222,6 +222,7 @@ templates.env.globals["sky_stars"] = {
 templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
 templates.env.globals["waiver_ar"] = WAIVER_AR
+templates.env.globals["not_listed_ar"] = NOT_LISTED_AR
 templates.env.filters["arabic_date"] = arabic_date
 # {{ 5 | count_ar("universities") }} → «5 جامعات» (Arabic counting rules, see universities.count_ar).
 templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun])

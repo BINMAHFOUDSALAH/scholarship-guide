@@ -1,0 +1,19 @@
+{#
+  «المقالات في الجامعات الأمريكية» (decision 061): from the essays field of each requirement file
+  (Explorer.essay_groups). The summary and source are on each university's page.
+#}
+{% set groups = explorer.essay_groups() %}
+{% if groups %}
+<section class="test-unis" id="universities" aria-labelledby="us-essays-title">
+  <h2 id="us-essays-title">المقالات الإضافية في الجامعات الأمريكية في القوائم</h2>
+  <p class="result-note">إضافةً إلى المقال الشخصي، حسب صفحة كل جامعة الرسمية. الأسئلة وحدود الكلمات في صف «المقالات» بصفحة الجامعة.</p>
+  {% for g in groups %}
+  <details class="us-fees-group"{% if loop.first %} open{% endif %}>
+    <summary>{{ g.title_ar }} ({{ g.rows | length | count_ar("universities") }})</summary>
+    <ul class="rows">
+      {% for r in g.rows %}<li><a href="{{ url_for('university_page', uid=r.id) }}#requirements">{{ r.name_ar }}</a>{% if r.count and r.count > 2 %} <span class="us-fees-fee">{{ r.count }}</span>{% endif %}</li>{% endfor %}
+    </ul>
+  </details>
+  {% endfor %}
+</section>
+{% endif %}

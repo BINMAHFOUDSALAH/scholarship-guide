@@ -81,7 +81,7 @@ def test_countries_say_whether_english_is_official():
 # ---------- researched requirements ----------
 
 DETAIL_FILES = sorted((DATA / "university_details").glob("*.json"))
-ENGLISH_KEYS = {"accepted", "min", "recommended", "each_min", "varies", "note_ar", "source_url", "recommended_source_url"}
+ENGLISH_KEYS = {"accepted", "listed", "min", "recommended", "each_min", "varies", "note_ar", "source_url", "recommended_source_url"}
 SNIPPET_MARKERS = ("مقتطف", "ملخص البحث", "نتيجة البحث", "قبل النشر")
 
 
@@ -110,6 +110,10 @@ def test_requirement_files_follow_the_schema(path):
         if item.get("accepted") is False:  # a refused test has no score to show
             assert item["min"] is None and item.get("recommended") is None and item.get("note_ar"), (path.stem, key)
         assert item.get("accepted", False) is False, (path.stem, key)  # only an explicit "not accepted" is stored
+        # Decision 061: "not among the tests the page lists" is stored only as false, never with a score.
+        assert item.get("listed", False) is False, (path.stem, key)
+        if item.get("listed") is False:
+            assert item["min"] is None and item.get("recommended") is None, (path.stem, key)
         if item["min"] is not None and item.get("recommended") is not None:
             assert item["recommended"] > item["min"], (path.stem, key)
         if item.get("each_min") is not None:
@@ -121,6 +125,14 @@ def test_requirement_files_follow_the_schema(path):
         if item["min"] is not None or item.get("recommended") is not None:
             name = {"ielts": "IELTS", "toefl_ibt": "TOEFL", "duolingo": "Duolingo"}[key]
             assert f"{name} غير مذكور" not in (d["english"].get("note_ar") or ""), (path.stem, key)
+    assert (d.get("english") or {}).get("required", False) is False, path.stem  # stored only when false (decision 061)
+    essays = d.get("essays")
+    if essays:  # decision 061: summarised in Arabic, with its official source
+        sourced(essays)
+        assert set(essays) <= {"cycle_ar", "personal_essay", "count", "summary_ar", "source_url"}, path.stem
+        assert essays.get("personal_essay") in (None, "common_app", "coalition", "own", "ucas", "uc_piq", "none"), path.stem
+        assert essays.get("count") is None or (isinstance(essays["count"], int) and essays["count"] >= 0), path.stem
+        assert essays["summary_ar"].strip(), path.stem
     if d.get("sat_act"):
         assert d["sat_act"]["policy"] in SAT_POLICY_AR, path.stem
         sourced(d["sat_act"])
@@ -406,9 +418,13 @@ def test_university_page_answers_first():
     html = client.get("/universities/stanford-university").text
     summary = html.split('id="summary-title"')[1].split("</section>")[0]
     assert "قوائم الابتعاث" in summary and "التخصصات" in summary
-    assert "أقرب موعد في الجامعة" in summary and "SAT / ACT" in summary and "IELTS" in summary
-    assert "لا يعني قبولك فيها" in summary  # being on a list is not admission
-    assert "/programs/custodian-scholarship#admission-vs-scholarship" in summary
+    assert "أقرب موعد في الجامعة" in summary and "SAT / ACT" in summary and "اختبارات الإنجليزية" in summary
+    # All the English tests the file covers, not IELTS only (decision 061).
+    assert "IELTS" in summary and "TOEFL iBT" in summary and "Duolingo" in summary
+    # The admission ≠ scholarship notice is said once, in the dates block, with its source (decision 061).
+    assert "لا يعني قبولك فيها" not in html
+    dates = html.split('id="dates-title"')[1]
+    assert "بعد</strong> أن يصلك قبول الجامعة" in dates
     assert html.index('id="summary-title"') < html.index('id="lists-title"') < html.index('id="req-title"')
     assert 'id="dates-title"' in html
 
@@ -461,7 +477,7 @@ def test_result_rows_can_be_saved_from_the_list():
 
 def test_my_list_explains_where_the_list_lives_and_when_storage_is_blocked():
     html = client.get("/my-list").text
-    assert "لا تنتقل إلى جهاز أو متصفح آخر" in html and "التصفح الخاص" in html
+    assert "لا تنتقل إلى جهاز آخر" in html and "التصفح الخاص" in html  # the latter in the blocked-storage note
     assert "data-mylist-blocked hidden" in html
 
 
@@ -517,10 +533,19 @@ def test_results_show_key_facts_or_say_they_are_not_collected():
     assert "لم نجمعها بعد" in client.get(f"/my-list?partial=1&ids={unknown}").text
 
 
-def test_explorer_says_being_on_a_list_is_not_admission():
+def test_explorer_header_has_no_repeated_disclaimer():
+    """Removed at the owner's request (decision 061): the explorer opens on the search."""
     html = client.get("/universities").text
     header = html.split('class="explorer-header"')[1].split("</header>")[0]
-    assert "لا يعني قبولك فيها" in header and "#admission-vs-scholarship" in header
+    assert "لا يعني قبولك فيها" not in header
+
+
+def test_sat_row_only_where_sat_applies():
+    """No «SAT/ACT: لم نتحقق منه» for UK, Australian or European universities (decision 061)."""
+    assert ex.key_facts("university-of-manchester")["sat_ar"] is None
+    page = client.get("/universities/university-of-manchester").text
+    summary = page.split('id="summary-title"')[1].split("</section>")[0]
+    assert "SAT / ACT" not in summary
 
 
 def test_saved_list_rows_show_key_facts():
@@ -705,10 +730,15 @@ def test_toefl_says_which_scale_and_links_to_the_explainer():
 def test_unverified_research_stays_hidden_on_the_live_site():
     from app.universities import Explorer
     drafts = [p.stem for p in DETAIL_FILES if json.loads(p.read_text(encoding="utf-8")).get("draft")]
-    assert "university-of-oxford" in drafts and "ucl-university-college-london" in drafts
     assert not any(uid in ex.details for uid in drafts)
     assert all(uid in Explorer(show_drafts=True).details for uid in drafts)  # still there for the owner
-    assert ex.key_facts("university-of-oxford") == {"researched": False}
+
+
+def test_oxford_and_ucl_published_after_reading_their_pages():
+    """Decision 061: both were drafts filled from snippets (058); now read on the official pages."""
+    assert ex.details["university-of-oxford"]["saudi_certificate"]["direct_entry"] is False
+    assert ex.key_facts("university-of-oxford")["researched"]
+    assert ex.details["ucl-university-college-london"]["english"]["ielts"]["min"] == 6.5
 
 
 def test_a_missing_sat_policy_reads_as_unverified_not_unpublished():
@@ -740,3 +770,42 @@ def test_a_track_ranked_per_field_asks_for_the_field_first():
     assert '<details class="all-unis">' in html  # the full list is still there, folded
     # With a country the list is short, so it's shown directly.
     assert "pick_fields" not in ex.search(track="emdad", country="CA")["sections"][0]
+
+
+def test_test_summary_matches_the_files():
+    """The test pages' lists are computed from the requirement files (decision 061)."""
+    s = ex.test_summary("duolingo")
+    rows = [r for g in s["groups"] for r in g["rows"]]
+    assert len(rows) == s["researched"] == sum(1 for d in ex.details.values() if (d.get("english") or {}).get("duolingo"))
+    mins = next(g for g in s["groups"] if g["key"] == "min")["rows"]
+    assert [r["value"] for r in mins] == sorted(r["value"] for r in mins)
+
+
+def test_duolingo_page_lists_universities():
+    html = client.get("/resources/duolingo").text
+    assert 'id="universities"' in html and "/universities/stanford-university" in html
+    assert "10 إلى 160" in html
+
+
+def test_not_listed_is_not_the_same_as_not_accepted():
+    """«ليس ضمن الاختبارات التي تذكرها الجامعة» needs only the page's list; «لا يُقبل» needs the page to say so."""
+    from app.universities import NOT_LISTED_AR
+    assert ex.key_facts("university-of-cambridge")["english"][-1]["text"] == NOT_LISTED_AR
+    page = client.get("/universities/university-of-cambridge").text
+    assert NOT_LISTED_AR in page and "لا يُقبل لإثبات اللغة" not in page.split('id="req-title"')[1].split('id="dates-title"')[0]
+
+
+def test_new_guides_load_with_their_computed_lists():
+    """Decision 061: the UK and essays guides list universities from the requirement files."""
+    uk = client.get("/resources/uk-applications").text
+    assert "£34.50" in uk and 'id="universities"' in uk and "/universities/university-of-manchester" in uk
+    essays = client.get("/resources/application-essays").text
+    assert 'id="universities"' in essays and "/universities/stanford-university" in essays
+    assert sum(len(g["rows"]) for g in ex.essay_groups()) == sum(
+        1 for uid, d in ex.details.items() if d.get("essays") and ex.universities[uid]["country"] == "US")
+
+
+def test_university_page_shows_essays_and_uk_guide_link():
+    stanford = client.get("/universities/stanford-university").text
+    assert "المقالات" in stanford and "/resources/application-essays" in stanford
+    assert "/resources/uk-applications" in client.get("/universities/university-of-manchester").text

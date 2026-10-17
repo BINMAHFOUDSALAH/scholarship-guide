@@ -1,7 +1,7 @@
 {
   "id": "university-of-south-carolina",
   "name_en": "University of South Carolina",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://sc.edu/about/offices_and_divisions/undergraduate_admissions/apply/for_international_students/",
   "platform": {
@@ -56,5 +56,12 @@
   "not_found_ar": [
     "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
     "نسبة القبول: ملف CDS متاح فقط عبر رابط غير آمن (http)."
-  ]
+  ],
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "own",
+    "count": 0,
+    "summary_ar": "مقال واحد من 250 إلى 650 كلمة، تختار سؤاله من سبعة أسئلة، عبر طلب الجامعة أو Common App. وسؤالان اختياريان عن الظروف الاستثنائية.",
+    "source_url": "https://www.sc.edu/about/offices_and_divisions/undergraduate_admissions/documents/2026-2027_application_guide.pdf"
+  }
 }

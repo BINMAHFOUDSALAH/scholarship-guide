@@ -1,0 +1,31 @@
+{
+  "id": "university-of-gottingen",
+  "name_en": "University of Göttingen",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.uni-goettingen.de/en/572943.html",
+  "platform": {
+    "value_ar": "بوابة التقديم الإلكتروني في الجامعة",
+    "source_url": "https://www.uni-goettingen.de/en/572943.html"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "معظم البكالوريوس بالألمانية، وبرنامجان فقط بالإنجليزية بالكامل، والصفحة لا تسميهما."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "للبرامج بالألمانية: A1 عند التقديم، وDSH-2 أو ما يعادلها عند التسجيل، وDSH-3 لعلم النفس.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "مواعيد التقديم منشورة دون سنة"
+  ]
+}

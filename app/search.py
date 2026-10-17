@@ -14,12 +14,23 @@ import sqlite3
 import threading
 
 from app.content import list_slugs, load_page
-from app.universities import normalize
+from app.universities import UNIVERSITIES_AR, count_ar, normalize
 
 # Arabic writes "the" and some small words joined to the next word: «المنحة» = «ال» + «منحة».
 # Dropping them on both sides lets «منحة» find «المنحة» and «والمنحة». Words of 3 letters or
 # fewer are kept whole so short words aren't cut to nothing.
 ARABIC_PREFIXES = ("وال", "بال", "فال", "كال", "لل", "ال")
+
+# Test and platform names written in Arabic letters or in English (decision 061): both spellings are
+# stored and searched as the English name, so «دولينجو» finds «Duolingo» and the other way round.
+# Keys are in search_form's own spelling (normalize: آ → ا, lower case; then the «ال» prefix dropped).
+SYNONYMS = {
+    "دولينجو": "duolingo", "دوولينجو": "duolingo", "دولنجو": "duolingo", "دولينقو": "duolingo",
+    "ايلتس": "ielts", "ايلس": "ielts",
+    "توفل": "toefl", "تويفل": "toefl",
+    "سات": "sat",
+    "يوكاس": "ucas",
+}
 
 H2 = re.compile(r'<h2 id="([^"]+)">(.*?)</h2>', re.S)
 TAG = re.compile(r"<[^>]+>")
@@ -36,7 +47,8 @@ def strip_prefix(word):
 
 def search_form(text):
     """The form both chunks and questions are stored and searched in."""
-    return " ".join(strip_prefix(w) for w in normalize(text).split())
+    words = (strip_prefix(w) for w in normalize(text).split())
+    return " ".join(SYNONYMS.get(w, w) for w in words)
 
 
 def plain(fragment):
@@ -58,7 +70,7 @@ def chunks_of(page, url):
 
 
 class SiteSearch:
-    def __init__(self, program_slugs, paths_by_id, test_needs):
+    def __init__(self, program_slugs, paths_by_id, test_needs, explorer=None):
         # check_same_thread=False: FastAPI answers requests on several threads. The lock makes
         # them take turns on this one connection; each search takes well under a millisecond.
         self.db = sqlite3.connect(":memory:", check_same_thread=False)
@@ -93,6 +105,20 @@ class SiteSearch:
             if row.get("need_ar") and row.get("source", {}).get("url", "").startswith("http"):
                 self.add("الاختبارات: من يطلب ماذا؟", row["who_ar"], "/grades/grade-11#tests-title",
                          row["need_ar"], [row["source"]])
+
+        # 4. Each English test across the researched universities (decision 061), computed from
+        # data/university_details/, so «duolingo» also answers "which universities accept it?".
+        if explorer is not None:
+            for slug, test in (("duolingo", "duolingo"), ("ielts", "ielts"), ("toefl", "toefl_ibt")):
+                page = load_page("resources", slug)
+                summary = explorer.test_summary(test)
+                if not page or page.get("status") != "sourced" or not summary["groups"]:
+                    continue
+                counts = "، ".join(f"{g['title_ar']}: {len(g['rows'])}" for g in summary["groups"])
+                text = (f"{summary['label']} في {count_ar(summary['researched'], UNIVERSITIES_AR)} من قوائم الابتعاث جمعنا متطلباتها. "
+                        f"{counts}. الحد الأدنى والدرجة الموصى بها لكل جامعة، من صفحتها الرسمية.")
+                self.add(page["title"], f"{summary['label']} في جامعات القوائم", f"/resources/{slug}#universities",
+                         text, page["sources"])
 
     def add(self, title, heading, url, text, sources):
         self.db.execute("INSERT INTO chunks VALUES (?, ?, ?, ?)",

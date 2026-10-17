@@ -1,7 +1,7 @@
 {
   "id": "university-of-surrey",
   "name_en": "University of Surrey",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.surrey.ac.uk/apply/undergraduate/how-to-apply-through-ucas",
   "platform": {
@@ -9,9 +9,24 @@
     "source_url": "https://www.surrey.ac.uk/apply/undergraduate/how-to-apply-through-ucas"
   },
   "english": {
-    "ielts": null,
-    "toefl_ibt": null,
-    "duolingo": null,
+    "ielts": {
+      "min": null,
+      "varies": true,
+      "note_ar": "المستوى يختلف بين التخصصات. الصفحة العامة تذكر 6.5 ولا تقل مهارة عن 6.0، وصفحة تخصص لدخول 2027 تذكر 6.5 مع 6.0 في الكتابة و5.5 في البقية.",
+      "source_url": "https://www.surrey.ac.uk/apply/international/english-language-requirements"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "varies": true,
+      "note_ar": "معادل IELTS 6.5 في جدول الجامعة: 4.5 ولا تقل مهارة عن 4 (المقياس الجديد)، أو 88 (القديم).",
+      "source_url": "https://www.surrey.ac.uk/apply/international/english-language-requirements"
+    },
+    "duolingo": {
+      "min": null,
+      "varies": true,
+      "note_ar": "مقبول. معادل IELTS 6.5 في جدول الجامعة: 120، والدرجات الفرعية بين 100 و110 حسب التخصص.",
+      "source_url": "https://www.surrey.ac.uk/apply/international/english-language-requirements"
+    },
     "note_ar": "لا يوجد حد عام: الجامعة تقول إن المستوى المطلوب «يختلف بين الدورات»، وتحيل إلى صفحة كل دورة. لذلك لم نعرض رقمًا."
   },
   "sat_act": null,
@@ -37,5 +52,11 @@
   "not_found_ar": [
     "الحد الأدنى لـ IELTS أو TOEFL أو Duolingo: يختلف حسب الدورة، ولم نقرأ صفحات الدورات",
     "صفحة مركز Surrey الدولي (isc.surrey.ac.uk) رفضت الفتح، لذلك لم نتحقق من شروط برنامج التأسيس للتوجيهية"
-  ]
+  ],
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "ucas",
+    "summary_ar": "خطاب الدافع في UCAS (ثلاثة أسئلة، 4,000 حرف).",
+    "source_url": "https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement/how-to-write-your-personal-statement-for-2026-entry-onwards"
+  }
 }

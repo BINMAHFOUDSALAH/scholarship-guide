@@ -1,0 +1,63 @@
+{
+  "id": "vrije-universiteit-amsterdam",
+  "name_en": "Vrije Universiteit Amsterdam",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.vu.nl/en/education/more-about/apply-bachelors-programme",
+  "platform": {
+    "value_ar": "Studielink، ثم إكمال الطلب في VU dashboard",
+    "source_url": "https://www.vu.nl/en/education/more-about/apply-bachelors-programme"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "varies": true,
+      "note_ar": "6.5. لا يُقبل IELTS Online ولا One Skill Retake. بعض البرامج لها شروط مختلفة.",
+      "source_url": "https://www.vu.nl/en/education/more-about/meeting-language-proficiency-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "varies": true,
+      "note_ar": "4.5 بالمقياس الجديد، أو 92 بالقديم. لا يُقبل Home Edition ولا MyBest.",
+      "source_url": "https://www.vu.nl/en/education/more-about/meeting-language-proficiency-requirements"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "الجامعة تقبل الاختبارات المذكورة في قائمتها فقط، وDuolingo ليس فيها.",
+      "source_url": "https://www.vu.nl/en/education/more-about/meeting-language-proficiency-requirements"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Studielink",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-04-01",
+      "year_stated": true,
+      "note_ar": "لطلاب خارج الاتحاد الأوروبي (عام 2027-2028، والتقديم من 1 أكتوبر 2026)",
+      "source_url": "https://www.vu.nl/en/education/more-about/apply-bachelors-programme"
+    },
+    {
+      "event_ar": "آخر موعد لبرامج المقاعد المحدودة",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "note_ar": null,
+      "source_url": "https://www.vu.nl/en/education/more-about/apply-bachelors-programme"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "عدد من البكالوريوس بالإنجليزية، مثل Business Analytics وComputer Science وArtificial Intelligence.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: ليست في قائمة الدول (2026-2027، والصفحة تُحدَّث لعام 2027-2028)، والجامعة تراجع كل شهادة غير هولندية فرديًا. وتضع Nuffic الثانوية السعودية بمستوى HAVO."
+  ]
+}

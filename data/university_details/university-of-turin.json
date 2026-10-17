@@ -1,0 +1,35 @@
+{
+  "id": "university-of-turin",
+  "name_en": "University of Turin",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://en.unito.it/studying-unito/international-degree-seeking-students/application-eu-equivalents-non-eu-citizens",
+  "platform": {
+    "value_ar": "Apply@UniTo، وUniversitaly للتسجيل المسبق لغير الأوروبيين المقيمين في الخارج",
+    "source_url": "https://en.unito.it/studying-unito/international-degree-seeking-students/application-eu-equivalents-non-eu-citizens"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "صفحات البرامج بالإنجليزية لا تذكر درجة اختبار."
+  },
+  "sat_act": {
+    "policy": "unknown",
+    "note_ar": "برنامج Business & Management يطلب SAT من كل المتقدمين، ولم نقرأ شروط البرنامجين الآخرين.",
+    "source_url": "https://apply.unito.it/en_GB/courses/course/564-business--management"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "ثلاثة برامج بكالوريوس بالإنجليزية: Business & Management وEconomics and Finance with Data Science وGlobal Law and Transnational Legal Studies. والبرامج بالإيطالية تطلب إيطالية B2 (نظام CLIQ). ولمن دراسته أقل من 12 سنة تقدم الجامعة برنامج تأسيس.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة، والقاعدة العامة شهادة بعد 12 سنة دراسية على الأقل",
+    "مواعيد التقديم لعام 2027-2028 لم تُنشر بعد في صفحات الجامعة"
+  ]
+}

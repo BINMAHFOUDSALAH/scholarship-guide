@@ -1,7 +1,7 @@
 {
   "id": "brown-university",
   "name_en": "Brown University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admission.brown.edu/international",
   "platform": {
@@ -64,6 +64,12 @@
     "fee_usd": 80,
     "waiver": "not_stated",
     "note_ar": "الإعفاء التلقائي لبرامج أمريكية للدخل المحدود، والصفحة لا تذكر الدوليين",
+    "source_url": "https://admission.brown.edu/apply/how-apply"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 4,
+    "summary_ar": "أربعة مقالات خاصة بالجامعة: اثنان من 150 إلى 250 كلمة (عن المنهج المفتوح، وعن نشأتك وما تضيفه)، واثنان من 100 إلى 150 كلمة (عن درس تودّ تدريسه، وعمّا يسعدك). لبرنامجي PLME وBRDD مقالات إضافية.",
     "source_url": "https://admission.brown.edu/apply/how-apply"
   }
 }

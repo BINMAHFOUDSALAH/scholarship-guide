@@ -1,7 +1,7 @@
 {
   "id": "colorado-state-university",
   "name_en": "Colorado State University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.colostate.edu/apply/international-freshmen/",
   "platform": {
@@ -66,5 +66,10 @@
     "waiver": "own_waiver",
     "note_ar": "لمن تشكل الرسوم عليه صعوبة مالية، ويُطلب داخل طلب القبول",
     "source_url": "https://admissions.colostate.edu/apply/international-freshmen/"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "summary_ar": "مقال Common App الشخصي فقط، من 250 إلى 650 كلمة. الإيضاح الأكاديمي اختياري.",
+    "source_url": "https://admissions.colostate.edu/apply/submitting-documents/"
   }
 }

@@ -1,0 +1,47 @@
+{
+  "id": "leiden-university",
+  "name_en": "Leiden University",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس (قائمة الشهادات 2027/2028)",
+  "admissions_url": "https://www.universiteitleiden.nl/en/education/admission-and-application/bachelors/admission-requirements",
+  "platform": {
+    "value_ar": "Studielink، ثم نظام الجامعة uSis",
+    "source_url": "https://www.universiteitleiden.nl/en/education/admission-and-application/bachelors/application-deadlines"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "each_min": 6.0,
+      "varies": true,
+      "note_ar": "مثال: International Relations and Organisations يطلب 6.0 في كل مهارة، والحد في وصف كل برنامج. لا يُقبل IELTS General.",
+      "source_url": "https://www.universiteitleiden.nl/en/education/study-programmes/bachelor/political-science/international-relations-and-organisations/admission-and-application/admission-requirements"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "varies": true,
+      "note_ar": "4.5 لكل قسم بالمقياس الجديد، أو 80 مع 20 لكل قسم قبل 21 يناير 2026.",
+      "source_url": "https://www.universiteitleiden.nl/en/education/study-programmes/bachelor/political-science/international-relations-and-organisations/admission-and-application/admission-requirements"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "الجامعة تقبل ثلاثة أنواع من الاختبارات، وليس منها Duolingo.",
+      "source_url": "https://www.universiteitleiden.nl/en/education/study-programmes/bachelor/political-science/international-relations-and-organisations/admission-and-application/admission-requirements"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "برامج بكالوريوس بالإنجليزية، مثل International Relations and Organisations وEnglish Language and Culture. والبرامج الهولندية تطلب الهولندية والإنجليزية.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: ليست في قائمة الشهادات 2027/2028، والجامعة تقول إن ذلك لا يعني الرفض تلقائيًا. وتضع Nuffic الثانوية السعودية بمستوى HAVO.",
+    "المواعيد (15 يناير و1 أبريل و1 مايو) منشورة دون سنة"
+  ]
+}

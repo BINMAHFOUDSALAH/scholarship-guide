@@ -16,7 +16,6 @@
     <p class="path-item-en" lang="en" dir="ltr">{{ program.name_en }}</p>
     <p class="lead">{{ program.summary_ar }}</p>
     {% if program.not_standalone_ar %}<aside class="notice notice--warn" role="note"><p><strong>{{ program.not_standalone_ar }}</strong></p></aside>{% endif %}
-    <p class="program-disclaimer">{{ site.name }} دليل طلابي مستقل، ولا يتبع {{ program.provider_ar }}. القرار في كل حالة للجهة الرسمية.</p>
 
     {# The main next step first (decision 035): for list-based programs, find your university in the lists. #}
     {% if program.universities_guide_url or program.apply_url %}

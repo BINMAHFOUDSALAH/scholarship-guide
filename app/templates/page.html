@@ -28,6 +28,9 @@
   </div>
 
   {% if page.tool == "us_fees" %}{% include "partials/us_fees.html" %}{% endif %}
+  {% if page.tool == "english_test" %}{% include "partials/test_at_universities.html" %}{% endif %}
+  {% if page.tool == "us_essays" %}{% include "partials/us_essays.html" %}{% endif %}
+  {% if page.tool == "uk_certificate" %}{% include "partials/uk_certificate.html" %}{% endif %}
 
   {% if page.sources %}{{ c.source_stamp(page.sources) }}{% endif %}
 

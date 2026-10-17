@@ -3,7 +3,21 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Next session (as of 2026-10-13; latest cloud session on branch `claude/wadih-design-overhaul-ahizpb`, decision 060, draft PR, not merged yet):**
+> **Next session (as of 2026-10-16, decision 061, local on `main`, not committed yet):**
+> **Done in this session:**
+> - Text about the site removed (the homepage lead's last sentence, the program-page independence line, the repeated admission ≠ scholarship notice, «SAT: لم نتحقق منه» outside the US/Canada).
+> - Every English test shown at a glance, with a new «ليس ضمن الاختبارات التي تذكرها الجامعة» state.
+> - New guides: `/resources/duolingo`, `/resources/uk-applications` (UCAS), `/resources/application-essays`; search matches دولينجو/Duolingo and answers "which universities accept it?".
+> - Essays for 62 US universities and every UK one; an English re-check of 33 universities; Oxford and UCL published from their official pages; Melbourne and Monash (English only).
+> - EU wave 5 done: 50 of 57 European universities (brief `docs/research/emdad-wave-5-eu-brief.md`). 181 universities now have requirements.
+>
+> **Owner to-dos:**
+> - Look at the new guides and a few university pages on a phone.
+> - Check in a browser the sites that block scripts: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, Virginia, Pittsburgh, Colorado School of Mines, Columbia (English), NUS, Michigan's essays, Tilburg, Humboldt and Barcelona. Also look up the Saudi certificate for German universities on anabin (a form query).
+> - Decide on Toulouse (which member institution the list means) and L'Institut Agro.
+> - Then commit.
+>
+> Earlier (latest cloud session on branch `claude/wadih-design-overhaul-ahizpb`, decision 060, merged in PR #17):
 > **Design overhaul (decision 060):** one visual language, the sky (dawn in light mode, night in dark; the sun turns into a crescent when the theme switches); the theme follows the device until the student picks; the homepage title in Naskh, the grades as a constellation, a closing night band; `/universities?track=arruaad` opens with «خريطة الثلاثين» (30 stars in 8 country constellations; country chips filter the table). **Owner to-do:** look at it on a real phone (Safari especially) in both themes before merging; that hasn't been checked.
 >
 > Earlier (branch `claude/brave-hopper-2a6fg7`, decisions 058–059, merged in PR #16):

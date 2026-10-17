@@ -1,0 +1,32 @@
+{
+  "id": "university-of-granada",
+  "name_en": "University of Granada",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس (Grado)، خريف 2027",
+  "admissions_url": "https://saap.ugr.es/grados/estudiantes-extranjeros/preuniversitarios-homologables",
+  "platform": {
+    "value_ar": "Distrito Único Andaluz، بعد طلب معادلة الشهادة",
+    "source_url": "https://www.ugr.es/info/perfiles/futuros-estudiantes/grado-acceso-admision/titulos-universitarios-extranjeros"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "الدراسة بالإسبانية، ولا يُطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "الدراسة بالإسبانية عدا دروس اللغات، والامتحانات بالإسبانية. المسار لحاملي الشهادات من خارج الاتحاد الأوروبي: معادلة الشهادة بالبكالوريا الإسبانية (homologación) من وزارة التعليم، ثم اختبار الوصول (PAU أو PCE عبر UNEDasiss) حسب الجامعة.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة. وجدول وزارة التعليم الإسبانية للسعودية يربط الصف الثاني عشر بمعادلة البكالوريا، ويقول إنه للمعلومات فقط",
+    "مواعيد التقديم لعام 2027-2028 لم تُنشر بعد"
+  ]
+}

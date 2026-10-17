@@ -1,7 +1,7 @@
 {
   "id": "washington-state-university",
   "name_en": "Washington State University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://ip.wsu.edu/future-students/about-wsu-programs/international-first-year/",
   "platform": {
@@ -47,5 +47,11 @@
     "waiver": "not_stated",
     "note_ar": null,
     "source_url": "https://admission.wsu.edu/first-year/"
+  },
+  "essays": {
+    "personal_essay": "none",
+    "count": 0,
+    "summary_ar": "لا يُطلب مقال شخصي لطلاب السنة الأولى عبر Common App. كلية الشرف تطلب مقالين لمن يتقدم إليها.",
+    "source_url": "https://www.commonapp.org/explore/washington-state-university/"
   }
 }

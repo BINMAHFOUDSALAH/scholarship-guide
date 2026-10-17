@@ -1,30 +1,36 @@
 {
   "id": "university-of-oxford",
   "name_en": "University of Oxford",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.ox.ac.uk/admissions/undergraduate",
   "platform": {
-    "value_ar": "UCAS، مع اختبارات قبول إضافية في بعض التخصصات",
+    "value_ar": "UCAS، مع اختبار قبول (UAT-UK أو UCAT أو LNAT) في بعض التخصصات",
     "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
   },
   "english": {
     "ielts": {
       "min": 7.5,
-      "note_ar": "IELTS Academic بمجموع 7.5 مع 7.0 على الأقل في كل مهارة، وهو المستوى المطلوب حاليًا لكل التخصصات حسب الصفحة. IELTS General وIELTS Online غير مقبولين. ملاحظة: هذه القيمة من مقتطف بحث رسمي، والصفحة نفسها تعذّر فتحها (403)، فتحتاج إلى تحقق.",
-      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying-to-oxford/for-international-students/ELR"
+      "each_min": 7.0,
+      "note_ar": "IELTS Academic. لا تُقبل IELTS General ولا IELTS Online.",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/for-international-students/english-language-requirements-visas"
     },
     "toefl_ibt": {
       "min": 110,
-      "note_ar": "المقياس 0–120، مع حد أدنى لكل مهارة: الاستماع 22، القراءة 24، التحدث 25، الكتابة 24. الأهم: حسب المقتطف، تُقبل نتائج TOEFL حتى 20 يناير 2026 فقط، ولا تُقبل الاختبارات من 21 يناير 2026، والجامعة تراجع الاختبار المعدّل. لذلك لا تختبر TOEFL قبل أن تسأل Oxford. ملاحظة: مقتطف بحث واحد، ولم نفتح الصفحة (403).",
-      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying-to-oxford/for-international-students/ELR"
+      "note_ar": "للاختبارات حتى 20 يناير 2026 فقط (المقياس القديم)، مع الاستماع 22 والقراءة 24 والتحدث 25 والكتابة 24. الاختبارات من 21 يناير 2026 لا تُقبل حاليًا، والجامعة تراجع شكل الاختبار الجديد.",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/for-international-students/english-language-requirements-visas"
     },
-    "duolingo": null,
-    "note_ar": "اختبارات أخرى حسب المقتطفات: Oxford Test of English (Advanced) 165 مع 155 على الأقل في كل مهارة، وC1 Advanced أو C2 Proficiency بمجموع 191 مع 185 على الأقل في كل مهارة، وPTE Academic 76 مع 66 على الأقل في كل مهارة. يجب إثبات المستوى قبل 31 يوليو من سنة العرض. قد يُعفى من درسوا IB أو Singapore Integrated Programme بالإنجليزية، أو من كانت لغتهم الأولى الإنجليزية ومن الدول الناطقة بها. وتتعارض صفحة قديمة مع الصفحات الأحدث في مستوى بعض التخصصات (الرياضيات والحاسب)، واتبعنا الأحدث."
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "جدول الاختبارات المقبولة لا يذكر Duolingo.",
+      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/for-international-students/english-language-requirements-visas"
+    },
+    "note_ar": "يجب إثبات المستوى قبل 31 يوليو من سنة العرض. ومن الاختبارات المقبولة أيضًا: PTE Academic ‏76 (و66 لكل مهارة)، وC1 Advanced أو C2 Proficiency ‏191 (و185 لكل مهارة)."
   },
   "sat_act": {
     "policy": "optional",
-    "note_ar": "لا يوجد شرط SAT أو ACT عام. تُستخدم الدرجة بديلًا لأحد اختبارات AP فقط إذا كانت مع ثلاث درجات AP بمستوى 5، والحد يختلف حسب التخصص، مثلًا ACT 33 أو SAT 1480 لتخصصات A*A*A. التفاصيل من مقتطف بحث رسمي، ولم نفتح الصفحة (403).",
+    "note_ar": "ليس شرطًا عامًا. لحاملي الشهادة الأمريكية: أربعة اختبارات AP بدرجة 5، أو ثلاثة مع SAT ‏1480 أو ACT ‏33 للتخصصات التي تطلب A*A*A.",
     "source_url": "https://www.ox.ac.uk/admissions/undergraduate/courses/admissions-requirements/international-qualifications"
   },
   "dates": [
@@ -35,33 +41,38 @@
       "date": "2026-10-15",
       "year_stated": true,
       "note_ar": "6 مساءً بتوقيت المملكة المتحدة",
-      "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
+      "source_url": "https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications"
     },
     {
       "event_ar": "آخر موعد لتسليم العمل الكتابي",
       "cycle_ar": "خريف 2027",
       "date": "2026-11-10",
-      "year_stated": true,
-      "note_ar": "إن طلبه التخصص",
+      "year_stated": false,
+      "note_ar": "إن طلبه التخصص، يُرسل إلى الكلية",
       "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
     },
     {
-      "event_ar": "إعلان النتيجة لمن أُجريت لهم مقابلات",
+      "event_ar": "إعلان القرارات",
       "cycle_ar": "خريف 2027",
       "date": "2027-01-12",
       "year_stated": true,
-      "note_ar": "المقابلات عبر الإنترنت في ديسمبر 2026",
+      "note_ar": "المقابلات من أوائل إلى منتصف ديسمبر",
       "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
     }
   ],
   "acceptance_rate": null,
-  "language_note_ar": "التوجيهية السعودية: لم نتمكن من فتح قائمة Oxford الرسمية للمؤهلات الدولية (403). ملخص البحث يقول إنها غير مقبولة للقبول الجامعي، لكن لم نتحقق من النص أو تاريخ الصفحة، فلم نعرض حكمًا نهائيًا. المسار المعتاد لغير البريطانيين هو A-levels أو ما يعادله. الدبلوم الأساس: دبلومات Oxford الخاصة بها مخصصة لطلاب المدارس الحكومية المقيمين في المملكة المتحدة، ودبلوم جامعي خارجي يُقبل فقط إذا غطى المحتوى المطلوب بالمستوى نفسه (من مقتطف بحث). اختبارات القبول: TMUA لتخصصات الرياضيات والحاسب، وESAT للفيزياء وهندسة العلوم، وTARA لـ PPE وعلم النفس، وUCAT للطب، وLNAT للقانون. تنتقل اختبارات Oxford إلى UAT-UK من 2026، وانتهى موعد التسجيل في 28 سبتمبر 2026 (من مقتطف بحث). المصدر: https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline",
-  "not_found_ar": [
-    "تعذّر فتح صفحات ox.ac.uk الرسمية كلها (رد 403)، فالقيم أعلاه مأخوذة من مقتطفات بحث رسمية وتحتاج إلى تحقق قبل النشر",
-    "أرقام القبول لدورة 2025 موجودة في تقرير Oxford الرسمي، لكن الملف رفض الفتح، فلم نُدرجها",
-    "حكم التوجيهية السعودية غير مؤكد، ولم نُدرجه كقرار نهائي",
-    "Duolingo English Test غير مذكور في المقتطفات التي وجدناها",
-    "مواعيد التسجيل والاختبار لدورة 2027 في UAT-UK وTMUA وESAT وTARA غير مؤكدة، وتوجد في ox.ac.uk/tests"
-  ],
-  "draft": true
+  "language_note_ar": null,
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "قائمة Oxford للمؤهلات الدولية تذكر التوجيهية السعودية «غير مقبولة». المؤهلات المقبولة مثل A-levels أو IB أو اختبارات AP الأمريكية.",
+    "quote": "Saudi Arabia Status Qualification Not accepted Tawjihiyah (General Secondary Education Certificate/GSEC)",
+    "source_url": "https://www.ox.ac.uk/admissions/undergraduate/courses/admissions-requirements/international-qualifications"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "ucas",
+    "summary_ar": "خطاب الدافع في UCAS (ثلاثة أسئلة، 4,000 حرف)، وعمل كتابي في بعض التخصصات.",
+    "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/admissions-timeline"
+  },
+  "not_found_ar": []
 }

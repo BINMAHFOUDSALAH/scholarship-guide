@@ -1,0 +1,72 @@
+{
+  "id": "institut-polytechnique-de-paris",
+  "name_en": "Institut Polytechnique de Paris",
+  "checked": "2026-10-16",
+  "entry_ar": "Bachelor of Science في École polytechnique (عضو IP Paris)، دخول خريف 2027",
+  "admissions_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission",
+  "platform": {
+    "value_ar": "نموذج التقديم في موقع البرنامج أو Parcoursup (لا الاثنين معًا)، ولا يمر عبر Campus France",
+    "source_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "each_min": 6.0,
+      "note_ar": "الاختبار لا يزيد عمره على سنتين عند الالتحاق.",
+      "source_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission"
+    },
+    "toefl_ibt": {
+      "min": 90,
+      "note_ar": null,
+      "source_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "الاختبارات المقبولة IELTS وTOEFL iBT وCambridge (CAE/CPE) فقط.",
+      "source_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الموجة الأولى",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-10-20",
+      "year_stated": true,
+      "note_ar": "23:59 بتوقيت وسط أوروبا الصيفي، والنتائج في يناير 2027",
+      "source_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الموجة الثانية",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-06",
+      "year_stated": true,
+      "note_ar": "النتائج في مارس 2027",
+      "source_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "الموجة الثالثة",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-02-08",
+      "year_stated": true,
+      "note_ar": "14:00 بتوقيت وسط أوروبا، والنتائج في أبريل 2027",
+      "source_url": "https://programmes.polytechnique.edu/bachelor/admissions/criteres-et-procedure-dadmission"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "البرنامج بالإنجليزية بالكامل، ولا يُطلب مستوى فرنسية للتقديم (الفرنسية B2 شرط للتخرج وتُدرس أثناء البرنامج).",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: الصفحة تطلب شهادة ثانوية تؤهل للتعليم العالي دون ذكر السعودية"
+  ]
+}

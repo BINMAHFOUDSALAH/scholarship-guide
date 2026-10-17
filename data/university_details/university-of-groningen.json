@@ -1,0 +1,64 @@
+{
+  "id": "university-of-groningen",
+  "name_en": "University of Groningen",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://www.rug.nl/education/application-enrolment-tuition-fees/admission/non-dutch-qualification/bachelor/",
+  "platform": {
+    "value_ar": "Studielink، ثم Progress Portal لرفع المستندات",
+    "source_url": "https://www.rug.nl/education/application-enrolment-tuition-fees/admission/non-dutch-qualification/bachelor-non-dutch-qualification"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.0,
+      "each_min": 6.0,
+      "varies": true,
+      "note_ar": "ثلاثة مستويات حسب الكلية (لعام 2027/28). المستوى 1: 6.0 في كل مهارة، ومنه كليات الاقتصاد والأعمال والعلوم والهندسة. المستوى 2: 6.5، والمستوى 3 (القانون): 7.0. لا يُقبل IELTS Online ولا One Skill Retake.",
+      "source_url": "https://www.rug.nl/education/application-enrolment-tuition-fees/admission/non-dutch-qualification/language-requirement"
+    },
+    "toefl_ibt": {
+      "min": 4.0,
+      "varies": true,
+      "note_ar": "المستوى 1 بالمقياس الجديد: 4.0 في كل مهارة، والمستوى 2: 4.5. وقبل 2026: 80. لا يُقبل MyBest.",
+      "source_url": "https://www.rug.nl/education/application-enrolment-tuition-fees/admission/non-dutch-qualification/language-requirement"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة الاختبارات المقبولة لا تذكر Duolingo.",
+      "source_url": "https://www.rug.nl/education/application-enrolment-tuition-fees/admission/non-dutch-qualification/language-requirement"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Studielink",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-05-01",
+      "year_stated": true,
+      "note_ar": "لكل من يحمل شهادة غير هولندية (عام 2027-2028)",
+      "source_url": "https://www.rug.nl/education/application-enrolment-tuition-fees/admission/procedures/application-informatie/application-deadlines/bachelor-application-deadlines?lang=en"
+    },
+    {
+      "event_ar": "آخر موعد لبرامج المقاعد المحدودة",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": true,
+      "note_ar": "International Business والطب وعلم النفس وطب الأسنان",
+      "source_url": "https://www.rug.nl/education/application-enrolment-tuition-fees/admission/procedures/application-informatie/application-deadlines/bachelor-application-deadlines?lang=en"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": "بعض البكالوريوس بالإنجليزية، مثل English Language and Culture وInternational Relations and International Organization وعلم النفس (المسار الإنجليزي).",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: ليست في قائمة الشهادات المعادلة لعام 2027/2028، والجامعة تقول إن الشهادة غير المدرجة قد لا تكفي، وترحب بالتقديم. وتضع Nuffic الثانوية السعودية بمستوى HAVO."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "universitat-pompeu-fabra-barcelona",
+  "name_en": "Universitat Pompeu Fabra (Barcelona)",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، خريف 2027 (من صفحات مدرسة ESCI-UPF)",
+  "admissions_url": "https://www.esci.upf.edu/es/acceso-matricula/acceso-grados",
+  "platform": {
+    "value_ar": "مكتب الوصول إلى الجامعة (Oficina de Acceso a la Universidad) بعد المعادلة",
+    "source_url": "https://www.esci.upf.edu/es/acceso-matricula/acceso-grados"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "شروط الإنجليزية في صفحات UPF الرئيسية لم تُقرأ (الموقع يحجب القراءة الآلية)."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "في مدرسة ESCI التابعة للجامعة: International Business and Marketing بالإنجليزية بالكامل. وحسب ESCI، بعد معادلة البكالوريا يُطلب اختبار PAU الذي تنظمه UNED.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة. وجدول وزارة التعليم الإسبانية للسعودية يربط الصف الثاني عشر بمعادلة البكالوريا، ويقول إنه للمعلومات فقط",
+    "مواعيد التقديم لعام 2027-2028 لم تُنشر بعد",
+    "صفحات UPF الرئيسية لم تُقرأ"
+  ]
+}

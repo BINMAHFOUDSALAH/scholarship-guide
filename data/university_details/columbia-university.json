@@ -1,7 +1,7 @@
 {
   "id": "columbia-university",
   "name_en": "Columbia University",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027 (لم تُؤكَّد الصفحات الرسمية بعد)",
   "admissions_url": "https://undergrad.admissions.columbia.edu/apply/firstyear",
   "platform": null,
@@ -47,5 +47,11 @@
     "سياسة SAT أو ACT لدورة خريف 2027 غير مؤكدة: صفحة الاختبارات الرسمية تعذّر فتحها، وجدول C8 في CDS لا يُقرأ",
     "مواعيد دورة خريف 2027 غير منشورة في المصادر التي اطّلعنا عليها؛ التواريخ أعلاه من CDS لدورة 2025",
     "نسبة قبول الطلاب الدوليين غير منشورة كنسبة؛ CDS تنشر العدد فقط: 407 مقبولًا من 15,380 متقدمًا دوليًا (خريف 2025)"
-  ]
+  ],
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 6,
+    "summary_ar": "ستة أسئلة خاصة بالجامعة، مع طلب Common App أو Coalition: قائمة عناوين أثّرت فيك (حتى 100 كلمة)، وخمسة أسئلة حتى 150 كلمة لكل منها، منها: لماذا كولومبيا، وما الذي يجذبك إلى تخصصك.",
+    "source_url": "https://undergrad.admissions.columbia.edu/apply/process/columbia-questions"
+  }
 }

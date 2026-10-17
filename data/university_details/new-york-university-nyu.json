@@ -1,7 +1,7 @@
 {
   "id": "new-york-university-nyu",
   "name_en": "New York University (NYU)",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/international-applicants.html",
   "platform": {
@@ -78,5 +78,10 @@
     "waiver": "accepts_common_app",
     "note_ar": "إن كانت الرسوم ضائقة مالية على أسرتك",
     "source_url": "https://www.nyu.edu/admissions/undergraduate-admissions/how-to-apply/application-fee-information.html"
+  },
+  "essays": {
+    "personal_essay": "common_app",
+    "summary_ar": "طلب Common App مع ملحق NYU الإلزامي، وأسئلة الملحق داخل الطلب نفسه.",
+    "source_url": "https://bulletins.nyu.edu/undergraduate/arts/admissions/"
   }
 }

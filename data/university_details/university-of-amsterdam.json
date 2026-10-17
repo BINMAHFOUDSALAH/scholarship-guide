@@ -1,0 +1,47 @@
+{
+  "id": "university-of-amsterdam",
+  "name_en": "University of Amsterdam",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول لعام 2027-2028",
+  "admissions_url": "https://www.uva.nl/en/education/admissions/bachelors/applying-for-a-degree-programme.html",
+  "platform": {
+    "value_ar": "Studielink، ثم إتمام الطلب لدى الجامعة",
+    "source_url": "https://www.uva.nl/en/education/admissions/bachelors/applying-for-a-degree-programme.html"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "each_min": 6.0,
+      "varies": true,
+      "note_ar": "6.5 ولا تقل مهارة عن 6.0، وبعض البرامج (PPLE وLiberal Arts & Sciences) لها شروط خاصة. لا يُقبل IELTS Online ولا Indicator ولا One Skill Retake.",
+      "source_url": "https://www.uva.nl/en/education/admissions/bachelors/applying-for-a-degree-programme.html"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "varies": true,
+      "note_ar": "المقياس الجديد: 4.5 (القراءة 4.5، الاستماع 5.0، التحدث 4.0، الكتابة 4.5). والقديم: 92 مع 22 لكل قسم.",
+      "source_url": "https://www.uva.nl/en/education/admissions/bachelors/applying-for-a-degree-programme.html"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "تقول الجامعة إنها لا تقبل اختبارات غير المذكورة، وDuolingo ليس منها.",
+      "source_url": "https://www.uva.nl/en/education/admissions/bachelors/applying-for-a-degree-programme.html"
+    },
+    "note_ar": null
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "أكثر من 20 برنامج بكالوريوس بالإنجليزية، مثل المسار الإنجليزي في Business Administration.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: ليست في دليل الشهادات (2027–2028)، والجامعة تقيّم الشهادات غير المدرجة فرديًا. وتضع Nuffic الثانوية السعودية بمستوى HAVO.",
+    "المواعيد (1 أبريل إرشاديًا، و1 مايو نهائيًا، و15 يناير للمقاعد المحدودة) منشورة دون سنة"
+  ]
+}

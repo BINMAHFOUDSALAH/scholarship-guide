@@ -1,7 +1,7 @@
 {
   "id": "university-of-chicago",
   "name_en": "University of Chicago",
-  "checked": "2026-10-11",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027 (دورة التقديم 2026–2027)",
   "admissions_url": "https://collegeadmissions.uchicago.edu/",
   "platform": {
@@ -66,5 +66,11 @@
     "waiver": "own_waiver",
     "note_ar": "لا رسوم على من يذكر أنه سيتقدم بطلب مساعدة مالية",
     "source_url": "https://collegeadmissions.uchicago.edu/apply/uchicago-admissions-faq/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "count": 2,
+    "summary_ar": "مقالان خاصان بالجامعة: «لماذا UChicago»، ومقال موسّع تختار سؤاله من أسئلة الجامعة المفتوحة المعروفة بغرابتها.",
+    "source_url": "https://collegeadmissions.uchicago.edu/apply/essay/"
   }
 }

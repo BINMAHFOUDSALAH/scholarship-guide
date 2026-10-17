@@ -1,0 +1,31 @@
+{
+  "id": "university-of-lausanne",
+  "name_en": "University of Lausanne",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، خريف 2027",
+  "admissions_url": "https://www.unil.ch/unil/en/home/menuinst/etudier/immatriculations-et-inscriptions/bachelor-avec-diplome-etranger.html",
+  "platform": {
+    "value_ar": "بوابة الترشح الإلكترونية في موقع الجامعة",
+    "source_url": "https://www.unil.ch/unil/en/home/menuinst/etudier/immatriculations-et-inscriptions/bachelor-avec-diplome-etranger.html"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "صفحات القبول تطلب الفرنسية، ولا تطلب اختبار إنجليزية.",
+    "required": false
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "المطلوب امتحان فرنسية بمستوى B1 على الأقل قبل التسجيل النهائي، ويُعفى منه حامل DELF B1 أو B2 أو DALF أو TCF B1.",
+  "saudi_certificate": {
+    "direct_entry": false,
+    "note_ar": "حسب قائمة swissuniversities لعام 2026/27: شهادة جامعية لا تقل عن 3 سنوات. وتقول الجامعة إن من لا تنطبق عليه الشروط يُقبل بعد شهادة جامعية تعترف بها.",
+    "quote": "University degree (at least 3 years)",
+    "source_url": "https://www.swissuniversities.ch/en/topics/studying/admission-to-universities/countries-1"
+  },
+  "not_found_ar": [
+    "المواعيد منشورة لعام 2026/2027 فقط (28 فبراير و30 أبريل)"
+  ]
+}

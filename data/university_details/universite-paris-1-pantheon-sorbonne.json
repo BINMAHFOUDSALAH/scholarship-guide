@@ -1,0 +1,31 @@
+{
+  "id": "universite-paris-1-pantheon-sorbonne",
+  "name_en": "Université Paris 1 Panthéon-Sorbonne",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للسنة الأولى من الإجازة (Licence)، خريف 2027",
+  "admissions_url": "https://international.pantheonsorbonne.fr/venir-paris-1-pantheon-sorbonne/etudiant-en-mobilite-individuelle",
+  "platform": {
+    "value_ar": "«الدراسة في فرنسا» (DAP) لمن يقيم في بلد مشمول بها، مثل السعودية",
+    "source_url": "https://international.pantheonsorbonne.fr/venir-paris-1-pantheon-sorbonne/etudiant-en-mobilite-individuelle"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "للبرامج بالإنجليزية يُطلب مستوى B2 يُثبت بـ IELTS أو TOEFL أو غيرهما، دون درجة محددة."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "صفحتان رسميتان تختلفان: صفحة «Formations en anglais» تذكر Licence Economics - International Track بالإنجليزية بالكامل، وصفحة التنقل الفردي تقول إن كل الإجازات بالفرنسية. والمطلوب للبرامج بالفرنسية مستوى B2 (DELF/DALF أو TCF).",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات الجامعة",
+    "نافذة DAP: الجامعة تذكر 15 أكتوبر إلى 15 ديسمبر 2026، وCampus France تذكر الفتح في 1 أكتوبر 2026"
+  ]
+}

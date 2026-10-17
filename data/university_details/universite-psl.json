@@ -1,0 +1,35 @@
+{
+  "id": "universite-psl",
+  "name_en": "Université PSL",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للسنة الأولى من البكالوريوس، خريف 2027",
+  "admissions_url": "https://psl.eu/en/international-admissions-procedures-psl",
+  "platform": {
+    "value_ar": "حسب البرنامج: «الدراسة في فرنسا» لبكالوريوس الذكاء الاصطناعي وبرامج Dauphine-PSL، ومنصة خاصة لبرنامج I-BE³",
+    "source_url": "https://psl.eu/en/international-admissions-procedures-psl"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "البرنامجان بالإنجليزية يطلبان مستوى لا درجة: الذكاء الاصطناعي C1، والهندسة (I-BE³) B2، وشهادات الاختبار فيه اختيارية."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "في برنامج I-BE³ وحده: SAT وACT اختياريان.",
+    "source_url": "https://psl.eu/en/education/international-bachelor-environmentally-engaged-engineering-i-be3"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "برنامجان بالإنجليزية بالكامل: International Bachelor of Science in AI، وInternational Bachelor of Environmentally Engaged Engineering (I-BE³، مع فرنسية A2). والبقية بالفرنسية أو بلغتين.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "حكم الثانوية السعودية: لا تذكره صفحات PSL",
+    "للمقيمين في السعودية، التقديم على السنة الأولى في الجامعات الفرنسية عبر «الدراسة في فرنسا» (Études en France)، وطلب القبول المسبق DAP لعام 2027-2028 من 1 أكتوبر إلى 15 ديسمبر 2026 حسب Campus France."
+  ]
+}

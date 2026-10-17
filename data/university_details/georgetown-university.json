@@ -1,7 +1,7 @@
 {
   "id": "georgetown-university",
   "name_en": "Georgetown University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://uadmissions.georgetown.edu/apply/international-applicants/",
   "platform": {
@@ -60,5 +60,12 @@
     "waiver": "accepts_common_app",
     "note_ar": "تقبل طلبات الإعفاء من المتقدمين الدوليين أيضًا إن كانت الرسوم عبئًا كبيرًا",
     "source_url": "https://uadmissions.georgetown.edu/faq/faq-application-process/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "own",
+    "count": 4,
+    "summary_ar": "طلب Georgetown الخاص فيه أربعة مقالات: قصيران حتى 250 كلمة (نشاط كان لك فيه دور كبير، وموقف مع رأي مختلف)، ومقال شخصي حتى 650 كلمة (يجوز أن يكون مقال Common App)، ومقال حتى 500 كلمة عن دافعك لدراسة تخصصك في الكلية التي تتقدم إليها.",
+    "source_url": "https://uadmissions.georgetown.edu/apply/first-year-applicants/application-requirements-and-forms/"
   }
 }

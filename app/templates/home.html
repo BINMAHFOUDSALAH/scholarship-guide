@@ -106,7 +106,7 @@
 <section id="programs" class="section" aria-labelledby="programs-title">
   <div class="section-head">
     <h2 id="programs-title" class="section-title">البرامج</h2>
-    <p class="section-note">أشهر برامج الابتعاث لخريجي الثانوية: لمن هي، وحالة التقديم، ومصادرها الرسمية.</p>
+    <p class="section-note">برامج الابتعاث لخريجي الثانوية.</p>
   </div>
 
   <div class="path-list">
@@ -167,11 +167,11 @@
           {% endfor %}
         </ul>
 
+        {# Two actions per program (decision 061): the details here, the official site there. The lists and
+           the official X account are one click further, on the program page. #}
         <p class="path-actions">
           {% if path.id in program_pages %}<a class="btn btn--secondary" href="{{ url_for('program_page', slug=path.id) }}">الشروط والتفاصيل</a>{% endif %}
-          {% if path.universities_guide_url %}<a class="path-link" href="{{ url_for('universities_page') }}">جامعاته وتخصصاته ←</a>{% endif %}
           <a class="path-link" href="{{ path.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a>
-          {% if path.social_url %}<a class="path-link" href="{{ path.social_url }}" target="_blank" rel="noopener">{{ path.social_label_ar }} ↗</a>{% endif %}
         </p>
       </div>
     </article>

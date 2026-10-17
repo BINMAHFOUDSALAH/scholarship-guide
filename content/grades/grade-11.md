@@ -20,6 +20,9 @@ resources:
   - title_ar: هيئة تقويم التعليم والتدريب (قياس)
     url: https://etec.gov.sa/
     why_ar: الموقع الرسمي لاختباري القدرات والتحصيلي.
+  - title_ar: دولينجو (Duolingo English Test)
+    url: /resources/duolingo
+    why_ar: اختبار من البيت، وأي جامعات تقبله.
 sources:
   - title: القبول الموحد في الجامعات والجهات التعليمية، وزارة التعليم
     url: https://www.moe.gov.sa/ar/knowledgecenter/eservices/pages/unified-admission.aspx

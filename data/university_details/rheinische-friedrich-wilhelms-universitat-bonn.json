@@ -1,0 +1,31 @@
+{
+  "id": "rheinische-friedrich-wilhelms-universitat-bonn",
+  "name_en": "Rheinische Friedrich-Wilhelms-Universität Bonn",
+  "checked": "2026-10-16",
+  "entry_ar": "القبول للبكالوريوس، الفصل الشتوي 2027",
+  "admissions_url": "https://www.uni-bonn.de/en/studying/application-admission-and-enrollment/applications-from-international-students",
+  "platform": {
+    "value_ar": "بوابة التقديم الإلكتروني في الجامعة، دون إرسال أوراق بالبريد",
+    "source_url": "https://www.uni-bonn.de/en/studying/application-admission-and-enrollment/special-application-matters/applicants-from-non-eu-eec-countries"
+  },
+  "english": {
+    "ielts": null,
+    "toefl_ibt": null,
+    "duolingo": null,
+    "note_ar": "معظم البكالوريوس بالألمانية. وسبعة برامج ألمانية تطلب إنجليزية B2 أيضًا، مثل Economics and Computer Science وMolecular Biomedicine."
+  },
+  "sat_act": null,
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": "للبرامج بالألمانية: B2 عند التقديم، وDSH-2 (C1) عند التسجيل، أو TestDaF ‏4 في كل الأقسام، أو Goethe C2، أو telc C1 Hochschule.",
+  "saudi_certificate": {
+    "direct_entry": null,
+    "note_ar": null,
+    "quote": null,
+    "source_url": null
+  },
+  "not_found_ar": [
+    "لا تذكر صفحات الجامعة الشهادة السعودية. وصفحة uni-assist الخاصة بالسعودية تتناول شهادات المدارس الخاصة والتعليم الصناعي فقط.",
+    "موعد التقديم للفصل الشتوي (15 يوليو) منشور دون سنة"
+  ]
+}

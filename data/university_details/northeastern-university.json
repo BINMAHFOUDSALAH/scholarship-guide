@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -20,9 +20,24 @@
     "source_url": "https://catalog.northeastern.edu/undergraduate/admission/admission-policy-entrance-requirements/"
   },
   "english": {
-    "ielts": null,
-    "toefl_ibt": null,
-    "duolingo": null,
+    "ielts": {
+      "min": null,
+      "recommended": 7.5,
+      "note_ar": "لا يوجد حد أدنى. نصف المقبولين في الوسط حصلوا على 7.5 إلى 8.0.",
+      "source_url": "https://admissions.northeastern.edu/application-information/international-applicants/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "recommended": 5.0,
+      "note_ar": "لا يوجد حد أدنى. نصف المقبولين في الوسط: 5.0 إلى 5.5 (المقياس الجديد)، أو 102 إلى 110 (القديم).",
+      "source_url": "https://admissions.northeastern.edu/application-information/international-applicants/"
+    },
+    "duolingo": {
+      "min": null,
+      "recommended": 130,
+      "note_ar": "لا يوجد حد أدنى. نصف المقبولين في الوسط: 130 إلى 140.",
+      "source_url": "https://admissions.northeastern.edu/application-information/international-applicants/"
+    },
     "note_ar": "مطلوب اختبار معتمد (Duolingo أو Cambridge C1/C2 أو IELTS أو PTE أو TOEFL)، والحد الأدنى في صفحة الدوليين التي لم نتمكن من قراءتها."
   },
   "application_fee": {

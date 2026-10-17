@@ -1,7 +1,7 @@
 {
   "id": "duke-university",
   "name_en": "Duke University",
-  "checked": "2026-10-12",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.duke.edu/apply/",
   "platform": {
@@ -67,6 +67,13 @@
     "fee_usd": 85,
     "waiver": "accepts_common_app",
     "note_ar": "تعفي في حالات كثيرة لمن لديهم حاجة مالية مرتفعة",
+    "source_url": "https://admissions.duke.edu/apply/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "common_app",
+    "count": 2,
+    "summary_ar": "مقال Common App الشخصي، وسؤالان إلزاميان حتى 250 كلمة لكل منهما: لماذا Duke، والمجتمع الذي شكّلك وما تضيفه. وأسئلة اختيارية.",
     "source_url": "https://admissions.duke.edu/apply/"
   }
 }

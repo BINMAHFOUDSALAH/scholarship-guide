@@ -1,7 +1,7 @@
 {
   "id": "university-of-essex",
   "name_en": "University of Essex",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.essex.ac.uk/undergraduate/applying-to-essex",
   "platform": {
@@ -21,7 +21,12 @@
       "note_ar": "للسنة الأولى، للاختبارات من 21 يناير 2026: 4 مع 4 في كل مهارة.",
       "source_url": "https://www1.essex.ac.uk/documents/admissions/englishInternational.pdf"
     },
-    "duolingo": null,
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "الجدول الرسمي لطلاب التأشيرة لا يذكر Duolingo. للاختبارات غير المذكورة تطلب الجامعة مراسلتها.",
+      "source_url": "https://www1.essex.ac.uk/documents/admissions/englishInternational.pdf"
+    },
     "note_ar": null
   },
   "sat_act": null,
@@ -47,5 +52,11 @@
   "not_found_ar": [
     "الثانوية السعودية غير مذكورة بالاسم للبكالوريوس. صفحة الشرق الأوسط تقول إن «أغلب دول المنطقة» تحتاج برنامج تأسيس أو دراسة جامعية سابقة أو شهادة ثانوية دولية",
     "Duolingo غير مذكور في جدول الطلاب الدوليين"
-  ]
+  ],
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "ucas",
+    "summary_ar": "خطاب الدافع في UCAS (ثلاثة أسئلة، 4,000 حرف).",
+    "source_url": "https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement/how-to-write-your-personal-statement-for-2026-entry-onwards"
+  }
 }

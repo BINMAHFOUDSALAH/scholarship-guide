@@ -1,7 +1,7 @@
 {
   "id": "university-of-nottingham",
   "name_en": "University of Nottingham",
-  "checked": "2026-10-13",
+  "checked": "2026-10-16",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.nottingham.ac.uk/ugstudy/applying/applying.aspx",
   "platform": {
@@ -9,10 +9,26 @@
     "source_url": "https://www.nottingham.ac.uk/ugstudy/applying/applying.aspx"
   },
   "english": {
-    "ielts": null,
-    "toefl_ibt": null,
-    "duolingo": null,
-    "note_ar": "حد IELTS منشور لكل دورة في قائمة الدورات، ولا يوجد رقم عام. تقبل الجامعة أيضًا PTE وTOEFL iBT."
+    "ielts": {
+      "min": 6.0,
+      "each_min": 5.5,
+      "varies": true,
+      "note_ar": "أدنى حد للبكالوريوس في سياسة الجامعة: 6.0 ولا تقل أي مهارة عن 5.5. كثير من التخصصات تطلب أعلى، مثل الطب والتمريض (7.5 مع 7.0).",
+      "source_url": "https://www.nottingham.ac.uk/qualitymanual/admissions/pol-min-english-entry-requirements.aspx"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "varies": true,
+      "note_ar": "معادل IELTS 6.0 في جدول الجامعة للاختبارات بعد يناير 2026: 4.5 ولا تقل مهارة عن 4.0. وقبل ذلك: 80.",
+      "source_url": "https://www.nottingham.ac.uk/studywithus/international-applicants/english-language/english-language-equivalencies.aspx"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "الجامعة تذكر IELTS وPTE وTOEFL فقط.",
+      "source_url": "https://www.nottingham.ac.uk/studywithus/international-applicants/english-language/english-language-requirements.aspx"
+    },
+    "note_ar": null
   },
   "sat_act": null,
   "dates": [
@@ -45,5 +61,11 @@
   },
   "not_found_ar": [
     "حد IELTS: في صفحة كل دورة فقط، ولم نقرأها"
-  ]
+  ],
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "ucas",
+    "summary_ar": "خطاب الدافع في UCAS (ثلاثة أسئلة، 4,000 حرف).",
+    "source_url": "https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement/how-to-write-your-personal-statement-for-2026-entry-onwards"
+  }
 }
