@@ -5,7 +5,7 @@ description: Research admission requirements for a batch of universities (an إ�
 
 # Research wave (university requirements)
 
-Done three times (US wave 1, UK wave 2, AU/CA/SG wave 3; decision 054). Follow these steps in order; each one exists because skipping it caused a problem before.
+Done five times (waves 1–5: US, UK, AU/CA/SG, the other US + India, Europe; decisions 054–056 and 061). Follow these steps in order; each one exists because skipping it caused a problem before.
 
 ## 1. Scope
 - List the universities in the إمداد/الرواد lists of the target countries that have no `data/university_details/<id>.json` (read `data/universities.json`; skip البحث والتطوير-only universities, they're doctorate-only).
@@ -15,7 +15,7 @@ Done three times (US wave 1, UK wave 2, AU/CA/SG wave 3; decision 054). Follow t
 - Write `docs/research/emdad-wave-<n>-brief.md`: status, scope, batches of ~5 (best إمداد rank first, same country together), and only what differs from the [wave 2 brief](../../../docs/research/emdad-wave-2-uk-brief.md) (intake, deadline system, platform, SAT relevance, language of instruction).
 
 ## 3. Agents
-- One `source-researcher` per batch, in parallel, `run_in_background: true`. Never pass a model (they run on Haiku via their own file).
+- One `source-researcher` per batch, in parallel, `run_in_background: true`. Never pass a model (`.claude/settings.json` forces Haiku on every subagent).
 - The prompt must include: read both briefs and `data/university_details/the-university-of-exeter.json` (the example); curl **to stdout only** (no `-o`, `>`, `tee`; agents have written files into the repo before); snippets are never sources; the `saudi_certificate` rule (true/false only when the page says so, else null); return JSON per university plus an evidence list (exact quote + URL for every number, date and yes/no).
 
 ## 4. Verify (main session)
