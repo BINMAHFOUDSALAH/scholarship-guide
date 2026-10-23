@@ -12,11 +12,13 @@ Why each choice was made lives in [decisions.md](decisions.md).
 > - GitHub: delete the six merged branches (`claude/brave-hopper-2a6fg7`, `claude/clever-bardeen-bei0zs`, `claude/funny-noether-nyj81u`, `claude/loving-hopper-sai8de`, `claude/wadih-design-overhaul-ahizpb`, `wadih-cleanup-requirements-guides`), and turn on Settings → General → "Automatically delete head branches" and Settings → Advanced Security → Dependabot security updates.
 > - Ask before installing: `httpx2` (the test client warns that `httpx` with it is deprecated).
 >
+> **Tests re-check (2026-10-23, `docs/research/rowwad-us-tests-recheck-brief.md`):** IELTS, Duolingo and SAT checked for the 30 الرواد + every US university; 3 new files (Pittsburgh, Colorado School of Mines, and Virginia with English and SAT only). The owner read Columbia, Oxford, UCL and UVA in a browser (their sites block scripts). Still open: Virginia's dates and platform (SAT optional, owner-confirmed); UChicago's undergraduate English page (JavaScript-only); UCL's SAT; Gallaudet's SAT.
+>
 > **Small fixes (2026-10-17 repo check):** CI moved to `actions/checkout@v7` and `actions/setup-python@v7` (v4/v5 ran on the deprecated Node 20) with read-only permissions; Dependabot keeps the Actions versions current (monthly).
 >
 > Earlier (decision 061, merged in PR #18): text about the site removed; every English test shown at a glance; new guides (Duolingo, UK applications, essays); essays for 62 US universities and every UK one; EU wave 5 (50 of 57).
 > **Owner to-dos from it:**
-> - Check in a browser the sites that block scripts: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, Virginia, Pittsburgh, Colorado School of Mines, Columbia (English), NUS, Michigan's essays, Tilburg, Humboldt and Barcelona.
+> - Check in a browser the sites that block scripts: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, Virginia, NUS (2027 dates), Michigan's essays and dates, Tilburg, Humboldt and Barcelona.
 > - Look up the Saudi certificate for German universities on anabin (a form query).
 > - Decide on Toulouse (which member institution the list means) and L'Institut Agro.
 >

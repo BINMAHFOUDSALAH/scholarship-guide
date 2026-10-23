@@ -1,7 +1,7 @@
 {
   "id": "colorado-state-university",
   "name_en": "Colorado State University",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.colostate.edu/apply/international-freshmen/",
   "platform": {
@@ -28,7 +28,7 @@
   },
   "sat_act": {
     "policy": "optional",
-    "note_ar": "الجامعة لا تشترط SAT أو ACT، ولا تعطيها وزنًا كبيرًا.",
+    "note_ar": "الجامعة لا تشترط SAT أو ACT، ولا تُراجَع الدرجات إلا إذا طلبت ذلك بالبريد الإلكتروني، ولا تُعطى وزنًا كبيرًا حتى عندئذ.",
     "source_url": "https://admissions.colostate.edu/apply/international-freshmen/"
   },
   "dates": [

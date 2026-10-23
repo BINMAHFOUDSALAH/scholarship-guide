@@ -1,7 +1,7 @@
 {
   "id": "washington-state-university",
   "name_en": "Washington State University",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://ip.wsu.edu/future-students/about-wsu-programs/international-first-year/",
   "platform": {
@@ -27,9 +27,9 @@
     "note_ar": "الدرجات يجب ألا يزيد عمرها على سنتين. من لا يبلغ الحد قد يُقبل في برنامج تأسيسي (Undergraduate Foundation)."
   },
   "sat_act": {
-    "policy": "unknown",
-    "note_ar": "صفحات القبول الدولي لا تذكر سياسة SAT أو ACT.",
-    "source_url": "https://ip.wsu.edu/future-students/requirements/"
+    "policy": "not_considered",
+    "note_ar": "لا تشترط الجامعة SAT أو ACT ولا تستعملها في قرار القبول. لكن صفحة الدوليين تقبل SAT (القراءة والكتابة 500) أو ACT طريقًا لإثبات الإنجليزية.",
+    "source_url": "https://admission.wsu.edu/first-year/"
   },
   "dates": [],
   "acceptance_rate": {

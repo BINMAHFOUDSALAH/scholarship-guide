@@ -1,7 +1,7 @@
 {
   "id": "university-of-oxford",
   "name_en": "University of Oxford",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.ox.ac.uk/admissions/undergraduate",
   "platform": {
@@ -21,9 +21,9 @@
       "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/for-international-students/english-language-requirements-visas"
     },
     "duolingo": {
+      "accepted": false,
       "min": null,
-      "listed": false,
-      "note_ar": "جدول الاختبارات المقبولة لا يذكر Duolingo.",
+      "note_ar": "لا تقبله الجامعة؛ جدول الاختبارات المقبولة لا يذكره.",
       "source_url": "https://www.ox.ac.uk/admissions/undergraduate/applying/for-international-students/english-language-requirements-visas"
     },
     "note_ar": "يجب إثبات المستوى قبل 31 يوليو من سنة العرض. ومن الاختبارات المقبولة أيضًا: PTE Academic ‏76 (و66 لكل مهارة)، وC1 Advanced أو C2 Proficiency ‏191 (و185 لكل مهارة)."

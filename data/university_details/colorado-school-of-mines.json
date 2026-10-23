@@ -1,0 +1,74 @@
+{
+  "id": "colorado-school-of-mines",
+  "name_en": "Colorado School of Mines",
+  "checked": "2026-10-23",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://undergraduate-admissions.mines.edu/international-first-year-requirements/",
+  "platform": {
+    "value_ar": "Common Application أو Golden Application (طلب Mines الخاص)، دون تفضيل بينهما",
+    "source_url": "https://undergraduate-admissions.mines.edu/frequently-asked-questions/"
+  },
+  "english": {
+    "ielts": {
+      "min": 6.5,
+      "each_min": 6.0,
+      "note_ar": "ولا تقل أي مهارة عن 6.0. يُقبل IELTS Indicator بالشروط نفسها.",
+      "source_url": "https://undergraduate-admissions.mines.edu/international-first-year-requirements/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "الصفحة نفسها تعطي رقمين للمقياس الجديد: النص يذكر 4.5 والجدول يذكر 4، فلم ننشر رقمًا. على المقياس القديم: 79.",
+      "source_url": "https://undergraduate-admissions.mines.edu/international-first-year-requirements/"
+    },
+    "duolingo": {
+      "min": 105,
+      "note_ar": "ولا تقل أي درجة فرعية عن 100.",
+      "source_url": "https://undergraduate-admissions.mines.edu/international-first-year-requirements/"
+    },
+    "note_ar": "إثبات الإنجليزية مطلوب بعد القبول وعند الالتحاق، وليس شرطًا للتقديم."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لا تطلب Mines نتائج SAT أو ACT من الطلاب الدوليين، إلا من سيلعب في رياضات NCAA.",
+    "source_url": "https://undergraduate-admissions.mines.edu/international-first-year-requirements/"
+  },
+  "dates": [
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Early Action",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-01",
+      "year_stated": false,
+      "note_ar": "يصلك قرار القبول والمنحة بحلول 15 ديسمبر",
+      "source_url": "https://undergraduate-admissions.mines.edu/frequently-asked-questions/"
+    },
+    {
+      "event_ar": "آخر موعد للتقديم",
+      "round_ar": "Regular Decision",
+      "cycle_ar": "خريف 2027",
+      "date": "2027-01-15",
+      "year_stated": false,
+      "note_ar": "بعده تُراجَع الطلبات تباعًا حسب المقاعد المتاحة",
+      "source_url": "https://undergraduate-admissions.mines.edu/frequently-asked-questions/"
+    }
+  ],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "صفحة المواعيد لا تذكر السنة؛ السنوات أعلاه من الدورة الحالية.",
+    "نسبة القبول: أحدث Common Data Set منشور هو 2022–2023، فلم نعرض نسبة قديمة."
+  ],
+  "application_fee": {
+    "fee_usd": 75,
+    "waiver": "accepts_common_app",
+    "note_ar": "75 دولارًا للدوليين و60 للأمريكيين. تقبل Mines إعفاء Common App.",
+    "source_url": "https://undergraduate-admissions.mines.edu/frequently-asked-questions/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2027",
+    "personal_essay": "none",
+    "count": 0,
+    "summary_ar": "لا مقالات إلزامية. سؤالان قصيران اختياريان «يُشجَّع عليهما بقوة»: عنصر من الجدول الدوري يمثّلك، ولماذا تريد أن تكون Oredigger.",
+    "source_url": "https://undergraduate-admissions.mines.edu/admissions-considerations/"
+  }
+}

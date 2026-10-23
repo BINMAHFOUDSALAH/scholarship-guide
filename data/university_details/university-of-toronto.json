@@ -1,7 +1,7 @@
 {
   "id": "university-of-toronto",
   "name_en": "University of Toronto",
-  "checked": "2026-10-11",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://future.utoronto.ca/",
   "platform": {
@@ -28,8 +28,8 @@
     "note_ar": "صفحة اللغة لا تذكر السعودية ضمن الدول التي قد يُعفى طلابها من اختبار اللغة بعد دراسة سنوات كافية بالإنجليزية، فلا نفترض الإعفاء."
   },
   "sat_act": {
-    "policy": "optional",
-    "note_ar": "اختياري لطلاب المدارس الدولية: يُنظر فيه إن أُرسل. ومتقدمو كلية الهندسة (Engineering) يجب أن يفصحوا عن كل نتائجهم.",
+    "policy": "unknown",
+    "note_ar": "الصفحة تذكره لمن يدرس بالنظام الأمريكي فقط: يُنظر فيه إن أُرسل، ومتقدمو كلية الهندسة يفصحون عن كل نتائجهم. ولا تذكره صفحة الشهادة السعودية.",
     "source_url": "https://future.utoronto.ca/apply/requirements/international-high-school-secondary/usa/us-admissions/"
   },
   "dates": [

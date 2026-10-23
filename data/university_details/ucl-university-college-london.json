@@ -1,7 +1,7 @@
 {
   "id": "ucl-university-college-london",
   "name_en": "UCL (University College London)",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/guidance-international-applicants",
   "platform": {
@@ -23,9 +23,9 @@
       "source_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/english-language-requirements"
     },
     "duolingo": {
+      "accepted": false,
       "min": null,
-      "listed": false,
-      "note_ar": "قائمة UCL لكل الاختبارات المقبولة لا تذكر Duolingo.",
+      "note_ar": "لا تقبله الجامعة؛ قائمة UCL لكل الاختبارات المقبولة لا تذكره.",
       "source_url": "https://www.ucl.ac.uk/study/prospective-students/undergraduate/how-apply/english-language-requirements"
     },
     "note_ar": "يجب أن يكون الاختبار قبل الالتحاق بسنتين على الأكثر: لدخول سبتمبر 2027، من 1 سبتمبر 2025 فما بعد. والموعد الأخير لتحقيق الشرط 1 سبتمبر 2027."

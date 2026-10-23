@@ -1,7 +1,7 @@
 {
   "id": "imperial-college-london",
   "name_en": "Imperial College London",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.imperial.ac.uk/study/apply/undergraduate/entry-requirements/",
   "platform": {
@@ -19,7 +19,8 @@
     "toefl_ibt": {
       "min": 4.5,
       "note_ar": "على المقياس الجديد (1–6): المستوى القياسي 4.5 مع 4.5 في كل مهارة، والأعلى 5.0 مع 5.0 في كل مهارة. وعلى القديم (0–120): القياسي 92 مع 20 في كل مهارة، والأعلى 100 مع 22.",
-      "source_url": "https://www.imperial.ac.uk/study/apply/english-language/"
+      "source_url": "https://www.imperial.ac.uk/study/apply/english-language/",
+      "varies": true
     },
     "duolingo": {
       "min": 115,
@@ -30,7 +31,7 @@
   },
   "sat_act": {
     "policy": "unknown",
-    "note_ar": "لا تذكر صفحة المؤهلات المقبولة SAT أو ACT، فلم نحدد السياسة.",
+    "note_ar": "تذكره صفحة المؤهلات المقبولة في مسار واحد فقط للشهادة الأمريكية: ثلاثة اختبارات AP بدرجات 5 و5 و4 مع شهادة الثانوية، و1460 في SAT أو 31 في ACT.",
     "source_url": "https://www.imperial.ac.uk/study/apply/undergraduate/entry-requirements/accepted-qualifications/"
   },
   "dates": [

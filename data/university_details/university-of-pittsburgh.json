@@ -1,0 +1,58 @@
+{
+  "id": "university-of-pittsburgh",
+  "name_en": "University of Pittsburgh",
+  "checked": "2026-10-23",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admissions.pitt.edu/international/international-first-year-students/",
+  "platform": {
+    "value_ar": "Common Application أو طلب Pitt الخاص، دون تفضيل بينهما",
+    "source_url": "https://admissions.pitt.edu/international/international-first-year-students/"
+  },
+  "english": {
+    "ielts": {
+      "min": null,
+      "recommended": 7.0,
+      "note_ar": "درجة تنافسية وليست حدًا أدنى، مع 6.0 فأكثر في كل مهارة.",
+      "source_url": "https://admissions.pitt.edu/international/toefl-ielts-duolingo/"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "recommended": 5.0,
+      "note_ar": "على المقياس الجديد من يناير 2026: 5.0 فأكثر مع 4.0 فأكثر في كل مهارة، وعلى المقياس القديم 100 فأكثر. درجة تنافسية وليست حدًا أدنى.",
+      "source_url": "https://admissions.pitt.edu/international/toefl-ielts-duolingo/"
+    },
+    "duolingo": {
+      "min": null,
+      "recommended": 125,
+      "note_ar": "درجة تنافسية وليست حدًا أدنى.",
+      "source_url": "https://admissions.pitt.edu/international/toefl-ielts-duolingo/"
+    },
+    "note_ar": "يُطلب عادةً اختبار إنجليزية من الطلاب الدوليين، وقد يُعفى منه بعضهم في حالات محددة."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لا يُشترط SAT أو ACT للالتحاق في خريف 2025 و2026 و2027 و2028.",
+    "source_url": "https://admissions.pitt.edu/test-optional/"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "آخر موعد للتقديم: صفحة الدوليين تذكر 1 أبريل لفصل الخريف دون سنة، وصفحة طلاب السنة الأولى تقول إنه لا يوجد موعد محدد (قبول متجدد)، فلم ننشر موعدًا.",
+    "نسبة القبول ونسبة قبول الدوليين غير منشورتين في الصفحات التي قرأناها.",
+    "إعفاء رسوم الطلب: غير مذكور في الصفحات التي قرأناها."
+  ],
+  "application_fee": {
+    "fee_usd": 55,
+    "waiver": "not_stated",
+    "note_ar": "الصفحة لا تفرّق بين الطلاب الأمريكيين والدوليين.",
+    "source_url": "https://admissions.pitt.edu/update/"
+  },
+  "essays": {
+    "cycle_ar": "خريف 2026",
+    "personal_essay": null,
+    "count": 0,
+    "summary_ar": "يُطلب من الدوليين بيان شخصي لـ Pitt أو مقال Common App الشخصي، ولا توجد مقالات إضافية. الصفحة تذكر دورة خريف 2026.",
+    "source_url": "https://admissions.pitt.edu/international/international-first-year-students/"
+  }
+}

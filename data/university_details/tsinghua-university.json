@@ -1,7 +1,7 @@
 {
   "id": "tsinghua-university",
   "name_en": "Tsinghua University",
-  "checked": "2026-10-11",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027 (دليل 2027 منشور)",
   "admissions_url": "https://international.join-tsinghua.edu.cn/",
   "platform": {
@@ -44,6 +44,15 @@
       "date": "2026-11-20",
       "year_stated": true,
       "note_ar": "5 مساءً بتوقيت بكين. النتيجة في يناير 2027",
+      "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
+    },
+    {
+      "event_ar": "فتح التقديم",
+      "round_ar": "الجولة الثانية",
+      "cycle_ar": "خريف 2027",
+      "date": "2026-11-21",
+      "year_stated": true,
+      "note_ar": "8 صباحًا بتوقيت بكين",
       "source_url": "https://international.join-tsinghua.edu.cn/Admission1/Schedule.htm"
     },
     {

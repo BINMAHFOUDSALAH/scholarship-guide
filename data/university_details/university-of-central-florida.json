@@ -1,7 +1,7 @@
 {
   "id": "university-of-central-florida",
   "name_en": "University of Central Florida",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.ucf.edu/admissions/undergraduate/international/",
   "platform": {
@@ -27,8 +27,8 @@
     "note_ar": "بدائل: SAT قراءة وكتابة 520، أو ACT English ‏20."
   },
   "sat_act": {
-    "policy": "unknown",
-    "note_ar": "قائمة مستندات الطلاب الجدد تذكر SAT أو ACT أو CLT، والصفحة لا تقول صراحة إنها مطلوبة للدوليين.",
+    "policy": "required",
+    "note_ar": "SAT أو ACT أو CLT ضمن المستندات المطلوبة لطلاب السنة الأولى الدوليين، ويُقبل ما أُدّي خلال آخر خمس سنوات (CLT من 1 يوليو 2023).",
     "source_url": "https://www.ucf.edu/admissions/undergraduate/international/"
   },
   "dates": [],

@@ -1,9 +1,13 @@
 {
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
-  "sat_act": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "القبول في الجامعة لا يشترط SAT أو ACT (test-optional)، وقد تشترط بعض المنح لطلاب السنة الأولى أحدهما. صفحة الدوليين تحيل إلى شروط طلاب السنة الأولى العامة.",
+    "source_url": "https://www.k-state.edu/admissions/undergrad/manhattan/apply/incoming-freshmen/requirements.html"
+  },
   "dates": [],
   "not_found_ar": [
     "لا يوجد آخر موعد لخريف 2027، فقط موعد أولوية للمنح (1 مايو) والطلبات تُقبل بعده"

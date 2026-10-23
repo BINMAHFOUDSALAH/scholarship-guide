@@ -1,7 +1,7 @@
 {
   "id": "north-carolina-state-university",
   "name_en": "North Carolina State University",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.ncsu.edu/apply/international/first-year/",
   "platform": {
@@ -29,7 +29,7 @@
   },
   "sat_act": {
     "policy": "unknown",
-    "note_ar": "الصفحة لا تذكر SAT أو ACT لمن يدرس خارج أمريكا.",
+    "note_ar": "قائمة المستندات لمن يدرس خارج أمريكا لا تذكر SAT أو ACT. والصفحة تقول إنه اختياري لمن يدرس في أمريكا بمعدل موزون 2.8 فأكثر، وإن النتائج الموثقة تُطلب عند الالتحاق إن ذكرتها في الطلب.",
     "source_url": "https://admissions.ncsu.edu/apply/international/first-year/"
   },
   "dates": [

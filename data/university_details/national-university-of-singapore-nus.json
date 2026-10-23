@@ -1,15 +1,28 @@
 {
   "id": "national-university-of-singapore-nus",
   "name_en": "National University of Singapore (NUS)",
-  "checked": "2026-10-11",
+  "checked": "2026-10-23",
   "entry_ar": "القبول للعام الأكاديمي 2027/2028",
   "admissions_url": "https://www.nus.edu.sg/oam/admissions/admissions",
   "platform": null,
   "english": {
-    "ielts": null,
-    "toefl_ibt": null,
-    "duolingo": null,
-    "note_ar": "في صفحة «الشهادات الثانوية الأخرى» لا يُطلب اختبار إنجليزي لهذه الفئة. ولا تحدد الصفحة هل تدخل التوجيهية السعودية فيها، فاسأل مكتب القبول."
+    "ielts": {
+      "min": 6.5,
+      "note_ar": "6.5 في الدرجة الكلية وفي القراءة والكتابة. لا يُقبل IELTS Indicator ولا One Skill Retake.",
+      "source_url": "https://www.nus.edu.sg/oam/docs/default-source/default-document-library/english-test-scores.pdf"
+    },
+    "toefl_ibt": {
+      "min": 4.5,
+      "note_ar": "4.5 في الدرجة الكلية وفي القراءة والكتابة، من جلسة اختبار واحدة (لا يُقبل MyBest).",
+      "source_url": "https://www.nus.edu.sg/oam/docs/default-source/default-document-library/english-test-scores.pdf"
+    },
+    "duolingo": {
+      "min": null,
+      "listed": false,
+      "note_ar": "قائمة NUS للاختبارات المقبولة لا تذكر Duolingo.",
+      "source_url": "https://www.nus.edu.sg/oam/docs/default-source/default-document-library/english-test-scores.pdf"
+    },
+    "note_ar": "هذه الدرجات لمن تطلب منه NUS اختبار إنجليزية؛ بعض الشهادات تتطلبه. وفي صفحة «الشهادات الثانوية الأخرى» لا يُطلب اختبار إنجليزي لهذه الفئة، ولا تحدد الصفحة هل تدخل التوجيهية السعودية فيها، فاسأل مكتب القبول."
   },
   "sat_act": {
     "policy": "unknown",
