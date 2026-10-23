@@ -42,7 +42,7 @@ Change → `pytest` → push → GitHub Actions runs the tests → Render deploy
 | `app/` | FastAPI app, Jinja2 templates, CSS/JS (RTL, mobile-first) |
 | `data/` | Official facts as JSON, each with its source (programs, universities, requirements) |
 | `content/` | Page text in Markdown (grades, programs, test guides) |
-| `scripts/` | Tools: rebuild the universities list from the Ministry's PDF, the stale-facts report, a quote checker |
+| `scripts/` | Tools: rebuild the universities list from the Ministry's PDF, the stale-facts report, quote and source checkers, a browser check of the explorer |
 | `tests/` | pytest |
 | `docs/` | Roadmap, decisions (why), architecture (how), specs, research notes |
 | `CLAUDE.md`, `.claude/` | Instructions, agents and skills for Claude Code, which helps build this project |

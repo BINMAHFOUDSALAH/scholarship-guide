@@ -16,19 +16,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Rules
 - A student guide: NOT the Ministry of Education, NOT Safeer, not affiliated with Aramco or KAUST.
-- Never invent official lists, deadlines, requirements, scores, or quotes. Claude may research facts only from **official sources**, read directly (link every fact, with the date it was read). A fact with an official source shows its source link; anything not backed by an official source or the owner's confirmation is **hidden, never stamped** (no «غير مؤكد», decision 028). Never publish from search snippets; research that couldn't be read on the official page stays in a `"draft": true` file (decision 058). Check dates stay in the data (`last_checked`) but aren't shown. The owner's review is tracked as `owner_reviewed`. If official sources conflict, show both and publish no single answer. Research notes: `docs/research/`.
+- **Never invent official lists, deadlines, requirements, scores, or quotes.**
+  - Research facts only from **official sources**, read directly; link every fact with the date it was read. Never publish from search snippets.
+  - A fact with an official source shows its source link. Anything not backed by an official source or the owner's confirmation is **hidden, never stamped** (no «غير مؤكد», decision 028).
+  - Research that couldn't be read on the official page stays in a `"draft": true` file (decision 058).
+  - If official sources conflict, show both and publish no single answer.
+  - Check dates stay in the data (`last_checked`) but aren't shown; the owner's review is `owner_reviewed`. Research notes: `docs/research/`.
 - Every important page shows its official sources.
 - Never collect sensitive data (no national ID, GPA, test scores, passport). Users are mostly minors: privacy and security are requirements. No third-party requests until the user acts (self-hosted fonts, no trackers; the only embed is click-to-play video).
 - Never read, edit, or print `.env` (also enforced by `.claude/settings.json`).
 - Arabic first, RTL, mobile first. One Arabic site with English names inline.
 - **Formal Arabic (الفصحى) on every page, never dialect** (decision 058; a test checks common dialect words). Keep terms consistent: test parts are «مهارات» (الاستماع، القراءة، الكتابة، التحدث); a score is «الحد الأدنى» or «الموصى به», never just a number.
-- Design (decision 062): act on forest, read on paper, in the logo's colours.
-  - Ink headings; forest means "you can act"; lime only for «مفتوح الآن», the next step and "you are here".
-  - One motif, the route: the logo's diamond as a step. Naskh titles, Plex text.
-  - Two designed themes; the device decides until the student picks.
-  - Arabic RTL, shared components, values under labels (never «·» chains), nothing under 13px.
-  - The logo never changes.
-  - Full rules in `.claude/rules/design.md` (loads when editing `app/templates/` or `app/static/`).
+- Design (decision 062): act on forest, read on paper, in the logo's colours; the logo never changes. The full rules are in `.claude/rules/design.md`, which loads automatically when working on `app/templates/` or `app/static/`.
 - Nothing official is hard-coded in templates: data in `data/`, page text in `content/`.
 
 ## How to work with me
@@ -39,12 +38,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   3. Report briefly: **what changed**, **how I can test it myself**, **the key concept**.
   4. **Recommend the next step** (fix, commit, push, or move on).
 - The key concept goes in the report itself (no separate learning log, decision 059). At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
-- **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Every subagent runs on **Haiku 5.5** (`claude-haiku-5-5`, enforced by `.claude/settings.json`: `CLAUDE_CODE_SUBAGENT_MODEL` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`, which also covers the built-in Explore and Plan agents; decision 059); never pass another model. If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
-  - `source-researcher`: new facts from official sources, ~5 items per agent, in parallel, with a strict schema + a finished example file.
-  - `fact-checker`: checks what's already published against its cited sources.
-  - `reviewer`: an independent check of a big or risky diff.
-  - University requirements: follow the `research-wave` skill (`.claude/skills/research-wave/SKILL.md`).
-  - Research agents are read-only: they read pages directly, with WebFetch or, where it can't reach a site (e.g. in a cloud session), with `curl`, and return results, and the main session saves them, validates them with tests, makes the decisions, writes the code, and flags anything an agent couldn't verify. Quick lookups and small edits stay in the main session.
+- **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Quick lookups and small edits stay in the main session.
+  - Every subagent runs on **Haiku 5.5**, forced by `.claude/settings.json` (decision 059). If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
+  - The agents (`.claude/agents/`) are read-only and return results. The main session saves them, validates them with tests, makes the decisions and flags anything an agent couldn't verify.
+  - `source-researcher` for new facts (~5 items per agent, in parallel, with a strict schema + a finished example file), `fact-checker` for what's already published, `reviewer` for a big or risky diff. University requirements: the `research-wave` skill.
 - Ask before installing packages, downloading files, or spending money. Never commit or push unless I ask.
 - Record design choices (with alternatives) in `docs/decisions.md`; tick progress in `docs/roadmap.md`.
 - **Handoff rule:** after any fundamental change (rule, decision, architecture, plan), update `CLAUDE.md` / `docs/roadmap.md` / `docs/decisions.md` / `docs/architecture.md` in the same step. Repo docs are the source of truth. When I say a session is ending, make sure the roadmap's "next session" note is accurate.
@@ -65,4 +62,6 @@ node scripts/check_explorer.mjs                 # the explorer's JavaScript in a
 ```
 
 ## Deploy
-Live at https://wadihguide.com (domain at Cloudflare, DNS only; hosted on Render, Frankfurt, on the $7/month compute plan so it never sleeps). The old address https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042). GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. Render installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Never set `WADIH_SHOW_DRAFTS` on Render.
+- Live at https://wadihguide.com: domain at Cloudflare (DNS only), hosted on Render (Frankfurt, $7/month plan so it never sleeps). The old https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042).
+- GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. It installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
+- Never set `WADIH_SHOW_DRAFTS` on Render.

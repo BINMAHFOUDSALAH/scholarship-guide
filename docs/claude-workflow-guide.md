@@ -36,7 +36,7 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 
 ## Best practices (Anthropic + experienced developers)
 
-1. **Give Claude a way to check its work.** Tests, a screenshot, a command that passes or fails. Wadih has about 490 tests, and every task ends with `pytest`.
+1. **Give Claude a way to check its work.** Tests, a screenshot, a command that passes or fails. Wadih has over 600 tests, and every task ends with `pytest`.
 2. **Explore → Plan → Code → Commit.** Skip planning only for tiny, clear changes.
 3. **Be specific.** Name the file, the situation, and what "done" looks like.
 4. **Ask for evidence, not "it works."** Test output, a screenshot, the command and its result.
@@ -57,11 +57,9 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 - **Interview me for a big feature:** "I want to build email alerts. Interview me with questions, then write a spec to `docs/specs/email-alerts.md`."
 - **Fresh start:** `/clear`, then "Read CLAUDE.md and the roadmap, then continue from the next step."
 
-## What Wadih uses today vs later
+## What Wadih uses
 
-- **Today:** CLAUDE.md, one path-scoped rule (`.claude/rules/design.md`), plan mode, tests, CI (GitHub Actions + Render deploy-after-checks), the `.env` permission rule, every subagent forced onto Haiku 5.5 (settings), checkpoints, three subagents (`source-researcher`, `fact-checker`, `reviewer`), one skill, `research-wave`, and two checking scripts (`scripts/stale_facts.py` for dates, `scripts/check_sources.py` for values). No MCP servers and no hooks: nothing needs them yet.
-- **Later:** more skills once a task repeats (news items, a new program), maybe a Stop hook that runs tests, a weekly link-check workflow, and building an **MCP server** for Wadih's verified data during the AI stages (a strong FDE portfolio piece).
-- Which project files exist and when to add them: [project-files-guide.md](project-files-guide.md).
+Which of these files Wadih has today, and when to add the rest: [project-files-guide.md](project-files-guide.md). No MCP servers and no hooks yet: nothing needs them. Ideas for later: more skills once a task repeats (news items, a new program), maybe a Stop hook that runs tests, a weekly link-check workflow, and an **MCP server** for Wadih's verified data in the AI stages (a strong FDE portfolio piece).
 
 ## Sources
 - Anthropic, *Best practices for Claude Code*: https://code.claude.com/docs/en/best-practices
