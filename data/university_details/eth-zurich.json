@@ -1,7 +1,7 @@
 {
   "id": "eth-zurich",
   "name_en": "ETH Zurich",
-  "checked": "2026-10-11",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027 (بكالوريوس، شهادة ثانوية من خارج سويسرا)",
   "admissions_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate.html",
   "platform": {
@@ -32,7 +32,7 @@
       "event_ar": "آخر موعد للتسجيل في الاختبار الدخولي",
       "cycle_ar": "خريف 2027",
       "date": "2026-10-15",
-      "year_stated": false,
+      "year_stated": true,
       "note_ar": "لمن يُطلب منه الاختبار",
       "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/eth-entrance-examination.html"
     },
@@ -43,14 +43,6 @@
       "year_stated": true,
       "note_ar": "لمن يُطلب منه، من 18 إلى 28 يناير 2027",
       "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/eth-entrance-examination.html"
-    },
-    {
-      "event_ar": "آخر موعد للتقديم",
-      "cycle_ar": "خريف 2027",
-      "date": "2027-03-31",
-      "year_stated": true,
-      "note_ar": "لحاملي الشهادات من خارج سويسرا. يفتح التقديم في 1 ديسمبر 2026، ويُغلق 23:59 بتوقيت وسط أوروبا",
-      "source_url": "https://ethz.ch/en/studies/bachelor/application/non-swiss-matriculation-certificate/how-to-apply.html"
     }
   ],
   "acceptance_rate": null,
@@ -59,7 +51,6 @@
     "نسبة قبول الطلاب الدوليين غير منشورة رسميًا",
     "القائمة الكاملة لشهادات الألمانية المقبولة ودرجاتها لم تظهر في الصفحة الرسمية؛ الصفحة تذكر C1 وGoethe C2 وÖSD C2 فقط، ولا تذكر TestDaF أو DSH أو telc",
     "لم تنشر ETH قائمة الدول التي يلزمها الاختبار الدخولي؛ تحدد الجامعة ذلك بعد استلام الطلب، وشروط كل بلد تُنشر عبر swissuniversities",
-    "صفحة التواريخ الرسمية تعتمد على JavaScript ولم تُقرأ منها مواعيد 2027 كاملة؛ موعد 31 مارس 2027 مأخوذ من صفحة طريقة التقديم",
-    "تعارض: صفحة الاختبار الدخولي تذكر «آخر موعد 31 مارس 2026»، وصفحة طريقة التقديم تذكر 31 مارس دون سنة؛ اعتمدنا 2027 لأنها دورة خريف 2027، ويجب التأكد من eApply"
+    "آخر موعد للتقديم لخريف 2027 غير مؤكد: صفحة الاختبار الدخولي تذكر «31 مارس 2026»، وصفحة طريقة التقديم تذكر الفترة من 1 ديسمبر إلى 31 مارس دون سنة، وصفحة المواعيد تعتمد على JavaScript."
   ]
 }

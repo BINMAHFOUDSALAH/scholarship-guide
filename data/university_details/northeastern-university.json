@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "language_note_ar": null,
   "acceptance_rate": null,
@@ -10,7 +10,7 @@
   },
   "dates": [],
   "not_found_ar": [
-    "مواعيد التقديم وحدود اختبارات الإنجليزية: صفحة القبول الدولي تحجب القراءة الآلية"
+    "مواعيد التقديم: صفحة القبول الدولي تحجب القراءة الآلية"
   ],
   "id": "northeastern-university",
   "name_en": "Northeastern University",
@@ -38,7 +38,7 @@
       "note_ar": "لا يوجد حد أدنى. نصف المقبولين في الوسط: 130 إلى 140.",
       "source_url": "https://admissions.northeastern.edu/application-information/international-applicants/"
     },
-    "note_ar": "مطلوب اختبار معتمد (Duolingo أو Cambridge C1/C2 أو IELTS أو PTE أو TOEFL)، والحد الأدنى في صفحة الدوليين التي لم نتمكن من قراءتها."
+    "note_ar": "مطلوب اختبار معتمد (Duolingo أو Cambridge C1/C2 أو IELTS أو PTE أو TOEFL) ممن ليست الإنجليزية لغته الأم، ولا يوجد حد أدنى."
   },
   "application_fee": {
     "fee_usd": 75,

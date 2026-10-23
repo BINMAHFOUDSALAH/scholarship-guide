@@ -1,7 +1,7 @@
 {
   "id": "university-of-cambridge",
   "name_en": "University of Cambridge",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://www.undergraduate.study.cam.ac.uk/",
   "platform": {
@@ -29,8 +29,8 @@
     "note_ar": "تقبل الجامعة أيضًا اختبارات Cambridge English: C1 Advanced بمجموع 193، وC2 Proficiency بمجموع 200، ولا تقل أي مهارة عن 185 في الاختبارين. المصدر: https://www.undergraduate.study.cam.ac.uk/node/143"
   },
   "sat_act": {
-    "policy": "optional",
-    "note_ar": "لا تطلبه الجامعة من المتقدمين بالتوجيهية. ولمن يتقدم بالشهادة الأمريكية مع خمسة اختبارات AP، تطلب الجامعة «درجة عالية» في SAT أو ACT دون رقم محدد.",
+    "policy": "unknown",
+    "note_ar": "لا تذكره الصفحة لمن يتقدم بالتوجيهية (المسار المذكور للتوجيهية يعتمد على اختبارات AP). ولمن يتقدم بالشهادة الأمريكية، تذكر الصفحة عادةً مزيجًا من اختبارات AP وSAT أو ACT.",
     "source_url": "https://www.undergraduate.study.cam.ac.uk/international-students/international-entry-requirements"
   },
   "dates": [

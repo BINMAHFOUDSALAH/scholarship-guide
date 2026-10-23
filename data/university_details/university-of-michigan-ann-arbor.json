@@ -1,7 +1,7 @@
 {
   "id": "university-of-michigan-ann-arbor",
   "name_en": "University of Michigan-Ann Arbor",
-  "checked": "2026-10-11",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027",
   "admissions_url": "https://admissions.umich.edu/apply/international-applicants/requirements-deadlines",
   "platform": {
@@ -13,22 +13,26 @@
       "min": 7.0,
       "each_min": 6.5,
       "note_ar": "7.0 مع 6.5 فأكثر في كل مهارة (تسميه الجامعة «نطاقًا مقبولًا»). يُقبل IELTS Indicator.",
-      "source_url": "https://admissions.umich.edu/apply/international-applicants/exams-visas"
+      "source_url": "https://teamdynamix.umich.edu/TDClient/154/Portal/KB/Article/7504/English-Language-Proficiency"
     },
     "toefl_ibt": {
       "min": 5,
       "note_ar": "على المقياس الجديد المعمول به من 21 يناير 2026 (1–6): نطاق 5–6 مع 5 فأكثر في كل مهارة، وتصفه الصفحة بأنه قريب من CEFR C1. على المقياس القديم 0–120: نطاق 100 مع 23 فأكثر في الاستماع والقراءة و21 فأكثر للتحدث والكتابة. تُقبل نسخة TOEFL Home Edition.",
-      "source_url": "https://admissions.umich.edu/apply/international-applicants/exams-visas"
+      "source_url": "https://teamdynamix.umich.edu/TDClient/154/Portal/KB/Article/7504/English-Language-Proficiency"
     },
     "duolingo": {
       "accepted": false,
       "min": null,
-      "note_ar": "لا يرد في قائمة الاختبارات التي تقبلها الجامعة للقبول الجامعي.",
-      "source_url": "https://admissions.umich.edu/apply/international-applicants/exams-visas"
+      "note_ar": "الجامعة لا تقبل Duolingo English Test.",
+      "source_url": "https://teamdynamix.umich.edu/TDClient/154/Portal/KB/Article/7504/English-Language-Proficiency"
     },
     "note_ar": "لا تُستعمل MyBest في TOEFL، ويجب إرسال كل المحاولات. عند إعادة الاختبار تُعاد كل المهارات. مدرسة الموسيقى لها حدودها الخاصة. هناك استثناء من امتحان الإنجليزية مرتبط بدرجات SAT أو ACT وبسنوات دراسة في دول محددة، وتفاصيله في الصفحة."
   },
-  "sat_act": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختياري لدورة 2027: يمكنك إرسال SAT أو ACT إن أردت، ولا يتضرر من لا يرسلها.",
+    "source_url": "https://teamdynamix.umich.edu/TDClient/154/Portal/KB/ArticleDet?ID=7490"
+  },
   "dates": [],
   "acceptance_rate": {
     "percent": 16.4,
@@ -38,7 +42,7 @@
   },
   "language_note_ar": null,
   "not_found_ar": [
-    "مواعيد التقديم وسياسة SAT/ACT: صفحات الجامعة ترفض القراءة الآلية، فلم ننشرها حتى نتحقق منها في موقع الجامعة.",
+    "مواعيد التقديم: صفحات القبول في الجامعة ترفض القراءة الآلية، فلم ننشرها حتى نتحقق منها.",
     "لم نتحقق من قبول Coalition Application.",
     "نسبة قبول الدوليين غير منشورة كنسبة، وقيم جدول الإقامة في CDS لم تظهر في الملف المقروء."
   ],

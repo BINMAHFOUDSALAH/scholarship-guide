@@ -742,9 +742,9 @@ def test_oxford_and_ucl_published_after_reading_their_pages():
 
 
 def test_a_missing_sat_policy_reads_as_unverified_not_unpublished():
-    assert ex.details["university-of-michigan-ann-arbor"]["sat_act"] is None
-    assert ex.key_facts("university-of-michigan-ann-arbor")["sat_ar"] == "لم نتحقق منه"
-    html = client.get("/universities/university-of-michigan-ann-arbor").text
+    assert ex.details["gallaudet-university"]["sat_act"] is None
+    assert ex.key_facts("gallaudet-university")["sat_ar"] == "لم نتحقق منه"
+    html = client.get("/universities/gallaudet-university").text
     assert "لا توجد لدينا مواعيد مؤكدة لهذه الدورة" in html and "لم تنشر الجامعة مواعيد" not in html
     assert main.explorer.sat_summary()["counts"].get("unverified", 0) >= 1  # counted apart from "غير محدد"
 

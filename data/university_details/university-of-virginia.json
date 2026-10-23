@@ -1,0 +1,37 @@
+{
+  "id": "university-of-virginia",
+  "name_en": "University of Virginia",
+  "checked": "2026-10-23",
+  "entry_ar": "القبول لخريف 2027",
+  "admissions_url": "https://admission.virginia.edu/international",
+  "platform": null,
+  "english": {
+    "ielts": {
+      "min": null,
+      "note_ar": "مقبول، ولا تنشر الجامعة حدًا أدنى.",
+      "source_url": "https://admission.virginia.edu/international"
+    },
+    "toefl_ibt": {
+      "min": null,
+      "note_ar": "مقبول، ولا تنشر الجامعة حدًا أدنى.",
+      "source_url": "https://admission.virginia.edu/international"
+    },
+    "duolingo": {
+      "min": null,
+      "note_ar": "مقبول، ولا تنشر الجامعة حدًا أدنى.",
+      "source_url": "https://admission.virginia.edu/international"
+    },
+    "note_ar": "تشجّع الجامعة بقوة من ليست الإنجليزية لغته الأولى على تقديم اختبار إنجليزية، أيًا كانت مدرسته، وتُراجَع نتيجته ضمن الطلب. ومن الاختبارات المقبولة أيضًا Cambridge C1 Advanced أو C2 Proficiency."
+  },
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "لمتقدمي السنة الأولى لخريف 2027 حرية إرسال درجات SAT أو ACT أو عدم إرسالها.",
+    "source_url": "https://admission.virginia.edu/admission/deadlines-instructions"
+  },
+  "dates": [],
+  "acceptance_rate": null,
+  "language_note_ar": null,
+  "not_found_ar": [
+    "منصة التقديم ومواعيده ورسومه ومقالاته: صفحات الجامعة تحجب القراءة الآلية، فلم ننشرها حتى نتحقق منها."
+  ]
+}

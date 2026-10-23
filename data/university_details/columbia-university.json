@@ -1,17 +1,33 @@
 {
   "id": "columbia-university",
   "name_en": "Columbia University",
-  "checked": "2026-10-16",
+  "checked": "2026-10-23",
   "entry_ar": "القبول لخريف 2027 (لم تُؤكَّد الصفحات الرسمية بعد)",
   "admissions_url": "https://undergrad.admissions.columbia.edu/apply/firstyear",
   "platform": null,
   "english": {
-    "ielts": null,
-    "toefl_ibt": null,
-    "duolingo": null,
-    "note_ar": "حدود اختبارات الإنجليزية لكلية كولومبيا والهندسة غير مؤكدة بعد. تعذّر فتح صفحة القبول الرسمية لهذا الشرط، فلم تُسجَّل أي أرقام."
+    "ielts": {
+      "min": 7.5,
+      "note_ar": "IELTS Academic أو IELTS Academic for UKVI، وتُرسَل النتيجة مباشرة من جهة الاختبار.",
+      "source_url": "https://undergrad.admissions.columbia.edu/apply/international/english-proficiency"
+    },
+    "toefl_ibt": {
+      "min": 5.5,
+      "note_ar": "للاختبارات من 21 يناير 2026: 5.5. وقبل ذلك: 105 على المقياس القديم. لا تقبل الجامعة MyBest، ورمز الإرسال 2116.",
+      "source_url": "https://undergrad.admissions.columbia.edu/apply/international/english-proficiency"
+    },
+    "duolingo": {
+      "min": 135,
+      "note_ar": "على الاختبار الحالي، وتُرسَل النتيجة مباشرة من جهة الاختبار.",
+      "source_url": "https://undergrad.admissions.columbia.edu/apply/international/english-proficiency"
+    },
+    "note_ar": "الصفحة الرسمية تحجب الطلبات الآلية، فقرأها صاحب الموقع بنفسه في 23 أكتوبر 2026."
   },
-  "sat_act": null,
+  "sat_act": {
+    "policy": "optional",
+    "note_ar": "اختياري لدورة 2026–2027 (القبول لخريف 2027). ومن دورة 2027–2028 (من أغسطس 2027) يصبح SAT أو ACT مطلوبًا لمتقدمي السنة الأولى والمحوّلين إلى Columbia College وColumbia Engineering.",
+    "source_url": "https://undergrad.admissions.columbia.edu/testing-policy-update"
+  },
   "dates": [
     {
       "event_ar": "آخر موعد للتقديم",
@@ -43,8 +59,6 @@
   "language_note_ar": null,
   "not_found_ar": [
     "منصة التقديم غير مؤكدة: صفحة التقديم الرسمية تعذّر فتحها",
-    "حدود اختبارات الإنجليزية غير مؤكدة: صفحة Columbia الرسمية تعذّر فتحها",
-    "سياسة SAT أو ACT لدورة خريف 2027 غير مؤكدة: صفحة الاختبارات الرسمية تعذّر فتحها، وجدول C8 في CDS لا يُقرأ",
     "مواعيد دورة خريف 2027 غير منشورة في المصادر التي اطّلعنا عليها؛ التواريخ أعلاه من CDS لدورة 2025",
     "نسبة قبول الطلاب الدوليين غير منشورة كنسبة؛ CDS تنشر العدد فقط: 407 مقبولًا من 15,380 متقدمًا دوليًا (خريف 2025)"
   ],
