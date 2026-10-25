@@ -502,16 +502,46 @@ def test_ielts_resource_page():
 
 # ---------- Waaid latest programs, deadlines, SDAIA ----------
 
-def test_waaid_toggle_lists_latest_programs_newest_first():
-    """The latest واعد programs live on the program page (decision 035); the homepage links there."""
+def test_waaid_programs_are_newest_first_and_linked_from_the_program_page():
+    """The program page links to /waaid (decision 063); the old #waaid-latest anchor still lands there."""
     w = main.waaid()
     closing = [p["apply_to"] for p in w["programs"]]
     assert closing == sorted(closing, reverse=True)
     html = client.get("/programs/custodian-scholarship").text
-    assert 'class="waaid-latest"' in html
-    assert w["programs"][0]["program_ar"] in html
+    assert 'id="waaid-latest"' in html and '/waaid"' in html
+    assert '/waaid"' in client.get("/").text
+
+
+def test_waaid_page_lists_every_program_under_its_own_anchor():
+    r = client.get("/waaid")
+    assert r.status_code == 200
+    html = r.text
+    for p in main.waaid_data["programs"]:
+        assert f'id="{p["id"]}"' in html, p["id"]
     assert main.waaid_data["source_url"] in html
-    assert "/programs/custodian-scholarship#waaid-latest" in client.get("/").text
+    assert f"<loc>{main.site['base_url']}/waaid</loc>" in client.get("/sitemap.xml").text
+
+
+def test_waaid_page_puts_open_high_school_programs_first(monkeypatch):
+    def program(pid, hs, apply_to):
+        return {"id": pid, "company_ar": "شركة", "program_ar": pid, "level_ar": "بكالوريوس",
+                "institution": "X", "country_ar": "Y", "duration_ar": "سنة", "start_ar": None,
+                "apply_from": "2000-01-01", "apply_to": apply_to, "for_high_school": hs, "requirements_ar": []}
+    monkeypatch.setitem(main.waaid_data, "programs", [
+        program("old-closed", True, "2001-01-01"),
+        program("open-master", False, "2999-01-01"),
+        program("open-bachelor", True, "2999-01-01"),
+    ])
+    html = client.get("/waaid").text
+    assert html.index('id="open-bachelor"') < html.index('id="open-master"') < html.index('id="old-closed"')
+    assert "https://www.uap.sa/" in html  # the official «تقدم الآن» destination, shown while something is open
+
+
+def test_board_links_each_waaid_program_to_its_anchor():
+    board = main.status_board()
+    items = [i for g in board.values() for i in g if i["program_ar"].startswith("مسار واعد")]
+    ids = {p["id"] for p in main.waaid_data["programs"]}
+    assert items and all(i["page"].startswith("/waaid#") and i["page"][7:] in ids for i in items)
 
 
 def test_open_track_closes_itself_after_its_deadline(monkeypatch):

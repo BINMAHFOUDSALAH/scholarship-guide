@@ -91,7 +91,7 @@ def waaid():
         for p in sorted(waaid_data["programs"], key=lambda p: p["apply_to"], reverse=True)
     ]
     return {"programs": programs, "any_open": any(p["is_open"] for p in programs),
-            "source_url": waaid_data["source_url"]}
+            "source_url": waaid_data["source_url"], "apply_url": waaid_data.get("apply_url")}
 
 
 # How long a closed program stays in «فُتح وأُغلق مؤخرًا» before it drops out of the board.
@@ -143,7 +143,7 @@ def status_board():
     for p in w["programs"]:
         item = {
             "title_ar": p["program_ar"], "program_ar": f"مسار واعد، {p['company_ar']}",
-            "page": "/programs/custodian-scholarship#waaid-latest", "source_url": w["source_url"],
+            "page": f"/waaid#{p['id']}", "source_url": w["source_url"],
             "for_high_school": p["for_high_school"],
         }
         if p["is_open"]:
@@ -309,6 +309,24 @@ def program_page(request: Request, slug: str):
     return templates.TemplateResponse(request, "program.html", {"program": program, "page": page, "explorer": explorer})
 
 
+@app.get("/waaid", response_class=HTMLResponse)
+def waaid_page(request: Request):
+    # مسار واعد on its own page (decision 063): every announced program under its own anchor, so the
+    # homepage and the board open the exact program a student tapped. Open first, high school first.
+    programs = explorer.waaid_matches()  # newest first, with university_id for the explorer link
+    today = date.today().isoformat()
+    groups = {
+        "open_hs": [p for p in programs if p["is_open"] and p["for_high_school"]],
+        "open_other": [p for p in programs if p["is_open"] and not p["for_high_school"]],
+        "upcoming": sorted((p for p in programs if p["apply_from"] > today), key=lambda p: p["apply_from"]),
+        "closed": [p for p in programs if p["apply_to"] < today],
+    }
+    track = next(t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("latest_programs"))
+    return templates.TemplateResponse(request, "waaid.html", {
+        "groups": groups, "track": track, "w": waaid(), "explorer": explorer,
+    })
+
+
 @app.get("/universities", response_class=HTMLResponse)
 def universities_page(request: Request, q: str = "", track: str = "", field: str = "",
                       country: str = "", lang: str = "", partial: bool = False):
@@ -402,6 +420,7 @@ def sitemap():
         ["/", "/about", "/news"]
         + [f"/grades/{slug}" for slug in list_slugs("grades")]
         + [f"/programs/{slug}" for slug in program_slugs()]
+        + ["/waaid"]
         + [f"/resources/{slug}" for slug in list_slugs("resources")]
         + ["/universities"]
         + [f"/universities/{uid}" for uid in sorted(explorer.universities)]

@@ -1,7 +1,9 @@
 {
-  "_note": "The latest programs announced under مسار واعد, copied from the Ministry's official Waaid page (newest first by closing date). Status (open/closed) is computed from apply_to on each request. Add new ones at the top when the page announces them.",
+  "_note": "The latest programs announced under مسار واعد, copied from the Ministry's official Waaid page (newest first by closing date). Status (open/closed) is computed from apply_to on each request. Add new ones at the top when the page announces them. Each program's id is its anchor on /waaid, so keep ids stable.",
   "source_url": "https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/",
   "checked": "2026-10-25",
+  "apply_url": "https://www.uap.sa/",
+  "apply_note": "Every «تقدم الآن» button on the official Waaid page (read 2026-10-25) leads to منصة قبول (uap.sa).",
   "programs": [
     {
       "id": "stc-nus-bcomp-cs",

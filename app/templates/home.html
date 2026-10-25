@@ -151,7 +151,7 @@
           <li class="track">
             <div class="track-main">
               <span class="track-name">{{ track.name_ar }}</span>
-              <span class="track-note">{{ track.note_ar }}{% if track.latest_programs and path.id in program_pages %}، <a href="{{ url_for('program_page', slug=path.id) }}#waaid-latest">آخر برامجه</a>{% endif %}</span>
+              <span class="track-note">{{ track.note_ar }}{% if track.latest_programs and path.id in program_pages %}، <a href="{{ url_for('waaid_page') }}">آخر برامجه</a>{% endif %}</span>
             </div>
             {# A status is shown only when it has an official source or the owner confirmed it (decision 028). #}
             {% set st = track_status(track) %}

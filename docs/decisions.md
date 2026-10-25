@@ -945,3 +945,14 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 **Limits:**
 - Not yet seen on a real iPhone (Safari) or with a screen reader, and no students have used it.
 - Phone pages are longer (the homepage 5,948 → 7,008px at 390px), mostly from the guides index, the fuller footer and the labelled facts.
+
+## 063 — واعد gets its own page; each program opens where the student tapped (updates 030, 033, 034)
+**Date:** 2026-10-25
+**Decision:**
+- **`/waaid`:** every program in `data/waaid_programs.json` under its own anchor (its `id`). Open programs come first, split into «لخريجي الثانوية» and «برامج ليست لخريجي الثانوية»; then «يفتح لاحقًا»; then «أُغلق التقديم» (newest first).
+- **Each program** shows its details as a labelled list: employer, place of study (linked to the university page when it's in the lists), degree, duration, start, application window, key requirements. The program a student tapped is marked with a forest bar (`:target`).
+- **Apply:** while something is open, one button «قدّم عبر منصة قبول ↗» (`apply_url`, where every official «تقدم الآن» button leads), with a reminder to read the full conditions on the official page.
+- **Links:** the homepage's «مفتوح للتقديم الآن» and the board on `/news` link each واعد program to `/waaid#<id>`. On the program page, the toggle became a short status line and a link (the `#waaid-latest` anchor stays for old links). In the sitemap.
+**Alternatives:** Keep the toggle and open it with JavaScript when the anchor is hit; a page per program (too many pages for short windows); link straight to the Ministry's page (loses the high school split and the explorer links).
+**Why:** The owner tapped an STC program on the homepage and landed on the program page's track list, with the toggle closed. A student who taps a program should see that program, with its dates and requirements.
+
