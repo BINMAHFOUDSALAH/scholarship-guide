@@ -100,7 +100,8 @@ RECENT_DAYS = 120
 
 def status_board():
     """The news board, built from the data that already holds each status (decision 033):
-    - open: tracks open today (soonest deadline first) and واعد programs open today
+    - open: tracks open today (soonest deadline first) and واعد programs open today (those not for
+      high school graduates last)
     - waiting: tracks closed until further notice or not open yet, and واعد programs opening later
     - recent: واعد programs and dated tracks that closed in the last RECENT_DAYS days (newest first)
     Nothing is typed twice: a status lives in paths.json / waaid_programs.json and shows up here.
@@ -152,7 +153,9 @@ def status_board():
         elif (today - date.fromisoformat(p["apply_to"])).days <= RECENT_DAYS:
             groups["recent"].append({**item, "status": "closed", "closed_on": p["apply_to"]})
 
-    groups["open"].sort(key=lambda i: (i.get("until") is None, i.get("until") or ""))
+    # Soonest deadline first, but واعد programs not open to high school graduates go last:
+    # one company's batch of master's programs shouldn't push الرواد off the homepage.
+    groups["open"].sort(key=lambda i: (i.get("for_high_school") is False, i.get("until") is None, i.get("until") or ""))
     groups["recent"].sort(key=lambda i: i["closed_on"], reverse=True)
     return groups
 
