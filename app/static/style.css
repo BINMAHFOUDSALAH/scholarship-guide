@@ -4303,13 +4303,10 @@ a.uni-name:hover .uni-name-en:only-child {
   }
 }
 
-/* واعد on its own page (decision 063): each program under its own anchor; the one a student tapped is marked. */
+/* واعد on its own page (decision 063): one block per announcement, each program under its own anchor.
+   The block or program a student tapped is marked with a forest bar (:target). */
 .waaid-section {
   margin-block: var(--space-6);
-}
-
-.waaid-group {
-  margin-block: var(--space-5) var(--space-2);
 }
 
 .waaid-hint {
@@ -4317,9 +4314,27 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink-muted);
 }
 
+.waaid-group {
+  margin-block: var(--space-4) var(--space-5);
+  padding-block-start: var(--space-3);
+  border-top: 1px solid var(--line-strong);
+  scroll-margin-top: var(--space-4);
+}
+
+.waaid-company {
+  margin: 0 0 var(--space-1);
+}
+
+.waaid-when {
+  margin: 0 0 var(--space-2);
+}
+
+.waaid-group .actions {
+  margin-block: var(--space-3);
+}
+
 .waaid-page .waaid-list {
   padding: 0;
-  border-bottom: 1px solid var(--line);
 }
 
 .waaid-name {
@@ -4341,6 +4356,7 @@ a.uni-name:hover .uni-name-en:only-child {
   scroll-margin-top: var(--space-4);
 }
 
+.waaid-group:target,
 .waaid-item:target {
   padding-inline-start: var(--space-3);
   border-inline-start: 3px solid var(--action);
@@ -4348,4 +4364,13 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .waaid-latest-link {
   font-weight: 700;
+}
+
+/* «تقدم الآن ↗» beside the source, on the homepage rows and the board (decision 063). */
+.open-actions,
+.board-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
 }

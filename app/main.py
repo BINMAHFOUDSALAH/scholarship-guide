@@ -15,7 +15,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.content import SLUG_PATTERN, list_slugs, load_page
 from app.search import SiteSearch
 from app.sky import rowwad_chart, star_field
-from app.universities import COUNT_FORMS, NOT_LISTED_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
+from app.universities import COUNT_FORMS, NOT_LISTED_AR, PROGRAMS_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
 
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR.parent / "data"
@@ -90,8 +90,32 @@ def waaid():
         {**p, "is_open": p["apply_from"] <= today <= p["apply_to"]}
         for p in sorted(waaid_data["programs"], key=lambda p: p["apply_to"], reverse=True)
     ]
-    return {"programs": programs, "any_open": any(p["is_open"] for p in programs),
+    return {"programs": programs, "any_open": any(p["is_open"] for p in programs), "groups": waaid_groups(programs),
             "source_url": waaid_data["source_url"], "apply_url": waaid_data.get("apply_url")}
+
+
+def waaid_groups(programs):
+    """واعد programs grouped by announcement (one company, one application window), in the order given (decision 063).
+    A group's id is its anchor on /waaid; it comes from its first program in the data, so links stay stable.
+    Inside a group, programs for high school graduates come first."""
+    by_key = {}
+    for p in programs:
+        by_key.setdefault((p["company_ar"], p["apply_from"], p["apply_to"]), []).append(p)
+    groups = []
+    for (company, start, end), ps in by_key.items():
+        hs = [p for p in ps if p["for_high_school"]]
+        groups.append({"id": f"g-{ps[0]['id']}", "company_ar": company, "apply_from": start, "apply_to": end,
+                       "is_open": ps[0]["is_open"], "programs": hs + [p for p in ps if not p["for_high_school"]],
+                       "hs_count": len(hs), "other_count": len(ps) - len(hs)})
+    return groups
+
+
+def waaid_who(group):
+    """«لمن» for an announcement: how many of its programs take high school graduates."""
+    hs, other = group["hs_count"], group["other_count"]
+    if hs and other:
+        return f"{count_ar(hs, PROGRAMS_AR)} لخريجي الثانوية، و{count_ar(other, PROGRAMS_AR)} لغير خريجي الثانوية"
+    return "لخريجي الثانوية" if hs else "لغير خريجي الثانوية"
 
 
 # How long a closed program stays in «فُتح وأُغلق مؤخرًا» before it drops out of the board.
@@ -128,6 +152,8 @@ def status_board():
                 # Who can act on it: «مفتوح الآن» alone read as "apply today" to students who can't yet
                 # (الرواد needs a university admission first; SDAIA needs a scholarship).
                 "who_ar": track.get("apply_with_ar"),
+                # «تقدم الآن ↗» while open, for tracks whose data names where to apply (sourced in the track).
+                "apply_url": track.get("apply_url") if status == "open" else None,
             }
             until = track.get("status_until")
             if status == "open":
@@ -139,23 +165,29 @@ def status_board():
             else:
                 groups["waiting"].append(item)
 
+    # واعد: one item per announcement (a company's programs with one window), not one per program, so a batch
+    # of 11 programs takes one row; the row opens that announcement on /waaid (decision 063).
     w = waaid()
-    for p in w["programs"]:
+    for g in w["groups"]:
+        single = len(g["programs"]) == 1
+        first = g["programs"][0]
         item = {
-            "title_ar": p["program_ar"], "program_ar": f"مسار واعد، {p['company_ar']}",
-            "page": f"/waaid#{p['id']}", "source_url": w["source_url"],
-            "for_high_school": p["for_high_school"],
+            "title_ar": first["program_ar"] if single else f"برامج {g['company_ar']}",
+            "program_ar": f"مسار واعد، {g['company_ar'] if single else count_ar(len(g['programs']), PROGRAMS_AR)}",
+            "page": f"/waaid#{g['id']}", "source_url": w["source_url"],
+            "who_ar": waaid_who(g),  # every واعد row says who it is for, one way (no tag)
+            "sort_last": g["hs_count"] == 0,
         }
-        if p["is_open"]:
-            groups["open"].append({**item, "status": "open", "until": p["apply_to"]})
-        elif p["apply_from"] > iso:
-            groups["waiting"].append({**item, "status": "not_open", "opens": p["apply_from"]})
-        elif (today - date.fromisoformat(p["apply_to"])).days <= RECENT_DAYS:
-            groups["recent"].append({**item, "status": "closed", "closed_on": p["apply_to"]})
+        if g["is_open"]:
+            groups["open"].append({**item, "status": "open", "until": g["apply_to"], "apply_url": w["apply_url"]})
+        elif g["apply_from"] > iso:
+            groups["waiting"].append({**item, "status": "not_open", "opens": g["apply_from"]})
+        elif (today - date.fromisoformat(g["apply_to"])).days <= RECENT_DAYS:
+            groups["recent"].append({**item, "status": "closed", "closed_on": g["apply_to"]})
 
-    # Soonest deadline first, but واعد programs not open to high school graduates go last:
-    # one company's batch of master's programs shouldn't push الرواد off the homepage.
-    groups["open"].sort(key=lambda i: (i.get("for_high_school") is False, i.get("until") is None, i.get("until") or ""))
+    # Soonest deadline first, but واعد announcements with nothing for high school graduates go last:
+    # a company's batch of master's programs shouldn't push الرواد off the homepage.
+    groups["open"].sort(key=lambda i: (i.get("sort_last", False), i.get("until") is None, i.get("until") or ""))
     groups["recent"].sort(key=lambda i: i["closed_on"], reverse=True)
     return groups
 
@@ -214,6 +246,7 @@ templates.env.globals["track_status_labels"] = TRACK_STATUS_LABELS
 templates.env.globals["tracks"] = TRACKS
 explorer.waaid = waaid  # the explorer lists واعد programs from the same data as the homepage
 templates.env.globals["waaid"] = waaid
+templates.env.globals["waaid_who"] = waaid_who
 templates.env.globals["track_status"] = track_status
 # The sky drawings (decisions 060, 062): the homepage's night stars and the الرواد chart, computed once.
 templates.env.globals["sky_stars"] = {
@@ -311,19 +344,18 @@ def program_page(request: Request, slug: str):
 
 @app.get("/waaid", response_class=HTMLResponse)
 def waaid_page(request: Request):
-    # مسار واعد on its own page (decision 063): every announced program under its own anchor, so the
-    # homepage and the board open the exact program a student tapped. Open first, high school first.
-    programs = explorer.waaid_matches()  # newest first, with university_id for the explorer link
+    # مسار واعد on its own page (decision 063): one block per announcement (company + window), each program
+    # under its own anchor. The homepage and the board open the announcement a student tapped.
+    groups = waaid_groups(explorer.waaid_matches())  # with university_id, for the link to the university page
     today = date.today().isoformat()
-    groups = {
-        "open_hs": [p for p in programs if p["is_open"] and p["for_high_school"]],
-        "open_other": [p for p in programs if p["is_open"] and not p["for_high_school"]],
-        "upcoming": sorted((p for p in programs if p["apply_from"] > today), key=lambda p: p["apply_from"]),
-        "closed": [p for p in programs if p["apply_to"] < today],
+    sections = {
+        "open": [g for g in groups if g["is_open"]],
+        "upcoming": sorted((g for g in groups if g["apply_from"] > today), key=lambda g: g["apply_from"]),
+        "closed": [g for g in groups if g["apply_to"] < today],
     }
     track = next(t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("latest_programs"))
     return templates.TemplateResponse(request, "waaid.html", {
-        "groups": groups, "track": track, "w": waaid(), "explorer": explorer,
+        "sections": sections, "track": track, "w": waaid(), "explorer": explorer,
     })
 
 

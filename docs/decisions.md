@@ -946,13 +946,20 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Not yet seen on a real iPhone (Safari) or with a screen reader, and no students have used it.
 - Phone pages are longer (the homepage 5,948 → 7,008px at 390px), mostly from the guides index, the fuller footer and the labelled facts.
 
-## 063 — واعد gets its own page; each program opens where the student tapped (updates 030, 033, 034)
+## 063 — واعد gets its own page; one row per announcement; «تقدم الآن» (updates 030, 033, 034)
 **Date:** 2026-10-25
 **Decision:**
-- **`/waaid`:** every program in `data/waaid_programs.json` under its own anchor (its `id`). Open programs come first, split into «لخريجي الثانوية» and «برامج ليست لخريجي الثانوية»; then «يفتح لاحقًا»; then «أُغلق التقديم» (newest first).
-- **Each program** shows its details as a labelled list: employer, place of study (linked to the university page when it's in the lists), degree, duration, start, application window, key requirements. The program a student tapped is marked with a forest bar (`:target`).
-- **Apply:** while something is open, one button «قدّم عبر منصة قبول ↗» (`apply_url`, where every official «تقدم الآن» button leads), with a reminder to read the full conditions on the official page.
-- **Links:** the homepage's «مفتوح للتقديم الآن» and the board on `/news` link each واعد program to `/waaid#<id>`. On the program page, the toggle became a short status line and a link (the `#waaid-latest` anchor stays for old links). In the sitemap.
-**Alternatives:** Keep the toggle and open it with JavaScript when the anchor is hit; a page per program (too many pages for short windows); link straight to the Ministry's page (loses the high school split and the explorer links).
-**Why:** The owner tapped an STC program on the homepage and landed on the program page's track list, with the toggle closed. A student who taps a program should see that program, with its dates and requirements.
-
+- **`/waaid`:** every program in `data/waaid_programs.json`, grouped by announcement (one company, one application window: `waaid_groups()`). Sections: «مفتوح الآن», «يفتح لاحقًا», «عن مسار واعد» (the track's sourced fact), «أُغلق التقديم» (newest first).
+  - An announcement shows its window, status, «لمن» (how many programs take high school graduates: `waaid_who()`) and, while open, «تقدم الآن ↗» plus «الشروط كاملة في الصفحة الرسمية ↗». Its programs follow, high school first.
+  - Each program is a labelled list: place of study (linked to the university page when it's in the lists), degree, duration, start, key requirements.
+  - Anchors: an announcement is `g-<its first program's id>`, a program is its `id`; the one a student tapped gets a forest bar (`:target`). Keep ids stable.
+- **Homepage and `/news`:** one row per واعد announcement, not one per program. A batch of 11 programs is «برامج <الشركة>» with «لمن: 3 برامج لخريجي الثانوية، و8 برامج لغير خريجي الثانوية», linked to its block on `/waaid`. A one-program announcement keeps the program's name. Every واعد row says who it is for in «لمن» («لخريجي الثانوية», «لغير خريجي الثانوية», or the counts), one way, with no tag. Announcements with nothing for high school graduates sort after everything else.
+- **«تقدم الآن ↗»** (secondary small button, beside the source) on open rows whose data names where to apply: واعد (`apply_url` in `waaid_programs.json`: every «تقدم الآن» button on the official واعد page leads to uap.sa) and الرواد (`apply_url` on the track, from the program's sourced «platform» fact). Shown only while open. SDAIA has none here: it isn't a standalone application.
+- **Program page:** the واعد toggle became a status line and a link (the `#waaid-latest` anchor stays for old links). `/waaid` is in the sitemap.
+**Alternatives:**
+- Keep the toggle and open it with JavaScript when the anchor is hit: the student still lands in a long program page.
+- One row per program on the homepage (what we had): STC's 11 programs filled 3 of the 4 slots with near-identical titles that didn't say which university; SDAIA was hidden behind «وغيرها (9)», 8 of them master's programs.
+- A page per program: too many pages for windows of 10 days.
+- Link straight to the Ministry's page: loses the high school split and the links to university pages.
+**Why:** The owner tapped an STC program on the homepage and landed on the program page's track list with the toggle closed. A student who taps an opening should see it, with its dates, who it's for, its requirements, and where to apply.
+**Checked:** 629 tests (incl. the lifecycle: «لم يفتح بعد» → open with «تقدم الآن» → closed, from dates alone) and a browser run of the student flows at 360/390/768/1280px in both themes (123 checks: rows, tap lands at the top and is marked, apply links, /news anchors, old anchor, no horizontal scroll, no console errors, every internal link answers 200).

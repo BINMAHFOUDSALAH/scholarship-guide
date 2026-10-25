@@ -537,11 +537,13 @@ def test_waaid_page_puts_open_high_school_programs_first(monkeypatch):
     assert "https://www.uap.sa/" in html  # the official «تقدم الآن» destination, shown while something is open
 
 
-def test_board_links_each_waaid_program_to_its_anchor():
+def test_board_links_each_waaid_announcement_to_its_block_on_the_page():
     board = main.status_board()
     items = [i for g in board.values() for i in g if i["program_ar"].startswith("مسار واعد")]
-    ids = {p["id"] for p in main.waaid_data["programs"]}
-    assert items and all(i["page"].startswith("/waaid#") and i["page"][7:] in ids for i in items)
+    html = client.get("/waaid").text
+    assert items and all(i["page"].startswith("/waaid#g-") for i in items)
+    for i in items:
+        assert f'id="{i["page"].split("#")[1]}"' in html, i["page"]
 
 
 def test_open_track_closes_itself_after_its_deadline(monkeypatch):
@@ -558,17 +560,74 @@ def test_open_track_closes_itself_after_its_deadline(monkeypatch):
     assert main.track_status(track) == "closed"
 
 
-def test_open_board_puts_waaid_programs_not_for_high_school_last(monkeypatch):
+def waaid_program(pid, hs, apply_from, apply_to, company="شركة"):
+    return {"id": pid, "company_ar": company, "program_ar": f"برنامج {pid}", "level_ar": "بكالوريوس",
+            "institution": "X", "country_ar": "Y", "duration_ar": "سنة", "start_ar": None,
+            "apply_from": apply_from, "apply_to": apply_to, "for_high_school": hs, "requirements_ar": []}
+
+
+def fix_today(monkeypatch, day):
+    import datetime
+
+    class Fixed(datetime.date):
+        @classmethod
+        def today(cls):
+            return datetime.date.fromisoformat(day)
+    monkeypatch.setattr(main, "date", Fixed)
+
+
+def test_open_board_puts_waaid_announcements_with_nothing_for_high_school_last(monkeypatch):
     """A batch of واعد master's programs closing soon must not push الرواد off the homepage."""
-    closes_soon = {"id": "x", "company_ar": "شركة", "program_ar": "ماجستير", "level_ar": "ماجستير",
-                   "institution": "X", "country_ar": "Y", "duration_ar": "سنة", "start_ar": None,
-                   "apply_from": "2000-01-01", "apply_to": main.date.today().isoformat(), "for_high_school": False,
-                   "requirements_ar": []}
-    monkeypatch.setitem(main.waaid_data, "programs", [closes_soon] * 5)
+    today = main.date.today().isoformat()
+    monkeypatch.setitem(main.waaid_data, "programs", [waaid_program(f"m{n}", False, "2000-01-01", today) for n in range(5)])
     board = main.status_board()["open"]
-    flags = [i.get("for_high_school") is False for i in board]
-    assert flags == sorted(flags)  # every non-high-school program after every other item
+    flags = [i.get("sort_last", False) for i in board]
+    assert flags == sorted(flags)  # every announcement with nothing for high school graduates after every other item
     assert any("x.com/SA_Scholarships" in (i["source_url"] or "") for i in board[:4])
+
+
+def test_a_waaid_announcement_is_one_row_with_who_and_apply(monkeypatch):
+    """11 programs from one company in one window: one homepage row that says who they are for, with «تقدم الآن»."""
+    fix_today(monkeypatch, "2026-10-30")
+    programs = ([waaid_program(f"b{n}", True, "2026-10-25", "2026-11-05", "شركة الاتصالات") for n in range(3)]
+                + [waaid_program(f"m{n}", False, "2026-10-25", "2026-11-05", "شركة الاتصالات") for n in range(8)])
+    monkeypatch.setitem(main.waaid_data, "programs", programs)
+    rows = [i for i in main.status_board()["open"] if i["program_ar"].startswith("مسار واعد")]
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["title_ar"] == "برامج شركة الاتصالات" and row["page"] == "/waaid#g-b0"
+    assert row["who_ar"] == "3 برامج لخريجي الثانوية، و8 برامج لغير خريجي الثانوية"
+    assert row["apply_url"] == main.waaid_data["apply_url"] == "https://www.uap.sa/"
+    home = client.get("/").text
+    assert "برامج شركة الاتصالات" in home and "تقدم الآن ↗" in home and "https://www.uap.sa/" in home
+
+
+def test_waaid_lifecycle_before_during_after(monkeypatch):
+    """Nothing is edited by hand: the same data reads «لم يفتح بعد», then open with «تقدم الآن», then closed."""
+    monkeypatch.setitem(main.waaid_data, "programs", [waaid_program("p1", True, "2026-10-25", "2026-11-05")])
+    for day, group, page_has, page_lacks in (
+        ("2026-10-20", "waiting", 'id="waaid-upcoming"', "تقدم الآن ↗"),
+        ("2026-10-25", "open", "تقدم الآن ↗", 'id="waaid-upcoming"'),
+        ("2026-11-05", "open", "تقدم الآن ↗", 'id="waaid-closed"'),
+        ("2026-11-06", "recent", 'id="waaid-closed"', "تقدم الآن ↗"),
+    ):
+        fix_today(monkeypatch, day)
+        board = main.status_board()
+        assert any(i["page"] == "/waaid#g-p1" for i in board[group]), (day, group)
+        html = client.get("/waaid").text
+        waaid_part = html[html.index("<h1>"):]
+        assert page_has in waaid_part, (day, page_has)
+        assert page_lacks not in waaid_part, (day, page_lacks)
+
+
+def test_arruaad_apply_link_only_while_open(monkeypatch):
+    track = next(t for t in main.paths_by_id["custodian-scholarship"]["tracks"] if t.get("id") == "arruaad")
+    assert track["apply_url"] == "https://www.uap.sa/"
+    fix_today(monkeypatch, track["status_until"])
+    row = next(i for i in main.status_board()["open"] if i["title_ar"] == "مسار الرواد")
+    assert row["apply_url"] == "https://www.uap.sa/"
+    fix_today(monkeypatch, "2026-11-16")  # the day after its deadline
+    assert not any(i["title_ar"] == "مسار الرواد" for i in main.status_board()["open"])
 
 
 def test_sdaia_program_page_and_targets():
