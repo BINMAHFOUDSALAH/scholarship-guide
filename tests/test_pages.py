@@ -528,6 +528,19 @@ def test_open_track_closes_itself_after_its_deadline(monkeypatch):
     assert main.track_status(track) == "closed"
 
 
+def test_open_board_puts_waaid_programs_not_for_high_school_last(monkeypatch):
+    """A batch of واعد master's programs closing soon must not push الرواد off the homepage."""
+    closes_soon = {"id": "x", "company_ar": "شركة", "program_ar": "ماجستير", "level_ar": "ماجستير",
+                   "institution": "X", "country_ar": "Y", "duration_ar": "سنة", "start_ar": None,
+                   "apply_from": "2000-01-01", "apply_to": main.date.today().isoformat(), "for_high_school": False,
+                   "requirements_ar": []}
+    monkeypatch.setitem(main.waaid_data, "programs", [closes_soon] * 5)
+    board = main.status_board()["open"]
+    flags = [i.get("for_high_school") is False for i in board]
+    assert flags == sorted(flags)  # every non-high-school program after every other item
+    assert any("x.com/SA_Scholarships" in (i["source_url"] or "") for i in board[:4])
+
+
 def test_sdaia_program_page_and_targets():
     html = client.get("/programs/sdaia-ai-scholarship").text
     assert "قرار ابتعاث" in html
