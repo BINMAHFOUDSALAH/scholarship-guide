@@ -70,7 +70,8 @@
 {% endblock %}
 
 {% block content %}
-{# What is open today, soonest deadline first, each with who can apply («لمن»). The full board is on /news. #}
+{# What is open today, soonest deadline first, each with who can apply («لمن») and, where the data names it, «تقدم الآن».
+   A واعد announcement is one row however many programs it has (decision 063). The full board is on /news. #}
 <section id="open-now" class="section" aria-labelledby="open-title">
   <div class="section-head">
     <h2 id="open-title" class="section-title">مفتوح للتقديم الآن</h2>
@@ -87,7 +88,12 @@
       </div>
       {% if item.who_ar %}<p class="open-who">لمن: {{ item.who_ar }}</p>{% endif %}
       <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
-      {% if item.source_url %}<p class="open-source"><a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر الرسمي ↗</a></p>{% endif %}
+      {% if item.apply_url or item.source_url %}
+      <p class="open-actions">
+        {% if item.apply_url %}<a class="btn btn--secondary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="تقدم الآن: {{ item.title_ar }}، في منصة قبول">تقدم الآن ↗</a>{% endif %}
+        {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر الرسمي ↗</a>{% endif %}
+      </p>
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
@@ -151,7 +157,7 @@
           <li class="track">
             <div class="track-main">
               <span class="track-name">{{ track.name_ar }}</span>
-              <span class="track-note">{{ track.note_ar }}{% if track.latest_programs and path.id in program_pages %}، <a href="{{ url_for('program_page', slug=path.id) }}#waaid-latest">آخر برامجه</a>{% endif %}</span>
+              <span class="track-note">{{ track.note_ar }}{% if track.latest_programs and path.id in program_pages %}، <a href="{{ url_for('waaid_page') }}">آخر برامجه</a>{% endif %}</span>
             </div>
             {# A status is shown only when it has an official source or the owner confirmed it (decision 028). #}
             {% set st = track_status(track) %}

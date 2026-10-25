@@ -1,0 +1,91 @@
+{#
+  مسار واعد on its own page (decision 063). One block per announcement (a company's programs with one application
+  window), under its own anchor (g-<id of its first-added program>), which the homepage and /news link to. Inside a block,
+  programs for high school graduates first, each under its own anchor (its id in data/waaid_programs.json).
+  Order: open now, then opening later, then closed (newest first).
+#}
+{% extends "base.html" %}
+{% import "components.html" as c %}
+
+{% block title %}برامج مسار واعد | {{ site.name }}{% endblock %}
+{% block description %}برامج مسار واعد المفتوحة الآن والمغلقة: جهة التوظيف، ومكان الدراسة، والمدة، وفترة التقديم، وأهم شروط كل برنامج من الصفحة الرسمية.{% endblock %}
+
+{% block content %}
+{# One program: each value under its own label (design rules), the institution linked to its page when it's in the lists. #}
+{% macro program_item(p) %}
+<li class="waaid-item" id="{{ p.id }}">
+  <h4 class="waaid-name">{{ p.program_ar }}</h4>
+  {% if p.for_high_school %}<p class="waaid-title"><span class="tag">لخريجي الثانوية</span></p>{% endif %}
+  <dl class="key-facts">
+    <div class="kf-row"><dt>مكان الدراسة</dt><dd>{% if p.university_id %}<a href="{{ url_for('university_page', uid=p.university_id) }}" lang="en" dir="ltr">{{ p.institution }}</a>{% else %}<bdi lang="en">{{ p.institution }}</bdi>{% endif %}، {{ p.country_ar }}</dd></div>
+    <div class="kf-row"><dt>الدرجة</dt><dd>{{ p.level_ar }}</dd></div>
+    <div class="kf-row"><dt>المدة</dt><dd>{{ p.duration_ar }}</dd></div>
+    {% if p.start_ar %}<div class="kf-row"><dt>بداية الدراسة</dt><dd>{{ p.start_ar }}</dd></div>{% endif %}
+    {% if p.requirements_ar %}<div class="kf-row"><dt>أهم الشروط</dt><dd><ul class="waaid-req">{% for r in p.requirements_ar %}<li>{{ r }}</li>{% endfor %}</ul></dd></div>{% endif %}
+  </dl>
+</li>
+{% endmacro %}
+
+{# One announcement: the company, its window and status, who it is for, «تقدم الآن» while open, then its programs. #}
+{% macro announcement(g, state) %}
+<section class="waaid-group" id="{{ g.id }}" aria-labelledby="{{ g.id }}-title">
+  <h3 class="waaid-company" id="{{ g.id }}-title">{{ g.company_ar }}</h3>
+  <p class="waaid-when">
+    {% if state == "open" %}{{ c.status_tag("open", g.apply_to) }}
+    {% elif state == "upcoming" %}{{ c.status_tag("not_open") }}
+    {% else %}{{ c.status_tag("closed", label="مغلق") }}{% endif %}
+  </p>
+  <dl class="key-facts">
+    <div class="kf-row"><dt>فترة التقديم</dt><dd>من <time datetime="{{ g.apply_from }}">{{ g.apply_from | arabic_date }}</time> إلى <time datetime="{{ g.apply_to }}">{{ g.apply_to | arabic_date }}</time></dd></div>
+    <div class="kf-row"><dt>لمن</dt><dd>{{ waaid_who(g) }}</dd></div>
+  </dl>
+  {% if state == "open" and w.apply_url %}
+  <div class="actions">
+    <a class="btn btn--primary" href="{{ w.apply_url }}" target="_blank" rel="noopener" aria-label="تقدم الآن: برامج {{ g.company_ar }}، في منصة قبول">تقدم الآن ↗</a>
+    <a class="src" href="{{ w.source_url }}" target="_blank" rel="noopener">الشروط كاملة في الصفحة الرسمية ↗</a>
+  </div>
+  {% endif %}
+  <ul class="waaid-list">{% for p in g.programs %}{{ program_item(p) }}{% endfor %}</ul>
+</section>
+{% endmacro %}
+
+<article class="waaid-page measure">
+  {{ c.back_link(url_for('program_page', slug='custodian-scholarship'), "برنامج خادم الحرمين الشريفين للابتعاث") }}
+  <header class="page-header">
+    <h1>برامج مسار واعد</h1>
+    <p class="lead">البرامج المعلنة في مسار واعد من صفحته الرسمية: المفتوح الآن، وما يفتح لاحقًا، وما أُغلق، مع أهم شروط كل برنامج ومواعيده.</p>
+  </header>
+
+  <section class="waaid-section" aria-labelledby="waaid-open">
+    <h2 id="waaid-open">مفتوح الآن</h2>
+    {% if sections.open %}
+    <p class="waaid-hint">التقديم عبر منصة قبول. هنا أهم الشروط فقط، فاقرأ شروط البرنامج كاملة في الصفحة الرسمية قبل أن تقدّم.</p>
+    {% for g in sections.open %}{{ announcement(g, "open") }}{% endfor %}
+    {% else %}
+    <p class="board-empty">لا يوجد برنامج مفتوح الآن. البرامج الجديدة تُعلن في صفحة مسار واعد وحساب البرنامج على X، وفترة التقديم قصيرة غالبًا.</p>
+    {% endif %}
+  </section>
+
+  {% if sections.upcoming %}
+  <section class="waaid-section" aria-labelledby="waaid-upcoming">
+    <h2 id="waaid-upcoming">يفتح لاحقًا</h2>
+    {% for g in sections.upcoming %}{{ announcement(g, "upcoming") }}{% endfor %}
+  </section>
+  {% endif %}
+
+  <section class="waaid-section" aria-labelledby="waaid-about">
+    <h2 id="waaid-about">عن مسار واعد</h2>
+    <ul class="fact-items">{% for f in track.facts %}{{ c.fact(f) }}{% endfor %}</ul>
+  </section>
+
+  {% if sections.closed %}
+  <section class="waaid-section" aria-labelledby="waaid-closed">
+    <h2 id="waaid-closed">أُغلق التقديم</h2>
+    <p class="waaid-hint">تعطيك فكرة عن نوع البرامج التي تُعلن في واعد وشروطها، الأحدث أولًا.</p>
+    {% for g in sections.closed %}{{ announcement(g, "closed") }}{% endfor %}
+  </section>
+  {% endif %}
+
+  {{ c.source_stamp([{"title": "صفحة مسار واعد في موقع البرنامج", "url": w.source_url}]) }}
+</article>
+{% endblock %}

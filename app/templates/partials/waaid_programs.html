@@ -1,29 +1,10 @@
-{# The latest programs announced under مسار واعد (data/waaid_programs.json), in a toggle.
-   Status is computed from each program's application window on every request. #}
-{% import "components.html" as c %}
+{# مسار واعد under the track list: a short status and a link to /waaid, where every program is listed (decision 063).
+   The id stays so old links to #waaid-latest still land here. #}
 {% set w = waaid() %}
 {% if w.programs %}
-{% set latest = w.programs[0] %}
-<details class="waaid-latest" id="waaid-latest">
-  <summary>
-    <span class="waaid-summary-title">آخر برامج مسار واعد ({{ w.programs | length }})</span>
-    <span class="waaid-summary-note">{% if w.any_open %}يوجد برنامج مفتوح الآن{% else %}آخرها: {{ latest.company_ar }}، أُغلق في {{ latest.apply_to | arabic_date }}{% endif %}</span>
-  </summary>
-  <ul class="waaid-list">
-    {% for p in w.programs %}
-    <li class="waaid-item">
-      <p class="waaid-title">
-        <strong>{{ p.program_ar }}</strong>
-        {{ c.status_tag('open' if p.is_open else 'closed', label=None if p.is_open else 'مغلق') }}
-        {% if p.for_high_school %}<span class="tag">لخريجي الثانوية</span>{% endif %}
-      </p>
-      <p class="waaid-meta">{{ p.company_ar }}، <bdi lang="en">{{ p.institution }}</bdi> ({{ p.country_ar }})</p>
-      <p class="waaid-meta">{{ p.level_ar }}، {{ p.duration_ar }}</p>
-      <p class="waaid-meta">التقديم من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %}، وبداية الدراسة {{ p.start_ar }}{% endif %}</p>
-      {% if p.requirements_ar %}<ul class="waaid-req">{% for r in p.requirements_ar %}<li>{{ r }}</li>{% endfor %}</ul>{% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-  <p class="source-stamp"><span class="source-stamp-label">المصدر:</span> <a href="{{ w.source_url }}" target="_blank" rel="noopener">صفحة مسار واعد في موقع البرنامج</a></p>
-</details>
+{% set open = w.programs | selectattr("is_open") | list %}
+<p class="waaid-latest" id="waaid-latest">
+  <a class="waaid-latest-link" href="{{ url_for('waaid_page') }}">برامج مسار واعد: المواعيد وشروط كل برنامج</a>
+  <span class="waaid-summary-note">{% if open %}مفتوح الآن: {{ open | length | count_ar("programs") }}، منها {{ open | selectattr("for_high_school") | list | length }} لخريجي الثانوية{% else %}لا يوجد برنامج مفتوح الآن{% endif %}</span>
+</p>
 {% endif %}

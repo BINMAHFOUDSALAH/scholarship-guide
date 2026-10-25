@@ -2468,26 +2468,17 @@ main:has(> .tuwaiq) {
   background: color-mix(in srgb, var(--amber) 7%, transparent);
 }
 
-/* واعد: the latest programs, in a toggle under the track list. */
+/* واعد under the track list: a short status and a link to /waaid (decision 063). */
 .waaid-latest {
-  max-width: 680px;
-  margin-block: var(--space-3);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  background: var(--surface-strong);
-}
-
-.waaid-latest > summary {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  max-width: 680px;
+  margin-block: var(--space-3);
   padding: var(--space-2) var(--space-3);
-  cursor: pointer;
-}
-
-.waaid-summary-title {
-  font-weight: 700;
-  color: var(--action);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
 }
 
 .waaid-summary-note {
@@ -2524,12 +2515,6 @@ main:has(> .tuwaiq) {
   margin: var(--space-1) 0 0;
   padding-inline-start: var(--space-4);
   font-size: var(--text-sm);
-}
-
-.waaid-latest > .source-stamp {
-  margin: 0;
-  padding: var(--space-2) var(--space-3);
-  border-top: 1px solid var(--line);
 }
 
 .waaid-list--results {
@@ -4316,4 +4301,76 @@ a.uni-name:hover .uni-name-en:only-child {
   .rowwad-chart[data-active] .chart-country {
     transition: none;
   }
+}
+
+/* واعد on its own page (decision 063): one block per announcement, each program under its own anchor.
+   The block or program a student tapped is marked with a forest bar (:target). */
+.waaid-section {
+  margin-block: var(--space-6);
+}
+
+.waaid-hint {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.waaid-group {
+  margin-block: var(--space-4) var(--space-5);
+  padding-block-start: var(--space-3);
+  border-top: 1px solid var(--line-strong);
+  scroll-margin-top: var(--space-4);
+}
+
+.waaid-company {
+  margin: 0 0 var(--space-1);
+}
+
+.waaid-when {
+  margin: 0 0 var(--space-2);
+}
+
+.waaid-group .actions {
+  margin-block: var(--space-3);
+}
+
+.waaid-page .waaid-list {
+  padding: 0;
+}
+
+.waaid-name {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-md);
+}
+
+.waaid-item .key-facts {
+  margin-top: var(--space-2);
+}
+
+.waaid-item .waaid-req {
+  margin: 0;
+  padding-inline-start: var(--space-3);
+  font-size: inherit;
+}
+
+.waaid-item {
+  scroll-margin-top: var(--space-4);
+}
+
+.waaid-group:target,
+.waaid-item:target {
+  padding-inline-start: var(--space-3);
+  border-inline-start: 3px solid var(--action);
+}
+
+.waaid-latest-link {
+  font-weight: 700;
+}
+
+/* «تقدم الآن ↗» beside the source, on the homepage rows and the board (decision 063). */
+.open-actions,
+.board-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
 }

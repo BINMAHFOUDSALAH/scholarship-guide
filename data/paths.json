@@ -37,6 +37,8 @@
         "status": "open",
         "apply_with_ar": "من معه قبول من جامعة في قائمة المسار",
         "status_source": "https://x.com/SA_Scholarships/status/2092689695088026059",
+        "apply_url": "https://www.uap.sa/",
+        "apply_url_note": "منصة قبول, per this program's sourced fact «platform» (X post of 26 Aug 2026 + the Ministry's service page). Shown as «تقدم الآن ↗» only while the track is open.",
         "last_checked": "2026-10-09",
         "facts": [
           {
@@ -113,7 +115,7 @@
                 "url": "https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/"
               }
             ],
-            "last_checked": "2026-10-11",
+            "last_checked": "2026-10-25",
             "academic_year": null,
             "status": "sourced",
             "owner_reviewed": false,
