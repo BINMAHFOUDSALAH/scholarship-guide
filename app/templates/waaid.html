@@ -1,6 +1,6 @@
 {#
   مسار واعد on its own page (decision 063). One block per announcement (a company's programs with one application
-  window), under its own anchor (g-<first program id>), which the homepage and /news link to. Inside a block,
+  window), under its own anchor (g-<id of its first-added program>), which the homepage and /news link to. Inside a block,
   programs for high school graduates first, each under its own anchor (its id in data/waaid_programs.json).
   Order: open now, then opening later, then closed (newest first).
 #}
@@ -41,7 +41,7 @@
   </dl>
   {% if state == "open" and w.apply_url %}
   <div class="actions">
-    <a class="btn btn--primary" href="{{ w.apply_url }}" target="_blank" rel="noopener">تقدم الآن ↗</a>
+    <a class="btn btn--primary" href="{{ w.apply_url }}" target="_blank" rel="noopener" aria-label="تقدم الآن: برامج {{ g.company_ar }}، في منصة قبول">تقدم الآن ↗</a>
     <a class="src" href="{{ w.source_url }}" target="_blank" rel="noopener">الشروط كاملة في الصفحة الرسمية ↗</a>
   </div>
   {% endif %}

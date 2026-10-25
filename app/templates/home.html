@@ -90,7 +90,7 @@
       <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
       {% if item.apply_url or item.source_url %}
       <p class="open-actions">
-        {% if item.apply_url %}<a class="btn btn--secondary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener">تقدم الآن ↗</a>{% endif %}
+        {% if item.apply_url %}<a class="btn btn--secondary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="تقدم الآن: {{ item.title_ar }}، في منصة قبول">تقدم الآن ↗</a>{% endif %}
         {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر الرسمي ↗</a>{% endif %}
       </p>
       {% endif %}

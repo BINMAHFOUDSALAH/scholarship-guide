@@ -577,13 +577,13 @@ def fix_today(monkeypatch, day):
 
 
 def test_open_board_puts_waaid_announcements_with_nothing_for_high_school_last(monkeypatch):
-    """A batch of واعد master's programs closing soon must not push الرواد off the homepage."""
-    today = main.date.today().isoformat()
-    monkeypatch.setitem(main.waaid_data, "programs", [waaid_program(f"m{n}", False, "2000-01-01", today) for n in range(5)])
-    board = main.status_board()["open"]
-    flags = [i.get("sort_last", False) for i in board]
-    assert flags == sorted(flags)  # every announcement with nothing for high school graduates after every other item
-    assert any("x.com/SA_Scholarships" in (i["source_url"] or "") for i in board[:4])
+    """A batch of واعد master's programs closing before الرواد must not push it off the homepage."""
+    fix_today(monkeypatch, "2026-11-01")  # الرواد is open until 2026-11-15
+    monkeypatch.setitem(main.waaid_data, "programs",
+                        [waaid_program(f"m{n}", False, "2026-10-25", "2026-11-05") for n in range(5)])
+    titles = [i["title_ar"] for i in main.status_board()["open"]]
+    assert titles.index("مسار الرواد") < titles.index("برامج شركة")  # the batch closes sooner but comes after
+    assert titles.index("مسار الرواد") < 4
 
 
 def test_a_waaid_announcement_is_one_row_with_who_and_apply(monkeypatch):
@@ -595,11 +595,22 @@ def test_a_waaid_announcement_is_one_row_with_who_and_apply(monkeypatch):
     rows = [i for i in main.status_board()["open"] if i["program_ar"].startswith("مسار واعد")]
     assert len(rows) == 1
     row = rows[0]
-    assert row["title_ar"] == "برامج شركة الاتصالات" and row["page"] == "/waaid#g-b0"
+    assert row["title_ar"] == "برامج شركة الاتصالات" and row["page"] == "/waaid#g-m7"
     assert row["who_ar"] == "3 برامج لخريجي الثانوية، و8 برامج لغير خريجي الثانوية"
     assert row["apply_url"] == main.waaid_data["apply_url"] == "https://www.uap.sa/"
     home = client.get("/").text
     assert "برامج شركة الاتصالات" in home and "تقدم الآن ↗" in home and "https://www.uap.sa/" in home
+
+
+def test_announcement_anchor_survives_a_program_added_later(monkeypatch):
+    """Programs are added at the top of the data; a link shared before that must still open the announcement."""
+    fix_today(monkeypatch, "2026-10-30")
+    first = [waaid_program("a", True, "2026-10-25", "2026-11-05"), waaid_program("b", False, "2026-10-25", "2026-11-05")]
+    monkeypatch.setitem(main.waaid_data, "programs", first)
+    anchor = main.waaid()["groups"][0]["id"]
+    monkeypatch.setitem(main.waaid_data, "programs", [waaid_program("new", True, "2026-10-25", "2026-11-05")] + first)
+    assert main.waaid()["groups"][0]["id"] == anchor
+    assert f'id="{anchor}"' in client.get("/waaid").text
 
 
 def test_waaid_lifecycle_before_during_after(monkeypatch):
@@ -613,7 +624,8 @@ def test_waaid_lifecycle_before_during_after(monkeypatch):
     ):
         fix_today(monkeypatch, day)
         board = main.status_board()
-        assert any(i["page"] == "/waaid#g-p1" for i in board[group]), (day, group)
+        row = next(i for i in board[group] if i["page"] == "/waaid#g-p1")
+        assert bool(row.get("apply_url")) == (group == "open"), (day, "apply link only while open")
         html = client.get("/waaid").text
         waaid_part = html[html.index("<h1>"):]
         assert page_has in waaid_part, (day, page_has)

@@ -96,7 +96,8 @@ def waaid():
 
 def waaid_groups(programs):
     """واعد programs grouped by announcement (one company, one application window), in the order given (decision 063).
-    A group's id is its anchor on /waaid; it comes from its first program in the data, so links stay stable.
+    A group's id is its anchor on /waaid. It comes from the group's first-added program (the last in the data,
+    since new programs go at the top), so a program added to an open window later doesn't break shared links.
     Inside a group, programs for high school graduates come first."""
     by_key = {}
     for p in programs:
@@ -104,7 +105,7 @@ def waaid_groups(programs):
     groups = []
     for (company, start, end), ps in by_key.items():
         hs = [p for p in ps if p["for_high_school"]]
-        groups.append({"id": f"g-{ps[0]['id']}", "company_ar": company, "apply_from": start, "apply_to": end,
+        groups.append({"id": f"g-{ps[-1]['id']}", "company_ar": company, "apply_from": start, "apply_to": end,
                        "is_open": ps[0]["is_open"], "programs": hs + [p for p in ps if not p["for_high_school"]],
                        "hs_count": len(hs), "other_count": len(ps) - len(hs)})
     return groups

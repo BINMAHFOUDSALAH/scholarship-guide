@@ -33,7 +33,7 @@
           {% if item.closed_on %}<span class="board-date">في <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time></span>{% endif %}{% endif %}
         </p>
         {% if item.source_url or item.apply_url %}<p class="board-links">
-          {% if item.apply_url and key == "open" %}<a class="btn btn--secondary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener">تقدم الآن ↗</a>{% endif %}
+          {% if item.apply_url and key == "open" %}<a class="btn btn--secondary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="تقدم الآن: {{ item.title_ar }}، في منصة قبول">تقدم الآن ↗</a>{% endif %}
           {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}
         </p>{% endif %}
       </li>
