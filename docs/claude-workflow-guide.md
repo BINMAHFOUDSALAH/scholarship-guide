@@ -59,7 +59,7 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 
 ## What Wadih uses
 
-Which of these files Wadih has today, and when to add the rest: [project-files-guide.md](project-files-guide.md). No MCP servers and no hooks yet: nothing needs them. Ideas for later: more skills once a task repeats (news items, a new program), maybe a Stop hook that runs tests, a weekly link-check workflow, and an **MCP server** for Wadih's verified data in the AI stages (a strong FDE portfolio piece).
+Which of these files Wadih has today, and when to add the rest: [project-files-guide.md](project-files-guide.md). Two skills: `research-wave` (university requirements) and `update-site` (new announcements, passed deadlines, bugs). A morning GitHub workflow is the alarm that tells you when to run `update-site` (decision 064). No MCP servers and no hooks yet: nothing needs them. Now and then, run `/doctor prompt-audit` to find outdated or conflicting instructions in CLAUDE.md, the rules, skills and agents. Ideas for later: maybe a Stop hook that runs tests, and an **MCP server** for Wadih's verified data in the AI stages (a strong FDE portfolio piece).
 
 ## Sources
 - Anthropic, *Best practices for Claude Code*: https://code.claude.com/docs/en/best-practices
