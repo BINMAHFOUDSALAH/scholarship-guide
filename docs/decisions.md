@@ -963,3 +963,35 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Link straight to the Ministry's page: loses the high school split and the links to university pages.
 **Why:** The owner tapped an STC program on the homepage and landed on the program page's track list with the toggle closed. A student who taps an opening should see it, with its dates, who it's for, its requirements, and where to apply.
 **Checked:** an independent review (reviewer agent: fixed the anchor stability, a test that would have failed after الرواد closes, link labels for screen readers; confirmed the MBC example on the official page) and 630 tests (incl. the lifecycle: «لم يفتح بعد» → open with «تقدم الآن» → closed, from dates alone) and a browser run of the student flows at 360/390/768/1280px in both themes (123 checks: rows, tap lands at the top and is marked, apply links, /news anchors, old anchor, no horizontal scroll, no console errors, every internal link answers 200).
+
+## 064 — `/update-site` does the work, a morning check is the alarm; SAR joins واعد (updates 053, 063)
+**Date:** 2026-11-01
+**Decision:**
+- **SAR on `/waaid`:** «تدريب في قطاع السكك الحديدية» (شركة الخطوط الحديدية السعودية (سار), TransportWorks, UK, 12 months from January 2027, apply 1–10 Nov 2026), read from the official واعد page on 2026-11-01. It is **not for high school graduates**: the page asks for an engineering bachelor's or master's from 2024–2026. The page names the trainer only in Arabic («شركة ترانسبورت ووركز»); «TransportWorks» is from the Ministry's announcement graphic the owner sent (`institution_note`). TOEFL is copied as the page writes it («64-78»), not interpreted.
+- **`scripts/watch.py`, the check.** It changes nothing and lists findings, each **urgent** (students are affected now) or **routine** (upkeep):
+  - urgent: a new واعد announcement on the official page missing from `data/waaid_programs.json`, counted per application window (it would have caught SAR), with a hint when the page mentions the high school certificate; a program we list that the page dropped; a changed watched page (`scripts/watch_pages.json`: KGSP «Cohort 19 will open soon», a 2028-2027 universities guide, Aramco's «باب التسجيل مغلق»); a live page that isn't 200; the live `/waaid` missing a program in the repo (a failed deploy); failing tests;
+  - routine: tracks past `status_until` (look for the next round), open tracks with no deadline not re-checked in 14 days, universities whose dates have all passed, واعد programs closed over 120 days ago, official links that answer 404/410, facts over 90 days.
+- **`/update-site` (`.claude/skills/update-site/SKILL.md`) does the work** when the owner asks:
+  1. it runs the tests and the check;
+  2. it goes through every program on its official page (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA);
+  3. it adds what's new, clears what's past, re-checks what's due and fixes bugs;
+  4. it verifies, then reports what it added, removed and updated, and what the owner must check (X posts, Aramco in a browser).
+- **The morning alarm (`.github/workflows/watch.yml` + `scripts/watch_issue.py`):** at 07:23 Riyadh GitHub runs the tests on today's date and the check, then keeps **one issue**, «Site check: N urgent, M routine»:
+  - It opens only for something urgent. Its body is rewritten each morning (edits don't notify). A comment, which does notify, lists only urgent findings that are new.
+  - A finding present on the previous run is ongoing and never announced again, even after skipped runs. One that went away and comes back within 7 days is a flap and stays quiet.
+  - It closes itself when nothing urgent is left. Closing it by hand mutes what's in it, and it reopens only for something new.
+  - The previous run's date and what was seen when live in a hidden comment in the body, so no other storage is needed.
+- **Hardening:**
+  - least privilege (`contents: read`, `issues: write`; the token is given only to the issue step, and checkout doesn't keep it);
+  - values reach scripts through `env`, not `${{ }}` inside `run` (GitHub's script-injection guidance);
+  - text copied from official pages is cleaned before it goes into the issue (`safe()`: no @mentions, links, HTML, code or tables, length capped);
+  - one run at a time, a 15-minute timeout, and a manual «dry run» that writes the report to the run's summary without touching the issue;
+  - a crash in the check fails the run, and GitHub emails the owner. Findings never fail it, so a red run means the alarm itself broke.
+- **"Remove past stuff"** means only what the site doesn't already handle. Status is computed from dates on every request: a track past its deadline shows «أُغلق» with its date for 120 days, and a past university date gets «انتهى». Editing those by hand would lose the closing date. What gets removed: واعد programs 120 days after closing (when they leave the homepage board, `RECENT_DAYS`), outdated news, and page text that has become wrong.
+**Alternatives:**
+- Only `/update-site`, no alarm (tried briefly): a واعد window can be 5 days (الاتحاد, 13–17 Sep), so a weekly run can miss one.
+- An issue comment for every finding, every day: alert fatigue; routine upkeep belongs in `/update-site`.
+- Let a script edit the data from official pages: breaks the rule that facts are read and checked before publishing.
+- A scheduled Claude session that fixes things: uses the owner's Claude plan daily; not wanted for now.
+- Store page hashes, or state in a file the workflow commits: a commit to `main` deploys; the issue body is enough.
+**Checked:** 36 tests for the check and the issue (Arabic window wordings seen on the real page; new, removed and unreadable announcements; urgent vs routine; text cleaning; the issue's whole life against a fake GitHub that keeps state between mornings, including flaps, a month of skipped runs, muting and reopening). A rehearsal of the workflow's commands ran against the live pages, with the issue step against the fake. The workflow itself can only run on GitHub after merging: run it once with «dry run», then without.

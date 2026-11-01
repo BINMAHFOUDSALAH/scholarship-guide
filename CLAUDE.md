@@ -41,7 +41,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Quick lookups and small edits stay in the main session.
   - Every subagent runs on **Haiku 5.5**, forced by `.claude/settings.json` (decision 059). If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
   - The agents (`.claude/agents/`) are read-only and return results. The main session saves them, validates them with tests, makes the decisions and flags anything an agent couldn't verify.
-  - `source-researcher` for new facts (~5 items per agent, in parallel, with a strict schema + a finished example file), `fact-checker` for what's already published, `reviewer` for a big or risky diff. University requirements: the `research-wave` skill.
+  - `source-researcher` for new facts (~5 items per agent, in parallel, with a strict schema + a finished example file), `fact-checker` for what's already published, `reviewer` for a big or risky diff. University requirements: the `research-wave` skill. Bringing the site up to date (new announcements, passed deadlines, Aramco/KAUST/SDAIA/الرواد…): the `update-site` skill.
 - Ask before installing packages, downloading files, or spending money. Never commit or push unless I ask.
 - Record design choices (with alternatives) in `docs/decisions.md`; tick progress in `docs/roadmap.md`.
 - **Handoff rule:** after any fundamental change (rule, decision, architecture, plan), update `CLAUDE.md` / `docs/roadmap.md` / `docs/decisions.md` / `docs/architecture.md` in the same step. Repo docs are the source of truth. When I say a session is ending, make sure the roadmap's "next session" note is accurate.
@@ -58,6 +58,7 @@ pytest tests/test_pages.py::test_about_loads    # one test
 python scripts/stale_facts.py --as-of 2026-12-09 --days 45   # facts to re-check before launch
 python scripts/check_quote.py URL "quote"       # does an official page really say this?
 python scripts/check_sources.py                 # every university fact still on its cited page?
+python scripts/watch.py                         # what needs updating: new واعد programs, passed deadlines, broken pages (--offline: no internet)
 node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
 ```
 
@@ -65,3 +66,4 @@ node scripts/check_explorer.mjs                 # the explorer's JavaScript in a
 - Live at https://wadihguide.com: domain at Cloudflare (DNS only), hosted on Render (Frankfurt, $7/month plan so it never sleeps). The old https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042).
 - GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. It installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
 - Never set `WADIH_SHOW_DRAFTS` on Render.
+- Every morning `.github/workflows/watch.yml` runs `scripts/watch.py` and keeps one GitHub issue, «Site check», that pings the owner only for new urgent findings (decision 064). It never changes the site; the fixing is `/update-site`.

@@ -3,6 +3,16 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
+> **Latest (2026-11-01, decision 064, branch `claude/sharp-volta-tii6mj`, not merged yet):**
+> - SAR's railway training added to واعد. It isn't for high school graduates (engineering graduates 2024–2026); applications 1–10 Nov.
+> - **`/update-site`** (skill) does the updating: it checks every program on its official page (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA), adds what's new, clears what's past and fixes bugs.
+> - A **morning check** (`.github/workflows/watch.yml`) is the alarm: one GitHub issue, «Site check», that pings only for something new and urgent.
+>
+> **Owner to-dos:**
+> - Merge before **10 Nov** (SAR's window closes then; STC's on 5 Nov).
+> - Then GitHub → Actions → watch → Run workflow with «dry run» ticked, read the report on the run's page, then run it again without. Install the GitHub app on your phone to get the pings.
+> - GitHub pauses scheduled workflows after 60 days with no commits; the next commit turns it back on.
+>
 > **Next session (as of 2026-10-17):** the «الطريق» redesign (decision 062) is merged (PR #19) and live on wadihguide.com; 616 tests and a live check of every page type passed. Audit, references and checks: `docs/research/design-direction-2026-10-17.md`.
 > - Act on forest, read on paper, in the logo's own colours; Naskh titles; the route of the grades; values under labels; a guides index and «الأدلة» in the nav; a footer with a self-updating copyright line. The logo is unchanged (a test checks).
 >
@@ -60,7 +70,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 >    - **Paused (2026-10-12): no budget for paid tools yet.** Missing: the 4 AI clips (the Higgsfield free plan has no credits or commercial use; Starter $19, or the Veo API ~$5) and the voices (the ElevenLabs free plan has no commercial licence; Starter $6).
 >    - A $0 route exists if wanted: the owner's own phone shots + the owner's own voice, or caption cards instead of AI shots.
 >    - Then rebuild, review, and post organically with `?src=` links.
-> 2. **Stale-facts check: done 2026-10-13 (decision 053).** `scripts/stale_facts.py` lists all 132 checked items by date; not a CI test, so it can't block a deploy. **Before Launch 1:** run it with `--as-of 2026-12-09 --days 45`, re-check from the top, update dates, repeat until empty. Later, optionally: a weekly CI job that runs it as a warning.
+> 2. **Stale-facts check: done 2026-10-13 (decision 053).** `scripts/stale_facts.py` lists all 132 checked items by date; not a CI test, so it can't block a deploy. **Before Launch 1:** run it with `--as-of 2026-12-09 --days 45`, re-check from the top, update dates, repeat until empty. Its 90-day list is now part of `/update-site` (decision 064).
 > 3. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes), then act on feedback before the full launch (~one month).
 > 4. **Aramco:** re-checked 2026-10-12 with WebFetch, unchanged (still the 2025–2026 cycle, registration closed). `curl` to aramco.com times out even from the laptop. Watch for the 2026–2027 cycle; the owner may spot-check the numbers in a browser.
 > 5. **RAG learning path (decision 045, `docs/specs/search.md`):** step 1 done 2026-10-12, keyword search at `/search` and `/api/search`, linked under the homepage search and on the 404 page (decision 046). **KGSP** now has its own page and «يفتح قريبًا» (decision 046): watch the Prospective Students page for Cohort 19 dates, and review its 8 facts (`owner_reviewed`). **Also 2026-10-12 (decision 047):** test pages for SAT, TOEFL, القدرات/التحصيلي; 3 more scholarship FAQ answers; Aramco re-checked. **Filters fixed (decision 048); logos + flags on university pages (decision 049): 147/290 logos done, next the other 143 from the universities' own sites (Haiku agents, batches, reviewed on a contact sheet).** **إمداد wave 1 done (2026-10-12): 35 US universities researched (65 detail files).** Next: waves 2–3, the other English-speaking universities (UK 29, Australia 13, Canada 8, Singapore 2). **UK wave 2 done 2026-10-13 (decision 054):** 26 UK universities, with a new «الشهادة الثانوية السعودية» row; Durham, Bournemouth (403) and LBS left out. Remaining (counted 2026-10-13): **wave 3 done 2026-10-13** (decision 055: 16 of 23 saved; Melbourne, Griffith, Monash, Deakin, Macquarie, Alberta and SMU block automated reads, so check them by hand in a browser or leave them); **wave 4 done 2026-10-13** (decision 056: 22 of 25 saved). The English-speaking countries are done (129 universities with requirements). **Check by hand in a browser (sites block automated reads):** Durham, Bournemouth, Melbourne, Griffith, Monash, Deakin, Macquarie, Alberta, SMU, Virginia, Pittsburgh, Colorado School of Mines, plus Oxford and UCL (filled from snippets). The 111 in non-English-speaking countries (China 40, Germany 17, Italy 10, Netherlands 10, Korea 9, France 9, Spain 6, Switzerland 5, Japan 5) need a different brief (language of instruction, the conditional-admission exception) and a scope decision against Launch 1. **Re-check Oxford and UCL** (`fact-checker`): their الرواد files were filled from search snippets after 403s. **US applications (decision 050):** guide at `/resources/us-applications`, fee + waiver on 50 US university pages. **Cleanup iteration 1 (decision 051).** **Known small issue (decision 052):** on the owner's phone, Back to a list can still move slightly before settling. Low priority; to look at, note the phone, browser and how Back was done (swipe, button, link). **Owner to-do:** copy القدرات/التحصيلي details (duration, scale, fee, attempts) from etec.gov.sa in a browser, and the Saudi TOEFL price from the ETS fee page. Next: step 2 (chunks with `last_checked`/`owner_reviewed`), then search by meaning (embeddings, ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
@@ -120,7 +130,8 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] `.env` permission lock (`.claude/settings.json`)
 - [x] `docs/claude-workflow-guide.md`, `docs/architecture.md`; CLAUDE.md trimmed (a `LEARNING_LOG.md` too, removed 2026-10-13, decision 059)
 - [x] Stale-facts report `scripts/stale_facts.py` (decision 053; a report, not a failing test)
-- [ ] Later: weekly broken-link check, pin the server's Python version
+- [x] `/update-site` (skill) + a morning check that keeps one GitHub issue (`watch.yml`): new واعد announcements, changed official pages, passed deadlines, broken pages and links, facts over 90 days (decision 064)
+- [ ] Later: pin the server's Python version
 
 ## Stage 1c: Wide editorial redesign (decisions 022–023)
 - [x] Light-first theme, two-state toggle
