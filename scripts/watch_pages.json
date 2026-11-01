@@ -1,5 +1,5 @@
 {
-  "_note": "Official pages scripts/watch.py checks every morning (decision 064). `expect`: phrases on the page today; if one disappears, the page changed and someone should read it. `alert_if`: phrases that mean news when they appear. Matching ignores case, spacing and invisible characters, and looks at the page's HTML too (so a link's file name counts). `confirmed_on`: when the phrase was seen on the page. `often_blocked`: the site often refuses scripts, so a failed fetch is a note, not a to-do. After acting on a change, update the phrase here.",
+  "_note": "Official pages scripts/watch.py checks when /update-site runs (decision 064). `expect`: phrases on the page today; if one disappears, the page changed and someone should read it. `alert_if`: phrases that mean news when they appear. Matching ignores case, spacing and invisible characters, and looks at the page's HTML too (so a link's file name counts). `confirmed_on`: when the phrase was seen on the page. `often_blocked`: the site often refuses scripts, so a failed fetch is a note, not a to-do. After acting on a change, update the phrase here.",
   "pages": [
     {
       "id": "kgsp-cohort-19",

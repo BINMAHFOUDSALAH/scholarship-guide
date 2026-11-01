@@ -1,5 +1,5 @@
-"""The daily check (scripts/watch.py, decision 064). No test here touches the internet: pages, the live site
-and GitHub are replaced by small fakes, and dates are passed in, so CI can't turn red as days go by."""
+"""The site check (scripts/watch.py, step 1 of /update-site, decision 064). No test here touches the internet:
+pages and the live site are replaced by small fakes, and dates are passed in, so CI can't turn red as days go by."""
 
 import importlib.util
 import json
@@ -167,46 +167,17 @@ def test_the_official_links_skip_x_and_the_site_itself():
     assert SOURCE in links
 
 
-class FakeGitHub:
-    def __init__(self, issues=()):
-        self.issues, self.calls = list(issues), []
-
-    def __call__(self, method, path, payload=None):
-        self.calls.append((method, path, payload))
-        return self.issues if method == "GET" else {}
-
-
-def items_with(*keys):
-    return [watch.item("new", k, f"text {k}") for k in keys]
-
-
-def test_the_issue_is_opened_once_and_comments_only_on_new_items():
-    api = FakeGitHub()
-    assert watch.sync_issue("report", items_with("a"), "2026-11-01", "o/r", api) == "opened"
-    method, path, payload = api.calls[-1]
-    assert (method, path) == ("POST", "/repos/o/r/issues") and watch.MARKER in payload["body"]
-
-    open_issue = {"number": 7, "body": payload["body"]}
-    api = FakeGitHub([{"number": 3, "body": "a pull request", "pull_request": {}}, open_issue])
-    assert watch.sync_issue("report", items_with("a", "b"), "2026-11-02", "o/r", api) == "updated (1 new)"
-    assert api.calls[1][:2] == ("PATCH", "/repos/o/r/issues/7")
-    assert api.calls[2][:2] == ("POST", "/repos/o/r/issues/7/comments")
-    assert "text b" in api.calls[2][2]["body"] and "text a" not in api.calls[2][2]["body"]
-
-    api = FakeGitHub([{"number": 7, "body": api.calls[1][2]["body"]}])
-    assert watch.sync_issue("report", items_with("a", "b"), "2026-11-03", "o/r", api) == "updated (0 new)"
-    assert [c[0] for c in api.calls] == ["GET", "PATCH"]  # nothing new: no comment, no notification
-
-
-def test_the_issue_closes_when_nothing_is_left():
-    api = FakeGitHub([{"number": 7, "body": f"report\n\n{watch.MARKER} [\"a\"] -->"}])
-    assert watch.sync_issue("report", [], "2026-11-04", "o/r", api) == "closed"
-    assert api.calls[-1] == ("PATCH", "/repos/o/r/issues/7", {"state": "closed", "state_reason": "completed"})
-    assert watch.sync_issue("report", [], "2026-11-04", "o/r", FakeGitHub()) == "nothing"
+def test_removes_waaid_programs_once_they_leave_the_homepage_board():
+    from app import main
+    assert watch.REMOVE_WAAID_AFTER_DAYS == main.RECENT_DAYS
+    ours = [program("m1", "2026-07-19", "2026-08-02", "معادن"), program("m2", "2026-07-19", "2026-08-02", "معادن"),
+            program("stc", "2026-10-25", "2026-11-05", "STC")]
+    assert watch.waaid_old_items(ours, "2026-11-30") == []  # 120 days after 2 Aug: still on the board
+    assert [i["key"] for i in watch.waaid_old_items(ours, "2026-12-01")] == ["waaid-old:m1,m2"]
 
 
 def test_the_offline_report_runs_on_the_real_data():
-    items, fyi, checked = watch.run("2026-11-01", tests="failure", offline=True)
-    assert items[0]["key"] == "tests" and all(i["section"] in watch.SECTIONS for i in items)
+    items, fyi, checked = watch.run("2026-11-01", offline=True)
+    assert all(i["section"] in watch.SECTIONS for i in items)
     report = watch.render(items, fyi, checked, "2026-11-01")
-    assert report.startswith("## Daily check, 1 Nov 2026") and "### Bugs" in report
+    assert report.startswith("## Site check, 1 Nov 2026") and "### Past or due for a re-check" in report

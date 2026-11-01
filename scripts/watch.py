@@ -1,9 +1,8 @@
-"""What needs a person today? A daily check of deadlines, official pages, and the live site (decision 064).
+"""What needs updating on the site? Step 1 of the /update-site skill (decision 064).
 
-A report, never a failing check: it lists what to act on and exits 0, so it can't block a deploy, and it
-changes nothing in the site or its data. The scheduled workflow (.github/workflows/watch.yml) runs it every
-morning and keeps one GitHub issue up to date. A person (or a Claude session) reads the issue, checks the
-official page, and makes the change, because facts are published only after reading their official source.
+A report, never a failing check: it lists what to act on and changes nothing in the site or its data.
+The skill (.claude/skills/update-site/SKILL.md) then reads each official page and makes the changes,
+because facts are published only after reading their official source.
 
 Run from the repo root:
 
@@ -14,17 +13,16 @@ Run from the repo root:
 What it checks:
 1. New on official pages: واعد announcements on the Ministry's page that aren't in data/waaid_programs.json,
    and the pages in scripts/watch_pages.json whose watched phrase disappeared (or whose alert phrase appeared).
-2. Deadlines: open tracks past their `status_until`, open tracks with no deadline not re-checked in 14 days,
-   universities whose every date has passed.
-3. Bugs: the tests (the workflow passes their result in), every page in the live sitemap, the live /waaid page
-   showing every program in the data (a failed deploy), and official links that answer 404 or 410.
+2. Past: open tracks past their `status_until`, open tracks with no deadline not re-checked in 14 days,
+   universities whose every date has passed, واعد programs closed long enough to remove.
+3. Bugs: every page in the live sitemap, the live /waaid page showing every program in the data
+   (a failed deploy), and official links that answer 404 or 410.
 4. Old facts: anything scripts/stale_facts.py finds older than 90 days.
 """
 
 import argparse
 import html
 import json
-import os
 import re
 import sys
 import time
@@ -42,15 +40,17 @@ import stale_facts  # noqa: E402  (same folder)
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-MARKER = "<!-- wadih-watch"  # how the workflow finds its own issue again
 RECHECK_OPEN_DAYS = 14  # an open track with no deadline: re-check it this often
 STALE_DAYS = 90  # same threshold as scripts/stale_facts.py
 CLOSING_SOON_DAYS = 3
+# A closed واعد program leaves the homepage board after RECENT_DAYS in app/main.py (a test keeps them equal);
+# from then on it's only history, so the skill removes it from the data.
+REMOVE_WAAID_AFTER_DAYS = 120
 SKIP_LINK_HOSTS = ("x.com", "twitter.com")  # refuse every script; their posts are checked by hand
 
 SECTIONS = {
     "new": "New on official pages",
-    "deadline": "Deadlines",
+    "past": "Past or due for a re-check",
     "bug": "Bugs",
     "stale": f"Old facts (last read {STALE_DAYS}+ days ago)",
 }
@@ -96,7 +96,7 @@ def short_date(iso):
 def fetch(url, read=True, timeout=40, tries=2):
     """(HTTP status or None, the page's text or None). Never raises: a page that doesn't open is a result.
     A page that gives no answer or a server error is tried once more, so one slow moment isn't a to-do."""
-    request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (wadihguide.com daily check)"})
+    request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (wadihguide.com site check)"})
     for attempt in range(tries):
         if attempt:
             time.sleep(5)
@@ -201,6 +201,19 @@ def waaid_closing_soon(programs, today):
             for (company, end), ps in sorted(windows.items(), key=lambda kv: kv[0][1])]
 
 
+def waaid_old_items(programs, today):
+    """واعد programs whose window closed more than REMOVE_WAAID_AFTER_DAYS ago, one item per announcement."""
+    cutoff = (date.fromisoformat(today) - timedelta(days=REMOVE_WAAID_AFTER_DAYS)).isoformat()
+    old = {}
+    for p in programs:
+        if p["apply_to"] < cutoff:
+            old.setdefault((p["company_ar"], p["apply_to"]), []).append(p["id"])
+    return [item("past", f"waaid-old:{','.join(ids)}",
+                 f"واعد: {company} closed {short_date(end)}, over {REMOVE_WAAID_AFTER_DAYS} days ago. Remove its "
+                 f"{len(ids)} program(s) from `data/waaid_programs.json` ({', '.join(ids)}).")
+            for (company, end), ids in old.items()]
+
+
 # ---------------------------------------------------------------- deadlines in the data
 
 def deadline_items(paths, details, today):
@@ -213,15 +226,16 @@ def deadline_items(paths, details, today):
             name = track.get("name_ar") or path["name_ar"]
             until = track.get("status_until")
             if track.get("status") == "open" and until and until < today:
-                items.append(item("deadline", f"track-closed:{tid}:{until}",
-                                  f"«{name}» passed its deadline ({short_date(until)}). The site already shows it "
-                                  f"closed; set its `status` in `data/paths.json` › {path['id']} and watch for the "
-                                  "next round."))
+                items.append(item("past", f"track-closed:{tid}:{until}",
+                                  f"«{name}» closed on its deadline ({short_date(until)}); the site already shows "
+                                  "«أُغلق» with that date, so leave its `status` as it is. Look for the next round on "
+                                  f"its official page; when one is announced, update it in `data/paths.json` › "
+                                  f"{path['id']}."))
             elif track.get("status") == "open" and not until:
                 age = (date.fromisoformat(today) - date.fromisoformat(track["last_checked"])).days
                 if age > RECHECK_OPEN_DAYS:
                     source = track.get("status_source")
-                    items.append(item("deadline", f"track-open:{tid}:{track['last_checked']}",
+                    items.append(item("past", f"track-open:{tid}:{track['last_checked']}",
                                       f"«{name}» shows «مفتوح الآن» with no published deadline, last checked "
                                       f"{short_date(track['last_checked'])} ({age} days ago). Still open? Re-check"
                                       f"{f' [its source]({source})' if source else ''} and update `last_checked` "
@@ -229,7 +243,7 @@ def deadline_items(paths, details, today):
     for d in details:
         dated = [x["date"] for x in d.get("dates") or [] if x.get("date") and not x.get("reference_only")]
         if dated and max(dated) < today:
-            items.append(item("deadline", f"uni-dates:{d['id']}:{max(dated)}",
+            items.append(item("past", f"uni-dates:{d['id']}:{max(dated)}",
                               f"{d['name_en']}: every date has passed (the last was {short_date(max(dated))}). "
                               f"Add the next round's dates to `data/university_details/{d['id']}.json` once the "
                               f"university publishes them ([admissions]({d.get('admissions_url')}))."))
@@ -347,23 +361,18 @@ def item(section, key, text):
     return {"section": section, "key": key, "text": text}
 
 
-def run(today, tests=None, offline=False):
+def run(today, offline=False):
     """Everything to act on, plus FYI lines and a summary of what was checked."""
     programs = load("waaid_programs.json")
     items, fyi, checked = [], [], []
 
-    if tests == "failure":
-        items.append(item("bug", "tests", "The tests fail on today's date. Run `pytest`: a page that depends on "
-                          "dates may have changed (see the workflow's log for the failing test)."))
-    if tests:
-        checked.append(f"tests: {tests}")
-
     details = [json.loads(f.read_text(encoding="utf-8"))
                for f in sorted((DATA / "university_details").glob("*.json"))]
     items += deadline_items(load("paths.json"), details, today)
+    items += waaid_old_items(programs["programs"], today)
     items += stale_items(today)
     fyi += waaid_closing_soon(programs["programs"], today)
-    checked.append(f"deadlines in data/paths.json and {len(details)} university files")
+    checked.append(f"dates in data/paths.json, data/waaid_programs.json and {len(details)} university files")
 
     if not offline:
         status, page = fetch(programs["source_url"])
@@ -393,68 +402,19 @@ def run(today, tests=None, offline=False):
 
 
 def render(items, fyi, checked, today):
-    lines = [f"## Daily check, {short_date(today)}", ""]
+    lines = [f"## Site check, {short_date(today)}", ""]
     if items:
-        lines += [f"**To act on: {len(items)}.** Read the official page before changing a fact (CLAUDE.md). "
-                  "To hand it over, ask Claude Code: «fix the items in the daily-check issue».", ""]
+        lines += [f"**To act on: {len(items)}.** Read the official page before changing a fact (CLAUDE.md).", ""]
     else:
         lines += ["**Nothing to act on.**", ""]
     for section, title in SECTIONS.items():
         found = [i for i in items if i["section"] == section]
-        if not found:
-            continue
-        lines += [f"### {title}", ""]
-        shown = found if len(found) <= 10 else found[:10]
-        lines += [f"- {i['text']}" for i in shown]
-        if len(found) > 10:
-            lines += ["", f"<details><summary>{len(found) - 10} more</summary>", ""]
-            lines += [f"- {i['text']}" for i in found[10:]]
-            lines += ["", "</details>"]
-        lines.append("")
+        if found:
+            lines += [f"### {title}", ""] + [f"- {i['text']}" for i in found] + [""]
     if fyi:
         lines += ["### FYI", ""] + [f"- {x}" for x in fyi] + [""]
     lines += [f"Checked: {'; '.join(checked)}."]
     return "\n".join(lines)
-
-
-# ---------------------------------------------------------------- the GitHub issue
-
-def github_api(method, path, payload=None):
-    request = urllib.request.Request(
-        "https://api.github.com" + path, method=method,
-        data=json.dumps(payload).encode() if payload is not None else None,
-        headers={"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}", "Accept": "application/vnd.github+json",
-                 "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "wadih-watch"})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.loads(response.read() or "null")
-
-
-def sync_issue(report, items, today, repo, api=github_api):
-    """One open issue holds today's report. It's opened when something needs acting on, updated in place
-    each morning (with a comment listing only what's new, so a notification means something new), and
-    closed when everything is done."""
-    issues = api("GET", f"/repos/{repo}/issues?state=open&per_page=100")
-    issue = next((i for i in issues if MARKER in (i.get("body") or "") and "pull_request" not in i), None)
-    keys = [i["key"] for i in items]
-    body = report[:60000] + f"\n\n{MARKER} {json.dumps(keys, ensure_ascii=False)} -->"
-    title = f"Daily check: {len(items)} to act on"
-    if not items:
-        if issue:
-            api("POST", f"/repos/{repo}/issues/{issue['number']}/comments",
-                {"body": f"All clear on {short_date(today)}: nothing left to act on. Closing."})
-            api("PATCH", f"/repos/{repo}/issues/{issue['number']}", {"state": "closed", "state_reason": "completed"})
-        return "closed" if issue else "nothing"
-    if not issue:
-        api("POST", f"/repos/{repo}/issues", {"title": title, "body": body})
-        return "opened"
-    old = re.search(rf"{MARKER} (\[.*?\]) -->", issue["body"], re.S)
-    old = set(json.loads(old.group(1))) if old else set()
-    api("PATCH", f"/repos/{repo}/issues/{issue['number']}", {"title": title, "body": body})
-    new = [i for i in items if i["key"] not in old]
-    if new:
-        api("POST", f"/repos/{repo}/issues/{issue['number']}/comments",
-            {"body": f"New on {short_date(today)}:\n\n" + "\n".join(f"- {i['text']}" for i in new)})
-    return f"updated ({len(new)} new)"
 
 
 def main(argv=None):
@@ -462,20 +422,11 @@ def main(argv=None):
     parser.add_argument("--as-of", type=date.fromisoformat, default=date.today(),
                         help="check as if today were this date (YYYY-MM-DD)")
     parser.add_argument("--offline", action="store_true", help="skip the checks that need the internet")
-    parser.add_argument("--tests", help="the test run's outcome (the workflow passes success or failure)")
-    parser.add_argument("--github-issue", action="store_true",
-                        help="open, update or close the daily-check issue (needs GITHUB_TOKEN and GITHUB_REPOSITORY)")
     args = parser.parse_args(argv)
 
     today = args.as_of.isoformat()
-    items, fyi, checked = run(today, tests=args.tests, offline=args.offline)
-    report = render(items, fyi, checked, today)
-    print(report)
-    if os.environ.get("GITHUB_STEP_SUMMARY"):
-        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
-            summary.write(report + "\n")
-    if args.github_issue:
-        print("\nIssue:", sync_issue(report, items, today, os.environ["GITHUB_REPOSITORY"]))
+    items, fyi, checked = run(today, offline=args.offline)
+    print(render(items, fyi, checked, today))
     return 0
 
 

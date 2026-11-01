@@ -964,21 +964,24 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 **Why:** The owner tapped an STC program on the homepage and landed on the program page's track list with the toggle closed. A student who taps an opening should see it, with its dates, who it's for, its requirements, and where to apply.
 **Checked:** an independent review (reviewer agent: fixed the anchor stability, a test that would have failed after الرواد closes, link labels for screen readers; confirmed the MBC example on the official page) and 630 tests (incl. the lifecycle: «لم يفتح بعد» → open with «تقدم الآن» → closed, from dates alone) and a browser run of the student flows at 360/390/768/1280px in both themes (123 checks: rows, tap lands at the top and is marked, apply links, /news anchors, old anchor, no horizontal scroll, no console errors, every internal link answers 200).
 
-## 064 — A daily check opens one GitHub issue; SAR joins واعد (updates 053, 063)
+## 064 — `/update-site`: one recipe to add what's new and clear what's past; SAR joins واعد (updates 053, 063)
 **Date:** 2026-11-01
 **Decision:**
-- **SAR on `/waaid`:** «تدريب في قطاع السكك الحديدية» (شركة الخطوط الحديدية السعودية (سار), TransportWorks, UK, 12 months from January 2027, apply 1–10 Nov 2026), read from the official واعد page on 2026-11-01. It is **not for high school graduates**: the page asks for an engineering bachelor's or master's from 2024–2026. The page names the trainer only in Arabic («شركة ترانسبورت ووركز»); «TransportWorks» is from the Ministry's announcement graphic the owner sent (`institution_note`). TOEFL is copied as the page gives it («TOEFL (IBT) 64 -78»), with no reading of what the range means.
-- **`scripts/watch.py` + `.github/workflows/watch.yml`:** every morning (07:23 Riyadh) GitHub runs the tests on today's date, then the check, and keeps **one issue** («Daily check: N to act on») up to date:
-  - **New on official pages:** واعد announcements on the Ministry's page that aren't in `data/waaid_programs.json`, counted per application window (it would have caught SAR this morning). Also the pages in `scripts/watch_pages.json` whose watched phrase disappeared (KGSP «Cohort 19 will open soon») or whose alert phrase appeared (a 2028-2027 universities guide).
-  - **Deadlines:** open tracks past `status_until`; open tracks with no deadline not re-checked in 14 days; universities whose every date has passed.
-  - **Bugs:** failing tests; any page in the live sitemap that isn't 200; the live `/waaid` missing a program that's in the repo (a failed deploy or an unmerged change); official links that answer 404/410.
-  - **Old facts:** `stale_facts.py`'s items older than 90 days.
-- The issue opens when something needs acting on. Each morning its body is replaced, with a comment listing **only new items**, so a notification always means something new. It closes itself when nothing is left. FYI lines (closing within 3 days, sites that refuse scripts, 403s) never open it.
-- **It changes nothing.** A person, or a Claude session asked to «fix the items in the daily-check issue», reads the official page and makes the change. Passed deadlines already show as closed on the site, since status is computed from dates on every request.
+- **SAR on `/waaid`:** «تدريب في قطاع السكك الحديدية» (شركة الخطوط الحديدية السعودية (سار), TransportWorks, UK, 12 months from January 2027, apply 1–10 Nov 2026), read from the official واعد page on 2026-11-01. It is **not for high school graduates**: the page asks for an engineering bachelor's or master's from 2024–2026. The page names the trainer only in Arabic («شركة ترانسبورت ووركز»); «TransportWorks» is from the Ministry's announcement graphic the owner sent (`institution_note`). TOEFL is copied as the page writes it («64-78»), not interpreted.
+- **The skill `/update-site` (`.claude/skills/update-site/SKILL.md`)**, run when the owner asks, never on a schedule:
+  1. it runs the tests and `scripts/watch.py`;
+  2. it goes through every program on its official page (الرواد, إمداد, واعد and the universities guide; Aramco; KGSP; SDAIA);
+  3. it adds what's new, clears what's past, re-checks what's due and fixes bugs;
+  4. it verifies, then reports what it added, removed and updated, and what the owner must check (X posts, Aramco in a browser).
+- **`scripts/watch.py`** (step 1) is a report that changes nothing. It lists:
+  - **new:** واعد announcements on the official page missing from `data/waaid_programs.json`, counted per application window (it would have caught SAR), and watched phrases that disappeared or appeared on official pages (`scripts/watch_pages.json`: KGSP «Cohort 19 will open soon», a 2028-2027 universities guide, Aramco's «باب التسجيل مغلق»);
+  - **past:** tracks past `status_until` (look for the next round), open tracks with no deadline not re-checked in 14 days, universities whose dates have all passed, واعد programs closed over 120 days ago;
+  - **bugs:** live pages that aren't 200, the live `/waaid` missing a program in the repo (not merged, or a failed deploy), official links that answer 404/410;
+  - **old facts** over 90 days.
+- **"Remove past stuff"** means only what the site doesn't already handle. Status is computed from dates on every request: a track past its deadline shows «أُغلق» with its date for 120 days, and a past university date gets «انتهى». Editing those statuses by hand would lose the closing date. What gets removed: واعد programs 120 days after closing (when they leave the homepage board, `RECENT_DAYS`), outdated news, and page text that has become wrong.
 **Alternatives:**
-- Auto-edit the data from the official page: breaks the rule that facts are read and checked before publishing, and pushing to `main` deploys.
-- A scheduled Claude session that fixes things and opens a pull request: possible later; it uses the owner's Claude plan every day, so ask first.
-- Weekly, as the roadmap first said: a واعد window can be 5 days (الاتحاد, 13–17 Sep), so a weekly run can miss one entirely.
-- Store page hashes to spot any change: needs state committed somewhere. A watched phrase is stateless, and says what the change means.
-- Fail the workflow when something is found: GitHub's failure emails don't say what's new, and a red check reads like a broken site.
-**Checked:** 655 tests, 25 of them new (Arabic window wordings seen on the real page, new/removed/unreadable announcements, deadlines, watched phrases, live-site and link checks, the issue lifecycle with a fake GitHub). A real run against the live pages read 190 واعد programs and 93 official links, and flagged SAR as missing from the live site, correctly, since it isn't merged yet.
+- A daily GitHub workflow that runs the check and opens a GitHub issue: built first, then removed. The owner prefers to run updates when they choose, and found a second tool confusing.
+- Let a script edit the data from official pages: breaks the rule that facts are read and checked before publishing.
+- A scheduled Claude session: uses the owner's Claude plan every day; not wanted for now.
+- Store page hashes to spot any change: needs saved state. A watched phrase needs none, and says what the change means.
+**Checked:** 654 tests, 24 of them new for the check (Arabic window wordings seen on the real page, new/removed/unreadable announcements, old واعد programs, deadlines, watched phrases, live-site and link checks). A real run against the live pages read 190 واعد programs and 93 official links, and flagged SAR as missing from the live site (correct: not merged yet).

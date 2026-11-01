@@ -103,7 +103,7 @@ Server-rendered pages, no frontend framework. GitHub → Render deploys on push 
 
 ## Tooling
 - `.github/workflows/tests.yml`: runs `pytest` on every push and pull request (CI), with a read-only token. Render deploys only after it passes.
-- `.github/workflows/watch.yml` + `scripts/watch.py` (decision 064): every morning, the tests on today's date, then a check for what needs a person: new واعد announcements (the official page vs `data/waaid_programs.json`, per application window), watched phrases on official pages (`scripts/watch_pages.json`), passed deadlines in the data, the live sitemap and `/waaid`, official links that 404, facts over 90 days. It keeps one GitHub issue up to date (token: `issues: write` only) and changes nothing in the site. Run locally: `.venv\Scripts\python.exe scripts\watch.py` (or `--offline`). `tests/test_watch.py` uses fakes, never the internet.
+- `scripts/watch.py` (decision 064): step 1 of the `/update-site` skill (`.claude/skills/update-site/SKILL.md`). It lists what needs a person and changes nothing: new واعد announcements (the official page vs `data/waaid_programs.json`, per application window), watched phrases on official pages (`scripts/watch_pages.json`), passed deadlines and old واعد programs in the data, the live sitemap and `/waaid`, official links that 404, facts over 90 days. Run: `.venv\Scripts\python.exe scripts\watch.py` (or `--offline`). `tests/test_watch.py` uses fakes, never the internet.
 - `.github/dependabot.yml`: a monthly pull request when an Action used in CI has a new version.
 - `.claude/settings.json`: a permission rule that blocks Claude from reading `.env`.
 - `.claude/launch.json`: starts the dev server in the Claude desktop app's browser pane.
