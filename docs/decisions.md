@@ -995,3 +995,18 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - A scheduled Claude session that fixes things: uses the owner's Claude plan daily; not wanted for now.
 - Store page hashes, or state in a file the workflow commits: a commit to `main` deploys; the issue body is enough.
 **Checked:** 36 tests for the check and the issue (Arabic window wordings seen on the real page; new, removed and unreadable announcements; urgent vs routine; text cleaning; the issue's whole life against a fake GitHub that keeps state between mornings, including flaps, a month of skipped runs, muting and reopening). A rehearsal of the workflow's commands ran against the live pages, with the issue step against the fake. The workflow itself can only run on GitHub after merging: run it once with «dry run», then without.
+
+## 065 — One Git rule with a cloud exception; instruction files checked against the current docs
+**Date:** 2026-11-01
+**Decision:**
+- **Git rule (CLAUDE.md), owner-approved:** never commit or push unless the owner asks. The exception: a cloud session commits and pushes to its own `claude/…` branch before it ends, so the work isn't lost (nothing goes live until the owner merges). Never push to `main`, merge, or force-push. The skills point to this rule instead of keeping their own version.
+- **Checked against Anthropic's memory and skills pages (2026-11-01):**
+  - CLAUDE.md is about 70 lines (target: under 200), with headers and bullets.
+  - Both skills' descriptions say what they do and when to use them.
+  - `update-site` stays model-invocable: it edits data but never deploys or commits, and a forwarded announcement should trigger it. The docs make skills manual-only for deploys, commits and messages.
+  - The docs warn that contradicting instructions make Claude "pick one arbitrarily"; the commit rule was the only contradiction.
+- The README says how the site stays current (the morning alarm, `/update-site`) and shows the tests badge. The workflow guide lists the two skills and `/doctor prompt-audit` for periodic checks.
+**Alternatives:**
+- Keep "never commit or push": the cloud session's own end-of-session check demands a commit and push, so every cloud session broke the rule.
+- Let sessions push anywhere: a push to `main` deploys, so that stays the owner's.
+**Why:** the owner asked whether the instruction files follow what experts recommend; the conflict caused friction twice in one session.

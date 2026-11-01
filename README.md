@@ -8,7 +8,7 @@ A free, Arabic-first guide for Saudi high school students: the programs open to 
 - **Official sources only:** every fact on the site links to the official page it came from. Anything without an official source is left out, not guessed.
 - **Independent:** a student guide. Not the Ministry of Education, not Safeer, and not affiliated with Aramco, KAUST or SDAIA.
 
-**Live site:** https://wadihguide.com
+**Live site:** https://wadihguide.com · [![tests](https://github.com/BINMAHFOUDSALAH/scholarship-guide/actions/workflows/tests.yml/badge.svg)](https://github.com/BINMAHFOUDSALAH/scholarship-guide/actions/workflows/tests.yml)
 
 > Status: in development, Launch 1 planned for December 2026. See [docs/roadmap.md](docs/roadmap.md).
 
@@ -34,6 +34,11 @@ Besides checking that pages load, the tests enforce the trust rules on the data:
 ## How changes go live
 
 Change → `pytest` → push → GitHub Actions runs the tests → Render deploys `main` only if they pass.
+
+## Keeping it current
+
+- **The alarm:** every morning a GitHub workflow ([watch.yml](.github/workflows/watch.yml)) checks the official pages, the deadlines in the data and the live site. It opens an issue only when something new or urgent appears (a new واعد program, a changed official page, a broken page). It never changes the site.
+- **The update:** `/update-site` in Claude Code goes through every program on its official page, adds what's new, clears what's past and fixes what's broken. A person reviews and merges.
 
 ## Where things are
 

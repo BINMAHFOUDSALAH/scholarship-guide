@@ -42,7 +42,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - Every subagent runs on **Haiku 5.5**, forced by `.claude/settings.json` (decision 059). If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
   - The agents (`.claude/agents/`) are read-only and return results. The main session saves them, validates them with tests, makes the decisions and flags anything an agent couldn't verify.
   - `source-researcher` for new facts (~5 items per agent, in parallel, with a strict schema + a finished example file), `fact-checker` for what's already published, `reviewer` for a big or risky diff. University requirements: the `research-wave` skill. Bringing the site up to date (new announcements, passed deadlines, Aramco/KAUST/SDAIA/الرواد…): the `update-site` skill.
-- Ask before installing packages, downloading files, or spending money. Never commit or push unless I ask.
+- Ask before installing packages, downloading files, or spending money.
+- Git: never commit or push unless I ask. One exception: a cloud session commits and pushes to its own `claude/…` branch before it ends, so the work isn't lost (nothing goes live until I merge). Never push to `main`, merge, or force-push.
 - Record design choices (with alternatives) in `docs/decisions.md`; tick progress in `docs/roadmap.md`.
 - **Handoff rule:** after any fundamental change (rule, decision, architecture, plan), update `CLAUDE.md` / `docs/roadmap.md` / `docs/decisions.md` / `docs/architecture.md` in the same step. Repo docs are the source of truth. When I say a session is ending, make sure the roadmap's "next session" note is accurate.
 

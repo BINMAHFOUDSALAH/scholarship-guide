@@ -3,14 +3,20 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-01, decision 064, branch `claude/sharp-volta-tii6mj`, not merged yet):**
-> - SAR's railway training added to واعد. It isn't for high school graduates (engineering graduates 2024–2026); applications 1–10 Nov.
-> - **`/update-site`** (skill) does the updating: it checks every program on its official page (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA), adds what's new, clears what's past and fixes bugs.
-> - A **morning check** (`.github/workflows/watch.yml`) is the alarm: one GitHub issue, «Site check», that pings only for something new and urgent.
+> **Latest (2026-11-01, decisions 064–065):**
+> - **Live (PR #25):**
+>   - SAR's railway training added to واعد. It isn't for high school graduates (engineering graduates 2024–2026); applications 1–10 Nov.
+>   - **`/update-site`** (skill) does the updating: it checks every program on its official page (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA), adds what's new, clears what's past and fixes bugs.
+>   - A **morning check** (`.github/workflows/watch.yml`) is the alarm: one GitHub issue, «Site check», that pings only for something new and urgent. The dry run on GitHub passed (it read all 190 واعد programs).
+> - **On branch `claude/sharp-volta-tii6mj`, not merged yet:**
+>   - the first `/update-site` run (Aramco, KGSP and واعد re-checked: unchanged);
+>   - README «Keeping it current» and the tests badge;
+>   - the Git rule's cloud exception (decision 065).
 >
 > **Owner to-dos:**
-> - Merge before **10 Nov** (SAR's window closes then; STC's on 5 Nov).
-> - Then GitHub → Actions → watch → Run workflow with «dry run» ticked, read the report on the run's page, then run it again without. Install the GitHub app on your phone to get the pings.
+> - Check X: [@SDAIA_SA](https://x.com/SDAIA_SA) (is the 4th cohort still open, any closing date?) and [@SA_Scholarships](https://x.com/SA_Scholarships) (does الرواد still close 15 Nov, has إمداد opened?). Then run `/update-site` with what you found.
+> - Install the GitHub app on your phone to get the morning check's pings.
+> - GitHub settings: a ruleset on `main` (require the `pytest` check, block force pushes) and "Automatically delete head branches". Decide on a licence.
 > - GitHub pauses scheduled workflows after 60 days with no commits; the next commit turns it back on.
 >
 > **Next session (as of 2026-10-17):** the «الطريق» redesign (decision 062) is merged (PR #19) and live on wadihguide.com; 616 tests and a live check of every page type passed. Audit, references and checks: `docs/research/design-direction-2026-10-17.md`.

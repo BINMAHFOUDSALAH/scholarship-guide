@@ -1,6 +1,6 @@
 # Project Files Guide
 
-A reference for the "special" files a project like this can have: what each one does, whether we use it yet, and when it's worth adding. Checked against Anthropic's [.claude directory reference](https://code.claude.com/docs/en/claude-directory) on 2026-10-13 (decision 059), and against its memory, skills, subagents and permissions pages on 2026-10-23.
+A reference for the "special" files a project like this can have: what each one does, whether we use it yet, and when it's worth adding. Checked against Anthropic's [.claude directory reference](https://code.claude.com/docs/en/claude-directory) on 2026-10-13 (decision 059), against its memory, skills, subagents and permissions pages on 2026-10-23, and against the memory and skills pages again on 2026-11-01: CLAUDE.md is well under the 200-line target, both skills say what they do and when, and `update-site` stays model-invocable because it never deploys or commits (the docs make only those manual-only).
 
 **Golden rule:** every file should have **one job**. Two files doing the same job means one of them will quietly go out of date and mislead you (or the next AI session).
 
