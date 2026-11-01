@@ -104,7 +104,7 @@
         "admission_ar": "حسب شروط كل برنامج",
         "status": "none_open",
         "status_source": "https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/",
-        "last_checked": "2026-10-25",
+        "last_checked": "2026-11-01",
         "facts": [
           {
             "id": "waaid-programs",
@@ -926,9 +926,9 @@
         "status": "not_open",
         "apply_with_ar": "طلاب الفصل الثاني من ثالث ثانوي",
         "status_source": "https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program",
-        "last_checked": "2026-10-13",
+        "last_checked": "2026-11-01",
         "owner_confirmed": true,
-        "status_note": "Owner pasted the official page on 2026-10-13 (new URL): cycle 1447-1448 (2025/2026), «باب التسجيل مغلق في الوقت الحالي، وسوف يتم الإعلان لاحقًا عن الفترة المخصصة للتسجيل». Requirements unchanged: Qudurat 90%, 85% average (G10, G11, G12 S1), 85% in maths/physics/chemistry/biology, age ≤ 22 Hijri years."
+        "status_note": "Owner pasted the official page on 2026-10-13 (new URL): cycle 1447-1448 (2025/2026), «باب التسجيل مغلق في الوقت الحالي، وسوف يتم الإعلان لاحقًا عن الفترة المخصصة للتسجيل». Requirements unchanged: Qudurat 90%, 85% average (G10, G11, G12 S1), 85% in maths/physics/chemistry/biology, age ≤ 22 Hijri years. Re-read 2026-11-01 (WebFetch): unchanged, still 1447-1448, registration closed, same requirements."
       }
     ]
   },
@@ -968,9 +968,9 @@
         "apply_with_ar": "طلاب ثالث ثانوي",
         "status_source": "https://kgsp.kaust.edu.sa/prospective-students",
         "owner_confirmed": true,
-        "last_checked": "2026-10-12",
+        "last_checked": "2026-11-01",
         "facts": [],
-        "status_note": "Prospective Students page, read 2026-10-12: «Applications for Cohort 19 will open soon», no dates. Its FAQ still shows the Cohort 18 dates. Owner asked to show «يفتح قريبًا» (2026-10-12)."
+        "status_note": "Prospective Students page, read 2026-10-12 and again 2026-11-01: «Applications for Cohort 19 will open soon», no dates. Its FAQ still shows the Cohort 18 dates. Owner asked to show «يفتح قريبًا» (2026-10-12)."
       }
     ],
     "apply_url": "https://kgsp.kaust.edu.sa/prospective-students",
@@ -984,7 +984,7 @@
             "url": "https://kgsp.kaust.edu.sa/prospective-students"
           }
         ],
-        "last_checked": "2026-10-12",
+        "last_checked": "2026-11-01",
         "academic_year": null,
         "status": "sourced",
         "owner_reviewed": false,

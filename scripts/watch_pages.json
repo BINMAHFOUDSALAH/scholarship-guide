@@ -23,7 +23,7 @@
       "name": "Aramco CDPNE: registration",
       "url": "https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program",
       "expect": ["باب التسجيل مغلق"],
-      "confirmed_on": "2026-10-13",
+      "confirmed_on": "2026-11-01",
       "often_blocked": true,
       "then": "Aramco's registration may be open: read the page in a browser, then update aramco-cdpne in data/paths.json."
     }
