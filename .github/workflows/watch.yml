@@ -1,0 +1,49 @@
+# The daily check (decision 064): every morning, look for what needs a person and keep one GitHub issue
+# up to date with it: new واعد announcements and other changes on official pages, passed deadlines,
+# broken pages or links, failing tests, and facts not re-read in 90 days. It never changes the site
+# or its data, and it never fails because of what it finds, so it can't block a deploy.
+# Run it by hand: GitHub → Actions → watch → Run workflow.
+name: watch
+
+on:
+  schedule:
+    - cron: "23 4 * * *"  # 07:23 in Riyadh (04:23 UTC), every day: واعد windows can be as short as 5 days
+  workflow_dispatch:
+
+# Read the code; write only issues (the daily-check issue). Nothing else.
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies (app + test tools)
+        run: pip install -r requirements-dev.txt
+
+      # The pages depend on today's date (open/closed), so a test can start failing on a day with no push.
+      # A failure here is reported in the issue instead of stopping the check.
+      - name: Run tests on today's date
+        id: tests
+        continue-on-error: true
+        run: pytest -q
+
+      - name: Check deadlines, official pages and the live site, then update the issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/watch.py --tests "${{ steps.tests.outcome }}" --github-issue

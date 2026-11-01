@@ -963,3 +963,22 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Link straight to the Ministry's page: loses the high school split and the links to university pages.
 **Why:** The owner tapped an STC program on the homepage and landed on the program page's track list with the toggle closed. A student who taps an opening should see it, with its dates, who it's for, its requirements, and where to apply.
 **Checked:** an independent review (reviewer agent: fixed the anchor stability, a test that would have failed after الرواد closes, link labels for screen readers; confirmed the MBC example on the official page) and 630 tests (incl. the lifecycle: «لم يفتح بعد» → open with «تقدم الآن» → closed, from dates alone) and a browser run of the student flows at 360/390/768/1280px in both themes (123 checks: rows, tap lands at the top and is marked, apply links, /news anchors, old anchor, no horizontal scroll, no console errors, every internal link answers 200).
+
+## 064 — A daily check opens one GitHub issue; SAR joins واعد (updates 053, 063)
+**Date:** 2026-11-01
+**Decision:**
+- **SAR on `/waaid`:** «تدريب في قطاع السكك الحديدية» (شركة الخطوط الحديدية السعودية (سار), TransportWorks, UK, 12 months from January 2027, apply 1–10 Nov 2026), read from the official واعد page on 2026-11-01. It is **not for high school graduates**: the page asks for an engineering bachelor's or master's from 2024–2026. The page names the trainer only in Arabic («شركة ترانسبورت ووركز»); «TransportWorks» is from the Ministry's announcement graphic the owner sent (`institution_note`). TOEFL is copied as the page gives it («TOEFL (IBT) 64 -78»), with no reading of what the range means.
+- **`scripts/watch.py` + `.github/workflows/watch.yml`:** every morning (07:23 Riyadh) GitHub runs the tests on today's date, then the check, and keeps **one issue** («Daily check: N to act on») up to date:
+  - **New on official pages:** واعد announcements on the Ministry's page that aren't in `data/waaid_programs.json`, counted per application window (it would have caught SAR this morning). Also the pages in `scripts/watch_pages.json` whose watched phrase disappeared (KGSP «Cohort 19 will open soon») or whose alert phrase appeared (a 2028-2027 universities guide).
+  - **Deadlines:** open tracks past `status_until`; open tracks with no deadline not re-checked in 14 days; universities whose every date has passed.
+  - **Bugs:** failing tests; any page in the live sitemap that isn't 200; the live `/waaid` missing a program that's in the repo (a failed deploy or an unmerged change); official links that answer 404/410.
+  - **Old facts:** `stale_facts.py`'s items older than 90 days.
+- The issue opens when something needs acting on. Each morning its body is replaced, with a comment listing **only new items**, so a notification always means something new. It closes itself when nothing is left. FYI lines (closing within 3 days, sites that refuse scripts, 403s) never open it.
+- **It changes nothing.** A person, or a Claude session asked to «fix the items in the daily-check issue», reads the official page and makes the change. Passed deadlines already show as closed on the site, since status is computed from dates on every request.
+**Alternatives:**
+- Auto-edit the data from the official page: breaks the rule that facts are read and checked before publishing, and pushing to `main` deploys.
+- A scheduled Claude session that fixes things and opens a pull request: possible later; it uses the owner's Claude plan every day, so ask first.
+- Weekly, as the roadmap first said: a واعد window can be 5 days (الاتحاد, 13–17 Sep), so a weekly run can miss one entirely.
+- Store page hashes to spot any change: needs state committed somewhere. A watched phrase is stateless, and says what the change means.
+- Fail the workflow when something is found: GitHub's failure emails don't say what's new, and a red check reads like a broken site.
+**Checked:** 655 tests, 25 of them new (Arabic window wordings seen on the real page, new/removed/unreadable announcements, deadlines, watched phrases, live-site and link checks, the issue lifecycle with a fake GitHub). A real run against the live pages read 190 واعد programs and 93 official links, and flagged SAR as missing from the live site, correctly, since it isn't merged yet.

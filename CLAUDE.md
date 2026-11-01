@@ -58,6 +58,7 @@ pytest tests/test_pages.py::test_about_loads    # one test
 python scripts/stale_facts.py --as-of 2026-12-09 --days 45   # facts to re-check before launch
 python scripts/check_quote.py URL "quote"       # does an official page really say this?
 python scripts/check_sources.py                 # every university fact still on its cited page?
+python scripts/watch.py                         # the daily check: new واعد programs, passed deadlines, broken pages (--offline: no internet)
 node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
 ```
 
@@ -65,3 +66,4 @@ node scripts/check_explorer.mjs                 # the explorer's JavaScript in a
 - Live at https://wadihguide.com: domain at Cloudflare (DNS only), hosted on Render (Frankfurt, $7/month plan so it never sleeps). The old https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042).
 - GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. It installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
 - Never set `WADIH_SHOW_DRAFTS` on Render.
+- Every morning `.github/workflows/watch.yml` runs `scripts/watch.py` and keeps one GitHub issue, «Daily check», listing what needs a person (decision 064). Asked to fix it: read each item's official page first, then follow the rules above.

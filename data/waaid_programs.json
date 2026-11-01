@@ -1,10 +1,25 @@
 {
   "_note": "The latest programs announced under مسار واعد, copied from the Ministry's official Waaid page (newest first by closing date). Status (open/closed) is computed from apply_to on each request. Add new ones at the top when the page announces them. Each program's id is its anchor on /waaid, so keep ids stable.",
   "source_url": "https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/",
-  "checked": "2026-10-25",
+  "checked": "2026-11-01",
   "apply_url": "https://www.uap.sa/",
-  "apply_note": "Every «تقدم الآن» button on the official Waaid page (read 2026-10-25) leads to منصة قبول (uap.sa).",
+  "apply_note": "Every «تقدم الآن» button on the official Waaid page (read 2026-10-25, and the SAR one on 2026-11-01) leads to منصة قبول (uap.sa).",
   "programs": [
+    {
+      "id": "sar-railway-training",
+      "company_ar": "شركة الخطوط الحديدية السعودية (سار)",
+      "program_ar": "تدريب في قطاع السكك الحديدية",
+      "level_ar": "تدريب",
+      "institution": "TransportWorks",
+      "institution_note": "The official page names it «شركة ترانسبورت ووركز» (read 2026-11-01); the English name is from the Ministry's announcement graphic for this program, sent by the owner.",
+      "country_ar": "المملكة المتحدة",
+      "duration_ar": "12 شهرًا",
+      "start_ar": "يناير 2027",
+      "apply_from": "2026-11-01",
+      "apply_to": "2026-11-10",
+      "for_high_school": false,
+      "requirements_ar": ["بكالوريوس أو ماجستير في التخصصات الهندسية، تخرّج في 2024 أو 2025 أو 2026، بمعدل لا يقل عن 3.75 من 5 أو 2.75 من 4 أو 80 من 100", "IELTS Academic لا يقل عن 6، ولا تقل أي مهارة عن 5.5، أو TOEFL iBT ‏(64-78) كما تكتبه الصفحة الرسمية"]
+    },
     {
       "id": "stc-nus-bcomp-cs",
       "company_ar": "شركة الاتصالات السعودية (STC)",
