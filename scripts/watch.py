@@ -1,8 +1,12 @@
-"""What needs updating on the site? Step 1 of the /update-site skill (decision 064).
+"""What needs updating on the site? (decision 064)
 
 A report, never a failing check: it lists what to act on and changes nothing in the site or its data.
-The skill (.claude/skills/update-site/SKILL.md) then reads each official page and makes the changes,
-because facts are published only after reading their official source.
+Two things use it:
+- the /update-site skill (.claude/skills/update-site/SKILL.md), step 1: Claude then reads each official
+  page and makes the changes, because facts are published only after reading their official source;
+- the morning workflow (.github/workflows/watch.yml), which passes --json to scripts/watch_issue.py to keep
+  one GitHub issue up to date. Each finding is urgent (students are affected now: a new announcement, a
+  broken page, failing tests) or routine (upkeep); only new urgent findings notify the owner.
 
 Run from the repo root:
 
@@ -15,8 +19,8 @@ What it checks:
    and the pages in scripts/watch_pages.json whose watched phrase disappeared (or whose alert phrase appeared).
 2. Past: open tracks past their `status_until`, open tracks with no deadline not re-checked in 14 days,
    universities whose every date has passed, واعد programs closed long enough to remove.
-3. Bugs: every page in the live sitemap, the live /waaid page showing every program in the data
-   (a failed deploy), and official links that answer 404 or 410.
+3. Bugs: the tests (the workflow passes their result in), every page in the live sitemap, the live /waaid
+   page showing every program in the data (a failed deploy), and official links that answer 404 or 410.
 4. Old facts: anything scripts/stale_facts.py finds older than 90 days.
 """
 
@@ -55,9 +59,9 @@ SECTIONS = {
     "stale": f"Old facts (last read {STALE_DAYS}+ days ago)",
 }
 
-# Arabic text on the Ministry's pages has invisible characters inside words and numbers («202​6م»),
+# Arabic text on the Ministry's pages has invisible characters inside words and numbers («202\u200b6م»),
 # and sometimes Arabic-Indic digits, so text is cleaned before any matching.
-INVISIBLE = dict.fromkeys(map(ord, "​‌‍‎‏⁠﻿\xad"), None)
+INVISIBLE = dict.fromkeys(map(ord, "\u200b\u200c\u200d\u200e\u200f\u2060\ufeff\xad"), None)
 DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
 MONTHS_AR = {"يناير": 1, "فبراير": 2, "مارس": 3, "أبريل": 4, "ابريل": 4, "إبريل": 4, "مايو": 5, "يونيو": 6,
              "يونيه": 6, "يوليو": 7, "يوليه": 7, "أغسطس": 8, "اغسطس": 8, "سبتمبر": 9, "أكتوبر": 10,
@@ -89,6 +93,14 @@ def page_lines(raw_html):
 def short_date(iso):
     d = date.fromisoformat(iso)
     return f"{d.day} {d.strftime('%b %Y')}"  # «1 Nov 2026» (no %-d: it doesn't work on Windows)
+
+
+def safe(text, limit=120):
+    """Text copied from a web page, made harmless before it goes into a GitHub issue: no @mentions
+    (a word joiner after @ stops GitHub from linking a user), no links, HTML, code or tables, and short."""
+    text = re.sub(r"[<>\[\]`|*_#~]", " ", text or "?").replace("@", "@\u2060")
+    text = re.sub(r"\s+", " ", text).strip()
+    return text if len(text) <= limit else text[:limit].rstrip() + "…"
 
 
 # ---------------------------------------------------------------- fetching
@@ -135,8 +147,9 @@ def parse_window(text):
 
 
 def waaid_announcements(lines):
-    """Every program on the official واعد page, in page order (newest first), as
-    {"title", "company", "window"}; window is None when the dates couldn't be read."""
+    """Every program on the official واعد page, in page order (newest first), as {"title", "company",
+    "window", "high_school"}; window is None when the dates couldn't be read, and high_school says whether
+    the block mentions the high school certificate (a hint for the owner, not a fact we publish)."""
     starts = [i for i, line in enumerate(lines) if ANNOUNCEMENT in line]
     found = []
     for n, start in enumerate(starts):
@@ -144,7 +157,7 @@ def waaid_announcements(lines):
         block = " ".join(lines[start:end])
         company = COMPANY.search(block)
         found.append({"title": lines[start - 1] if start else "", "company": company and company.group(1),
-                      "window": parse_window(block)})
+                      "window": parse_window(block), "high_school": "ثانوية" in block})
     return found
 
 
@@ -156,7 +169,7 @@ def waaid_items(announcements, programs, today, source_url):
     link = f"[official page]({source_url})"
     if not announcements:
         return [item("new", "waaid-page", f"Couldn't read any واعد announcement on the {link}: it may be down, "
-                     "blocking scripts, or redesigned. Check it in a browser.")]
+                     "blocking scripts, or redesigned. Check it in a browser.", urgent=True)]
     live = [a for a in announcements if a["window"] and a["window"][1] >= today]
     page = Counter(a["window"] for a in live)
     ours = Counter((p["apply_from"], p["apply_to"]) for p in programs if p["apply_to"] >= today)
@@ -164,28 +177,32 @@ def waaid_items(announcements, programs, today, source_url):
         have = ours.get(window, 0)
         if count > have:
             on_page = [a for a in live if a["window"] == window]
-            names = "، ".join(sorted({a["company"] or "?" for a in on_page}))
-            titles = "؛ ".join(f"«{a['title']}»" for a in on_page[:12])
+            names = "، ".join(sorted({safe(a["company"], 60) for a in on_page}))
+            titles = "؛ ".join(f"«{safe(a['title'], 80)}»" for a in on_page[:12])
+            hs = sum(a["high_school"] for a in on_page)
+            hint = (f" {hs} of them mention the high school certificate (likely for high school graduates)."
+                    if hs else " None mentions the high school certificate.")
             what = (f"a new announcement ({count} program{'s' * (count > 1)})" if not have
                     else f"{count} programs where our data has {have}")
             items.append(item("new", f"waaid:{window[0]}:{window[1]}:{count}",
                               f"واعد, {short_date(window[0])} to {short_date(window[1])}: the {link} lists {what} "
-                              f"from {names}: {titles}. Add the missing ones at the top of `data/waaid_programs.json` "
-                              f"from the page (requirements, who it's for)."))
+                              f"from {names}: {titles}.{hint} Add the missing ones at the top of "
+                              "`data/waaid_programs.json` from the page (requirements, who it's for).", urgent=True))
     for window, have in ours.items():
         if page.get(window, 0) < have:
             items.append(item("new", f"waaid-gone:{window[0]}:{window[1]}:{page.get(window, 0)}",
                               f"واعد, {short_date(window[0])} to {short_date(window[1])}: our data has {have} "
                               f"program(s) but the {link} now lists {page.get(window, 0)}. Removed, or dates changed? "
-                              "Read the page and fix `data/waaid_programs.json`."))
+                              "Read the page and fix `data/waaid_programs.json`.", urgent=True))
     # A block at the top whose dates couldn't be read (a new wording) would otherwise go unnoticed.
     for a in announcements:
         if a["window"] and a["window"][1] < today:
             break  # from here down, the page lists closed announcements
         if not a["window"]:
             items.append(item("new", f"waaid-unread:{a['title']}",
-                              f"واعد: couldn't read the dates of «{a['title']}» ({a['company'] or '?'}) near the top "
-                              f"of the {link}. Read it and add it to `data/waaid_programs.json` if it's new."))
+                              f"واعد: couldn't read the dates of «{safe(a['title'], 80)}» ({safe(a['company'], 60)}) "
+                              f"near the top of the {link}. Read it and add it to `data/waaid_programs.json` if it's "
+                              "new.", urgent=True))
     return items
 
 
@@ -287,7 +304,7 @@ def page_watch_items(entries, fetcher=fetch):
             why = "; ".join([f"«{p}» is no longer on it" for p in gone] + [f"«{p}» appeared" for p in new])
             items.append(item("new", f"page:{e['id']}:{'|'.join(gone + new)}",
                               f"{e['name']}: [the page]({e['url']}) changed ({why}). {e['then']} Then update the "
-                              "phrase in `scripts/watch_pages.json`."))
+                              "phrase in `scripts/watch_pages.json`.", urgent=True))
     return items, fyi
 
 
@@ -339,32 +356,40 @@ def live_items(base_url, programs, fetcher=fetch, fetch_all=fetch_many):
     status, sitemap = fetcher(f"{base_url}/sitemap.xml")
     if sitemap is None:
         return [item("bug", "live-down", f"The live site didn't answer: {base_url}/sitemap.xml gave "
-                     f"{status or 'no answer'}. Check Render's dashboard (Events, Logs).")], 0
+                     f"{status or 'no answer'}. Check Render's dashboard (Events, Logs).", urgent=True)], 0
     pages = re.findall(r"<loc>([^<]+)</loc>", sitemap)
     for url, (code, _) in sorted(fetch_all(pages).items()):
         if code != 200:
             items.append(item("bug", f"live:{url}:{code}", f"Live page {url} answered {code or 'nothing'} "
-                              "instead of 200."))
+                              "instead of 200.", urgent=True))
     status, page = fetcher(f"{base_url}/waaid")
     missing = [p["id"] for p in programs if page is not None and f'id="{p["id"]}"' not in page]
     if missing:
         items.append(item("bug", f"live-behind:{','.join(missing)}",
                           f"The live /waaid page is missing {len(missing)} program(s) that are in the repo "
                           f"({', '.join(missing)}): the change isn't merged to `main` yet, or the last deploy "
-                          "failed (Render → Events)."))
+                          "failed (Render → Events).", urgent=True))
     return items, len(pages)
 
 
 # ---------------------------------------------------------------- the report
 
-def item(section, key, text):
-    return {"section": section, "key": key, "text": text}
+def item(section, key, text, urgent=False):
+    """One finding. `key` is stable while the finding stays the same (the issue uses it to tell new from
+    known); `urgent` means students are affected now."""
+    return {"section": section, "key": key, "text": text, "urgent": urgent}
 
 
-def run(today, offline=False):
+def run(today, tests=None, offline=False):
     """Everything to act on, plus FYI lines and a summary of what was checked."""
     programs = load("waaid_programs.json")
     items, fyi, checked = [], [], []
+
+    if tests == "failure":
+        items.append(item("bug", "tests", "The tests fail on today's date: a page that depends on dates may be "
+                          "wrong. See the failing test in the workflow's log, or run `pytest`.", urgent=True))
+    if tests:
+        checked.append(f"tests: {tests}")
 
     details = [json.loads(f.read_text(encoding="utf-8"))
                for f in sorted((DATA / "university_details").glob("*.json"))]
@@ -402,13 +427,17 @@ def run(today, offline=False):
 
 
 def render(items, fyi, checked, today):
+    urgent = [i for i in items if i["urgent"]]
     lines = [f"## Site check, {short_date(today)}", ""]
     if items:
-        lines += [f"**To act on: {len(items)}.** Read the official page before changing a fact (CLAUDE.md).", ""]
+        lines += [f"**Urgent: {len(urgent)} · Routine: {len(items) - len(urgent)}.** Type `/update-site` in "
+                  "Claude Code to handle them. It reads each official page before changing a fact.", ""]
     else:
         lines += ["**Nothing to act on.**", ""]
+    if urgent:
+        lines += ["### Urgent", ""] + [f"- {i['text']}" for i in urgent] + [""]
     for section, title in SECTIONS.items():
-        found = [i for i in items if i["section"] == section]
+        found = [i for i in items if i["section"] == section and not i["urgent"]]
         if found:
             lines += [f"### {title}", ""] + [f"- {i['text']}" for i in found] + [""]
     if fyi:
@@ -422,11 +451,17 @@ def main(argv=None):
     parser.add_argument("--as-of", type=date.fromisoformat, default=date.today(),
                         help="check as if today were this date (YYYY-MM-DD)")
     parser.add_argument("--offline", action="store_true", help="skip the checks that need the internet")
+    parser.add_argument("--tests", help="the test run's outcome (the workflow passes success or failure)")
+    parser.add_argument("--json", type=Path, help="also write the findings to this file (for scripts/watch_issue.py)")
     args = parser.parse_args(argv)
 
     today = args.as_of.isoformat()
-    items, fyi, checked = run(today, offline=args.offline)
-    print(render(items, fyi, checked, today))
+    items, fyi, checked = run(today, tests=args.tests, offline=args.offline)
+    report = render(items, fyi, checked, today)
+    print(report)
+    if args.json:
+        args.json.write_text(json.dumps({"today": today, "items": items, "report": report}, ensure_ascii=False,
+                                        indent=1), encoding="utf-8")
     return 0
 
 

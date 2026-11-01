@@ -1,0 +1,64 @@
+# The morning site check (decision 064): an alarm, not a fixer. Every morning it looks for what needs a
+# person and keeps one GitHub issue up to date. It notifies the owner only for new urgent findings (a new
+# واعد announcement, a changed official page, a broken page, failing tests). It never changes the site or
+# its data: the owner types /update-site in Claude Code to make the changes.
+# Run by hand: GitHub → Actions → watch → Run workflow (tick "dry run" to see the report without the issue).
+name: watch
+
+on:
+  schedule:
+    - cron: "23 4 * * *"  # 07:23 in Riyadh (04:23 UTC), daily: a واعد window can be as short as 5 days
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: write the report here only, don't touch the issue"
+        type: boolean
+        default: false
+
+# Least privilege: read the code, write issues. Nothing else.
+permissions:
+  contents: read
+  issues: write
+
+# Never two runs at once (two runs could open two issues).
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false  # nothing here pushes, so don't leave the token in git's config
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies (app + test tools)
+        run: pip install -r requirements-dev.txt
+
+      # The pages depend on today's date (open/closed), so a test can start failing on a day with no push.
+      # A failure is reported as urgent in the issue instead of stopping the check.
+      - name: Run the tests on today's date
+        id: tests
+        continue-on-error: true
+        run: pytest -q
+
+      # Values go through env, never straight into the script (GitHub's script-injection guidance).
+      - name: Check official pages, deadlines and the live site
+        env:
+          TESTS_OUTCOME: ${{ steps.tests.outcome }}
+        run: python scripts/watch.py --tests "$TESTS_OUTCOME" --json site-check.json | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Update the site-check issue
+        if: ${{ !inputs.dry_run }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/watch_issue.py site-check.json

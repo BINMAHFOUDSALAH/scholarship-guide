@@ -5,11 +5,11 @@ description: Bring واضح up to date. Find and add what's new (واعد progra
 
 # Update the site
 
-The owner runs this when they want the site current (decision 064). It runs only when asked: no schedule. Work in the main session; a `source-researcher` agent is worth it only when more than ~5 new items need research (CLAUDE.md). Never commit or push unless the owner asks.
+The owner runs this when they want the site current (decision 064), often after the morning «Site check» issue on GitHub pinged them. That issue is the alarm and lists the same findings; this skill does the work. Work in the main session; a `source-researcher` agent is worth it only when more than ~5 new items need research (CLAUDE.md). Never commit or push unless the owner asks.
 
 ## 1. Find what changed
 - `pytest -q` first. If it's red before you change anything, that's the first bug to fix.
-- `python scripts/watch.py` (about 2 minutes). It compares the data with the official pages and the live site and lists what to act on: new on official pages, past or due for a re-check, bugs, facts over 90 days. That list is your starting to-do.
+- `python scripts/watch.py` (about 2 minutes). It compares the data with the official pages and the live site and lists what to act on, **urgent first** (a new announcement, a changed official page, a broken page), then routine (past or due for a re-check, broken links, facts over 90 days). That list is your starting to-do. Run it yourself rather than copying the GitHub issue, which may be from this morning.
 - It can't see X posts, Aramco's page (it refuses scripts) or pages without a watch phrase. Step 2 covers them.
 
 ## 2. Go through every program, even when the check found nothing
@@ -62,4 +62,4 @@ After acting on a watched page, update its phrase in `scripts/watch_pages.json` 
 - A short table: **added**, **removed**, **updated**, **re-checked and unchanged**, **couldn't check** (owner to-dos: X posts, Aramco in a browser).
 - What's time-sensitive: windows closing soon (the check's FYI lines). Open windows mean merge soon.
 - `docs/decisions.md` only if a rule changed; the roadmap's next-session note if something big changed.
-- Ask before committing.
+- Ask before committing. Once the owner merges, the next morning's check closes the GitHub issue by itself if nothing urgent is left.

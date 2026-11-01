@@ -3,8 +3,15 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-01, decision 064, branch `claude/sharp-volta-tii6mj`, not merged yet):** SAR's railway training added to واعد (not for high school graduates: engineering graduates 2024–2026; apply 1–10 Nov). New skill **`/update-site`**: type it in Claude Code to bring the site up to date. It runs `scripts/watch.py`, checks every program (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA) on its official page, adds what's new, clears what's past, fixes bugs, and reports what you must check yourself (X posts, Aramco in a browser).
-> **Owner to-dos:** merge before **10 Nov** (SAR's window closes then; STC's on 5 Nov). Run `/update-site` once or twice a week, and whenever someone sends you an announcement.
+> **Latest (2026-11-01, decision 064, branch `claude/sharp-volta-tii6mj`, not merged yet):**
+> - SAR's railway training added to واعد. It isn't for high school graduates (engineering graduates 2024–2026); applications 1–10 Nov.
+> - **`/update-site`** (skill) does the updating: it checks every program on its official page (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA), adds what's new, clears what's past and fixes bugs.
+> - A **morning check** (`.github/workflows/watch.yml`) is the alarm: one GitHub issue, «Site check», that pings only for something new and urgent.
+>
+> **Owner to-dos:**
+> - Merge before **10 Nov** (SAR's window closes then; STC's on 5 Nov).
+> - Then GitHub → Actions → watch → Run workflow with «dry run» ticked, read the report on the run's page, then run it again without. Install the GitHub app on your phone to get the pings.
+> - GitHub pauses scheduled workflows after 60 days with no commits; the next commit turns it back on.
 >
 > **Next session (as of 2026-10-17):** the «الطريق» redesign (decision 062) is merged (PR #19) and live on wadihguide.com; 616 tests and a live check of every page type passed. Audit, references and checks: `docs/research/design-direction-2026-10-17.md`.
 > - Act on forest, read on paper, in the logo's own colours; Naskh titles; the route of the grades; values under labels; a guides index and «الأدلة» in the nav; a footer with a self-updating copyright line. The logo is unchanged (a test checks).
@@ -123,7 +130,7 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] `.env` permission lock (`.claude/settings.json`)
 - [x] `docs/claude-workflow-guide.md`, `docs/architecture.md`; CLAUDE.md trimmed (a `LEARNING_LOG.md` too, removed 2026-10-13, decision 059)
 - [x] Stale-facts report `scripts/stale_facts.py` (decision 053; a report, not a failing test)
-- [x] `/update-site` (skill + `scripts/watch.py`): official links that 404, the live sitemap, new واعد announcements, passed deadlines, facts over 90 days (decision 064)
+- [x] `/update-site` (skill) + a morning check that keeps one GitHub issue (`watch.yml`): new واعد announcements, changed official pages, passed deadlines, broken pages and links, facts over 90 days (decision 064)
 - [ ] Later: pin the server's Python version
 
 ## Stage 1c: Wide editorial redesign (decisions 022–023)

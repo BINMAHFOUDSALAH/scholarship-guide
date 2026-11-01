@@ -19,12 +19,12 @@ SOURCE = "https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/"
 
 @pytest.mark.parametrize("text, window", [
     ("من 1 نوفمبر 2026م إلى 10 نوفمبر 2026م", ("2026-11-01", "2026-11-10")),
-    ("من 25 أكتوبر 2026م إلى 5 نوفمبر 202​​6م", ("2026-10-25", "2026-11-05")),  # invisible characters
+    ("من 25 أكتوبر 2026م إلى 5 نوفمبر 202\u200b\u200b6م", ("2026-10-25", "2026-11-05")),  # invisible characters
     ("25\xa0أكتوبر 2026م إلى 5 نوفمبر 2026م", ("2026-10-25", "2026-11-05")),  # no «من», a no-break space
     ("من  3 أغسطس إلى 17 أغسطس 2026", ("2026-08-03", "2026-08-17")),  # the year said once
     ("من 2 أغسطس إلى13 أغسطس 2026م", ("2026-08-02", "2026-08-13")),
     ("من 30 أغسطس 2026م وحتى 3 سبتمبر 2026م", ("2026-08-30", "2026-09-03")),
-    ("من 2 أغسطس 2026م إل​ى 6 أغسطس 2026م", ("2026-08-02", "2026-08-06")),
+    ("من 2 أغسطس 2026م إل\u200bى 6 أغسطس 2026م", ("2026-08-02", "2026-08-06")),
     ("من ٢٠ ديسمبر إلى ٥ يناير ٢٠٢٧", ("2026-12-20", "2027-01-05")),  # Arabic-Indic digits, across a new year
     ("بمعدل 3.5 من 4 أو ما يعادلها", None),
     ("من 31 نوفمبر 2026 إلى 5 ديسمبر 2026", None),  # a typo on the page isn't a date
@@ -181,3 +181,43 @@ def test_the_offline_report_runs_on_the_real_data():
     assert all(i["section"] in watch.SECTIONS for i in items)
     report = watch.render(items, fyi, checked, "2026-11-01")
     assert report.startswith("## Site check, 1 Nov 2026") and "### Past or due for a re-check" in report
+
+
+def test_urgent_means_students_are_affected_now():
+    found = watch.waaid_announcements(watch.page_lines(PAGE))
+    new = watch.waaid_items(found, [program("stc", "2026-10-25", "2026-11-05")], "2026-11-01", SOURCE)
+    assert new and all(i["urgent"] for i in new)
+    past = watch.deadline_items([], [{"id": "u", "name_en": "U", "dates": [{"date": "2026-10-15"}]}], "2026-11-01")
+    assert past and not any(i["urgent"] for i in past)
+    assert not any(i["urgent"] for i in watch.link_items({"https://gone": "x"}, {"https://gone": (404, None)})[0])
+    items, _, _ = watch.run("2026-11-01", tests="failure", offline=True)
+    assert [i["key"] for i in items if i["urgent"]] == ["tests"]
+
+
+def test_a_new_announcement_says_whether_it_mentions_the_high_school_certificate():
+    page = (block("بكالوريوس في علوم الحاسب", "شركة", "من 1 ديسمبر 2026م إلى 10 ديسمبر 2026م")
+            .replace("شارك:", "شهادة ثانوية بمعدل 90%. شارك:"))
+    found = watch.waaid_announcements(watch.page_lines(page))
+    assert found[0]["high_school"] is True
+    assert "1 of them mention the high school certificate" in watch.waaid_items(found, [], "2026-11-01", SOURCE)[0]["text"]
+
+
+def test_text_copied_from_a_page_cannot_mention_link_or_inject_html_in_the_issue():
+    text = watch.safe("@octocat [click](https://evil.example) <img src=x> `code` | ## title " + "ب" * 200)
+    assert "@octocat" not in text and "[" not in text and "<" not in text and "`" not in text
+    assert "#" not in text and "|" not in text and len(text) <= 121
+    found = watch.waaid_announcements(watch.page_lines(block("@octocat <b>x</b>", "شركة @team", "من 1 ديسمبر 2026م إلى 10 ديسمبر 2026م")))
+    item_text = watch.waaid_items(found, [], "2026-11-01", SOURCE)[0]["text"]
+    assert "@octocat" not in item_text and "@team" not in item_text
+
+
+def test_the_report_lists_urgent_findings_first_and_writes_json(tmp_path):
+    items = [watch.item("past", "p", "routine thing"), watch.item("new", "n", "urgent thing", urgent=True)]
+    report = watch.render(items, [], ["x"], "2026-11-01")
+    assert report.index("### Urgent") < report.index("urgent thing") < report.index("### Past") < report.index("routine")
+    out = tmp_path / "check.json"
+    assert watch.main(["--offline", "--as-of", "2026-11-01", "--tests", "failure", "--json", str(out)]) == 0
+    check = json.loads(out.read_text(encoding="utf-8"))
+    assert check["today"] == "2026-11-01" and check["items"][0] == {
+        "section": "bug", "key": "tests", "text": check["items"][0]["text"], "urgent": True}
+    assert check["report"].startswith("## Site check, 1 Nov 2026")

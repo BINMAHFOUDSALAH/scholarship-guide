@@ -66,3 +66,4 @@ node scripts/check_explorer.mjs                 # the explorer's JavaScript in a
 - Live at https://wadihguide.com: domain at Cloudflare (DNS only), hosted on Render (Frankfurt, $7/month plan so it never sleeps). The old https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042).
 - GitHub Actions runs `pytest` on every push (`.github/workflows/tests.yml`); Render auto-deploys **only after CI passes**. It installs `requirements.txt` and runs `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
 - Never set `WADIH_SHOW_DRAFTS` on Render.
+- Every morning `.github/workflows/watch.yml` runs `scripts/watch.py` and keeps one GitHub issue, «Site check», that pings the owner only for new urgent findings (decision 064). It never changes the site; the fixing is `/update-site`.
