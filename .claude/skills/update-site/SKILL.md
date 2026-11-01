@@ -5,7 +5,7 @@ description: Bring واضح up to date. Find and add what's new (واعد progra
 
 # Update the site
 
-The owner runs this when they want the site current (decision 064), often after the morning «Site check» issue on GitHub pinged them. That issue is the alarm and lists the same findings; this skill does the work. Work in the main session; a `source-researcher` agent is worth it only when more than ~5 new items need research (CLAUDE.md). Never commit or push unless the owner asks.
+The owner runs this when they want the site current (decision 064), often after the morning «Site check» issue on GitHub pinged them. That issue is the alarm and lists the same findings; this skill does the work. Work in the main session; a `source-researcher` agent is worth it only when more than ~5 new items need research (CLAUDE.md). Commit and push only as CLAUDE.md's Git rule allows.
 
 ## 1. Find what changed
 - `pytest -q` first. If it's red before you change anything, that's the first bug to fix.
