@@ -1037,3 +1037,13 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **SDAIA:** the owner's rule: with no date on SDAIA's own page, there is nothing to update. Its track has `no_deadline_ok`, so the morning check stops asking for re-checks.
 **Alternatives:** move the language and theme switches into the menu (hides the language from someone who can't read the page); shorten the switch to «EN» / «ع» (less clear); keep labels and let the header wrap to two lines (taller and busier).
 **Why:** one calm line at every width, with targets big enough to tap and the language always findable.
+
+## 068 — Fewer, bigger controls in the phone header; the theme switch moves into the menu (updates 060, 067)
+**Date:** 2026-11-04
+**Decision:** owner's review on a phone: the menu button was small and hard to reach. Below 1100px:
+- the header keeps three controls: the language switch, «قائمتي» (decision 039) and the menu, each 48px tall (Material's touch size, above WCAG's 44px), with 20–22px icons;
+- the menu says «القائمة» / «Menu» beside its icon from 420px (a labelled menu is found faster than ☰ alone);
+- the theme switch (decision 060) moves into the menu as its last row, worded in full («التبديل إلى الوضع الداكن»); `theme.js` keeps both switches in step. From 1100px it stays in the header;
+- the menu opens as a full-width panel under the header with 48px rows.
+**Alternatives:** a bottom navigation bar (easiest to reach, but a second nav to keep and more chrome on every page); a bigger header row only (the corner stays hard to reach and five controls still crowd); moving the language switch into the menu too (someone who can't read the page must find it).
+**Why:** the top corner is the hardest place for a thumb; fewer, larger, labelled targets make it easier without adding a new pattern.
