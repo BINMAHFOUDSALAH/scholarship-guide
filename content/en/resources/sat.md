@@ -1,5 +1,5 @@
 ---
-translated_from: b7388bfcaa2f2f08
+translated_from: 8129479ac5dbc0d3
 title: SAT
 description: What the SAT is, how it is scored, which scholarship programs ask for it, what it costs, and how to practise for free. From the official sources.
 next_step: Download the Bluebook app and take a full practice test for free, to know your score now before you book.
@@ -25,7 +25,7 @@ Each section is from **200 to 800**, and the total score is from **400 to 1600**
 ## What does it cost, and when?
 
 - **Fees:** 68 dollars, plus an **international fee of 43 dollars** for those testing outside the US, and a test centre fee may be added at some locations ([source](https://satsuite.collegeboard.org/sat/registration/international-testing/fees)).
-- **Upcoming dates:** 7 November 2026 (registration until 23 October), then 5 December 2026, then 6 March, 1 May and 5 June 2027, the same for international students ([source](https://satsuite.collegeboard.org/sat/dates-deadlines)). Look for a centre near you when you register.
+- **Upcoming dates:** 5 December 2026 (registration until 20 November), then 6 March, 1 May and 5 June 2027, the same for international students ([source](https://satsuite.collegeboard.org/sat/dates-deadlines)). Look for a centre near you when you register.
 
 ## Sending your score to universities
 

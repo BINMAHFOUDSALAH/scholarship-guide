@@ -6,6 +6,10 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-04
 
+**2026-11-04 (/update-site):** nothing to remove (the oldest واعد program closed 2 Aug, inside the 120 days; the site closes programs by date). SAT: next date now 5 Dec, since registration for 7 Nov has closed. The Ministry rebuilt its site: the tracks document has a new address.
+- **Left open (owner chose to skip):** the career guidance handbook (دليل التوجيه المهني 1444هـ) is a 404 and wasn't found on the new site. Still cited in `content/resources/undecided.md`, `content/grades/grade-10.md`, `data/exploration.json` and `app/templates/explore_result.html`; the daily check keeps listing it.
+- **Owner to-dos:** check [@SA_Scholarships](https://x.com/SA_Scholarships) for news on الرواد and إمداد.
+
 **2026-11-04 (decision 074):** the repository tidied for visitors: a rewritten README with a screenshot, this log split out of the roadmap, a map of `docs/`, the ad's guide moved to `marketing/README.md`, an MIT licence for the code. On GitHub: the About box, the unused tabs off, 15 merged branches deleted.
 
 **2026-11-04 (decision 073, merged in PR #35):** «جرّب قبل أن تقرر»: no «غيّر» page (the last question goes straight to the result), and a redesigned result in both languages: a lead naming the closest fields, then one card per field with its own drawing, a plain title, one sentence of why, real majors and one action that opens in place. The majors for health, education and arts come from the Ministry's Saudi unified classification, read directly.
