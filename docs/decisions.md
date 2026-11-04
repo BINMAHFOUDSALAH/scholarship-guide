@@ -23,7 +23,7 @@ Newest entries go at the bottom. When a decision changes, add a new entry instea
 **Alternatives:** A database (SQLite/Postgres) from day one; a headless CMS.
 **Why:** There is one editor, and files in git give free history and review of every change. Validation makes the app refuse to start if a fact is missing its source or date. A database will be added when there is a real need (search index and chat logs in the RAG stage).
 
-## 004 — One Arabic site with English names inline
+## 004 — One Arabic site with English names inline (superseded by 066)
 **Date:** 2026-10-09
 **Decision:** The whole site is Arabic and right-to-left. Official names (universities, tests, majors) are also shown in English where useful, e.g. هندسة الحاسب (Computer Engineering). Data records store both `name_ar` and `name_en`.
 **Alternatives:** A full English copy of every page (`/ar` and `/en`).
@@ -1010,3 +1010,21 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - Keep "never commit or push": the cloud session's own end-of-session check demands a commit and push, so every cloud session broke the rule.
 - Let sessions push anywhere: a push to `main` deploys, so that stays the owner's.
 **Why:** the owner asked whether the instruction files follow what experts recommend; the conflict caused friction twice in one session.
+
+## 066 — An English version of the whole site, kept in step with the Arabic (supersedes 004)
+**Date:** 2026-11-04
+**Decision:**
+- **Why:** the owner's request (2026-11-03): many users are Saudi students who don't read Arabic. The whole site at once; the toggle goes live only when everything is translated.
+- **Addresses:** Arabic stays where it is; `/en/...` is the same page in English. `i18n.LanguageMiddleware` strips `/en` and sets the language, so every route exists once; links written as `/path` get `/en` on English pages (`localize_links`), redirects stay in English, static files have one address. Each page tells Google its pair (`hreflang`, canonical); the sitemap lists both. No automatic redirect by browser language.
+- **Arabic is the source; English is stored against the exact Arabic it translates** (`data/i18n/*.en.json`: `ui` for templates and Python, `js`, `data`, `universities`, `content` for source titles). If the Arabic changes, the old English stops matching and `tests/test_english.py` fails, so a stale translation can't be shown. Data and logic stay Arabic; translation happens when text is shown (`env.finalize`, `_()`, `_f()`, `tr`, `tf`). Universities, fields and majors use the official guide's `name_en`.
+- **Pages:** `content/en/<section>/<slug>.md` holds only translated keys plus `translated_from` (a fingerprint of the Arabic page); sources, status and dates come from the Arabic file.
+- **Translation and checks:** the interface, the shared data and the 14 pages were translated in the main session; the 1,419 university notes by Haiku subagents in 18 batches with a glossary. Then a separate meaning check of every pair (Haiku, 16 agents), a sampled read in the main session, and tests: no Arabic outside `lang="ar"` on any English page (every sitemap page plus filter, search, partial and 404 variants), every number, link and Latin name kept, minimum vs recommended kept apart, "not listed" never "not accepted", internal links stay in `/en`, anchors exist, no third-party requests.
+- **What English pages say:** once in the footer and on the About page, that the English is our translation and the official source decides. Our translation of a quote is marked "(our translation)"; the Tuwaiq quote shows the spoken Arabic first. Official Arabic names stay beside their English on program pages.
+- **Rule from now on:** every Arabic change ships with its English in the same commit (CLAUDE.md, `/update-site`, `research-wave`).
+**Alternatives:**
+- gettext `.po` files: standard, but a translator tool and a compile step for a one-person project, and no automatic "the Arabic changed" check;
+- duplicate templates per language: two copies of every page that drift apart;
+- `_en` fields beside every `_ar` field in the data: doubles every data file and every research step, and a missing field silently shows Arabic;
+- machine translation in the browser: unchecked meaning, third-party requests, and wrong official facts with no guard.
+**Why:** decision 004's worry was stale translations showing wrong official information. Keying English to the exact Arabic turns that into a failing test, so the English can't drift.
+

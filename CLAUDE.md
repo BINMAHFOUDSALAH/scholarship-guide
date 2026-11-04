@@ -25,7 +25,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Every important page shows its official sources.
 - Never collect sensitive data (no national ID, GPA, test scores, passport). Users are mostly minors: privacy and security are requirements. No third-party requests until the user acts (self-hosted fonts, no trackers; the only embed is click-to-play video).
 - Never read, edit, or print `.env` (also enforced by `.claude/settings.json`).
-- Arabic first, RTL, mobile first. One Arabic site with English names inline.
+- Arabic first, RTL, mobile first. The Arabic is the source; `/en/...` is the same site in English (decision 066).
+  - **Every Arabic change ships with its English in the same commit:** templates/Python/JS text → `data/i18n/ui.en.json` / `js.en.json`; data → `data.en.json` or `universities.en.json` (keyed by the exact Arabic); a page → `content/en/<section>/<slug>.md` with its new `translated_from`. `tests/test_english.py` fails until it's done.
+  - Translate exactly: keep numbers, dates, conditions and hedges; minimum ≠ recommended; "not listed" ≠ "not accepted". Our translation of a quote says "(our translation)".
 - **Formal Arabic (الفصحى) on every page, never dialect** (decision 058; a test checks common dialect words). Keep terms consistent: test parts are «مهارات» (الاستماع، القراءة، الكتابة، التحدث); a score is «الحد الأدنى» or «الموصى به», never just a number.
 - Design (decision 062): act on forest, read on paper, in the logo's colours; the logo never changes. The full rules are in `.claude/rules/design.md`, which loads automatically when working on `app/templates/` or `app/static/`.
 - Nothing official is hard-coded in templates: data in `data/`, page text in `content/`.
@@ -39,7 +41,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   4. **Recommend the next step** (fix, commit, push, or move on).
 - The key concept goes in the report itself (no separate learning log, decision 059). At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
 - **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Quick lookups and small edits stay in the main session.
-  - Every subagent runs on **Haiku 5.5**, forced by `.claude/settings.json` (decision 059). If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
+  - Every subagent runs on **Haiku 5.5**, forced by `.claude/settings.json` (decision 059). In cloud sessions that setting didn't apply (2026-11-04): also pass `model: "haiku"` and ask the agent to report its model. If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
   - The agents (`.claude/agents/`) are read-only and return results. The main session saves them, validates them with tests, makes the decisions and flags anything an agent couldn't verify.
   - `source-researcher` for new facts (~5 items per agent, in parallel, with a strict schema + a finished example file), `fact-checker` for what's already published, `reviewer` for a big or risky diff. University requirements: the `research-wave` skill. Bringing the site up to date (new announcements, passed deadlines, Aramco/KAUST/SDAIA/الرواد…): the `update-site` skill.
 - Ask before installing packages, downloading files, or spending money.
@@ -61,6 +63,8 @@ python scripts/check_quote.py URL "quote"       # does an official page really s
 python scripts/check_sources.py                 # every university fact still on its cited page?
 python scripts/watch.py                         # what needs updating: new واعد programs, passed deadlines, broken pages (--offline: no internet)
 node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
+node scripts/check_explorer.mjs http://127.0.0.1:8000 --en   # the same flows on the English pages
+python scripts/english_leaks.py                 # Arabic still showing on English pages (should be 0)
 ```
 
 ## Deploy

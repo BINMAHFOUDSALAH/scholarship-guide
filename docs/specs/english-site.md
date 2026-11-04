@@ -1,8 +1,8 @@
-# The English version of واضح (decision 066, not recorded yet)
+# The English version of واضح (decision 066)
 
 Owner's request (2026-11-03): an English toggle, because many users are Saudi students who don't read Arabic. The whole site at once; the toggle goes live only when everything is translated. The owner does not read the English: the meaning check below is our job. Reverses decision 004 (its reason, stale translations, is handled by design).
 
-Branch: `feature/english-site`. The owner approved commits and pushes on this branch. Never merge to `main` without asking.
+Branch: `feature/english-site` (groundwork), finished on `feature/english-site-tisyc3` (2026-11-04). **Status: all steps below done**; what stays true for maintenance is in decision 066, `docs/architecture.md` and CLAUDE.md. The owner approved commits and pushes on this branch. Never merge to `main` without asking.
 
 ## How it works (built)
 - **Addresses:** Arabic stays where it is; `/en/...` is the same page in English. `i18n.LanguageMiddleware` strips `/en` and sets the language in a contextvar, so routes exist once. `url_for` (`url_for_language`) and `render()` + `localize_links()` in `main.py` keep links in English. Static files have one address. No automatic redirect.

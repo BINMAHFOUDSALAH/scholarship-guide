@@ -51,6 +51,8 @@ X can't be read by scripts. List what needs an X check for the owner, or ask the
 
 **Rules that always apply:** what couldn't be read on an official page isn't published (keep it in a `"draft": true` file or leave it out). If two official sources disagree, show both and publish no single answer. Formal Arabic only.
 
+**e. English (decision 066).** Every Arabic text you add or change needs its English in the same change: data strings in `data/i18n/data.en.json` or `universities.en.json` (keyed by the exact new Arabic; delete the old key), template text in `ui.en.json`, a Markdown page in `content/en/` with its new `translated_from` (`python -c "from app.content import source_hash; print(source_hash('programs', 'kaust-kgsp'))"`). Translate exactly (numbers, dates, conditions, hedges; minimum ≠ recommended). `pytest tests/test_english.py` and `python scripts/english_leaks.py` must be clean.
+
 ## 4. Keep the check accurate
 After acting on a watched page, update its phrase in `scripts/watch_pages.json` (new `expect` text and `confirmed_on`). For example, when KGSP publishes Cohort 19 dates, watch for the next change. Add a phrase for any newly awaited page.
 

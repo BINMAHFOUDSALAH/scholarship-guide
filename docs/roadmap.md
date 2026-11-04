@@ -3,7 +3,14 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-01, decisions 064–065):**
+> **Latest (2026-11-04, decision 066): the English version, on branch `feature/english-site-tisyc3` (pull request open, not merged).**
+> - Every page exists at `/en/...` in English: interface, data, the 14 guide/grade/program pages, all 1,419 university notes. A toggle in the header switches between the same page in each language.
+> - Checked: 688 tests (22 new in `tests/test_english.py`: no Arabic on any English page, facts kept, minimum vs recommended, links stay in English); a meaning check of every Arabic/English pair plus a sampled read; the explorer's browser flows in both languages (30/30 each); every Arabic page unchanged against `main` (336 pages); layouts at 320, 360, 390 and 1280px in both themes.
+> - Fixed on the way: the theme toggle never loaded (a script clash from the English groundwork; Arabic pages too).
+> - **From now on, every Arabic change needs its English in the same commit** (CLAUDE.md, `/update-site`, `research-wave`).
+> - **Owner to-dos:** look at `/en` on a real phone (Safari); if you want, ask a native English reader to read the short list in the pull request; merge when happy. Decide whether to say "English" anywhere on the homepage or in the X bio.
+>
+> **Earlier (2026-11-01, decisions 064–065):**
 > - **Live (PR #25):**
 >   - SAR's railway training added to واعد. It isn't for high school graduates (engineering graduates 2024–2026); applications 1–10 Nov.
 >   - **`/update-site`** (skill) does the updating: it checks every program on its official page (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA), adds what's new, clears what's past and fixes bugs.
