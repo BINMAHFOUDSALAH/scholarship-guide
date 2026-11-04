@@ -3,7 +3,8 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-04, decision 066): the English version, on branch `feature/english-site-tisyc3` (pull request open, not merged).**
+> **Latest (2026-11-04, decision 066): the English version, merged in PR #27 (owner-approved) and live at https://wadihguide.com/en/ after CI.**
+> - `/update-site` run the same day: nothing to change. Re-checked and unchanged on their official pages: KGSP (Cohort 19 «will open soon», no dates), Aramco CDPNE (registration closed, still 1447–1448), the universities guide (still 2026–2027), the الرواد and إمداد pages; no new واعد announcements (190 listed). Cambridge's next-cycle dates aren't published yet. **Owner to-do:** SDAIA's status comes from an X post scripts can't read: check [@SDAIA_SA](https://x.com/SDAIA_SA) for a closing date (its site rejects scripts too). STC's واعد programs close 5 Nov.
 > - Every page exists at `/en/...` in English: interface, data, the 14 guide/grade/program pages, all 1,419 university notes. A toggle in the header switches between the same page in each language.
 > - Checked: 688 tests (22 new in `tests/test_english.py`: no Arabic on any English page, facts kept, minimum vs recommended, links stay in English); a meaning check of every Arabic/English pair plus a sampled read; the explorer's browser flows in both languages (30/30 each); every Arabic page unchanged against `main` (336 pages); layouts at 320, 360, 390 and 1280px in both themes.
 > - Fixed on the way: the theme toggle never loaded (a script clash from the English groundwork; Arabic pages too).
