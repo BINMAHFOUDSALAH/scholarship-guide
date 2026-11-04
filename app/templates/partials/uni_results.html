@@ -102,7 +102,7 @@
     {% else %}
     {% set cinfo = explorer.countries.get(r.country) if r.country else None %}
     {% if cinfo and r.language and ((r.language == "english") != cinfo.english) %}
-    <p class="result-empty">{{ cinfo.name_ar }} {{ _("لغتها الرسمية") }} {{ "الإنجليزية" if cinfo.english else cinfo.language_ar }}{{ _("، فلا تجتمع مع فلتر «") }}{{ "الإنجليزية" if r.language == "english" else "غير الإنجليزية" }}{{ _("».") }} <a href="{{ url_for('universities_page') }}?country={{ r.country }}{% if r.track %}&amp;track={{ r.track }}{% endif %}">{{ _("اعرض جامعات") }} {{ cinfo.name_ar }}</a></p>
+    <p class="result-empty">{{ _f("{country} لغتها الرسمية {language}، فلا تجتمع مع فلتر «{filter}».", country=cinfo.name_ar, language="الإنجليزية" if cinfo.english else cinfo.language_ar, filter="الإنجليزية" if r.language == "english" else "غير الإنجليزية") }} <a href="{{ url_for('universities_page') }}?country={{ r.country }}{% if r.track %}&amp;track={{ r.track }}{% endif %}">{{ _("اعرض جامعات") }} {{ cinfo.name_ar }}</a></p>
     {% else %}
     <p class="result-empty">{{ _("لا توجد جامعات في هذه القائمة مع الفلاتر الحالية. أزل أحد الفلاتر أعلاه، أو اختر مسارًا آخر.") }}</p>
     {% endif %}

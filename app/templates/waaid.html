@@ -36,7 +36,7 @@
     {% else %}{{ c.status_tag("closed", label="مغلق") }}{% endif %}
   </p>
   <dl class="key-facts">
-    <div class="kf-row"><dt>{{ _("فترة التقديم") }}</dt><dd>{{ _("من") }} <time datetime="{{ g.apply_from }}">{{ g.apply_from | arabic_date }}</time> {{ _("إلى") }} <time datetime="{{ g.apply_to }}">{{ g.apply_to | arabic_date }}</time></dd></div>
+    <div class="kf-row"><dt>{{ _("فترة التقديم") }}</dt>{% set start %}<time datetime="{{ g.apply_from }}">{{ g.apply_from | arabic_date }}</time>{% endset %}{% set end %}<time datetime="{{ g.apply_to }}">{{ g.apply_to | arabic_date }}</time>{% endset %}<dd>{{ _f("من {start} إلى {end}", start=start, end=end) }}</dd></div>
     <div class="kf-row"><dt>{{ _("لمن") }}</dt><dd>{{ waaid_who(g) }}</dd></div>
   </dl>
   {% if state == "open" and w.apply_url %}
