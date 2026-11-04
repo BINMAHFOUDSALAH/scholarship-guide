@@ -1097,7 +1097,7 @@ The owner then said: "do the best options and go for it".
   - English coverage of every field's text.
 **Update (same day, owner): less text.** Copy that only reassured or explained has been removed:
 - the result's lead, «يجذبك أكثر من مجال، وهذا قوة وليس ترددًا», the "many fields" note, the band descriptions, the notes under the mentioned field (kept only when it doesn't draw the student), and the «لا تجذبك الآن» note;
-- the activity's "not tried yet" note, the part 2 and review hints, and the long lead, privacy line and legends (now short);
+- the activity's "not tried yet" note, the part 2 and review hints, the tap-to-advance hint (keyboard choices never advance, and tapping users see the next activity appear), and the long lead, privacy line and legends (now short);
 - the guide's reassurance sentences ("that is normal", "these notes help more than you think").
 What stays is text that gives an instruction, a fact with its source, or a caution the student needs: thin evidence, the field they mentioned, and the draft banner.
 **Next:**

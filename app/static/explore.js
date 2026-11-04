@@ -26,7 +26,6 @@
   const prev = nav.querySelector("[data-prev]");
   const next = nav.querySelector("[data-next]");
   const submitArea = form.querySelector("[data-submit-area]");
-  const autoHint = form.querySelector("[data-auto-hint]");
   const progress = document.querySelector("[data-explore-progress]");
   const partText = progress.querySelector("[data-progress-part]");
   const countText = progress.querySelector("[data-progress-count]");
@@ -99,7 +98,6 @@
     next.hidden = step === review;
     next.textContent = backToReview ? t("العودة إلى المراجعة") : t("التالي");
     submitArea.hidden = step !== review;
-    autoHint.hidden = part !== "2";
     if (moveFocus) {
       const heading = step.querySelector("[tabindex='-1']");
       if (heading) heading.focus();
