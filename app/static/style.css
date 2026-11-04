@@ -362,16 +362,18 @@ main:has(> .tuwaiq) {
 }
 
 .brand-descriptor {
+  white-space: nowrap;
   font-size: var(--text-xs);
   color: var(--ink-muted);
 }
 
 .site-nav {
-  display: none; /* phones use the menu; shown from 960px */
+  display: none; /* phones and tablets use the menu; shown from 1100px */
   gap: var(--space-4);
 }
 
 .site-nav a {
+  white-space: nowrap;
   padding-block: 6px;
   border-bottom: 2px solid transparent;
   color: var(--ink);
@@ -540,7 +542,8 @@ main:has(> .tuwaiq) {
   font-weight: 700;
 }
 
-@media (min-width: 960px) {
+/* The full nav needs about 1100px in English (owner's review, 2026-11-04); below that, the menu. */
+@media (min-width: 1100px) {
   .site-nav {
     display: flex;
     margin-inline-start: var(--space-4);
@@ -4432,5 +4435,103 @@ a.uni-name:hover .uni-name-en:only-child {
     overflow: hidden;
     clip: rect(0 0 0 0);
     white-space: nowrap;
+  }
+}
+
+/*
+  The header from phone to laptop (owner's review, 2026-11-04). Below 1100px the tools are square 44px icons
+  (WCAG 2.5.5's 44px target; each keeps its accessible name) and the language switch keeps its word, because a
+  reader who can't read this page looks for their language's name (NN/g: visible, labelled in its own language,
+  no flags). The descriptor under the name goes below 600px, so the logo and the tools don't crowd each other.
+  Labels never wrap onto two lines.
+*/
+.mylist-label,
+.theme-toggle-label,
+.menu-label,
+.lang-toggle {
+  white-space: nowrap;
+}
+
+@media (max-width: 1099px) {
+  .header-tools {
+    gap: var(--space-2);
+  }
+
+  .theme-toggle,
+  .menu-button,
+  .mylist-link {
+    justify-content: center;
+    min-width: 44px;
+    padding: 0 12px;
+  }
+
+  .lang-toggle {
+    padding: 0 14px;
+  }
+
+  .theme-toggle-label,
+  .menu-label,
+  .mylist-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 599px) {
+  .brand-descriptor {
+    display: none;
+  }
+}
+
+/* Laptops: the nav needs the room, so the theme switch is its icon alone (its name stays for screen readers). */
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .theme-toggle {
+    justify-content: center;
+    min-width: 44px;
+    padding: 0 12px;
+  }
+
+  .theme-toggle-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* Small phones (up to 419px): a smaller mark and name, and tighter tools, so five things fit on one line. */
+@media (max-width: 419px) {
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-name {
+    font-size: 1.5rem;
+  }
+
+  .header-inner {
+    gap: var(--space-2);
+  }
+
+  .theme-toggle,
+  .menu-button,
+  .mylist-link {
+    min-width: 40px;
+    padding: 0 8px;
+  }
+
+  .lang-toggle {
+    padding: 0 10px;
+  }
+
+  .header-tools {
+    gap: 6px;
   }
 }

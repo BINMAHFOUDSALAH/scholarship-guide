@@ -1028,3 +1028,12 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - machine translation in the browser: unchecked meaning, third-party requests, and wrong official facts with no guard.
 **Why:** decision 004's worry was stale translations showing wrong official information. Keying English to the exact Arabic turns that into a failing test, so the English can't drift.
 
+## 067 — A header with room at every width; SDAIA without a date needs nothing (updates 039, 062, 064)
+**Date:** 2026-11-04
+**Decision:**
+- **Owner's review on a phone:** the header felt tight. A sweep of every width from 320 to 1400px found it overflowing at 380–660px (two labelled buttons plus the new language switch) and «My list» wrapping on laptops.
+- **The header now:** below 1100px the tools are square 44px icons (WCAG 2.5.5's size; each keeps its name for screen readers), the language switch keeps its word («English» / «العربية», no flag, NN/g), and «قائمتي» stays visible (decision 039). The descriptor under the name hides below 600px, and phones up to 419px get a smaller mark and name. The full nav shows from 1100px (it needs that much in English); below it, the menu. Labels never wrap. Below 360px only the logo mark stays (decision 066).
+- **Arabic is the default:** `/` is always Arabic, whatever the browser's language; English only at `/en` (unchanged, confirmed live).
+- **SDAIA:** the owner's rule: with no date on SDAIA's own page, there is nothing to update. Its track has `no_deadline_ok`, so the morning check stops asking for re-checks.
+**Alternatives:** move the language and theme switches into the menu (hides the language from someone who can't read the page); shorten the switch to «EN» / «ع» (less clear); keep labels and let the header wrap to two lines (taller and busier).
+**Why:** one calm line at every width, with targets big enough to tap and the language always findable.
