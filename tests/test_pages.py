@@ -886,7 +886,7 @@ def test_homepage_route_leads_from_the_grades_to_the_programs():
 
 
 def test_every_guide_is_in_the_homepage_index_and_the_footer():
-    """No guide without a way in: each page in content/resources is listed under «أدلة الاختبارات والتقديم»
+    """No guide without a way in: each page in content/resources is listed under «الأدلة»
     on the homepage and in every footer (titles come from the pages themselves)."""
     from app.content import list_slugs, load_page
 
