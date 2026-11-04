@@ -1047,3 +1047,4 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - the menu opens as a full-width panel under the header with 48px rows.
 **Alternatives:** a bottom navigation bar (easiest to reach, but a second nav to keep and more chrome on every page); a bigger header row only (the corner stays hard to reach and five controls still crowd); moving the language switch into the menu too (someone who can't read the page must find it).
 **Why:** the top corner is the hardest place for a thumb; fewer, larger, labelled targets make it easier without adding a new pattern.
+**Update (same day, owner):** the theme switch stays in the header, not in the menu. The header keeps four 48px controls (language, «قائمتي», theme, menu); the menu's label shows from 480px; up to 389px the controls are 44px so four still fit.
