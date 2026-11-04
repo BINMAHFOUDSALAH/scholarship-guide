@@ -1,6 +1,6 @@
 # Should واضح build an interests-and-majors assessment? (2026-11-04)
 
-An evaluation of the owner's proposed feature: an interactive assessment of a student's interests and abilities that ends in a shortlist of majors or careers. It was done from four perspectives: research scientist, career guidance, assessment (psychometrics) and UI/UX. It revisits the "no own quiz" part of decision 057 and doesn't change any decision. The owner decides.
+An evaluation of the owner's proposed feature: an interactive assessment of a student's interests and abilities that ends in a shortlist of majors or careers. It was done from four perspectives: research scientist, career guidance, assessment (psychometrics) and UI/UX. It revisits the "no own quiz" part of decision 057. **Outcome (same day): decision 069.** The guide is live; the activity is built as a draft, without scores.
 
 **Evidence labels** (same as the October audit):
 - **[V]** verified by me in the code, the live site or a primary source

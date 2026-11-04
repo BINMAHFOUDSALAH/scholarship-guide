@@ -22,5 +22,14 @@
  "تعذّر تحديث النتائج. تحقق من اتصالك بالإنترنت، ثم حاول مرة أخرى.": "Couldn't update the results. Check your internet connection, then try again.",
  "حاول مرة أخرى": "Try again",
  " في القائمة أدناه": " in the list below",
- "المقطع الأصلي": "The original clip"
+ "المقطع الأصلي": "The original clip",
+ "لم تُجب": "Not answered",
+ "غيّر": "Change",
+ "غيّر إجابتك عن: {label}": "Change your answer about: {label}",
+ "لم تجرّب بعد {n} من {total} نشاطًا، وهذا طبيعي. ستجد في النتيجة طرقًا لتجربة ما يجذبك منها.": "You haven't tried {n} of the {total} activities yet, and that is normal. Your result will show ways to try the ones that draw you.",
+ "المراجعة الأخيرة": "Final review",
+ "الجزء {n} من {total}": "Part {n} of {total}",
+ "النشاط {n} من {total}": "Activity {n} of {total}",
+ "العودة إلى المراجعة": "Back to the review",
+ "التالي": "Next"
 }

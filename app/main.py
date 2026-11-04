@@ -13,7 +13,7 @@ from fastapi.templating import Jinja2Templates
 from jinja2 import pass_context
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app import i18n
+from app import exploration, i18n
 from app.content import SLUG_PATTERN, english_titles, list_slugs, load_page
 from app.i18n import tf, tr
 from app.search import SiteSearch
@@ -307,6 +307,8 @@ templates.env.globals["sky_stars"] = {
     "chart": star_field(90, 1000, 520, seed=5),
 }
 templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
+# «جرّب قبل أن تقرر» (decision 069): its door on the «لم تقرر بعد؟» guide shows only while the activity is public.
+templates.env.globals["explore_public"] = lambda: exploration.is_public(SHOW_DRAFTS)
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
 templates.env.globals["waiver_ar"] = WAIVER_AR
 templates.env.globals["not_listed_ar"] = NOT_LISTED_AR
@@ -466,6 +468,46 @@ def my_list(request: Request, ids: str = "", partial: bool = False):
                                       {"unis": [explorer.universities[uid] for uid in wanted], "explorer": explorer})
 
 
+def explore_or_404():
+    """The activity is a draft until reviewed (decision 069): on the live site it doesn't exist yet."""
+    if not exploration.is_public(SHOW_DRAFTS):
+        raise HTTPException(status_code=404)
+
+
+@app.get("/explore", response_class=HTMLResponse)
+def explore_page(request: Request):
+    """«جرّب قبل أن تقرر»: the whole activity is one form, so it works without JavaScript; explore.js turns it
+    into one question per screen, with progress and a review step."""
+    explore_or_404()
+    return render(request, "explore.html", {"x": exploration.DATA, "activities": exploration.activities(),
+                                            "field_names": exploration.field_names(explorer)})
+
+
+@app.get("/explore/result")
+def explore_result_reload():
+    # The result exists only as the answer to the form (nothing is stored), so a reload starts again.
+    explore_or_404()
+    return RedirectResponse("/explore", status_code=303)
+
+
+@app.post("/explore/result", response_class=HTMLResponse)
+async def explore_result(request: Request):
+    """The result, drawn from the posted answers and then forgotten: nothing is saved or logged."""
+    explore_or_404()
+    if int(request.headers.get("content-length") or 0) > exploration.MAX_BODY:
+        raise HTTPException(status_code=413)
+    result = exploration.score(exploration.parse(await request.body()))
+    shown = [f["id"] for band in result["bands"].values() for f in band]
+    if result["considered"]:
+        shown.append(result["considered"]["id"])
+    views = {fid: exploration.field_view(fid, explorer, school_tracks) for fid in shown}
+    return render(request, "explore_result.html", {
+        "r": result, "views": views, "x": exploration.DATA, "program_names": path_names,
+        "sources": [{"title": school_tracks["source"]["title"], "url": school_tracks["source"]["url"]},
+                    {"title": explorer.source["title_ar"], "url": explorer.source["url"]}] + exploration.DATA["sources"],
+    })
+
+
 @app.get("/search", response_class=HTMLResponse)
 def search_page(request: Request, q: str = ""):
     # Works without JavaScript: the form reloads this page with ?q=.
@@ -508,6 +550,7 @@ def sitemap():
         + ["/waaid"]
         + [f"/resources/{slug}" for slug in list_slugs("resources")]
         + ["/universities"]
+        + (["/explore"] if exploration.is_public(SHOW_DRAFTS) else [])
         + [f"/universities/{uid}" for uid in sorted(explorer.universities)]
     )
     # Every page exists in both languages (decision 066); Google reads the pairs from each page's own tags.

@@ -1048,3 +1048,43 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 **Alternatives:** a bottom navigation bar (easiest to reach, but a second nav to keep and more chrome on every page); a bigger header row only (the corner stays hard to reach and five controls still crowd); moving the language switch into the menu too (someone who can't read the page must find it).
 **Why:** the top corner is the hardest place for a thumb; fewer, larger, labelled targets make it easier without adding a new pattern.
 **Update (same day, owner):** the theme switch stays in the header, not in the menu. The header keeps four 48px controls (language, «قائمتي», theme, menu); the menu's label shows from 480px; up to 389px the controls are 44px so four still fit.
+
+## 069 — «لم تقرر بعد؟» goes live; «جرّب قبل أن تقرر» is an exploration activity, not an assessment, and stays a draft (updates 057)
+**Date:** 2026-11-04 · **Research:** [career-exploration-evaluation-2026-11.md](research/career-exploration-evaluation-2026-11.md)
+**Context:** the owner proposed an interactive assessment of interests and abilities that ends in a shortlist of majors. Decision 057 had rejected an own quiz. The research note re-evaluated it and found:
+- the Ministry already has an official career-interest measure for track placement (its guidance handbook defines it);
+- teenagers' interests are only moderately stable, and self-rated ability matches measured ability only at about r = .33;
+- an Arabic version of an established inventory would need validation (O\*NET's licence requires it);
+- career help works mostly through trying things, information about real work, and support, not through a score.
+The owner then said: "do the best options and go for it".
+**Decision:**
+- **Published now: the «لم تقرر بعد؟» guide** (`content/resources/undecided.md` + English).
+  - It routes by *why* a student is stuck.
+  - It pushes "try before you decide".
+  - It quotes the Ministry handbook's definition of «مقياس الميول المهنية» and describes the student counsellor's role and the «ملف الإنجاز المهني».
+  - It links the eight fields of the Ministry's 2026–2027 guide to the explorer.
+  - It says the guide lists no health or education field (checked in the PDF, Arabic and English text).
+  - Linked from the homepage guides (a new group «قبل أن تقرر») and the grade 10 page.
+- **Built, but a draft: «جرّب قبل أن تقرر»** (`/explore`).
+  - 30 activities across UNESCO's 10 broad fields. Answers: «أستمتع به / لا بأس به / لا أستمتع به / لم أجرّبه، وأودّ أن أجرّبه / لم أجرّبه، ولا يجذبني».
+  - Plus "what makes it hard", the grade, subjects where the student has seen progress, and a field the student or their family has in mind.
+  - The result groups fields into «تجذبك الآن / تستحق التجربة / لا تجذبك الآن» by fixed, readable rules (`exploration.band()`), each explained by the student's own answers. No scores, percentages or ability ratings.
+  - Each field shows example majors and an explorer link (or the "not in the guide" note), the school tracks whose official summary relates to it, a scholarship program where one names it (SDAIA for ICT), and two "try this week" ideas.
+  - The next steps depend on the grade. In grade 10: compare the tracks and ask the counsellor about the official measure.
+  - The field a student mentions is always shown, respectfully, whatever their answers.
+- **Privacy:**
+  - The form is posted once (POST, never in a URL or the access log) and nothing is stored.
+  - No name, gender, grades or free text.
+  - It works without JavaScript. `explore.js` adds one question per screen, progress, a review step and tap-to-advance (keyboard choices never advance).
+- **Gate:** `data/exploration.json` has `"draft": true`, so `/explore` returns 404 on the live site and the guide hides its door. Publish only after both steps below, then set `draft: false`, add the page to the homepage door if wanted, and record it here:
+  1. a Saudi school counsellor and a career-development specialist have reviewed the activities, the subject map and the wording;
+  2. 5+ students have tried it in the usability test (research note §9).
+**Alternatives:**
+- **The original scored assessment with a shortlist of majors:** false precision; duplicates and may contradict the official measure; needs psychometric validation.
+- **Computing the result in the browser:** answers would never leave the device, but the rules would be duplicated in JavaScript and untestable with pytest, and it wouldn't work without JavaScript. Posting once and storing nothing gives the same privacy in practice.
+- **Pages of five activities:** fewer taps, but long screens on a phone. One per screen with tap-to-advance is quicker to answer.
+- **An AI result:** not repeatable, not testable, and it would send minors' answers to a third party. AI may later answer questions from the verified field content.
+**Next:**
+- The owner arranges the counsellor review and the student test (run it locally with `WADIH_SHOW_DRAFTS=1`).
+- Verify the Ministry measure's details on an official page (press reports say it counts in placement; not verified, so not published).
+
