@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .claude/settings.local.json
+.claude/worktrees/
 # Official source files we download to extract from (re-downloadable, not committed)
 data/raw/
 # Ad production media (big files, re-buildable; decision 044)

@@ -1,132 +1,95 @@
 # Roadmap
 
-The living plan for واضح. Update the checkboxes at the end of every step.
-Why each choice was made lives in [decisions.md](decisions.md).
+Where واضح stands and what comes next. Why each choice was made: [decisions.md](decisions.md). What each session did: [log.md](log.md).
 
-> **Latest (2026-11-04, decision 073, merged in PR #35):** «جرّب قبل أن تقرر»: no «غيّر» page (the last question goes straight to the result), and a redesigned result in both languages: a lead naming the closest fields, then one card per field with its own drawing, a plain title, one sentence of why, real majors and one action that opens in place. The majors for health, education and arts come from the Ministry's Saudi unified classification, read directly.
-> - **Owner to-dos:** try the whole journey on your own iPhone in Safari, Arabic and English (checked on emulated iPhones only, Chromium and WebKit); read the 10 titles and the why sentences.
->
-> **Earlier (2026-11-04, decision 072):** a tap on an activity's answer moves on by itself again (owner: «التالي» 30 times is too slow), with the safeguards: a second tap before the move stays on the same question, one just after it is ignored, keys never move on. `node scripts/check_explore.mjs`: 25 checks.
->
-> **Earlier (2026-11-04, decision 071):** «جرّب قبل أن تقرر» fixed after the owner's iPhone test: a tap only selects (no moving on by itself, which let a second tap answer the next question), nothing pre-chosen, «تخطَّ» / «التالي», a reload starts clean, a shortlist of three in «تستحق التجربة». New check: `node scripts/check_explore.mjs`. The line «لا نحفظ إجاباتك…» is removed (owner).
->
-> **Earlier (2026-11-04, decision 070):** «جرّب قبل أن تقرر» (`/explore`) is **live**, with a door on the homepage under the grades («لم تقرر ماذا تدرس؟»). Published by the owner before the counsellor review.
->
-> **Earlier (2026-11-04, decision 069, merged in PR #31):** the «لم تقرر بعد؟» guide (`/resources/undecided`, in the homepage guides and on the grade 10 page), and «جرّب قبل أن تقرر» built as an unscored exploration activity (research: `docs/research/career-exploration-evaluation-2026-11.md`). Checked: 717 tests; a UI sweep at 320–1280px in both themes and languages, keyboard only, without JavaScript and in print.
-> - **Owner to-dos:**
->   - open /explore and the homepage on a real phone (Safari especially);
->   - get one Saudi school counsellor (and, if possible, a career-development specialist) to review the 30 activities, the subject map and the wording; then set `expert_reviewed: true` in `data/exploration.json`;
->   - try it with 5 students in the usability test (research note §9: can they name a field to explore and one action; does anyone read it as "the site told me what to study"?);
->   - check the Ministry's grade 10 interest measure on an official page (press says it counts in placement; not published).
->
-> **Earlier (2026-11-04, decision 068):** phone header: four 48px controls (language, «قائمتي», theme, «القائمة» with its label from 480px; 44px up to 389px); the menu opens full width with 48px rows.
->
-> **Earlier (2026-11-04, decision 067):** the header fits on one line at every width (320–1400px swept, both languages): icon tools below 1100px, the full nav from 1100px, no descriptor below 600px. SDAIA: no date on its page = nothing to update (`no_deadline_ok`).
->
-> **Earlier (2026-11-04, decision 066): the English version, merged in PR #27 (owner-approved) and live at https://wadihguide.com/en/ after CI.**
-> - `/update-site` run the same day: nothing to change. Re-checked and unchanged on their official pages: KGSP (Cohort 19 «will open soon», no dates), Aramco CDPNE (registration closed, still 1447–1448), the universities guide (still 2026–2027), the الرواد and إمداد pages; no new واعد announcements (190 listed). Cambridge's next-cycle dates aren't published yet. **Owner to-do:** SDAIA's status comes from an X post scripts can't read: check [@SDAIA_SA](https://x.com/SDAIA_SA) for a closing date (its site rejects scripts too). STC's واعد programs close 5 Nov.
-> - Every page exists at `/en/...` in English: interface, data, the 14 guide/grade/program pages, all 1,419 university notes. A toggle in the header switches between the same page in each language.
-> - Checked: 688 tests (22 new in `tests/test_english.py`: no Arabic on any English page, facts kept, minimum vs recommended, links stay in English); a meaning check of every Arabic/English pair plus a sampled read; the explorer's browser flows in both languages (30/30 each); every Arabic page unchanged against `main` (336 pages); layouts at 320, 360, 390 and 1280px in both themes.
-> - Fixed on the way: the theme toggle never loaded (a script clash from the English groundwork; Arabic pages too).
-> - **From now on, every Arabic change needs its English in the same commit** (CLAUDE.md, `/update-site`, `research-wave`).
-> - **Owner to-dos:** look at `/en` on a real phone (Safari); if you want, ask a native English reader to read the short list in the pull request; merge when happy. Decide whether to say "English" anywhere on the homepage or in the X bio.
->
-> **Earlier (2026-11-01, decisions 064–065):**
-> - **Live (PR #25):**
->   - SAR's railway training added to واعد. It isn't for high school graduates (engineering graduates 2024–2026); applications 1–10 Nov.
->   - **`/update-site`** (skill) does the updating: it checks every program on its official page (الرواد, إمداد, واعد, the universities guide, Aramco, KGSP, SDAIA), adds what's new, clears what's past and fixes bugs.
->   - A **morning check** (`.github/workflows/watch.yml`) is the alarm: one GitHub issue, «Site check», that pings only for something new and urgent. The dry run on GitHub passed (it read all 190 واعد programs).
-> - **On branch `claude/sharp-volta-tii6mj`, not merged yet:**
->   - the first `/update-site` run (Aramco, KGSP and واعد re-checked: unchanged);
->   - README «Keeping it current» and the tests badge;
->   - the Git rule's cloud exception (decision 065).
->
-> **Owner to-dos:**
-> - Check X: [@SDAIA_SA](https://x.com/SDAIA_SA) (is the 4th cohort still open, any closing date?) and [@SA_Scholarships](https://x.com/SA_Scholarships) (does الرواد still close 15 Nov, has إمداد opened?). Then run `/update-site` with what you found.
-> - Install the GitHub app on your phone to get the morning check's pings.
-> - GitHub settings: a ruleset on `main` (require the `pytest` check, block force pushes) and "Automatically delete head branches". Decide on a licence.
-> - GitHub pauses scheduled workflows after 60 days with no commits; the next commit turns it back on.
->
-> **Next session (as of 2026-10-17):** the «الطريق» redesign (decision 062) is merged (PR #19) and live on wadihguide.com; 616 tests and a live check of every page type passed. Audit, references and checks: `docs/research/design-direction-2026-10-17.md`.
-> - Act on forest, read on paper, in the logo's own colours; Naskh titles; the route of the grades; values under labels; a guides index and «الأدلة» in the nav; a footer with a self-updating copyright line. The logo is unchanged (a test checks).
->
-> **Owner to-dos:**
-> - Look at the live site on a real phone, Safari especially, in both themes. Not checked yet.
-> - Read the new copy: the route's lines and the guides' hints (`data/home.json`).
-> - GitHub: delete the six merged branches (`claude/brave-hopper-2a6fg7`, `claude/clever-bardeen-bei0zs`, `claude/funny-noether-nyj81u`, `claude/loving-hopper-sai8de`, `claude/wadih-design-overhaul-ahizpb`, `wadih-cleanup-requirements-guides`), and turn on Settings → General → "Automatically delete head branches" and Settings → Advanced Security → Dependabot security updates.
-> - Ask before installing: `httpx2` (the test client warns that `httpx` with it is deprecated).
->
-> **Tests re-check (2026-10-23, `docs/research/rowwad-us-tests-recheck-brief.md`):** IELTS, Duolingo and SAT checked for the 30 الرواد + every US university; 3 new files (Pittsburgh, Colorado School of Mines, and Virginia with English and SAT only). The owner read Columbia, Oxford, UCL and UVA in a browser (their sites block scripts). Still open: Virginia's dates and platform (SAT optional, owner-confirmed); UChicago's undergraduate English page (JavaScript-only); UCL's SAT; Gallaudet's SAT.
->
-> **Small fixes (2026-10-17 repo check):** CI moved to `actions/checkout@v7` and `actions/setup-python@v7` (v4/v5 ran on the deprecated Node 20) with read-only permissions; Dependabot keeps the Actions versions current (monthly).
->
-> Earlier (decision 061, merged in PR #18): text about the site removed; every English test shown at a glance; new guides (Duolingo, UK applications, essays); essays for 62 US universities and every UK one; EU wave 5 (50 of 57).
-> **Owner to-dos from it:**
-> - Check in a browser the sites that block scripts: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, Virginia, NUS (2027 dates), Michigan's essays and dates, Tilburg, Humboldt and Barcelona.
-> - Look up the Saudi certificate for German universities on anabin (a form query).
-> - Decide on Toulouse (which member institution the list means) and L'Institut Agro.
->
-> Earlier (latest cloud session on branch `claude/wadih-design-overhaul-ahizpb`, decision 060, merged in PR #17):
-> **Design overhaul (decision 060):** one visual language, the sky (dawn in light mode, night in dark; the sun turns into a crescent when the theme switches); the theme follows the device until the student picks; the homepage title in Naskh, the grades as a constellation, a closing night band; `/universities?track=arruaad` opens with «خريطة الثلاثين» (30 stars in 8 country constellations; country chips filter the table). **Owner to-do:** look at it on a real phone (Safari especially) in both themes before merging; that hasn't been checked.
->
-> Earlier (branch `claude/brave-hopper-2a6fg7`, decisions 058–059, merged in PR #16):
-> **Requirements audit + explorer fixes (decision 058, `docs/research/requirements-audit-2026-10-13.md`):** all 129 files checked against their sources; English scores now separate «الحد الأدنى» from «الموصى به» (the Georgia Tech 6-vs-7 case: 7.0 is the graduate requirement); the filter-✕ bug (suggestions floating over the tags) fixed; إمداد asks for a field first; formal Arabic rule + test.
-> **Owner to-dos from it (browser, ~15 min):** confirm Oxford and UCL (hidden as drafts until then; exact pages in the audit), Michigan's deadlines and SAT policy, NYU's fee/dates, Saskatchewan's deadline. Then remove `"draft": true` or fix the values.
-> **Repo tidy (decision 059):** layout checked against the current Claude Code docs; `LEARNING_LOG.md` removed; every subagent forced onto Haiku; `scripts/check_sources.py` (facts vs their pages) and `scripts/check_explorer.mjs` (explorer JS in a browser) added.
-> **Ask before installing:** run `scripts/check_explorer.mjs` in CI (Playwright install); today it runs in cloud sessions only.
->
-> Earlier (the audit session ran in the cloud on branch `claude/clever-bardeen-bei0zs`):
-> Live on `main` at **https://wadihguide.com** (decision 042; the old onrender address and www redirect with a 301): decisions 035–043, including the finder trust fixes (041), the footer feedback line (043), and the iPhone header fix (header icons only up to 479px).
-> Owner's laptop: `git checkout main` then `git pull`, and work on `main` or a new branch. The cloud branch `claude/loving-hopper-sai8de` is fully merged.
->
-> ⏰ **When the next universities guide PDF is out (reminder):**
-> 1. re-run `scripts/extract_universities.py`; the test `test_every_requirement_file_belongs_to_a_listed_university` flags universities that left the lists
-> 2. add Arabic names for new universities (`university_names_ar.json`)
-> 3. research **إمداد** requirements in waves, English-speaking countries first (US 53, UK 29, Australia 13, Canada 8, Singapore 2 in the current guide), with `source-researcher` agents on Haiku (`curl`), ~5 per batch
-> 4. update the guide link and year everywhere it appears
->
-> **Next steps:**
-> 0. **Product audit (decision 057, `docs/research/product-audit-2026-10-13.md`):** direction = a deep study-abroad core plus thin doors to official tools («لم تقرر بعد؟», «الدراسة في السعودية»). **Milestone L, items 1–2 done 2026-10-13 (not yet committed or deployed when this was written):**
->    - false and stale counts on grades 11/12
->    - «لمن» on open items
->    - the explorer's focus bug after clearing filters
->    - the timing note on program and university pages
->    - foundation-year conditions on the 19 «لا تكفي» university pages
->
->    **Still open, in order:**
->    1. ~~the «لم تقرر بعد؟» guide~~ **done 2026-11-04 (decision 069)**; HRDF «سبل» left out (not read on an official page). «جرّب قبل أن تقرر» built as a draft: review + student test before publishing.
->    2. the usability test (item 3 below), adding "can you apply to الرواد today?" and "Duolingo or IELTS?"
->    3. then P1 from the audit: «الدراسة في السعودية», Duolingo `accepted` field + page, alternatives section, fee-waiver class split
->
->    The remaining 143 logos are **deferred** (audit F).
-> 1. **Testers:** share https://wadihguide.com; feedback comes through the footer's X link (decision 043). **Done 2026-10-12:** the service is on Render's $7/month compute plan (0.5 CPU, 512 MB), so it never sleeps. It is billed by the second; to stop, switch Compute back to Free.
->    - **Launch ad «الشلة» (decision 044, guide in `docs/marketing/launch-ad.md`):** the pipeline and the real site footage are done.
->    - **Paused (2026-10-12): no budget for paid tools yet.** Missing: the 4 AI clips (the Higgsfield free plan has no credits or commercial use; Starter $19, or the Veo API ~$5) and the voices (the ElevenLabs free plan has no commercial licence; Starter $6).
->    - A $0 route exists if wanted: the owner's own phone shots + the owner's own voice, or caption cards instead of AI shots.
->    - Then rebuild, review, and post organically with `?src=` links.
-> 2. **Stale-facts check: done 2026-10-13 (decision 053).** `scripts/stale_facts.py` lists all 132 checked items by date; not a CI test, so it can't block a deploy. **Before Launch 1:** run it with `--as-of 2026-12-09 --days 45`, re-check from the top, update dates, repeat until empty. Its 90-day list is now part of `/update-site` (decision 064).
-> 3. **Usability test with 3–5 students** (questions in the grade-pages, timeline and audit research notes), then act on feedback before the full launch (~one month).
-> 4. **Aramco:** re-checked 2026-10-12 with WebFetch, unchanged (still the 2025–2026 cycle, registration closed). `curl` to aramco.com times out even from the laptop. Watch for the 2026–2027 cycle; the owner may spot-check the numbers in a browser.
-> 5. **RAG learning path (decision 045, `docs/specs/search.md`):** step 1 done 2026-10-12, keyword search at `/search` and `/api/search`, linked under the homepage search and on the 404 page (decision 046). **KGSP** now has its own page and «يفتح قريبًا» (decision 046): watch the Prospective Students page for Cohort 19 dates, and review its 8 facts (`owner_reviewed`). **Also 2026-10-12 (decision 047):** test pages for SAT, TOEFL, القدرات/التحصيلي; 3 more scholarship FAQ answers; Aramco re-checked. **Filters fixed (decision 048); logos + flags on university pages (decision 049): 147/290 logos done, next the other 143 from the universities' own sites (Haiku agents, batches, reviewed on a contact sheet).** **إمداد wave 1 done (2026-10-12): 35 US universities researched (65 detail files).** Next: waves 2–3, the other English-speaking universities (UK 29, Australia 13, Canada 8, Singapore 2). **UK wave 2 done 2026-10-13 (decision 054):** 26 UK universities, with a new «الشهادة الثانوية السعودية» row; Durham, Bournemouth (403) and LBS left out. Remaining (counted 2026-10-13): **wave 3 done 2026-10-13** (decision 055: 16 of 23 saved; Melbourne, Griffith, Monash, Deakin, Macquarie, Alberta and SMU block automated reads, so check them by hand in a browser or leave them); **wave 4 done 2026-10-13** (decision 056: 22 of 25 saved). The English-speaking countries are done (129 universities with requirements). **Check by hand in a browser (sites block automated reads):** Durham, Bournemouth, Melbourne, Griffith, Monash, Deakin, Macquarie, Alberta, SMU, Virginia, Pittsburgh, Colorado School of Mines, plus Oxford and UCL (filled from snippets). The 111 in non-English-speaking countries (China 40, Germany 17, Italy 10, Netherlands 10, Korea 9, France 9, Spain 6, Switzerland 5, Japan 5) need a different brief (language of instruction, the conditional-admission exception) and a scope decision against Launch 1. **Re-check Oxford and UCL** (`fact-checker`): their الرواد files were filled from search snippets after 403s. **US applications (decision 050):** guide at `/resources/us-applications`, fee + waiver on 50 US university pages. **Cleanup iteration 1 (decision 051).** **Known small issue (decision 052):** on the owner's phone, Back to a list can still move slightly before settling. Low priority; to look at, note the phone, browser and how Back was done (swipe, button, link). **Owner to-do:** copy القدرات/التحصيلي details (duration, scale, fee, attempts) from etec.gov.sa in a browser, and the Saudi TOEFL price from the ETS fee page. Next: step 2 (chunks with `last_checked`/`owner_reviewed`), then search by meaning (embeddings, ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
-> 6. **Optional:** page-view counts without trackers (a small counter of our own); for now, Render's Metrics tab.
->
-> Resolved 2026-10-12: «ثلاث قبولات كحد أقصى» (on the site); the age rule contradicts itself on the conditions page (not published).
->
-> Also done 2026-10-11:
-> - official X accounts as sources (@SA_Scholarships, @SDAIA_SA)
-> - SDAIA open (cohort 4) with a 'not standalone' warning; next deadline per university (decision 031)
-> - SDAIA's full list of 95 universities from its PDF (decision 032)
-> - news as a status board + /news page; SDAIA logo (decision 033)
-> - explorer majors by field, own suggestions panel, واعد in «المسار» (decision 034)
-> Owner to-dos still open: review the fact-check tables (§5 of each research file), send a post that states الرواد's 15 Nov end date and one for إمداد closing, review the 15 least-certain Arabic university names (`docs/research/arabic-names-to-check.md`), optionally export the Telegram group (JSON) for the FAQ step.
+Keep this page short: update the sections below in place, tick the stages, and put the dated story in the log.
 
-**Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
-**Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
-**Pace:** ~5 hours per week.
+## Where we are
 
----
+- **Live:** https://wadihguide.com (Arabic) and https://wadihguide.com/en/ (English).
+- **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
+- **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
+- **Pace:** ~5 hours per week.
+- **Just merged:** «جرّب قبل أن تقرر», straight to a redesigned result (decision 073, PR #35).
+- **Next session:** the owner's iPhone check of that journey, then next step 1.
 
-## Stage 1: Live walking skeleton
+## Next steps
+
+In order (direction: a deep study-abroad core plus thin doors to official tools, decision 057).
+
+1. **Usability test with 3–5 students.** Write the script (`docs/research/usability-test.md`, Stage 1e step 5) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
+2. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.
+3. **P1 from the [product audit](research/product-audit-2026-10-13.md):** «الدراسة في السعودية», the alternatives section, the fee-waiver class split.
+4. **Accessibility:** a screen-reader run on a real phone and the broken-link check (Stage 1e step 6).
+5. **Search, the road to RAG ([spec](specs/search.md), decision 045):** keyword search is done. Next: chunks with `last_checked` / `owner_reviewed`, then search by meaning (embeddings; ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
+6. **إمداد requirements, the rest:** China 40, Korea 9, Japan 5 (counted 2026-10-13). They need their own brief (language of instruction, the conditional-admission exception) and a scope decision against Launch 1.
+
+**Later or optional:**
+- FAQ from real student questions (Stage 1e step 4).
+- Page-view counts without trackers (for now, Render's Metrics tab).
+- The remaining 143 university logos (deferred, audit F).
+- The launch ad: paused, no budget for paid tools yet; a $0 route exists ([marketing/README.md](../marketing/README.md)).
+
+## Owner to-dos
+
+Gathered from the session notes in [log.md](log.md). The ones that could be checked in the repo or on GitHub on 2026-11-04 are accurate; the rest may already be done, so tick or delete them.
+
+### On a real phone (Safari especially)
+- [ ] The whole «جرّب قبل أن تقرر» journey on an iPhone, Arabic and English (checked on emulated iPhones only); read the 10 titles and the why sentences (decision 073).
+- [ ] The live site in both themes, and `/en` (decisions 062, 066).
+- [ ] Back to a list can still move slightly before settling (decision 052, low priority): note the phone, the browser and how Back was done.
+
+### With other people
+- [ ] Share https://wadihguide.com with testers; feedback comes through the footer's X link (decision 043).
+- [ ] One Saudi school counsellor (and, if possible, a career-development specialist) reviews the 30 activities, the subject map and the wording; then set `expert_reviewed: true` in `data/exploration.json`.
+- [ ] Optional: a native English reader for the short list in pull request 27.
+- [ ] Optional: export the Telegram group (JSON) for the FAQ step.
+
+### Official sources that scripts can't read
+- [ ] X: [@SDAIA_SA](https://x.com/SDAIA_SA) (is the 4th cohort still open, any closing date?) and [@SA_Scholarships](https://x.com/SA_Scholarships) (does الرواد still close 15 Nov, has إمداد opened?). Then run `/update-site` with what you found.
+- [ ] Links to X posts that state الرواد's end date and إمداد's closing → `source_url` in `data/news.json`, `status_source` in `data/paths.json`.
+- [ ] The Ministry's grade 10 interest measure on an official page (press says it counts in placement; not published).
+- [ ] In a browser, sites that block scripts:
+  - to read: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, SMU, Tilburg, Humboldt, Barcelona;
+  - to confirm: Virginia (dates, platform), NUS (2027 dates), Michigan (essays, dates, SAT policy), NYU (fee, dates), Saskatchewan (deadline), UChicago (undergraduate English page), UCL (SAT), Gallaudet (SAT).
+- [ ] The Saudi certificate for German universities on anabin (a form query).
+- [ ] القدرات/التحصيلي details (duration, scale, fee, attempts) from etec.gov.sa, and the Saudi TOEFL price from the ETS fee page.
+- [ ] Optional: spot-check Aramco's numbers in a browser (`curl` to aramco.com times out).
+
+### Review and decide
+- [ ] The fact-check tables (§5 of each research file), including KGSP's 8 facts (`owner_reviewed`).
+- [ ] The checklist at the bottom of [paths-research.md](research/paths-research.md).
+- [ ] The 15 least-certain Arabic university names ([arabic-names-to-check.md](research/arabic-names-to-check.md)).
+- [ ] The copy: the route's lines and the guides' hints (`data/home.json`).
+- [ ] Toulouse (which member institution the list means) and L'Institut Agro.
+- [ ] Whether to say "English" anywhere on the homepage or in the X bio.
+
+### GitHub
+- [ ] Install the GitHub app on your phone to get the morning check's pings.
+- [ ] Optional, off as of 2026-11-04: a ruleset on `main` (require the `pytest` check, block force pushes; changes then reach `main` only through pull requests), Dependabot security updates, private vulnerability reporting (decision 074).
+- GitHub pauses scheduled workflows after 60 days with no commits; the next commit turns it back on.
+
+## Waiting on something
+
+- **The next universities guide PDF** (expected Dec 2026 / Jan 2027):
+  1. re-run `scripts/extract_universities.py`; the test `test_every_requirement_file_belongs_to_a_listed_university` flags universities that left the lists;
+  2. add Arabic names for new universities (`university_names_ar.json`);
+  3. research what's missing in waves (`research-wave` skill);
+  4. update the guide link and year everywhere it appears.
+- **New rounds on official pages:** KGSP Cohort 19's dates, Aramco's next cycle, Cambridge's next-cycle dates. `/update-site` checks them.
+- **Ask before installing:** `httpx2` (the test client warns that `httpx` with it is deprecated); Playwright in CI for `scripts/check_explorer.mjs`.
+
+## Stages
+
+| Stage | Goal | Status |
+|---|---|---|
+| 1, 1b–1e | Live skeleton, design, tooling, accuracy | Live; 1e steps 4–6 open |
+| 2 | Universities explorer + content model | Shipped; إمداد requirements, Pydantic models and shared resources open |
+| 3 | The scholarship path + polish → **Launch 1** | In progress |
+| 4 | Accounts, email alerts, guided start → **Launch 2** | Not started |
+| 5–9 | Operations, more programs, search + RAG, chatbot, agents | Keyword search started early (decision 045) |
+
+### Stage 1: Live walking skeleton
 Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 
 - [x] **Step 1:** Housekeeping + `docs/decisions.md`
@@ -148,7 +111,7 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 
 **Stage 1 complete:** the site is live, tested, and deploys on every push.
 
-## Stage 1b: Homepage design pass
+### Stage 1b: Homepage design pass
 - [x] Hero with Tuwaiq horizon + "ابدأ من هنا" revealing the grade question (decision 018)
 - [x] News + tests in panels; news sorted by date then status, with status chips
 - [x] Path panels with place scenes and accents (world / desert / sea)
@@ -156,29 +119,27 @@ Teaches HTTP, routing, templates, virtual environments, testing, and deployment.
 - [x] Real licensed photos per path with credits (decision 020)
 - [x] Share preview (Open Graph + share image), meta descriptions, robots.txt, sitemap.xml (decision 021)
 - [x] Tuwaiq video: Al Arabiya's own clip `6fVtY11654w` added as draft, with a source line
-- [ ] Owner: watch the clip, confirm the wording matches `quote_ar` → set `status: verified` in `featured_quote.json`
+- [x] Owner: watch the clip, confirm the wording matches `quote_ar` → set `status: verified` in `featured_quote.json`
 
-## Stage 1d: Tooling and learning docs (decision 024)
+### Stage 1c: Wide editorial redesign (decisions 022–023)
+- [x] Light-first theme, two-state toggle
+- [x] Plex Bold headlines + Naskh accents; owner's palette; wide grid + reading column
+- [x] Header with nav + phone menu; 3-column footer
+- [x] Hero with signature drawing; «من أين تبدأ؟»; compact news; facts-first path rows with «لمن؟»; 5-step journey; «كيف نعمل»
+
+### Stage 1d: Tooling and learning docs (decision 024)
 - [x] CI: GitHub Actions runs pytest on every push (`.github/workflows/tests.yml`)
-- [ ] Owner: Render → wadih → Settings → Auto-Deploy → "After CI Checks Pass" (after the first CI run is green)
+- [x] Owner: Render → wadih → Settings → Auto-Deploy → "After CI Checks Pass" (after the first CI run is green)
 - [x] `.env` permission lock (`.claude/settings.json`)
 - [x] `docs/claude-workflow-guide.md`, `docs/architecture.md`; CLAUDE.md trimmed (a `LEARNING_LOG.md` too, removed 2026-10-13, decision 059)
 - [x] Stale-facts report `scripts/stale_facts.py` (decision 053; a report, not a failing test)
 - [x] `/update-site` (skill) + a morning check that keeps one GitHub issue (`watch.yml`): new واعد announcements, changed official pages, passed deadlines, broken pages and links, facts over 90 days (decision 064)
 - [ ] Later: pin the server's Python version
 
-## Stage 1c: Wide editorial redesign (decisions 022–023)
-- [x] Light-first theme, two-state toggle
-- [x] Plex Bold headlines + Naskh accents; owner's palette; wide grid + reading column
-- [x] Header with nav + phone menu; 3-column footer
-- [x] Hero with signature drawing; «من أين تبدأ؟»; compact news; facts-first path rows with «لمن؟»; 5-step journey; «كيف نعمل»
-- [ ] Owner: X post links for الرواد open / إمداد closed → `source_url` in `news.json` and `status_source` in `paths.json`
-
-## Stage 1e: Accuracy + clarity pass (owner's design brief, 2026-10-10; decisions 025–027)
+### Stage 1e: Accuracy + clarity pass (owner's design brief, 2026-10-10; decisions 025–027)
 Order chosen by the owner: facts first, then layout.
 - [x] **Step 1: facts + program page.** Official-source fact-check (`docs/research/custodian-scholarship-2026-27.md`); one fact shape with source + date (decision 025); «غير مؤكد» only for real gaps; `/programs/custodian-scholarship` with all 4 tracks, a comparison table, the conditional-admission explainer + 5-question checklist, admission vs. scholarship; «المسارات» → «البرامج» (decision 027); Oxford photo removed (decision 026); grade 12 wording fixed. 64 tests.
 - [x] Owner chose the official logo (decision 028)
-- [ ] Owner: review the fact-check table
 - [x] **Step 2: homepage restructure (decision 028):** short hero with visible grade buttons → programs → news → Tuwaiq video; journey moved to grade 12, tests to grade 11; «من أين تبدأ؟», «كيف نعمل», and all «غير مؤكد» stamps and on-screen dates removed; photo credits moved to /about.
 - [x] **IELTS resource page** `/resources/ielts` (official IELTS + MoE + KGSP sources).
 - [x] KGSP and Aramco research by two parallel research agents → `docs/research/`.
@@ -187,16 +148,15 @@ Order chosen by the owner: facts first, then layout.
 - [x] **Finder, at a glance (decision 038):** scope note, tracks reordered, «لغة الدولة الرسمية» with a hint, SAT/IELTS/next date/admissions link per row and in «قائمتي», structured university dates (75 migrated), scholarship window shown apart from university dates.
 - [ ] **Step 4: FAQ from real student questions.** The owner exports the Telegram group (Telegram Desktop → JSON); the raw export never enters the repo. Claude extracts only the questions, strips names/usernames/numbers, groups duplicates, counts them. Answers go in a data file with the fact shape; unanswered ones stay hidden. No automatic scraping.
 - [x] **UX redesign (decision 035):** one design system; homepage (grades + search, open now, compact programs); explorer (filter tags, labels, back to results, Arabic suggestions fix); university pages («باختصار», not-admission notice); «قائمتي» on the device; program/grade pages; accessibility pass. Audit + research: `docs/research/ux-redesign-2026-10.md`.
-- [ ] Owner: review the redesign branch and merge it to `main`.
+- [x] Owner: review the redesign branch and merge it to `main`.
 - [ ] **Step 5: usability test script** (`docs/research/usability-test.md`) for 3–5 students; the owner runs it. Include: find a major's universities on a phone, tell «الترتيب» from a world ranking, find a university's own deadline vs. the scholarship's, save two universities and find them again.
 - [ ] **Step 6: accessibility + broken-link pass.** Accessibility half done in decision 035 (axe on 14 routes, 320px reflow, keyboard path, contrast tests); still to do: a screen-reader run on a real phone (VoiceOver/TalkBack) and the broken-link check.
 - Later (Stage 2): per-university conditional-admission table for non-English-speaking destinations, generated from `data/universities.json` ("potentially eligible under the published exception", never "guaranteed").
 
-## Research (in progress, alongside Stage 1)
+### Research (alongside Stage 1)
 - [x] First draft of the 3 paths + Tuwaiq quote sources: [research/paths-research.md](research/paths-research.md)
-- [ ] Owner verifies (checklist at the bottom of that file)
 
-## Stage 2: Universities explorer + content model (headline of Launch 1)
+### Stage 2: Universities explorer + content model (headline of Launch 1)
 - [x] **Shipped 2026-10-11** (decisions 029–032): extraction script → `data/universities.json` (290 universities, all track/field lists, majors, notes), `/universities` (search by university or major, filters incl. SDAIA targets), `/universities/<id>`, `/api/universities`, requirements for the 30 الرواد universities, Arabic names. Still open below: requirements for إمداد universities, Pydantic models, shared resources beyond IELTS.
 Teaches data extraction, data modeling + validation (Pydantic), a JSON API, and client-side search.
 - Spec first: `docs/specs/universities-explorer.md`.
@@ -207,17 +167,18 @@ Teaches data extraction, data modeling + validation (Pydantic), a JSON API, and 
 - Pydantic models for paths, tracks, and universities: every fact has `source` + `last_checked`, or the app refuses to start. `active_year` setting.
 - Shared resources (English/IELTS, Qudurat, math/Calc, Khan Academy links), linked many-to-many from paths.
 
-## Stage 3: Scholarship path content + design polish + Launch 1
+### Stage 3: Scholarship path content + design polish + Launch 1
 Teaches responsive/RTL polish, content workflow, CI, and shipping.
 - Full government scholarship path page, verified by the owner, with live track status (each with a source link).
 - ~~A subtle visual theme per path, based on place (decision 016)~~: dropped. Programs show their official logos or licensed photos (decisions 028, 062).
 - [x] Visual identity: the sky, two designed themes, the homepage opening, the الرواد destination (decision 060). Real-phone check still to do.
 - [x] Redesign «الطريق» (decision 062): the logo's colours, act on forest and read on paper, the route of the grades, labelled facts, a guides index, a full footer with a self-updating copyright line. Real-phone check still to do.
 - Privacy-friendly visitor counting on our own server (decision 015).
-- CI basics: GitHub Actions runs the tests on every push.
-- Domain check/purchase (ask first), then **Launch 1**.
+- [x] CI basics: GitHub Actions runs the tests on every push.
+- [x] Domain: wadihguide.com (decision 042).
+- Then **Launch 1**.
 
-## Stage 4: Accounts, email alerts, guided start → Launch 2
+### Stage 4: Accounts, email alerts, guided start → Launch 2
 - «قائمتي» exists on the device (decision 035): at sign-in, offer to move the device list into the account; later a per-university checklist and a deadlines view built from the saved list.
 Teaches databases, authentication (incl. OAuth), email delivery, security, privacy, and rules-based recommendation logic.
 - Specs first: `docs/specs/accounts.md`, `docs/specs/email-alerts.md`, `docs/specs/guided-start.md`.
@@ -227,7 +188,7 @@ Teaches databases, authentication (incl. OAuth), email delivery, security, priva
 - Privacy: minimum data (no national ID, GPA, test scores, passport), privacy policy, "delete my account", PDPL review incl. users under 18.
 - Guided start: rules-based (not AI) recommendations + "your next 3 steps" + progress saved to the account. Then **Launch 2**.
 
-## Later stages
+### Later stages
 5. Operations: broken-source-link checker, stale-content warnings, security headers, backups
 6. More paths (Aramco, KAUST) and resources, one at a time, each verified
 7. Search + RAG over verified content only, eval question set. **Started early (decision 045):** keyword search done; the steps are in `docs/specs/search.md`

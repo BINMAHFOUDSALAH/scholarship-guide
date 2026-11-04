@@ -48,6 +48,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Git: never commit or push unless I ask. One exception: a cloud session commits and pushes to its own `claude/…` branch before it ends, so the work isn't lost (nothing goes live until I merge). Never push to `main`, merge, or force-push.
 - Record design choices (with alternatives) in `docs/decisions.md`; tick progress in `docs/roadmap.md`.
 - **Handoff rule:** after any fundamental change (rule, decision, architecture, plan), update `CLAUDE.md` / `docs/roadmap.md` / `docs/decisions.md` / `docs/architecture.md` in the same step. Repo docs are the source of truth. When I say a session is ending, make sure the roadmap's "next session" note is accurate.
+- **Keep the roadmap short:** update its sections in place (where we are, next steps, owner to-dos). What a session did goes in a short dated note at the top of `docs/log.md` (decision 074).
 
 ## Commands (Windows PowerShell, from the repo root)
 ```powershell

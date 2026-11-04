@@ -550,7 +550,7 @@ Claude may mark a fact `sourced` after reading the official page itself. The own
 - **Files:**
   - Scripts in `marketing/src/`.
   - Media in `marketing/assets/` and `marketing/out/`, both git-ignored.
-  - The production guide and launch plan in `docs/marketing/launch-ad.md`.
+  - The production guide and launch plan in `marketing/README.md` (moved from `docs/marketing/` by decision 074).
 - **API keys:** stored outside the repo (`%USERPROFILE%\.wadih\`), restricted, with credit limits. They are never pasted in chat.
 - **Soft launch first:** organic only, measured with `?src=` links read from Render's access logs (no trackers). Any paid boost waits for 14 days of data and the owner's approval.
 
@@ -1190,4 +1190,25 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **Common majors the owner confirms, or no majors on those three cards:** the first has no official link, and the second leaves those three cards emptier than the others.
 - **Photos or AI images:** need licences or budget, weigh more, and don't change with the design. Icons alone: too small to make a field recognisable.
 - **A grid of two columns on wide screens:** the picture stays whole, but opening one card leaves a hole beside it. One column, with the text beside the picture, reads in order.
+
+## 074 — The repository's front door: a short README, a short roadmap, MIT for the code (updates 044)
+**Date:** 2026-11-04
+**Context:** the owner asked for the README and everything else a visitor sees on GitHub to be organized as an experienced maintainer would, with the unnecessary removed. The repository is also their public portfolio.
+**Decision:**
+- **README:** what it is, the live links, a screenshot, the principles, how it works, how to run and test it, the layout, where to read more. Detail stays in `docs/`.
+- **`docs/README.md`:** a map of the documents, so nobody has to guess what 30 research notes are.
+- **Roadmap:** where we are, next steps, the owner's to-dos and the stages. The 116 lines of running notes moved word for word to `docs/log.md`; open to-dos were gathered at the top, and items the repo or GitHub showed as done were ticked.
+- **`marketing/`:** the ad's guide moved from `docs/marketing/launch-ad.md` to `marketing/README.md`, next to its scripts, marked as paused. The folder stays apart from the app, as in decision 044.
+- **Licence (owner's choice):** MIT for the code. Not covered: the guide text and facts in `content/` and `data/`, the name, logo and drawings (all rights reserved), and third-party material, which keeps its own licences. `LICENSE` holds the plain MIT text so GitHub recognises it; the scope is in the README.
+- **On GitHub:** a current description, the website and topics; the unused Wiki and Projects tabs off (the Wiki was empty; turning a tab off deletes nothing); the 15 merged branches deleted, and branches deleted automatically after a merge from now on.
+- **Nothing was deleted from the repository.**
+
+**Not added:** `CONTRIBUTING.md`, a code of conduct, issue and pull request templates, `CHANGELOG.md`. This is a one-person project with no releases; a README section says how to report a wrong fact. `SECURITY.md` was drafted and dropped (owner: not needed now); the site has no accounts yet, so revisit it with accounts in Stage 4.
+**Left off for now:** a ruleset on `main`, Dependabot security updates and private vulnerability reporting. The owner asked to keep only what's necessary, and a ruleset changes how changes reach `main`. They stay on the roadmap.
+**Alternatives:**
+- **MIT for the code + CC BY for the content:** others could copy the guides with credit, but copies of deadlines and requirements go out of date. Opening up later stays possible; taking it back doesn't.
+- **No licence:** the simplest, but unusual for a public portfolio project.
+- **Taking the ad out of the public repository:** it would stay in the git history anyway, and a second repository is more to look after. The owner chose to keep it.
+- **`CHANGELOG.md` instead of a log:** a changelog is written for users of releases; the log is for the next working session.
+- **Moving finished research briefs into a subfolder:** tidier, but it changes many references for little gain. The map groups them instead.
 
