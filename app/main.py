@@ -14,7 +14,7 @@ from jinja2 import pass_context
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app import i18n
-from app.content import SLUG_PATTERN, list_slugs, load_page
+from app.content import SLUG_PATTERN, english_titles, list_slugs, load_page
 from app.i18n import tf, tr
 from app.search import SiteSearch
 from app.sky import rowwad_chart, star_field
@@ -77,6 +77,9 @@ def is_confirmed(item):
 
 
 i18n.load()  # the English texts, data/i18n/*.en.json (decision 066)
+# Page titles are read from the Arabic Markdown in places computed once (the footer, the guides list, search):
+# their English comes from content/en, so a translated page translates its title everywhere.
+i18n.add_from_data(english_titles())
 site = load_json("site.json")
 paths = load_json("paths.json")
 test_needs = load_json("test_needs.json")

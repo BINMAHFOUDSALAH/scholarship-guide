@@ -18,7 +18,7 @@ VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "met
 
 
 class ArabicFinder(HTMLParser):
-    """Collects text (and visible attributes) with Arabic letters that isn't inside lang="ar"."""
+    """Collects text (and visible attributes) with Arabic letters or «» that isn't inside lang="ar"."""
 
     ATTRS = ("aria-label", "title", "alt", "placeholder", "content", "data-summary", "data-default", "label",
              "data-save-name", "value")
@@ -63,7 +63,7 @@ class ArabicFinder(HTMLParser):
         if self.in_script or self.arabic_zone():
             return
         text = " ".join(data.split())
-        if AR.search(text):
+        if AR.search(text) or "«" in text or "»" in text:
             self.found.append(text)
 
 

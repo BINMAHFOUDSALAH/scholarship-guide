@@ -28,6 +28,16 @@ def source_hash(section, slug):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
 
+def english_titles():
+    """(Arabic title, English title) for every page that has an English file in content/en."""
+    pairs = []
+    for english in sorted(EN_DIR.glob("*/*.md")):
+        arabic = CONTENT_DIR / english.parent.name / english.name
+        if arabic.is_file():
+            pairs.append((frontmatter.load(arabic).metadata.get("title"), frontmatter.load(english).metadata.get("title")))
+    return pairs
+
+
 def load_page(section, slug):
     """Read content/<section>/<slug>.md and return its frontmatter plus rendered HTML, or None.
 
