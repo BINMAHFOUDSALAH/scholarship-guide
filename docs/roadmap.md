@@ -3,7 +3,7 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-04, decision 068):** phone header: three 48px controls (language, «قائمتي», «القائمة» with its label from 420px); the theme switch is the menu's last row below 1100px; the menu opens full width.
+> **Latest (2026-11-04, decision 068):** phone header: four 48px controls (language, «قائمتي», theme, «القائمة» with its label from 480px; 44px up to 389px); the menu opens full width with 48px rows.
 >
 > **Earlier (2026-11-04, decision 067):** the header fits on one line at every width (320–1400px swept, both languages): icon tools below 1100px, the full nav from 1100px, no descriptor below 600px. SDAIA: no date on its page = nothing to update (`no_deadline_ok`).
 >

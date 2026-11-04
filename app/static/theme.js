@@ -36,14 +36,14 @@ function saveTheme(theme) {
   }
 }
 
-// The header has one switch; on phones and tablets a second one sits in the menu (decision 068). Both stay in step.
+// Every .theme-toggle on the page (today: the header's) stays in step.
 const buttons = [...document.querySelectorAll(".theme-toggle")];
 
 if (buttons.length) {
   let current = chosenTheme() || (system.matches ? "dark" : "light");
 
   // The label names the mode you'll switch TO, which is clearer for a two-state switch.
-  // The menu's switch says it in full («التبديل إلى الوضع الداكن»), the header's in one word.
+  // A switch marked data-long-label says it in full («التبديل إلى الوضع الداكن»); the header's in one word.
   const render = () => {
     const next = current === "dark" ? "فاتح" : "داكن";
     for (const button of buttons) {

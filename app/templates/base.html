@@ -123,18 +123,6 @@
             <nav class="menu-nav" aria-label="{{ _('القائمة') }}">
               {{ nav_items() }}
             </nav>
-            {# On phones and tablets the theme switch lives here, so the header keeps fewer, bigger controls (decision 068).
-               theme.js fills its words («التبديل إلى الوضع الداكن») and shows it. #}
-            <button class="theme-toggle theme-toggle--menu" type="button" data-long-label hidden>
-              <svg class="theme-icon" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false">
-                <defs><mask id="theme-icon-bite-menu"><rect x="-12" y="-12" width="24" height="24" fill="#fff"/><circle class="theme-icon-shadow" r="4.8" fill="#000"/></mask></defs>
-                <g class="theme-icon-rays" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-                  <path d="M0 -10.5v2.4M0 8.1v2.4M-10.5 0h2.4M8.1 0h2.4M-7.4 -7.4l1.7 1.7M5.7 5.7l1.7 1.7M-7.4 7.4l1.7-1.7M5.7 -5.7l1.7-1.7"/>
-                </g>
-                <circle class="theme-icon-disc" r="5.2" fill="currentColor" mask="url(#theme-icon-bite-menu)"/>
-              </svg>
-              <span class="theme-toggle-label">{{ _("داكن") }}</span>
-            </button>
           </div>
         </details>
       </div>
