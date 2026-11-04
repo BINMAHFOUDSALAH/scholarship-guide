@@ -1,5 +1,5 @@
 ---
-translated_from: d78a6f6352d132a7
+translated_from: 7024a65c25dc1bd5
 title: Grade 10
 stage_ar: Explore and prepare
 description: A common year before you choose your track. You don't need to decide your future now, but this year counts.
@@ -8,6 +8,9 @@ activity:
   href: "#tracks"
   link_label_ar: The five tracks
 resources:
+  - title_ar: Not decided yet?
+    url: /resources/undecided
+    why_ar: How to discover the fields that draw you, and what to try this term.
   - title_ar: Secondary school tracks (Ministry of Education, in Arabic)
     url: https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Pages/SecondarySchoolTracks.aspx
     why_ar: The official page for the tracks, with links to their guides.

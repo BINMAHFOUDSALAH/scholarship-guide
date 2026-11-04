@@ -11,6 +11,9 @@ activity:
   link_label_ar: المسارات الخمسة
 tool: tracks
 resources:
+  - title_ar: لم تقرر بعد؟
+    url: /resources/undecided
+    why_ar: كيف تكتشف المجالات التي تجذبك، وماذا تجرّب هذا الفصل.
   - title_ar: المسارات الثانوية (وزارة التعليم)
     url: https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Pages/SecondarySchoolTracks.aspx
     why_ar: الصفحة الرسمية للمسارات، وروابط أدلتها.

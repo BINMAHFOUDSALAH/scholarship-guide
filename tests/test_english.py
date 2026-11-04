@@ -120,7 +120,7 @@ def test_every_shown_university_and_data_text_has_english():
 
     for path in sorted((ROOT / "data" / "university_details").glob("*.json")):
         walk(json.loads(path.read_text(encoding="utf-8")))
-    for name in ("paths", "home", "site", "test_needs", "apply_year", "school_tracks", "waaid_programs", "news"):
+    for name in ("paths", "home", "site", "test_needs", "apply_year", "school_tracks", "waaid_programs", "news", "exploration"):
         walk(json.loads((ROOT / "data" / f"{name}.json").read_text(encoding="utf-8")))
     assert not missing, f"{len(missing)} texts without English, e.g. {missing[:5]}"
 

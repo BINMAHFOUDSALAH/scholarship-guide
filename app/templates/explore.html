@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{#
+  «جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test.
+  The whole activity is one form, so it works without JavaScript. explore.js shows one step at a time
+  (parts 1–3, one activity per screen in part 2), with progress, «السابق» and a review step before the result.
+  Answers are posted once (never in a URL) and nothing is stored.
+#}
+
+{% block title %}{{ _("جرّب قبل أن تقرر |") }} {{ site.name }}{% endblock %}
+{% block description %}{{ _("نشاط استكشافي قصير يقترح مجالات تجربها قبل أن تختار مسارك أو تخصصك. ليس اختبارًا، ولا نحفظ إجاباتك.") }}{% endblock %}
+{% block head_extra %}{% if x.draft %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
+
+{% block content %}
+<div class="explore measure">
+  <header class="page-header">
+    <p class="doc-kind"><a href="/resources/undecided">{{ _("لم تقرر بعد؟") }}</a></p>
+    <h1>{{ _("جرّب قبل أن تقرر") }}</h1>
+    <p class="lead">{{ _("نحو عشر دقائق. يقترح مجالات تجربها، ولا يحدد تخصصك.") }}</p>
+    <p class="explore-privacy">{{ _("لا نحفظ إجاباتك، ولا نسأل عن اسمك أو درجاتك.") }}</p>
+  </header>
+
+  {% if x.draft %}
+  <div class="notice notice--warn"><p>{{ _("نسخة تجريبية تظهر على جهازك فقط: لم يراجعها مختص بعد، ولا تظهر على الموقع.") }}</p></div>
+  {% endif %}
+
+  <div class="explore-progress" data-explore-progress hidden>
+    <p class="explore-progress-part" data-progress-part></p>
+    <p class="explore-progress-count" data-progress-count></p>
+    <progress class="explore-progress-bar" data-progress-bar max="1" value="0"></progress>
+  </div>
+
+  <form class="explore-form" method="post" action="/explore/result" data-explore novalidate>
+
+    {# ---------- Part 1 ---------- #}
+    <section class="explore-step" data-step data-part="1" aria-labelledby="part1-title">
+      <h2 class="explore-part-title" id="part1-title" tabindex="-1">{{ _("ما الذي يصعّب عليك القرار؟") }}</h2>
+      <fieldset class="explore-group" data-label="{{ _('ما الذي يصعّب عليك القرار؟') }}">
+        <legend class="explore-legend">{{ _("اختر ما ينطبق عليك.") }}</legend>
+        <div class="explore-options">
+          {% for d in x.difficulties %}
+          <label class="explore-option"><input type="checkbox" name="difficulty" value="{{ d.id }}"> <span>{{ d.label_ar }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <fieldset class="explore-group" data-label="{{ _('صفك') }}">
+        <legend class="explore-legend">{{ _("في أي صف أنت؟") }} <span class="explore-optional">{{ _("(اختياري)") }}</span></legend>
+        <div class="explore-options explore-options--row">
+          {% for g in x.grades %}
+          <label class="explore-option"><input type="radio" name="grade" value="{{ g.id }}"> <span>{{ g.label_ar }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+    </section>
+
+    {# ---------- Part 2: one activity per screen ---------- #}
+    <section class="explore-part" aria-labelledby="part2-title">
+      <h2 class="explore-part-title" id="part2-title">{{ _("كيف تجد هذه الأنشطة؟") }}</h2>
+      {% for a in activities %}
+      <fieldset class="explore-step explore-card" data-step data-part="2" data-auto id="q-{{ a.id }}" data-label="{{ a.text_ar }}">
+        <legend class="explore-question" tabindex="-1">{{ a.text_ar }}</legend>
+        <div class="explore-options">
+          {% for ans in x.answers %}
+          {% if loop.index0 and ans.group != loop.previtem.group %}<span class="explore-divider" aria-hidden="true"></span>{% endif %}
+          <label class="explore-option explore-option--{{ ans.group }}"><input type="radio" name="a-{{ a.id }}" value="{{ ans.id }}"> <span>{{ ans.label_ar }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      {% endfor %}
+    </section>
+
+    {# ---------- Part 3 ---------- #}
+    <section class="explore-step" data-step data-part="3" aria-labelledby="part3a-title">
+      <h2 class="explore-part-title" id="part3a-title" tabindex="-1">{{ _("ما الذي لاحظته عن نفسك؟") }}</h2>
+      <fieldset class="explore-group" data-label="{{ _('مواد لاحظت فيها تقدمك') }}">
+        <legend class="explore-legend">{{ _("في أي المواد أو الأنشطة لاحظت أنك تتقدم؟") }}</legend>
+        <div class="explore-options explore-options--grid">
+          {% for s in x.subjects %}
+          <label class="explore-option"><input type="checkbox" name="subject" value="{{ s.id }}"> <span>{{ s.label_ar }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="explore-step" data-step data-part="3" aria-labelledby="part3b-title">
+      <h2 class="explore-part-title" id="part3b-title" tabindex="-1">{{ _("هل هناك مجال تفكر فيه، أو يتوقعه منك أهلك؟") }}</h2>
+      <fieldset class="explore-group" data-label="{{ _('مجال تفكر فيه أو يتوقعه أهلك') }}">
+        <legend class="explore-legend">{{ _("سنعرضه في نتيجتك.") }}</legend>
+        <div class="explore-options explore-options--grid">
+          <label class="explore-option"><input type="radio" name="considered" value="" checked> <span>{{ _("لا يوجد") }}</span></label>
+          {% for f in x.fields %}
+          <label class="explore-option"><input type="radio" name="considered" value="{{ f.id }}"> <span>{{ field_names[f.id] }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+    </section>
+
+    {# ---------- Review (built by explore.js; without JavaScript the whole form is the review) ---------- #}
+    <section class="explore-step explore-review" data-step data-review aria-labelledby="review-title" hidden>
+      <h2 class="explore-part-title" id="review-title" tabindex="-1">{{ _("راجع إجاباتك") }}</h2>
+      <dl class="summary-list" data-review-list></dl>
+    </section>
+
+    <div class="explore-nav" data-explore-nav hidden>
+      <button type="button" class="btn btn--secondary" data-prev>{{ _("السابق") }}</button>
+      <button type="button" class="btn btn--primary" data-next>{{ _("التالي") }}</button>
+    </div>
+
+    <div class="explore-submit" data-submit-area>
+      <button type="submit" class="btn btn--primary">{{ _("اعرض النتيجة") }}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='explore.js') }}?v={{ asset_version('explore.js') }}" defer></script>
+{% endblock %}

@@ -62,6 +62,11 @@ def collect():
     tracks = load("school_tracks.json")["source"]
     add("data/school_tracks.json", "school tracks", tracks["read_on"], tracks["url"])
 
+    explore = load("exploration.json")  # «جرّب قبل أن تقرر» (decision 069): our own wording, plus its sources
+    add("data/exploration.json", "exploration activity (draft)", explore["last_checked"], None, explore["owner_reviewed"])
+    for source in explore["sources"]:
+        add("data/exploration.json", f"source: {source['title']}", source["read_on"], source["url"])
+
     for row in load("test_needs.json")["rows"]:
         if "read_on" in row:  # the computed row has no date of its own
             add("data/test_needs.json", f"row: {row['id']}", row["read_on"], row["source"]["url"])

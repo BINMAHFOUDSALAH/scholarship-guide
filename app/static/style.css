@@ -4630,3 +4630,265 @@ a.uni-name:hover .uni-name-en:only-child {
     gap: var(--space-2);
   }
 }
+
+/* ---------- «جرّب قبل أن تقرر» (decision 069) ----------
+   One long form that works without JavaScript; explore.js adds .is-stepped and shows one step at a time.
+   Answers are native radios and checkboxes inside big labels (48px), so keyboards and screen readers get
+   real groups. Read on paper, act on forest: a chosen answer takes the forest border. */
+
+.explore-privacy {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.explore-progress {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-1) var(--space-3);
+  align-items: baseline;
+  margin-block: var(--space-4) var(--space-3);
+}
+
+.explore-progress p {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.explore-progress-bar {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 6px;
+  accent-color: var(--action);
+}
+
+.explore-part-title {
+  margin-block: var(--space-4) var(--space-2);
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+.explore-group,
+.explore-card {
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
+}
+
+.explore-legend {
+  margin-bottom: var(--space-3);
+  padding: 0;
+  font-weight: 700;
+}
+
+.explore-optional {
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.explore-question {
+  margin-bottom: var(--space-3);
+  padding: 0;
+  font-family: var(--font-title);
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.explore-question:focus,
+.explore-part-title:focus {
+  outline: none;
+}
+
+.explore-options {
+  display: grid;
+  gap: var(--space-2);
+}
+
+@media (min-width: 480px) {
+  .explore-options--grid,
+  .explore-options--row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 640px) {
+  .explore-options--row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.explore-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius);
+  background: var(--field-bg);
+  color: var(--field-ink);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.explore-option input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--action);
+}
+
+.explore-option:has(input:checked) {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+  font-weight: 700;
+}
+
+.explore-option:has(input:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* "Haven't tried it yet" answers sit apart from the tried ones: not a lower score, another kind of answer. */
+.explore-divider {
+  display: block;
+  height: 1px;
+  margin-block: var(--space-1);
+  background: var(--line-strong);
+}
+
+.explore-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.explore-nav [data-next] {
+  margin-inline-start: auto;
+}
+
+.explore-submit {
+  margin-top: var(--space-4);
+}
+
+.explore-change {
+  margin-inline-start: var(--space-2);
+}
+
+/* In steps, each step stands alone: no stacked spacing from the long form. */
+.explore-form.is-stepped .explore-card {
+  margin-bottom: 0;
+}
+
+/* ---------- The result ---------- */
+
+.explore-counts {
+  margin-bottom: var(--space-4);
+}
+
+.explore-counts .summary-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+}
+
+.explore-result .section {
+  margin-top: var(--space-5);
+}
+
+.explore-result .section-note {
+  margin-block: var(--space-1) var(--space-3);
+}
+
+.explore-field {
+  margin-block: var(--space-4) var(--space-5);
+}
+
+.explore-field-name {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-md);
+  line-height: 1.6;
+}
+
+.explore-field-note {
+  color: var(--ink-muted);
+}
+
+.explore-why,
+.explore-tracks,
+.explore-try,
+.explore-tips,
+.explore-next {
+  margin: 0;
+  padding-inline-start: 1.2em;
+}
+
+.explore-why li,
+.explore-tracks li,
+.explore-try li,
+.explore-tips li,
+.explore-next li {
+  margin-bottom: var(--space-1);
+}
+
+/* The answer under its activity: a value under its label (decision 062), not joined to it. */
+.explore-answer {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.explore-progress-note {
+  margin-top: var(--space-2);
+}
+
+.explore-not-now {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--line-strong);
+  padding-top: var(--space-3);
+}
+
+.explore-not-now summary {
+  min-height: 44px;
+  font-family: var(--font-title);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.explore-more {
+  border-bottom: 1px solid var(--line);
+}
+
+.explore-more summary {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  font-weight: 700;
+  color: var(--action);
+  cursor: pointer;
+}
+
+.explore-more[open] summary {
+  margin-bottom: var(--space-2);
+}
+
+.explore-actions {
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+/* A printed result: the page itself, without the site around it or the buttons. */
+@media print {
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .explore-actions {
+    display: none !important;
+  }
+}

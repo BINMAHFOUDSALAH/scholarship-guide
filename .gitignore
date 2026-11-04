@@ -10,3 +10,6 @@ data/raw/
 marketing/assets/
 marketing/out/
 marketing/.edge-profile/
+
+# Local server logs (never commit)
+*.log

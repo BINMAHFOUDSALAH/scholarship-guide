@@ -3,7 +3,15 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-04, decision 068):** phone header: four 48px controls (language, «قائمتي», theme, «القائمة» with its label from 480px; 44px up to 389px); the menu opens full width with 48px rows.
+> **Latest (2026-11-04, decision 069, branch `claude/blissful-tesla-xzor9q`, not merged):** the «لم تقرر بعد؟» guide (`/resources/undecided`, in the homepage guides and on the grade 10 page), and «جرّب قبل أن تقرر» (`/explore`) built as a **draft**: an unscored exploration activity (research: `docs/research/career-exploration-evaluation-2026-11.md`). 716 tests; browser flows at 390 and 1280px, English, and without JavaScript.
+> - **Owner to-dos:**
+>   - run it locally (`$env:WADIH_SHOW_DRAFTS="1"; uvicorn app.main:app --reload`, then /explore);
+>   - get one Saudi school counsellor (and, if possible, a career-development specialist) to review the 30 activities, the subject map and the wording;
+>   - try it with 5 students in the usability test (research note §9: can they name a field to explore and one action; does anyone read it as "the site told me what to study"?);
+>   - then set `"draft": false` in `data/exploration.json` (the test `test_it_stays_a_draft_until_reviewed` must change with it);
+>   - check the Ministry's grade 10 interest measure on an official page (press says it counts in placement; not published).
+>
+> **Earlier (2026-11-04, decision 068):** phone header: four 48px controls (language, «قائمتي», theme, «القائمة» with its label from 480px; 44px up to 389px); the menu opens full width with 48px rows.
 >
 > **Earlier (2026-11-04, decision 067):** the header fits on one line at every width (320–1400px swept, both languages): icon tools below 1100px, the full nav from 1100px, no descriptor below 600px. SDAIA: no date on its page = nothing to update (`no_deadline_ok`).
 >
@@ -78,7 +86,7 @@ Why each choice was made lives in [decisions.md](decisions.md).
 >    - foundation-year conditions on the 19 «لا تكفي» university pages
 >
 >    **Still open, in order:**
->    1. the «لم تقرر بعد؟» guide (Markdown, sourced; check the Ministry's interest-measure and HRDF «سبل» pages from the laptop: cloud reads are blocked)
+>    1. ~~the «لم تقرر بعد؟» guide~~ **done 2026-11-04 (decision 069)**; HRDF «سبل» left out (not read on an official page). «جرّب قبل أن تقرر» built as a draft: review + student test before publishing.
 >    2. the usability test (item 3 below), adding "can you apply to الرواد today?" and "Duolingo or IELTS?"
 >    3. then P1 from the audit: «الدراسة في السعودية», Duolingo `accepted` field + page, alternatives section, fee-waiver class split
 >
