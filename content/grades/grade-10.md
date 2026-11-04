@@ -4,7 +4,7 @@ stage_ar: اكتشف واستعد
 description: سنة مشتركة قبل أن تختار مسارك. لا تحتاج أن تقرر مستقبلك الآن، لكن هذه السنة تُحسب.
 status: sourced
 owner_reviewed: false
-last_checked: 2026-10-13
+last_checked: 2026-11-04
 activity:
   text_ar: "اكتب في ورقة مهاراتك ونقاط قوتك، وفي ورقة أخرى ما تحبه. ثم اختر من المسارات الخمسة أدناه مسارين، واسأل عنهما الموجه الطالبي في مدرستك."
   href: "#tracks"
@@ -27,7 +27,7 @@ sources:
   - title: المسارات الثانوية، وزارة التعليم
     url: https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Pages/SecondarySchoolTracks.aspx
   - title: الثانوية العامة، وثيقة تعريفية 2025
-    url: https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Documents/Pathways_documents_2025.pdf
+    url: https://www.moe.gov.sa/media/uploads/a4/a4273fc1d0b5a4085feab6b28899cf97f22b330e8e88718ceae4c597b861843f.pdf
   - title: دليل التوجيه المهني 1444هـ، وزارة التعليم
     url: https://www.moe.gov.sa/ar/aboutus/aboutministry/RPRLibrary/دليل%20التوجيه%20المهني%20١٤٤٤.pdf
   - title: برنامج الابتعاث الجامعي لخريجي الثانوية، أرامكو (الدورة السابقة)

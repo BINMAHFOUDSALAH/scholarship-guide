@@ -6,7 +6,7 @@
       "name": "KGSP: Cohort 19 dates",
       "url": "https://kgsp.kaust.edu.sa/prospective-students",
       "expect": ["Applications for Cohort 19 will open soon"],
-      "confirmed_on": "2026-11-01",
+      "confirmed_on": "2026-11-04",
       "then": "KGSP may have published Cohort 19 dates: read the page, then update the kgsp track in data/paths.json and content/programs/kaust-kgsp.md."
     },
     {
@@ -15,7 +15,7 @@
       "url": "https://sites.moe.gov.sa/scholarship-program/",
       "expect": ["aldlyl-alastrshady-ltrtyb-qwaaem-aljamaeat-hsb-almjalat-2027-2026.pdf"],
       "alert_if": ["2028-2027"],
-      "confirmed_on": "2026-11-01",
+      "confirmed_on": "2026-11-04",
       "then": "A new universities guide may be out: follow the roadmap's «When the next universities guide PDF is out» steps."
     },
     {
@@ -23,7 +23,7 @@
       "name": "Aramco CDPNE: registration",
       "url": "https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program",
       "expect": ["باب التسجيل مغلق"],
-      "confirmed_on": "2026-11-01",
+      "confirmed_on": "2026-11-04",
       "often_blocked": true,
       "then": "Aramco's registration may be open: read the page in a browser, then update aramco-cdpne in data/paths.json."
     }
