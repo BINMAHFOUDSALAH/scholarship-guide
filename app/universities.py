@@ -12,6 +12,9 @@ import unicodedata
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode
 
+from app import i18n
+from app.i18n import tf, tr
+
 DATA_DIR = Path(__file__).parent.parent / "data"
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -71,14 +74,14 @@ def english_compact(test, item):
         return NOT_LISTED_AR
     low, rec, each = item.get("min"), item.get("recommended"), item.get("each_min")
     if low is not None:
-        text = f"من {score_text(test, low)} حسب التخصص" if item.get("varies") else score_text(test, low)
+        text = tf("من {score} حسب التخصص", score=score_text(test, low)) if item.get("varies") else score_text(test, low)
         if rec is not None:
-            text += f"، والموصى به {score_text(test, rec)}"
+            text += tf("، والموصى به {score}", score=score_text(test, rec))
         elif each is not None and not item.get("varies"):
-            text += f"، ولا تقل مهارة عن {score_text(test, each)}"
+            text += tf("، ولا تقل مهارة عن {score}", score=score_text(test, each))
         return text
     if rec is not None:
-        return f"لا حد أدنى معلن، والموصى به {score_text(test, rec)}"
+        return tf("لا حد أدنى معلن، والموصى به {score}", score=score_text(test, rec))
     if item.get("varies"):
         return "يختلف حسب التخصص"
     return no_score_ar(item)
@@ -126,6 +129,9 @@ def count_ar(n, forms):
     forms = (one, two, 3–10, 11–99, 100s), e.g. ("برنامج واحد", "برنامجان", "برامج", "برنامجًا", "برنامج"):
     1 → «برنامج واحد», 2 → «برنامجان», 5 → «5 برامج», 30 → «30 برنامجًا», 200 → «200 برنامج».
     """
+    if i18n.is_english():
+        singular, plural = COUNT_EN[forms[0]]
+        return f"{n} {singular if n == 1 else plural}"
     one, two, few, many, hundreds = forms
     if n == 1:
         return one
@@ -143,6 +149,9 @@ PROGRAMS_AR = ("برنامج واحد", "برنامجان", "برامج", "بر�
 FIELDS_AR = ("مجال واحد", "مجالان", "مجالات", "مجالًا", "مجال")
 COUNTRIES_AR = ("دولة واحدة", "دولتان", "دول", "دولة", "دولة")
 RESULTS_AR = ("نتيجة واحدة", "نتيجتان", "نتائج", "نتيجة", "نتيجة")
+# English counts, by the Arabic form for "one".
+COUNT_EN = {UNIVERSITIES_AR[0]: ("university", "universities"), PROGRAMS_AR[0]: ("program", "programs"),
+            FIELDS_AR[0]: ("field", "fields"), COUNTRIES_AR[0]: ("country", "countries"), RESULTS_AR[0]: ("result", "results")}
 COUNT_FORMS = {"universities": UNIVERSITIES_AR, "programs": PROGRAMS_AR, "fields": FIELDS_AR,
                "countries": COUNTRIES_AR, "results": RESULTS_AR}
 
@@ -183,6 +192,11 @@ class Explorer:
             u["country_info"] = self.countries[u["country"]]
             u["search_key"] = normalize(f"{u['name_en']} {u['name_ar'] or ''}")
             self.universities[u["id"]] = u
+
+        # English pages use the official English names from the guide (decision 066).
+        i18n.add_from_data((u["name_ar"], u["name_en"]) for u in self.universities.values())
+        i18n.add_from_data((f["name_ar"], f["name_en"]) for f in self.fields.values())
+        i18n.add_from_data((m["name_ar"], m["name_en"]) for f in self.fields.values() for m in f["majors"])
 
         # Official logos (decision 049): only for universities we know, only when the file exists.
         logos = (_load("university_logos.json", {}) or {}).get("logos", {})
@@ -231,11 +245,11 @@ class Explorer:
         return out
 
     def field_options(self, track):
-        return sorted((f for (t, _), f in self.fields.items() if t == track), key=lambda f: f["name_ar"])
+        return sorted((f for (t, _), f in self.fields.items() if t == track), key=lambda f: tr(f["name_ar"]))
 
     def country_options(self):
         used = {u["country"] for u in self.universities.values()}
-        return sorted(((c, self.countries[c]) for c in used), key=lambda kv: kv[1]["name_ar"])
+        return sorted(((c, self.countries[c]) for c in used), key=lambda kv: tr(kv[1]["name_ar"]))
 
     # ---------- search ----------
 
@@ -300,8 +314,8 @@ class Explorer:
                     field = self.field(t, fid)
                     result["sections"].append({"track": t, "field": field, "rows": rows, "matched_majors": names,
                                                # The guide ranks universities by field, not by major (decision 041).
-                                               "note_ar": f"هذا ترتيب مجال «{field['name_ar']}» كله في الدليل، وليس قائمة بتخصص "
-                                                          f"«{names[0]['name_ar']}» وحده. تأكد أن الجامعة تدرّس التخصص من موقعها."})
+                                               "note_ar": tf("هذا ترتيب مجال «{field}» كله في الدليل، وليس قائمة بتخصص «{major}» وحده. تأكد أن الجامعة تدرّس التخصص من موقعها.",
+                                                               field=field["name_ar"], major=names[0]["name_ar"])})
             self._add_waaid(result, q)
             return result
 
@@ -357,7 +371,7 @@ class Explorer:
         """The country code if the search text is a country's name (Arabic or an alias), else None."""
         nq = normalize(q)
         for code, c in self.countries.items():
-            if nq in {normalize(n) for n in [c["name_ar"], *c.get("aliases", [])]}:
+            if nq in {normalize(n) for n in [c["name_ar"], tr(c["name_ar"]), *c.get("aliases", [])]}:
                 return code
         return None
 
@@ -437,16 +451,16 @@ class Explorer:
         parts = []
         for s in result["sections"]:
             if "waaid" in s:
-                parts.append(f"{count_ar(len(s['waaid']), PROGRAMS_AR)} في مسار واعد")
+                parts.append(tf("{count} في مسار واعد", count=count_ar(len(s["waaid"]), PROGRAMS_AR)))
                 continue
             n = len(s["rows"]) if "rows" in s else len(s["universities"])
-            where = TRACKS[s["track"]]["name_ar"] if s["track"] else "نتائج البحث"
+            where = tr(TRACKS[s["track"]]["name_ar"] if s["track"] else "نتائج البحث")
             if s.get("field"):
-                where += f" ({s['field']['name_ar']})"
-            parts.append(f"{where}: {count_ar(n, UNIVERSITIES_AR)}" if n else f"{where}: لا توجد نتائج")
+                where += f" ({tr(s['field']['name_ar'])})"
+            parts.append(f"{where}: {count_ar(n, UNIVERSITIES_AR)}" if n else f"{where}: {tr('لا توجد نتائج')}")
         non_english = any(not u["country_info"]["english"]
                           for s in result["sections"] for _, u in s.get("rows", []))
-        return {"applied": applied, "summary_ar": "، ".join(parts), "query": urlencode(params),
+        return {"applied": applied, "summary_ar": tr("، ").join(parts), "query": urlencode(params),
                 "non_english": non_english}
 
     # ---------- واعد ----------
@@ -458,6 +472,8 @@ class Explorer:
         out = []
         for p in self.waaid()["programs"]:
             key = normalize(f"{p['program_ar']} {p['company_ar']} {p['institution']} {p['level_ar']}")
+            if i18n.is_english():
+                key += " " + normalize(f"{tr(p['program_ar'])} {tr(p['company_ar'])} {tr(p['level_ar'])}")
             if not nq or nq in key:
                 out.append({**p, "university_id": self.by_name.get(normalize(p["institution"]))})
         return out
@@ -472,6 +488,8 @@ class Explorer:
     def suggestions(self):
         """For the search box: majors grouped by their إمداد field (as in the guide), doctorate-only
         majors in their own group, and every university name in both languages."""
+        if i18n.is_english():
+            return self._suggestions_english()
         groups, seen = [], set()
         emdad = sorted((f for (t, _), f in self.fields.items() if t == "emdad"), key=lambda f: min(f["list_pages"]))
         for f in emdad:
@@ -493,6 +511,29 @@ class Explorer:
             groups.append({"title_ar": "تخصصات الدكتوراه فقط (البحث والتطوير)", "title_en": "Doctorate only", "majors": doctorate})
         unis = [{"id": u["id"], "name_ar": u["name_ar"], "name_en": u["name_en"],
                  "country_ar": u["country_info"]["name_ar"]}
+                for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())]
+        return {"fields": groups, "universities": unis}
+
+    def _suggestions_english(self):
+        """The same lists for English pages: the English name is the main one, and search matches on it.
+        universities.js shows name_ar first, so it holds the name to show."""
+        groups, seen = [], set()
+        emdad = sorted((f for (t, _), f in self.fields.items() if t == "emdad"), key=lambda f: min(f["list_pages"]))
+        rnd = [f for (t, _), f in self.fields.items() if t == "rnd"]
+        def majors_of(fields, masters=True):
+            out = []
+            for f in fields:
+                for m in f["majors"]:
+                    if m["name_ar"] not in seen:
+                        seen.add(m["name_ar"])
+                        out.append({"name_ar": m["name_en"], "name_en": "", "masters_only": m["masters_only"] if masters else False})
+            return out
+        for f in emdad:
+            groups.append({"title_ar": f["name_en"], "title_en": f["name_en"], "majors": majors_of([f])})
+        doctorate = majors_of(rnd, masters=False)
+        if doctorate:
+            groups.append({"title_ar": tr("تخصصات الدكتوراه فقط (البحث والتطوير)"), "title_en": "Doctorate only", "majors": doctorate})
+        unis = [{"id": u["id"], "name_ar": None, "name_en": u["name_en"], "country_ar": tr(u["country_info"]["name_ar"])}
                 for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())]
         return {"fields": groups, "universities": unis}
 
@@ -622,7 +663,7 @@ class Explorer:
                 continue
             key = "closed" if fee["waiver"] in ("domestic_only", "none") else fee["waiver"]
             rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"], "fee_usd": fee["fee_usd"]})
-        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: r["name_ar"])}
+        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: tr(r["name_ar"]))}
                 for key, title in groups if rows[key]]
 
     def certificate_groups(self, country="GB"):
@@ -637,7 +678,7 @@ class Explorer:
                 continue
             key = (d.get("saudi_certificate") or {}).get("direct_entry")
             rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"]})
-        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: r["name_ar"])}
+        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: tr(r["name_ar"]))}
                 for key, title in groups if rows[key]]
 
     def essay_groups(self):
@@ -657,7 +698,7 @@ class Explorer:
             else:
                 key = "other" if n is None else "none" if n == 0 else "some" if n <= 2 else "many"
             rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"], "count": n})
-        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: r["name_ar"])}
+        return [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=lambda r: tr(r["name_ar"]))}
                 for key, title in groups if rows[key]]
 
     def test_summary(self, test):
@@ -700,9 +741,9 @@ class Explorer:
             rows[key].append({"id": uid, "name_ar": u["name_ar"] or u["name_en"], "country": u["country"],
                               "country_ar": u["country_info"]["name_ar"], "value": item.get("min") if key == "min" else item.get("recommended"),
                               "text": english_compact(test, item), "source_url": item["source_url"]})
-        order = {"min": lambda r: (r["value"], r["name_ar"]), "recommended": lambda r: (r["value"], r["name_ar"])}
+        order = {"min": lambda r: (r["value"], tr(r["name_ar"])), "recommended": lambda r: (r["value"], tr(r["name_ar"]))}
         return {"label": label, "researched": researched,
-                "groups": [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=order.get(key, lambda r: r["name_ar"]))}
+                "groups": [{"key": key, "title_ar": title, "rows": sorted(rows[key], key=order.get(key, lambda r: tr(r["name_ar"])))}
                            for key, title in groups if rows[key]]}
 
     def profile(self, uid):

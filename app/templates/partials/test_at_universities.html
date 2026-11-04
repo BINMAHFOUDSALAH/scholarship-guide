@@ -6,15 +6,15 @@
 {% set s = explorer.test_summary(page.test) %}
 {% if s.groups %}
 <section class="test-unis" id="universities" aria-labelledby="test-unis-title">
-  <h2 id="test-unis-title"><span lang="en" dir="ltr">{{ s.label }}</span> في جامعات القوائم</h2>
-  <p class="result-note">من صفحة كل جامعة الرسمية، في {{ s.researched | count_ar("universities") }} جمعنا متطلباتها. الحد الفعلي قد يختلف حسب التخصص، فتأكد من صفحة تخصصك.</p>
+  <h2 id="test-unis-title"><span lang="en" dir="ltr">{{ s.label }}</span> {{ _("في جامعات القوائم") }}</h2>
+  <p class="result-note">{{ _("من صفحة كل جامعة الرسمية، في") }} {{ s.researched | count_ar("universities") }} {{ _("جمعنا متطلباتها. الحد الفعلي قد يختلف حسب التخصص، فتأكد من صفحة تخصصك.") }}</p>
   {% for g in s.groups %}
   <details class="us-fees-group"{% if loop.first %} open{% endif %}>
     <summary>{{ g.title_ar }} ({{ g.rows | length | count_ar("universities") }})</summary>
     <ul class="rows">
       {% for r in g.rows %}
       <li><a href="{{ url_for('university_page', uid=r.id) }}">{{ r.name_ar }}</a>
-        <span class="us-fees-fee">{{ r.country_ar }}{% if g.key in ("min", "recommended") %}، {{ r.text }}{% endif %}</span></li>
+        <span class="us-fees-fee">{{ r.country_ar }}{% if g.key in ("min", "recommended") %}{{ _("،") }} {{ r.text }}{% endif %}</span></li>
       {% endfor %}
     </ul>
   </details>

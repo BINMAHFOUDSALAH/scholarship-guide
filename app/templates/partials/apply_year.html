@@ -6,31 +6,31 @@
 {% import "components.html" as c %}
 {% import "partials/uni_macros.html" as um with context %}
 <section class="grade-tool" id="year" aria-labelledby="year-title">
-  <h2 id="year-title">سنة التقديم شهرًا بشهر</h2>
-  <p class="result-note">هذا ما يحدث غالبًا في الجامعات الأمريكية والبريطانية. كل جامعة تحدد مواعيدها، فتحقق منها في صفحتها.</p>
+  <h2 id="year-title">{{ _("سنة التقديم شهرًا بشهر") }}</h2>
+  <p class="result-note">{{ _("هذا ما يحدث غالبًا في الجامعات الأمريكية والبريطانية. كل جامعة تحدد مواعيدها، فتحقق منها في صفحتها.") }}</p>
   <ol class="rows year-list">
     {% for r in apply_year.rows %}
     {% set now = this_month in r.months %}
     <li class="year-row{% if now %} is-now{% endif %}"{% if now %} aria-current="date"{% endif %}>
       <span class="year-mark" aria-hidden="true"></span>
-      <p class="year-when">{{ r.when_ar }}{% if now %} <span class="tag tag--here">الآن</span>{% endif %}</p>
+      <p class="year-when">{{ r.when_ar }}{% if now %} <span class="tag tag--here">{{ _("الآن") }}</span>{% endif %}</p>
       <p class="year-title">{{ r.title_ar }}</p>
       <p class="year-action">{{ r.action_ar }}</p>
       {% if r.computed == "early" %}
-      <p class="year-fact"><span class="tag">من بياناتنا</span> في {{ timeline_stats.early }} من {{ timeline_stats.with_deadlines }} جامعة من قوائم الابتعاث جمعنا مواعيدها، يوجد موعد تقديم في أكتوبر أو نوفمبر.</p>
+      <p class="year-fact"><span class="tag">{{ _("من بياناتنا") }}</span> {{ _f("في {early} من {total} جامعة من قوائم الابتعاث جمعنا مواعيدها، يوجد موعد تقديم في أكتوبر أو نوفمبر.", early=timeline_stats.early, total=timeline_stats.with_deadlines) }}</p>
       {% elif r.computed == "regular" %}
-      <p class="year-fact"><span class="tag">من بياناتنا</span> {{ timeline_stats.january }} من {{ timeline_stats.with_deadlines }} جامعة من قوائم الابتعاث جمعنا مواعيدها لها موعد تقديم في يناير.</p>
+      <p class="year-fact"><span class="tag">{{ _("من بياناتنا") }}</span> {{ _f("{january} من {total} جامعة من قوائم الابتعاث جمعنا مواعيدها لها موعد تقديم في يناير.", january=timeline_stats.january, total=timeline_stats.with_deadlines) }}</p>
       {% endif %}
       {% for f in r.facts %}
-      <p class="year-fact"><span class="tag">موعد رسمي</span> {{ f.text_ar }}
-        <span class="year-sources">المصدر: {% for s in f.sources %}<a href="{{ s.url }}" target="_blank" rel="noopener"><bdi>{{ s.title }}</bdi></a>{% if not loop.last %}، {% endif %}{% endfor %}</span></p>
+      <p class="year-fact"><span class="tag">{{ _("موعد رسمي") }}</span> {{ f.text_ar }}
+        <span class="year-sources">{{ _("المصدر:") }} {% for s in f.sources %}<a href="{{ s.url }}" target="_blank" rel="noopener"><bdi>{{ s.title }}</bdi></a>{% if not loop.last %}{{ _("،") }} {% endif %}{% endfor %}</span></p>
       {% endfor %}
       {% if now and deadlines %}
       <div class="year-upcoming">
-        <p class="year-upcoming-title">أقرب مواعيد الجامعات الآن</p>
+        <p class="year-upcoming-title">{{ _("أقرب مواعيد الجامعات الآن") }}</p>
         <ul class="year-upcoming-list">
           {% for x in deadlines[:4] %}
-          <li><strong class="year-upcoming-date">{{ x.date | arabic_date }}</strong> <a href="{{ url_for('university_page', uid=x.university.id) }}#dates">{{ x.university.name_ar or x.university.name_en }}</a>، {{ um.date_short(x) }}{% if not x.year_stated %} <span class="tag">السنة غير مذكورة في الصفحة</span>{% endif %}</li>
+          <li><strong class="year-upcoming-date">{{ x.date | arabic_date }}</strong> <a href="{{ url_for('university_page', uid=x.university.id) }}#dates">{{ x.university.name_ar or x.university.name_en }}</a>{{ _("،") }} {{ um.date_short(x) }}{% if not x.year_stated %} <span class="tag">{{ _("السنة غير مذكورة في الصفحة") }}</span>{% endif %}</li>
           {% endfor %}
         </ul>
       </div>
@@ -42,10 +42,10 @@
   {% set sch = apply_year.scholarship %}
   <div class="notice year-scholarship">
     <h3>{{ sch.title_ar }}</h3>
-    <p>{{ sch.rule_ar }} <a class="src" href="{{ sch.rule_source }}" target="_blank" rel="noopener">المصدر ↗</a></p>
+    <p>{{ sch.rule_ar }} <a class="src" href="{{ sch.rule_source }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></p>
     {% set t = arruaad_track %}
     {% set st_now = track_status(t) %}
-    <p>موعد التقديم يُعلن كل سنة.{% if st_now and (t.status_source or t.owner_confirmed) %} {{ t.name_ar }} الآن: {{ c.status_tag(st_now, t.status_until) }}{% if t.status_source %} <a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">المصدر ↗</a>{% endif %}{% endif %} وكل المواعيد المعلنة في <a href="{{ url_for('news_page') }}">مواعيد التقديم</a>.</p>
-    <p><strong>إن أُغلق قبل نتائجك:</strong> {{ sch.conflict_ar }} <a class="src" href="{{ sch.conflict_source }}" target="_blank" rel="noopener">المصدر ↗</a></p>
+    <p>{{ _("موعد التقديم يُعلن كل سنة.") }}{% if st_now and (t.status_source or t.owner_confirmed) %} {{ t.name_ar }} {{ _("الآن:") }} {{ c.status_tag(st_now, t.status_until) }}{% if t.status_source %} <a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a>{% endif %}{% endif %} {{ _("وكل المواعيد المعلنة في") }} <a href="{{ url_for('news_page') }}">{{ _("مواعيد التقديم") }}</a>.</p>
+    <p><strong>{{ _("إن أُغلق قبل نتائجك:") }}</strong> {{ sch.conflict_ar }} <a class="src" href="{{ sch.conflict_source }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></p>
   </div>
 </section>

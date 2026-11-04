@@ -3,6 +3,8 @@
 // Their choice is saved in localStorage, which stays on this device and is never sent anywhere.
 // Without JavaScript the button stays hidden and the site is shown in light mode.
 
+// Classic scripts share one global scope, so each file names its own helper (a shared `t` broke them).
+const themeText = (text) => (window.WADIH_I18N && window.WADIH_I18N[text]) || text; // English pages (decision 066)
 const THEME_COLORS = { light: "#F6F4EE", dark: "#0c1310" };
 const system = window.matchMedia("(prefers-color-scheme: dark)");
 const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -43,8 +45,8 @@ if (button) {
   // The label names the mode you'll switch TO, which is clearer for a two-state switch.
   const render = () => {
     const next = current === "dark" ? "فاتح" : "داكن";
-    label.textContent = next;
-    button.setAttribute("aria-label", `التبديل إلى الوضع ال${next}`);
+    label.textContent = themeText(next);
+    button.setAttribute("aria-label", themeText(`التبديل إلى الوضع ال${next}`));
     button.setAttribute("aria-pressed", current === "dark" ? "true" : "false");
   };
 

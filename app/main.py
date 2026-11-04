@@ -10,9 +10,12 @@ from fastapi.exception_handlers import http_exception_handler
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from jinja2 import pass_context
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app.content import SLUG_PATTERN, list_slugs, load_page
+from app import i18n
+from app.content import SLUG_PATTERN, english_titles, list_slugs, load_page
+from app.i18n import tf, tr
 from app.search import SiteSearch
 from app.sky import rowwad_chart, star_field
 from app.universities import COUNT_FORMS, NOT_LISTED_AR, PROGRAMS_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
@@ -25,6 +28,8 @@ DATA_DIR = APP_DIR.parent / "data"
 SHOW_DRAFTS = os.environ.get("WADIH_SHOW_DRAFTS") == "1"
 
 
+ENGLISH_MONTHS = ["January", "February", "March", "April", "May", "June",
+                  "July", "August", "September", "October", "November", "December"]
 ARABIC_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
                  "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
 
@@ -47,9 +52,11 @@ def load_json(name):
 
 
 def arabic_date(iso_date):
-    """'2026-10-09' -> '9 أكتوبر 2026'. Also accepts a date object (Markdown frontmatter dates)."""
+    """'2026-10-09' -> '9 أكتوبر 2026', or '9 October 2026' on English pages. Also accepts a date object
+    (Markdown frontmatter dates)."""
     year, month, day = (int(part) for part in str(iso_date).split("-"))
-    return f"{day} {ARABIC_MONTHS[month - 1]} {year}"
+    months = ENGLISH_MONTHS if i18n.is_english() else ARABIC_MONTHS
+    return f"{day} {months[month - 1]} {year}"
 
 
 def sort_news(items):
@@ -69,6 +76,10 @@ def is_confirmed(item):
     return bool(item.get("source_url") or item.get("owner_confirmed"))
 
 
+i18n.load()  # the English texts, data/i18n/*.en.json (decision 066)
+# Page titles are read from the Arabic Markdown in places computed once (the footer, the guides list, search):
+# their English comes from content/en, so a translated page translates its title everywhere.
+i18n.add_from_data(english_titles())
 site = load_json("site.json")
 paths = load_json("paths.json")
 test_needs = load_json("test_needs.json")
@@ -115,7 +126,7 @@ def waaid_who(group):
     """«لمن» for an announcement: how many of its programs take high school graduates."""
     hs, other = group["hs_count"], group["other_count"]
     if hs and other:
-        return f"{count_ar(hs, PROGRAMS_AR)} لخريجي الثانوية، و{count_ar(other, PROGRAMS_AR)} لغير خريجي الثانوية"
+        return tf("{hs} لخريجي الثانوية، و{other} لغير خريجي الثانوية", hs=count_ar(hs, PROGRAMS_AR), other=count_ar(other, PROGRAMS_AR))
     return "لخريجي الثانوية" if hs else "لغير خريجي الثانوية"
 
 
@@ -173,8 +184,8 @@ def status_board():
         single = len(g["programs"]) == 1
         first = g["programs"][0]
         item = {
-            "title_ar": first["program_ar"] if single else f"برامج {g['company_ar']}",
-            "program_ar": f"مسار واعد، {g['company_ar'] if single else count_ar(len(g['programs']), PROGRAMS_AR)}",
+            "title_ar": first["program_ar"] if single else tf("برامج {company}", company=g["company_ar"]),
+            "program_ar": tf("مسار واعد، {what}", what=g["company_ar"] if single else count_ar(len(g["programs"]), PROGRAMS_AR)),
             "page": f"/waaid#{g['id']}", "source_url": w["source_url"],
             "who_ar": waaid_who(g),  # every واعد row says who it is for, one way (no tag)
             "sort_last": g["hs_count"] == 0,
@@ -211,8 +222,16 @@ def program_slugs():
 
 # Site search (decision 045): built once at startup from the published pages and facts.
 site_search = SiteSearch(program_slugs(), paths_by_id, test_needs, explorer)
+with i18n.use_lang("en"):
+    site_search_en = SiteSearch(program_slugs(), paths_by_id, test_needs, explorer)
+
+
+def current_search():
+    """The search index of the page's language."""
+    return site_search_en if i18n.is_english() else site_search
 
 app = FastAPI(title=site["name"])
+app.add_middleware(i18n.LanguageMiddleware)  # /en/... is the same page in English (decision 066)
 
 # One public address (decision 042): visits to the old Render address or to www are sent, with the same
 # path and query, to base_url. Other hosts (local runs, tests) are left alone.
@@ -240,6 +259,39 @@ def asset_version(path):
     data = (APP_DIR / "static" / path).read_bytes()
     return hashlib.sha256(data).hexdigest()[:8]
 templates = Jinja2Templates(directory=APP_DIR / "templates")
+
+
+@pass_context
+def url_for_language(context, name, /, **path_params):
+    """url_for that stays in the page's language. Static files have one address for both."""
+    url = context["request"].url_for(name, **path_params)
+    return url if name == "static" or not i18n.is_english() else url.replace(path=i18n.EN_PREFIX + url.path)
+
+
+def render(request, name, context=None, status_code=200):
+    """Draw a page. On English pages, links written as /path get /en in front (i18n.localize_links)."""
+    response = templates.TemplateResponse(request, name, context or {}, status_code=status_code)
+    if i18n.is_english():
+        response.body = i18n.localize_links(response.body.decode("utf-8")).encode("utf-8")
+        response.headers["content-length"] = str(len(response.body))
+    return response
+
+
+def language_links(request):
+    """This page in Arabic and in English, as paths with the query kept. Used by the toggle and Google's tags."""
+    # One leading slash: a path like //example.com must never become a link to another site.
+    path, query = "/" + request.url.path.lstrip("/"), request.url.query
+    tail = "?" + query if query else ""
+    return {"ar": path + tail, "en": i18n.EN_PREFIX + path + tail, "ar_path": path, "en_path": i18n.EN_PREFIX + path}
+
+
+# Everything {{ value }} prints goes through this, so data shows in the page's language.
+templates.env.finalize = i18n.finalize
+templates.env.globals.update({
+    "_": i18n.t, "_f": i18n.tfm, "tr": tr, "ar": i18n.keep_arabic, "is_en": i18n.is_english,
+    "language_links": language_links, "url_for": url_for_language,
+    "js_strings": lambda: i18n.js_strings(),
+})
 templates.env.globals["site"] = site
 templates.env.globals["asset_version"] = asset_version
 templates.env.globals["show_drafts"] = SHOW_DRAFTS
@@ -279,7 +331,7 @@ templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     show_quote = featured_quote["status"] == "verified" or SHOW_DRAFTS
-    return templates.TemplateResponse(
+    return render(
         request,
         "home.html",
         {
@@ -297,13 +349,13 @@ def home(request: Request):
 @app.get("/news", response_class=HTMLResponse)
 def news_page(request: Request):
     # Everything on the board (no limits) plus the announcements from data/news.json.
-    return templates.TemplateResponse(request, "news.html",
+    return render(request, "news.html",
                                       {"board": status_board(), "announcements": news, "path_names": path_names})
 
 
 @app.get("/about", response_class=HTMLResponse)
 def about(request: Request):
-    return templates.TemplateResponse(request, "about.html", {"paths": paths, "explorer": explorer})
+    return render(request, "about.html", {"paths": paths, "explorer": explorer})
 
 
 @app.get("/grades/{slug}", response_class=HTMLResponse)
@@ -313,7 +365,7 @@ def grade_page(request: Request, slug: str):
     if page is None:
         raise HTTPException(status_code=404)
     # Each grade page has the same structure (grade.html, decision 040); its own tool comes from data/.
-    return templates.TemplateResponse(request, "grade.html", {
+    return render(request, "grade.html", {
         "page": page, "grades": home_text["grades"], "explorer": explorer,
         "test_needs": test_needs, "sat_summary": explorer.sat_summary(),  # ثاني ثانوي
         "school_tracks": school_tracks,  # أول ثانوي
@@ -330,7 +382,7 @@ def resource_page(request: Request, slug: str):
     page = load_page("resources", slug)
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "page.html", {"page": page, "explorer": explorer})
+    return render(request, "page.html", {"page": page, "explorer": explorer})
 
 
 @app.get("/programs/{slug}", response_class=HTMLResponse)
@@ -340,7 +392,7 @@ def program_page(request: Request, slug: str):
     page = load_page("programs", slug) if program else None
     if page is None:
         raise HTTPException(status_code=404)
-    return templates.TemplateResponse(request, "program.html", {"program": program, "page": page, "explorer": explorer})
+    return render(request, "program.html", {"program": program, "page": page, "explorer": explorer})
 
 
 @app.get("/waaid", response_class=HTMLResponse)
@@ -355,7 +407,7 @@ def waaid_page(request: Request):
         "closed": [g for g in groups if g["apply_to"] < today],
     }
     track = next(t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("latest_programs"))
-    return templates.TemplateResponse(request, "waaid.html", {
+    return render(request, "waaid.html", {
         "sections": sections, "track": track, "w": waaid(), "explorer": explorer,
     })
 
@@ -373,7 +425,7 @@ def universities_page(request: Request, q: str = "", track: str = "", field: str
                # The الرواد destination at the top of the page (decision 060).
                "arruaad_track": next(t for t in scholarship_tracks if t["id"] == "arruaad")}
     template = "partials/uni_results.html" if partial else "universities.html"
-    return templates.TemplateResponse(request, template, context)
+    return render(request, template, context)
 
 
 # The scholarship's extra conditions for a foundation year (a sourced fact in paths.json), or None if unpublished.
@@ -388,7 +440,7 @@ def university_page(request: Request, uid: str, from_: str | None = Query(None, 
         raise HTTPException(status_code=404)
     # `from` is the search the student came from (set on result links), so the page can link back
     # to the same results. Only known parameters survive (see Explorer.back_url).
-    return templates.TemplateResponse(request, "university.html",
+    return render(request, "university.html",
                                       {"p": profile, "explorer": explorer, "today": date.today().isoformat(),
                                        "back_url": explorer.back_url(from_),
                                        # The scholarship's own dates, shown apart from the university's (decision 038).
@@ -404,13 +456,13 @@ def my_list(request: Request, ids: str = "", partial: bool = False):
     asks for its rows with ?partial=1&ids=a,b. Only ids of universities we know are drawn, in the
     student's order, at most 100. Nothing is stored here."""
     if not partial:
-        return templates.TemplateResponse(request, "my_list.html", {})
+        return render(request, "my_list.html", {})
     wanted = []
     for uid in ids.split(",")[:100]:
         uid = uid.strip()
         if SLUG_PATTERN.match(uid) and uid in explorer.universities and uid not in wanted:
             wanted.append(uid)
-    return templates.TemplateResponse(request, "partials/my_list_rows.html",
+    return render(request, "partials/my_list_rows.html",
                                       {"unis": [explorer.universities[uid] for uid in wanted], "explorer": explorer})
 
 
@@ -418,14 +470,14 @@ def my_list(request: Request, ids: str = "", partial: bool = False):
 def search_page(request: Request, q: str = ""):
     # Works without JavaScript: the form reloads this page with ?q=.
     q = q.strip()[:200]
-    return templates.TemplateResponse(request, "search.html", {"q": q, "results": site_search.search(q) if q else []})
+    return render(request, "search.html", {"q": q, "results": current_search().search(q) if q else []})
 
 
 @app.get("/api/search")
 def search_api(q: str = ""):
     # The same results as /search, as JSON: the retrieval step the future chatbot will call.
     q = q.strip()[:200]
-    return JSONResponse({"query": q, "results": site_search.search(q) if q else []})
+    return JSONResponse({"query": q, "results": [{**r, "url": i18n.prefix() + r["url"]} for r in current_search().search(q)] if q else []})
 
 
 @app.get("/api/suggestions")
@@ -458,7 +510,9 @@ def sitemap():
         + ["/universities"]
         + [f"/universities/{uid}" for uid in sorted(explorer.universities)]
     )
-    urls = "".join(f"  <url><loc>{site['base_url']}{path}</loc></url>\n" for path in page_paths)
+    # Every page exists in both languages (decision 066); Google reads the pairs from each page's own tags.
+    urls = "".join(f"  <url><loc>{site['base_url']}{prefix}{path}</loc></url>\n"
+                   for prefix in ("", i18n.EN_PREFIX) for path in page_paths)
     xml = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -471,5 +525,5 @@ def sitemap():
 async def not_found(request: Request, exc: StarletteHTTPException):
     # A friendly Arabic page for unknown addresses; other errors keep FastAPI's default.
     if exc.status_code == 404:
-        return templates.TemplateResponse(request, "404.html", status_code=404)
+        return render(request, "404.html", status_code=404)
     return await http_exception_handler(request, exc)

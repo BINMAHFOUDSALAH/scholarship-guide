@@ -3,8 +3,8 @@
   source; the الرواد row is counted from the universities' requirement files (Explorer.sat_summary).
 #}
 <section class="grade-tool test-needs" aria-labelledby="tests-title">
-  <h2 id="tests-title">الاختبارات: من يطلب ماذا؟</h2>
-  <p class="result-note">لا يوجد اختبار واحد يطلبه الجميع. اعرف أين ستقدّم أولًا، ثم اختبر ما تطلبه تلك الجهات.</p>
+  <h2 id="tests-title">{{ _("الاختبارات: من يطلب ماذا؟") }}</h2>
+  <p class="result-note">{{ _("لا يوجد اختبار واحد يطلبه الجميع. اعرف أين ستقدّم أولًا، ثم اختبر ما تطلبه تلك الجهات.") }}</p>
   <dl class="summary-list">
     {% for row in test_needs.rows %}
     <div class="summary-row">
@@ -12,12 +12,12 @@
       <dd>
         {% if row.computed %}
         {% set s = sat_summary %}
-        <span lang="en" dir="ltr">SAT</span> أو <span lang="en" dir="ltr">ACT</span>: مطلوب في {{ s.counts.get("required", 0) }} من {{ s.researched }}، واختياري في {{ s.counts.get("optional", 0) }}، ولا يُنظر فيه في {{ s.counts.get("not_considered", 0) }}{% if s.counts.get("unknown") %}، وغير محدد في {{ s.counts.unknown }}{% endif %}{% if s.counts.get("unverified") %}، ولم نتحقق منه في {{ s.counts.unverified }}{% endif %}.
-        واختبار الإنجليزية ودرجته تحددهما كل جامعة.
+        <span lang="en" dir="ltr">SAT</span> {{ _("أو") }} <span lang="en" dir="ltr">ACT</span>{{ _(": مطلوب في") }} {{ s.counts.get("required", 0) }} {{ _("من") }} {{ s.researched }}{{ _("، واختياري في") }} {{ s.counts.get("optional", 0) }}{{ _("، ولا يُنظر فيه في") }} {{ s.counts.get("not_considered", 0) }}{% if s.counts.get("unknown") %}{{ _("، وغير محدد في") }} {{ s.counts.unknown }}{% endif %}{% if s.counts.get("unverified") %}{{ _("، ولم نتحقق منه في") }} {{ s.counts.unverified }}{% endif %}.
+        {{ _("واختبار الإنجليزية ودرجته تحددهما كل جامعة.") }}
         <a href="{{ row.source.url }}">{{ row.source.title }}</a>
         {% else %}
         {{ row.need_ar }}
-        <a class="src" href="{{ row.source.url }}" target="_blank" rel="noopener">المصدر ↗</a>
+        <a class="src" href="{{ row.source.url }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a>
         {% endif %}
       </dd>
     </div>
@@ -25,5 +25,5 @@
   </dl>
   {# Counted from the requirement files, like the الرواد row, so it can't go stale as waves are added. #}
   {% set emdad = explorer.sat_summary("emdad") %}
-  <p class="fact-note" data-emdad-count>جامعات مسار إمداد: جمعنا متطلبات {{ emdad.researched }} من {{ emdad.total }}، وتجدها في صفحة كل جامعة. وللبقية ابحث في صفحة القبول الدولي (International admissions) في موقع الجامعة. تعريف كل اختبار وموقعه الرسمي في صفحاته: <a href="{{ url_for('resource_page', slug='ielts') }}">آيلتس</a>، <a href="{{ url_for('resource_page', slug='toefl') }}">توفل</a>، <a href="{{ url_for('resource_page', slug='sat') }}">SAT</a>، <a href="{{ url_for('resource_page', slug='qudurat-tahsili') }}">القدرات والتحصيلي</a>.</p>
+  <p class="fact-note" data-emdad-count>{{ _("جامعات مسار إمداد: جمعنا متطلبات") }} {{ emdad.researched }} {{ _("من") }} {{ emdad.total }}{{ _("، وتجدها في صفحة كل جامعة. وللبقية ابحث في صفحة القبول الدولي (International admissions) في موقع الجامعة. تعريف كل اختبار وموقعه الرسمي في صفحاته:") }} <a href="{{ url_for('resource_page', slug='ielts') }}">{{ _("آيلتس") }}</a>{{ _("،") }} <a href="{{ url_for('resource_page', slug='toefl') }}">{{ _("توفل") }}</a>{{ _("،") }} <a href="{{ url_for('resource_page', slug='sat') }}">SAT</a>{{ _("،") }} <a href="{{ url_for('resource_page', slug='qudurat-tahsili') }}">{{ _("القدرات والتحصيلي") }}</a>.</p>
 </section>

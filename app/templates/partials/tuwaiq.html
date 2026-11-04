@@ -7,12 +7,15 @@
   <div class="container tuwaiq-inner">
     <div class="tuwaiq-text">
       <blockquote id="tuwaiq-quote" class="tuwaiq-quote">
-        <p>«{{ quote.quote_ar }}»</p>
-        <footer>{{ quote.attribution_ar }}{% if quote.context_ar %}، {{ quote.context_ar }}{% endif %}</footer>
+        {#- English pages: the words as spoken, then our translation, so a translation never reads as the quote itself. #}
+        {% if is_en() %}<p lang="ar" dir="rtl">«{{ ar(quote.quote_ar) }}»</p>
+        <p class="tuwaiq-translation">{{ _f("ترجمتنا: «{quote}»", quote=quote.quote_ar) }}</p>
+        {% else %}<p>{{ _("«") }}{{ quote.quote_ar }}{{ _("»") }}</p>{% endif %}
+        <footer>{{ quote.attribution_ar }}{% if quote.context_ar %}{{ _("،") }} {{ quote.context_ar }}{% endif %}</footer>
       </blockquote>
       <p class="tuwaiq-message">{{ quote.message_ar }}</p>
       {# The page ends on a step, not a dead end (decision 060): back to the route of the three years. #}
-      <p class="tuwaiq-next"><a class="btn btn--secondary" href="#grades">اختر صفك وابدأ</a></p>
+      <p class="tuwaiq-next"><a class="btn btn--secondary" href="#grades">{{ _("اختر صفك وابدأ") }}</a></p>
     </div>
 
     <div class="video">
@@ -27,26 +30,26 @@
         <span class="video-play" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M8 5 L19 12 L8 19 Z" fill="currentColor"/></svg>
         </span>
-        <span class="video-label">شاهد المقطع الأصلي</span>
-        <span class="video-note">يُحمَّل من يوتيوب عند الضغط فقط</span>
+        <span class="video-label">{{ _("شاهد المقطع الأصلي") }}</span>
+        <span class="video-note">{{ _("يُحمَّل من يوتيوب عند الضغط فقط") }}</span>
       </a>
       {% elif quote.video_url %}
       <a class="video-facade" href="{{ quote.video_url }}" target="_blank" rel="noopener">
         <span class="video-play" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M8 5 L19 12 L8 19 Z" fill="currentColor"/></svg>
         </span>
-        <span class="video-label">شاهد المقطع الأصلي ↗</span>
+        <span class="video-label">{{ _("شاهد المقطع الأصلي ↗") }}</span>
       </a>
       {% endif %}
       {% if quote.youtube_id or quote.video_url %}
-      <p class="video-source">المصدر: <a href="{{ quote.video_url }}" target="_blank" rel="noopener">{{ quote.video_publisher }} على يوتيوب ↗</a></p>
+      <p class="video-source">{{ _("المصدر:") }} <a href="{{ quote.video_url }}" target="_blank" rel="noopener">{{ quote.video_publisher }} {{ _("على يوتيوب ↗") }}</a></p>
       {% elif show_drafts %}
       <div class="video-facade video-facade--empty">
-        <span class="video-label">مكان المقطع الأصلي</span>
-        <span class="video-note">يُضاف بعد التحقق من رابط رسمي</span>
+        <span class="video-label">{{ _("مكان المقطع الأصلي") }}</span>
+        <span class="video-note">{{ _("يُضاف بعد التحقق من رابط رسمي") }}</span>
       </div>
       {% endif %}
     </div>
   </div>
-  {% if quote.photo_credit %}<p class="container tuwaiq-credit">الصورة: {{ quote.photo_credit }}</p>{% endif %}
+  {% if quote.photo_credit %}<p class="container tuwaiq-credit">{{ _("الصورة:") }} {{ quote.photo_credit }}</p>{% endif %}
 </section>

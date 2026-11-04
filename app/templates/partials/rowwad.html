@@ -16,9 +16,9 @@
 <section class="rowwad" data-rowwad aria-labelledby="rowwad-title"{% if result.track != "arruaad" %} hidden{% endif %}>
   <div class="container rowwad-inner">
     <div class="rowwad-text">
-      <p class="rowwad-program"><a href="{{ url_for('program_page', slug='custodian-scholarship') }}">برنامج خادم الحرمين الشريفين للابتعاث</a></p>
-      <h1 id="rowwad-title" class="rowwad-title">جامعات مسار الرواد</h1>
-      <p class="lead">{{ t.note_ar }}. الدرجة: {{ t.levels_ar }}.</p>
+      <p class="rowwad-program"><a href="{{ url_for('program_page', slug='custodian-scholarship') }}">{{ _("برنامج خادم الحرمين الشريفين للابتعاث") }}</a></p>
+      <h1 id="rowwad-title" class="rowwad-title">{{ _("جامعات مسار الرواد") }}</h1>
+      <p class="lead">{{ t.note_ar }}{{ _(". الدرجة:") }} {{ t.levels_ar }}.</p>
     </div>
 
     <div class="rowwad-aside">
@@ -26,8 +26,8 @@
       {% if st and (t.status_source or t.owner_confirmed) %}
       <div class="rowwad-status">
         <p class="rowwad-status-line">{{ c.status_tag(st, t.status_until) }}</p>
-        {% if t.apply_with_ar %}<p class="rowwad-who">لمن: {{ t.apply_with_ar }}</p>{% endif %}
-        {% if t.status_source %}<p class="rowwad-source"><a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">المصدر الرسمي ↗</a></p>{% endif %}
+        {% if t.apply_with_ar %}<p class="rowwad-who">{{ _("لمن:") }} {{ t.apply_with_ar }}</p>{% endif %}
+        {% if t.status_source %}<p class="rowwad-source"><a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي ↗") }}</a></p>{% endif %}
       </div>
       {{ c.window_note(t) }}
       {% endif %}
@@ -71,13 +71,13 @@
 
         {# Home: where the student starts. The guiding star, as on the homepage. #}
         {{ sky.guide_star(chart.home[0], chart.home[1], 11, "chart-home") }}
-        <text class="chart-label chart-label--home" x="{{ chart.home[0] }}" y="{{ chart.home[1] + 34 }}" text-anchor="middle">المملكة</text>
+        <text class="chart-label chart-label--home" x="{{ chart.home[0] }}" y="{{ chart.home[1] + 34 }}" text-anchor="middle">{{ _("المملكة") }}</text>
       </svg>
-      <figcaption class="chart-readout" data-chart-readout data-default="{{ chart.stars | length | count_ar('universities') }} في {{ chart.countries | length | count_ar('countries') }}">{{ chart.stars | length | count_ar("universities") }} في {{ chart.countries | length | count_ar("countries") }}</figcaption>
+      <figcaption class="chart-readout" data-chart-readout data-default="{{ chart.stars | length | count_ar('universities') }} {{ _('في') }} {{ chart.countries | length | count_ar('countries') }}">{{ chart.stars | length | count_ar("universities") }} {{ _("في") }} {{ chart.countries | length | count_ar("countries") }}</figcaption>
     </figure>
 
     {# The constellations as filters: choosing a country narrows the table below (and lights its path on the chart). #}
-    <ul class="country-chips" aria-label="جامعات الرواد حسب الدولة">
+    <ul class="country-chips" aria-label="{{ _('جامعات الرواد حسب الدولة') }}">
       {% for k in chart.countries %}
       <li><a class="country-chip" href="{{ url_for('universities_page') }}?track=arruaad&amp;country={{ k.code }}" data-country-chip="{{ k.code }}"{% if result.country == k.code %} aria-current="true"{% endif %}>
         <img class="flag" src="{{ url_for('static', path='img/flags/' ~ (k.code | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">

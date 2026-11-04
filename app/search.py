@@ -14,7 +14,11 @@ import sqlite3
 import threading
 
 from app.content import list_slugs, load_page
+from app.i18n import is_english, tf, tr
 from app.universities import UNIVERSITIES_AR, count_ar, normalize
+
+ENGLISH_STOPWORDS = {"a", "an", "and", "are", "can", "do", "does", "for", "how", "i", "in", "is", "it", "my", "of", "on", "or",
+                     "the", "to", "what", "when", "where", "which", "who", "why", "with"}
 
 # Arabic writes "the" and some small words joined to the next word: «المنحة» = «ال» + «منحة».
 # Dropping them on both sides lets «منحة» find «المنحة» and «والمنحة». Words of 3 letters or
@@ -97,14 +101,14 @@ class SiteSearch:
             labelled += [(t["name_ar"], f) for t in program["tracks"] for f in t.get("facts") or []]
             for label, f in labelled:
                 if f["status"] in ("sourced", "conflict") and f.get("sources"):
-                    text = " ".join(filter(None, [f["text_ar"], f.get("note_ar")]))
-                    self.add(program["name_ar"], label, f"/programs/{slug}#fact-{f['id']}", text, f["sources"])
+                    text = " ".join(filter(None, [tr(f["text_ar"]), tr(f.get("note_ar"))]))
+                    self.add(tr(program["name_ar"]), tr(label), f"/programs/{slug}#fact-{f['id']}", text, f["sources"])
 
         # 3. «الاختبارات: من يطلب ماذا؟» (data/test_needs.json), shown on the ثاني ثانوي page.
         for row in test_needs["rows"]:
             if row.get("need_ar") and row.get("source", {}).get("url", "").startswith("http"):
-                self.add("الاختبارات: من يطلب ماذا؟", row["who_ar"], "/grades/grade-11#tests-title",
-                         row["need_ar"], [row["source"]])
+                self.add(tr("الاختبارات: من يطلب ماذا؟"), tr(row["who_ar"]), "/grades/grade-11#tests-title",
+                         tr(row["need_ar"]), [row["source"]])
 
         # 4. Each English test across the researched universities (decision 061), computed from
         # data/university_details/, so «duolingo» also answers "which universities accept it?".
@@ -114,20 +118,24 @@ class SiteSearch:
                 summary = explorer.test_summary(test)
                 if not page or page.get("status") != "sourced" or not summary["groups"]:
                     continue
-                counts = "، ".join(f"{g['title_ar']}: {len(g['rows'])}" for g in summary["groups"])
-                text = (f"{summary['label']} في {count_ar(summary['researched'], UNIVERSITIES_AR)} من قوائم الابتعاث جمعنا متطلباتها. "
-                        f"{counts}. الحد الأدنى والدرجة الموصى بها لكل جامعة، من صفحتها الرسمية.")
-                self.add(page["title"], f"{summary['label']} في جامعات القوائم", f"/resources/{slug}#universities",
+                counts = tr("، ").join(f"{tr(g['title_ar'])}: {len(g['rows'])}" for g in summary["groups"])
+                text = tf("{label} في {count} من قوائم الابتعاث جمعنا متطلباتها. {counts}. الحد الأدنى والدرجة الموصى بها لكل جامعة، من صفحتها الرسمية.",
+                          label=summary["label"], count=count_ar(summary["researched"], UNIVERSITIES_AR), counts=counts)
+                self.add(page["title"], tf("{label} في جامعات القوائم", label=summary["label"]), f"/resources/{slug}#universities",
                          text, page["sources"])
 
     def add(self, title, heading, url, text, sources):
         self.db.execute("INSERT INTO chunks VALUES (?, ?, ?, ?)",
                         (search_form(title), search_form(heading or ""), search_form(text), len(self.chunks)))
+        sources = [{**s, "title": tr(s["title"])} for s in sources]
         self.chunks.append({"title": title, "heading": heading, "url": url, "text": text, "sources": sources})
 
     def search(self, q):
         """The best chunks for q, most relevant first (at most MAX_RESULTS)."""
         words = search_form(q[:200]).split()[:12]
+        # English questions carry small words the guide's text may not hold next to the real ones.
+        if is_english():
+            words = [w for w in words if w not in ENGLISH_STOPWORDS] or words
         if not words:
             return []
         # Each word in quotes (so FTS5 never reads it as an operator), with * so «تقد» finds «تقديم».

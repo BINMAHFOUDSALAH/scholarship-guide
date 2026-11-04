@@ -401,7 +401,8 @@ main:has(> .tuwaiq) {
 
 .theme-toggle,
 .menu-button,
-.mylist-link {
+.mylist-link,
+.lang-toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -420,7 +421,8 @@ main:has(> .tuwaiq) {
 
 .theme-toggle:hover,
 .menu-button:hover,
-.mylist-link:hover {
+.mylist-link:hover,
+.lang-toggle:hover {
   border-color: var(--action);
 }
 
@@ -4251,7 +4253,8 @@ a.uni-name:hover .uni-name-en:only-child {
 @media (max-width: 479px) {
   .theme-toggle,
   .menu-button,
-  .mylist-link {
+  .mylist-link,
+  .lang-toggle {
     padding: 0 10px;
   }
 
@@ -4373,4 +4376,61 @@ a.uni-name:hover .uni-name-en:only-child {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2) var(--space-3);
+}
+
+/* ---------- English pages (decision 066) ---------- */
+
+/*
+  The language switch sits with the header tools and looks like them: a bordered control, never a flag.
+  Its label is in the other language («English» on Arabic pages, «العربية» on English ones), so a reader
+  who can't read this page can still find it. It keeps its text on phones: an icon alone wouldn't say which language.
+*/
+.lang-toggle {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lang-toggle:lang(ar) {
+  font-size: var(--text-base);
+}
+
+/* University names: on English pages the official English name is the main name, not the quiet line under an Arabic one. */
+:root[lang="en"] .uni-name-en {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: inherit;
+  text-align: start;
+}
+
+/*
+  Narrow phones: the header holds the logo, the language switch, «قائمتي», the theme and the menu. Below 380px the
+  gaps tighten; below 360px only the logo mark stays (the link keeps its name, site.name + «الصفحة الرئيسية»),
+  so nothing scrolls sideways. The mark itself is unchanged.
+*/
+@media (max-width: 379px) {
+  .header-inner {
+    gap: var(--space-2);
+  }
+
+  .header-tools {
+    gap: 6px;
+  }
+
+  .theme-toggle,
+  .menu-button,
+  .mylist-link,
+  .lang-toggle {
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 359px) {
+  .brand-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 }

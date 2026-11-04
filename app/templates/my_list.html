@@ -1,38 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}قائمتي | {{ site.name }}{% endblock %}
-{% block description %}الجامعات التي حفظتها في {{ site.name }}، محفوظة في متصفحك على هذا الجهاز.{% endblock %}
+{% block title %}{{ _("قائمتي |") }} {{ site.name }}{% endblock %}
+{% block description %}{{ _("الجامعات التي حفظتها في") }} {{ site.name }}{{ _("، محفوظة في متصفحك على هذا الجهاز.") }}{% endblock %}
 {# A personal page: nothing for search engines here. #}
 {% block head_extra %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block content %}
 <div class="mylist page-wide" data-mylist-page data-rows-url="{{ url_for('my_list') }}">
   <header class="mylist-header">
-    <h1>قائمتي</h1>
-    <p class="lead">الجامعات التي حفظتها لتعود إليها، مع أقرب موعد تقديم في كل جامعة.</p>
-    <p class="mylist-privacy">القائمة محفوظة في هذا المتصفح فقط: لا تنتقل إلى جهاز آخر، وتُحذف إذا مسحت بيانات المتصفح.</p>
+    <h1>{{ _("قائمتي") }}</h1>
+    <p class="lead">{{ _("الجامعات التي حفظتها لتعود إليها، مع أقرب موعد تقديم في كل جامعة.") }}</p>
+    <p class="mylist-privacy">{{ _("القائمة محفوظة في هذا المتصفح فقط: لا تنتقل إلى جهاز آخر، وتُحذف إذا مسحت بيانات المتصفح.") }}</p>
   </header>
 
   <div class="notice notice--warn" data-mylist-blocked hidden>
-    <p>متصفحك لا يسمح بحفظ البيانات على هذا الجهاز (مثلًا في التصفح الخاص)، فلا يمكن حفظ القائمة. جرّب نافذة عادية أو متصفحًا آخر.</p>
+    <p>{{ _("متصفحك لا يسمح بحفظ البيانات على هذا الجهاز (مثلًا في التصفح الخاص)، فلا يمكن حفظ القائمة. جرّب نافذة عادية أو متصفحًا آخر.") }}</p>
   </div>
 
   <noscript>
-    <div class="notice notice--warn"><p>«قائمتي» تحتاج تفعيل JavaScript في متصفحك.</p></div>
+    <div class="notice notice--warn"><p>{{ _("«قائمتي» تحتاج تفعيل JavaScript في متصفحك.") }}</p></div>
   </noscript>
 
   <p class="sr-only" role="status" data-mylist-status></p>
-  <p class="mylist-loading" data-mylist-loading hidden>جارٍ تحميل قائمتك…</p>
+  <p class="mylist-loading" data-mylist-loading hidden>{{ _("جارٍ تحميل قائمتك…") }}</p>
   <div class="notice notice--warn" data-mylist-error hidden>
-    <p>تعذّر عرض قائمتك الآن. تحقق من اتصالك ثم أعد تحميل الصفحة. قائمتك ما زالت محفوظة.</p>
+    <p>{{ _("تعذّر عرض قائمتك الآن. تحقق من اتصالك ثم أعد تحميل الصفحة. قائمتك ما زالت محفوظة.") }}</p>
   </div>
 
   <ul class="rows mylist-rows" data-mylist-rows hidden></ul>
 
   <div class="mylist-empty" data-mylist-empty hidden>
-    <p class="mylist-empty-title">لم تحفظ أي جامعة بعد.</p>
-    <p>اضغط «احفظ» بجانب أي جامعة في نتائج البحث، أو «احفظ في قائمتي» في صفحتها، وستجدها هنا.</p>
-    <a class="btn btn--primary" href="{{ url_for('universities_page') }}">ابحث في الجامعات</a>
+    <p class="mylist-empty-title">{{ _("لم تحفظ أي جامعة بعد.") }}</p>
+    <p>{{ _("اضغط «احفظ» بجانب أي جامعة في نتائج البحث، أو «احفظ في قائمتي» في صفحتها، وستجدها هنا.") }}</p>
+    <a class="btn btn--primary" href="{{ url_for('universities_page') }}">{{ _("ابحث في الجامعات") }}</a>
   </div>
 </div>
 {% endblock %}

@@ -4,7 +4,7 @@
 {% if w.programs %}
 {% set open = w.programs | selectattr("is_open") | list %}
 <p class="waaid-latest" id="waaid-latest">
-  <a class="waaid-latest-link" href="{{ url_for('waaid_page') }}">برامج مسار واعد: المواعيد وشروط كل برنامج</a>
-  <span class="waaid-summary-note">{% if open %}مفتوح الآن: {{ open | length | count_ar("programs") }}، منها {{ open | selectattr("for_high_school") | list | length }} لخريجي الثانوية{% else %}لا يوجد برنامج مفتوح الآن{% endif %}</span>
+  <a class="waaid-latest-link" href="{{ url_for('waaid_page') }}">{{ _("برامج مسار واعد: المواعيد وشروط كل برنامج") }}</a>
+  <span class="waaid-summary-note">{% if open %}{{ _("مفتوح الآن:") }} {{ open | length | count_ar("programs") }}{{ _f("، منها {n} لخريجي الثانوية", n=open | selectattr("for_high_school") | list | length) }}{% else %}{{ _("لا يوجد برنامج مفتوح الآن") }}{% endif %}</span>
 </p>
 {% endif %}

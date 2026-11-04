@@ -8,7 +8,7 @@
 #}
 {% macro uni_name(u, link=True, back=None) %}
 {% if link %}<a class="uni-name" href="{{ url_for('university_page', uid=u.id) }}{% if back is not none %}?from={{ back | urlencode }}{% endif %}">{% else %}<span class="uni-name">{% endif %}
-  {% if u.name_ar %}<span class="uni-name-ar">{{ u.name_ar }}</span>{% endif %}
+  {% if u.name_ar and not is_en() %}<span class="uni-name-ar">{{ u.name_ar }}</span>{% endif %}
   <span class="uni-name-en" lang="en" dir="ltr">{{ u.name_en }}</span>
 {% if link %}</a>{% else %}</span>{% endif %}
 {% endmacro %}
@@ -18,13 +18,13 @@
   "back to results" lands on the same row) until mylist.js knows the browser can keep the list;
   without JavaScript or with storage blocked, it never shows.
 #}
-{% macro save_button(u) %}<button class="save-mini" type="button" data-save="{{ u.id }}" data-save-name="{{ u.name_ar or u.name_en }}" data-pending tabindex="-1"><span data-save-label>احفظ</span></button>{% endmacro %}
+{% macro save_button(u) %}<button class="save-mini" type="button" data-save="{{ u.id }}" data-save-name="{{ u.name_ar or u.name_en }}" data-pending tabindex="-1"><span data-save-label>{{ _("احفظ") }}</span></button>{% endmacro %}
 
 {# The notes the official guide attaches to a listing. #}
 {% macro listing_notes(l) %}
-{% if l.masters_only %}<span class="tag tag--warn">ماجستير فقط</span>{% endif %}
-{% if l.hearing_impaired_only %}<span class="tag">لذوي الإعاقة السمعية</span>{% endif %}
-{% if l.bachelors_only_majors %}<span class="tag">بكالوريوس في تخصصات محددة</span>{% endif %}
+{% if l.masters_only %}<span class="tag tag--warn">{{ _("ماجستير فقط") }}</span>{% endif %}
+{% if l.hearing_impaired_only %}<span class="tag">{{ _("لذوي الإعاقة السمعية") }}</span>{% endif %}
+{% if l.bachelors_only_majors %}<span class="tag">{{ _("بكالوريوس في تخصصات محددة") }}</span>{% endif %}
 {% endmacro %}
 
 {# One واعد program: what, who runs it, where, when, open or closed, and the key requirements. #}
@@ -33,11 +33,11 @@
   <p class="waaid-title">
     <strong>{{ p.program_ar }}</strong>
     {{ c.status_tag('open' if p.is_open else 'closed', label=None if p.is_open else 'مغلق') }}
-    {% if p.for_high_school %}<span class="tag">لخريجي الثانوية</span>{% endif %}
+    {% if p.for_high_school %}<span class="tag">{{ _("لخريجي الثانوية") }}</span>{% endif %}
   </p>
-  <p class="waaid-meta">{{ p.company_ar }}، {% if p.university_id %}<a href="{{ url_for('university_page', uid=p.university_id) }}" lang="en" dir="ltr">{{ p.institution }}</a>{% else %}<bdi lang="en">{{ p.institution }}</bdi>{% endif %} ({{ p.country_ar }})</p>
-  <p class="waaid-meta">{{ p.level_ar }}، {{ p.duration_ar }}</p>
-  <p class="waaid-meta">التقديم من {{ p.apply_from | arabic_date }} إلى {{ p.apply_to | arabic_date }}{% if p.start_ar %}، وبداية الدراسة {{ p.start_ar }}{% endif %}</p>
+  <p class="waaid-meta">{{ p.company_ar }}{{ _("،") }} {% if p.university_id %}<a href="{{ url_for('university_page', uid=p.university_id) }}" lang="en" dir="ltr">{{ p.institution }}</a>{% else %}<bdi lang="en">{{ p.institution }}</bdi>{% endif %} ({{ p.country_ar }})</p>
+  <p class="waaid-meta">{{ p.level_ar }}{{ _("،") }} {{ p.duration_ar }}</p>
+  <p class="waaid-meta">{{ _("التقديم من") }} {{ p.apply_from | arabic_date }} {{ _("إلى") }} {{ p.apply_to | arabic_date }}{% if p.start_ar %}{{ _("، وبداية الدراسة") }} {{ p.start_ar }}{% endif %}</p>
   {% if p.requirements_ar %}<ul class="waaid-req">{% for x in p.requirements_ar %}<li>{{ x }}</li>{% endfor %}</ul>{% endif %}
 </li>
 {% endmacro %}
@@ -46,10 +46,10 @@
   One university date in words: «آخر موعد للتقديم، Early Decision، لخريف 2027». Shared by the
   result rows, «قائمتي», and the university page (decision 038). Arabic commas, not dots (decision 062).
 #}
-{% macro date_words(x) %}{{ x.event_ar }}{% if x.round_ar %}، <bdi>{{ x.round_ar }}</bdi>{% endif %}، ل{{ x.cycle_ar }}{% endmacro %}
+{% macro date_words(x) %}{{ x.event_ar }}{% if x.round_ar %}{{ _("،") }} <bdi>{{ x.round_ar }}</bdi>{% endif %}{{ _("، ل") }}{{ x.cycle_ar }}{% endmacro %}
 
 {# The short form for a result row: «آخر موعد للتقديم، Early Decision». No brackets: they flip around English text in RTL. #}
-{% macro date_short(x) %}{{ x.event_ar }}{% if x.round_ar %}، <bdi>{{ x.round_ar }}</bdi>{% endif %}{% endmacro %}
+{% macro date_short(x) %}{{ x.event_ar }}{% if x.round_ar %}{{ _("،") }} <bdi>{{ x.round_ar }}</bdi>{% endif %}{% endmacro %}
 
 {#
   At a glance (decisions 038, 062): the English tests the file covers, SAT/ACT (where it applies), the university's
@@ -62,7 +62,7 @@
 {% if k.researched %}
 <dl class="key-facts">
   <div class="kf-row">
-    <dt>الإنجليزية</dt>
+    <dt>{{ _("الإنجليزية") }}</dt>
     <dd>{% if k.english_groups %}<ul class="kf-tests">{% for g in k.english_groups %}<li><bdi class="kf-test" lang="en">{{ g.labels | join(" / ") }}</bdi> <span class="kf-val">{{ g.text }}</span></li>{% endfor %}</ul>{% else %}{{ k.english_none_ar }}{% endif %}</dd>
   </div>
   {% if k.sat_ar %}
@@ -72,20 +72,20 @@
   </div>
   {% endif %}
   <div class="kf-row">
-    <dt>أقرب موعد في الجامعة</dt>
-    <dd>{% if k.next %}<strong class="kf-date">{{ k.next.date | arabic_date }}</strong> <span class="kf-date-what">{{ date_short(k.next) }}</span>{% else %}لا يوجد لدينا موعد قادم مؤكد{% endif %}</dd>
+    <dt>{{ _("أقرب موعد في الجامعة") }}</dt>
+    <dd>{% if k.next %}<strong class="kf-date">{{ k.next.date | arabic_date }}</strong> <span class="kf-date-what">{{ date_short(k.next) }}</span>{% else %}{{ _("لا يوجد لدينا موعد قادم مؤكد") }}{% endif %}</dd>
   </div>
 </dl>
 {% if link %}{{ admissions_link(u) }}{% endif %}
 {% elif not quiet %}
-<p class="key-facts key-facts--unknown">المتطلبات والمواعيد: لم نجمعها بعد.</p>
+<p class="key-facts key-facts--unknown">{{ _("المتطلبات والمواعيد: لم نجمعها بعد.") }}</p>
 {% endif %}
 {% endmacro %}
 
 {# The university's official admissions page, from its requirements file (a result row puts it beside «احفظ»). #}
 {% macro admissions_link(u) %}
 {% set url = (explorer.details.get(u.id) or {}).get("admissions_url") %}
-{% if url %}<p class="kf-link"><a class="src" href="{{ url }}" target="_blank" rel="noopener">صفحة القبول الرسمية ↗</a></p>{% endif %}
+{% if url %}<p class="kf-link"><a class="src" href="{{ url }}" target="_blank" rel="noopener">{{ _("صفحة القبول الرسمية ↗") }}</a></p>{% endif %}
 {% endmacro %}
 
 {#
@@ -95,12 +95,12 @@
 #}
 {% macro app_fee(u, d, source=false) %}
 {% set f = d.application_fee %}
-<span class="fee-line fee-amount">{% if f.fee_usd == 0 %}بلا رسوم تقديم{% elif f.fee_usd %}<strong><bdi lang="en">${{ f.fee_usd }}</bdi></strong> للطلاب الدوليين{% else %}الرسوم غير منشورة{% endif %}</span>
+<span class="fee-line fee-amount">{% if f.fee_usd == 0 %}{{ _("بلا رسوم تقديم") }}{% elif f.fee_usd %}<strong><bdi lang="en">${{ f.fee_usd }}</bdi></strong> {{ _("للطلاب الدوليين") }}{% else %}{{ _("الرسوم غير منشورة") }}{% endif %}</span>
 {%- if waiver_ar[f.waiver] %}<span class="fee-line">{{ waiver_ar[f.waiver] }}</span>{% endif %}
 {%- if f.note_ar %}<span class="fee-line fee-note">{{ f.note_ar }}</span>{% endif %}
 <span class="fee-line fee-links">
-{%- if source %}<a class="src" href="{{ f.source_url }}" target="_blank" rel="noopener">المصدر ↗</a>{% if f.waiver_source_url %} <a class="src" href="{{ f.waiver_source_url }}" target="_blank" rel="noopener">مصدر الإعفاء ↗</a>{% endif %}{% endif %}
-{%- if u.country == "US" and f.waiver in ("accepts_common_app", "own_waiver") %}{% if source %} {% endif %}<a href="{{ url_for('resource_page', slug='us-applications') }}#fee-waiver">كيف تطلب الإعفاء؟</a>{% endif %}
+{%- if source %}<a class="src" href="{{ f.source_url }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a>{% if f.waiver_source_url %} <a class="src" href="{{ f.waiver_source_url }}" target="_blank" rel="noopener">{{ _("مصدر الإعفاء ↗") }}</a>{% endif %}{% endif %}
+{%- if u.country == "US" and f.waiver in ("accepts_common_app", "own_waiver") %}{% if source %} {% endif %}<a href="{{ url_for('resource_page', slug='us-applications') }}#fee-waiver">{{ _("كيف تطلب الإعفاء؟") }}</a>{% endif %}
 </span>
 {% endmacro %}
 
@@ -110,7 +110,7 @@
   The flag is decorative (alt=""): the country's name follows it (decision 049).
 #}
 {% macro country(u) %}
-<span class="uni-country"><img class="uni-flag" src="{{ url_for('static', path='img/flags/' ~ (u.country | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">لغة الدولة: {{ u.country_info.language_ar }}</span>{% endif %}</span>
+<span class="uni-country"><img class="uni-flag" src="{{ url_for('static', path='img/flags/' ~ (u.country | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">{{ u.country_info.name_ar }}{% if not u.country_info.english %} <span class="tag">{{ _("لغة الدولة:") }} {{ u.country_info.language_ar }}</span>{% endif %}</span>
 {% endmacro %}
 
 {# One university's place in the lists, as short tags: «الرواد: المرتبة 12»، «إمداد: 4 مجالات». #}
@@ -119,8 +119,8 @@
 {% set em = u.listings | selectattr("track", "equalto", "emdad") | list %}
 {% set rd = u.listings | selectattr("track", "equalto", "rnd") | list %}
 <span class="memberships tags">
-  {% if ar %}<span class="tag">الرواد: المرتبة {{ ar[0].rank }}</span>{% endif %}
-  {% if em %}<span class="tag">إمداد: {{ em | length | count_ar("fields") }}</span>{% endif %}
-  {% if rd %}<span class="tag">البحث والتطوير (دكتوراه): {{ rd | length | count_ar("fields") }}</span>{% endif %}
+  {% if ar %}<span class="tag">{{ _("الرواد: المرتبة") }} {{ ar[0].rank }}</span>{% endif %}
+  {% if em %}<span class="tag">{{ _("إمداد:") }} {{ em | length | count_ar("fields") }}</span>{% endif %}
+  {% if rd %}<span class="tag">{{ _("البحث والتطوير (دكتوراه):") }} {{ rd | length | count_ar("fields") }}</span>{% endif %}
 </span>
 {% endmacro %}

@@ -1,31 +1,33 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
 
-{% block title %}عن الدليل | {{ site.name }}{% endblock %}
-{% block description %}{{ site.name }} دليل طلابي مستقل: كيف نجمع المعلومات من مصادرها الرسمية ونتحقق منها.{% endblock %}
+{% block title %}{{ _("عن الدليل |") }} {{ site.name }}{% endblock %}
+{% block description %}{{ site.name }} {{ _("دليل طلابي مستقل: كيف نجمع المعلومات من مصادرها الرسمية ونتحقق منها.") }}{% endblock %}
 
 {% block content %}
 <div class="measure">
-<h1>عن الدليل</h1>
-<p>{{ site.name }} دليل طلابي مستقل، لا يتبع وزارة التعليم ولا أي جهة رسمية أو برنامج يذكره.</p>
+<h1>{{ _("عن الدليل") }}</h1>
+<p>{{ site.name }} {{ _("دليل طلابي مستقل، لا يتبع وزارة التعليم ولا أي جهة رسمية أو برنامج يذكره.") }}</p>
 
-<h2 id="verify">كيف نتحقق من المعلومات</h2>
-<p>كل معلومة رسمية (شروط، مواعيد، قوائم جامعات) تُؤخذ من مصدرها الرسمي، ويظهر تحتها رابط مصدرها، هكذا:</p>
+<h2 id="verify">{{ _("كيف نتحقق من المعلومات") }}</h2>
+<p>{{ _("كل معلومة رسمية (شروط، مواعيد، قوائم جامعات) تُؤخذ من مصدرها الرسمي، ويظهر تحتها رابط مصدرها، هكذا:") }}</p>
 {{ c.source_stamp([{"title": "مثال: الشروط الخاصة بمسار الرواد", "url": "https://sites.moe.gov.sa/scholarship-program/conditions/info-6/"}]) }}
 
-<p>ما لم نتحقق منه لا ننشره. وإذا قال مصدران رسميان شيئين مختلفين، نذكر المصدرين ولا نختار بينهما.</p>
+<p>{{ _("ما لم نتحقق منه لا ننشره. وإذا قال مصدران رسميان شيئين مختلفين، نذكر المصدرين ولا نختار بينهما.") }}</p>
 
-<p>نحن لا نراقب المواقع الرسمية آليًا، فقد تتغير معلومة بعد أن نشرناها.</p>
+<p>{{ _("نحن لا نراقب المواقع الرسمية آليًا، فقد تتغير معلومة بعد أن نشرناها.") }}</p>
 
-<p>المعلومات الرسمية تتغير، لذلك ننصح دائمًا بفتح رابط المصدر قبل أي قرار مهم.</p>
+<p>{{ _("المعلومات الرسمية تتغير، لذلك ننصح دائمًا بفتح رابط المصدر قبل أي قرار مهم.") }}</p>
 
-<h2 id="credits">الصور والشعارات</h2>
+{% if is_en() %}<p id="translation">{{ _("الصفحات الإنجليزية ترجمتنا للنص العربي. المصدر الرسمي هو المرجع، وكثير من المصادر الرسمية بالعربية فقط.") }}</p>{% endif %}
+
+<h2 id="credits">{{ _("الصور والشعارات") }}</h2>
 <ul class="credits">
   {% for path in paths %}
   {% if path.logo %}
-  <li>شعار {{ path.provider_ar if path.logo.plate == 'dark' else path.name_ar }}: من <a href="{{ path.logo.source_url }}" target="_blank" rel="noopener">مصدره الرسمي</a>. نعرضه للتعريف بالبرنامج فقط، و{{ site.name }} لا يتبع الجهة المالكة له.</li>
+  <li>{{ _("شعار") }} {{ path.provider_ar if path.logo.plate == 'dark' else path.name_ar }}{{ _(": من") }} <a href="{{ path.logo.source_url }}" target="_blank" rel="noopener">{{ _("مصدره الرسمي") }}</a>{{ _(". نعرضه للتعريف بالبرنامج فقط، و") }}{{ site.name }} {{ _("لا يتبع الجهة المالكة له.") }}</li>
   {% elif path.photo %}
-  <li>{{ path.photo.alt_ar }}: <a href="{{ path.photo.source_url }}" target="_blank" rel="noopener">صورة: <span lang="en" dir="ltr">{{ path.photo.credit }}</span></a>،
+  <li>{{ path.photo.alt_ar }}: <a href="{{ path.photo.source_url }}" target="_blank" rel="noopener">{{ _("صورة:") }} <span lang="en" dir="ltr">{{ path.photo.credit }}</span></a>{{ _("،") }}
     {% if path.photo.license_url %}<a href="{{ path.photo.license_url }}" target="_blank" rel="noopener" lang="en" dir="ltr">{{ path.photo.license }}</a>{% else %}{{ path.photo.license }}{% endif %}</li>
   {% endif %}
   {% endfor %}
@@ -33,12 +35,12 @@
 
 {# University logos and flags (decision 049): shown on each university's page, credited here. #}
 <details class="credits-more">
-  <summary>شعارات الجامعات ({{ explorer.logos | length }}) والأعلام</summary>
-  <p>شعارات الجامعات من صفحاتها في ويكيميديا كومنز، ونعرضها للتعريف بالجامعة فقط، و{{ site.name }} لا يتبع أي جامعة. أعلام الدول من مجموعة <a href="https://github.com/lipis/flag-icons" target="_blank" rel="noopener" lang="en" dir="ltr">flag-icons</a> (رخصة MIT).</p>
+  <summary>{{ _("شعارات الجامعات (") }}{{ explorer.logos | length }}{{ _(") والأعلام") }}</summary>
+  <p>{{ _("شعارات الجامعات من صفحاتها في ويكيميديا كومنز، ونعرضها للتعريف بالجامعة فقط، و") }}{{ site.name }} {{ _("لا يتبع أي جامعة. أعلام الدول من مجموعة") }} <a href="https://github.com/lipis/flag-icons" target="_blank" rel="noopener" lang="en" dir="ltr">flag-icons</a> {{ _("(رخصة MIT).") }}</p>
   <ul class="credits">
     {% for uid, logo in explorer.logos | dictsort %}
     {% set u = explorer.universities[uid] %}
-    <li>{{ u.name_ar or u.name_en }}: <a href="{{ logo.source_url }}" target="_blank" rel="noopener">المصدر</a>، <span lang="en" dir="ltr">{{ logo.licence }}</span></li>
+    <li>{{ u.name_ar or u.name_en }}: <a href="{{ logo.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{{ _("،") }} <span lang="en" dir="ltr">{{ logo.licence }}</span></li>
     {% endfor %}
   </ul>
 </details>
