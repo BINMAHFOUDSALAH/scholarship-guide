@@ -36,18 +36,22 @@ function saveTheme(theme) {
   }
 }
 
-const button = document.querySelector(".theme-toggle");
+// The header has one switch; on phones and tablets a second one sits in the menu (decision 068). Both stay in step.
+const buttons = [...document.querySelectorAll(".theme-toggle")];
 
-if (button) {
-  const label = button.querySelector(".theme-toggle-label");
+if (buttons.length) {
   let current = chosenTheme() || (system.matches ? "dark" : "light");
 
   // The label names the mode you'll switch TO, which is clearer for a two-state switch.
+  // The menu's switch says it in full («التبديل إلى الوضع الداكن»), the header's in one word.
   const render = () => {
     const next = current === "dark" ? "فاتح" : "داكن";
-    label.textContent = themeText(next);
-    button.setAttribute("aria-label", themeText(`التبديل إلى الوضع ال${next}`));
-    button.setAttribute("aria-pressed", current === "dark" ? "true" : "false");
+    for (const button of buttons) {
+      const full = themeText(`التبديل إلى الوضع ال${next}`);
+      button.querySelector(".theme-toggle-label").textContent = button.hasAttribute("data-long-label") ? full : themeText(next);
+      if (!button.hasAttribute("data-long-label")) button.setAttribute("aria-label", full);
+      button.setAttribute("aria-pressed", current === "dark" ? "true" : "false");
+    }
   };
 
   // The whole page cross-fades while the sky's own pieces (sun to moon, the stars) move on their own.
@@ -64,11 +68,13 @@ if (button) {
     }
   };
 
-  button.addEventListener("click", () => {
-    const next = current === "dark" ? "light" : "dark";
-    saveTheme(next);
-    switchTo(next);
-  });
+  for (const button of buttons) {
+    button.addEventListener("click", () => {
+      const next = current === "dark" ? "light" : "dark";
+      saveTheme(next);
+      switchTo(next);
+    });
+  }
 
   // The device switched (e.g. at sunset): follow it, unless the student chose a theme here.
   system.addEventListener("change", () => {
@@ -77,5 +83,5 @@ if (button) {
 
   applyTheme(current);
   render();
-  button.hidden = false;
+  for (const button of buttons) button.hidden = false;
 }

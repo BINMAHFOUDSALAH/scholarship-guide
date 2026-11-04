@@ -4535,3 +4535,108 @@ a.uni-name:hover .uni-name-en:only-child {
     gap: 6px;
   }
 }
+
+/*
+  Phones and tablets, second pass (owner's review, 2026-11-04, decision 068): fewer, bigger controls.
+  - The theme switch moves into the menu (it's rarely used), so the header keeps three: language, «قائمتي», menu.
+  - Each is 48px tall (Material's touch size, above WCAG's 44px) with 20–22px icons.
+  - The menu says «القائمة» beside its icon where there's room (420px and up): a labelled menu is found faster.
+  - The menu opens as a full-width panel under the header, with 48px rows, so its links are easy to reach and tap.
+*/
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-toggle--menu {
+  display: none;
+}
+
+@media (max-width: 1099px) {
+  .header-tools > .theme-toggle {
+    display: none;
+  }
+
+  .header-tools .mylist-link,
+  .header-tools .menu-button,
+  .header-tools .lang-toggle {
+    min-height: 48px;
+  }
+
+  .header-tools .mylist-link,
+  .header-tools .menu-button {
+    min-width: 48px;
+  }
+
+  .mylist-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-button svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* The panel spans the header's width, under it. */
+  .header-inner {
+    position: relative;
+  }
+
+  .menu {
+    position: static;
+  }
+
+  .menu-panel {
+    inset-inline: 0;
+    min-width: 0;
+    padding: var(--space-2);
+  }
+
+  .menu-panel a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    font-size: var(--text-base);
+  }
+
+  .theme-toggle--menu:not([hidden]) {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 48px;
+    margin-block-start: var(--space-2);
+    padding: 0 var(--space-3);
+    border: 0;
+    border-block-start: 1px solid var(--line);
+    border-radius: 0;
+    font-size: var(--text-base);
+  }
+
+  .theme-toggle--menu .theme-toggle-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+  }
+
+  .theme-toggle--menu svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (min-width: 420px) and (max-width: 1099px) {
+  .menu-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+  }
+
+  .header-tools .menu-button {
+    padding: 0 14px;
+  }
+}

@@ -3,7 +3,9 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-04, decision 067):** the header fits on one line at every width (320–1400px swept, both languages): icon tools below 1100px, the full nav from 1100px, no descriptor below 600px. SDAIA: no date on its page = nothing to update (`no_deadline_ok`).
+> **Latest (2026-11-04, decision 068):** phone header: three 48px controls (language, «قائمتي», «القائمة» with its label from 420px); the theme switch is the menu's last row below 1100px; the menu opens full width.
+>
+> **Earlier (2026-11-04, decision 067):** the header fits on one line at every width (320–1400px swept, both languages): icon tools below 1100px, the full nav from 1100px, no descriptor below 600px. SDAIA: no date on its page = nothing to update (`no_deadline_ok`).
 >
 > **Earlier (2026-11-04, decision 066): the English version, merged in PR #27 (owner-approved) and live at https://wadihguide.com/en/ after CI.**
 > - `/update-site` run the same day: nothing to change. Re-checked and unchanged on their official pages: KGSP (Cohort 19 «will open soon», no dates), Aramco CDPNE (registration closed, still 1447–1448), the universities guide (still 2026–2027), the الرواد and إمداد pages; no new واعد announcements (190 listed). Cambridge's next-cycle dates aren't published yet. **Owner to-do:** SDAIA's status comes from an X post scripts can't read: check [@SDAIA_SA](https://x.com/SDAIA_SA) for a closing date (its site rejects scripts too). STC's واعد programs close 5 Nov.
