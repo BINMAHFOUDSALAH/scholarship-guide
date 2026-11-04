@@ -161,7 +161,8 @@ def test_form_works_without_javascript(drafts):
     assert r.status_code == 200
     html = r.text
     assert '<form class="explore-form" method="post" action="/explore/result"' in html
-    assert html.count('data-auto id="q-') == len(ex.DATA["activities"])
+    assert html.count('class="explore-step explore-card" data-step data-part="2"') == len(ex.DATA["activities"])
+    assert " checked" not in html.split("<form", 1)[1]  # no answer is ever chosen for the student
     assert html.count('type="radio" name="a-') == len(ex.DATA["activities"]) * len(ex.DATA["answers"])
     assert "explore.js" in html
 
@@ -242,3 +243,48 @@ def test_the_guide_is_public_and_routes_onward(live):
 
 def test_the_guide_opens_the_activity_when_it_is_public(drafts):
     assert 'href="/explore"' in client.get("/resources/undecided").text
+
+
+# ---------- the result page shows exactly what the rules say ----------
+
+BAND_MARKERS = {'id="draws-title"': "draws", 'id="try-title"': "try", 'id="considered-title"': "considered",
+                'class="explore-not-now"': "not_now", 'id="next-title"': None}
+
+
+def page_bands(html):
+    """Field ids per band, in page order: each field belongs to the last band heading above it."""
+    marks = sorted((html.index(m), band) for m, band in BAND_MARKERS.items() if m in html)
+    bands = {"draws": [], "try": [], "considered": [], "not_now": []}
+    for found in re.finditer(r'<section class="explore-field" id="field-([\w-]+)"', html):
+        band = [b for pos, b in marks if pos < found.start()][-1]
+        bands[band].append(found.group(1))
+    return bands
+
+
+def test_result_page_matches_the_rules_for_random_students(live):
+    """40 random students (fixed seed): every field sits in the band score() gives it, in its order, and each
+    field's reasons are exactly the answers given for its activities (owner's check, 2026-11-04)."""
+    import random
+    rng = random.Random(2026)
+    choices = list(ex.ANSWERS) + [None]  # None = skipped
+    for _ in range(40):
+        data = {f"a-{a['id']}": v for a in ex.DATA["activities"] if (v := rng.choice(choices))}
+        data["subject"] = rng.sample(list(ex.SUBJECTS), rng.randint(0, 3))
+        data["difficulty"] = rng.sample(list(ex.DIFFICULTIES), rng.randint(0, 2))
+        if rng.random() < 0.6:
+            data["considered"] = rng.choice(list(ex.FIELDS))
+        html = post(data).text
+        r = ex.score(ex.parse(urlencode(data, doseq=True).encode()))
+        expected = {band: [f["id"] for f in fields] for band, fields in r["bands"].items()}
+        shown = page_bands(html)
+        assert shown["draws"] == expected["draws"], data
+        assert shown["try"] == expected["try"], data
+        assert shown["not_now"] == expected["not_now"], data
+        assert shown["considered"] == ([r["considered"]["id"]] if r["considered"] else []), data
+        for fields in [*r["bands"].values(), [r["considered"]] if r["considered"] else []]:
+            for f in fields:
+                block = html.split(f'id="field-{f["id"]}"', 1)[1].split('<section class="explore-field"', 1)[0]
+                activities = re.findall(r'<span class="explore-why-activity">([^<]+)</span>', block)
+                assert activities == [w["activity_ar"] for w in f["why"]], (f["id"], data)
+        if len(expected["try"]) > 3:  # a shortlist: three open, the rest folded
+            assert "مجالات أخرى تستحق التجربة" in html

@@ -1118,3 +1118,27 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 **Update (same day, owner):** the activity's line «لا نحفظ إجاباتك، ولا نسأل عن اسمك أو درجاتك.» is removed as not needed. Nothing changes in how answers are handled (still sent once, never stored).
 **Still to do:** the counsellor review and the student test (research note §8–9). If they turn up problems, fix the wording, or set `"draft": true` again: the page, its doors and its sitemap entry all disappear (tested).
 
+## 071 — «جرّب قبل أن تقرر»: no moving on by itself, nothing pre-chosen, a shortlist (updates 069–070)
+**Date:** 2026-11-04
+**Context:** on the owner's iPhone, questions appeared already answered and the activity skipped ahead. Reproduced on an emulated iPhone:
+- after a tap the activity moved on by itself 250ms later;
+- a second tap (a student unsure the first one worked) then answered the next question for them;
+- «لا يوجد» was pre-selected in part 3;
+- browsers put a previous run's answers back after a reload.
+**Decision:**
+- **Tapping an answer only selects it.** The student moves on with the button, which says «تخطَّ» while nothing is chosen and «التالي» once something is. It's the "one question per page" pattern with an explicit continue: a survey must never record an answer nobody chose.
+- **No answer is pre-selected anywhere** (a test checks the form). A skipped question counts as skipped.
+- **For 400ms after the question changes, taps are ignored** (never key presses): the second tap of a double tap, on an answer or on «التالي». Moving on jumps to the new question at once (no smooth scroll), and only when it's out of view, so the page isn't moving under the finger.
+- **A reload starts clean; Back from the result opens the review with the answers.** Browsers restore answers just before `pageshow` (measured), so the choice is made there.
+- **A short fade** when the question changes (off with reduced motion).
+- **A shortlist:** «تستحق التجربة» shows its three strongest fields; the others fold under «مجالات أخرى تستحق التجربة (N)». With realistic answers it often held 5–8 fields. The rules and the order are unchanged.
+**Verified:**
+- On an emulated iPhone: `scripts/check_explore.mjs`, 18 checks, Arabic and English. It fails on the old live version with the owner's bug (two taps answered three questions).
+- A pytest test runs 40 random students through the result page and checks every field's band, order and reasons against `score()`; it fails if the page drops a field.
+- Five students answered by taps matched `score()` exactly.
+- The UI sweep (1,150 checks) and keyboard-only, including fast key presses.
+**Alternatives:**
+- **Keep moving on by itself, with a longer guard:** still records answers by accident (any fixed delay is either too short for some or blocks quick deliberate taps), and it's harder for screen readers.
+- **A guard of 600ms:** blocked quick but deliberate taps in testing.
+- **`autocomplete="off"` to stop restored answers:** it also stops Back from bringing answers back.
+

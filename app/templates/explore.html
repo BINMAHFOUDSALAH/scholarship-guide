@@ -3,7 +3,8 @@
 {#
   «جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test.
   The whole activity is one form, so it works without JavaScript. explore.js shows one step at a time
-  (parts 1–3, one activity per screen in part 2), with progress, «السابق» and a review step before the result.
+  (parts 1–3, one activity per screen in part 2), with progress, «السابق» / «التالي» and a review step before the result.
+  No answer is pre-selected: a skipped question counts as skipped.
   Answers are posted once (never in a URL) and nothing is stored.
 #}
 
@@ -56,7 +57,7 @@
     <section class="explore-part" aria-labelledby="part2-title">
       <h2 class="explore-part-title" id="part2-title">{{ _("كيف تجد هذه الأنشطة؟") }}</h2>
       {% for a in activities %}
-      <fieldset class="explore-step explore-card" data-step data-part="2" data-auto id="q-{{ a.id }}" data-label="{{ a.text_ar }}">
+      <fieldset class="explore-step explore-card" data-step data-part="2" id="q-{{ a.id }}" data-label="{{ a.text_ar }}">
         <legend class="explore-question" tabindex="-1">{{ a.text_ar }}</legend>
         <div class="explore-options">
           {% for ans in x.answers %}
@@ -86,7 +87,7 @@
       <fieldset class="explore-group" data-label="{{ _('مجال تفكر فيه أو يتوقعه أهلك') }}">
         <legend class="explore-legend">{{ _("سنعرضه في نتيجتك.") }}</legend>
         <div class="explore-options explore-options--grid">
-          <label class="explore-option"><input type="radio" name="considered" value="" checked> <span>{{ _("لا يوجد") }}</span></label>
+          <label class="explore-option"><input type="radio" name="considered" value=""> <span>{{ _("لا يوجد") }}</span></label>
           {% for f in x.fields %}
           <label class="explore-option"><input type="radio" name="considered" value="{{ f.id }}"> <span>{{ field_names[f.id] }}</span></label>
           {% endfor %}
