@@ -24,8 +24,6 @@ GRADES = {g["id"]: g for g in DATA["grades"]}
 
 # Fewer tried activities than this and the result leads with «جرّب أولًا»: too little to go on.
 THIN_EVIDENCE = 10
-# This many fields drawing the student and the result says the answers are close (it's common).
-MANY_DRAWS = 6
 # The form is small (about 2 KB); anything much bigger isn't ours.
 MAX_BODY = 20_000
 
@@ -110,7 +108,6 @@ def score(choices):
              for name in ("draws", "try", "not_now")}
     tried = sum(1 for v in answers.values() if ANSWERS[v]["group"] == "tried")
     untried = len(answers) - tried
-    draws = sum(1 for f in fields if f["band"] == "draws")
     return {
         "bands": bands,
         "considered": next((f for f in fields if f["id"] == considered), None),
@@ -118,9 +115,7 @@ def score(choices):
         "untried": untried,
         "skipped": len(DATA["activities"]) - len(answers),
         "thin": tried < THIN_EVIDENCE,
-        "many_draws": draws >= MANY_DRAWS,
         "nothing_yet": not any(f["band"] in ("draws", "try") for f in fields),
-        "several_draws": draws >= 2,
         "difficulties": [DIFFICULTIES[d] for d in choices["difficulties"]],
         "grade": choices["grade"],
     }

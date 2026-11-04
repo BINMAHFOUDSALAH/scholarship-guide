@@ -4669,10 +4669,6 @@ a.uni-name:hover .uni-name-en:only-child {
   line-height: 1.5;
 }
 
-.explore-hint {
-  color: var(--ink-muted);
-}
-
 .explore-group,
 .explore-card {
   margin: 0 0 var(--space-4);

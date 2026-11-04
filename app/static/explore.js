@@ -32,7 +32,6 @@
   const countText = progress.querySelector("[data-progress-count]");
   const bar = progress.querySelector("[data-progress-bar]");
   const PARTS = 3;
-  const UNTRIED_NOTE_FROM = 5;
   let current = 0;
   let backToReview = false; // came here from «غيّر» on the review: «التالي» goes straight back
 
@@ -78,18 +77,6 @@
     });
   }
 
-  function updateUntriedNote(step) {
-    const note = step.querySelector("[data-untried-note]");
-    if (!note) return;
-    const untried = activities.filter((s) => {
-      const checked = s.querySelector("input:checked");
-      return checked && checked.closest(".explore-option--untried");
-    }).length;
-    note.textContent = fill("لم تجرّب بعد {n} من {total} نشاطًا، وهذا طبيعي. ستجد في النتيجة طرقًا لتجربة ما يجذبك منها.",
-      { n: untried, total: activities.length });
-    note.hidden = untried < UNTRIED_NOTE_FROM;
-  }
-
   function show(index, moveFocus = true) {
     current = Math.max(0, Math.min(index, steps.length - 1));
     const step = steps[current];
@@ -106,7 +93,6 @@
       countText.textContent = part === "2"
         ? fill("النشاط {n} من {total}", { n: activities.indexOf(step) + 1, total: activities.length }) : "";
     }
-    updateUntriedNote(step);
     countText.hidden = !countText.textContent;
     bar.value = current / (steps.length - 1);
     prev.hidden = current === 0;

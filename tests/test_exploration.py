@@ -118,9 +118,9 @@ def test_no_answers_means_try_first():
     assert not r["bands"]["draws"] and not r["bands"]["try"]
 
 
-def test_enjoying_everything_says_the_answers_are_close():
+def test_enjoying_everything_draws_every_field():
     r = ex.score(ex.parse(urlencode({f"a-{a['id']}": "enjoy" for a in ex.DATA["activities"]}).encode()))
-    assert r["many_draws"] and len(r["bands"]["draws"]) == 10 and not r["thin"]
+    assert len(r["bands"]["draws"]) == 10 and not r["thin"] and not r["nothing_yet"]
 
 
 def test_strongest_first_and_the_considered_field_apart():

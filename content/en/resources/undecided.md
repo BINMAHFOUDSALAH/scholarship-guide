@@ -1,5 +1,5 @@
 ---
-translated_from: ca52f4f7d870c436
+translated_from: aa535efc22ef13ca
 title: Not decided yet?
 description: How to discover the fields that draw you, what to try this term, and how to go from a field to a major and a university.
 next_step: Choose two fields that draw you or make you curious, and try an activity from each of them this month.
@@ -7,30 +7,26 @@ next_step: Choose two fields that draw you or make you curious, and try an activ
 
 ## It's fine not to know yet {#start}
 
-If you don't know yet what you want to study, that is normal. You don't need to decide everything now, but two decisions are ahead of you:
+Two decisions are ahead of you:
 
 - **In Grade 10:** after it, each student is placed in a track according to their interests and abilities ([Ministry of Education](https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Pages/SecondarySchoolTracks.aspx)). Compare [the five tracks](/grades/grade-10#tracks).
 - **In Grade 12:** you choose the majors and universities you apply to ([Grade 12](/grades/grade-12)).
 
 ## What makes the decision hard for you? {#hard}
 
-Each reason has what helps it:
-
-- **I haven't tried many things yet:** you can't know whether you like something you haven't tried. Start [by trying](#try).
+- **I haven't tried many things yet:** start [by trying](#try).
 - **I know what I like, but not the majors:** go [from the field to the major](#fields).
-- **I like more than one field:** that is a good thing, not indecision. Try two fields this month, then compare how you felt in each.
+- **I like more than one field:** try two fields this month, then compare them.
 - **My family expects a particular major:** read [If your family sees it differently](#family).
 - **I don't know whether I can do it:** read [Interest is not ability](#not-the-same).
 
 ## Try before you decide {#try}
 
-Three ways, all possible this term:
-
 1. **Do something from the field:** a school project, a free online lesson, or an activity in a school club.
 2. **Talk to someone who works in it:** a relative, a neighbour or a teacher. Ask them: what do you do on a normal day? What is the hardest part of your work? And what did you study to get there?
 3. **Volunteer or take part:** in an event at your school or in your neighbourhood, or in a competition.
 
-After each try, write two lines: what did you enjoy? And what wore you out? These notes help you more than you think.
+After each try, write two lines: what did you enjoy? And what wore you out?
 
 ## The official measure and the student counsellor {#official}
 
@@ -57,7 +53,7 @@ And before the major comes the **school track**: compare [the five tracks](/grad
 
 ## If your family sees it differently {#family}
 
-Your family's view may come from caring about you. So instead of arguing:
+Instead of arguing:
 
 1. Ask them why they think this major suits you, and listen to their reasons.
 2. Learn enough about the major they suggest: what is studied in it, which track suits it, and try an activity from it.
@@ -70,4 +66,4 @@ Your family's view may come from caring about you. So instead of arguing:
 - **Ability:** what you can do, and it grows with learning and practice.
 - **Admission:** the conditions of the university or the program, such as the track, the average and the tests, which you find on their official pages.
 
-Don't judge a field by one of these alone. And changing your mind after trying is normal.
+Don't judge a field by one of these alone.

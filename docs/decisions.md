@@ -1095,6 +1095,11 @@ The owner then said: "do the best options and go for it".
   - the body cap also holds for chunked posts;
   - «لا يوجد» shows in the review;
   - English coverage of every field's text.
+**Update (same day, owner): less text.** Copy that only reassured or explained has been removed:
+- the result's lead, «يجذبك أكثر من مجال، وهذا قوة وليس ترددًا», the "many fields" note, the band descriptions, the notes under the mentioned field (kept only when it doesn't draw the student), and the «لا تجذبك الآن» note;
+- the activity's "not tried yet" note, the part 2 and review hints, and the long lead, privacy line and legends (now short);
+- the guide's reassurance sentences ("that is normal", "these notes help more than you think").
+What stays is text that gives an instruction, a fact with its source, or a caution the student needs: thin evidence, the field they mentioned, and the draft banner.
 **Next:**
 - The owner arranges the counsellor review and the student test (run it locally with `WADIH_SHOW_DRAFTS=1`).
 - Verify the Ministry measure's details on an official page (press reports say it counts in placement; not verified, so not published).

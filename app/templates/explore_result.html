@@ -85,7 +85,6 @@
   <header class="page-header">
     <p class="doc-kind"><a href="/resources/undecided">{{ _("لم تقرر بعد؟") }}</a></p>
     <h1>{{ _("مجالات لتستكشفها") }}</h1>
-    <p class="lead">{{ _("هذه مجالات تستكشفها، لا قرار. بنيناها على إجاباتك فقط، وتتغير كلما جرّبت أكثر.") }}</p>
   </header>
 
   {% if x.draft %}
@@ -99,14 +98,9 @@
   </dl>
 
   {% if r.nothing_yet %}
-  <div class="notice"><p>{{ _("لم يجذبك شيء من هذه الأنشطة بعد، وهذا طبيعي. الأنشطة هنا قليلة: جرّب كل أسبوع شيئًا جديدًا من مجال مختلف، ثم أعد النشاط بعد شهر.") }}</p></div>
+  <div class="notice"><p>{{ _("لم يجذبك شيء من هذه الأنشطة بعد. جرّب كل أسبوع شيئًا من مجال مختلف، ثم أعد النشاط بعد شهر.") }}</p></div>
   {% elif r.thin %}
-  <div class="notice"><p>{{ _("جرّبت عددًا قليلًا من هذه الأنشطة حتى الآن، فابدأ بالتجربة قبل أن تعتمد على هذه النتيجة.") }}</p></div>
-  {% endif %}
-  {% if r.many_draws %}
-  <div class="notice"><p>{{ _("تستمتع بأنشطة في مجالات كثيرة، وهذا طبيعي. اختر مجالين لتجربهما بعمق هذا الشهر، ثم أعد النشاط.") }}</p></div>
-  {% elif r.several_draws %}
-  <div class="notice"><p>{{ _("يجذبك أكثر من مجال، وهذا قوة وليس ترددًا.") }}</p></div>
+  <div class="notice"><p>{{ _("جرّبت أنشطة قليلة، فجرّب أكثر قبل أن تعتمد على هذه النتيجة.") }}</p></div>
   {% endif %}
 
   {% if r.difficulties %}
@@ -121,7 +115,6 @@
   {% if r.bands.draws %}
   <section class="section" aria-labelledby="draws-title">
     <h2 class="section-title" id="draws-title">{{ _("تجذبك الآن") }}</h2>
-    <p class="section-note">{{ _("استمتعت بنشاطين أو أكثر من أنشطتها، ولم يكن فيها ما لا تستمتع به.") }}</p>
     {% for f in r.bands.draws %}{{ field_block(f, views[f.id], full=loop.index <= 3) }}{% endfor %}
   </section>
   {% endif %}
@@ -129,7 +122,6 @@
   {% if r.bands.try %}
   <section class="section" aria-labelledby="try-title">
     <h2 class="section-title" id="try-title">{{ _("تستحق التجربة") }}</h2>
-    <p class="section-note">{{ _("استمتعت بنشاط منها، أو تودّ تجربة أحد أنشطتها، أو وجدت أحد أنشطتها لا بأس به ولاحظت تقدمك في مادة قريبة منها.") }}</p>
     {% for f in r.bands.try %}{{ field_block(f, views[f.id]) }}{% endfor %}
   </section>
   {% endif %}
@@ -138,9 +130,7 @@
   {% set f = r.considered %}
   <section class="section" aria-labelledby="considered-title">
     <h2 class="section-title" id="considered-title">{{ _("المجال الذي ذكرته") }}</h2>
-    {% if f.band == "draws" %}{% set note = _("ومن إجاباتك أنه يجذبك الآن.") %}
-    {% elif f.band == "try" %}{% set note = _("ومن إجاباتك أنه يستحق التجربة.") %}
-    {% else %}{% set note = _("لم تختر من أنشطته ما يجذبك بعد، وهذا لا يعني أنه لا يناسبك: الأنشطة هنا قليلة، والتجربة تكشف أكثر.") %}{% endif %}
+    {% set note = _("لم تختر من أنشطته ما يجذبك بعد، وهذا لا يعني أنه لا يناسبك.") if f.band == "not_now" else None %}
     {{ field_block(f, views[f.id], note, full=True) }}
   </section>
   {% endif %}
@@ -148,7 +138,6 @@
   {% if r.bands.not_now %}
   <details class="explore-not-now">
     <summary>{{ _("لا تجذبك الآن") }}</summary>
-    <p class="section-note">{{ _("قد يتغير هذا حين تجرّب أكثر. وهي هنا لتعرف ما فيها.") }}</p>
     {% for f in r.bands.not_now %}{{ field_block(f, views[f.id]) }}{% endfor %}
   </details>
   {% endif %}
