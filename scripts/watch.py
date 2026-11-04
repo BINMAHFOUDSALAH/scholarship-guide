@@ -248,7 +248,8 @@ def deadline_items(paths, details, today):
                                   "«أُغلق» with that date, so leave its `status` as it is. Look for the next round on "
                                   f"its official page; when one is announced, update it in `data/paths.json` › "
                                   f"{path['id']}."))
-            elif track.get("status") == "open" and not until:
+            # no_deadline_ok: the owner's rule for programs like SDAIA: no date on the official page, nothing to update.
+            elif track.get("status") == "open" and not until and not track.get("no_deadline_ok"):
                 age = (date.fromisoformat(today) - date.fromisoformat(track["last_checked"])).days
                 if age > RECHECK_OPEN_DAYS:
                     source = track.get("status_source")

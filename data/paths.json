@@ -488,9 +488,10 @@
         "status": "open",
         "apply_with_ar": "من لديه ابتعاث قائم من برنامج خادم الحرمين الشريفين، في تخصص ذكاء اصطناعي أو علوم حاسب",
         "status_source": "https://x.com/SDAIA_SA/status/2107816249824621004",
-        "last_checked": "2026-10-11",
+        "last_checked": "2026-11-04",
         "facts": [],
-        "status_note": "SDAIA's X post, 7 Oct 2026: registration opened for the 4th cohort. No deadline published yet."
+        "status_note": "SDAIA's X post, 7 Oct 2026: registration opened for the 4th cohort. No deadline published yet. Owner checked the SDAIA page on 2026-11-04: no dates given. Owner's rule: with no date on SDAIA's own page, there is nothing to update, so the morning check doesn't ask for re-checks (no_deadline_ok).",
+          "no_deadline_ok": true
       }
     ],
     "target_universities": [
