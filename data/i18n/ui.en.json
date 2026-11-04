@@ -523,7 +523,6 @@
  "قارن المسارات الخمسة قبل أن تُسكَّن في أحدها.": "Compare the five tracks before you are placed in one of them.",
  "برنامج لمن يُبتعث في تخصص منه": "A program for scholarship students in one of its majors",
  "نحو عشر دقائق. يقترح مجالات تجربها، ولا يحدد تخصصك.": "About ten minutes. It suggests fields to try, and doesn't decide your major.",
- "لا نحفظ إجاباتك، ولا نسأل عن اسمك أو درجاتك.": "We don't keep your answers, and we don't ask for your name or your grades.",
  "اختر ما ينطبق عليك.": "Choose what applies to you.",
  "(اختياري)": "(optional)",
  "في أي المواد أو الأنشطة لاحظت أنك تتقدم؟": "In which subjects or activities have you noticed you are making progress?",
@@ -532,5 +531,6 @@
  "جرّبت أنشطة قليلة، فجرّب أكثر قبل أن تعتمد على هذه النتيجة.": "You have tried only a few activities, so try more before you rely on this result.",
  "لم تختر من أنشطته ما يجذبك بعد، وهذا لا يعني أنه لا يناسبك.": "You haven't chosen any of its activities as drawing you yet, and that doesn't mean it doesn't suit you.",
  "لم تقرر ماذا تدرس؟": "Not sure what to study?",
- "نحو عشر دقائق": "About ten minutes"
+ "نحو عشر دقائق": "About ten minutes",
+ "مجالات أخرى تستحق التجربة": "Other fields worth trying"
 }

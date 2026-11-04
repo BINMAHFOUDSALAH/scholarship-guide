@@ -4660,11 +4660,6 @@ a.uni-name:hover .uni-name-en:only-child {
    Answers are native radios and checkboxes inside big labels (48px), so keyboards and screen readers get
    real groups. Read on paper, act on forest: a chosen answer takes the forest border. */
 
-.explore-privacy {
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
 .explore-progress {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -4804,6 +4799,18 @@ a.uni-name:hover .uni-name-en:only-child {
   margin-inline-start: var(--space-2);
 }
 
+/* A new question fades in, so it's clear the step changed (a response to the student's press; off with reduced motion). */
+@media (prefers-reduced-motion: no-preference) {
+  .explore-form.is-stepped [data-step]:not([hidden]) {
+    animation: explore-step-in 0.18s ease-out;
+  }
+
+  @keyframes explore-step-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
 /* In steps, each step stands alone: no stacked spacing from the long form. */
 .explore-form.is-stepped .explore-card {
   margin-bottom: 0;
@@ -4869,6 +4876,19 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .explore-progress-note {
   margin-top: var(--space-2);
+}
+
+.explore-more-fields {
+  margin-block: var(--space-3) var(--space-4);
+}
+
+.explore-more-fields summary {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  font-weight: 700;
+  color: var(--action);
+  cursor: pointer;
 }
 
 .explore-not-now {

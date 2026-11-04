@@ -122,7 +122,14 @@
   {% if r.bands.try %}
   <section class="section" aria-labelledby="try-title">
     <h2 class="section-title" id="try-title">{{ _("تستحق التجربة") }}</h2>
-    {% for f in r.bands.try %}{{ field_block(f, views[f.id]) }}{% endfor %}
+    {# The three strongest open; the rest fold away, so the list stays a shortlist (strongest first, see score()). #}
+    {% for f in r.bands.try[:3] %}{{ field_block(f, views[f.id]) }}{% endfor %}
+    {% if r.bands.try | length > 3 %}
+    <details class="explore-more-fields">
+      <summary>{{ _("مجالات أخرى تستحق التجربة") }} ({{ r.bands.try | length - 3 }})</summary>
+      {% for f in r.bands.try[3:] %}{{ field_block(f, views[f.id]) }}{% endfor %}
+    </details>
+    {% endif %}
   </section>
   {% endif %}
 

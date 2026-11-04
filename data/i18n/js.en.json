@@ -30,5 +30,6 @@
  "الجزء {n} من {total}": "Part {n} of {total}",
  "النشاط {n} من {total}": "Activity {n} of {total}",
  "العودة إلى المراجعة": "Back to the review",
- "التالي": "Next"
+ "التالي": "Next",
+ "تخطَّ": "Skip"
 }
