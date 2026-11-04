@@ -1,8 +1,10 @@
 # Launch ad «الشلة»: production guide
 
-The first ad for واضح: a 30-second vertical video (plus 15s and 6s cutdowns) that makes a grade 12 student feel understood and gives one clear reason to open wadihguide.com. Why it's built this way: decision 044.
+The first ad for واضح: a 30-second vertical video (plus 15s and 6s cutdowns) that makes a grade 12 student feel understood and gives one clear reason to open wadihguide.com. Why it's built this way: [decision 044](../docs/decisions.md).
 
-**Status (2026-10-12):**
+This folder is separate from the website: nothing in `app/` uses it. Only the scripts in `src/` and this guide are in git; the media stays on the owner's laptop.
+
+**Status (2026-10-12): paused, no budget for paid tools yet.**
 - Built and verified: the real site footage, captions, end card, and the build pipeline.
 - Still placeholders: the 4 AI shots (Higgsfield) and the 9 voice lines (ElevenLabs).
 - The current rough cut is `marketing/out/wadih-ad-30s-9x16.mp4`.

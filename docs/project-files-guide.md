@@ -31,8 +31,10 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 
 | File | What it does | Status | When to use it |
 |---|---|---|---|
-| `docs/roadmap.md` | The living plan: stages, steps, and checkboxes showing where we are. | ✅ | Tick boxes at the end of every step. A new session reads this to know "what's next." |
-| `progress.md` | Commonly used for "what's done, what's next." | ❌ | Same job as `docs/roadmap.md`, so we don't add it. If you ever want a **session log** (a dated diary of what happened each session), that's a different job and could be `docs/log.md`. |
+| `docs/README.md` | The map of `docs/`: what each document is for. GitHub shows it when someone opens the folder. | ✅ | Add a line when you add a document. |
+| `docs/roadmap.md` | The living plan: where we are, next steps, the owner's to-dos, and the stages with checkboxes. | ✅ | Update it in place and tick boxes at the end of every step. A new session reads this to know "what's next." Keep it short; the story goes in `docs/log.md`. |
+| `docs/log.md` | A session log: a dated record of what each session did and left open, newest first. | ✅ (decision 074) | A short note at the top when a session ends. Open to-dos go in the roadmap, reasons in `docs/decisions.md`. |
+| `progress.md` | Commonly used for "what's done, what's next." | ❌ | Same job as `docs/roadmap.md`, so we don't add it. |
 | `docs/decisions.md` | Every design choice: what we chose, the alternatives, and why. | ✅ | Add an entry whenever we make a choice someone might later question. Never delete old entries; mark them "Superseded." |
 | `spec.md` / `docs/specs/<feature>.md` | A **specification**: a short document describing exactly what a feature must do *before* building it (goal, inputs, outputs, rules, edge cases, how we'll test it). | ✅ (`search.md`, `universities-explorer.md`) | Before any feature bigger than a page: the compare-paths table, the chatbot (Stage 7), each agent (Stage 8). One spec per feature in `docs/specs/`, not one giant `spec.md`. Specs are also great input for AI: "build what this spec says." |
 | `goal.md`, `PRD.md`, `TODO.md` | Common in other projects: the goal, product requirements, a task list. | ❌ | Same jobs as CLAUDE.md's "Project" section (goal), `docs/specs/` (requirements) and `docs/roadmap.md` (tasks). A second copy would drift. |
@@ -40,10 +42,12 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `docs/architecture.md` | How the code fits together (moved out of CLAUDE.md to keep it short). | ✅ | Update when the structure changes. |
 | `docs/claude-workflow-guide.md` | How to work with Claude Code: subagents, skills, hooks, MCP, `/goal`, best practices, example prompts. | ✅ | Read when unsure which Claude feature to use. |
 | `LEARNING_LOG.md` | A diary of what was built and learned. | ❌ removed (decision 059) | The owner didn't read it. The key concept is in each task's report; the why is in `docs/decisions.md`. The old file is in git history. |
-| `README.md` | The front page of the repo on GitHub: what the project is, how to run it, the live link. | ✅ | Update it when how to run the project changes, and at launch (add the live URL + screenshots). |
+| `README.md` | The front page of the repo on GitHub: what the project is, the live link, how it works, how to run it. | ✅ | Update it when how to run the project changes. Keep it short and link to `docs/` for detail. Retake `docs/images/home.png` when the homepage changes a lot. |
+| `marketing/README.md` | The launch ad's guide, next to its scripts (decision 044). | ✅ | Update it when the ad work starts again. |
 | `CHANGELOG.md` | A list of what changed in each release, written for users. | ❌ for now | Useful once the site is live and you ship updates people care about. |
 | `CONTRIBUTING.md` | How other people can contribute (style rules, how to submit changes). | ❌ | Only if others start contributing. |
-| `LICENSE` | Says what others may legally do with your code. Without one, nobody may reuse it. | ⏳ owner to decide | The repo is already public on GitHub. With no licence, the default is "all rights reserved": people can read it but not reuse it. Choose that on purpose, or an open licence (e.g. MIT for code, CC BY for text). Content and code can have different licences. |
+| `LICENSE` | Says what others may legally do with your code. Without one, nobody may reuse it. | ✅ MIT, code only (decision 074) | The plain MIT text, so GitHub recognises it. The README says what it doesn't cover: guide text and facts, the name and logo, third-party material. |
+| `SECURITY.md` | How to report a security problem privately. GitHub links it from the Security tab. | ⏳ Stage 4 | Not needed yet (decision 074). Add it when the site has accounts. |
 
 ## Code and configuration
 
