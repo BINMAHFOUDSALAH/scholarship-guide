@@ -1,5 +1,5 @@
 ---
-translated_from: 175f1dc182a7cbbf
+translated_from: ca52f4f7d870c436
 title: Not decided yet?
 description: How to discover the fields that draw you, what to try this term, and how to go from a field to a major and a university.
 next_step: Choose two fields that draw you or make you curious, and try an activity from each of them this month.
@@ -7,7 +7,7 @@ next_step: Choose two fields that draw you or make you curious, and try an activ
 
 ## It's fine not to know yet {#start}
 
-Many students don't know yet what they want to study, and that is normal. You don't need to decide everything now, but two decisions are ahead of you:
+If you don't know yet what you want to study, that is normal. You don't need to decide everything now, but two decisions are ahead of you:
 
 - **In Grade 10:** after it, each student is placed in a track according to their interests and abilities ([Ministry of Education](https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Pages/SecondarySchoolTracks.aspx)). Compare [the five tracks](/grades/grade-10#tracks).
 - **In Grade 12:** you choose the majors and universities you apply to ([Grade 12](/grades/grade-12)).
@@ -57,7 +57,7 @@ And before the major comes the **school track**: compare [the five tracks](/grad
 
 ## If your family sees it differently {#family}
 
-Your family's view usually comes from caring about you. So instead of arguing:
+Your family's view may come from caring about you. So instead of arguing:
 
 1. Ask them why they think this major suits you, and listen to their reasons.
 2. Learn enough about the major they suggest: what is studied in it, which track suits it, and try an activity from it.

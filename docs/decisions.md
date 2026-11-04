@@ -1084,6 +1084,17 @@ The owner then said: "do the best options and go for it".
 - **Computing the result in the browser:** answers would never leave the device, but the rules would be duplicated in JavaScript and untestable with pytest, and it wouldn't work without JavaScript. Posting once and storing nothing gives the same privacy in practice.
 - **Pages of five activities:** fewer taps, but long screens on a phone. One per screen with tap-to-advance is quicker to answer.
 - **An AI result:** not repeatable, not testable, and it would send minors' answers to a third party. AI may later answer questions from the verified field content.
+**Checked (2026-11-04):**
+- The handbook's wording, with `scripts/check_quote.py` on the official PDF: «مقياس الميول المهنية», «أداة للكشف عن الميول المهنية الرئيسة», «اكتشف ذاتك» all FOUND. pdftotext garbles the lam-alef ligature in the rest of the definition, which was read in the extracted text.
+- The guide's field list, in the 2026–2027 PDF itself: no health or education field, in Arabic or English.
+- The SDAIA link, against the program's sourced «المجالات ذات الأولوية» fact. It's labelled «برنامج لمن يُبتعث في تخصص منه», since it isn't a standalone scholarship.
+- An independent `reviewer` pass (Haiku 5.5) led to these fixes:
+  - no implied deadline in the grade 10 step;
+  - no prevalence claims («وهذا شائع»);
+  - one band's description now matches its rule;
+  - the body cap also holds for chunked posts;
+  - «لا يوجد» shows in the review;
+  - English coverage of every field's text.
 **Next:**
 - The owner arranges the counsellor review and the student test (run it locally with `WADIH_SHOW_DRAFTS=1`).
 - Verify the Ministry measure's details on an official page (press reports say it counts in placement; not verified, so not published).

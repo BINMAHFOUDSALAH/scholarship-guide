@@ -494,9 +494,17 @@ def explore_result_reload():
 async def explore_result(request: Request):
     """The result, drawn from the posted answers and then forgotten: nothing is saved or logged."""
     explore_or_404()
-    if int(request.headers.get("content-length") or 0) > exploration.MAX_BODY:
+    length = request.headers.get("content-length") or "0"
+    if not length.isdigit():
+        raise HTTPException(status_code=400)
+    if int(length) > exploration.MAX_BODY:
         raise HTTPException(status_code=413)
-    result = exploration.score(exploration.parse(await request.body()))
+    body = b""
+    async for chunk in request.stream():  # also caps a body sent without a length (chunked)
+        body += chunk
+        if len(body) > exploration.MAX_BODY:
+            raise HTTPException(status_code=413)
+    result = exploration.score(exploration.parse(body))
     shown = [f["id"] for band in result["bands"].values() for f in band]
     if result["considered"]:
         shown.append(result["considered"]["id"])

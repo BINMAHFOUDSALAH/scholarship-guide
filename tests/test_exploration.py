@@ -185,17 +185,34 @@ def test_nothing_is_stored_or_put_in_a_url():
 def test_oversized_posts_are_refused(drafts):
     r = client.post("/explore/result", content=b"a=" + b"x" * (ex.MAX_BODY + 1), headers=FORM)
     assert r.status_code == 413
+    # Sent without a length (chunked), the body is still capped while it's read.
+    chunks = (b"a=" + b"x" * 1000 for _ in range(ex.MAX_BODY // 1000 + 2))
+    assert client.post("/explore/result", content=chunks, headers=FORM).status_code == 413
+    bad = client.post("/explore/result", content=b"a=b", headers={**FORM, "content-length": "abc"})
+    assert bad.status_code in (400, 413)  # a bad length is refused, never a server error
+
+
+def every_answer():
+    """Every activity answered (all five answers used), every difficulty, subject and grade 12: the result then
+    shows every field's text, every tip and every answer label."""
+    labels = list(ex.ANSWERS)
+    data = {f"a-{a['id']}": labels[i % len(labels)] for i, a in enumerate(ex.DATA["activities"])}
+    return {**data, "difficulty": list(ex.DIFFICULTIES), "subject": list(ex.SUBJECTS), "grade": "12"}
 
 
 def test_english_pages_are_english(drafts):
     form = client.get("/en/explore").text
     assert 'action="/en/explore/result"' in form
-    data = {**answers_for("health", "enjoy"), **answers_for("ict", "curious"), "difficulty": ["untried", "family"],
-            "subject": "biology", "grade": "12", "considered": "education"}
-    result = post(data, prefix="/en").text
-    for html in (form, result):
+    pages = [form] + [post({**every_answer(), "considered": fid}, prefix="/en").text for fid in ("", "health", "ict")]
+    for grade in ("10", "11"):
+        pages.append(post({**every_answer(), "grade": grade}, prefix="/en").text)
+    for html in pages:
         assert '<html lang="en" dir="ltr"' in html
         assert not arabic_outside_lang_ar(html), arabic_outside_lang_ar(html)[:5]
+    shown = "\n".join(pages)
+    for f in ex.DATA["fields"]:  # every field's ideas reached an English page, in English
+        for idea in f["try_ar"]:
+            assert main.i18n.lookup(idea) and main.i18n.lookup(idea) in shown.replace("&#39;", "'"), idea
 
 
 # ---------- the guide ----------

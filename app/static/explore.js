@@ -43,7 +43,6 @@
 
   function chosenLabels(group) {
     return Array.from(group.querySelectorAll("input:checked"))
-      .filter((input) => input.value !== "")
       .map((input) => input.closest("label").querySelector("span").textContent.trim());
   }
 
