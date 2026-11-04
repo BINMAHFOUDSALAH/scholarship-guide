@@ -4787,16 +4787,9 @@ a.uni-name:hover .uni-name-en:only-child {
   margin-top: var(--space-4);
 }
 
-.explore-nav [data-next] {
+.explore-nav [data-next],
+.explore-nav [data-submit] {
   margin-inline-start: auto;
-}
-
-.explore-submit {
-  margin-top: var(--space-4);
-}
-
-.explore-change {
-  margin-inline-start: var(--space-2);
 }
 
 /* A new question fades in, so it's clear the step changed (a response to the student's press; off with reduced motion). */
@@ -4816,37 +4809,227 @@ a.uni-name:hover .uni-name-en:only-child {
   margin-bottom: 0;
 }
 
-/* ---------- The result ---------- */
+/* Part 3's long lists (the last question has 11 answers) never hide the button below the fold: the buttons stay in
+   reach (decision 073), above all the result's button. Only there: on an activity the bar could cover an answer, and a
+   stray tap on «تخطَّ» would skip the question. */
+.explore-form.is-stepped:has(> [data-part="3"]:not([hidden])) .explore-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  padding-block: var(--space-2);
+  background: var(--paper);
+}
 
-.explore-counts {
+/* ---------- The result (decision 073) ----------
+   One card per field: its picture, a clear title, why it's here, real majors, one action. On phones a column with the
+   picture on top; on wide screens the text at the reading start and the picture beside it. The pictures are the same
+   on both themes: forest is the ground they're drawn on. */
+
+.explore-result .page-header {
   margin-bottom: var(--space-4);
 }
 
-.explore-counts .summary-row {
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
+.explore-result .lead {
+  margin-bottom: var(--space-1);
+  color: var(--ink);
 }
 
-.explore-result .section {
-  margin-top: var(--space-5);
+.explore-caution {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
 }
 
-.explore-result .section-note {
-  margin-block: var(--space-1) var(--space-3);
+.explore-band {
+  margin-block: var(--space-5);
+}
+
+.explore-band .section-title {
+  margin-bottom: var(--space-3);
+}
+
+.explore-fields {
+  display: grid;
+  gap: var(--space-3);
 }
 
 .explore-field {
-  margin-block: var(--space-4) var(--space-5);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+}
+
+.explore-field-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  background: #184b3a; /* the pictures' own ground, while one loads */
+}
+
+.explore-field-body {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3);
 }
 
 .explore-field-name {
-  margin-bottom: var(--space-2);
-  font-size: var(--text-md);
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: var(--text-lg);
+  line-height: 1.45;
+}
+
+.explore-field-why {
+  margin: 0;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.explore-label {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.explore-majors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Examples to read, not buttons: a soft tint and no border, so they don't ask to be pressed. */
+.explore-majors li {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--action) 10%, var(--surface-strong));
+  font-size: var(--text-sm);
   line-height: 1.6;
 }
 
-.explore-field-note {
-  color: var(--ink-muted);
+.explore-field-majors .source-stamp {
+  margin-block: var(--space-2) 0;
+  font-size: var(--text-xs);
+}
+
+/* The card's one action. It opens the rest in place, and once open it steps back to an outline. */
+.explore-dive > summary {
+  width: 100%;
+  list-style: none;
+}
+
+.explore-dive > summary::-webkit-details-marker {
+  display: none;
+}
+
+.explore-chevron {
+  transition: rotate 0.18s ease-out;
+}
+
+.explore-dive[open] .explore-chevron {
+  rotate: 180deg;
+}
+
+.explore-dive[open] > summary,
+.explore-dive[open] > summary:hover {
+  border-color: var(--action);
+  background: transparent;
+  color: var(--action);
+}
+
+.explore-dive[open] > summary:hover {
+  background: color-mix(in srgb, var(--action) 9%, transparent);
+}
+
+.explore-dive .summary-list {
+  margin-top: var(--space-3);
+}
+
+.explore-dive .summary-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+@media (min-width: 720px) {
+  .explore-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 40%);
+  }
+
+  .explore-field-art {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+    min-height: 270px;
+    aspect-ratio: auto;
+  }
+
+  .explore-field-body {
+    grid-column: 1;
+    grid-row: 1;
+    align-content: start;
+    padding: var(--space-4);
+  }
+
+  .explore-dive > summary {
+    width: fit-content;
+  }
+
+  /* Open, the card grows far taller than its picture: the picture keeps its size and stays in view beside the text. */
+  .explore-field:has(.explore-dive[open]) {
+    overflow: visible;
+  }
+
+  .explore-field:has(.explore-dive[open]) .explore-field-art {
+    position: sticky;
+    top: var(--space-3);
+    align-self: start;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1.3;
+    border-radius: var(--radius-panel);
+  }
+}
+
+/* The fields that don't draw the student now: a small picture beside the title. */
+.explore-field.explore-field--compact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+}
+
+.explore-field--compact .explore-field-body {
+  display: contents;
+}
+
+.explore-field--compact .explore-field-name {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  font-size: var(--text-md);
+}
+
+.explore-field.explore-field--compact .explore-field-art {
+  position: static;
+  grid-column: 2;
+  grid-row: 1;
+  width: 112px;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius);
+}
+
+.explore-field--compact .explore-field-majors,
+.explore-field--compact .explore-dive {
+  grid-column: 1 / -1;
 }
 
 .explore-why,
@@ -4879,47 +5062,36 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .explore-more-fields {
-  margin-block: var(--space-3) var(--space-4);
+  margin-top: var(--space-3);
 }
 
-.explore-more-fields summary {
-  display: flex;
-  align-items: center;
-  min-height: 48px;
+.explore-more-fields > summary {
+  padding-block: 12px;
   font-weight: 700;
   color: var(--action);
   cursor: pointer;
 }
 
 .explore-not-now {
-  margin-top: var(--space-5);
-  border-top: 1px solid var(--line-strong);
+  margin-block: var(--space-5);
   padding-top: var(--space-3);
+  border-top: 1px solid var(--line-strong);
 }
 
-.explore-not-now summary {
-  min-height: 44px;
+.explore-not-now > summary {
+  padding-block: 8px;
   font-family: var(--font-title);
   font-size: var(--text-lg);
   font-weight: 700;
   cursor: pointer;
 }
 
-.explore-more {
-  border-bottom: 1px solid var(--line);
+.explore-not-now .explore-fields {
+  margin-top: var(--space-3);
 }
 
-.explore-more summary {
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  font-weight: 700;
-  color: var(--action);
-  cursor: pointer;
-}
-
-.explore-more[open] summary {
-  margin-bottom: var(--space-2);
+.explore-result .next-step {
+  margin-block: var(--space-3);
 }
 
 .explore-actions {
@@ -4927,12 +5099,47 @@ a.uni-name:hover .uni-name-en:only-child {
   margin-top: var(--space-4);
 }
 
-/* A printed result: the page itself, without the site around it or the buttons. */
+/* A response to the student's press: the suggestions arrive, a card's details open (off with reduced motion). */
+@media (prefers-reduced-motion: no-preference) {
+  .explore-band .explore-field {
+    animation: explore-rise 0.3s ease-out backwards;
+  }
+
+  .explore-band .explore-field:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+
+  .explore-band .explore-field:nth-child(3) {
+    animation-delay: 0.12s;
+  }
+
+  .explore-dive[open] > .summary-list {
+    animation: explore-step-in 0.18s ease-out;
+  }
+
+  @keyframes explore-rise {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+}
+
+/* A printed result: the page itself, without the site around it or the buttons; explore.js opens every card first. */
 @media print {
   .site-header,
   .site-footer,
   .skip-link,
-  .explore-actions {
+  .explore-actions,
+  .explore-dive > summary {
     display: none !important;
+  }
+
+  .explore-field {
+    break-inside: avoid;
   }
 }

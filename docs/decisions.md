@@ -1164,3 +1164,30 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **Move on at once (0ms):** the student can't see what they chose, and a mis-tap is gone before they notice.
 - **A longer wait (e.g. 600ms):** feels sluggish; 300ms is enough to see the choice.
 
+## 073 — «جرّب قبل أن تقرر»: straight to the result; one illustrated card per field (updates 062, 069, 071, 072)
+**Date:** 2026-11-04 · **Research:** [field-majors-classification-2026-11.md](research/field-majors-classification-2026-11.md)
+**Context:** the owner, after using the activity: the page with «غيّر» before the result is unnecessary, since answers could be changed earlier, and the result is confusing. Measured on a phone (page height, for the same answers): the review was 34 rows and about 5,000px; the result about 6,300px, opening with counts that read like a score, each field a long list of answers. After this decision the result is about 5,200px; the gain is less in length than in what comes first. The "example majors" were the guide's first four, which misrepresent a field (engineering showed only chemical and materials), and health and education showed none.
+**Decision (owner's request, and the owner's choices where noted):**
+- **No review page.** The last question's button is «اعرض النتيجة». «السابق» changes an answer on the way, and Back from the result returns to the last question with the answers. On part 3's long lists the buttons stay in reach, so the last button is never below the fold. Not on the activities: there the bar could cover an answer, and a stray tap on «تخطَّ» would skip the question (`check_explore.mjs` caught this).
+- **The result opens with the answer:** a lead naming the closest fields («أقربها إليك الآن: …»), one line that it doesn't decide a major, then the cards. The counts are gone. The difficulty tips move below the fields.
+- **One card per field:** a picture, a plain title, one sentence of why (`why_text()`, from what the student enjoys, wants to try and has seen progress in), up to four real majors, and one action.
+- **The action opens in place (owner's choice), «استكشف هذا المجال»:** something to try this week, where to study it, a program, the school tracks, and every answer behind it, so the transparency of decision 069 stays one tap away. Staying on the page also suits a result that exists only as the answer to a form.
+- **A shortlist in each band:** the three strongest open and the rest fold, now in «تجذبك الآن» too. Fields that don't draw the student stay folded, with a small picture and no "because".
+- **Plain titles:** `title_ar` («التقنية وعلوم الحاسب», «السياحة والرياضة والنقل» instead of «الخدمات»), in the form as well. The guide's own name stays beside the explorer link, where the student will meet it.
+- **Real majors only (owner's choice):** seven fields use names from the Ministry's guide, chosen to be recognisable and checked by a test. Health, education and arts, where the guide has none or one, use the Ministry's Saudi unified classification, read directly, with its source on the card. The health and education note and the arts line about the guide stay in the details.
+- **Our own drawings:** one for each of the 10 fields, in the logo's idea: paper cut-outs on the forest tile, one lime accent. Separate SVG files, 40 KB for all ten, with no text, script or outside request (a test checks). They need no licence and stay sharp at any size.
+**Exceptions to decision 062, recorded in `.claude/rules/design.md`:** cards are allowed here (this page compares a few things to choose from), and lime appears inside the drawings as colour.
+**Safeguard:** the result's button appears where «التالي» was, so a double tap could send the form. The 400ms guard now covers it. Switched off on purpose, with the buttons pinned in place, the double tap did send the form, in both engines.
+**Verified:**
+- pytest, 741 tests. The rules are unchanged (40 random students still match `score()` band by band), plus new tests for the titles, majors, drawings, the why sentence, the card and the flow.
+- `scripts/check_explore.mjs` on an emulated iPhone: 33 checks, Arabic and English, Chromium and WebKit (new flag `--webkit`). With the guard switched off on purpose, six fail, among them the owner's original bug and the form sent by a double tap.
+- The full journey by taps: 30 answers, the last question, the result, opening a card, the explorer, Back to the result (Chromium Arabic and English, WebKit Arabic and English).
+- Widths from 320 to 1280px with every card open, both themes, both languages; keyboard; without JavaScript; print.
+**Not verified:** a real iPhone (WebKit on Windows is close, not the same), and students. The usability test (research note §9) should ask whether a student can name a field and one action from this page.
+**Alternatives:**
+- **A page per field:** richer and indexable, but a bigger build, and Back to a posted result risks a browser's "resubmit" warning. It can come later as a public door if students ask.
+- **The button going straight to the explorer:** simplest, but health and education have no list there, and it's a big jump for an undecided grade 10 student.
+- **Common majors the owner confirms, or no majors on those three cards:** the first has no official link, and the second leaves those three cards emptier than the others.
+- **Photos or AI images:** need licences or budget, weigh more, and don't change with the design. Icons alone: too small to make a field recognisable.
+- **A grid of two columns on wide screens:** the picture stays whole, but opening one card leaves a hole beside it. One column, with the text beside the picture, reads in order.
+

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -85 640 490" width="640" height="490">
+  <!-- Field illustration (decision 073): paper cut-outs on the logo's forest tile. Engineering: a bridge on a drawing board, a gear. -->
+  <rect y="-85" width="640" height="490" fill="#184b3a"/>
+  <g stroke="#f6f4ee" stroke-opacity=".08" stroke-width="1.5">
+    <path d="M0-64H640M0-32H640M0 0H640M0 32H640M0 64H640M0 96H640M0 128H640M0 160H640M0 192H640M0 224H640M0 256H640M0 288H640M0 320H640M0 352H640M0 384H640"/>
+    <path d="M32-85V405M64-85V405M96-85V405M128-85V405M160-85V405M192-85V405M224-85V405M256-85V405M288-85V405M320-85V405M352-85V405M384-85V405M416-85V405M448-85V405M480-85V405M512-85V405M544-85V405M576-85V405M608-85V405"/>
+  </g>
+  <path d="M0 262c90-16 190-20 320-20s230 4 320 20v143H0z" fill="#0f3a2c"/>
+  <circle cx="320" cy="150" r="118" fill="#2a6a53" opacity=".55"/>
+  <!-- the bridge -->
+  <path d="M88 212C150 196 204 150 222 84c18 66 62 120 98 120s80-54 98-120c18 66 72 112 134 128" fill="none" stroke="#f6f4ee" stroke-width="5" stroke-linecap="round"/>
+  <g stroke="#9ad3b4" stroke-width="2.5">
+    <path d="M122 203v21M152 190v34M182 168v56M206 130v94"/>
+    <path d="M240 130v94M262 168v56M286 194v30M320 204v20M354 194v30M378 168v56M400 130v94"/>
+    <path d="M434 130v94M458 168v56M488 190v34M518 203v21"/>
+  </g>
+  <rect x="210" y="74" width="24" height="176" rx="3" fill="#f6f4ee"/>
+  <rect x="406" y="74" width="24" height="176" rx="3" fill="#f6f4ee"/>
+  <rect x="214" y="104" width="16" height="9" fill="#184b3a"/>
+  <rect x="410" y="104" width="16" height="9" fill="#184b3a"/>
+  <rect x="214" y="150" width="16" height="9" fill="#184b3a"/>
+  <rect x="410" y="150" width="16" height="9" fill="#184b3a"/>
+  <rect x="62" y="222" width="516" height="13" rx="3" fill="#f6f4ee"/>
+  <!-- the dimension line, as on a drawing -->
+  <g stroke="#9ad3b4" stroke-width="2.5" fill="none">
+    <path d="M222 284H418"/>
+    <path d="M222 274v20M418 274v20"/>
+    <path d="M234 278l-12 6 12 6M406 278l12 6-12 6"/>
+  </g>
+  <!-- the gear -->
+  <g transform="translate(528 74)">
+    <circle r="33" fill="none" stroke="#d8ed9b" stroke-width="13" stroke-dasharray="13.2 12.7"/>
+    <circle r="31" fill="#d8ed9b"/>
+    <circle r="12" fill="#184b3a"/>
+  </g>
+  <!-- the set square -->
+  <path d="M60 46v92h92z" fill="none" stroke="#f6f4ee" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M76 86v36h36z" fill="none" stroke="#9ad3b4" stroke-width="3" stroke-linejoin="round"/>
+</svg>

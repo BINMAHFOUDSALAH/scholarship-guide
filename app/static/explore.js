@@ -1,6 +1,7 @@
 // «جرّب قبل أن تقرر» (decision 069): turns the one long form into steps, one question per screen.
 // - Part 1 (what makes the decision hard, the grade), part 2 (one activity per screen), part 3 (progress in
-//   subjects, a field the student or their family has in mind), then a review where any answer can be changed.
+//   subjects, a field the student or their family has in mind). The last step's button goes straight to the result
+//   (decision 073: no review page; «السابق» changes an answer on the way).
 // - In part 2, tapping an answer moves on to the next activity after a short moment (AUTO_NEXT_MS), so the
 //   student sees their choice first (owner, 2026-11-04: pressing «التالي» 30 times is too slow). Only taps do this:
 //   with the keyboard, arrow keys change the choice and the student moves on with Enter or «التالي».
@@ -10,7 +11,7 @@
 //   question (the last choice wins, one move), and for a moment after the question changes, taps on the questions
 //   and buttons are ignored (never key presses).
 // - Each visit starts clean (a reload never brings old answers back); Back returns to where the student left off,
-//   with the answers: the review when coming back from the result, the same question when they left mid-way.
+//   with the answers: the last step when coming back from the result, the same question when they left mid-way.
 //   Only the step number is kept, in this page's own history entry; answers are never stored.
 // - Nothing is stored or sent until the student presses «اعرض النتيجة». Without JavaScript the whole form shows
 //   and works as it is.
@@ -18,30 +19,40 @@
   const t = (text) => (window.WADIH_I18N && window.WADIH_I18N[text]) || text; // English pages (decision 066)
   const fill = (text, values) => t(text).replace(/\{(\w+)\}/g, (m, key) => (key in values ? String(values[key]) : m));
 
-  // The result page: printing is the only way to keep it (nothing is saved).
+  // The result page: printing is the only way to keep it (nothing is saved), so a printed page shows every card's
+  // details, however they were left on screen.
   for (const button of document.querySelectorAll("[data-print]")) {
     button.hidden = false;
     button.addEventListener("click", () => window.print());
   }
+  let foldedForPrint = [];
+  window.addEventListener("beforeprint", () => {
+    for (const details of document.querySelectorAll(".explore-result details:not([open])")) {
+      foldedForPrint.push(details); // added to, never replaced: the event can fire twice before "afterprint"
+      details.open = true;
+    }
+  });
+  window.addEventListener("afterprint", () => {
+    for (const details of foldedForPrint) details.open = false;
+    foldedForPrint = [];
+  });
 
   const form = document.querySelector("[data-explore]");
   if (!form) return;
 
   const steps = Array.from(form.querySelectorAll("[data-step]"));
-  const review = form.querySelector("[data-review]");
   const activities = steps.filter((s) => s.dataset.part === "2");
   const partTwo = form.querySelector(".explore-part");
-  const nav = form.querySelector("[data-explore-nav]");
-  const prev = nav.querySelector("[data-prev]");
-  const next = nav.querySelector("[data-next]");
-  const submitArea = form.querySelector("[data-submit-area]");
+  const last = steps.length - 1;
+  const prev = form.querySelector("[data-prev]");
+  const next = form.querySelector("[data-next]");
+  const submit = form.querySelector("[data-submit]");
   const progress = document.querySelector("[data-explore-progress]");
   const partText = progress.querySelector("[data-progress-part]");
   const countText = progress.querySelector("[data-progress-count]");
   const bar = progress.querySelector("[data-progress-bar]");
   const PARTS = 3;
   let current = 0;
-  let backToReview = false; // came here from «غيّر» on the review: «التالي» goes straight back
   const STEP_LOCK_MS = 400;  // the second tap of a double tap: too soon to have read the new question
   const AUTO_NEXT_MS = 300;  // a tap on an answer: long enough to see it chosen, short enough not to wait
   let autoNext = 0;          // the pending move, cancelled by any other move
@@ -49,70 +60,24 @@
   let lockedUntil = 0;
 
   form.classList.add("is-stepped");
-  nav.hidden = false;
   progress.hidden = false;
-  review.hidden = false;
-
-  function chosenLabels(group) {
-    return Array.from(group.querySelectorAll("input:checked"))
-      .map((input) => input.closest("label").querySelector("span").textContent.trim());
-  }
-
-  function buildReview() {
-    const list = review.querySelector("[data-review-list]");
-    list.replaceChildren();
-    steps.forEach((step, index) => {
-      if (step === review) return;
-      const groups = step.matches("fieldset") ? [step] : Array.from(step.querySelectorAll("fieldset"));
-      for (const group of groups) {
-        const label = group.dataset.label;
-        const row = document.createElement("div");
-        row.className = "summary-row";
-        const dt = document.createElement("dt");
-        dt.textContent = label;
-        const dd = document.createElement("dd");
-        const answer = document.createElement("span");
-        const chosen = chosenLabels(group);
-        answer.textContent = chosen.length ? chosen.join(t("، ")) : t("لم تُجب");
-        const change = document.createElement("button");
-        change.type = "button";
-        change.className = "btn btn--small btn--secondary explore-change";
-        change.textContent = t("غيّر");
-        change.setAttribute("aria-label", fill("غيّر إجابتك عن: {label}", { label }));
-        change.addEventListener("click", () => {
-          backToReview = true;
-          show(index);
-        });
-        dd.append(answer, " ", change);
-        row.append(dt, dd);
-        list.append(row);
-      }
-    });
-  }
 
   function show(index, moveFocus = true) {
     window.clearTimeout(autoNext);
-    current = Math.max(0, Math.min(index, steps.length - 1));
+    current = Math.max(0, Math.min(index, last));
     const step = steps[current];
     steps.forEach((s, i) => { s.hidden = i !== current; });
     const part = step.dataset.part;
     partTwo.hidden = part !== "2";
-    if (step === review) {
-      buildReview();
-      backToReview = false;
-      partText.textContent = t("المراجعة الأخيرة");
-      countText.textContent = "";
-    } else {
-      partText.textContent = fill("الجزء {n} من {total}", { n: part, total: PARTS });
-      countText.textContent = part === "2"
-        ? fill("النشاط {n} من {total}", { n: activities.indexOf(step) + 1, total: activities.length }) : "";
-    }
+    partText.textContent = fill("الجزء {n} من {total}", { n: part, total: PARTS });
+    countText.textContent = part === "2"
+      ? fill("النشاط {n} من {total}", { n: activities.indexOf(step) + 1, total: activities.length }) : "";
     countText.hidden = !countText.textContent;
-    bar.value = current / (steps.length - 1);
+    bar.value = current / last;
     prev.hidden = current === 0;
-    next.hidden = step === review;
+    next.hidden = current === last;
+    submit.hidden = current !== last;
     updateNext();
-    submitArea.hidden = step !== review;
     // Which step this is, in this page's own history entry (a number, never an answer), so Back returns here.
     try { history.replaceState({ ...(history.state || {}), exploreStep: current }, ""); } catch (e) { /* not needed to work */ }
     if (moveFocus) {
@@ -129,17 +94,18 @@
   // «التالي» once something is chosen, «تخطَّ» while nothing is: the button says what pressing it does.
   function updateNext() {
     const answered = !!steps[current].querySelector("input:checked");
-    next.textContent = backToReview ? t("العودة إلى المراجعة") : answered ? t("التالي") : t("تخطَّ");
+    next.textContent = answered ? t("التالي") : t("تخطَّ");
   }
 
   function forward() {
-    show(backToReview ? steps.indexOf(review) : current + 1);
+    show(current + 1);
   }
 
-  // Captured before anything else sees it: the tap neither chooses an answer nor presses a button. Only taps and
+  // Captured before anything else sees it: the tap neither chooses an answer nor presses a button. The result's
+  // button is here too: it appears where «التالي» was, and a double tap must never send the form. Only taps and
   // clicks (event.detail ≥ 1); a key press (detail 0) is always deliberate, so the keyboard is never held up.
   form.addEventListener("click", (event) => {
-    if (event.detail > 0 && Date.now() < lockedUntil && event.target.closest(".explore-option, [data-prev], [data-next]")) {
+    if (event.detail > 0 && Date.now() < lockedUntil && event.target.closest(".explore-option, [data-prev], [data-next], [data-submit]")) {
       event.preventDefault();
       event.stopPropagation();
     }
@@ -164,19 +130,19 @@
     autoNext = window.setTimeout(() => { if (steps[current] === step) forward(); }, AUTO_NEXT_MS);
   });
 
-  // Enter inside a question goes to the next step; only the review's button shows the result. Enter is a key
-  // press, so it's never held up, but a held-down Enter (key repeat) would race through questions: ignored.
+  // Enter inside a question goes to the next step; only the last step shows the result. Enter is a key press, so
+  // it's never held up, but a held-down Enter (key repeat) would race through questions: ignored.
   form.addEventListener("keydown", (event) => {
     if (event.key === "Enter" && event.repeat) event.preventDefault();
   });
   form.addEventListener("submit", (event) => {
-    if (steps[current] !== review) {
+    if (current !== last) {
       event.preventDefault();
       forward();
     }
   });
 
-  // A reload starts clean, and Back from the result opens the review with the answers. Browsers put earlier
+  // A reload starts clean, and Back from the result opens the last step with the answers. Browsers put earlier
   // answers back after the page has loaded, just before "pageshow" (measured in Chromium, 2026-11-04), so the
   // choice is made there. A first visit has nothing to restore and is left alone; a page the browser kept in
   // memory comes back exactly as it was.
@@ -188,8 +154,8 @@
     if (event.persisted) return; // kept in memory by the browser: the page, its step and its answers are as left
     const back = navigation.type === "back_forward";
     if (back && answered()) {
-      // Back to where the student left off: the question they were on, or the review if they came from the result.
-      show(Number.isInteger(savedStep) ? savedStep : steps.indexOf(review), false);
+      // Back to where the student left off: the step they were on (the last one if they came from the result).
+      show(Number.isInteger(savedStep) ? savedStep : last, false);
     } else if (back || navigation.type === "reload") {
       form.reset();
       show(0, false);

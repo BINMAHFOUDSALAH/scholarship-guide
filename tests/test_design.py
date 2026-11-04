@@ -58,6 +58,8 @@ def text_pairs(t):
         (t["ink"], t["paper"], "body text and headings"),
         (t["ink"], t["surface"], "text on panels"),
         (t["ink"], t["surface-strong"], "text in inputs, menus and the summary sheet"),
+        (t["ink"], mix(t["action"], 10, t["surface-strong"]), "the example majors on a result card"),
+        (t["ink-muted"], t["surface-strong"], "labels and sources on a result card"),
         (t["ink-muted"], t["paper"], "secondary text"),
         (t["ink-muted"], t["surface"], "secondary text on panels"),
         (t["ink-muted"], t["surface-strong"], "hints in the suggestions panel"),

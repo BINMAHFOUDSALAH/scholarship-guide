@@ -309,6 +309,8 @@ templates.env.globals["sky_stars"] = {
 templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
 # «جرّب قبل أن تقرر» (decision 069): its door on the «لم تقرر بعد؟» guide shows only while the activity is public.
 templates.env.globals["explore_public"] = lambda: exploration.is_public(SHOW_DRAFTS)
+templates.env.globals["explore_why"] = exploration.why_text
+templates.env.globals["explore_list"] = exploration.list_text
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
 templates.env.globals["waiver_ar"] = WAIVER_AR
 templates.env.globals["not_listed_ar"] = NOT_LISTED_AR
@@ -477,10 +479,9 @@ def explore_or_404():
 @app.get("/explore", response_class=HTMLResponse)
 def explore_page(request: Request):
     """«جرّب قبل أن تقرر»: the whole activity is one form, so it works without JavaScript; explore.js turns it
-    into one question per screen, with progress and a review step."""
+    into one question per screen, with progress, and the last step goes straight to the result."""
     explore_or_404()
-    return render(request, "explore.html", {"x": exploration.DATA, "activities": exploration.activities(),
-                                            "field_names": exploration.field_names(explorer)})
+    return render(request, "explore.html", {"x": exploration.DATA, "activities": exploration.activities()})
 
 
 @app.get("/explore/result")
@@ -511,6 +512,7 @@ async def explore_result(request: Request):
     views = {fid: exploration.field_view(fid, explorer, school_tracks) for fid in shown}
     return render(request, "explore_result.html", {
         "r": result, "views": views, "x": exploration.DATA, "program_names": path_names,
+        "lead_titles": [views[f["id"]]["title_ar"] for f in (result["bands"]["draws"] or result["bands"]["try"])[:3]],
         "sources": [{"title": school_tracks["source"]["title"], "url": school_tracks["source"]["url"]},
                     {"title": explorer.source["title_ar"], "url": explorer.source["url"]}] + exploration.DATA["sources"],
     })

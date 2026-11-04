@@ -13,6 +13,7 @@ from fastapi.testclient import TestClient
 
 import app.main as main
 from app import exploration as ex
+from app import i18n
 from scripts.english_leaks import arabic_outside_lang_ar
 
 client = TestClient(main.app)
@@ -74,6 +75,38 @@ def test_activities_never_ask_the_same_field_twice_in_a_row():
     assert all(a != b for a, b in zip(order, order[1:]))
 
 
+def test_every_field_has_a_clear_title_and_real_majors():
+    """Decision 073: a plain title and up to four example majors for each card. Every name is real: from the Ministry's
+    guide (checked here against the guide's own list) or, where the guide has none or one, from the Ministry's Saudi
+    unified classification (read directly, docs/research/field-majors-classification-2026-11.md)."""
+    titles = [f["title_ar"] for f in ex.DATA["fields"]]
+    assert all(titles) and len(set(titles)) == len(titles)
+    sources = {s.get("id") for s in ex.DATA["sources"]}
+    for f in ex.DATA["fields"]:
+        assert 1 <= len(f["majors_ar"]) <= 4, f["id"]
+        if f["majors_from"] == "guide":
+            assert set(f["majors_ar"]) <= set(ex.guide_majors(main.explorer, f["guide_field"])), f["id"]
+        else:
+            assert f["majors_from"] == "classification" and "classification" in sources, f["id"]
+    from_classification = {f["id"] for f in ex.DATA["fields"] if f["majors_from"] == "classification"}
+    assert from_classification == {"health", "education", "arts-humanities"}  # the guide has too little for these
+
+
+PICTURE_COLOURS = {"#184b3a", "#0f3a2c", "#2a6a53", "#9ad3b4", "#f6f4ee", "#d8ed9b"}  # the logo's, and tints of its forest
+
+
+@pytest.mark.parametrize("fid", list(ex.FIELDS))
+def test_every_field_has_its_picture_and_nothing_else_comes_with_it(fid):
+    """Our own drawings (decision 073): one shape and palette, and self-contained, so no third-party request and no
+    script can ever come with a picture on a minor's result page."""
+    svg = (main.APP_DIR / "static" / "img" / "fields" / f"{fid}.svg").read_text(encoding="utf-8")
+    assert svg.startswith("<svg ") and 'viewBox="0 -85 640 490"' in svg  # phones show the middle 640x320
+    assert not re.search(r"<(script|image|foreignObject|text|style)\b|\bon\w+=", svg), fid
+    assert not re.findall(r'(?:href|src)="(?!#)', svg), fid
+    assert not re.findall(r"url\(", svg), fid
+    assert set(c.lower() for c in re.findall(r"#[0-9a-fA-F]{6}\b", svg)) <= PICTURE_COLOURS, fid
+
+
 def test_published_and_the_review_still_recorded_as_to_come():
     """Published by the owner before the counsellor review (decision 070); the data keeps saying so."""
     assert ex.DATA["draft"] is False and ex.DATA["expert_reviewed"] is False
@@ -133,6 +166,42 @@ def test_strongest_first_and_the_considered_field_apart():
     assert "health" not in [f["id"] for band in r["bands"].values() for f in band]
 
 
+def field_of(data, fid):
+    r = ex.score(ex.parse(urlencode(data, doseq=True).encode()))
+    return next(f for band in r["bands"].values() for f in band if f["id"] == fid)
+
+
+@pytest.mark.parametrize("data, expected", [
+    ({"a-small-program": "enjoy"}, "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة."),
+    ({"a-small-program": "enjoy", "a-fix-app": "enjoy", "subject": "digital"},
+     "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة، وبحل مشكلة في جهاز أو تطبيق لا يعمل، ولاحظت تقدمك في الحاسب والتقنية الرقمية."),
+    ({"a-small-program": "enjoy", "a-fix-app": "enjoy", "a-simple-site": "enjoy"},
+     "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة، وبحل مشكلة في جهاز أو تطبيق لا يعمل، وبنشاط آخر منه."),
+    ({"a-small-program": "enjoy", "a-fix-app": "curious"},
+     "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة، وتودّ أن تجرّب حل مشكلة في جهاز أو تطبيق لا يعمل."),
+    ({"a-fix-app": "curious"}, "لأنك تودّ أن تجرّب حل مشكلة في جهاز أو تطبيق لا يعمل."),
+    ({"a-fix-app": "curious", "a-simple-site": "curious"},
+     "لأنك تودّ أن تجرّب حل مشكلة في جهاز أو تطبيق لا يعمل، وتصميم صفحة موقع أو تطبيق بسيط."),
+    ({"a-simple-site": "ok", "subject": ["math", "digital"]}, "لأنك لاحظت تقدمك في الرياضيات والحاسب والتقنية الرقمية."),
+])
+def test_why_is_one_short_sentence_from_the_students_own_answers(data, expected):
+    assert ex.why_text(field_of(data, "ict")) == expected
+
+
+def test_why_in_english():
+    data = {"a-small-program": "enjoy", "a-fix-app": "curious", "subject": ["math", "digital"]}
+    with i18n.use_lang("en"):
+        assert ex.why_text(field_of(data, "ict")) == ("You enjoy writing a small program or modifying a game. "
+                                                      "You'd like to try fixing a problem with a device or an app that doesn't work. "
+                                                      "You've noticed your progress in: Mathematics, Computing and digital technology.")
+
+
+def test_the_lead_names_the_fields_clearly_in_both_languages():
+    assert ex.list_text(["التقنية وعلوم الحاسب", "الهندسة والبناء"]) == "التقنية وعلوم الحاسب، والهندسة والبناء"
+    with i18n.use_lang("en"):
+        assert ex.list_text(["التقنية وعلوم الحاسب", "الهندسة والبناء"]) == "Technology and computer science; Engineering and construction"
+
+
 # ---------- the pages ----------
 
 def test_live_on_the_site(live):
@@ -165,6 +234,51 @@ def test_form_works_without_javascript(drafts):
     assert " checked" not in html.split("<form", 1)[1]  # no answer is ever chosen for the student
     assert html.count('type="radio" name="a-') == len(ex.DATA["activities"]) * len(ex.DATA["answers"])
     assert "explore.js" in html
+
+
+def test_the_last_question_goes_straight_to_the_result():
+    """No page between the answers and the result (decision 073): «السابق» changes an answer on the way."""
+    html = client.get("/explore").text
+    js = (main.APP_DIR / "static" / "explore.js").read_text(encoding="utf-8")
+    assert "data-review" not in html and "راجع إجاباتك" not in html
+    assert "غيّر" not in js and "buildReview" not in js
+    assert '<button type="submit" class="btn btn--primary" data-submit>' in html  # shows without JavaScript too
+    # A double tap must never send the form: the button appears where «التالي» was.
+    assert "[data-submit]" in js.split("lockedUntil &&", 1)[1].split("\n", 1)[0]
+
+
+def test_a_card_says_what_it_is_why_what_you_study_and_one_thing_to_do(drafts):
+    html = post({**answers_for("ict", "enjoy"), **answers_for("health", "cold"), **answers_for("arts-humanities", "curious"),
+                 "subject": "digital"}).text
+    card = html.split('id="field-ict"', 1)[1].split('<section class="explore-field', 1)[0]
+    assert "/static/img/fields/ict.svg" in card and 'alt=""' in card  # the title says it; a screen reader needn't hear it twice
+    assert "التقنية وعلوم الحاسب" in card                             # the plain title…
+    assert "تقنية الاتصالات والمعلومات" in card                        # …and the guide's name beside the explorer link
+    assert "لأنك تستمتع بكتابة برنامج صغير" in card
+    assert "الذكاء الاصطناعي" in card
+    assert main.explorer.source["url"] in card                         # the majors' source beside them
+    assert card.count("<summary") == 1 and "استكشف هذا المجال" in card  # one action
+    assert "/universities?track=emdad&amp;field=ict" in card           # it leads on to the universities
+    assert card.index("<summary") < card.index("جرّب هذا الأسبوع")     # the details come after the action
+    # The first thing on the page says which fields; the counts that read like a score are gone.
+    assert html.index("أقربها إليك الآن:") < html.index('id="draws-title"')
+    assert "أنشطة جرّبتها" not in html and 'class="summary-list explore-counts"' not in html
+    # The fields where the guide has none or one: the examples name their own source, and the card says so.
+    classification = next(s["url"] for s in ex.DATA["sources"] if s.get("id") == "classification")
+    arts = html.split('id="field-arts-humanities"', 1)[1].split('<section class="explore-field', 1)[0]
+    assert classification in arts and "التاريخ" in arts
+    assert "تخصصًا واحدًا: تصميم المنتجات" in arts
+    # A field that doesn't draw the student gets no "because": there is none to give.
+    health = html.split('id="field-health"', 1)[1].split('<section class="explore-field', 1)[0]
+    assert "explore-field--compact" in html.split('id="field-health"', 1)[0].rsplit("<section", 1)[1]
+    assert 'class="explore-field-why"' not in health and classification in health and "الطب" in health
+
+
+def test_only_the_three_strongest_fields_of_a_band_stay_open(drafts):
+    html = post({f"a-{a['id']}": "enjoy" for a in ex.DATA["activities"]}).text
+    section = html.split('id="draws-title"', 1)[1]
+    opened, folded = section.split('class="explore-more-fields"', 1)
+    assert len(re.findall(FIELD_CARD, opened)) == 3 and len(re.findall(FIELD_CARD, folded)) == 7
 
 
 def test_result_explains_itself(drafts):
@@ -220,13 +334,18 @@ def test_english_pages_are_english(drafts):
     pages = [form] + [post({**every_answer(), "considered": fid}, prefix="/en").text for fid in ("", "health", "ict")]
     for grade in ("10", "11"):
         pages.append(post({**every_answer(), "grade": grade}, prefix="/en").text)
+    ict = [a["id"] for a in ex.DATA["activities"] if a["field"] == "ict"]
+    for answers in (["enjoy"], ["enjoy", "enjoy"], ["enjoy"] * 3, ["enjoy", "curious"], ["curious"], ["curious"] * 2, ["curious"] * 3):
+        pages.append(post({f"a-{aid}": answer for aid, answer in zip(ict, answers)}, prefix="/en").text)
+    pages.append(post({f"a-{ict[0]}": "ok", "subject": "math"}, prefix="/en").text)
+    pages.append(post({f"a-{a['id']}": "enjoy" for a in ex.DATA["activities"]}, prefix="/en").text)  # «مجالات أخرى»
     for html in pages:
         assert '<html lang="en" dir="ltr"' in html
         assert not arabic_outside_lang_ar(html), arabic_outside_lang_ar(html)[:5]
-    shown = "\n".join(pages)
-    for f in ex.DATA["fields"]:  # every field's ideas reached an English page, in English
-        for idea in f["try_ar"]:
-            assert main.i18n.lookup(idea) and main.i18n.lookup(idea) in shown.replace("&#39;", "'"), idea
+    shown = "\n".join(pages).replace("&#39;", "'").replace("&amp;", "&")
+    for f in ex.DATA["fields"]:  # every field's title, ideas and majors reached an English page, in English
+        for text in [f["title_ar"], *f["try_ar"], *f["majors_ar"]]:
+            assert main.i18n.lookup(text) and main.i18n.lookup(text) in shown, text
 
 
 # ---------- the guide ----------
@@ -248,14 +367,15 @@ def test_the_guide_opens_the_activity_when_it_is_public(drafts):
 # ---------- the result page shows exactly what the rules say ----------
 
 BAND_MARKERS = {'id="draws-title"': "draws", 'id="try-title"': "try", 'id="considered-title"': "considered",
-                'class="explore-not-now"': "not_now", 'id="next-title"': None}
+                'class="explore-not-now"': "not_now", 'id="help-title"': None, 'id="next-title"': None}
+FIELD_CARD = r'<section class="explore-field[^"]*" id="field-([\w-]+)"'
 
 
 def page_bands(html):
     """Field ids per band, in page order: each field belongs to the last band heading above it."""
     marks = sorted((html.index(m), band) for m, band in BAND_MARKERS.items() if m in html)
     bands = {"draws": [], "try": [], "considered": [], "not_now": []}
-    for found in re.finditer(r'<section class="explore-field" id="field-([\w-]+)"', html):
+    for found in re.finditer(FIELD_CARD, html):
         band = [b for pos, b in marks if pos < found.start()][-1]
         bands[band].append(found.group(1))
     return bands
@@ -263,8 +383,8 @@ def page_bands(html):
 
 def test_result_page_matches_the_rules_for_random_students(live):
     """40 random students (fixed seed): every field sits in the band score() gives it, in its order, and each
-    field's reasons are exactly its activities with the answers given, and only the three strongest «تستحق التجربة»
-    fields stay open (owner's check, 2026-11-04)."""
+    field's reasons are exactly its activities with the answers given, and only the three strongest of a band stay
+    open (owner's check, 2026-11-04; decision 073 folds «تجذبك الآن» the same way)."""
     import random
     rng = random.Random(2026)
     choices = list(ex.ANSWERS) + [None]  # None = skipped
@@ -284,14 +404,20 @@ def test_result_page_matches_the_rules_for_random_students(live):
         assert shown["considered"] == ([r["considered"]["id"]] if r["considered"] else []), data
         for fields in [*r["bands"].values(), [r["considered"]] if r["considered"] else []]:
             for f in fields:
-                block = html.split(f'id="field-{f["id"]}"', 1)[1].split('<section class="explore-field"', 1)[0]
+                block = html.split(f'id="field-{f["id"]}"', 1)[1].split('<section class="explore-field', 1)[0]
                 reasons = re.findall(r'<span class="explore-why-activity">([^<]+)</span> '
                                      r'<span class="explore-answer explore-answer--\w+">([^<]+)</span>', block)
                 assert reasons == [(w["activity_ar"], w["answer_ar"]) for w in f["why"]], (f["id"], data)
-        if len(expected["try"]) > 3:  # a shortlist: the three strongest open, the rest folded, in order
-            start = html.index('class="explore-more-fields"')
-            end = min(html.index(m, start) for m in BAND_MARKERS if m in html[start:])  # up to the next band
-            folded = html[start:end]
-            assert re.findall(r'<section class="explore-field" id="field-([\w-]+)"', folded) == expected["try"][3:], data
-        else:
-            assert 'class="explore-more-fields"' not in html
+        for marker, ids in (('id="draws-title"', expected["draws"]), ('id="try-title"', expected["try"])):
+            if not ids:  # an empty band has no heading
+                assert marker not in html, data
+                continue
+            start = html.index(marker)
+            end = min(html.index(m, start + 1) for m in BAND_MARKERS if m != marker and m in html[start + 1:])
+            section = html[start:end]
+            if len(ids) > 3:  # a shortlist: the three strongest open, the rest folded, in order
+                opened, folded = section.split('class="explore-more-fields"', 1)
+                assert re.findall(FIELD_CARD, opened) == ids[:3], data
+                assert re.findall(FIELD_CARD, folded) == ids[3:], data
+            else:
+                assert 'class="explore-more-fields"' not in section, data

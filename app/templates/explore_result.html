@@ -2,30 +2,45 @@
 {% import "components.html" as c %}
 
 {#
-  The result of «جرّب قبل أن تقرر» (decision 069). Fields in three bands, each explained by the student's own
-  answers; no scores, ranks or percentages. Facts on the page (majors, school tracks) come from the sourced data.
-  Drawn from the posted form and then forgotten: nothing is stored.
+  The result of «جرّب قبل أن تقرر» (decisions 069, 073). One card per field, in three bands: an illustration, a clear
+  title, why it was suggested (the student's own answers, no scores, ranks or percentages), real example majors with
+  their source, and one action, «استكشف هذا المجال», which opens the rest in place. Staying on this page matters: the
+  result exists only as the answer to the form, so nothing here is stored.
 #}
 
 {% block title %}{{ _("مجالات لتستكشفها |") }} {{ site.name }}{% endblock %}
 {% block head_extra %}<meta name="robots" content="noindex">{% endblock %}
 
-{# A field's facts, from the sourced data: what you'd study, the school tracks, a program for it. #}
-{% macro majors_row(v) %}
+{# What opens under a card's button: try it, where to study it, the school tracks, a program, every answer behind it. #}
+{% macro field_details(f, v) %}
+<details class="explore-dive">
+  <summary class="btn btn--primary">
+    {{ _("استكشف هذا المجال") }}
+    <svg class="explore-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </summary>
+  <dl class="summary-list">
     <div class="summary-row">
-      <dt>{{ _("ماذا تدرس؟") }}</dt>
+      <dt>{{ _("جرّب هذا الأسبوع") }}</dt>
+      <dd><ul class="explore-try">{% for idea in v.try_ar %}<li>{{ idea }}</li>{% endfor %}</ul></dd>
+    </div>
+    <div class="summary-row">
+      <dt>{{ _("أين تدرسه؟") }}</dt>
       <dd>
         {% if v.in_guide %}
-        <p>{{ _("أمثلة من تخصصاته في دليل الوزارة لقوائم الجامعات:") }} {% for m in v.majors %}{{ m }}{% if not loop.last %}{{ _("،") }} {% endif %}{% endfor %}{% if v.more_majors %}{{ _("، وغيرها.") }}{% endif %}</p>
+        {% if v.guide_only_major %}<p>{{ _f("يذكر دليل الوزارة لقوائم الجامعات من هذا المجال تخصصًا واحدًا: {major}.", major=v.guide_only_major) }}</p>{% endif %}
         <a href="{{ v.explorer_url }}">{{ _("تخصصاته وجامعاته في مستكشف الجامعات") }}</a>
+        <span class="summary-sub">{{ _f("اسمه في المستكشف: {name}", name=v.guide_name_ar) }}</span>
         {% else %}
         <p>{{ _("لا يذكر دليل الوزارة لقوائم الجامعات 2026–2027 هذا المجال ضمن مجالاته، فلن تجده في مستكشف الجامعات في واضح. اسأل الموجه الطالبي عن تخصصاته في الجامعات السعودية.") }}</p>
         {% endif %}
       </dd>
     </div>
-{% endmacro %}
-
-{% macro tracks_row(v) %}
+    {% if v.programs %}
+    <div class="summary-row">
+      <dt>{{ _("برنامج لمن يُبتعث في تخصص منه") }}</dt>
+      <dd>{% for pid in v.programs %}<a href="/programs/{{ pid }}">{{ program_names[pid] }}</a>{% endfor %}</dd>
+    </div>
+    {% endif %}
     <div class="summary-row">
       <dt>{{ _("المسارات الثانوية") }}</dt>
       <dd>
@@ -35,29 +50,8 @@
         <span class="summary-sub">{{ _("من وصف وزارة التعليم لكل مسار. شروط القبول في كل تخصص تحددها الجامعة.") }}</span>
       </dd>
     </div>
-{% endmacro %}
-
-{% macro programs_row(v) %}
-    {% if v.programs %}
     <div class="summary-row">
-      <dt>{{ _("برنامج لمن يُبتعث في تخصص منه") }}</dt>
-      <dd>{% for pid in v.programs %}<a href="/programs/{{ pid }}">{{ program_names[pid] }}</a>{% endfor %}</dd>
-    </div>
-    {% endif %}
-{% endmacro %}
-
-{#
-  One field. The reasons and the "try" ideas always show. full (the first three fields that draw the student, and
-  the one they mentioned): what you'd study and a program show too, and the school tracks fold into «أي مسار؟».
-  Otherwise all three fold into «ماذا تدرس، وأي مسار؟». With everything open, a phone page ran past 13,000px.
-#}
-{% macro field_block(f, v, note=None, full=False) %}
-<section class="explore-field" id="field-{{ v.id }}" aria-labelledby="fh-{{ v.id }}">
-  <h3 class="explore-field-name" id="fh-{{ v.id }}">{{ v.name_ar }}</h3>
-  {% if note %}<p class="explore-field-note">{{ note }}</p>{% endif %}
-  <dl class="summary-list">
-    <div class="summary-row">
-      <dt>{{ _("لماذا؟") }}</dt>
+      <dt>{{ _("إجاباتك عن أنشطته") }}</dt>
       <dd>
         {% if f.why %}
         <ul class="explore-why">
@@ -67,35 +61,63 @@
         {% if f.progress %}<p class="explore-progress-note">{{ _("لاحظت تقدمك في:") }} {% for p in f.progress %}{{ p }}{% if not loop.last %}{{ _("،") }} {% endif %}{% endfor %}</p>{% endif %}
       </dd>
     </div>
-    {% if full %}{{ majors_row(v) }}{{ programs_row(v) }}{% endif %}
-    <div class="summary-row">
-      <dt>{{ _("جرّب هذا الأسبوع") }}</dt>
-      <dd><ul class="explore-try">{% for idea in v.try_ar %}<li>{{ idea }}</li>{% endfor %}</ul></dd>
-    </div>
   </dl>
-  <details class="explore-more">
-    <summary>{{ _("أي مسار ثانوي؟") if full else _("ماذا تدرس، وأي مسار؟") }}</summary>
-    <dl class="summary-list">{% if not full %}{{ majors_row(v) }}{% endif %}{{ tracks_row(v) }}{% if not full %}{{ programs_row(v) }}{% endif %}</dl>
+</details>
+{% endmacro %}
+
+{# One field. compact: the fields that don't draw the student now, a small picture and no reason to give. #}
+{% macro field_card(f, v, note=None, compact=False, first=False) %}
+<section class="explore-field{% if compact %} explore-field--compact{% endif %}" id="field-{{ v.id }}" aria-labelledby="fh-{{ v.id }}">
+  {% set art = "img/fields/" ~ v.id ~ ".svg" %}
+  <img class="explore-field-art" src="{{ url_for('static', path=art) }}?v={{ asset_version(art) }}" alt="" width="640" height="320" decoding="async"{% if not first %} loading="lazy"{% endif %}>
+  <div class="explore-field-body">
+    <h3 class="explore-field-name" id="fh-{{ v.id }}">{{ v.title_ar }}</h3>
+    {% if note %}<p class="explore-field-why">{{ note }}</p>
+    {% elif not compact %}<p class="explore-field-why">{{ explore_why(f) }}</p>{% endif %}
+    <div class="explore-field-majors">
+      <p class="explore-label">{{ _("أمثلة من تخصصاته") }}</p>
+      <ul class="explore-majors">{% for m in v.majors %}<li>{{ m }}</li>{% endfor %}</ul>
+      {{ c.source_stamp([v.majors_source]) }}
+    </div>
+    {{ field_details(f, v) }}
+  </div>
+</section>
+{% endmacro %}
+
+{# A band: the three strongest fields open, the rest fold away, so it stays a shortlist (strongest first, see score()). #}
+{% macro band(fields, title_id, title, more, lead=False) %}
+<section class="section explore-band" aria-labelledby="{{ title_id }}">
+  <h2 class="section-title" id="{{ title_id }}">{{ title }}</h2>
+  <div class="explore-fields">
+    {% for f in fields[:3] %}{{ field_card(f, views[f.id], first=lead and loop.first) }}{% endfor %}
+  </div>
+  {% if fields | length > 3 %}
+  <details class="explore-more-fields">
+    <summary>{{ more }} ({{ fields | length - 3 }})</summary>
+    <div class="explore-fields">
+      {% for f in fields[3:] %}{{ field_card(f, views[f.id]) }}{% endfor %}
+    </div>
   </details>
+  {% endif %}
 </section>
 {% endmacro %}
 
 {% block content %}
-<div class="explore explore-result measure">
+<div class="explore explore-result page-wide">
   <header class="page-header">
     <p class="doc-kind"><a href="/resources/undecided">{{ _("لم تقرر بعد؟") }}</a></p>
     <h1>{{ _("مجالات لتستكشفها") }}</h1>
+    {% if r.bands.draws %}
+    <p class="lead">{{ _f("أقربها إليك الآن: {fields}.", fields=explore_list(lead_titles)) }}</p>
+    {% elif r.bands.try %}
+    <p class="lead">{{ _f("ابدأ بتجربة: {fields}.", fields=explore_list(lead_titles)) }}</p>
+    {% endif %}
+    {% if not r.nothing_yet %}<p class="explore-caution">{{ _("هذه اقتراحات من إجاباتك، ولا تحدد تخصصك.") }}</p>{% endif %}
   </header>
 
   {% if x.draft %}
   <div class="notice notice--warn"><p>{{ _("نسخة تجريبية تظهر على جهازك فقط: لم يراجعها مختص بعد، ولا تظهر على الموقع.") }}</p></div>
   {% endif %}
-
-  <dl class="summary-list explore-counts">
-    <div class="summary-row"><dt>{{ _("أنشطة جرّبتها") }}</dt><dd>{{ r.tried }}</dd></div>
-    <div class="summary-row"><dt>{{ _("أنشطة لم تجرّبها بعد") }}</dt><dd>{{ r.untried }}</dd></div>
-    {% if r.skipped %}<div class="summary-row"><dt>{{ _("أنشطة تجاوزتها") }}</dt><dd>{{ r.skipped }}</dd></div>{% endif %}
-  </dl>
 
   {% if r.nothing_yet %}
   <div class="notice"><p>{{ _("لم يجذبك شيء من هذه الأنشطة بعد. جرّب كل أسبوع شيئًا من مجال مختلف، ثم أعد النشاط بعد شهر.") }}</p></div>
@@ -103,8 +125,29 @@
   <div class="notice"><p>{{ _("جرّبت أنشطة قليلة، فجرّب أكثر قبل أن تعتمد على هذه النتيجة.") }}</p></div>
   {% endif %}
 
+  {% if r.bands.draws %}{{ band(r.bands.draws, "draws-title", _("تجذبك الآن"), _("مجالات أخرى تجذبك"), lead=True) }}{% endif %}
+  {% if r.bands.try %}{{ band(r.bands.try, "try-title", _("تستحق التجربة"), _("مجالات أخرى تستحق التجربة"), lead=not r.bands.draws) }}{% endif %}
+
+  {% if r.considered %}
+  {% set f = r.considered %}
+  <section class="section explore-band" aria-labelledby="considered-title">
+    <h2 class="section-title" id="considered-title">{{ _("المجال الذي ذكرته") }}</h2>
+    {% set note = _("لم تختر من أنشطته ما يجذبك بعد، وهذا لا يعني أنه لا يناسبك.") if f.band == "not_now" else None %}
+    <div class="explore-fields">{{ field_card(f, views[f.id], note) }}</div>
+  </section>
+  {% endif %}
+
+  {% if r.bands.not_now %}
+  <details class="explore-not-now">
+    <summary>{{ _("لا تجذبك الآن") }} ({{ r.bands.not_now | length }})</summary>
+    <div class="explore-fields">
+      {% for f in r.bands.not_now %}{{ field_card(f, views[f.id], compact=True) }}{% endfor %}
+    </div>
+  </details>
+  {% endif %}
+
   {% if r.difficulties %}
-  <section class="section" aria-labelledby="help-title">
+  <section class="section explore-band" aria-labelledby="help-title">
     <h2 class="section-title" id="help-title">{{ _("ما يساعدك الآن") }}</h2>
     <ul class="explore-tips">
       {% for d in r.difficulties %}<li>{{ d.tip_ar }}{% if d.link %} <a href="{{ d.link.href }}">{{ d.link.label_ar }}</a>{% endif %}</li>{% endfor %}
@@ -112,44 +155,7 @@
   </section>
   {% endif %}
 
-  {% if r.bands.draws %}
-  <section class="section" aria-labelledby="draws-title">
-    <h2 class="section-title" id="draws-title">{{ _("تجذبك الآن") }}</h2>
-    {% for f in r.bands.draws %}{{ field_block(f, views[f.id], full=loop.index <= 3) }}{% endfor %}
-  </section>
-  {% endif %}
-
-  {% if r.bands.try %}
-  <section class="section" aria-labelledby="try-title">
-    <h2 class="section-title" id="try-title">{{ _("تستحق التجربة") }}</h2>
-    {# The three strongest open; the rest fold away, so the list stays a shortlist (strongest first, see score()). #}
-    {% for f in r.bands.try[:3] %}{{ field_block(f, views[f.id]) }}{% endfor %}
-    {% if r.bands.try | length > 3 %}
-    <details class="explore-more-fields">
-      <summary>{{ _("مجالات أخرى تستحق التجربة") }} ({{ r.bands.try | length - 3 }})</summary>
-      {% for f in r.bands.try[3:] %}{{ field_block(f, views[f.id]) }}{% endfor %}
-    </details>
-    {% endif %}
-  </section>
-  {% endif %}
-
-  {% if r.considered %}
-  {% set f = r.considered %}
-  <section class="section" aria-labelledby="considered-title">
-    <h2 class="section-title" id="considered-title">{{ _("المجال الذي ذكرته") }}</h2>
-    {% set note = _("لم تختر من أنشطته ما يجذبك بعد، وهذا لا يعني أنه لا يناسبك.") if f.band == "not_now" else None %}
-    {{ field_block(f, views[f.id], note, full=True) }}
-  </section>
-  {% endif %}
-
-  {% if r.bands.not_now %}
-  <details class="explore-not-now">
-    <summary>{{ _("لا تجذبك الآن") }}</summary>
-    {% for f in r.bands.not_now %}{{ field_block(f, views[f.id]) }}{% endfor %}
-  </details>
-  {% endif %}
-
-  <section class="section" aria-labelledby="next-title">
+  <section class="section explore-band" aria-labelledby="next-title">
     <h2 class="section-title" id="next-title">{{ _("بعد هذه الصفحة") }}</h2>
     {{ c.next_step(_("اختر مجالًا واحدًا مما سبق، وجرّب نشاطًا منه هذا الأسبوع."), label=_("خطوتك التالية")) }}
     <ul class="explore-next">
