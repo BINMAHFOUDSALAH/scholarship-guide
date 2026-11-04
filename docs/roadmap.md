@@ -3,7 +3,9 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-04, decision 071):** «جرّب قبل أن تقرر» fixed after the owner's iPhone test: a tap only selects (no moving on by itself, which let a second tap answer the next question), nothing pre-chosen, «تخطَّ» / «التالي», a reload starts clean, a shortlist of three in «تستحق التجربة». New check: `node scripts/check_explore.mjs`. The line «لا نحفظ إجاباتك…» is removed (owner).
+> **Latest (2026-11-04, decision 072):** a tap on an activity's answer moves on by itself again (owner: «التالي» 30 times is too slow), with the safeguards: a second tap before the move stays on the same question, one just after it is ignored, keys never move on. `node scripts/check_explore.mjs`: 25 checks.
+>
+> **Earlier (2026-11-04, decision 071):** «جرّب قبل أن تقرر» fixed after the owner's iPhone test: a tap only selects (no moving on by itself, which let a second tap answer the next question), nothing pre-chosen, «تخطَّ» / «التالي», a reload starts clean, a shortlist of three in «تستحق التجربة». New check: `node scripts/check_explore.mjs`. The line «لا نحفظ إجاباتك…» is removed (owner).
 >
 > **Earlier (2026-11-04, decision 070):** «جرّب قبل أن تقرر» (`/explore`) is **live**, with a door on the homepage under the grades («لم تقرر ماذا تدرس؟»). Published by the owner before the counsellor review.
 >
