@@ -5,7 +5,8 @@
 //   a second tap on an answer, and a double press on «التالي», change nothing else;
 // - «تخطَّ» / «التالي», «السابق», a reload starts clean, Back from the result opens the review;
 // - a full run by taps: the review and the result's reasons show exactly what was tapped;
-// - fast keyboard presses are never ignored.
+// - fast keyboard presses (Space, Enter on an answer) are never ignored, a tap right after moving on is;
+// - leaving mid-activity and coming back with Back keeps the answers.
 //
 // Needs Playwright (preinstalled in Claude Code cloud sessions; on your laptop it would need an install, ask
 // first, CLAUDE.md). Start the server, then:
@@ -139,6 +140,37 @@ for (let i = 0; i < 3; i++) {
 }
 check("fast keyboard choices all count", (await checkedValues(3)) === "enjoy enjoy enjoy"
   && (await counter()) === L.activity(4), `${await checkedValues(3)} at ${await counter()}`);
+// The guard's own job: a tap on an answer right after moving on (the second tap of a double tap) is ignored.
+await page.goto(url);
+await tapNext();
+await tapAnswer("enjoy");
+await page.locator("[data-next]").tap(); // moves to activity 2 and starts the guard
+await step().locator('label:has(input[value="dislike"])').tap(); // at once: the accidental second tap
+check("a tap right after moving on is ignored", (await checkedValues(2)) === "enjoy -", await checkedValues(2));
+await page.waitForTimeout(450);
+await tapAnswer("dislike"); // a moment later: a real choice
+check("a moment later the same tap counts", (await checkedValues(2)) === "enjoy dislike", await checkedValues(2));
+
+// Enter on an answer right after moving on: a key press, never held up.
+await page.locator("[data-next]").focus();
+await page.keyboard.press("Enter"); // to activity 3
+await step().locator('input[value="ok"]').focus();
+await page.keyboard.press("Space");
+await page.keyboard.press("Enter");
+check("Enter on an answer moves on at once", (await counter()) === L.activity(4) && (await checkedValues(3)) === "enjoy dislike ok",
+  `${await checkedValues(3)} at ${await counter()}`);
+
+// Leaving mid-activity and coming back with Back: the answers are kept, never shown as a fresh start.
+await Promise.all([page.waitForURL(/\/resources\/undecided/), page.locator(".doc-kind a").tap()]); // the guide link above the title
+// The browser's own Back (Playwright's goBack reports a restore from the browser's memory as "aborted").
+await page.evaluate(() => history.back()).catch(() => {}); // the page it ran on is left: expected
+await page.waitForURL(/\/explore$/);
+await page.waitForTimeout(800);
+const back = await counter().catch(() => "");
+const reviewShown = await page.locator("[data-review]").isVisible();
+check("Back after leaving mid-activity returns to the same question, answers kept",
+  (await checkedValues(3)) === "enjoy dislike ok" && back === L.activity(4) && !reviewShown, reviewShown ? "review" : back);
+
 check("no JavaScript errors", errors.length === 0, errors.join(" | "));
 
 await browser.close();

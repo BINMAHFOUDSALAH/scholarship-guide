@@ -1137,6 +1137,11 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - A pytest test runs 40 random students through the result page and checks every field's band, order and reasons against `score()`; it fails if the page drops a field.
 - Five students answered by taps matched `score()` exactly.
 - The UI sweep (1,150 checks) and keyboard-only, including fast key presses.
+**Review (same day):** an independent `reviewer` pass (Haiku 5.5) led to these fixes:
+- Enter on an answer is never held up; only a held-down Enter (key repeat) is ignored.
+- A page the browser kept in memory comes back exactly as left.
+- Back returns to the step the student left: the question mid-way, the review from the result. The step number (never an answer) is kept in the page's own history entry with `history.replaceState`.
+- The checks now also cover a tap right after moving on (ignored), Enter on an answer (counts), Back after leaving mid-way, and the folded fields and answer words in the result test.
 **Alternatives:**
 - **Keep moving on by itself, with a longer guard:** still records answers by accident (any fixed delay is either too short for some or blocks quick deliberate taps), and it's harder for screen readers.
 - **A guard of 600ms:** blocked quick but deliberate taps in testing.

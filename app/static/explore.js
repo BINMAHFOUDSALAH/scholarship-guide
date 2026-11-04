@@ -6,8 +6,9 @@
 //   (owner's iPhone, 2026-11-04). A survey must never record an answer nobody chose.
 // - For a moment after the question changes, taps on the questions and buttons are ignored (never key presses):
 //   a quick second tap would otherwise land on one of the new question's answers, or move two steps.
-// - Each visit starts clean (a reload never brings old answers back); coming back from the result with the
-//   browser's Back opens the review with the answers, to change them.
+// - Each visit starts clean (a reload never brings old answers back); Back returns to where the student left off,
+//   with the answers: the review when coming back from the result, the same question when they left mid-way.
+//   Only the step number is kept, in this page's own history entry; answers are never stored.
 // - Nothing is stored or sent until the student presses «اعرض النتيجة». Without JavaScript the whole form shows
 //   and works as it is.
 (function () {
@@ -105,6 +106,8 @@
     next.hidden = step === review;
     updateNext();
     submitArea.hidden = step !== review;
+    // Which step this is, in this page's own history entry (a number, never an answer), so Back returns here.
+    try { history.replaceState({ ...(history.state || {}), exploreStep: current }, ""); } catch (e) { /* not needed to work */ }
     if (moveFocus) {
       lockedUntil = Date.now() + STEP_LOCK_MS; // only after the student moved: the first press always counts
       const heading = step.querySelector("[tabindex='-1']");
@@ -138,24 +141,32 @@
   next.addEventListener("click", forward);
   form.addEventListener("change", updateNext);
 
-  // Enter inside a question goes to the next step; only the review's button shows the result.
+  // Enter inside a question goes to the next step; only the review's button shows the result. Enter is a key
+  // press, so it's never held up, but a held-down Enter (key repeat) would race through questions: ignored.
+  form.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && event.repeat) event.preventDefault();
+  });
   form.addEventListener("submit", (event) => {
     if (steps[current] !== review) {
       event.preventDefault();
-      if (Date.now() >= lockedUntil) forward();
+      forward();
     }
   });
 
   // A reload starts clean, and Back from the result opens the review with the answers. Browsers put earlier
   // answers back after the page has loaded, just before "pageshow" (measured in Chromium, 2026-11-04), so the
-  // choice is made there. A first visit has nothing to restore and is left alone.
+  // choice is made there. A first visit has nothing to restore and is left alone; a page the browser kept in
+  // memory comes back exactly as it was.
   const navigation = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
   const answered = () => !!form.querySelector("input:checked");
+  const savedStep = (history.state || {}).exploreStep; // read before show() below writes step 0 over it
   show(0, false);
   window.addEventListener("pageshow", (event) => {
-    const back = event.persisted || navigation.type === "back_forward";
+    if (event.persisted) return; // kept in memory by the browser: the page, its step and its answers are as left
+    const back = navigation.type === "back_forward";
     if (back && answered()) {
-      show(steps.indexOf(review), false);
+      // Back to where the student left off: the question they were on, or the review if they came from the result.
+      show(Number.isInteger(savedStep) ? savedStep : steps.indexOf(review), false);
     } else if (back || navigation.type === "reload") {
       form.reset();
       show(0, false);
