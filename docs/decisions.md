@@ -1115,5 +1115,6 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A fifth stop on the grades route:** the route is a real sequence of school years; the activity isn't a year.
 - **A lime or primary button:** lime is only for the next step, and a primary button would compete with the grades, the main way in.
 **Why:** the tagline promises «مستقبلك بعد الثانوية», and "I don't know what to study" is a question students arrive with. Asking it at the top, in the same form as «في أي صف أنت؟», lets them find their way in without reading further.
+**Update (same day, owner):** the activity's line «لا نحفظ إجاباتك، ولا نسأل عن اسمك أو درجاتك.» is removed as not needed. Nothing changes in how answers are handled (still sent once, never stored).
 **Still to do:** the counsellor review and the student test (research note §8–9). If they turn up problems, fix the wording, or set `"draft": true` again: the page, its doors and its sitemap entry all disappear (tested).
 

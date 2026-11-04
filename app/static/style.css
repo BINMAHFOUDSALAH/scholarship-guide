@@ -4660,11 +4660,6 @@ a.uni-name:hover .uni-name-en:only-child {
    Answers are native radios and checkboxes inside big labels (48px), so keyboards and screen readers get
    real groups. Read on paper, act on forest: a chosen answer takes the forest border. */
 
-.explore-privacy {
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
 .explore-progress {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
