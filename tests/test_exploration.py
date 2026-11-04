@@ -74,9 +74,9 @@ def test_activities_never_ask_the_same_field_twice_in_a_row():
     assert all(a != b for a, b in zip(order, order[1:]))
 
 
-def test_it_stays_a_draft_until_reviewed():
-    """Flip this only after the counsellor review and the student test (decision 069)."""
-    assert ex.DATA["draft"] is True and ex.DATA["expert_reviewed"] is False
+def test_published_and_the_review_still_recorded_as_to_come():
+    """Published by the owner before the counsellor review (decision 070); the data keeps saying so."""
+    assert ex.DATA["draft"] is False and ex.DATA["expert_reviewed"] is False
 
 
 # ---------- the rules ----------
@@ -135,11 +135,25 @@ def test_strongest_first_and_the_considered_field_apart():
 
 # ---------- the pages ----------
 
-def test_hidden_on_the_live_site(live):
+def test_live_on_the_site(live):
+    assert client.get("/explore").status_code == 200
+    assert post({"a-first-aid": "enjoy"}).status_code == 200
+    assert "/explore</loc>" in client.get("/sitemap.xml").text and "/en/explore</loc>" in client.get("/sitemap.xml").text
+    assert 'href="/explore"' in client.get("/resources/undecided").text  # the guide's door
+    home = client.get("/").text
+    assert "لم تقرر ماذا تدرس؟" in home and '/explore"' in home  # the homepage's door, under the grades
+    assert home.index('id="grades"') < home.index("hero-door") < home.index("hero-search")
+    assert 'name="robots" content="noindex"' not in client.get("/explore").text  # public now: search engines may list it
+
+
+def test_the_draft_switch_still_hides_it(live, monkeypatch):
+    """Setting "draft": true again hides the page, its doors and its sitemap entry."""
+    monkeypatch.setitem(ex.DATA, "draft", True)
     assert client.get("/explore").status_code == 404
     assert post({"a-first-aid": "enjoy"}).status_code == 404
-    assert "/explore" not in client.get("/sitemap.xml").text
+    assert "/explore</loc>" not in client.get("/sitemap.xml").text
     assert 'href="/explore"' not in client.get("/resources/undecided").text
+    assert "hero-door" not in client.get("/").text
 
 
 def test_form_works_without_javascript(drafts):
@@ -149,7 +163,6 @@ def test_form_works_without_javascript(drafts):
     assert '<form class="explore-form" method="post" action="/explore/result"' in html
     assert html.count('data-auto id="q-') == len(ex.DATA["activities"])
     assert html.count('type="radio" name="a-') == len(ex.DATA["activities"]) * len(ex.DATA["answers"])
-    assert 'name="robots" content="noindex"' in html  # a draft isn't for search engines
     assert "explore.js" in html
 
 

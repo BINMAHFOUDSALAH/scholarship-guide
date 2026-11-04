@@ -43,6 +43,18 @@
       </ol>
     </nav>
 
+    {#
+      A second question at the same level as the grades (decision 070): for a student who doesn't know what to
+      study. One line and an outlined button, so it doesn't compete with the route. Only while the activity is public.
+    #}
+    {% if explore_public() %}
+    <div class="hero-door">
+      <h2 class="hero-door-title">{{ _("لم تقرر ماذا تدرس؟") }}</h2>
+      <a class="btn btn--secondary" href="{{ url_for('explore_page') }}">{{ _("جرّب قبل أن تقرر") }}</a>
+      <p class="hero-door-hint">{{ _("نحو عشر دقائق") }}</p>
+    </div>
+    {% endif %}
+
     {# The second way in: the official lists, searchable. Same suggestions as the explorer (universities.js). #}
     <form class="hero-search" method="get" action="{{ url_for('universities_page') }}" role="search" aria-labelledby="home-search-title">
       <h2 id="home-search-title" class="hero-search-title"><label for="home-q">{{ _("أو ابحث عن جامعة أو تخصص في قوائم الابتعاث") }}</label></h2>

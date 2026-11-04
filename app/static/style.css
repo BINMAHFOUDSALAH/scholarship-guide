@@ -789,6 +789,30 @@ main:has(> .tuwaiq) {
 }
 
 /* The second way in: search the official lists. */
+/* «لم تقرر ماذا تدرس؟» under the grades (decision 070): a question, an outlined button, how long it takes. */
+.hero-door {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.hero-door-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: 1.5;
+}
+
+.hero-door-hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
 .hero-search {
   position: relative;
   z-index: 2;
