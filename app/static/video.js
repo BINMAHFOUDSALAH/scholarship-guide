@@ -3,7 +3,8 @@
 // When the clip ends, we put our own cover back, so YouTube's grid of suggested videos never
 // shows. (YouTube's small logo/title link inside the player is required by its terms and stays.)
 
-const t = (text) => (window.WADIH_I18N && window.WADIH_I18N[text]) || text; // English pages (decision 066)
+// Classic scripts share one global scope, so each file names its own helper (a shared `t` broke them).
+const videoText = (text) => (window.WADIH_I18N && window.WADIH_I18N[text]) || text; // English pages (decision 066)
 const YOUTUBE_ID = /^[A-Za-z0-9_-]{11}$/;
 const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
 
@@ -23,7 +24,7 @@ document.querySelectorAll(".video-facade[data-youtube-id]").forEach((link) => {
     });
     const player = document.createElement("iframe");
     player.src = `${PLAYER_ORIGIN}/embed/${id}?${params}`;
-    player.title = t("المقطع الأصلي");
+    player.title = videoText("المقطع الأصلي");
     player.allow = "autoplay; encrypted-media; picture-in-picture";
     player.allowFullscreen = true;
     player.referrerPolicy = "strict-origin-when-cross-origin";

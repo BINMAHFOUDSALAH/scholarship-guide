@@ -7,6 +7,7 @@
 // an install (ask first, CLAUDE.md). Start the server, then:
 //     node scripts/check_explorer.mjs                      (http://127.0.0.1:8000)
 //     node scripts/check_explorer.mjs http://127.0.0.1:8001
+//     node scripts/check_explorer.mjs http://127.0.0.1:8000 --en   (the same flows on the English pages, decision 066)
 // Prints PASS/FAIL per check; exits 1 if any check fails.
 
 import { createRequire } from "node:module";
@@ -19,7 +20,13 @@ try {
   playwright = require("/opt/node22/lib/node_modules/playwright"); // global install in cloud sessions
 }
 const { chromium } = playwright;
-const base = process.argv[2] || "http://127.0.0.1:8000";
+const english = process.argv.includes("--en");
+const host = process.argv.slice(2).find((a) => a.startsWith("http")) || "http://127.0.0.1:8000";
+const base = host + (english ? "/en" : "");
+// The words the checks look for, in the page's language (the ✕ labels and two searches).
+const L = english
+  ? { remove: "Remove", country: "Remove Country:", lang: "Remove Country's language:", track: "Remove Track:", q1: "engineering", q2: "Software Engineering" }
+  : { remove: "إزالة", country: "إزالة الدولة", lang: "إزالة لغة الدولة", track: "إزالة المسار", q1: "هندسة", q2: "هندسة البرمجيات" };
 const results = [];
 const check = (name, ok, detail = "") => results.push([ok ? "PASS" : "FAIL", name, detail]);
 const chips = (page) => page.$$eval("#results a.applied-x", (as) => as.map((a) => a.getAttribute("aria-label")));
@@ -47,32 +54,32 @@ for (const [width, tag] of [[390, "phone"], [1280, "desktop"]]) {
   check(`${tag}: four tags`, (await chips(page)).length === 4);
 
   // ✕ on one tag, while the suggestions are open: only that filter goes.
-  await page.click('#results a.applied-x[aria-label^="إزالة الدولة"]'); await settle(page);
+  await page.click(`#results a.applied-x[aria-label^="${L.country}"]`); await settle(page);
   check(`${tag}: ✕ removes only its filter`, !param(page, "country") && param(page, "track") === "emdad"
     && param(page, "field") && param(page, "q") === "London", page.url());
   check(`${tag}: suggestions closed after ✕`, await hidden());
   const focused = await page.evaluate(() => document.activeElement.getAttribute("aria-label") || "");
-  check(`${tag}: focus on a remaining tag`, focused.startsWith("إزالة"), focused);
+  check(`${tag}: focus on a remaining tag`, focused.startsWith(L.remove), focused);
 
-  await page.click('#results a.applied-x[aria-label^="إزالة المسار"]'); await settle(page);
+  await page.click(`#results a.applied-x[aria-label^="${L.track}"]`); await settle(page);
   check(`${tag}: ✕ track also clears its field`, !param(page, "track") && !param(page, "field") && param(page, "q") === "London");
 
   // Two quick ✕ before the first answer arrives.
   await page.goto(base + "/universities?q=AI&track=emdad&country=US&lang=english", { waitUntil: "networkidle" });
   await page.route("**/universities?*partial=1*", async (route) => { await new Promise((r) => setTimeout(r, 400)); await route.continue(); });
-  await page.click('#results a.applied-x[aria-label^="إزالة الدولة"]');
-  await page.click('#results a.applied-x[aria-label^="إزالة لغة الدولة"]');
+  await page.click(`#results a.applied-x[aria-label^="${L.country}"]`);
+  await page.click(`#results a.applied-x[aria-label^="${L.lang}"]`);
   await page.waitForTimeout(1200); await settle(page);
   await page.unroute("**/universities?*partial=1*");
   check(`${tag}: two quick ✕ remove both, nothing returns`, !param(page, "country") && !param(page, "lang")
     && param(page, "track") === "emdad" && param(page, "q") === "AI", page.url());
 
   await page.click("#results a.applied-clear"); await settle(page);
-  check(`${tag}: «مسح الكل» clears everything`, page.url().endsWith("/universities") && (await chips(page)).length === 0);
+  check(`${tag}: «مسح الكل» clears everything`, page.url().endsWith(base.replace(host, "") + "/universities") && (await chips(page)).length === 0);
   check(`${tag}: suggestions closed after «مسح الكل»`, await hidden());
 
   await page.goto(base + "/universities?track=emdad&country=US", { waitUntil: "networkidle" });
-  await page.focus('#results a.applied-x[aria-label^="إزالة الدولة"]');
+  await page.focus(`#results a.applied-x[aria-label^="${L.country}"]`);
   await page.keyboard.press("Enter"); await settle(page);
   check(`${tag}: Enter on ✕ works`, !param(page, "country") && param(page, "track") === "emdad");
 
@@ -84,13 +91,13 @@ for (const [width, tag] of [[390, "phone"], [1280, "desktop"]]) {
 
   // The suggestions themselves.
   await page.goto(base + "/universities", { waitUntil: "networkidle" });
-  await page.fill("#q", "هندسة"); await page.waitForTimeout(300);
+  await page.fill("#q", L.q1); await page.waitForTimeout(300);
   check(`${tag}: suggestions open on typing`, !(await hidden()));
   await page.keyboard.press("Escape");
-  check(`${tag}: Escape closes and keeps the text`, (await hidden()) && (await page.inputValue("#q")) === "هندسة");
+  check(`${tag}: Escape closes and keeps the text`, (await hidden()) && (await page.inputValue("#q")) === L.q1);
   await page.mouse.click(5, 300); await page.waitForTimeout(400);
   check(`${tag}: outside click keeps them closed`, await hidden());
-  await page.fill("#q", "هندسة البرمجيات"); await page.waitForTimeout(300);
+  await page.fill("#q", L.q2); await page.waitForTimeout(300);
   await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter"); await page.waitForTimeout(800);
   check(`${tag}: Enter on a major searches it`, param(page, "q") !== null && (await hidden()));
 
@@ -98,5 +105,5 @@ for (const [width, tag] of [[390, "phone"], [1280, "desktop"]]) {
   await ctx.close();
 }
 await browser.close();
-for (const r of results) console.log(r.join("  "));
+for (const r of results) console.log((english ? "[en] " : "") + r.join("  "));
 process.exit(results.some((r) => r[0] === "FAIL") ? 1 : 0);
