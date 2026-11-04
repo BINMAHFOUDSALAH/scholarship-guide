@@ -3,8 +3,8 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-04, decision 073, branch `feature/explore-results`, not merged yet):** «جرّب قبل أن تقرر»: no «غيّر» page (the last question goes straight to the result), and a redesigned result in both languages: a lead naming the closest fields, then one card per field with its own drawing, a plain title, one sentence of why, real majors and one action that opens in place. The majors for health, education and arts come from the Ministry's Saudi unified classification, read directly.
-> - **Owner to-dos:** try the whole journey on your own iPhone in Safari, Arabic and English; read the 10 titles and the why sentences; merge when happy.
+> **Latest (2026-11-04, decision 073, merged in PR #35):** «جرّب قبل أن تقرر»: no «غيّر» page (the last question goes straight to the result), and a redesigned result in both languages: a lead naming the closest fields, then one card per field with its own drawing, a plain title, one sentence of why, real majors and one action that opens in place. The majors for health, education and arts come from the Ministry's Saudi unified classification, read directly.
+> - **Owner to-dos:** try the whole journey on your own iPhone in Safari, Arabic and English (checked on emulated iPhones only, Chromium and WebKit); read the 10 titles and the why sentences.
 >
 > **Earlier (2026-11-04, decision 072):** a tap on an activity's answer moves on by itself again (owner: «التالي» 30 times is too slow), with the safeguards: a second tap before the move stays on the same question, one just after it is ignored, keys never move on. `node scripts/check_explore.mjs`: 25 checks.
 >
