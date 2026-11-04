@@ -1,11 +1,14 @@
 // «جرّب قبل أن تقرر» (decision 069): turns the one long form into steps, one question per screen.
 // - Part 1 (what makes the decision hard, the grade), part 2 (one activity per screen), part 3 (progress in
 //   subjects, a field the student or their family has in mind), then a review where any answer can be changed.
-// - Choosing an answer only selects it: the student moves on with «التالي» (or «تخطَّ» while nothing is chosen).
-//   It used to move on by itself after a tap, and a second tap then answered the next question for the student
-//   (owner's iPhone, 2026-11-04). A survey must never record an answer nobody chose.
-// - For a moment after the question changes, taps on the questions and buttons are ignored (never key presses):
-//   a quick second tap would otherwise land on one of the new question's answers, or move two steps.
+// - In part 2, tapping an answer moves on to the next activity after a short moment (AUTO_NEXT_MS), so the
+//   student sees their choice first (owner, 2026-11-04: pressing «التالي» 30 times is too slow). Only taps do this:
+//   with the keyboard, arrow keys change the choice and the student moves on with Enter or «التالي».
+//   «تخطَّ» skips a question; «التالي» shows when a question already has an answer (e.g. after «السابق»).
+// - A survey must never record an answer nobody chose. The first version of moving on by itself let a second tap
+//   answer the next question (owner's iPhone, 2026-11-04). Now a second tap before the move lands on the same
+//   question (the last choice wins, one move), and for a moment after the question changes, taps on the questions
+//   and buttons are ignored (never key presses).
 // - Each visit starts clean (a reload never brings old answers back); Back returns to where the student left off,
 //   with the answers: the review when coming back from the result, the same question when they left mid-way.
 //   Only the step number is kept, in this page's own history entry; answers are never stored.
@@ -40,6 +43,9 @@
   let current = 0;
   let backToReview = false; // came here from «غيّر» on the review: «التالي» goes straight back
   const STEP_LOCK_MS = 400;  // the second tap of a double tap: too soon to have read the new question
+  const AUTO_NEXT_MS = 300;  // a tap on an answer: long enough to see it chosen, short enough not to wait
+  let autoNext = 0;          // the pending move, cancelled by any other move
+  let tappedAt = 0;          // when an answer was last tapped (a key press resets it)
   let lockedUntil = 0;
 
   form.classList.add("is-stepped");
@@ -85,6 +91,7 @@
   }
 
   function show(index, moveFocus = true) {
+    window.clearTimeout(autoNext);
     current = Math.max(0, Math.min(index, steps.length - 1));
     const step = steps[current];
     steps.forEach((s, i) => { s.hidden = i !== current; });
@@ -140,6 +147,22 @@
   prev.addEventListener("click", () => show(current - 1));
   next.addEventListener("click", forward);
   form.addEventListener("change", updateNext);
+
+  // Tap an activity's answer → move on after AUTO_NEXT_MS. A second tap before then (the same answer, or another:
+  // the last one wins) restarts the wait, so there is one move. Tapping the answer already chosen (after «السابق»)
+  // moves on too. A key press never moves on by itself.
+  form.addEventListener("pointerup", (event) => {
+    if (event.target.closest(".explore-option")) tappedAt = Date.now();
+  });
+  form.addEventListener("keydown", () => { tappedAt = 0; });
+  form.addEventListener("click", (event) => {
+    const step = steps[current];
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement) || input.type !== "radio" || step.dataset.part !== "2") return;
+    if (!step.contains(input) || Date.now() - tappedAt > 1000) return;
+    window.clearTimeout(autoNext);
+    autoNext = window.setTimeout(() => { if (steps[current] === step) forward(); }, AUTO_NEXT_MS);
+  });
 
   // Enter inside a question goes to the next step; only the review's button shows the result. Enter is a key
   // press, so it's never held up, but a held-down Enter (key repeat) would race through questions: ignored.

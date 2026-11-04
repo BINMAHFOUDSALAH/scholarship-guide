@@ -1147,3 +1147,20 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A guard of 600ms:** blocked quick but deliberate taps in testing.
 - **`autocomplete="off"` to stop restored answers:** it also stops Back from bringing answers back.
 
+## 072 — «جرّب قبل أن تقرر»: a tap on an answer moves on again, safely (updates 071)
+**Date:** 2026-11-04
+**Context:** the owner: pressing «التالي» after each of 30 answers takes too long; choosing should move on.
+**Decision:** in part 2, a tap on an activity's answer moves on by itself after 300ms, so the student sees it chosen first. The safeguards from decision 071 stay, and new ones close the ways the first version went wrong:
+- **A second tap before the move** lands on the same question: the last choice wins, and there's one move (the wait restarts).
+- **A second tap just after the move** falls in the 400ms guard and is ignored.
+- **Only taps move on by themselves.** With the keyboard, Space and the arrow keys choose without moving on; Enter or «التالي» moves on.
+- **Tapping the answer already chosen** (after «السابق») moves on too.
+- Nothing is pre-selected; «تخطَّ» skips; parts 1 and 3 (several choices per screen) still use the button.
+**Verified:**
+- `scripts/check_explore.mjs`: 25 checks on an emulated iPhone, Arabic and English. They cover one tap = one move, double taps 150ms and 350ms apart, changing your mind before the move, a double press on «تخطَّ», tapping your own answer after «السابق», the keyboard, the guard, and a full run by taps only whose review and result match what was tapped.
+- With the guard switched off on purpose, five checks fail, one with the owner's original bug: the next question answered for the student.
+**Alternatives:**
+- **Keep «التالي» after every answer (decision 071):** the safest, but slow over 30 questions, and the owner found it tiring.
+- **Move on at once (0ms):** the student can't see what they chose, and a mis-tap is gone before they notice.
+- **A longer wait (e.g. 600ms):** feels sluggish; 300ms is enough to see the choice.
+

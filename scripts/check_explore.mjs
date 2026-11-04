@@ -1,12 +1,12 @@
-// Drives «جرّب قبل أن تقرر» (/explore) on an emulated iPhone, with touch taps (decisions 069–070).
+// Drives «جرّب قبل أن تقرر» (/explore) on an emulated iPhone, with touch taps (decisions 069–072).
 // pytest checks the HTML and that the result page follows the rules; this checks what only a browser shows:
-// - nothing is chosen for the student, and a tap only selects (no moving on by itself);
-// - the double taps that once answered the next question for the student (owner's iPhone, 2026-11-04):
-//   a second tap on an answer, and a double press on «التالي», change nothing else;
-// - «تخطَّ» / «التالي», «السابق», a reload starts clean, Back from the result opens the review;
-// - a full run by taps: the review and the result's reasons show exactly what was tapped;
-// - fast keyboard presses (Space, Enter on an answer) are never ignored, a tap right after moving on is;
-// - leaving mid-activity and coming back with Back keeps the answers.
+// - nothing is chosen for the student; a tap on an activity's answer moves on once, by itself (decision 072);
+// - the double taps that once answered the next question for the student (owner's iPhone, 2026-11-04): a second
+//   tap before or just after the move, and a double press on «تخطَّ», never answer another question;
+// - changing your mind before the move keeps the last choice; «السابق» shows your answer, and tapping it moves on;
+// - the keyboard: Space and the arrow keys choose without moving on, Enter moves on, and nothing is held up;
+// - a reload starts clean; Back returns to where the student left off (the review from the result);
+// - a full run by taps only: the review and the result's reasons show exactly what was tapped.
 //
 // Needs Playwright (preinstalled in Claude Code cloud sessions; on your laptop it would need an install, ask
 // first, CLAUDE.md). Start the server, then:
@@ -63,48 +63,87 @@ const tapTwiceAt = async (locator, gap) => {
   await page.waitForTimeout(600);
 };
 
-// Nothing chosen for the student; a tap only selects.
+const settle = () => page.waitForTimeout(800); // past the 300ms move and the 400ms guard
+
+// Nothing chosen for the student.
 await page.goto(url);
 check("no answer is pre-selected", (await page.locator("input:checked").count()) === 0);
 check("with nothing chosen the button says skip", (await nextLabel()) === L.skip, await nextLabel());
+
+// A tap on an answer moves on, once, and records only that answer.
 await tapNext();
 await tapAnswer("enjoy");
-await page.waitForTimeout(600);
-check("a tap selects and stays on the question", (await counter()) === L.activity(1), await counter());
-check("after choosing the button says next", (await nextLabel()) === L.next, await nextLabel());
+await settle();
+check("a tap on an answer moves on", (await counter()) === L.activity(2), await counter());
+check("and records only that answer", (await checkedValues(3)) === "enjoy - -", await checkedValues(3));
 
-// The double taps.
-await tapTwiceAt(step().locator('label:has(input[value="enjoy"])'), 300);
-check("a double tap answers only this question", (await checkedValues(4)) === "enjoy - - -", await checkedValues(4));
+// The double taps: before the move (same question) and just after it (inside the guard). One answer, one move.
+for (const gap of [150, 350]) {
+  await page.goto(url);
+  await tapNext();
+  await tapTwiceAt(step().locator('label:has(input[value="enjoy"])'), gap);
+  await settle();
+  check(`a double tap (${gap}ms apart) answers one question and moves once`,
+    (await checkedValues(3)) === "enjoy - -" && (await counter()) === L.activity(2), `${await checkedValues(3)} at ${await counter()}`);
+}
+
+// Changing your mind before the move: the last choice wins, one move.
+await page.goto(url);
+await tapNext();
+await tapAnswer("enjoy");
+await page.waitForTimeout(100);
+await tapAnswer("dislike");
+await settle();
+check("changing your mind before the move keeps the last choice", (await checkedValues(2)) === "dislike -"
+  && (await counter()) === L.activity(2), `${await checkedValues(2)} at ${await counter()}`);
+
+// A double press on «تخطَّ»: one step, nothing answered.
+await page.goto(url);
+await tapNext();
 await tapTwiceAt(page.locator("[data-next]"), 120);
-check("a double press on next moves one step", (await counter()) === L.activity(2), await counter());
-check("and leaves the next question unanswered", (await checkedValues(4)) === "enjoy - - -", await checkedValues(4));
+check("a double press on skip moves one step and answers nothing",
+  (await counter()) === L.activity(2) && (await checkedValues(2)) === "- -", `${await checkedValues(2)} at ${await counter()}`);
 
-// Back to the answer, change it, reload.
+// «السابق» shows the student's answer; tapping it again moves on; changing it replaces it.
+await page.goto(url);
+await tapNext();
+await tapAnswer("enjoy");
+await settle();
 await page.locator("[data-prev]").tap();
 await page.waitForTimeout(450);
-check("previous shows the student's own answer", await step().locator('input[value="enjoy"]').isChecked());
+check("previous shows the student's own answer", (await counter()) === L.activity(1)
+  && (await step().locator('input[value="enjoy"]').isChecked()) && (await nextLabel()) === L.next);
+await tapAnswer("enjoy");
+await settle();
+check("tapping your own answer again moves on", (await counter()) === L.activity(2), await counter());
+await page.locator("[data-prev]").tap();
+await page.waitForTimeout(450);
 await tapAnswer("ok");
-check("changing an answer replaces it", (await step().locator('input[value="ok"]').isChecked())
-  && !(await step().locator('input[value="enjoy"]').isChecked()));
+await settle();
+check("changing an answer replaces it", (await checkedValues(2)) === "ok -" && (await counter()) === L.activity(2),
+  `${await checkedValues(2)} at ${await counter()}`);
 await page.reload();
 await page.waitForTimeout(400);
 check("a reload starts clean", (await page.locator("input:checked").count()) === 0
   && (await page.locator("[data-progress-part]").innerText()) === L.part1);
 
-// A full run by taps: every fifth activity skipped, the rest in turn.
+// A full run by taps only: answered activities move on by themselves, skipped ones with «تخطَّ».
 const pattern = ["enjoy", "curious", "ok", "dislike", null, "cold"];
 const tapped = {};
 await page.locator("input[name=grade]").first().tap();
 await tapNext();
 for (let i = 0; i < 30; i++) {
   const value = pattern[i % pattern.length];
+  const before = await counter();
   if (value) {
     const text = (await step().locator("legend").innerText()).trim();
     await tapAnswer(value);
     tapped[text] = (await step().locator(`label:has(input[value="${value}"]) span`).innerText()).trim();
+    await settle();
+  } else {
+    await tapNext();
   }
-  await tapNext();
+  if (i < 29 && (await counter()) === before) { check(`activity ${i + 1} moved on`, false, before); break; }
 }
 await tapNext(); // subjects: skipped
 await tapNext(); // the field you have in mind: skipped
@@ -128,37 +167,43 @@ await page.goBack();
 await page.waitForTimeout(600);
 check("Back from the result opens the review", await page.locator("[data-review]").isVisible());
 check("with the answers kept", (await page.locator("input:checked").count()) === Object.keys(tapped).length + 1);
-// The keyboard is never held up: fast Space / Enter presses all count (the tap guard is for taps only).
+// The keyboard: Space and the arrow keys choose without moving on; Enter moves on; nothing is held up.
 await page.goto(url);
 await page.locator("[data-next]").focus();
 await page.keyboard.press("Enter");
-for (let i = 0; i < 3; i++) {
+await step().locator('input[value="enjoy"]').focus();
+await page.keyboard.press("Space");
+await page.waitForTimeout(600);
+check("a key press chooses without moving on", (await counter()) === L.activity(1) && (await checkedValues(1)) === "enjoy",
+  `${await checkedValues(1)} at ${await counter()}`);
+await page.keyboard.press("ArrowDown");
+await page.waitForTimeout(600);
+check("an arrow key changes the choice without moving on", (await counter()) === L.activity(1)
+  && (await checkedValues(1)) !== "enjoy" && (await checkedValues(1)) !== "-", `${await checkedValues(1)} at ${await counter()}`);
+await page.keyboard.press("Enter");
+for (let i = 0; i < 3; i++) { // fast: Space then Enter, no waiting
   await step().locator('input[value="enjoy"]').focus();
   await page.keyboard.press("Space");
-  await page.locator("[data-next]").focus();
   await page.keyboard.press("Enter");
 }
-check("fast keyboard choices all count", (await checkedValues(3)) === "enjoy enjoy enjoy"
-  && (await counter()) === L.activity(4), `${await checkedValues(3)} at ${await counter()}`);
+check("Enter moves on, and fast key presses all count", (await counter()) === L.activity(5)
+  && (await checkedValues(4)).endsWith("enjoy enjoy enjoy"), `${await checkedValues(4)} at ${await counter()}`);
+
 // The guard's own job: a tap on an answer right after moving on (the second tap of a double tap) is ignored.
 await page.goto(url);
 await tapNext();
-await tapAnswer("enjoy");
-await page.locator("[data-next]").tap(); // moves to activity 2 and starts the guard
+await page.locator("[data-next]").tap(); // skip activity 1: moves to activity 2 and starts the guard
 await step().locator('label:has(input[value="dislike"])').tap(); // at once: the accidental second tap
-check("a tap right after moving on is ignored", (await checkedValues(2)) === "enjoy -", await checkedValues(2));
-await page.waitForTimeout(450);
+await page.waitForTimeout(100);
+check("a tap right after moving on is ignored", (await checkedValues(2)) === "- -" && (await counter()) === L.activity(2),
+  `${await checkedValues(2)} at ${await counter()}`);
+await page.waitForTimeout(400);
 await tapAnswer("dislike"); // a moment later: a real choice
-check("a moment later the same tap counts", (await checkedValues(2)) === "enjoy dislike", await checkedValues(2));
-
-// Enter on an answer right after moving on: a key press, never held up.
-await page.locator("[data-next]").focus();
-await page.keyboard.press("Enter"); // to activity 3
-await step().locator('input[value="ok"]').focus();
-await page.keyboard.press("Space");
-await page.keyboard.press("Enter");
-check("Enter on an answer moves on at once", (await counter()) === L.activity(4) && (await checkedValues(3)) === "enjoy dislike ok",
-  `${await checkedValues(3)} at ${await counter()}`);
+await settle();
+check("a moment later the same tap counts", (await checkedValues(2)) === "- dislike" && (await counter()) === L.activity(3),
+  `${await checkedValues(2)} at ${await counter()}`);
+await tapAnswer("ok");
+await settle();
 
 // Leaving mid-activity and coming back with Back: the answers are kept, never shown as a fresh start.
 await Promise.all([page.waitForURL(/\/resources\/undecided/), page.locator(".doc-kind a").tap()]); // the guide link above the title
@@ -169,7 +214,7 @@ await page.waitForTimeout(800);
 const back = await counter().catch(() => "");
 const reviewShown = await page.locator("[data-review]").isVisible();
 check("Back after leaving mid-activity returns to the same question, answers kept",
-  (await checkedValues(3)) === "enjoy dislike ok" && back === L.activity(4) && !reviewShown, reviewShown ? "review" : back);
+  (await checkedValues(3)) === "- dislike ok" && back === L.activity(4) && !reviewShown, reviewShown ? "review" : back);
 
 check("no JavaScript errors", errors.length === 0, errors.join(" | "));
 
