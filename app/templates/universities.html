@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}الجامعات في قوائم الابتعاث | {{ site.name }}{% endblock %}
-{% block description %}ابحث باسم الجامعة أو بالتخصص، واعرف ترتيبها في قوائم مسارات الرواد وإمداد والبحث والتطوير لبرنامج خادم الحرمين الشريفين للابتعاث 2026–2027.{% endblock %}
+{% block title %}{{ _("الجامعات في قوائم الابتعاث |") }} {{ site.name }}{% endblock %}
+{% block description %}{{ _("ابحث باسم الجامعة أو بالتخصص، واعرف ترتيبها في قوائم مسارات الرواد وإمداد والبحث والتطوير لبرنامج خادم الحرمين الشريفين للابتعاث 2026–2027.") }}{% endblock %}
 
 {% block body_class %}{% if result.track == "arruaad" %}page-rowwad{% endif %}{% endblock %}
 
@@ -17,48 +17,48 @@
   <div class="container">
     <div class="explorer-top page-wide">
       <header class="explorer-header" data-explorer-header{% if r.track == "arruaad" %} hidden{% endif %}>
-        <h1>الجامعات في قوائم الابتعاث</h1>
-        <p class="lead">هل الجامعة في قوائم برنامج خادم الحرمين الشريفين للابتعاث؟ وماذا تطلب للقبول؟</p>
+        <h1>{{ _("الجامعات في قوائم الابتعاث") }}</h1>
+        <p class="lead">{{ _("هل الجامعة في قوائم برنامج خادم الحرمين الشريفين للابتعاث؟ وماذا تطلب للقبول؟") }}</p>
       </header>
 
-      <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" aria-label="البحث في الجامعات" data-explorer>
+      <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" aria-label="{{ _('البحث في الجامعات') }}" data-explorer>
         <div class="search-field">
-          <label class="field-label" for="q">ابحث باسم جامعة أو تخصص</label>
+          <label class="field-label" for="q">{{ _("ابحث باسم جامعة أو تخصص") }}</label>
           {# Examples are visible text, not a placeholder: placeholders vanish when you type. #}
-          <p class="field-hint" id="q-hint">بالعربية أو الإنجليزية، مثل: الذكاء الاصطناعي، Stanford، هندسة البرمجيات.</p>
+          <p class="field-hint" id="q-hint">{{ _("بالعربية أو الإنجليزية، مثل: الذكاء الاصطناعي، Stanford، هندسة البرمجيات.") }}</p>
           <div class="search-box">
             {# A combobox: universities.js shows our own suggestions (universities, then majors by field).
                Without JavaScript it's a plain search field. #}
             <input class="input" id="q" name="q" type="search" value="{{ r.q }}" autocomplete="off"
                    role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="q-suggest"
                    aria-describedby="q-hint" data-suggest="{{ url_for('suggestions_api') }}">
-            <button class="btn btn--primary search-submit" type="submit">ابحث</button>
-            <div id="q-suggest" class="suggest" role="listbox" aria-label="اقتراحات" tabindex="-1" hidden></div>
+            <button class="btn btn--primary search-submit" type="submit">{{ _("ابحث") }}</button>
+            <div id="q-suggest" class="suggest" role="listbox" aria-label="{{ _('اقتراحات') }}" tabindex="-1" hidden></div>
           </div>
         </div>
 
         {# On phones (with JavaScript) the filters fold behind «الفلاتر»; the active ones stay visible as tags above the results. #}
         <button class="btn btn--secondary filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel" hidden data-filters-toggle>
-          <span class="filters-toggle-label">الفلاتر <span class="filters-count" data-filters-count></span></span>
+          <span class="filters-toggle-label">{{ _("الفلاتر") }} <span class="filters-count" data-filters-count></span></span>
           {# Says what the filters do, so students know they can narrow the lists (owner, 2026-10-12). #}
-          <span class="filters-toggle-hint">المسار، المجال، الدولة، اللغة</span>
+          <span class="filters-toggle-hint">{{ _("المسار، المجال، الدولة، اللغة") }}</span>
         </button>
         <fieldset class="filters" id="filters-panel">
-          <legend class="sr-only">تصفية النتائج</legend>
+          <legend class="sr-only">{{ _("تصفية النتائج") }}</legend>
           <div class="filter">
-            <label class="field-label" for="track">المسار</label>
+            <label class="field-label" for="track">{{ _("المسار") }}</label>
             <select class="select" id="track" name="track">
-              <option value="">كل المسارات</option>
+              <option value="">{{ _("كل المسارات") }}</option>
               {% for tid, t in tracks.items() %}
-              <option value="{{ tid }}"{% if r.track == tid %} selected{% endif %}>{{ t.short_ar }}{% if tid == "rnd" %} (دكتوراه){% endif %}{% if tid == "waaid" %} (برامج بجهات توظيف){% endif %}</option>
+              <option value="{{ tid }}"{% if r.track == tid %} selected{% endif %}>{{ t.short_ar }}{% if tid == "rnd" %} {{ _("(دكتوراه)") }}{% endif %}{% if tid == "waaid" %} {{ _("(برامج بجهات توظيف)") }}{% endif %}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="filter">
-            <label class="field-label" for="field">المجال</label>
+            <label class="field-label" for="field">{{ _("المجال") }}</label>
             <select class="select" id="field" name="field" aria-describedby="field-hint">
-              <option value="">كل المجالات</option>
+              <option value="">{{ _("كل المجالات") }}</option>
               {% for tid in ("emdad", "rnd") %}
               <optgroup label="{{ tracks[tid].short_ar }}" data-track="{{ tid }}">
                 {% for f in explorer.field_options(tid) %}
@@ -67,13 +67,13 @@
               </optgroup>
               {% endfor %}
             </select>
-            <p class="field-hint filter-hint" id="field-hint">اختر في «المسار» إمداد أو البحث والتطوير أولًا.</p>
+            <p class="field-hint filter-hint" id="field-hint">{{ _("اختر في «المسار» إمداد أو البحث والتطوير أولًا.") }}</p>
           </div>
 
           <div class="filter">
-            <label class="field-label" for="country">الدولة</label>
+            <label class="field-label" for="country">{{ _("الدولة") }}</label>
             <select class="select" id="country" name="country">
-              <option value="">كل الدول</option>
+              <option value="">{{ _("كل الدول") }}</option>
               {% for code, info in explorer.country_options() %}
               <option value="{{ code }}"{% if r.country == code %} selected{% endif %}>{{ info.name_ar }}</option>
               {% endfor %}
@@ -81,26 +81,26 @@
           </div>
 
           <div class="filter">
-            <label class="field-label" for="lang">لغة الدولة الرسمية</label>
+            <label class="field-label" for="lang">{{ _("لغة الدولة الرسمية") }}</label>
             <select class="select" id="lang" name="lang" aria-describedby="lang-hint">
-              <option value="">كل اللغات</option>
-              <option value="english"{% if r.language == "english" %} selected{% endif %}>الإنجليزية</option>
-              <option value="other"{% if r.language == "other" %} selected{% endif %}>غير الإنجليزية</option>
+              <option value="">{{ _("كل اللغات") }}</option>
+              <option value="english"{% if r.language == "english" %} selected{% endif %}>{{ _("الإنجليزية") }}</option>
+              <option value="other"{% if r.language == "other" %} selected{% endif %}>{{ _("غير الإنجليزية") }}</option>
             </select>
-            <p class="field-hint filter-hint" id="lang-hint">لغة الدولة، وليست لغة الدراسة: بعض البرامج تُدرَّس بالإنجليزية.</p>
+            <p class="field-hint filter-hint" id="lang-hint">{{ _("لغة الدولة، وليست لغة الدراسة: بعض البرامج تُدرَّس بالإنجليزية.") }}</p>
           </div>
           {# What the tracks mean, from the program's own data (paths.json). #}
           <details class="tracks-help filters-wide">
-            <summary>ما الفرق بين المسارات؟</summary>
+            <summary>{{ _("ما الفرق بين المسارات؟") }}</summary>
             <dl class="summary-list">
               {% for t in scholarship_tracks %}
               <div class="summary-row">
                 <dt>{{ t.name_ar }}</dt>
-                <dd>{{ t.note_ar }}. الدرجة: {{ t.levels_ar }}. لخريجي الثانوية: {{ t.high_school_ar }}.</dd>
+                <dd>{{ t.note_ar }}{{ _(". الدرجة:") }} {{ t.levels_ar }}{{ _(". لخريجي الثانوية:") }} {{ t.high_school_ar }}.</dd>
               </div>
               {% endfor %}
             </dl>
-            <p><a href="{{ url_for('program_page', slug='custodian-scholarship') }}">شروط كل مسار من مصادرها</a></p>
+            <p><a href="{{ url_for('program_page', slug='custodian-scholarship') }}">{{ _("شروط كل مسار من مصادرها") }}</a></p>
           </details>
         </fieldset>
 
@@ -119,7 +119,7 @@
     {% include "partials/uni_results.html" %}
   </div>
   {# The basis of every list on this page (decision 041: below the results, so search comes first on phones). #}
-  <p class="explorer-source">مصدر القوائم: <a href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ explorer.source.title_ar }} (PDF) ↗</a>، {{ explorer.source.publisher_ar }}.</p>
+  <p class="explorer-source">{{ _("مصدر القوائم:") }} <a href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ explorer.source.title_ar }} (PDF) ↗</a>{{ _("،") }} {{ explorer.source.publisher_ar }}.</p>
 </div>
 {% endblock %}
 

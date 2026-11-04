@@ -4,6 +4,7 @@
 // (the ids only, never stored). Without JavaScript, or with storage blocked, the save buttons stay hidden
 // and the «قائمتي» page says why.
 (function () {
+  const t = (text) => (window.WADIH_I18N && window.WADIH_I18N[text]) || text; // English pages (decision 066)
   const KEY = "wadih:saved";
   const MAX = 100;
 
@@ -59,10 +60,10 @@
       if (button.classList.contains("save-mini")) {
         // A short visible label, with the university's name for screen readers.
         const name = button.dataset.saveName || "";
-        label.textContent = isSaved ? "✓ في قائمتك" : "احفظ";
-        button.setAttribute("aria-label", isSaved ? "أزِل " + name + " من قائمتي" : "احفظ " + name + " في قائمتي");
+        label.textContent = t(isSaved ? "✓ في قائمتك" : "احفظ");
+        button.setAttribute("aria-label", t(isSaved ? "أزِل {name} من قائمتي" : "احفظ {name} في قائمتي").replace("{name}", name));
       } else {
-        label.textContent = isSaved ? "أزِل من قائمتي" : "احفظ في قائمتي";
+        label.textContent = t(isSaved ? "أزِل من قائمتي" : "احفظ في قائمتي");
         const note = document.querySelector('[data-save-note="' + id + '"]');
         if (note) note.hidden = !isSaved;
       }
@@ -80,12 +81,12 @@
     const saved = ids.includes(id);
     const next = saved ? ids.filter((x) => x !== id) : [id, ...ids];
     if (!write(next)) {
-      if (status) status.textContent = "تعذّر الحفظ في هذا المتصفح.";
+      if (status) status.textContent = t("تعذّر الحفظ في هذا المتصفح.");
       return;
     }
     renderButtons();
     renderHeader();
-    if (status) status.textContent = saved ? "أُزيلت من قائمتك." : "حُفظت في قائمتك على هذا الجهاز.";
+    if (status) status.textContent = t(saved ? "أُزيلت من قائمتك." : "حُفظت في قائمتك على هذا الجهاز.");
   }
 
   // ---------- the «قائمتي» page ----------
@@ -147,7 +148,7 @@
       const next = item.nextElementSibling || item.previousElementSibling;
       item.remove();
       renderHeader();
-      status.textContent = "أُزيلت " + name + " من قائمتك.";
+      status.textContent = t("أُزيلت {name} من قائمتك.").replace("{name}", name);
       if (next) {
         next.querySelector("button[data-remove]").focus();
       } else {

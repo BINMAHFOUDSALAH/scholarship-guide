@@ -13,51 +13,51 @@
          width="{{ program.logo.width // 2 }}" height="{{ program.logo.height // 2 }}" alt="{{ program.logo.alt_ar }}">
     {% endif %}
     <h1>{{ program.name_ar }}</h1>
-    <p class="path-item-en" lang="en" dir="ltr">{{ program.name_en }}</p>
+    {% if is_en() %}<p class="path-item-en" lang="ar" dir="rtl">{{ ar(program.name_ar) }}</p>{% else %}<p class="path-item-en" lang="en" dir="ltr">{{ program.name_en }}</p>{% endif %}
     <p class="lead">{{ program.summary_ar }}</p>
     {% if program.not_standalone_ar %}<aside class="notice notice--warn" role="note"><p><strong>{{ program.not_standalone_ar }}</strong></p></aside>{% endif %}
 
     {# The main next step first (decision 035): for list-based programs, find your university in the lists. #}
     {% if program.universities_guide_url or program.apply_url %}
     <div class="actions">
-      {% if program.universities_guide_url %}<a class="btn btn--primary" href="{{ url_for('universities_page') }}">ابحث عن جامعتك وتخصصك في القوائم</a>{% endif %}
-      {% if program.apply_url %}<a class="btn btn--secondary" href="{{ program.apply_url }}" target="_blank" rel="noopener">صفحة التقديم الرسمية ↗</a>{% endif %}
+      {% if program.universities_guide_url %}<a class="btn btn--primary" href="{{ url_for('universities_page') }}">{{ _("ابحث عن جامعتك وتخصصك في القوائم") }}</a>{% endif %}
+      {% if program.apply_url %}<a class="btn btn--secondary" href="{{ program.apply_url }}" target="_blank" rel="noopener">{{ _("صفحة التقديم الرسمية ↗") }}</a>{% endif %}
     </div>
     {% endif %}
     <div class="program-links">
-      <p class="program-links-title">روابط رسمية</p>
+      <p class="program-links-title">{{ _("روابط رسمية") }}</p>
       <ul>
-        <li><a href="{{ program.official_url }}" target="_blank" rel="noopener">الموقع الرسمي ↗</a></li>
-        {% if program.universities_guide_url %}<li><a href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">قائمة الجامعات والتخصصات (PDF) ↗</a></li>{% endif %}
-        {% if program.targets_guide_url %}<li><a href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">الجامعات المستهدفة (PDF) ↗</a></li>{% endif %}
+        <li><a href="{{ program.official_url }}" target="_blank" rel="noopener">{{ _("الموقع الرسمي ↗") }}</a></li>
+        {% if program.universities_guide_url %}<li><a href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">{{ _("قائمة الجامعات والتخصصات (PDF) ↗") }}</a></li>{% endif %}
+        {% if program.targets_guide_url %}<li><a href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">{{ _("الجامعات المستهدفة (PDF) ↗") }}</a></li>{% endif %}
         {% if program.social_url %}<li><a href="{{ program.social_url }}" target="_blank" rel="noopener">{{ program.social_label_ar }} ↗</a></li>{% endif %}
       </ul>
     </div>
   </header>
 
   {# «في هذه الصفحة»: the page's sections, including the h2s of the Markdown explainer (content.py). #}
-  <nav class="page-contents measure" aria-label="في هذه الصفحة">
-    <p class="page-contents-title">في هذه الصفحة</p>
+  <nav class="page-contents measure" aria-label="{{ _('في هذه الصفحة') }}">
+    <p class="page-contents-title">{{ _("في هذه الصفحة") }}</p>
     <ul>
-      <li><a href="#tracks-title">المسارات</a></li>
-      {% if program.facts %}<li><a href="#facts-title">ما يجب أن تعرفه قبل التقديم</a></li>{% endif %}
-      {% if program.target_universities %}<li><a href="#targets-title">الجامعات المستهدفة</a></li>{% endif %}
+      <li><a href="#tracks-title">{{ _("المسارات") }}</a></li>
+      {% if program.facts %}<li><a href="#facts-title">{{ _("ما يجب أن تعرفه قبل التقديم") }}</a></li>{% endif %}
+      {% if program.target_universities %}<li><a href="#targets-title">{{ _("الجامعات المستهدفة") }}</a></li>{% endif %}
       {% for item in page.contents %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
     </ul>
   </nav>
 
   <section class="program-section" aria-labelledby="tracks-title">
-    <h2 id="tracks-title">المسارات</h2>
+    <h2 id="tracks-title">{{ _("المسارات") }}</h2>
     {# A real table: the same fields for every track, so they can be compared. On phones each row stacks. #}
     <table class="compare">
-      <caption class="sr-only">مقارنة مسارات {{ program.name_ar }}</caption>
+      <caption class="sr-only">{{ _("مقارنة مسارات") }} {{ program.name_ar }}</caption>
       <thead>
         <tr>
-          <th scope="col">المسار</th>
-          <th scope="col">الدرجة</th>
-          <th scope="col">لخريجي الثانوية؟</th>
-          <th scope="col">شرط القبول</th>
-          <th scope="col">حالة التقديم</th>
+          <th scope="col">{{ _("المسار") }}</th>
+          <th scope="col">{{ _("الدرجة") }}</th>
+          <th scope="col">{{ _("لخريجي الثانوية؟") }}</th>
+          <th scope="col">{{ _("شرط القبول") }}</th>
+          <th scope="col">{{ _("حالة التقديم") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -67,15 +67,15 @@
             <span class="track-name">{{ track.name_ar }}</span>
             <span class="track-note">{{ track.note_ar }}</span>
           </th>
-          <td data-label="الدرجة">{{ track.levels_ar }}</td>
-          <td data-label="لخريجي الثانوية؟">{{ track.high_school_ar }}</td>
-          <td data-label="شرط القبول">{{ track.admission_ar }}</td>
-          <td data-label="حالة التقديم">
+          <td data-label="{{ _('الدرجة') }}">{{ track.levels_ar }}</td>
+          <td data-label="{{ _('لخريجي الثانوية؟') }}">{{ track.high_school_ar }}</td>
+          <td data-label="{{ _('شرط القبول') }}">{{ track.admission_ar }}</td>
+          <td data-label="{{ _('حالة التقديم') }}">
             {% set st = track_status(track) %}
             {% if st and (track.status_source or track.owner_confirmed or track.latest_programs) %}
             {{ c.status_tag(st, track.status_until) }}
             {% else %}
-            <span class="track-note">لا نتابع حالته في هذا الدليل</span>
+            <span class="track-note">{{ _("لا نتابع حالته في هذا الدليل") }}</span>
             {% endif %}
           </td>
         </tr>
@@ -87,7 +87,7 @@
     {% for track in program.tracks if track.latest_programs %}{% include "partials/waaid_programs.html" %}{% endfor %}
 
     {% if program.tracks | selectattr("facts") | list %}
-    <h3 class="program-subtitle">شروط كل مسار من مصدره</h3>
+    <h3 class="program-subtitle">{{ _("شروط كل مسار من مصدره") }}</h3>
     <ul class="fact-items">
       {% for track in program.tracks %}{% for f in track.facts %}{{ c.fact(f, label=track.name_ar) }}{% endfor %}{% endfor %}
     </ul>
@@ -96,7 +96,7 @@
 
   {% if program.facts %}
   <section class="program-section" aria-labelledby="facts-title">
-    <h2 id="facts-title">ما يجب أن تعرفه قبل التقديم</h2>
+    <h2 id="facts-title">{{ _("ما يجب أن تعرفه قبل التقديم") }}</h2>
     <ul class="fact-items">
       {% for f in program.facts %}{{ c.fact(f) }}{% endfor %}
     </ul>
@@ -105,7 +105,7 @@
 
   {% if program.target_universities %}
   <section class="program-section" aria-labelledby="targets-title">
-    <h2 id="targets-title">الجامعات المستهدفة</h2>
+    <h2 id="targets-title">{{ _("الجامعات المستهدفة") }}</h2>
     {% if program.targets_note_ar %}<p class="result-note">{{ program.targets_note_ar }}</p>{% endif %}
     {% set listed = program.target_universities | selectattr("id") | list %}
     {% set unlisted = program.target_universities | rejectattr("id") | list %}
@@ -116,11 +116,11 @@
       {% endfor %}
     </ul>
     {% if unlisted %}
-    <p class="uni-majors-title">ليست في قوائم الدليل الاسترشادي لبرنامج خادم الحرمين 2026–2027:</p>
+    <p class="uni-majors-title">{{ _("ليست في قوائم الدليل الاسترشادي لبرنامج خادم الحرمين 2026–2027:") }}</p>
     <ul class="target-list">
       {% for t in unlisted %}<li><span lang="en" dir="ltr">{{ t.name_en }}</span> ({{ t.country_ar }})</li>{% endfor %}
     </ul>
-    <p class="fact-note">برنامج سدايا يشترط قرار ابتعاث من برنامج خادم الحرمين، فتأكد من الجهة الرسمية قبل أن تستهدف جامعة غير موجودة في قوائمه.</p>
+    <p class="fact-note">{{ _("برنامج سدايا يشترط قرار ابتعاث من برنامج خادم الحرمين، فتأكد من الجهة الرسمية قبل أن تستهدف جامعة غير موجودة في قوائمه.") }}</p>
     {% endif %}
     {% if program.targets_source %}{{ c.source_stamp([program.targets_source]) }}{% endif %}
   </section>

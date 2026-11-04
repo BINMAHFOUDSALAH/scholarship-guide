@@ -20,8 +20,8 @@
    The check date stays in the data (for spotting stale facts) but isn't shown (decision 028). #}
 {% macro source_stamp(sources) %}
 <p class="source-stamp">
-  <span class="source-stamp-label">المصدر:</span>
-  {% for s in sources %}<a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }}</a>{% if not loop.last %}<span aria-hidden="true">،</span> {% endif %}{% endfor %}
+  <span class="source-stamp-label">{{ _("المصدر:") }}</span>
+  {% for s in sources %}<a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }}</a>{% if not loop.last %}<span aria-hidden="true">{{ _("،") }}</span> {% endif %}{% endfor %}
 </p>
 {% endmacro %}
 
@@ -49,12 +49,12 @@
 #}
 {% macro status_tag(status, until=None, label=None) %}
 <span class="status status--{{ status }}">{{ label or track_status_labels[status] }}</span>
-{%- if until and status == "open" %} <span class="status-until">حتى <time datetime="{{ until }}">{{ until | arabic_date }}</time></span>{% endif %}
+{%- if until and status == "open" %} <span class="status-until">{{ _("حتى") }} <time datetime="{{ until }}">{{ until | arabic_date }}</time></span>{% endif %}
 {% endmacro %}
 
 {# Back to where the student came from (GOV.UK "back link"). In RTL, "back" points right. #}
 {% macro back_link(href, text) %}
-<p class="back-link-wrap"><a class="back-link" href="{{ href }}" data-back-link><span aria-hidden="true">→</span> {{ text }}</a></p>
+<p class="back-link-wrap"><a class="back-link" href="{{ href }}" data-back-link><span aria-hidden="true">{{ _("→") }}</span> {{ text }}</a></p>
 {% endmacro %}
 
 {# The one place lime is used: what the student should do next. #}
@@ -73,6 +73,6 @@
 #}
 {% macro window_note(track) %}
 {% if track and track_status(track) == "open" and track.status_until %}
-<p class="window-note"><strong>في ثالث ثانوي الآن؟</strong> هذه النافذة لمن معه قبول جامعي اليوم. إن كانت نتائج جامعاتك ستصل بعد {{ track.status_until | arabic_date }}، فستقدّم في نافذة لاحقة يُعلن موعدها. <a href="/grades/grade-12#year">كيف ترتّب ذلك</a></p>
+<p class="window-note"><strong>{{ _("في ثالث ثانوي الآن؟") }}</strong> {{ _("هذه النافذة لمن معه قبول جامعي اليوم. إن كانت نتائج جامعاتك ستصل بعد") }} {{ track.status_until | arabic_date }}{{ _("، فستقدّم في نافذة لاحقة يُعلن موعدها.") }} <a href="/grades/grade-12#year">{{ _("كيف ترتّب ذلك") }}</a></p>
 {% endif %}
 {% endmacro %}

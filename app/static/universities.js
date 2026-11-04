@@ -11,6 +11,9 @@
 (function () {
   if (!window.fetch) return;
 
+  const t = (text) => (window.WADIH_I18N && window.WADIH_I18N[text]) || text; // English pages (decision 066)
+  const BASE = document.documentElement.dataset.base || ""; // "/en" on English pages
+
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // The same forgiving match as the server: case, accents, and Arabic letter variants.
@@ -63,7 +66,7 @@
           en.textContent = english;
           small.append(en);
         }
-        if (extra) small.append((english ? "، " : "") + extra);
+        if (extra) small.append((english ? t("، ") : "") + extra);
         el.append(small);
       }
       el.addEventListener("mousedown", (event) => event.preventDefault()); // keep focus in the input
@@ -104,7 +107,7 @@
       if (q) {
         const unis = d.universities.filter((u) => u.key.includes(q)).slice(0, 6);
         if (unis.length) {
-          panel.append(group("جامعات: تفتح صفحة الجامعة", unis.map((u) =>
+          panel.append(group(t("جامعات: تفتح صفحة الجامعة"), unis.map((u) =>
             option(u.name_ar || u.name_en, u.name_ar ? u.name_en : "", u.country_ar, () => onUniversity(u)))));
         }
       }
@@ -118,19 +121,19 @@
         hidden += all.length - majors.length;
         room -= majors.length;
         if (!majors.length) continue;
-        panel.append(group("تخصصات مجال: " + g.title_ar, majors.map((m) =>
-          option(m.name_ar + (m.masters_only ? " (ماجستير فقط)" : ""), m.name_en, "", () => onMajor(m)))));
+        panel.append(group(t("تخصصات مجال: ") + g.title_ar, majors.map((m) =>
+          option(m.name_ar + (m.masters_only ? t(" (ماجستير فقط)") : ""), m.name_en, "", () => onMajor(m)))));
       }
       if (hidden) {
         const more = document.createElement("p");
         more.className = "suggest-empty";
-        more.textContent = "وتخصصات أخرى (" + hidden + "). اكتب كلمة أدق، أو اضغط «ابحث».";
+        more.textContent = t("وتخصصات أخرى ({n}). اكتب كلمة أدق، أو اضغط «ابحث».").replace("{n}", hidden);
         panel.append(more);
       }
       if (!options.length) {
         const empty = document.createElement("p");
         empty.className = "suggest-empty";
-        empty.textContent = "لا اقتراحات. اضغط «ابحث» للبحث بالنص كما كتبته.";
+        empty.textContent = t("لا اقتراحات. اضغط «ابحث» للبحث بالنص كما كتبته.");
         panel.append(empty);
       }
       open();
@@ -214,7 +217,7 @@
   }
 
   function universityUrl(u, from) {
-    return "/universities/" + encodeURIComponent(u.id) + (from === null ? "" : "?from=" + encodeURIComponent(from));
+    return BASE + "/universities/" + encodeURIComponent(u.id) + (from === null ? "" : "?from=" + encodeURIComponent(from));
   }
 
   // The current search as a query string (only non-empty fields).
@@ -295,11 +298,11 @@
       box.className = "notice notice--warn results-error";
       box.setAttribute("role", "alert");
       const text = document.createElement("p");
-      text.textContent = "تعذّر تحديث النتائج. تحقق من اتصالك بالإنترنت، ثم حاول مرة أخرى.";
+      text.textContent = t("تعذّر تحديث النتائج. تحقق من اتصالك بالإنترنت، ثم حاول مرة أخرى.");
       const retry = document.createElement("button");
       retry.type = "button";
       retry.className = "btn btn--secondary";
-      retry.textContent = "حاول مرة أخرى";
+      retry.textContent = t("حاول مرة أخرى");
       retry.addEventListener("click", () => { lastQuery = null; update(); });
       box.append(text, retry);
       results.replaceChildren(box);
@@ -411,7 +414,7 @@
     function restReadout() {
       const chip = country.value && chipFor(country.value);
       readout.textContent = chip
-        ? chip.querySelector("span").textContent + ": " + chip.querySelector(".country-chip-count").textContent + " في القائمة أدناه"
+        ? chip.querySelector("span").textContent + ": " + chip.querySelector(".country-chip-count").textContent + t(" في القائمة أدناه")
         : readout.dataset.default;
     }
 
@@ -483,7 +486,7 @@
 
     results.addEventListener("click", (event) => {
       const link = event.target.closest('a[href*="/universities/"]');
-      const match = link && new URL(link.href).pathname.match(/^\/universities\/([a-z0-9-]+)$/);
+      const match = link && new URL(link.href).pathname.match(/^(?:\/en)?\/universities\/([a-z0-9-]+)$/);
       if (match) {
         // Where the tapped university sat on the screen, so it can come back to exactly the same spot.
         store.set({ list: location.pathname + location.search, id: match[1], y: window.scrollY,
@@ -495,7 +498,7 @@
     // pixels, so calling it again (or when the browser already restored the place) causes no jump.
     function bringBack(saved) {
       const row = [...results.querySelectorAll('a[href*="/universities/"]')]
-        .find((a) => new URL(a.href).pathname === "/universities/" + saved.id);
+        .find((a) => new URL(a.href).pathname === BASE + "/universities/" + saved.id);
       if (!row) {
         if (Math.abs(window.scrollY - saved.y) > 4) window.scrollTo(0, saved.y);
         return;
@@ -540,7 +543,7 @@
   if (back && document.referrer && history.length > 1) {
     let from = null;
     try { from = new URL(document.referrer); } catch (e) { from = null; }
-    if (from && from.origin === location.origin && from.pathname === "/universities") {
+    if (from && from.origin === location.origin && from.pathname === BASE + "/universities") {
       back.addEventListener("click", (event) => {
         event.preventDefault();
         history.back(); // the browser restores the list and the scroll position

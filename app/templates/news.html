@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}مواعيد التقديم والمستجدات | {{ site.name }}{% endblock %}
-{% block description %}ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا في برامج الابتعاث، مع روابط المصادر الرسمية.{% endblock %}
+{% block title %}{{ _("مواعيد التقديم والمستجدات |") }} {{ site.name }}{% endblock %}
+{% block description %}{{ _("ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا في برامج الابتعاث، مع روابط المصادر الرسمية.") }}{% endblock %}
 
 {% block content %}
 <div class="news-page page-wide">
   <header class="page-header">
-    <h1>مواعيد التقديم والمستجدات</h1>
-    <p class="lead">ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا، لكل برنامج ومسار. الحالة من مصدرها الرسمي، وتتغير وحدها مع مواعيد الفتح والإغلاق المعلنة.</p>
+    <h1>{{ _("مواعيد التقديم والمستجدات") }}</h1>
+    <p class="lead">{{ _("ما المفتوح الآن، وما المغلق أو لم يفتح بعد، وما فُتح وأُغلق مؤخرًا، لكل برنامج ومسار. الحالة من مصدرها الرسمي، وتتغير وحدها مع مواعيد الفتح والإغلاق المعلنة.") }}</p>
   </header>
 
   {% set board_limit = None %}
@@ -17,7 +17,7 @@
   {% if announcements %}
   <section class="board-group board-group--news" aria-labelledby="announcements-title">
     <div class="board-head">
-      <h2 id="announcements-title" class="board-title">إعلانات</h2>
+      <h2 id="announcements-title" class="board-title">{{ _("إعلانات") }}</h2>
     </div>
     <ul class="board-list">
       {% for item in announcements %}
@@ -36,6 +36,6 @@
   </section>
   {% endif %}
 
-  <p class="news-follow">تابع أيضًا الحسابات الرسمية: <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">برنامج خادم الحرمين الشريفين للابتعاث على X ↗</a></p>
+  <p class="news-follow">{{ _("تابع أيضًا الحسابات الرسمية:") }} <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">{{ _("برنامج خادم الحرمين الشريفين للابتعاث على X ↗") }}</a></p>
 </div>
 {% endblock %}

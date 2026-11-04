@@ -17,7 +17,7 @@
 {% block content %}
 <article class="measure grade-page">
   {# The three years as the homepage's route (decision 062): one diamond per year, the current one lit. #}
-  <nav class="grade-journey" aria-label="سنوات الثانوية">
+  <nav class="grade-journey" aria-label="{{ _('سنوات الثانوية') }}">
     <ol>
       {% for g in grades %}
       <li><a href="{{ url_for('grade_page', slug=g.slug) }}"{% if g.slug == page.slug %} aria-current="page"{% endif %}><span class="grade-journey-name">{{ g.label_ar }}</span> <span class="grade-journey-hint">{{ g.hint_ar }}</span><span class="journey-mark" aria-hidden="true"></span></a></li>
@@ -42,7 +42,7 @@
   {% if page.tool == "year" %}{% include "partials/apply_year.html" %}{% endif %}
 
   <section class="grade-resources" aria-labelledby="resources-title">
-    <h2 id="resources-title">لتعرف أكثر</h2>
+    <h2 id="resources-title">{{ _("لتعرف أكثر") }}</h2>
     <ul class="rows resource-list">
       {% for r in page.resources %}
       <li>
@@ -57,6 +57,6 @@
 
   {% set ns = namespace(next=None) %}
   {% for g in grades %}{% if loop.previtem is defined and loop.previtem.slug == page.slug %}{% set ns.next = g %}{% endif %}{% endfor %}
-  {% if ns.next %}<p class="next-grade"><a href="{{ url_for('grade_page', slug=ns.next.slug) }}">ماذا ينتظرك في {{ ns.next.label_ar }}؟</a></p>{% endif %}
+  {% if ns.next %}<p class="next-grade"><a href="{{ url_for('grade_page', slug=ns.next.slug) }}">{{ _("ماذا ينتظرك في") }} {{ ns.next.label_ar }}{{ _("؟") }}</a></p>{% endif %}
 </article>
 {% endblock %}
