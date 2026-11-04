@@ -51,8 +51,6 @@ def test_translation_files_are_valid_and_english():
 def test_a_key_has_one_english_across_files():
     seen = {}
     for path in sorted(I18N.glob("*.en.json")):
-        if path.name == "js.en.json":
-            continue
         for ar, en in json.loads(path.read_text(encoding="utf-8")).items():
             assert seen.setdefault(ar, (en, path.name))[0] == en, f"{ar!r}: {path.name} and {seen[ar][1]} disagree"
 
@@ -149,6 +147,8 @@ def numbers(text):
 
 def fact_problems(ar, en):
     problems = []
+    if sorted(re.findall(r"\{(\w+)\}", ar)) != sorted(re.findall(r"\{(\w+)\}", en)):
+        problems.append("placeholders differ")
     if "{" in ar:  # placeholders are filled later, from data
         ar, en = re.sub(r"\{\w+\}", "", ar), re.sub(r"\{\w+\}", "", en)
     a, e = numbers(ar), numbers(en)
@@ -282,7 +282,8 @@ def test_english_pages_are_english_and_left_to_right():
 def test_english_pages_link_within_english():
     for url, r in english_pages().items():
         for href in re.findall(r'(?:href|action)="(/[^"]*)"', r.text):
-            if href.startswith(("/static/", "/en/", "//")) or href == "/en":
+            assert not href.startswith("//"), f"{url}: protocol-relative link {href}"
+            if href.startswith(("/static/", "/en/")) or href == "/en":
                 continue
             assert 'data-lang-switch' in r.text and href in r.text, url
             # the only Arabic link is the language switch back to the same page
@@ -293,14 +294,14 @@ def test_english_anchors_exist():
     """A link to /en/page#id lands on an element with that id."""
     ids = {}
     for url, r in english_pages().items():
-        ids[url.split("?")[0]] = set(re.findall(r'id="([^"]+)"', r.text))
+        ids[url] = set(re.findall(r'id="([^"]+)"', r.text))
     for url, r in english_pages().items():
         for path, anchor in re.findall(r'href="(/en[^"#?]*)#([^"]+)"', r.text):
             path = path if path != "/en/" else "/en/"
             target = ids.get(path) or set(re.findall(r'id="([^"]+)"', client.get(path).text))
             assert anchor in target, f"{url}: {path}#{anchor} has no target"
         for anchor in re.findall(r'href="#([^"]+)"', r.text):
-            assert anchor in ids[url.split("?")[0]] or anchor in r.text, f"{url}: #{anchor}"
+            assert anchor in ids[url], f"{url}: #{anchor}"
 
 
 def test_english_switch_points_to_the_same_page():
@@ -312,9 +313,15 @@ def test_english_switch_points_to_the_same_page():
 def test_english_redirects_stay_in_english():
     r = client.get("/en/", follow_redirects=False)
     assert r.status_code == 200
-    r = client.get("/en/about/", follow_redirects=False)
-    if 300 <= r.status_code < 400:
-        assert r.headers["location"].startswith(("/en/", "http://testserver/en/"))
+    # The old Render address redirects to the same English page on the public one.
+    r = client.get("/en/about?x=1", headers={"host": "wadih-mqni.onrender.com"}, follow_redirects=False)
+    assert r.status_code == 301 and r.headers["location"] == main.site["base_url"] + "/en/about?x=1"
+
+
+def test_language_switch_never_leaves_the_site():
+    r = client.get("/en//example.com")
+    assert r.status_code == 404
+    assert 'href="//' not in r.text
 
 
 def test_english_api_and_search():
@@ -345,4 +352,5 @@ def test_drafts_and_third_parties_stay_out_of_english_pages():
 def test_english_dates_and_counts():
     with i18n.use_lang("en"):
         assert main.arabic_date("2026-10-09") == "9 October 2026"
-    assert "443 universities" in english_pages()["/en/"].text or "universities in" in english_pages()["/en/"].text
+    n, countries = len(main.explorer.universities), len(main.explorer.country_options())
+    assert f"{n} universities in {countries} countries" in english_pages()["/en/"].text

@@ -279,7 +279,8 @@ def render(request, name, context=None, status_code=200):
 
 def language_links(request):
     """This page in Arabic and in English, as paths with the query kept. Used by the toggle and Google's tags."""
-    path, query = request.url.path, request.url.query
+    # One leading slash: a path like //example.com must never become a link to another site.
+    path, query = "/" + request.url.path.lstrip("/"), request.url.query
     tail = "?" + query if query else ""
     return {"ar": path + tail, "en": i18n.EN_PREFIX + path + tail, "ar_path": path, "en_path": i18n.EN_PREFIX + path}
 

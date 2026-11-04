@@ -8,7 +8,7 @@
     <div class="tuwaiq-text">
       <blockquote id="tuwaiq-quote" class="tuwaiq-quote">
         {#- English pages: the words as spoken, then our translation, so a translation never reads as the quote itself. #}
-        {% if is_en() %}<p lang="ar" dir="rtl">{{ ar("«" ~ quote.quote_ar ~ "»") }}</p>
+        {% if is_en() %}<p lang="ar" dir="rtl">«{{ ar(quote.quote_ar) }}»</p>
         <p class="tuwaiq-translation">{{ _f("ترجمتنا: «{quote}»", quote=quote.quote_ar) }}</p>
         {% else %}<p>{{ _("«") }}{{ quote.quote_ar }}{{ _("»") }}</p>{% endif %}
         <footer>{{ quote.attribution_ar }}{% if quote.context_ar %}{{ _("،") }} {{ quote.context_ar }}{% endif %}</footer>
