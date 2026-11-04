@@ -1,6 +1,6 @@
 {
-  "_note": "«جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test. No scores are shown, nothing is stored. The activities, the subject-to-field map and the 'try' ideas are our own advice, not official facts; they stay a draft (hidden on the live site) until a school counsellor and a career-development specialist have reviewed them and students have tried them (docs/research/career-exploration-evaluation-2026-11.md §8–9). Field names, majors and school tracks come from the sourced data (universities.json, school_tracks.json).",
-  "draft": true,
+  "_note": "«جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test. No scores are shown, nothing is stored. The activities, the subject-to-field map and the 'try' ideas are our own advice, not official facts; published by the owner on 2026-11-04 before a counsellor review (decision 070); expert_reviewed records that the review is still to come (docs/research/career-exploration-evaluation-2026-11.md §8–9). Field names, majors and school tracks come from the sourced data (universities.json, school_tracks.json).",
+  "draft": false,
   "expert_reviewed": false,
   "owner_reviewed": false,
   "last_checked": "2026-11-04",

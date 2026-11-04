@@ -1104,3 +1104,16 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - The owner arranges the counsellor review and the student test (run it locally with `WADIH_SHOW_DRAFTS=1`).
 - Verify the Ministry measure's details on an official page (press reports say it counts in placement; not verified, so not published).
 
+## 070 — «جرّب قبل أن تقرر» goes live, with a door on the homepage under the grades (updates 069)
+**Date:** 2026-11-04
+**Decision:** the owner chose to publish the activity now, before the counsellor review and the student test that decision 069 asked for.
+- `data/exploration.json` has `"draft": false`. `expert_reviewed` stays `false`, so the data still says the review is to come.
+- The draft banner and `noindex` disappear on their own (both follow `draft`). `/explore` joins the sitemap in both languages, and the guide's door appears.
+- **The homepage door:** a second question at the same level as the grades, right under them: «لم تقرر ماذا تدرس؟», an outlined button «جرّب قبل أن تقرر» and «نحو عشر دقائق». It sits on the forest start, before the search of the lists, and shows only while the activity is public.
+**Alternatives:**
+- **A card or panel lower on the page (e.g. beside the guides):** an undecided student would have to scroll past the programs to find it, and the design keeps panels few.
+- **A fifth stop on the grades route:** the route is a real sequence of school years; the activity isn't a year.
+- **A lime or primary button:** lime is only for the next step, and a primary button would compete with the grades, the main way in.
+**Why:** the tagline promises «مستقبلك بعد الثانوية», and "I don't know what to study" is a question students arrive with. Asking it at the top, in the same form as «في أي صف أنت؟», lets them find their way in without reading further.
+**Still to do:** the counsellor review and the student test (research note §8–9). If they turn up problems, fix the wording, or set `"draft": true` again: the page, its doors and its sitemap entry all disappear (tested).
+

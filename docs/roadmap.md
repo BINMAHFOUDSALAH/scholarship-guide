@@ -3,12 +3,13 @@
 The living plan for واضح. Update the checkboxes at the end of every step.
 Why each choice was made lives in [decisions.md](decisions.md).
 
-> **Latest (2026-11-04, decision 069, branch `claude/blissful-tesla-xzor9q`, not merged):** the «لم تقرر بعد؟» guide (`/resources/undecided`, in the homepage guides and on the grade 10 page), and «جرّب قبل أن تقرر» (`/explore`) built as a **draft**: an unscored exploration activity (research: `docs/research/career-exploration-evaluation-2026-11.md`). 716 tests; browser flows at 390 and 1280px, English, and without JavaScript.
+> **Latest (2026-11-04, decision 070):** «جرّب قبل أن تقرر» (`/explore`) is **live**, with a door on the homepage under the grades («لم تقرر ماذا تدرس؟»). Published by the owner before the counsellor review.
+>
+> **Earlier (2026-11-04, decision 069, merged in PR #31):** the «لم تقرر بعد؟» guide (`/resources/undecided`, in the homepage guides and on the grade 10 page), and «جرّب قبل أن تقرر» built as an unscored exploration activity (research: `docs/research/career-exploration-evaluation-2026-11.md`). Checked: 717 tests; a UI sweep at 320–1280px in both themes and languages, keyboard only, without JavaScript and in print.
 > - **Owner to-dos:**
->   - run it locally (`$env:WADIH_SHOW_DRAFTS="1"; uvicorn app.main:app --reload`, then /explore);
->   - get one Saudi school counsellor (and, if possible, a career-development specialist) to review the 30 activities, the subject map and the wording;
+>   - open /explore and the homepage on a real phone (Safari especially);
+>   - get one Saudi school counsellor (and, if possible, a career-development specialist) to review the 30 activities, the subject map and the wording; then set `expert_reviewed: true` in `data/exploration.json`;
 >   - try it with 5 students in the usability test (research note §9: can they name a field to explore and one action; does anyone read it as "the site told me what to study"?);
->   - then set `"draft": false` in `data/exploration.json` (the test `test_it_stays_a_draft_until_reviewed` must change with it);
 >   - check the Ministry's grade 10 interest measure on an official page (press says it counts in placement; not published).
 >
 > **Earlier (2026-11-04, decision 068):** phone header: four 48px controls (language, «قائمتي», theme, «القائمة» with its label from 480px; 44px up to 389px); the menu opens full width with 48px rows.
