@@ -64,7 +64,7 @@ python scripts/check_sources.py                 # every university fact still on
 python scripts/watch.py                         # what needs updating: new واعد programs, passed deadlines, broken pages (--offline: no internet)
 node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
 node scripts/check_explorer.mjs http://127.0.0.1:8000 --en   # the same flows on the English pages
-node scripts/check_explore.mjs                  # «جرّب قبل أن تقرر» on an emulated iPhone: tap-to-advance, double taps, skip, keyboard, Back, reload (add --en)
+node scripts/check_explore.mjs                  # «جرّب قبل أن تقرر» on an emulated iPhone: tap-to-advance, double taps, skip, keyboard, Back, reload, the result's cards (add --en, --webkit for Safari's engine)
 python scripts/english_leaks.py                 # Arabic still showing on English pages (should be 0)
 ```
 

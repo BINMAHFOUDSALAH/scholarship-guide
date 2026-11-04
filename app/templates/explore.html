@@ -3,8 +3,8 @@
 {#
   «جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test.
   The whole activity is one form, so it works without JavaScript. explore.js shows one step at a time
-  (parts 1–3, one activity per screen in part 2: a tap on an answer moves on), with progress, «السابق» / «التالي» and a
-  review step before the result.
+  (parts 1–3, one activity per screen in part 2: a tap on an answer moves on), with progress and «السابق» / «التالي»;
+  the last step's button goes straight to the result (decision 073).
   No answer is pre-selected: a skipped question counts as skipped.
   Answers are posted once (never in a URL) and nothing is stored.
 #}
@@ -90,25 +90,17 @@
         <div class="explore-options explore-options--grid">
           <label class="explore-option"><input type="radio" name="considered" value=""> <span>{{ _("لا يوجد") }}</span></label>
           {% for f in x.fields %}
-          <label class="explore-option"><input type="radio" name="considered" value="{{ f.id }}"> <span>{{ field_names[f.id] }}</span></label>
+          <label class="explore-option"><input type="radio" name="considered" value="{{ f.id }}"> <span>{{ f.title_ar }}</span></label>
           {% endfor %}
         </div>
       </fieldset>
     </section>
 
-    {# ---------- Review (built and shown by explore.js; without JavaScript it stays hidden and the whole form shows) ---------- #}
-    <section class="explore-step explore-review" data-step data-review aria-labelledby="review-title" hidden>
-      <h2 class="explore-part-title" id="review-title" tabindex="-1">{{ _("راجع إجاباتك") }}</h2>
-      <dl class="summary-list" data-review-list></dl>
-    </section>
-
-    <div class="explore-nav" data-explore-nav hidden>
-      <button type="button" class="btn btn--secondary" data-prev>{{ _("السابق") }}</button>
-      <button type="button" class="btn btn--primary" data-next>{{ _("التالي") }}</button>
-    </div>
-
-    <div class="explore-submit" data-submit-area>
-      <button type="submit" class="btn btn--primary">{{ _("اعرض النتيجة") }}</button>
+    {# Without JavaScript only «اعرض النتيجة» shows, under the whole form; explore.js shows the buttons each step needs. #}
+    <div class="explore-nav">
+      <button type="button" class="btn btn--secondary" data-prev hidden>{{ _("السابق") }}</button>
+      <button type="button" class="btn btn--primary" data-next hidden>{{ _("التالي") }}</button>
+      <button type="submit" class="btn btn--primary" data-submit>{{ _("اعرض النتيجة") }}</button>
     </div>
   </form>
 </div>

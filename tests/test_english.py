@@ -101,10 +101,11 @@ def test_no_unused_translations():
 
 def test_every_shown_university_and_data_text_has_english():
     """University requirement files and the shared data: every Arabic text a page can show has English.
-    Fields that are never shown (sources' quotes, notes for the owner, search aliases) are skipped."""
+    Fields that are never shown (sources' quotes, notes for the owner, search aliases) are skipped, and so are names
+    whose English comes from the data itself (name_ar; majors_ar, checked in test_exploration's English test)."""
     known = translations()
     skip_keys = {"quote", "aliases", "evidence", "note_for_owner", "_note", "note", "status_note", "apply_url_note",
-                 "apply_note", "institution_note", "name_ar"}
+                 "apply_note", "institution_note", "name_ar", "majors_ar"}
     missing = []
 
     def walk(o, key=None):

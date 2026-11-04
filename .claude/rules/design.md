@@ -30,7 +30,7 @@ Loaded when Claude edits templates, CSS/JS or the design tests. The tokens and t
   - `--wide` (1200px) for the homepage grid and the footer;
   - `.page-wide` (1080px) for tool pages;
   - `.measure` (680px) for reading.
-- **Panels are few:** the search, the university summary, the next step (`--radius-panel`). No grids of identical cards, no decorative shadows, no stock photos. The الرواد star chart is the only drawing of data.
+- **Panels are few:** the search, the university summary, the next step, and the field cards on the «جرّب قبل أن تقرر» result, the one place that compares a few things to choose from (`--radius-panel`, decision 073). Elsewhere no grids of identical cards. No decorative shadows, no stock photos. The الرواد star chart is the only drawing of data.
 - **Motion:** one load moment (the homepage's route draws once), the theme cross-fade, and responses to the student's action. Nothing loops, and all of it is off with reduced motion.
 - **Themes:** two designed themes, in `:root[data-theme="dark"]` only (no `prefers-color-scheme` in the CSS). The device decides until the student picks (060).
 - **The logo never changes:** the header draws `static/favicon.svg` exactly (a test checks). Don't recolour, redraw or restyle its parts; only its size and the space around it may change.
@@ -39,5 +39,6 @@ Loaded when Claude edits templates, CSS/JS or the design tests. The tokens and t
   - A country flag goes beside a country's name (049).
   - A university's official logo appears only on its own page, self-hosted with its source and licence (049).
   - Photos must be real, licensed and credited.
+  - Each broad field has its own drawing (`static/img/fields/<id>.svg`, decision 073): paper cut-outs on the logo's forest tile. Our own work, no text, no script, no outside request, the same on both themes (a test checks). Colours: forest and its tints, paper, and one lime accent; lime in a drawing is colour, not the meaning it has in the interface. No diamond. Phones show the middle 640×320 of the 640×490 frame, so what matters stays there and only ground goes above and below.
 - **Footer:** the grades, programs and guides come from the data. The copyright line is last; its year comes from `current_year()` and `site.since`. No second logo or slogan.
 - **Contrast** (both themes, checked by `tests/test_design.py`): ≥ 4.5:1 for text, ≥ 3:1 for borders and focus.

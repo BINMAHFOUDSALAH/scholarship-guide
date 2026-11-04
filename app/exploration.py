@@ -14,6 +14,8 @@ import json
 from pathlib import Path
 from urllib.parse import parse_qs
 
+from app import i18n
+
 DATA = json.loads((Path(__file__).parent.parent / "data" / "exploration.json").read_text(encoding="utf-8"))
 
 ANSWERS = {a["id"]: a for a in DATA["answers"]}
@@ -121,28 +123,60 @@ def score(choices):
     }
 
 
-def field_names(explorer):
-    """Each field's name: the Ministry guide's own name where the guide has the field (as in the explorer)."""
-    return {f["id"]: explorer.field("emdad", f["guide_field"])["name_ar"] if f.get("guide_field") else f["name_ar"]
-            for f in DATA["fields"]}
+def list_text(titles):
+    """Field titles in a sentence: «أ، وب، وج» / "A; B; C" (an English title holds its own "and")."""
+    return ("; " if i18n.is_english() else "، و").join(i18n.tr(t) for t in titles)
+
+
+def why_text(f):
+    """Why a field was suggested, in one short sentence from the student's own answers (decision 073): what they
+    enjoy, else what they'd like to try, and where they've seen themselves progress. At most two activities are
+    named; every answer stays listed in the card's details. Built when shown, so it follows the page's language."""
+    def said(answer):
+        names = [i18n.tr(w["activity_ar"]) for w in f["why"] if w["answer"] == answer]
+        return [n[:1].lower() + n[1:] for n in names] if i18n.is_english() else names  # mid-sentence in English
+
+    enjoy, curious = said("enjoy"), said("curious")
+    progress = [i18n.tr(p) for p in f["progress"]]
+    parts = []
+    if enjoy:
+        pattern = {1: "لأنك تستمتع ب{a}", 2: "لأنك تستمتع ب{a}، وب{b}"}.get(len(enjoy), "لأنك تستمتع ب{a}، وب{b}، وبنشاط آخر منه")
+        parts.append(i18n.tf(pattern, a=enjoy[0], b=enjoy[1] if len(enjoy) > 1 else ""))
+        if curious and len(enjoy) == 1:
+            parts.append(i18n.tf("وتودّ أن تجرّب {a}", a=curious[0]))
+    elif curious:
+        pattern = {1: "لأنك تودّ أن تجرّب {a}", 2: "لأنك تودّ أن تجرّب {a}، و{b}"}.get(len(curious), "لأنك تودّ أن تجرّب {a}، و{b}، ونشاطًا آخر منه")
+        parts.append(i18n.tf(pattern, a=curious[0], b=curious[1] if len(curious) > 1 else ""))
+    if progress:
+        pattern = "ولاحظت تقدمك في {p}" if parts else "لأنك لاحظت تقدمك في {p}"
+        parts.append(i18n.tf(pattern, p=(", " if i18n.is_english() else " و").join(progress)))
+    if not parts:
+        return ""
+    return (". " if i18n.is_english() else "، ").join(parts) + "."
 
 
 def field_view(fid, explorer, school_tracks):
-    """What the result shows about a field: its name, example majors from the Ministry's guide and a link to
-    its universities (or why there are none), and the school tracks whose official summary relates to it."""
+    """What a result card shows about a field: its plain title, real example majors with where they come from, a
+    link to its universities (or why there are none), and the school tracks whose official summary relates to it."""
     f = FIELDS[fid]
     guide = f.get("guide_field")
-    view = {"id": fid, "try_ar": f["try_ar"], "programs": f.get("programs", []), "in_guide": bool(guide)}
+    sources = {s.get("id"): s for s in DATA["sources"]}
+    view = {"id": fid, "title_ar": f["title_ar"], "try_ar": f["try_ar"], "programs": f.get("programs", []),
+            "in_guide": bool(guide), "majors": f["majors_ar"],
+            "majors_source": {"title": "التصنيف السعودي الموحد للتخصصات", "url": sources["classification"]["url"]}
+            if f["majors_from"] == "classification"
+            else {"title": "دليل الوزارة لقوائم الجامعات", "url": explorer.source["url"]}}
     if guide:
-        emdad = explorer.field("emdad", guide)
-        view["name_ar"] = emdad["name_ar"]
-        majors = list(dict.fromkeys(m["name_ar"] for track in ("emdad", "rnd")
-                                    for m in (explorer.field(track, guide) or {}).get("majors", [])))
-        view["majors"] = majors[:4]
-        view["more_majors"] = len(majors) > 4
+        view["guide_name_ar"] = explorer.field("emdad", guide)["name_ar"]
+        listed = guide_majors(explorer, guide)
+        view["guide_only_major"] = listed[0] if len(listed) == 1 else None  # the card's examples go beyond the guide
         view["explorer_url"] = f"/universities?track=emdad&field={guide}"
-    else:
-        view["name_ar"] = f["name_ar"]
     by_name = {t["name_ar"]: t for t in school_tracks["tracks"]}
     view["tracks"] = [by_name[name] for name in f["tracks"]]
     return view
+
+
+def guide_majors(explorer, guide):
+    """Every major the Ministry's guide lists under a field, in both of its lists."""
+    return list(dict.fromkeys(m["name_ar"] for track in ("emdad", "rnd")
+                              for m in (explorer.field(track, guide) or {}).get("majors", [])))
