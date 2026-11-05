@@ -39,7 +39,7 @@
       </li>
       {% endfor %}
     </ul>
-    {% if board_limit and items | length > board_limit %}<p class="board-more"><a href="{{ url_for('news_page') }}">{{ _("وغيرها (") }}{{ items | length - board_limit }})</a></p>{% endif %}
+    {% if board_limit and items | length > board_limit %}<p class="board-more"><a href="{{ url_for('news_page') }}">{{ _f("وغيرها ({n})", n=items | length - board_limit) }}</a></p>{% endif %}
     {% else %}
     <p class="board-empty">{{ _("لا شيء الآن.") }} {{ hint }}</p>
     {% endif %}

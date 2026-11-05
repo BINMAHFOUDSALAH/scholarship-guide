@@ -111,7 +111,7 @@
     </li>
     {% endfor %}
   </ul>
-  {% if board.open | length > 4 %}<p class="section-link section-link--after"><a href="{{ url_for('news_page') }}">{{ _("وغيرها (") }}{{ board.open | length - 4 }}{{ _(") في مواعيد التقديم") }}</a></p>{% endif %}
+  {% if board.open | length > 4 %}<p class="section-link section-link--after"><a href="{{ url_for('news_page') }}">{{ _f("وغيرها ({n}) في مواعيد التقديم", n=board.open | length - 4) }}</a></p>{% endif %}
   {% else %}
   <p class="result-empty">{{ _("لا يوجد تقديم مفتوح الآن في البرامج التي نتابعها.") }} <a href="{{ url_for('news_page') }}">{{ _("ما المغلق، وما الذي فُتح وأُغلق مؤخرًا؟") }}</a></p>
   {% endif %}
