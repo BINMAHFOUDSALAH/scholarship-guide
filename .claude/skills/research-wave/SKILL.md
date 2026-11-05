@@ -15,7 +15,7 @@ Done five times (waves 1–5: US, UK, AU/CA/SG, the other US + India, Europe; de
 - Write `docs/research/emdad-wave-<n>-brief.md`: status, scope, batches of ~5 (best إمداد rank first, same country together), and only what differs from the [wave 2 brief](../../../docs/research/emdad-wave-2-uk-brief.md) (intake, deadline system, platform, SAT relevance, language of instruction).
 
 ## 3. Agents
-- One `source-researcher` per batch, in parallel, `run_in_background: true`. Never pass a model (`.claude/settings.json` forces Haiku on every subagent).
+- One `source-researcher` per batch, in parallel, `run_in_background: true`. Pass `model: "haiku"` (its agent file says Haiku too, decision 077) and ask it to report its model.
 - The prompt must include: read both briefs and `data/university_details/the-university-of-exeter.json` (the example); curl **to stdout only** (no `-o`, `>`, `tee`; agents have written files into the repo before); snippets are never sources; the `saudi_certificate` rule (true/false only when the page says so, else null); return JSON per university plus an evidence list (exact quote + URL for every number, date and yes/no).
 
 ## 4. Verify (main session)

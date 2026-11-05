@@ -1246,3 +1246,17 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **All of them at once:** several skills setting style at once gives inconsistent pages.
 **Not verified:** the new skill has not yet been run on a page.
 
+## 077 — Subagent models: Haiku reads, Sonnet judges (updates 059)
+**Date:** 2026-11-05
+**Context:** the owner asked whether subagents should run on Haiku or Sonnet. Since decision 059 every subagent was forced onto Haiku. Checked against [Claude Code's subagents page](https://code.claude.com/docs/en/sub-agents) on 2026-11-05: the order is the per-call model, then the agent file's `model:`, then `CLAUDE_CODE_SUBAGENT_MODEL`, then the main model; `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` makes the variable win and ignores the agent files.
+**Decision:**
+- **`source-researcher`: Haiku 5.5.** Mostly fetching pages and copying exact quotes, often many in parallel. Its mistakes are caught: the main session checks every quote (`check_quote.py`, `curl`) and the tests.
+- **`fact-checker` and `reviewer`: Sonnet 5.5.** Their job is judgement (minimum vs recommended, "not listed" vs "not accepted", a rule broken in a diff), and a miss means a wrong fact in front of students. They run rarely, so the extra usage is small.
+- **`.claude/settings.json`:** `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` removed; `CLAUDE_CODE_SUBAGENT_MODEL` stays as the default (Haiku) for any subagent without its own model.
+- In cloud sessions, also pass the model on each call and ask the agent to report it (CLAUDE.md).
+**Alternatives:**
+- **Haiku for all (059):** cheapest, but the two agents that guard the facts are where judgement matters most.
+- **Sonnet for all:** the researcher's bulk reading doesn't need it, and its output is verified anyway; it would use limits fastest in parallel waves.
+- **Opus for the reviewer:** strongest, but heavier; reconsider if Sonnet misses real problems.
+**Not verified:** no side-by-side run of Haiku and Sonnet on Wadih's tasks yet. A first check: run `fact-checker` on Sonnet over a page Haiku checked before and compare.
+

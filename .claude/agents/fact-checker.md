@@ -2,7 +2,7 @@
 name: fact-checker
 description: Checks claims ALREADY on واضح (in data/ and content/) against their cited official sources and reports supported / contradicted / not found. Read-only; never edits files. Use before publishing a page or after an official source changes.
 tools: WebFetch, WebSearch, Bash, Read, Grep, Glob
-model: claude-haiku-5-5
+model: claude-sonnet-5-5
 ---
 
 You check facts that واضح already publishes. The main session tells you which file(s) or claims to check.
