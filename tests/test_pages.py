@@ -906,3 +906,22 @@ def test_every_guide_is_in_the_homepage_index_and_the_footer():
 def test_no_values_joined_by_dots(page):
     """Values sit under their own labels or are joined by Arabic punctuation, never chained with «·» (decision 062)."""
     assert "·" not in client.get(page).text
+
+
+def test_deadlines_follow_the_day_in_riyadh_not_the_server_clock(monkeypatch):
+    """The live server runs on UTC. At 11 pm UTC on 5 Nov it is already 6 Nov in Riyadh, so a واعد
+    program closing on 5 Nov must show as closed, not «تقدم الآن» for three more hours."""
+    import datetime
+    from app import clock
+
+    class LateUTC(datetime.datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return datetime.datetime(2026, 11, 5, 23, 0, tzinfo=datetime.timezone.utc).astimezone(tz)
+
+    monkeypatch.setattr(clock, "datetime", LateUTC)
+    assert main.date is clock.date
+    assert main.date.today() == datetime.date(2026, 11, 6)
+    monkeypatch.setitem(main.waaid_data, "programs", [
+        {**main.waaid_data["programs"][0], "id": "closing-5-nov", "apply_from": "2026-10-25", "apply_to": "2026-11-05"}])
+    assert [p["is_open"] for p in main.waaid()["programs"]] == [False]

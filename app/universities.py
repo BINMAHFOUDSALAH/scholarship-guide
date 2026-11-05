@@ -542,7 +542,7 @@ class Explorer:
     def next_deadline(self, uid, today=None):
         """The university's next upcoming dated item for the current cycle, or None.
         Dates kept only for reference (a past cycle) never count."""
-        from datetime import date as _date
+        from app.clock import date as _date
         today = today or _date.today().isoformat()
         dates = [d for d in (self.details.get(uid) or {}).get("dates") or []
                  if d.get("date") and d["date"] >= today and not d.get("reference_only")]
@@ -618,7 +618,7 @@ class Explorer:
     def upcoming_deadlines(self, limit=6, today=None):
         """The next application deadlines across researched universities, soonest first (grade 12 page).
         Only «آخر موعد للتقديم» items of the current cycle."""
-        from datetime import date as _date
+        from app.clock import date as _date
         today = today or _date.today().isoformat()
         rows = []
         for uid, d in self.details.items():
