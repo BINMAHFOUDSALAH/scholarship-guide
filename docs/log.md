@@ -6,6 +6,9 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-05
 
+**2026-11-05 (decision 076):** design tools chosen: `frontend-design` to build; `web-design-guidelines` (new project skill, pinned rules with واضح overrides), `design-critique` and `accessibility-review` to review. Taste, UI/UX Pro Max and Impeccable not installed (they compete with `design.md`). CLAUDE.md: `design.md` beats any plugin.
+- **Owner to-dos:** try `/web-design-guidelines app/templates/home.html` on a page.
+
 **2026-11-05 (decision 075):** a colour pass. Each of the 10 fields has its own tone (drawings recoloured; result cards, explorer field picker and university pages use it), a sun-yellow door to «جرّب قبل أن تقرر» with the ten tones beside it, «تقدم الآن» filled, a sand band under the homepage's quote.
 - **Owner to-dos:** look at the result on your phone in both themes; say if any two fields still feel too alike.
 

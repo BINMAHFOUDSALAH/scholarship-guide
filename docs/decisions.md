@@ -1231,3 +1231,18 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **Field colours in the activity's questions:** they would tell the student which field each answer feeds, and could steer the answers. Left out.
 - **A warm accent across all pages (headings, guide groups):** colour without a job; it would dilute the meanings of forest, lime and amber. Kept to the door and the sand band.
 - **Coral or red for the door:** too close to an error or a warning.
+
+## 076 — Design tools: one builder, three reviewers, design.md wins
+**Date:** 2026-11-05
+**Context:** the owner asked which Claude Code design plugins and skills to install (a list from ChatGPT: Anthropic's Frontend Design, UI/UX Pro Max, Impeccable, Vercel's Web Design Guidelines, Taste) and how they work.
+**Decision:**
+- **Build** with Anthropic's `frontend-design` (official; already available in cloud sessions).
+- **Review** with three tools: Vercel's `web-design-guidelines`, added as a project skill in `.claude/skills/web-design-guidelines/` with a **pinned copy** of its rules (the upstream skill downloads them from GitHub on every run, so they could change under us) and واضح overrides (plain HTML not React, language from the URL, no CDNs, Arabic copy untouched, RTL); plus `design:design-critique` and `design:accessibility-review` (already available).
+- **`design.md` always wins**, written into CLAUDE.md: no plugin's palette, fonts, layouts or starter files.
+**Alternatives (not installed):**
+- **Taste:** classifies the site as a business type, deals its own palette, fonts and hero, and copies `starter.html` and `assets/` into the project. It would overwrite decision 062/075. Fine for an experiment on a throwaway branch, never for live pages.
+- **UI/UX Pro Max:** a library of styles and palettes that loads by itself on any UI request; it would compete with `design.md` on every page, and needs Python plus a third-party plugin.
+- **Impeccable:** good refining commands (`critique`, `polish`, `bolder`), but 24 commands overlapping `design-critique`, a third-party install, and an optional hook that checks every UI edit. Reconsider if the built-in critique falls short.
+- **All of them at once:** several skills setting style at once gives inconsistent pages.
+**Not verified:** the new skill has not yet been run on a page.
+
