@@ -1253,10 +1253,12 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **`source-researcher`: Haiku 5.5.** Mostly fetching pages and copying exact quotes, often many in parallel. Its mistakes are caught: the main session checks every quote (`check_quote.py`, `curl`) and the tests.
 - **`fact-checker` and `reviewer`: Sonnet 5.5.** Their job is judgement (minimum vs recommended, "not listed" vs "not accepted", a rule broken in a diff), and a miss means a wrong fact in front of students. They run rarely, so the extra usage is small.
 - **`.claude/settings.json`:** `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` removed; `CLAUDE_CODE_SUBAGENT_MODEL` stays as the default (Haiku) for any subagent without its own model.
+- **Aliases, not version numbers** (`haiku`, `sonnet`): the agents follow each new version with no upkeep, and a retired version can never break them. A per-call model only accepts aliases anyway. The safety net doesn't depend on the version: the main session checks every quote and the tests run on every change.
 - In cloud sessions, also pass the model on each call and ask the agent to report it (CLAUDE.md).
 **Alternatives:**
 - **Haiku for all (059):** cheapest, but the two agents that guard the facts are where judgement matters most.
 - **Sonnet for all:** the researcher's bulk reading doesn't need it, and its output is verified anyway; it would use limits fastest in parallel waves.
 - **Opus for the reviewer:** strongest, but heavier; reconsider if Sonnet misses real problems.
+- **Pinned versions** (`claude-sonnet-5-5`): identical behaviour over time, but needs updating by hand and breaks when the version is retired. Wadih doesn't need identical runs.
 **Not verified:** no side-by-side run of Haiku and Sonnet on Wadih's tasks yet. A first check: run `fact-checker` on Sonnet over a page Haiku checked before and compare.
 

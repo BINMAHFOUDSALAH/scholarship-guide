@@ -6,7 +6,7 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-05
 
-**2026-11-05 (decision 077):** subagent models: `source-researcher` stays on Haiku; `fact-checker` and `reviewer` move to Sonnet. Haiku is now the default, no longer forced.
+**2026-11-05 (decision 077):** subagent models: `source-researcher` stays on Haiku; `fact-checker` and `reviewer` move to Sonnet. Haiku is now the default, no longer forced. Written as aliases (`haiku`, `sonnet`), so they follow the latest versions.
 - **Owner to-dos:** none; the first `fact-checker` run on Sonnet is a chance to compare.
 
 **2026-11-05 (decision 076):** design tools chosen: `frontend-design` to build; `web-design-guidelines` (new project skill, pinned rules with واضح overrides), `design-critique` and `accessibility-review` to review. Taste, UI/UX Pro Max and Impeccable not installed (they compete with `design.md`). CLAUDE.md: `design.md` beats any plugin.
