@@ -18,6 +18,9 @@
   - forest (--action): links, buttons, focus, the current place; and the stage surfaces
   - lime: only "open now", "your next step" and "you are here" (never small text on paper)
   - amber: restrictions and "not open yet"
+  - sun: the door into exploring fields («جرّب قبل أن تقرر») on the stage; warm, and never a status
+  - sand: a warm paper for a closing band (the homepage's quote), so a long page has rhythm
+  - field tones: each broad field's own colour (below), only to recognise a field, never a rank or a status
   - muted ink: closed, secondary text
   Every text/background pair used here is checked for contrast in tests/test_design.py.
 */
@@ -39,6 +42,9 @@
   --lime: #d8ed9b;           /* "open now", "your next step", "you are here" */
   --on-lime: #101713;
   --amber: #774c0c;          /* restrictions and "not open yet" */
+  --sun: #f4c95d;            /* the door into exploring, on the stage */
+  --on-sun: #101713;
+  --sand: #efe8d8;           /* a warm band of paper */
   --focus: #184b3a;          /* keyboard focus ring */
 
   /* The stage: forest surfaces where the student starts or searches (and the footer). */
@@ -110,6 +116,9 @@
   --lime: #d8ed9b;
   --on-lime: #101713;
   --amber: #e0b26a;
+  --sun: #f4c95d;
+  --on-sun: #101713;
+  --sand: #17201a;
   --focus: #d8ed9b;
   --stage: #10261d;
   --stage-deep: #0f1f18;
@@ -123,6 +132,52 @@
   --star: #ece9e0;
   --star-show: 1;
   --guide-edge: #d8ed9b;
+}
+
+/* ---------- Field tones (decision 075) ----------
+   Each broad field has its own colour, so a student recognises it at a glance: on the «جرّب قبل أن تقرر» result, in
+   the universities explorer and on a university page. A tone only names a field: no tone is better than another,
+   and none is used for a status (lime, amber) or an action (forest). The field's drawing
+   (static/img/fields/<id>.svg) is painted with exactly these five values (a test checks):
+   --tone the ground, --tone-deep its shadow, --tone-mid, --tone-light, and --tone-glow, the one bright accent.
+   Text keeps ink; a tone's own text (a label) uses --tone-ink, ≥ 4.5:1 in both themes (tests/test_design.py). */
+.tone-health { --tone: #b9493a; --tone-deep: #8e3326; --tone-mid: #d06b58; --tone-light: #f6bfae; --tone-glow: #ffd9a0; }
+.tone-engineering { --tone: #a95a0c; --tone-deep: #7f4206; --tone-mid: #c97a2a; --tone-light: #f5cf96; --tone-glow: #ffd23f; }
+.tone-education { --tone: #a8355f; --tone-deep: #7e2446; --tone-mid: #c45a80; --tone-light: #f3b8cc; --tone-glow: #ffd6a5; }
+.tone-agriculture { --tone: #4e6b1e; --tone-deep: #384f12; --tone-mid: #6d8a35; --tone-light: #c9dc8f; --tone-glow: #f2d16b; }
+.tone-services { --tone: #0d6b6a; --tone-deep: #094f4f; --tone-mid: #2a8a87; --tone-light: #9fe0d8; --tone-glow: #ffc56b; }
+.tone-social-sciences { --tone: #1b6390; --tone-deep: #134a6d; --tone-mid: #3b82ad; --tone-light: #a8d4ef; --tone-glow: #ffd07a; }
+.tone-ict { --tone: #3047a8; --tone-deep: #22347f; --tone-mid: #4f66c4; --tone-light: #b3c2f4; --tone-glow: #7fe7ff; }
+.tone-natural-sciences { --tone: #5a3596; --tone-deep: #422671; --tone-mid: #7853b5; --tone-light: #cfbef3; --tone-glow: #ffe27a; }
+.tone-arts-humanities { --tone: #7f2d78; --tone-deep: #5f1f59; --tone-mid: #a04a98; --tone-light: #ecb6e4; --tone-glow: #ffc94d; }
+.tone-business-law { --tone: #3d4462; --tone-deep: #2c3149; --tone-mid: #5a6285; --tone-light: #c6cbe3; --tone-glow: #e8c15a; }
+
+.field-tone {
+  --tone-ink: var(--tone-deep);   /* a label in the field's colour */
+  --tone-edge: var(--tone);       /* swatches and a card's edge */
+  --tone-wash: color-mix(in srgb, var(--tone) 7%, var(--surface-strong));
+  --tone-chip: color-mix(in srgb, var(--tone) 14%, var(--surface-strong));
+  --tone-rule: color-mix(in srgb, var(--tone) 28%, var(--surface-strong));
+}
+
+:root[data-theme="dark"] .field-tone {
+  --tone-ink: var(--tone-light);
+  --tone-edge: var(--tone-light);
+  --tone-wash: color-mix(in srgb, var(--tone) 16%, var(--surface-strong));
+  --tone-chip: color-mix(in srgb, var(--tone) 30%, var(--surface-strong));
+  --tone-rule: color-mix(in srgb, var(--tone) 45%, var(--surface-strong));
+}
+
+/* A field's swatch beside its name (the explorer, a university page). Its name is always written next to it. */
+.tone-dot {
+  display: inline-block;
+  flex: none;
+  width: 0.75em;
+  height: 0.75em;
+  margin-inline-end: 0.45em;
+  border-radius: 3px;
+  background: var(--tone-edge);
+  vertical-align: 0.05em;
 }
 
 /* ---------- Base ---------- */
@@ -811,6 +866,35 @@ main:has(> .tuwaiq) {
   margin: 0;
   font-size: var(--text-sm);
   color: var(--ink-muted);
+}
+
+/* The door's one warm button: sun on forest, ink text (decision 075). Doubled class: .btn comes later. */
+.btn.btn--sun {
+  border-color: var(--sun);
+  background: var(--sun);
+  color: var(--on-sun);
+}
+
+.btn.btn--sun:hover {
+  border-color: color-mix(in srgb, var(--sun) 82%, #ffffff);
+  background: color-mix(in srgb, var(--sun) 82%, #ffffff);
+}
+
+.btn.btn--sun:focus-visible {
+  outline-color: var(--sun);
+}
+
+/* The ten fields' tones in a row: a preview of the result's colours. Decorative (aria-hidden). */
+.hero-door-fields {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.hero-door-fields > span {
+  width: 12px;
+  height: 22px;
+  border-radius: 3px;
+  background: var(--tone-mid);
 }
 
 .hero-search {
@@ -1815,6 +1899,7 @@ main:has(> .tuwaiq) {
 .tuwaiq {
   padding-block: var(--space-6);
   border-top: 1px solid var(--line);
+  background: var(--sand); /* a warm closing band before the footer (decision 075) */
 }
 
 .tuwaiq-inner {
@@ -3165,6 +3250,10 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .field-pick:hover .field-pick-name {
   text-decoration-thickness: 2px;
+}
+
+.field-pick:hover {
+  background: var(--tone-wash);
 }
 
 .all-unis > summary {
@@ -4822,8 +4911,9 @@ a.uni-name:hover .uni-name-en:only-child {
 
 /* ---------- The result (decision 073) ----------
    One card per field: its picture, a clear title, why it's here, real majors, one action. On phones a column with the
-   picture on top; on wide screens the text at the reading start and the picture beside it. The pictures are the same
-   on both themes: forest is the ground they're drawn on. */
+   picture on top; on wide screens the text at the reading start and the picture beside it. Each card takes its
+   field's tone (decision 075): the picture's ground, a light wash, the majors and the labels, so fields are told apart
+   at a glance. The pictures are the same on both themes; the button stays forest, because it's the action. */
 
 .explore-result .page-header {
   margin-bottom: var(--space-4);
@@ -4855,9 +4945,9 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .explore-field {
   overflow: hidden;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--tone-rule, var(--line-strong));
   border-radius: var(--radius-panel);
-  background: var(--surface-strong);
+  background: var(--tone-wash, var(--surface-strong));
 }
 
 .explore-field-art {
@@ -4866,7 +4956,7 @@ a.uni-name:hover .uni-name-en:only-child {
   height: auto;
   aspect-ratio: 2 / 1;
   object-fit: cover;
-  background: #184b3a; /* the pictures' own ground, while one loads */
+  background: var(--tone, #184b3a); /* the picture's own ground, while it loads */
 }
 
 .explore-field-body {
@@ -4892,7 +4982,7 @@ a.uni-name:hover .uni-name-en:only-child {
   margin: 0 0 var(--space-2);
   font-size: var(--text-sm);
   font-weight: 700;
-  color: var(--ink-muted);
+  color: var(--tone-ink, var(--ink-muted));
 }
 
 .explore-majors {
@@ -4908,7 +4998,7 @@ a.uni-name:hover .uni-name-en:only-child {
 .explore-majors li {
   padding: 3px 10px;
   border-radius: 6px;
-  background: color-mix(in srgb, var(--action) 10%, var(--surface-strong));
+  background: var(--tone-chip, color-mix(in srgb, var(--action) 10%, var(--surface-strong)));
   font-size: var(--text-sm);
   line-height: 1.6;
 }
@@ -4949,6 +5039,16 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .explore-dive .summary-list {
   margin-top: var(--space-3);
+  border-color: var(--tone-rule, var(--line-strong));
+}
+
+/* Open, the details keep the field's tone: its labels and the rules between them. */
+.explore-dive .summary-row {
+  border-color: var(--tone-rule, var(--line));
+}
+
+.explore-dive .summary-row > dt {
+  color: var(--tone-ink, var(--ink-muted));
 }
 
 .explore-dive .summary-row:last-child {
@@ -4999,6 +5099,7 @@ a.uni-name:hover .uni-name-en:only-child {
 
 /* The fields that don't draw the student now: a small picture beside the title. */
 .explore-field.explore-field--compact {
+  border-inline-start: 5px solid var(--tone-edge, var(--line-strong));
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--space-2) var(--space-3);

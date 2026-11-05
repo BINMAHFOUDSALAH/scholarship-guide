@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -85 640 490" width="640" height="490">
-  <!-- Field illustration (decision 073): paper cut-outs on the logo's forest tile. Social sciences and media: a newspaper, a microphone, people talking, a chart. -->
-  <rect y="-85" width="640" height="490" fill="#184b3a"/>
-  <circle cx="320" cy="160" r="128" fill="#2a6a53" opacity=".55"/>
+  <!-- Field illustration (decision 073): paper cut-outs on the field's own colour (its .tone-social-sciences palette in style.css). Social sciences and media: a newspaper, a microphone, people talking, a chart. -->
+  <rect y="-85" width="640" height="490" fill="#1b6390"/>
+  <circle cx="320" cy="160" r="128" fill="#3b82ad" opacity=".55"/>
   <!-- the links between people -->
-  <g fill="none" stroke="#9ad3b4" stroke-opacity=".45" stroke-width="3">
+  <g fill="none" stroke="#a8d4ef" stroke-opacity=".45" stroke-width="3">
     <path d="M38 66L128 44 196 86M38 66L92 150M500 44L602 84 560 170M500 44L448 96"/>
   </g>
   <!-- the newspaper -->
   <g transform="translate(320 164) rotate(-3)">
     <rect x="-120" y="-112" width="240" height="224" rx="8" fill="#f6f4ee"/>
-    <rect x="-98" y="-92" width="196" height="24" rx="4" fill="#184b3a"/>
-    <path d="M-98-52H98" stroke="#2a6a53" stroke-opacity=".6" stroke-width="3"/>
-    <rect x="-98" y="-40" width="90" height="72" rx="4" fill="#9ad3b4"/>
+    <rect x="-98" y="-92" width="196" height="24" rx="4" fill="#1b6390"/>
+    <path d="M-98-52H98" stroke="#3b82ad" stroke-opacity=".6" stroke-width="3"/>
+    <rect x="-98" y="-40" width="90" height="72" rx="4" fill="#a8d4ef"/>
     <!-- the rising chart in its picture -->
-    <path d="M-88 22l22-24 18 12 30-36" fill="none" stroke="#184b3a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-    <g stroke="#2a6a53" stroke-opacity=".6" stroke-width="5" stroke-linecap="round">
+    <path d="M-88 22l22-24 18 12 30-36" fill="none" stroke="#1b6390" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g stroke="#3b82ad" stroke-opacity=".6" stroke-width="5" stroke-linecap="round">
       <path d="M8-36H98M8-18H98M8 0H98M8 18H74"/>
       <path d="M-98 54H98M-98 72H98M-98 90H38"/>
     </g>
@@ -22,11 +22,11 @@
   <!-- the microphone -->
   <g transform="translate(112 196)">
     <rect x="-28" y="-92" width="56" height="96" rx="28" fill="#f6f4ee"/>
-    <path d="M-28-46H28" stroke="#184b3a" stroke-width="3" stroke-opacity=".55"/>
-    <path d="M-28-30H28" stroke="#184b3a" stroke-width="3" stroke-opacity=".55"/>
-    <path d="M-44-22c0 32 18 50 44 50s44-18 44-50" fill="none" stroke="#9ad3b4" stroke-width="7" stroke-linecap="round"/>
-    <path d="M0 28v44M-30 76H30" fill="none" stroke="#9ad3b4" stroke-width="7" stroke-linecap="round"/>
-    <rect x="-28" y="-14" width="56" height="10" fill="#d8ed9b"/>
+    <path d="M-28-46H28" stroke="#1b6390" stroke-width="3" stroke-opacity=".55"/>
+    <path d="M-28-30H28" stroke="#1b6390" stroke-width="3" stroke-opacity=".55"/>
+    <path d="M-44-22c0 32 18 50 44 50s44-18 44-50" fill="none" stroke="#a8d4ef" stroke-width="7" stroke-linecap="round"/>
+    <path d="M0 28v44M-30 76H30" fill="none" stroke="#a8d4ef" stroke-width="7" stroke-linecap="round"/>
+    <rect x="-28" y="-14" width="56" height="10" fill="#ffd07a"/>
   </g>
   <!-- the people -->
   <g fill="#f6f4ee">
@@ -35,9 +35,9 @@
   </g>
   <!-- the talk -->
   <g transform="translate(522 200)">
-    <path d="M-68-58H56a14 14 0 0 1 14 14v58a14 14 0 0 1-14 14H-20l-30 28v-28h-18a14 14 0 0 1-14-14v-58a14 14 0 0 1 14-14z" fill="#9ad3b4"/>
-    <circle cx="-34" cy="-14" r="9" fill="#184b3a"/>
-    <circle cx="-6" cy="-14" r="9" fill="#184b3a"/>
-    <circle cx="22" cy="-14" r="9" fill="#184b3a"/>
+    <path d="M-68-58H56a14 14 0 0 1 14 14v58a14 14 0 0 1-14 14H-20l-30 28v-28h-18a14 14 0 0 1-14-14v-58a14 14 0 0 1 14-14z" fill="#a8d4ef"/>
+    <circle cx="-34" cy="-14" r="9" fill="#1b6390"/>
+    <circle cx="-6" cy="-14" r="9" fill="#1b6390"/>
+    <circle cx="22" cy="-14" r="9" fill="#1b6390"/>
   </g>
 </svg>

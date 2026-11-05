@@ -311,6 +311,7 @@ templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
 templates.env.globals["explore_public"] = lambda: exploration.is_public(SHOW_DRAFTS)
 templates.env.globals["explore_why"] = exploration.why_text
 templates.env.globals["explore_list"] = exploration.list_text
+templates.env.globals["explore_field_ids"] = lambda: list(exploration.FIELDS)  # the homepage door's tones
 templates.env.globals["sat_policy_ar"] = SAT_POLICY_AR
 templates.env.globals["waiver_ar"] = WAIVER_AR
 templates.env.globals["not_listed_ar"] = NOT_LISTED_AR

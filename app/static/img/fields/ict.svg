@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -85 640 490" width="640" height="490">
-  <!-- Field illustration (decision 073): paper cut-outs on the logo's forest tile. Technology: code, circuits, an AI chip. -->
-  <rect y="-85" width="640" height="490" fill="#184b3a"/>
+  <!-- Field illustration (decision 073): paper cut-outs on the field's own colour (its .tone-ict palette in style.css). Technology: code, circuits, an AI chip. -->
+  <rect y="-85" width="640" height="490" fill="#3047a8"/>
   <!-- circuit traces -->
-  <g fill="none" stroke="#9ad3b4" stroke-opacity=".5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="#b3c2f4" stroke-opacity=".5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
     <path d="M0 62H84l24 24v40"/>
     <path d="M0 250H70l30-30h44"/>
     <path d="M0 158H60"/>
@@ -14,7 +14,7 @@
     <path d="M230 405V364l26-26H372"/>
     <path d="M520 405V368l-24-24"/>
   </g>
-  <g fill="#9ad3b4">
+  <g fill="#b3c2f4">
     <circle cx="108" cy="130" r="7"/>
     <circle cx="146" cy="220" r="7"/>
     <circle cx="62" cy="158" r="7"/>
@@ -24,21 +24,21 @@
     <circle cx="376" cy="338" r="7"/>
     <circle cx="494" cy="342" r="7"/>
   </g>
-  <circle cx="544" cy="120" r="8" fill="#d8ed9b"/>
+  <circle cx="544" cy="120" r="8" fill="#7fe7ff"/>
   <!-- the code window -->
   <rect x="136" y="48" width="262" height="216" rx="14" fill="#f6f4ee"/>
-  <path d="M150 48h234a14 14 0 0 1 14 14v22H136V62a14 14 0 0 1 14-14z" fill="#9ad3b4"/>
-  <circle cx="160" cy="66" r="6" fill="#184b3a"/>
-  <circle cx="180" cy="66" r="6" fill="#184b3a"/>
-  <circle cx="200" cy="66" r="6" fill="#184b3a"/>
+  <path d="M150 48h234a14 14 0 0 1 14 14v22H136V62a14 14 0 0 1 14-14z" fill="#b3c2f4"/>
+  <circle cx="160" cy="66" r="6" fill="#3047a8"/>
+  <circle cx="180" cy="66" r="6" fill="#3047a8"/>
+  <circle cx="200" cy="66" r="6" fill="#3047a8"/>
   <g stroke-width="9" stroke-linecap="round">
-    <path d="M160 112H236" stroke="#184b3a"/>
-    <path d="M254 112H300" stroke="#2a6a53" stroke-opacity=".55"/>
-    <path d="M184 138H288" stroke="#2a6a53" stroke-opacity=".55"/>
-    <path d="M184 164H252" stroke="#184b3a"/>
-    <path d="M270 164H340" stroke="#2a6a53" stroke-opacity=".55"/>
-    <path d="M208 190H282" stroke="#184b3a"/>
-    <path d="M160 216H220" stroke="#2a6a53" stroke-opacity=".55"/>
+    <path d="M160 112H236" stroke="#3047a8"/>
+    <path d="M254 112H300" stroke="#4f66c4" stroke-opacity=".55"/>
+    <path d="M184 138H288" stroke="#4f66c4" stroke-opacity=".55"/>
+    <path d="M184 164H252" stroke="#3047a8"/>
+    <path d="M270 164H340" stroke="#4f66c4" stroke-opacity=".55"/>
+    <path d="M208 190H282" stroke="#3047a8"/>
+    <path d="M160 216H220" stroke="#4f66c4" stroke-opacity=".55"/>
   </g>
   <!-- the AI chip -->
   <g fill="#f6f4ee">
@@ -47,8 +47,8 @@
     <rect x="410" y="94" width="8" height="22" rx="2"/><rect x="436" y="94" width="8" height="22" rx="2"/><rect x="462" y="94" width="8" height="22" rx="2"/><rect x="488" y="94" width="8" height="22" rx="2"/>
     <rect x="410" y="232" width="8" height="22" rx="2"/><rect x="436" y="232" width="8" height="22" rx="2"/><rect x="462" y="232" width="8" height="22" rx="2"/><rect x="488" y="232" width="8" height="22" rx="2"/>
   </g>
-  <rect x="390" y="110" width="128" height="128" rx="16" fill="#0f3a2c" stroke="#f6f4ee" stroke-width="5"/>
+  <rect x="390" y="110" width="128" height="128" rx="16" fill="#22347f" stroke="#f6f4ee" stroke-width="5"/>
   <!-- the letters AI, drawn so they need no font -->
-  <path d="M414 202l21-58h9l21 58M422 182h35" fill="none" stroke="#d8ed9b" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M488 144v58" fill="none" stroke="#d8ed9b" stroke-width="10" stroke-linecap="round"/>
+  <path d="M414 202l21-58h9l21 58M422 182h35" fill="none" stroke="#7fe7ff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M488 144v58" fill="none" stroke="#7fe7ff" stroke-width="10" stroke-linecap="round"/>
 </svg>

@@ -301,7 +301,7 @@ def test_suggestions_group_majors_by_field():
 
 def test_university_page_shows_every_field_with_rank_and_majors():
     html = client.get("/universities/university-of-wisconsin-madison").text
-    assert html.count('class="field-block"') == len(ex.universities["university-of-wisconsin-madison"]["listings"])
+    assert html.count('class="field-block field-tone') == len(ex.universities["university-of-wisconsin-madison"]["listings"])
     assert "زراعة المناطق الجافة" in html  # a major of the agriculture field, visible without clicking
     assert "<details>" not in html.split('class="field-blocks"')[1].split('class="field-src"')[0]
 

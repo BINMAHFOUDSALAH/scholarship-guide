@@ -4,6 +4,11 @@ What each working session did and left open, newest first. Notes are kept as the
 ones can be out of date. Today's plan and to-dos are in [roadmap.md](roadmap.md); the reasons for each
 choice are in [decisions.md](decisions.md).
 
+## 2026-11-05
+
+**2026-11-05 (decision 075):** a colour pass. Each of the 10 fields has its own tone (drawings recoloured; result cards, explorer field picker and university pages use it), a sun-yellow door to «جرّب قبل أن تقرر» with the ten tones beside it, «تقدم الآن» filled, a sand band under the homepage's quote.
+- **Owner to-dos:** look at the result on your phone in both themes; say if any two fields still feel too alike.
+
 ## 2026-11-04
 
 **2026-11-04 (/update-site):** nothing to remove (the oldest واعد program closed 2 Aug, inside the 120 days; the site closes programs by date). SAT: next date now 5 Dec, since registration for 7 Nov has closed. The Ministry rebuilt its site: the tracks document has a new address.

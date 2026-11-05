@@ -1,25 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -85 640 490" width="640" height="490">
-  <!-- Field illustration (decision 073): paper cut-outs on the logo's forest tile. Agriculture: a palm against the sun, furrows, a sprout, a sheep. -->
-  <rect y="-85" width="640" height="490" fill="#184b3a"/>
+  <!-- Field illustration (decision 073): paper cut-outs on the field's own colour (its .tone-agriculture palette in style.css). Agriculture: a palm against the sun, furrows, a sprout, a sheep. -->
+  <rect y="-85" width="640" height="490" fill="#4e6b1e"/>
   <!-- the sun and its rays -->
-  <g stroke="#d8ed9b" stroke-width="5" stroke-linecap="round">
+  <g stroke="#f2d16b" stroke-width="5" stroke-linecap="round">
     <path d="M430 28v18M366 46l10 16M494 46l-10 16M330 100l17 6M530 100l-17 6"/>
   </g>
-  <circle cx="430" cy="124" r="62" fill="#d8ed9b"/>
+  <circle cx="430" cy="124" r="62" fill="#f2d16b"/>
   <!-- the far hill -->
-  <path d="M0 190c90-34 170-34 270-8s220 30 370-16v239H0z" fill="#2a6a53"/>
+  <path d="M0 190c90-34 170-34 270-8s220 30 370-16v239H0z" fill="#6d8a35"/>
   <!-- the field with its furrows -->
-  <path d="M0 236c120-26 250-30 370-20s190 10 270-8v197H0z" fill="#0f3a2c"/>
-  <g fill="none" stroke="#9ad3b4" stroke-opacity=".55" stroke-width="4" stroke-linecap="round">
+  <path d="M0 236c120-26 250-30 370-20s190 10 270-8v197H0z" fill="#384f12"/>
+  <g fill="none" stroke="#c9dc8f" stroke-opacity=".55" stroke-width="4" stroke-linecap="round">
     <path d="M198 226L-19 405M258 222L120 405M318 220L262 405M378 218L404 405M438 220L545 405M498 222L688 405"/>
   </g>
   <!-- the palm -->
   <g transform="translate(176 0)">
     <path d="M-10 262C-4 200-6 140 4 84h14C10 140 12 200 12 262z" fill="#f6f4ee"/>
-    <g fill="none" stroke="#2a6a53" stroke-width="2.5">
+    <g fill="none" stroke="#6d8a35" stroke-width="2.5">
       <path d="M-7 240h17M-6 216h17M-5 192h16M-3 168h15M-2 144h15M0 120h14"/>
     </g>
-    <g fill="#9ad3b4">
+    <g fill="#c9dc8f">
       <path d="M11 84C-20 52-70 50-112 86c44-14 84-10 123-2z"/>
       <path d="M11 84C14 44 52 18 104 28 66 38 36 56 11 84z"/>
       <path d="M11 84C44 66 92 74 124 118 88 96 50 86 11 84z"/>
@@ -29,28 +29,28 @@
       <path d="M11 84C-20 92-56 118-68 158c22-30 50-52 79-74z"/>
       <path d="M11 84C38 92 66 124 68 166 54 132 34 106 11 84z"/>
     </g>
-    <circle cx="4" cy="94" r="8" fill="#d8ed9b"/>
-    <circle cx="20" cy="96" r="8" fill="#d8ed9b"/>
+    <circle cx="4" cy="94" r="8" fill="#f2d16b"/>
+    <circle cx="20" cy="96" r="8" fill="#f2d16b"/>
   </g>
   <!-- the sprout -->
   <g transform="translate(350 262)">
     <path d="M0 40V-30" stroke="#f6f4ee" stroke-width="7" stroke-linecap="round"/>
     <path d="M0-20C-8-58-44-66-70-58-64-30-34-10 0-20z" fill="#f6f4ee"/>
-    <path d="M0-30C6-66 40-76 66-70 62-40 32-20 0-30z" fill="#9ad3b4"/>
-    <path d="M-22 40c0-12 10-18 22-18s22 6 22 18z" fill="#2a6a53"/>
+    <path d="M0-30C6-66 40-76 66-70 62-40 32-20 0-30z" fill="#c9dc8f"/>
+    <path d="M-22 40c0-12 10-18 22-18s22 6 22 18z" fill="#6d8a35"/>
   </g>
   <!-- the sheep -->
   <g transform="translate(522 214)">
     <g fill="#f6f4ee">
       <circle cx="-30" cy="0" r="18"/><circle cx="-10" cy="-12" r="19"/><circle cx="12" cy="-12" r="18"/><circle cx="28" cy="2" r="16"/><circle cx="4" cy="8" r="20"/><circle cx="-18" cy="10" r="17"/>
     </g>
-    <path d="M36-8c16-8 32-2 34 12 1 12-12 20-24 16-8-3-14-10-16-18z" fill="#9ad3b4"/>
-    <circle cx="56" cy="2" r="3.5" fill="#0f3a2c"/>
-    <g stroke="#9ad3b4" stroke-width="6" stroke-linecap="round">
+    <path d="M36-8c16-8 32-2 34 12 1 12-12 20-24 16-8-3-14-10-16-18z" fill="#c9dc8f"/>
+    <circle cx="56" cy="2" r="3.5" fill="#384f12"/>
+    <g stroke="#c9dc8f" stroke-width="6" stroke-linecap="round">
       <path d="M-24 26v22M-4 28v22M14 26v22"/>
     </g>
   </g>
   <!-- the drop -->
-  <path d="M64 124c20 28 30 42 30 58a30 30 0 0 1-60 0c0-16 10-30 30-58z" fill="#9ad3b4"/>
-  <path d="M50 182c0 10 6 16 14 16" fill="none" stroke="#184b3a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M64 124c20 28 30 42 30 58a30 30 0 0 1-60 0c0-16 10-30 30-58z" fill="#c9dc8f"/>
+  <path d="M50 182c0 10 6 16 14 16" fill="none" stroke="#4e6b1e" stroke-width="4" stroke-linecap="round"/>
 </svg>

@@ -1,33 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -85 640 490" width="640" height="490">
-  <!-- Field illustration (decision 073): paper cut-outs on the logo's forest tile. Business and law: the scales of justice, a rising chart, a briefcase. -->
-  <rect y="-85" width="640" height="490" fill="#184b3a"/>
-  <path d="M0 276h640v129H0z" fill="#0f3a2c"/>
-  <circle cx="310" cy="150" r="124" fill="#2a6a53" opacity=".55"/>
+  <!-- Field illustration (decision 073): paper cut-outs on the field's own colour (its .tone-business-law palette in style.css). Business and law: the scales of justice, a rising chart, a briefcase. -->
+  <rect y="-85" width="640" height="490" fill="#3d4462"/>
+  <path d="M0 276h640v129H0z" fill="#2c3149"/>
+  <circle cx="310" cy="150" r="124" fill="#5a6285" opacity=".55"/>
   <!-- the scales -->
   <rect x="302" y="56" width="16" height="204" fill="#f6f4ee"/>
   <path d="M250 276c0-22 26-30 60-30s60 8 60 30z" fill="#f6f4ee"/>
   <circle cx="310" cy="46" r="16" fill="#f6f4ee"/>
   <rect x="176" y="70" width="268" height="12" rx="6" fill="#f6f4ee"/>
-  <g fill="none" stroke="#9ad3b4" stroke-width="3.5">
+  <g fill="none" stroke="#c6cbe3" stroke-width="3.5">
     <path d="M190 78l-44 90M190 78l44 90"/>
     <path d="M430 78l-44 90M430 78l44 90"/>
   </g>
   <path d="M130 168h120c0 38-28 56-60 56s-60-18-60-56z" fill="#f6f4ee"/>
   <path d="M370 168h120c0 38-28 56-60 56s-60-18-60-56z" fill="#f6f4ee"/>
   <!-- coins on one pan -->
-  <g fill="#d8ed9b" stroke="#184b3a" stroke-width="3">
+  <g fill="#e8c15a" stroke="#3d4462" stroke-width="3">
     <rect x="160" y="150" width="60" height="16" rx="8"/>
     <rect x="166" y="134" width="60" height="16" rx="8"/>
     <rect x="160" y="118" width="60" height="16" rx="8"/>
   </g>
   <!-- a book of rules on the other -->
   <g>
-    <rect x="396" y="122" width="72" height="46" rx="4" fill="#9ad3b4"/>
-    <path d="M396 134h72M396 156h72" stroke="#184b3a" stroke-width="3"/>
-    <path d="M410 145h44" stroke="#184b3a" stroke-width="4" stroke-linecap="round"/>
+    <rect x="396" y="122" width="72" height="46" rx="4" fill="#c6cbe3"/>
+    <path d="M396 134h72M396 156h72" stroke="#3d4462" stroke-width="3"/>
+    <path d="M410 145h44" stroke="#3d4462" stroke-width="4" stroke-linecap="round"/>
   </g>
   <!-- the rising bars -->
-  <g fill="#9ad3b4">
+  <g fill="#c6cbe3">
     <rect x="522" y="206" width="24" height="70" rx="3"/>
     <rect x="556" y="164" width="24" height="112" rx="3"/>
     <rect x="590" y="114" width="24" height="162" rx="3"/>
@@ -38,7 +38,7 @@
   <g transform="translate(70 228)">
     <path d="M-20-44v-14a8 8 0 0 1 8-8h24a8 8 0 0 1 8 8v14" fill="none" stroke="#f6f4ee" stroke-width="7"/>
     <rect x="-54" y="-44" width="108" height="92" rx="9" fill="#f6f4ee"/>
-    <path d="M-54-6c30 14 78 14 108 0" fill="none" stroke="#184b3a" stroke-width="4"/>
-    <rect x="-10" y="-4" width="20" height="16" rx="3" fill="#184b3a"/>
+    <path d="M-54-6c30 14 78 14 108 0" fill="none" stroke="#3d4462" stroke-width="4"/>
+    <rect x="-10" y="-4" width="20" height="16" rx="3" fill="#3d4462"/>
   </g>
 </svg>

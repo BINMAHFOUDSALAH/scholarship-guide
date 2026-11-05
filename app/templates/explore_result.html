@@ -67,7 +67,7 @@
 
 {# One field. compact: the fields that don't draw the student now, a small picture and no reason to give. #}
 {% macro field_card(f, v, note=None, compact=False, first=False) %}
-<section class="explore-field{% if compact %} explore-field--compact{% endif %}" id="field-{{ v.id }}" aria-labelledby="fh-{{ v.id }}">
+<section class="explore-field field-tone tone-{{ v.id }}{% if compact %} explore-field--compact{% endif %}" id="field-{{ v.id }}" aria-labelledby="fh-{{ v.id }}">
   {% set art = "img/fields/" ~ v.id ~ ".svg" %}
   <img class="explore-field-art" src="{{ url_for('static', path=art) }}?v={{ asset_version(art) }}" alt="" width="640" height="320" decoding="async"{% if not first %} loading="lazy"{% endif %}>
   <div class="explore-field-body">

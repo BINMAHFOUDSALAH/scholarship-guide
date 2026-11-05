@@ -1,53 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -85 640 490" width="640" height="490">
-  <!-- Field illustration (decision 073): paper cut-outs on the logo's forest tile. Tourism, sport and transport: a plane on its route, a map pin, a suitcase, a ball, a train. -->
-  <rect y="-85" width="640" height="490" fill="#184b3a"/>
+  <!-- Field illustration (decision 073): paper cut-outs on the field's own colour (its .tone-services palette in style.css). Tourism, sport and transport: a plane on its route, a map pin, a suitcase, a ball, a train. -->
+  <rect y="-85" width="640" height="490" fill="#0d6b6a"/>
   <!-- the globe behind -->
   <g fill="none" stroke="#f6f4ee" stroke-opacity=".1" stroke-width="2.5">
     <circle cx="320" cy="170" r="150"/>
     <ellipse cx="320" cy="170" rx="74" ry="150"/>
     <path d="M170 170H470M186 104H454M186 236H454"/>
   </g>
-  <path d="M0 278h640v127H0z" fill="#0f3a2c"/>
+  <path d="M0 278h640v127H0z" fill="#094f4f"/>
   <!-- the route -->
-  <path d="M104 122C176 36 330 22 462 62" fill="none" stroke="#9ad3b4" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 17"/>
+  <path d="M104 122C176 36 330 22 462 62" fill="none" stroke="#9fe0d8" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 17"/>
   <!-- the map pin -->
   <g transform="translate(104 122)">
-    <path d="M0 70C-30 34-42 12-42-8a42 42 0 0 1 84 0c0 20-12 42-42 78z" fill="#d8ed9b"/>
-    <circle cy="-8" r="16" fill="#184b3a"/>
+    <path d="M0 70C-30 34-42 12-42-8a42 42 0 0 1 84 0c0 20-12 42-42 78z" fill="#ffc56b"/>
+    <circle cy="-8" r="16" fill="#0d6b6a"/>
   </g>
   <!-- the plane -->
   <g transform="translate(508 70) rotate(14)">
     <path d="M-72-5C-50-8-10-9 44-9c20 0 36 4 36 9s-16 9-36 9C-10 9-50 8-72 5l-6-5z" fill="#f6f4ee"/>
     <path d="M-20 4L-44 56h18L24 6z" fill="#f6f4ee"/>
-    <path d="M-20-4L-44-50h18L24-6z" fill="#9ad3b4"/>
+    <path d="M-20-4L-44-50h18L24-6z" fill="#9fe0d8"/>
     <path d="M-72-4l-16-26h14L-48-4z" fill="#f6f4ee"/>
-    <path d="M-72 4l-14 20h12L-50 4z" fill="#9ad3b4"/>
+    <path d="M-72 4l-14 20h12L-50 4z" fill="#9fe0d8"/>
   </g>
   <!-- the suitcase -->
   <g transform="translate(320 200)">
     <path d="M-32-76v-14a10 10 0 0 1 10-10h44a10 10 0 0 1 10 10v14" fill="none" stroke="#f6f4ee" stroke-width="8"/>
     <rect x="-80" y="-76" width="160" height="140" rx="14" fill="#f6f4ee"/>
-    <rect x="-54" y="-76" width="16" height="140" fill="#9ad3b4"/>
-    <rect x="38" y="-76" width="16" height="140" fill="#9ad3b4"/>
-    <rect x="-22" y="-44" width="44" height="30" rx="4" fill="#2a6a53"/>
+    <rect x="-54" y="-76" width="16" height="140" fill="#9fe0d8"/>
+    <rect x="38" y="-76" width="16" height="140" fill="#9fe0d8"/>
+    <rect x="-22" y="-44" width="44" height="30" rx="4" fill="#2a8a87"/>
     <path d="M-12-29H12" stroke="#f6f4ee" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="-54" cy="70" r="9" fill="#0f3a2c" stroke="#f6f4ee" stroke-width="3"/>
-    <circle cx="54" cy="70" r="9" fill="#0f3a2c" stroke="#f6f4ee" stroke-width="3"/>
+    <circle cx="-54" cy="70" r="9" fill="#094f4f" stroke="#f6f4ee" stroke-width="3"/>
+    <circle cx="54" cy="70" r="9" fill="#094f4f" stroke="#f6f4ee" stroke-width="3"/>
   </g>
   <!-- the ball -->
   <g transform="translate(528 228)">
     <circle r="48" fill="#f6f4ee"/>
-    <path d="M0-16l15 11-6 18H-9l-6-18z" fill="#184b3a"/>
-    <g fill="none" stroke="#184b3a" stroke-width="3.5">
+    <path d="M0-16l15 11-6 18H-9l-6-18z" fill="#0d6b6a"/>
+    <g fill="none" stroke="#0d6b6a" stroke-width="3.5">
       <path d="M0-16V-36M15-5L34-12M9 13L21 30M-9 13L-21 30M-15-5L-34-12"/>
     </g>
-    <path d="M0-48l-14 10 14 4 14-4zM46-14l-16-1 5 14 13 4zM28 39l5-15-14 5-1 15zM-28 39l-5-15 14 5 1 15zM-46-14l16-1-5 14-13 4z" fill="#184b3a"/>
+    <path d="M0-48l-14 10 14 4 14-4zM46-14l-16-1 5 14 13 4zM28 39l5-15-14 5-1 15zM-28 39l-5-15 14 5 1 15zM-46-14l16-1-5 14-13 4z" fill="#0d6b6a"/>
   </g>
   <!-- the train -->
   <g transform="translate(104 240)">
-    <path d="M-58 38v-52a26 26 0 0 1 26-26h64a26 26 0 0 1 26 26v52z" fill="#9ad3b4"/>
-    <rect x="-44" y="-26" width="88" height="30" rx="6" fill="#184b3a"/>
-    <path d="M0-26V4" stroke="#9ad3b4" stroke-width="4"/>
+    <path d="M-58 38v-52a26 26 0 0 1 26-26h64a26 26 0 0 1 26 26v52z" fill="#9fe0d8"/>
+    <rect x="-44" y="-26" width="88" height="30" rx="6" fill="#0d6b6a"/>
+    <path d="M0-26V4" stroke="#9fe0d8" stroke-width="4"/>
     <circle cx="-34" cy="20" r="7" fill="#f6f4ee"/>
     <circle cx="34" cy="20" r="7" fill="#f6f4ee"/>
   </g>
