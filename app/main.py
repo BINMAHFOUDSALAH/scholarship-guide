@@ -2,7 +2,7 @@ import hashlib
 import json
 import os
 from functools import cache
-from datetime import date
+from app.clock import date
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query, Request

@@ -6,6 +6,9 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-05
 
+**2026-11-05 (/update-site):** nothing new or past to change (KGSP, the universities guide, الرواد, إمداد, Aramco and Cambridge unchanged; SDAIA refused scripts). Fixed: the site read "today" on the server's UTC clock, so a deadline lasted until 3 am in Riyadh; now `app/clock.py` gives the day in Riyadh (UTC+3) and every deadline follows it.
+- **Left open:** the career guidance handbook 404 (as on 4 Nov). **Owner to-dos:** check @SA_Scholarships and @SDAIA_SA on X; الرواد closes 15 Nov.
+
 **2026-11-05 (decision 077):** subagent models: `source-researcher` stays on Haiku; `fact-checker` and `reviewer` move to Sonnet. Haiku is now the default, no longer forced. Written as aliases (`haiku`, `sonnet`), so they follow the latest versions.
 - **Owner to-dos:** none; the first `fact-checker` run on Sonnet is a chance to compare.
 
