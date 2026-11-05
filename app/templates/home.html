@@ -45,12 +45,14 @@
 
     {#
       A second question at the same level as the grades (decision 070): for a student who doesn't know what to
-      study. One line and an outlined button, so it doesn't compete with the route. Only while the activity is public.
+      study. One line and the stage's one sun-coloured button (decision 075): the way into exploring the fields, with
+      the ten fields' own tones beside it as a preview of the result. Only while the activity is public.
     #}
     {% if explore_public() %}
     <div class="hero-door">
       <h2 class="hero-door-title">{{ _("لم تقرر ماذا تدرس؟") }}</h2>
-      <a class="btn btn--secondary" href="{{ url_for('explore_page') }}">{{ _("جرّب قبل أن تقرر") }}</a>
+      <a class="btn btn--sun" href="{{ url_for('explore_page') }}">{{ _("جرّب قبل أن تقرر") }}</a>
+      <span class="hero-door-fields" aria-hidden="true">{% for fid in explore_field_ids() %}<span class="field-tone tone-{{ fid }}"></span>{% endfor %}</span>
       <p class="hero-door-hint">{{ _("نحو عشر دقائق") }}</p>
     </div>
     {% endif %}
@@ -102,7 +104,7 @@
       <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
       {% if item.apply_url or item.source_url %}
       <p class="open-actions">
-        {% if item.apply_url %}<a class="btn btn--secondary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="{{ _f('تقدم الآن: {title}، في منصة قبول', title=item.title_ar) }}">{{ _("تقدم الآن ↗") }}</a>{% endif %}
+        {% if item.apply_url %}<a class="btn btn--primary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="{{ _f('تقدم الآن: {title}، في منصة قبول', title=item.title_ar) }}">{{ _("تقدم الآن ↗") }}</a>{% endif %}
         {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي ↗") }}</a>{% endif %}
       </p>
       {% endif %}

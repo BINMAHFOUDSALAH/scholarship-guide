@@ -78,7 +78,45 @@ def text_pairs(t):
         (t["stage"], t["on-stage"], "a primary button on the stage (forest text on ivory)"),
         (t["on-stage"], t["stage-deep"], "footer titles"),
         (t["on-stage-muted"], t["stage-deep"], "footer links and the copyright line"),
+        # Warm accents (decision 075): the explore door on the stage, the sand band.
+        (t["on-sun"], t["sun"], "«جرّب قبل أن تقرر» on the stage"),
+        (t["ink"], t["sand"], "the quote band"),
+        (t["ink-muted"], t["sand"], "secondary text on the quote band"),
+        (t["action"], t["sand"], "links and buttons on the quote band"),
     ]
+
+
+FIELD_TONES = {k: dict(re.findall(r"--tone(?:-([a-z]+))?:\s*(#[0-9a-f]{6})", v))
+               for k, v in re.findall(r"\.tone-([a-z-]+) \{([^}]*)\}", CSS) if "--tone:" in v}
+
+
+def tone_pairs(t, tone, dark):
+    """A field's card (decision 075): its wash, chips and labels, as the .field-tone rules mix them."""
+    wash = mix(tone[""], 16 if dark else 7, t["surface-strong"])
+    chip = mix(tone[""], 30 if dark else 14, t["surface-strong"])
+    label = tone["light"] if dark else tone["deep"]
+    return [
+        (t["ink"], wash, "text on a field's card"),
+        (t["ink-muted"], wash, "secondary text on a field's card"),
+        (t["action"], wash, "links and the button's outline on a field's card"),
+        (label, wash, "a field's labels on its card"),
+        (label, t["paper"], "a field's label on the page"),
+        (t["ink"], chip, "the example majors on a field's card"),
+    ]
+
+
+def test_there_are_ten_field_tones():
+    assert len(FIELD_TONES) == 10 and all(set(v) == {"", "deep", "mid", "light", "glow"} for v in FIELD_TONES.values())
+
+
+@pytest.mark.parametrize("theme, t", [("light", LIGHT), ("dark", DARK)])
+def test_field_tones_are_readable_in_both_themes(theme, t):
+    for fid, tone in FIELD_TONES.items():
+        for fg, bg, where in tone_pairs(t, tone, theme == "dark"):
+            assert contrast(fg, bg) >= 4.5, f"{theme} {fid}: {where} ({fg} on {bg}) is {contrast(fg, bg):.2f}:1"
+        swatch = tone["light"] if theme == "dark" else tone[""]
+        assert contrast(swatch, t["paper"]) >= 3, f"{theme} {fid}: its swatch ({swatch})"
+        assert contrast("#f6f4ee", tone[""]) >= 4.5, f"{fid}: paper cut-outs on its ground"
 
 
 @pytest.mark.parametrize("theme, t", [("light", LIGHT), ("dark", DARK)])
@@ -97,6 +135,7 @@ def test_controls_and_focus_ring_stand_out(theme, t):
         (t["action"], t["paper"], "secondary button border"),
         (t["lime"], t["stage"], "focus ring and the lit diamond on the stage"),
         (t["lime"], t["stage-deep"], "focus ring in the footer"),
+        (t["sun"], t["stage"], "the sun button on the stage"),
     ]:
         assert contrast(fg, bg) >= 3, f"{theme}: {where} ({fg} on {bg}) is {contrast(fg, bg):.2f}:1"
 

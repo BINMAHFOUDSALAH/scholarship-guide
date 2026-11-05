@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -85 640 490" width="640" height="490">
-  <!-- Field illustration (decision 073): paper cut-outs on the logo's forest tile. Education: a board, an open book, a pencil. -->
-  <rect y="-85" width="640" height="490" fill="#184b3a"/>
-  <path d="M0 268c100-12 210-16 320-16s220 4 320 16v137H0z" fill="#0f3a2c"/>
+  <!-- Field illustration (decision 073): paper cut-outs on the field's own colour (its .tone-education palette in style.css). Education: a board, an open book, a pencil. -->
+  <rect y="-85" width="640" height="490" fill="#a8355f"/>
+  <path d="M0 268c100-12 210-16 320-16s220 4 320 16v137H0z" fill="#7e2446"/>
   <!-- the board -->
-  <rect x="160" y="30" width="336" height="172" rx="10" fill="#0f3a2c" stroke="#f6f4ee" stroke-width="6"/>
-  <g fill="none" stroke="#9ad3b4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="160" y="30" width="336" height="172" rx="10" fill="#7e2446" stroke="#f6f4ee" stroke-width="6"/>
+  <g fill="none" stroke="#f3b8cc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
     <path d="M188 158l50-84 50 84z"/>
     <path d="M212 158a26 26 0 0 0 -11-18"/>
     <path d="M312 84h56M312 112h92M312 140h38M362 140h42"/>
@@ -13,24 +13,24 @@
   <path d="M446 64v20h20" fill="none" stroke="#f6f4ee" stroke-width="4" stroke-linecap="round"/>
   <!-- the open book -->
   <path d="M320 208c-40-22-102-26-160-16v98c58-10 120-6 160 16 40-22 102-26 160-16v-98c-58-10-120-6-160 16z" fill="#f6f4ee"/>
-  <path d="M320 208v98" stroke="#2a6a53" stroke-width="4"/>
-  <g fill="none" stroke="#2a6a53" stroke-opacity=".6" stroke-width="5" stroke-linecap="round">
+  <path d="M320 208v98" stroke="#c45a80" stroke-width="4"/>
+  <g fill="none" stroke="#c45a80" stroke-opacity=".6" stroke-width="5" stroke-linecap="round">
     <path d="M184 216c36-4 76-2 112 12M184 240c36-4 76-2 112 12M184 264c36-4 76-2 112 12"/>
     <path d="M344 228c36-14 76-16 112-12M344 252c36-14 76-16 112-12M344 276c36-14 76-16 80-14"/>
   </g>
   <!-- the pencil -->
   <g transform="translate(556 188) rotate(24)">
-    <rect x="-13" y="-92" width="26" height="24" rx="4" fill="#d8ed9b"/>
+    <rect x="-13" y="-92" width="26" height="24" rx="4" fill="#ffd6a5"/>
     <rect x="-13" y="-68" width="26" height="124" fill="#f6f4ee"/>
-    <rect x="-4" y="-68" width="8" height="124" fill="#9ad3b4"/>
-    <path d="M-13 56h26l-13 30z" fill="#9ad3b4"/>
-    <path d="M-5 74h10l-5 12z" fill="#0f3a2c"/>
+    <rect x="-4" y="-68" width="8" height="124" fill="#f3b8cc"/>
+    <path d="M-13 56h26l-13 30z" fill="#f3b8cc"/>
+    <path d="M-5 74h10l-5 12z" fill="#7e2446"/>
   </g>
   <!-- the graduation cap -->
   <g transform="translate(76 118)">
-    <path d="M-34 8v28c18 16 50 16 68 0V8z" fill="#9ad3b4"/>
+    <path d="M-34 8v28c18 16 50 16 68 0V8z" fill="#f3b8cc"/>
     <path d="M0-30L66 2 0 34-66 2z" fill="#f6f4ee"/>
-    <path d="M46 8v36" stroke="#d8ed9b" stroke-width="5" stroke-linecap="round"/>
-    <circle cx="46" cy="50" r="7" fill="#d8ed9b"/>
+    <path d="M46 8v36" stroke="#ffd6a5" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="46" cy="50" r="7" fill="#ffd6a5"/>
   </g>
 </svg>

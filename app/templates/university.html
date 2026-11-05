@@ -126,10 +126,10 @@
     <ol class="field-blocks">
       {% for l in p.by_track[tid] %}
       {% set f = l.field_info %}
-      <li class="field-block">
+      <li class="field-block field-tone tone-{{ f.id }}">
         <div class="field-head">
           <span class="field-rank"><span class="field-rank-label">{{ _("الترتيب") }}</span> {{ l.rank }}</span>
-          <span class="field-name">{{ f.name_ar }}{% if not is_en() %} <span class="term-en" lang="en" dir="ltr">{{ f.name_en }}</span>{% endif %}</span>
+          <span class="field-name"><span class="tone-dot" aria-hidden="true"></span>{{ f.name_ar }}{% if not is_en() %} <span class="term-en" lang="en" dir="ltr">{{ f.name_en }}</span>{% endif %}</span>
           <span class="tags">{{ um.listing_notes(l) }}</span>
         </div>
         {% if l.masters_only %}<p class="fact-note">{{ _("في هذا المجال: الجامعة مدرجة لدرجة الماجستير فقط، فلا تنطبق على البكالوريوس.") }}</p>{% endif %}

@@ -92,19 +92,35 @@ def test_every_field_has_a_clear_title_and_real_majors():
     assert from_classification == {"health", "education", "arts-humanities"}  # the guide has too little for these
 
 
-PICTURE_COLOURS = {"#184b3a", "#0f3a2c", "#2a6a53", "#9ad3b4", "#f6f4ee", "#d8ed9b"}  # the logo's, and tints of its forest
+def field_tones(fid):
+    """A field's five tones, from its .tone-<id> rule in style.css (decision 075): the one source of its colours."""
+    css = (main.APP_DIR / "static" / "style.css").read_text(encoding="utf-8")
+    rule = re.search(r"\.tone-%s \{([^}]*)\}" % re.escape(fid), css)
+    assert rule, f"no .tone-{fid} in style.css"
+    return dict(re.findall(r"--tone(?:-([a-z]+))?:\s*(#[0-9a-f]{6})", rule.group(1)))
 
 
 @pytest.mark.parametrize("fid", list(ex.FIELDS))
 def test_every_field_has_its_picture_and_nothing_else_comes_with_it(fid):
-    """Our own drawings (decision 073): one shape and palette, and self-contained, so no third-party request and no
-    script can ever come with a picture on a minor's result page."""
+    """Our own drawings (decision 073): one shape, each in its field's own tones and paper (decision 075), and
+    self-contained, so no third-party request and no script can ever come with a picture on a minor's result page."""
     svg = (main.APP_DIR / "static" / "img" / "fields" / f"{fid}.svg").read_text(encoding="utf-8")
     assert svg.startswith("<svg ") and 'viewBox="0 -85 640 490"' in svg  # phones show the middle 640x320
     assert not re.search(r"<(script|image|foreignObject|text|style)\b|\bon\w+=", svg), fid
     assert not re.findall(r'(?:href|src)="(?!#)', svg), fid
     assert not re.findall(r"url\(", svg), fid
-    assert set(c.lower() for c in re.findall(r"#[0-9a-fA-F]{6}\b", svg)) <= PICTURE_COLOURS, fid
+    tones = field_tones(fid)
+    assert set(tones) == {"", "deep", "mid", "light", "glow"}, fid
+    assert set(c.lower() for c in re.findall(r"#[0-9a-fA-F]{6}\b", svg)) <= set(tones.values()) | {"#f6f4ee"}, fid
+    assert f'<rect y="-85" width="640" height="490" fill="{tones[""]}"/>' in svg, fid  # drawn on the field's ground
+
+
+def test_every_field_has_a_tone_of_its_own():
+    """Ten fields, ten grounds: no two fields share a colour, and none is the brand's forest, lime or amber, which
+    mean "act", "now" and "restriction" (decision 075)."""
+    grounds = [field_tones(fid)[""] for fid in ex.FIELDS]
+    assert len(set(grounds)) == len(grounds)
+    assert not set(grounds) & {"#184b3a", "#d8ed9b", "#774c0c", "#e0b26a"}
 
 
 def test_published_and_the_review_still_recorded_as_to_come():

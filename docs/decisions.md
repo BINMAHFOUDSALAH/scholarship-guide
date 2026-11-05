@@ -1212,3 +1212,22 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **`CHANGELOG.md` instead of a log:** a changelog is written for users of releases; the log is for the next working session.
 - **Moving finished research briefs into a subfolder:** tidier, but it changes many references for little gain. The map groups them instead.
 
+
+## 075 — Colour with a job: a tone for each field, a warm door, a sand band (updates 062, 073)
+**Date:** 2026-11-05
+**Context:** the owner asked for a review of the colour across the site. The audit: every field drawing used the same six greens, so the ten cards on the «جرّب قبل أن تقرر» result looked alike; the homepage was one long column of paper; «تقدم الآن» was an outline, quieter than the action it is; and the way into the activity was an outline button on the forest, easy to miss.
+**Decision:**
+- **A tone for each field.** Five values per field in `.tone-<id>` in `style.css` (ground, deep, mid, light, glow), spread around the colour wheel and kept apart from forest, lime and amber: health coral, engineering amber-orange, education raspberry, arts and humanities plum, social sciences and media cerulean, ICT royal blue, sciences and maths violet, business and law slate with gold, agriculture olive, tourism, sport and transport teal. A tone only names a field: none is better, none is a status.
+- **Where the tone shows:** the field's drawing (recoloured with exactly its five values, paper cut-outs kept), the result card (a light wash, its majors, its labels, the rules of the opened details, a coloured edge on the folded cards), and a small swatch beside the field's name in the universities explorer (the field picker, the result heading) and on a university page. The same colour follows a field from the result to its universities. The name is always written beside it.
+- **The action stays forest.** «استكشف هذا المجال» and every button keep the brand's action colour, so "you can act" still reads the same on any card.
+- **A warm door:** «جرّب قبل أن تقرر» on the homepage's stage is a sun-yellow button (`--sun`, ink text, 10.9:1), with the ten field tones beside it as a preview of the result.
+- **«تقدم الآن» is a filled forest button** on the homepage and the status board: it's the one action in its row.
+- **A sand band** (`--sand`) under the homepage's quote, so a long page has a rhythm: forest, paper, sand, forest. Reading pages stay calm paper.
+**Exception to 062 and 073, recorded in `.claude/rules/design.md`:** field drawings and cards use their field's tone instead of forest and lime.
+**Verified:** pytest (contrast of every new pair in both themes, ten distinct tones, each drawing using only its own five values on its own ground); `check_explore.mjs` and `check_explorer.mjs`; screenshots at 390 and 1280px, light and dark, of the homepage, the activity, a full result with every band open, the explorer and a university page; `english_leaks.py` 0 (no new text).
+**Not verified:** a real phone, and students. Colour-vision: every tone is paired with its written name, so nothing depends on telling two hues apart.
+**Alternatives:**
+- **Coloured borders only:** the owner's brief asked for more than tiny borders, and a border alone doesn't make ten cards recognisable.
+- **Field colours in the activity's questions:** they would tell the student which field each answer feeds, and could steer the answers. Left out.
+- **A warm accent across all pages (headings, guide groups):** colour without a job; it would dilute the meanings of forest, lime and amber. Kept to the door and the sand band.
+- **Coral or red for the door:** too close to an error or a warning.

@@ -55,7 +55,7 @@
   <header class="result-head">
     <h2 id="result-{{ loop.index }}" class="result-title">
       {% if s.track %}{{ tracks[s.track].name_ar }}{% else %}{{ _("نتائج البحث") }}{% endif %}
-      {%- if s.field %}<span class="result-field">: {{ s.field.name_ar }}</span>{% endif %}
+      {%- if s.field %}<span class="result-field field-tone tone-{{ s.field.id }}">: <span class="tone-dot" aria-hidden="true"></span>{{ s.field.name_ar }}</span>{% endif %}
     </h2>
     <p class="result-count">
       {% if s.waaid is defined %}{{ s.waaid | length | count_ar("programs") }}{% elif s.rows is defined %}{{ s.rows | length | count_ar("universities") }}{% else %}{{ s.universities | length | count_ar("universities") }}{% endif %}
@@ -128,8 +128,8 @@
     <p class="result-note">{{ _f("{track} يرتّب الجامعات داخل كل مجال، فابدأ باختيار المجال لترى ترتيبها فيه:", track=tracks[s.track].name_ar) }}</p>
     <ul class="field-picker">
       {% for f in s.pick_fields %}
-      <li><a class="field-pick" href="{{ url_for('universities_page') }}?track={{ s.track }}&amp;field={{ f.id }}" data-pick-field="{{ f.id }}">
-        <span class="field-pick-name">{{ f.name_ar }}</span>
+      <li><a class="field-pick field-tone tone-{{ f.id }}" href="{{ url_for('universities_page') }}?track={{ s.track }}&amp;field={{ f.id }}" data-pick-field="{{ f.id }}">
+        <span class="field-pick-name"><span class="tone-dot" aria-hidden="true"></span>{{ f.name_ar }}</span>
         <span class="field-pick-count">{{ f.count | count_ar("universities") }}</span>
       </a></li>
       {% endfor %}

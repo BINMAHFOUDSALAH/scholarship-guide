@@ -29,7 +29,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - **Every Arabic change ships with its English in the same commit:** templates/Python/JS text → `data/i18n/ui.en.json` / `js.en.json`; data → `data.en.json` or `universities.en.json` (keyed by the exact Arabic); a page → `content/en/<section>/<slug>.md` with its new `translated_from`. `tests/test_english.py` fails until it's done.
   - Translate exactly: keep numbers, dates, conditions and hedges; minimum ≠ recommended; "not listed" ≠ "not accepted". Our translation of a quote says "(our translation)".
 - **Formal Arabic (الفصحى) on every page, never dialect** (decision 058; a test checks common dialect words). Keep terms consistent: test parts are «مهارات» (الاستماع، القراءة، الكتابة، التحدث); a score is «الحد الأدنى» or «الموصى به», never just a number.
-- Design (decision 062): act on forest, read on paper, in the logo's colours; the logo never changes. The full rules are in `.claude/rules/design.md`, which loads automatically when working on `app/templates/` or `app/static/`.
+- Design (decision 062): act on forest, read on paper, in the logo's colours; each broad field has its own tone, and a warm sun/sand accent has one job each (075); the logo never changes. The full rules are in `.claude/rules/design.md`, which loads automatically when working on `app/templates/` or `app/static/`.
 - Nothing official is hard-coded in templates: data in `data/`, page text in `content/`.
 
 ## How to work with me
