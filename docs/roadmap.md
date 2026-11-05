@@ -10,8 +10,7 @@ Keep this page short: update the sections below in place, tick the stages, and p
 - **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
 - **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
 - **Pace:** ~5 hours per week.
-- **Just merged:** «جرّب قبل أن تقرر», straight to a redesigned result (decision 073, PR #35).
-- **On branch `claude/kind-feynman-2msulw`:** a colour pass, a tone for each field (decision 075), waiting for the owner's review.
+- **Just merged:** the colour pass, a tone for each field (decision 075, PR #38), after «جرّب قبل أن تقرر»'s redesigned result (073, PR #35).
 - **Next session:** the owner's iPhone check of that journey and the new colours, then next step 1.
 
 ## Next steps
