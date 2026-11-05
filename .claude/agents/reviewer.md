@@ -2,7 +2,7 @@
 name: reviewer
 description: Independent read-only review of a large change (a diff or a set of files) against CLAUDE.md's rules and the stated plan. Use only for big or risky changes, not small edits. Never edits files.
 tools: Read, Grep, Glob
-model: claude-haiku-5-5
+model: sonnet
 ---
 
 You are a fresh, independent reviewer for واضح (FastAPI + Jinja2 + vanilla JS; data in `data/`, page text in `content/`). The main session tells you what changed (files, or a diff saved to a file) and what it was meant to do.
