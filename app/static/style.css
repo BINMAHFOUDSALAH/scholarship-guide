@@ -4009,7 +4009,7 @@ a.uni-name:hover .uni-name-en:only-child {
   cursor: pointer;
 }
 
-/* ---------- «قائمتي» ---------- */
+/* ---------- «خطتي» (was «قائمتي»; decision 078, Part B) ---------- */
 
 .mylist-privacy {
   max-width: 44em;
@@ -4050,6 +4050,74 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .mylist-loading {
   color: var(--ink-muted);
+}
+
+.plan-item p {
+  margin: 0;
+}
+
+.plan-name {
+  font-size: var(--text-md);
+  font-weight: 700;
+}
+
+.plan-name a {
+  text-decoration: none;
+}
+
+.plan-name a:hover {
+  text-decoration: underline;
+}
+
+.plan-program {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+/* Where the student is: a select they change, with the date it last changed beside it. */
+.plan-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin-block-start: var(--space-1);
+}
+
+.plan-status-label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.plan-status-select {
+  width: auto;
+  min-width: 10rem;
+}
+
+.plan-date {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.plan-step {
+  font-size: var(--text-sm);
+}
+
+/* The homepage's return strip: shown by mylist.js only when this browser holds a plan. */
+.plan-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.plan-strip[hidden] {
+  display: none;
+}
+
+.plan-strip p {
+  margin: 0;
 }
 
 /* ---------- Application deadlines (/news): one column in the order a student acts on it ---------- */

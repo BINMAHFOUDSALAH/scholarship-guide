@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _("خطتي |") }} {{ site.name }}{% endblock %}
+{% block description %}{{ _("الجامعات والبرامج التي تخطط للتقديم عليها، وأين وصلت في كل منها.") }}{% endblock %}
+{# A personal page: nothing for search engines here. #}
+{% block head_extra %}<meta name="robots" content="noindex">{% endblock %}
+
+{#
+  «خطتي» (decision 078, Part B). The plan lives in this browser (mylist.js); the page POSTs it and the
+  server draws one row per item: what it is, where you are (a status you change here), and the next step.
+#}
+{% block content %}
+<div class="mylist page-wide" data-mylist-page data-rows-url="{{ url_for('my_plan') }}">
+  <header class="mylist-header">
+    <h1>{{ _("خطتي") }}</h1>
+    <p class="lead">{{ _("الجامعات والبرامج التي تخطط لها، وأين وصلت في كل منها، وخطوتك التالية.") }}</p>
+    <p class="mylist-privacy">{{ _("محفوظة في هذا المتصفح فقط، وتُحذف إذا مسحت بيانات المتصفح.") }}</p>
+  </header>
+
+  <div class="notice notice--warn" data-mylist-blocked hidden>
+    <p>{{ _("متصفحك لا يسمح بالحفظ على هذا الجهاز (مثلًا في التصفح الخاص)، فلا يمكن حفظ خطتك. جرّب نافذة عادية أو متصفحًا آخر.") }}</p>
+  </div>
+
+  <noscript>
+    <div class="notice notice--warn"><p>{{ _("«خطتي» تحتاج تفعيل JavaScript في متصفحك.") }}</p></div>
+  </noscript>
+
+  <p class="sr-only" role="status" data-mylist-status></p>
+  <p class="mylist-loading" data-mylist-loading hidden>{{ _("جارٍ تحميل خطتك…") }}</p>
+  <div class="notice notice--warn" data-mylist-error hidden>
+    <p>{{ _("تعذّر عرض خطتك الآن. تحقق من اتصالك ثم أعد تحميل الصفحة. خطتك ما زالت محفوظة.") }}</p>
+  </div>
+
+  <ul class="rows mylist-rows" data-mylist-rows hidden></ul>
+
+  <div class="mylist-empty" data-mylist-empty hidden>
+    <p class="mylist-empty-title">{{ _("خطتك فارغة.") }}</p>
+    <p>{{ _("اضغط «احفظ» بجانب أي جامعة أو مسار، وستجده هنا مع خطوتك التالية.") }}</p>
+    <p class="actions">
+      <a class="btn btn--primary" href="{{ url_for('universities_page') }}">{{ _("ابحث في الجامعات") }}</a>
+      <a class="btn btn--secondary" href="{{ url_for('home') }}#programs">{{ _("البرامج") }}</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

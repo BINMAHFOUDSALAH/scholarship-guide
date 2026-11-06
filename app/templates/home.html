@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
 {% import "partials/sky.html" as sky %}
+{% import "partials/uni_macros.html" as um with context %}
 
 {#
   The homepage (decision 062). It opens on the forest "start": what واضح is, then the route of the three
@@ -103,6 +104,12 @@
       {% endif %}
     </li>
 {% endmacro %}
+{# The return strip (decision 078, Part B): only when this browser holds a plan (mylist.js shows it). #}
+<div class="plan-strip" data-plan-strip hidden>
+  <p>{{ _("لديك خطة محفوظة على هذا الجهاز.") }}</p>
+  <p><a href="{{ url_for('my_plan') }}">{{ _("تابع خطتك") }}</a></p>
+</div>
+
 <section id="open-now" class="section" aria-labelledby="open-title">
   <div class="section-head">
     <h2 id="open-title" class="section-title">{{ _("مفتوح للتقديم الآن") }}</h2>
@@ -189,8 +196,10 @@
             </div>
             {# A status is shown only when it has an official source or the owner confirmed it (decision 028). #}
             {% set st = track_status(track) %}
-            {% if st and (track.status_source or track.owner_confirmed or track.latest_programs) %}
-            <div class="track-state">{{ c.status_tag(st, track.status_until) }}</div>
+            {% set pid = plan_id(path, track) %}
+            {% if (st and (track.status_source or track.owner_confirmed or track.latest_programs)) or pid %}
+            <div class="track-state">{% if st and (track.status_source or track.owner_confirmed or track.latest_programs) %}{{ c.status_tag(st, track.status_until) }}{% endif %}
+              {% if pid %}{{ um.save_program(pid, track.name_ar if path.tracks | length > 1 else path.name_ar) }}{% endif %}</div>
             {% endif %}
           </li>
           {% endfor %}

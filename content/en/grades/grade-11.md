@@ -1,10 +1,10 @@
 ---
-translated_from: 01c179fcaffc2de7
+translated_from: 99cfeeb056cde6a4
 title: Grade 11
 stage_ar: Research and plan
 description: Know where you will apply and which tests those places ask for, and plan for them before the summer before Grade 12.
 activity:
-  text_ar: "Search for a major that interests you, and save three universities to “My list”. Then open each one's page and write down: does it ask for the SAT? And what English score?"
+  text_ar: "Search for a major that interests you, and save three universities to “My plan”. Then open each one's page and write down: does it ask for the SAT? And what English score?"
   href: /universities
   link_label_ar: Search the universities
 resources:

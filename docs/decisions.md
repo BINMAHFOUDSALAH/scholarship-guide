@@ -1294,3 +1294,17 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A3 by substring with a stop list:** fixes «طب» only; whole words fix the class of bug.
 - **Keep the handbook link with a note:** a dead source is no source (rule: hidden, never stamped).
 **Not verified:** a real phone and a screen reader; the health wording hasn't been read by a student.
+
+## 080 — «خطتي» on the device replaces «قائمتي» (Phase 1 Part B; updates 035, 039, 078)
+**Date:** 2026-11-06
+**Context:** decision 078's Part B. «قائمتي» kept university ids only, so the site could not say where a student was or what came next, and grade 12's step asked for notes it couldn't hold.
+**Decision:**
+- **What's kept:** universities and program tracks (owner's choice: not tests), each with a status (أفكّر، أستعد، قدّمت، قُبلت، لم أُقبل) and the date it last changed. `localStorage["wadih:plan"] = {"v": 1, "items": [{type, id, status, updated}]}`: ids, statuses and dates only, the shape Phase 2 stores per account. Old «قائمتي» saves move in once, as «أفكّر».
+- **Drawn by the server, stored nowhere:** the page POSTs the plan to `/my-plan`; `app/plan.py` keeps only known ids and statuses (≤ 100) and draws each row with a next step from data already published (a university's page and next date, the «معي قبول جامعي» steps once applied or accepted if it's in الرواد or إمداد, a program's «متى تتقدم» and official site). `/my-list` redirects.
+- **Where you add:** «احفظ» on university rows and pages (as before) and on every high-school track (homepage and program pages). A1's step 5 now says «قدّمت؟ سجّل ذلك في خطتي».
+- **Coming back:** the header shows «خطتي (n)»; the homepage shows one line, «لديك خطة محفوظة على هذا الجهاز. تابع خطتك», only while a plan exists.
+**Alternatives:**
+- **Statuses drawn in the browser:** no POST, but the next steps would need the data in JavaScript; one server template keeps them in one place for both languages.
+- **A date field the student types:** more to fill on a phone; the date of the last change is enough to see progress.
+- **Tests in the plan:** the owner chose universities and programs only, to keep it simple.
+**Not verified:** a real phone and a screen reader; no student has used it yet (the Phase 1 test).

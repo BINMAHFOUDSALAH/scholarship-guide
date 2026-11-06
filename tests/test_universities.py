@@ -475,31 +475,75 @@ def test_result_rows_can_be_saved_from_the_list():
         assert 'data-save-name="جامعة ستانفورد"' in html or "data-save-name=" in html
 
 
-def test_my_list_explains_where_the_list_lives_and_when_storage_is_blocked():
-    html = client.get("/my-list").text
-    assert "لا تنتقل إلى جهاز آخر" in html and "التصفح الخاص" in html  # the latter in the blocked-storage note
+def plan_rows(*items):
+    """The «خطتي» rows the server draws for a plan (decision 078, Part B)."""
+    return client.post("/my-plan", json={"v": 1, "items": list(items)}).text
+
+
+def uni(uid, status="thinking", updated="2026-11-06"):
+    return {"type": "university", "id": uid, "status": status, "updated": updated}
+
+
+def test_my_plan_explains_where_the_plan_lives_and_when_storage_is_blocked():
+    html = client.get("/my-plan").text
+    assert "في هذا المتصفح فقط" in html and "التصفح الخاص" in html  # the latter in the blocked-storage note
     assert "data-mylist-blocked hidden" in html
 
 
-def test_my_list_page_is_private_and_not_indexed():
-    html = client.get("/my-list").text
+def test_my_plan_page_is_private_and_not_indexed():
+    html = client.get("/my-plan").text
     assert '<meta name="robots" content="noindex">' in html
-    assert "في هذا المتصفح فقط" in html and "<noscript>" in html
-    assert "/my-list" not in client.get("/sitemap.xml").text
+    assert "<noscript>" in html
+    assert "/my-plan" not in client.get("/sitemap.xml").text
 
 
-def test_my_list_rows_keep_known_ids_in_order():
-    html = client.get("/my-list?partial=1&ids=yale-university,nope,../../.env,harvard-university,yale-university").text
-    assert re.findall(r'data-mylist-item="([^"]+)"', html) == ["yale-university", "harvard-university"]
+def test_old_my_list_address_moves_to_my_plan():
+    r = client.get("/my-list", follow_redirects=False)
+    assert r.status_code == 301 and r.headers["location"].endswith("/my-plan")
+    assert client.get("/en/my-list", follow_redirects=False).headers["location"].endswith("/en/my-plan")
+
+
+def test_my_plan_rows_keep_valid_items_in_order():
+    html = plan_rows(uni("yale-university"), uni("nope"), {"type": "university", "id": "../../.env"},
+                     uni("harvard-university", "bogus"), uni("yale-university"),
+                     {"type": "program", "id": "arruaad", "status": "applied", "updated": "2026-11-01"},
+                     {"type": "program", "id": "rnd"}, {"type": "evil", "id": "x"}, "junk")
+    assert re.findall(r'data-mylist-item="([^"]+)"', html) == [
+        "university:yale-university", "university:harvard-university", "program:arruaad"]
     assert "<html" not in html
-    assert 'aria-label="إزالة جامعة ييل من قائمتي"' in html  # the visible «إزالة» is in the name (WCAG 2.5.3)
-    assert "data-mylist-item" not in client.get("/my-list?partial=1&ids=").text
+    assert 'aria-label="إزالة جامعة ييل من خطتي"' in html  # the visible «إزالة» is in the name (WCAG 2.5.3)
+    harvard = html.split('data-mylist-item="university:harvard-university"')[1].split("</select>")[0]
+    assert '<option value="thinking" selected>' in harvard  # an unknown status starts over
+    assert "قدّمت في 1 نوفمبر 2026" in html
+    assert "data-mylist-item" not in plan_rows()
+    assert client.post("/my-plan", content=b"not json").status_code == 400
+    assert client.post("/my-plan", content=b"x" * 30_000).status_code == 413
 
 
-def test_my_list_rows_are_capped_at_100():
-    ids = ",".join(sorted(ex.universities)[:150])
-    html = client.get(f"/my-list?partial=1&ids={ids}").text
+def test_my_plan_rows_are_capped_at_100():
+    html = plan_rows(*[uni(uid) for uid in sorted(ex.universities)[:150]])
     assert len(re.findall(r"data-mylist-item=", html)) == 100
+
+
+def test_my_plan_next_steps_follow_the_status():
+    """Each status has its own next step, linking to pages that hold the sourced facts."""
+    thinking = plan_rows(uni("stanford-university"))
+    assert 'href="/universities/stanford-university"' in thinking and "خطوتك التالية" in thinking
+    accepted = plan_rows(uni("stanford-university", "accepted"))
+    assert "/programs/custodian-scholarship#ready" in accepted  # Stanford is in الرواد
+    aramco = plan_rows({"type": "program", "id": "aramco-cdpne", "status": "thinking"})
+    assert "تتقدم وأنت في ثالث ثانوي" in aramco and "أرامكو" in aramco
+    applied = plan_rows({"type": "program", "id": "kgsp", "status": "applied"})
+    assert "kaust.edu.sa" in applied or "الموقع الرسمي" in applied
+
+
+def test_every_high_school_track_can_join_the_plan():
+    """Save buttons on the homepage's tracks: every track a school student can follow has a plan id."""
+    import app.main as main
+    home = client.get("/").text
+    for pid, (path, track) in main.plan_programs.items():
+        assert f'data-save="{pid}" data-save-type="program"' in home, pid
+    assert "rnd" not in main.plan_programs  # doctorate only
 
 
 # ---------- at a glance (decision 038) ----------
@@ -530,7 +574,7 @@ def test_results_show_key_facts_or_say_they_are_not_collected():
     emdad = client.get("/universities?track=emdad&field=ict").text
     assert "لم نجمع متطلبات جامعات هذه القائمة" not in emdad  # removed at the owner's request (2026-10-12)
     assert "لم نجمعها بعد" not in emdad
-    assert "لم نجمعها بعد" in client.get(f"/my-list?partial=1&ids={unknown}").text
+    assert "لم نجمعها بعد" in plan_rows(uni(unknown))
 
 
 def test_explorer_header_has_no_repeated_disclaimer():
@@ -549,7 +593,7 @@ def test_sat_row_only_where_sat_applies():
 
 
 def test_saved_list_rows_show_key_facts():
-    html = client.get("/my-list?partial=1&ids=stanford-university").text
+    html = plan_rows(uni("stanford-university"))
     assert "SAT/ACT" in html and "صفحة القبول الرسمية" in html
 
 
@@ -650,7 +694,7 @@ def test_lists_show_flags_but_no_logos():
     """Owner's choice (2026-10-12): flags in list rows too; logos only on the university page."""
     html = client.get("/universities?track=arruaad").text
     assert html.count('class="uni-flag"') == 30 and 'class="uni-logo"' not in html
-    assert 'class="uni-flag"' in client.get("/my-list?partial=1&ids=harvard-university").text
+    assert 'class="uni-flag"' in plan_rows(uni("harvard-university"))
 
 
 # ---------- US applications guide (decision 050) ----------
