@@ -79,7 +79,8 @@ def test_home_marks_no_nav_item_and_every_page_has_a_skip_link():
 def test_footer_says_we_are_independent_and_links_the_image_credits():
     """The credits on /about must stay reachable (CC BY-SA licences), from every page's footer."""
     footer = client.get("/universities").text.split('<footer class="site-footer">')[1]
-    assert "لا يتبع وزارة التعليم" in footer
+    assert "دليل طلابي مستقل" in footer  # the full "not affiliated" statement lives on /about (owner, 2026-11-06)
+    assert "لا يتبع وزارة التعليم" in client.get("/about").text
     assert "/about#credits" in footer and "كيف نتحقق" not in footer
     assert 'id="credits"' in client.get("/about").text
 
@@ -470,11 +471,11 @@ def test_ready_steps_link_existing_sourced_facts():
 
 @pytest.mark.parametrize("status", ["open", "closed"])
 def test_ready_step_says_when_applying_is_open(monkeypatch, status):
-    """Open: the apply link and the leaving notice. Closed: no link, and the honest «window closed» line."""
+    """Open: the apply link, with no extra disclaimer (owner, 2026-11-06). Closed: no link, and the honest «window closed» line."""
     monkeypatch.setitem(main.templates.env.globals, "track_status", lambda track: status)
     ready = client.get("/programs/custodian-scholarship").text.split('id="ready"')[1].split("</section>")[0]
     if status == "open":
-        assert "https://www.uap.sa/" in ready and "ولا يرى طلبك ولا يستقبله" in ready
+        assert "https://www.uap.sa/" in ready and "ولا يرى طلبك" not in ready
     else:
         assert "https://www.uap.sa/" not in ready and "لم يُعلن موعد النافذة القادمة" in ready
 
@@ -784,7 +785,9 @@ def test_year_patterns_are_counted_from_the_university_files():
     s = main.explorer.timeline_stats()
     assert 0 < s["early"] <= s["with_deadlines"] and 0 < s["january"] <= s["with_deadlines"]
     html = client.get("/grades/grade-12").text
-    assert f"في {s['early']} من {s['with_deadlines']} جامعة" in html
+    # Counted in Arabic (decision 078, A5): «من 108 جامعات», never «من 108 جامعة».
+    total = main.count_ar(s["with_deadlines"], main.COUNT_FORMS["universities"])
+    assert f"في {s['early']} من {total} من قوائم" in html
     assert "والابتعاث؟ لا يتبع هذه الأشهر" in html and "عدم التأكيد يسقط حق الطالب في الترشيح" in html
 
 
@@ -792,8 +795,8 @@ def test_year_patterns_never_name_a_track_they_dont_count():
     # timeline_stats() counts every researched university (الرواد and إمداد), so the sentence must not
     # say «مسار الرواد»: it once read «102 جامعة في مسار الرواد», and الرواد has 30.
     year = client.get("/grades/grade-12").text.split('id="year"')[1].split("year-scholarship")[0]
-    assert "جامعة في مسار الرواد جمعنا" not in year
-    assert "جامعة من قوائم الابتعاث جمعنا مواعيدها" in year
+    assert "في مسار الرواد جمعنا" not in year
+    assert "من قوائم الابتعاث جمعنا مواعيدها" in year
 
 
 def test_emdad_research_count_comes_from_the_files():
@@ -960,3 +963,55 @@ def test_deadlines_follow_the_day_in_riyadh_not_the_server_clock(monkeypatch):
     monkeypatch.setitem(main.waaid_data, "programs", [
         {**main.waaid_data["programs"][0], "id": "closing-5-nov", "apply_from": "2026-10-25", "apply_to": "2026-11-05"}])
     assert [p["is_open"] for p in main.waaid()["programs"]] == [False]
+
+
+def test_every_program_and_track_says_when_you_apply():
+    """A2 (decision 078): «البرامج» and «مفتوح للتقديم الآن» group by apply_when, so each needs one."""
+    for p in main.paths:
+        assert p.get("apply_when") in main.APPLY_WHEN, p["id"]
+        for t in p["tracks"]:
+            if t.get("for_high_school") is not False:
+                assert t.get("apply_when") in main.APPLY_WHEN, t.get("id") or t["name_ar"]
+
+
+def test_open_now_puts_school_programs_first_and_the_rest_after_a_step(monkeypatch):
+    """الرواد (needs an admission) and SDAIA (needs a scholarship) never sit under «تتقدم عليه وأنت في الثانوية»."""
+    html = client.get("/").text.split('id="open-now"')[1].split("</section>")[0]
+    school = html.split('id="open-school"')[1].split('id="open-later"')[0]
+    assert "مسار الرواد" not in school and "الذكاء الاصطناعي" not in school
+    board = main.open_by_when(main.status_board())
+    assert all(i["when"] == "in_school" for i in board["school"])
+    assert all(i["when"] != "in_school" and i["status"] == "open" for i in board["later"])
+    if any(i["title_ar"] == "مسار الرواد" for i in main.status_board()["open"]):
+        assert "مسار الرواد" in html.split('id="open-later"')[1]
+
+
+def test_programs_are_grouped_by_when_you_apply():
+    html = client.get("/").text.split('id="programs"')[1].split("</section>")[0]
+    groups = main.programs_by_when()
+    assert sum(len(g["paths"]) for g in groups) == len(main.paths)
+    positions = [html.index(f'id="programs-{g["when"]}"') for g in groups]
+    assert positions == sorted(positions)
+    # KGSP (in grade 12) comes before the Custodian program (after an admission).
+    assert html.index('id="program-kaust-kgsp"') < html.index('id="program-custodian-scholarship"')
+
+
+def test_grade_12_says_where_to_start_and_promises_only_what_the_site_does():
+    """A4 (decision 078): «من أين تبدأ؟» routes by what the student wants; «ابدأ الآن» no longer asks them to
+    write notes «لكل جامعة في «قائمتي»», which «قائمتي» can't hold."""
+    html = client.get("/grades/grade-12").text
+    start = html.split('id="start-title"')[1].split("</section>")[0]
+    for href in ("/programs/custodian-scholarship#ready", "/#programs-in_school", "https://www.uap.sa/", "/resources/undecided"):
+        assert f'href="{href}"' in start, href
+    assert "لكل جامعة في «قائمتي»" not in html
+    assert 'id="programs-in_school"' in client.get("/").text  # the anchor the second row links to
+    assert "Where to start?" in client.get("/en/grades/grade-12").text
+
+
+def test_no_bare_zero_counts(monkeypatch):
+    """A5 (decision 078): «منها 0 لخريجي الثانوية» and «0 جامعة» read as broken; say it in words or hide it."""
+    custodian = client.get("/programs/custodian-scholarship").text
+    assert "منها 0" not in custodian
+    empty = client.get("/universities", params={"q": "zzzz"}).text
+    assert not re.search(r"(?<![\d٠-٩])0 جامعة", empty)
+    assert ">0<" not in client.get("/news").text.replace(" ", "")

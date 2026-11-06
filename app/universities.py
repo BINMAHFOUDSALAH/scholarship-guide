@@ -170,6 +170,30 @@ def normalize(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
+def words(normalized):
+    """The words of a normalized text, each without the article «ال» (so «الطب» and «طب» are one word)."""
+    return [w[2:] if w.startswith("ال") and len(w) >= 4 else w for w in normalized.split()]
+
+
+def words_match(q_words, key_words):
+    """True when the query's words appear in order in the key, each as a whole word (decision 078, A3).
+    A query word of 4+ letters may also start a longer word («هندس» → «هندسة», "comput" → "computer"),
+    but a short one must be the whole word: «طب» finds «الطب», never «الطبيعي»."""
+    n = len(q_words)
+    if not n:
+        return False
+    for i in range(len(key_words) - n + 1):
+        if all(k == q or (len(q) >= 4 and k.startswith(q)) for q, k in zip(q_words, key_words[i:i + n])):
+            return True
+    return False
+
+
+# Health majors (decision 078, A3): the Ministry's 2026–2027 guide has no health field, so these searches
+# found nothing or a wrong match («طب» → «الغاز الطبيعي»). They get an answer from the guide and الرواد's rule.
+HEALTH_TERMS = {"طب", "طب بشري", "تمريض", "صيدله", "اسنان", "طب اسنان", "علاج طبيعي", "صحه",
+                "medicine", "medical", "nursing", "pharmacy", "dentistry", "dental", "health"}
+
+
 def _load(name, default=None):
     path = DATA_DIR / name
     if not path.is_file():
@@ -221,8 +245,8 @@ class Explorer:
         self.majors = []
         for (track, fid), f in self.fields.items():
             for m in f["majors"]:
-                self.majors.append({**m, "track": track, "field": fid,
-                                    "key": normalize(f"{m['name_ar']} {m['name_en']}")})
+                key = normalize(f"{m['name_ar']} {m['name_en']}")
+                self.majors.append({**m, "track": track, "field": fid, "key": key, "words": words(key)})
 
     # ---------- lookups ----------
 
@@ -258,7 +282,13 @@ class Explorer:
         if not nq:
             return []
         exact = [m for m in self.majors if nq in (normalize(m["name_ar"]), normalize(m["name_en"]))]
-        return exact or [m for m in self.majors if nq in m["key"]]
+        q_words = words(nq)
+        return exact or [m for m in self.majors if words_match(q_words, m["words"])]
+
+    @staticmethod
+    def is_health_search(q):
+        """A search for a health major (medicine, nursing…), which the guide's fields don't cover."""
+        return " ".join(words(normalize(q))) in HEALTH_TERMS
 
     def _keep(self, u, country, language):
         if country and u["country"] != country:
@@ -285,7 +315,8 @@ class Explorer:
             track = "emdad"
         keep = lambda u: self._keep(u, country, language)  # noqa: E731
         result = {"q": q, "track": track, "field": field, "country": country, "language": language,
-                  "mode": "browse", "sections": [], "majors": []}
+                  "mode": "browse", "sections": [], "majors": [],
+                  "health": bool(q) and self.is_health_search(q)}
 
         if track == "waaid":
             result["mode"] = "waaid"
@@ -317,6 +348,17 @@ class Explorer:
                                                "note_ar": tf("هذا ترتيب مجال «{field}» كله في الدليل، وليس قائمة بتخصص «{major}» وحده. تأكد أن الجامعة تدرّس التخصص من موقعها.",
                                                                field=field["name_ar"], major=names[0]["name_ar"])})
             self._add_waaid(result, q)
+            return result
+
+        if q and not name_hits and self.is_health_search(q):
+            # No health field in the guide: say so with its source, and show الرواد, which takes every major.
+            result["mode"] = "health"
+            if track in ("", "arruaad"):
+                rows = [(l, u) for l, u in self.listings("arruaad") if keep(u)]
+                full = urlencode({k: v for k, v in (("track", "arruaad"), ("country", country), ("lang", language)) if v})
+                # No ARRUAAD_NOTE here: the health answer above already says it, with its source.
+                result["sections"].append({"track": "arruaad", "field": None, "rows": rows, "compact": True,
+                                           "full_href": "/universities?" + full})
             return result
 
         if q:
@@ -436,7 +478,7 @@ class Explorer:
 
         applied = []
         if "q" in params:
-            is_major = result["mode"] == "major" and any(
+            is_major = result["mode"] == "health" or result["mode"] == "major" and any(
                 normalize(params["q"]) in (normalize(m["name_ar"]), normalize(m["name_en"])) for m in result["majors"])
             applied.append(chip("التخصص" if is_major else "البحث", params["q"], "q"))
         if "track" in params:

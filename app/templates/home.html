@@ -84,47 +84,61 @@
 {% endblock %}
 
 {% block content %}
-{# What is open today, soonest deadline first, each with who can apply («لمن») and, where the data names it, «تقدم الآن».
+{# What is open today, in two parts (decision 078, A2): first what a school student applies to themselves (open or
+   the next to open), then what is open now but needs a step first, each with when you apply and who can.
    A واعد announcement is one row however many programs it has (decision 063). The full board is on /news. #}
+{% macro open_row(item) %}
+    <li class="open-item">
+      <div class="open-main">
+        <p class="open-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
+        {% if item.program_ar != item.title_ar %}<p class="open-program">{{ item.program_ar }}</p>{% endif %}
+      </div>
+      {% if item.who_ar %}<p class="open-who">{{ _("لمن:") }} {{ item.who_ar }}</p>{% endif %}
+      <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
+      {% if (item.apply_url and item.status == "open") or item.source_url %}
+      <p class="open-actions">
+        {% if item.apply_url and item.status == "open" %}<a class="btn btn--primary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="{{ _f('تقدم الآن: {title}، في منصة قبول', title=item.title_ar) }}">{{ _("تقدم الآن ↗") }}</a>{% endif %}
+        {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي ↗") }}</a>{% endif %}
+      </p>
+      {% endif %}
+    </li>
+{% endmacro %}
 <section id="open-now" class="section" aria-labelledby="open-title">
   <div class="section-head">
     <h2 id="open-title" class="section-title">{{ _("مفتوح للتقديم الآن") }}</h2>
     <p class="section-link"><a href="{{ url_for('news_page') }}">{{ _("كل المواعيد والحالات") }}</a></p>
   </div>
-  {% set open_items = board.open[:4] %}
-  {% if open_items %}
-  <ul class="open-list">
-    {% for item in open_items %}
-    <li class="open-item">
-      <div class="open-main">
-        <p class="open-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
-        <p class="open-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">{{ _("لخريجي الثانوية") }}</span>{% endif %}</p>
-      </div>
-      {% if item.who_ar %}<p class="open-who">{{ _("لمن:") }} {{ item.who_ar }}</p>{% endif %}
-      <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
-      {% if item.apply_url or item.source_url %}
-      <p class="open-actions">
-        {% if item.apply_url %}<a class="btn btn--primary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="{{ _f('تقدم الآن: {title}، في منصة قبول', title=item.title_ar) }}">{{ _("تقدم الآن ↗") }}</a>{% endif %}
-        {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي ↗") }}</a>{% endif %}
-      </p>
-      {% endif %}
-    </li>
-    {% endfor %}
+
+  <h3 class="open-group-title" id="open-school">{{ _("تتقدم عليه وأنت في الثانوية") }}</h3>
+  {% if open_now.school %}
+  <ul class="open-list" aria-labelledby="open-school">
+    {% for item in open_now.school %}{{ open_row(item) }}{% endfor %}
   </ul>
-  {% if board.open | length > 4 %}<p class="section-link section-link--after"><a href="{{ url_for('news_page') }}">{{ _f("وغيرها ({n}) في مواعيد التقديم", n=board.open | length - 4) }}</a></p>{% endif %}
   {% else %}
-  <p class="result-empty">{{ _("لا يوجد تقديم مفتوح الآن في البرامج التي نتابعها.") }} <a href="{{ url_for('news_page') }}">{{ _("ما المغلق، وما الذي فُتح وأُغلق مؤخرًا؟") }}</a></p>
+  <p class="result-empty">{{ _("لا يوجد الآن برنامج نتابعه تتقدم عليه وأنت في الثانوية.") }}</p>
+  {% endif %}
+
+  {% if open_now.later %}
+  <h3 class="open-group-title" id="open-later">{{ _("مفتوح الآن، وتحتاج قبله خطوة") }}</h3>
+  {% set later = open_now.later[:4] %}
+  <ul class="open-list" aria-labelledby="open-later">
+    {% for item in later %}{{ open_row(item) }}{% endfor %}
+  </ul>
+  {% if open_now.later | length > 4 %}<p class="section-link section-link--after"><a href="{{ url_for('news_page') }}">{{ _f("وغيرها ({n}) في مواعيد التقديم", n=open_now.later | length - 4) }}</a></p>{% endif %}
   {% endif %}
 </section>
 
 <section id="programs" class="section" aria-labelledby="programs-title">
   <div class="section-head">
     <h2 id="programs-title" class="section-title">{{ _("البرامج") }}</h2>
-    <p class="section-note">{{ _("برامج الابتعاث لخريجي الثانوية.") }}</p>
+    <p class="section-note">{{ _("مرتبة حسب متى تتقدم عليها.") }}</p>
   </div>
 
+  {# Grouped by when you apply (decision 078, A2), in the order a student meets them. #}
+  {% for group in program_groups %}
+  <h3 class="path-group-title" id="programs-{{ group.when }}">{{ group.title_ar }}</h3>
   <div class="path-list">
-    {% for path in paths %}
+    {% for path in group.paths %}
     <article class="path-row theme-{{ path.theme }}"{% if path.not_standalone_ar %} data-addon{% endif %} aria-labelledby="program-{{ path.id }}">
       <div class="path-id">
         {% if path.logo %}
@@ -150,9 +164,9 @@
         </figure>
         {% endif %}
         <div class="path-names">
-          <h3 class="path-item-name" id="program-{{ path.id }}">
+          <h4 class="path-item-name" id="program-{{ path.id }}">
             {% if path.id in program_pages %}<a href="{{ url_for('program_page', slug=path.id) }}">{{ path.name_ar }}</a>{% else %}{{ path.name_ar }}{% endif %}
-          </h3>
+          </h4>
           {% if is_en() %}<p class="path-item-en" lang="ar" dir="rtl">{{ ar(path.name_ar) }}</p>{% else %}<p class="path-item-en" lang="en" dir="ltr">{{ path.name_en }}</p>{% endif %}
           {% if path.provider_ar != path.name_ar %}<p class="path-provider">{{ path.provider_ar }}</p>{% endif %}
         </div>
@@ -191,6 +205,7 @@
     </article>
     {% endfor %}
   </div>
+  {% endfor %}
 </section>
 
 {# The guides index (decision 062): before deciding, the tests, the application systems, each in one line (069). #}

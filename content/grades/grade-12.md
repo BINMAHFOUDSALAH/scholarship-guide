@@ -5,10 +5,27 @@ description: سنة التقديم. ثلاثة أنواع من الطلبات، 
 status: sourced
 owner_reviewed: false
 last_checked: 2026-10-13
+start:
+  - title_ar: تريد الدراسة في الخارج بالابتعاث
+    text_ar: احصل أولًا على قبول من جامعة في قائمة المسار، ثم تقدّم على الابتعاث.
+    href: /programs/custodian-scholarship#ready
+    link_label_ar: خطوات «معي قبول جامعي»
+  - title_ar: تريد أرامكو أو كاوست
+    text_ar: تتقدم عليهما بنفسك وأنت في ثالث ثانوي، ولكل منهما شروطه ومواعيده.
+    href: /#programs-in_school
+    link_label_ar: البرامج التي تتقدم عليها في الثانوية
+  - title_ar: تريد جامعة حكومية سعودية
+    text_ar: تتقدم بعد شهادة الثانوية عبر المنصة الوطنية للقبول الموحد.
+    href: https://www.uap.sa/
+    link_label_ar: المنصة الوطنية للقبول الموحد
+  - title_ar: لم تقرر بعد
+    text_ar: ابدأ بالمجالات التي تجذبك، ثم انتقل إلى التخصص والجامعة.
+    href: /resources/undecided
+    link_label_ar: لم تقرر بعد؟
 activity:
-  text_ar: "لكل جامعة في «قائمتي»، اكتب: منصة التقديم، وآخر موعد ومصدره الرسمي، والاختبارات التي سترسل نتيجتها."
-  href: /my-list
-  link_label_ar: افتح قائمتي
+  text_ar: "ابحث عن تخصصك في قوائم الابتعاث واحفظ الجامعات التي تهمك. في صفحة كل جامعة تجد منصة التقديم ومواعيدها ومصدرها الرسمي."
+  href: /universities
+  link_label_ar: ابحث في الجامعات
 tool: year
 resources:
   - title_ar: المنصة الوطنية للقبول الموحد

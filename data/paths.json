@@ -59,7 +59,8 @@
         ],
         "owner_confirmed": true,
         "status_until": "2026-11-15",
-        "status_note": "Open: official X post, 26 Aug 2026 ('يمكنك التقديم الآن… عبر منصة قبول'). Until 15 Nov 2026: owner-confirmed 2026-10-11 (not in that post)."
+        "status_note": "Open: official X post, 26 Aug 2026 ('يمكنك التقديم الآن… عبر منصة قبول'). Until 15 Nov 2026: owner-confirmed 2026-10-11 (not in that post).",
+        "apply_when": "after_admission"
       },
       {
         "id": "emdad",
@@ -91,7 +92,8 @@
             "note_ar": null
           }
         ],
-        "owner_confirmed": true
+        "owner_confirmed": true,
+        "apply_when": "after_admission"
       },
       {
         "id": "waaid",
@@ -123,7 +125,8 @@
           }
         ],
         "latest_programs": "waaid",
-        "status_note": "Computed from data/waaid_programs.json: open while any listed program's window is open."
+        "status_note": "Computed from data/waaid_programs.json: open while any listed program's window is open.",
+        "apply_when": "after_school"
       },
       {
         "id": "rnd",
@@ -327,7 +330,8 @@
         "owner_reviewed": false,
         "note_ar": null
       }
-    ]
+    ],
+    "apply_when": "after_admission"
   },
   {
     "id": "sdaia-ai-scholarship",
@@ -491,7 +495,8 @@
         "last_checked": "2026-11-04",
         "facts": [],
         "status_note": "SDAIA's X post, 7 Oct 2026: registration opened for the 4th cohort. No deadline published yet. Owner checked the SDAIA page on 2026-11-04: no dates given. Owner's rule: with no date on SDAIA's own page, there is nothing to update, so the morning check doesn't ask for re-checks (no_deadline_ok).",
-          "no_deadline_ok": true
+        "no_deadline_ok": true,
+        "apply_when": "with_scholarship"
       }
     ],
     "target_universities": [
@@ -896,7 +901,8 @@
       "retrieved": "2026-10-11"
     },
     "targets_note_ar": "95 جامعة في 15 دولة حسب ملف سدايا الرسمي. اختيرت لأنها ضمن أفضل 50 جامعة في التخصصات المستهدفة في واحد على الأقل من تصنيفات THE وQS وShanghai، والقائمة قابلة للتغيير.",
-    "target_label_ar": "مستهدفة في سدايا (الذكاء الاصطناعي)"
+    "target_label_ar": "مستهدفة في سدايا (الذكاء الاصطناعي)",
+    "apply_when": "with_scholarship"
   },
   {
     "id": "aramco-cdpne",
@@ -929,9 +935,11 @@
         "status_source": "https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program",
         "last_checked": "2026-11-04",
         "owner_confirmed": true,
-        "status_note": "Owner pasted the official page on 2026-10-13 (new URL): cycle 1447-1448 (2025/2026), «باب التسجيل مغلق في الوقت الحالي، وسوف يتم الإعلان لاحقًا عن الفترة المخصصة للتسجيل». Requirements unchanged: Qudurat 90%, 85% average (G10, G11, G12 S1), 85% in maths/physics/chemistry/biology, age ≤ 22 Hijri years. Re-read 2026-11-01 (WebFetch): unchanged, still 1447-1448, registration closed, same requirements."
+        "status_note": "Owner pasted the official page on 2026-10-13 (new URL): cycle 1447-1448 (2025/2026), «باب التسجيل مغلق في الوقت الحالي، وسوف يتم الإعلان لاحقًا عن الفترة المخصصة للتسجيل». Requirements unchanged: Qudurat 90%, 85% average (G10, G11, G12 S1), 85% in maths/physics/chemistry/biology, age ≤ 22 Hijri years. Re-read 2026-11-01 (WebFetch): unchanged, still 1447-1448, registration closed, same requirements.",
+        "apply_when": "in_school"
       }
-    ]
+    ],
+    "apply_when": "in_school"
   },
   {
     "id": "kaust-kgsp",
@@ -971,7 +979,8 @@
         "owner_confirmed": true,
         "last_checked": "2026-11-04",
         "facts": [],
-        "status_note": "Prospective Students page, read 2026-10-12 and again 2026-11-01: «Applications for Cohort 19 will open soon», no dates. Its FAQ still shows the Cohort 18 dates. Owner asked to show «يفتح قريبًا» (2026-10-12)."
+        "status_note": "Prospective Students page, read 2026-10-12 and again 2026-11-01: «Applications for Cohort 19 will open soon», no dates. Its FAQ still shows the Cohort 18 dates. Owner asked to show «يفتح قريبًا» (2026-10-12).",
+        "apply_when": "in_school"
       }
     ],
     "apply_url": "https://kgsp.kaust.edu.sa/prospective-students",
@@ -1104,6 +1113,7 @@
         "owner_reviewed": false,
         "note_ar": "صفحة تفاصيل المنحة نفسها تحيل إلى صفحة الطلاب المتقدمين لمعرفة طريقة القبول. تابع صفحة الطلاب المتقدمين عند فتح التقديم."
       }
-    ]
+    ],
+    "apply_when": "in_school"
   }
 ]

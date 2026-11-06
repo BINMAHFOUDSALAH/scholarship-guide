@@ -6,6 +6,9 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-06
 
+**2026-11-06 (decision 079, Phase 1 Part A done):** A2: «مفتوح للتقديم الآن» and «البرامج» grouped by when you apply (`apply_when`); A3: whole-word major search, a sourced answer for health majors; A4: grade 12's «من أين تبدأ؟» and an honest «ابدأ الآن»; A5: no bare zeros, «108 جامعات», the dead handbook no longer cited. Owner: removed lines that tell students what they know (the Qabool notice, «القرار… للوزارة وحدها», the footer's "not affiliated", kept on /about).
+- **Checked:** pytest, both explorer checks (Arabic, English), the activity check; screenshots at 390px and 1280px. **Not checked:** a real phone, screen reader.
+
 **2026-11-06 (decision 078, Phase 1 A1):** the Phase 1 plan is in the repo (decision 078: Part A fixes, Part B «خطتي» on the device, Phase 2 accounts + the AI assistant from 25 Nov). A1 built on `feature/phase1-part-a`: «معي قبول جامعي» on the Custodian program page (`#ready`), five steps from the page's frontmatter, each linking a sourced fact on the same page; step 4 shows الرواد/إمداد status and «قدّم عبر منصة قبول ↗» only while open. Tests: every step links an existing sourced fact; open and closed windows.
 - **Not checked:** a real phone, screen reader, keyboard. **Owner to-dos:** look at `#ready` on your phone.
 - **Git rule (owner):** once verified, Claude commits, pushes a branch, opens a PR and merges after CI, without asking (CLAUDE.md).

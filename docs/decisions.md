@@ -1279,3 +1279,18 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **Keep «قائمتي» beside a new plan:** two personal places to explain; one is clearer.
 - **Google sign-in as well:** less typing, but another provider to set up and explain to minors; can be added later.
 **Not verified:** no students have tried the journey yet; the 5-student test runs on the finished Phase 1 before Launch 1.
+
+## 079 — Phase 1 Part A done: when you apply, whole-word majors, grade 12's start, fewer words (updates 057, 069, 078)
+**Date:** 2026-11-06
+**Context:** decision 078's Part A (A2–A5), plus the owner's note while it was built: lines that tell students what they already know («واضح دليل مستقل، ولا يرى طلبك…», «والقرار في حالتك للوزارة وحدها») distract.
+**Decision:**
+- **A2, when you apply:** every track and program in `paths.json` has `apply_when` (`in_school`, `after_school`, `after_admission`, `with_scholarship`). «مفتوح للتقديم الآن» has two parts: «تتقدم عليه وأنت في الثانوية» (Aramco, KGSP: open or next to open) and «مفتوح الآن، وتحتاج قبله خطوة» (الرواد, SDAIA, واعد). «البرامج» is grouped the same way. Each label restates the program's sourced «لمن؟».
+- **A3, majors:** whole words, «ال» ignored; a 4+ letter word may start a longer one. «طب» no longer finds «الغاز الطبيعي». Health searches (طب، تمريض، صيدلة، أسنان…) get an answer with two sources: the 2026–2027 guide names no health field (so no إمداد list), and الرواد accepts every major at its 30 universities.
+- **A4:** grade 12 opens with «من أين تبدأ؟» (abroad on the scholarship, Aramco/KAUST, a Saudi public university, undecided), each a link to a sourced page. «ابدأ الآن» asks only for what the site does (search, save, open the university's page). «وقارن النتيجتين» on the activity's result is gone: nothing is kept to compare.
+- **A5:** no bare zeros («منها 0», «0 جامعة», an empty board's «0»); «من 108 جامعات» counted in Arabic. The career guidance handbook (404 since 4 Nov, not on the Ministry's new site) is no longer cited: the three sentences quoting it are removed (owner's choice: remove, don't keep a dead source).
+- **Fewer words (owner):** the two lines above are removed; the footer says «دليل طلابي مستقل ومجاني» and the full "not affiliated with the Ministry" statement stays on /about only.
+**Alternatives:**
+- **A2 as a tag on each row** («متى تتقدم: …»): more text on every row; the two headings say it once.
+- **A3 by substring with a stop list:** fixes «طب» only; whole words fix the class of bug.
+- **Keep the handbook link with a note:** a dead source is no source (rule: hidden, never stamped).
+**Not verified:** a real phone and a screen reader; the health wording hasn't been read by a student.

@@ -144,7 +144,7 @@
       <div class="footer-about">
         <p class="footer-brand">{{ site.name }}</p>
         {# Independence on every page, because pages show official logos and data (decision 035). #}
-        <p class="footer-promise">{{ site.name }} {{ _("دليل طلابي مستقل ومجاني، لا يتبع وزارة التعليم ولا أي جهة رسمية.") }} <a href="{{ url_for('about') }}">{{ _("عن الدليل") }}</a></p>
+        <p class="footer-promise">{{ site.name }} {{ _("دليل طلابي مستقل ومجاني.") }} <a href="{{ url_for('about') }}">{{ _("عن الدليل") }}</a></p>
         {% if is_en() %}<p class="footer-promise">{{ _("هذه الصفحة بالإنجليزية ترجمتنا، والمصدر الرسمي هو المرجع.") }}</p>{% endif %}
         {# The owner's X account, also the way to send feedback (decision 043): footer only, one link (icon + text),
            opens in a new tab without giving X access to this page. #}
