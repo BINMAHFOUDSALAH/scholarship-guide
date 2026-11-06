@@ -6,6 +6,8 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-06
 
+**2026-11-06 (owner):** «لم تقرر بعد؟»: removed the section «الميل غير القدرة، والقدرة غير القبول» and the line that linked to it (owner: vague, not helpful).
+
 **2026-11-06 (decision 080, Phase 1 Part B done):** «خطتي» replaces «قائمتي»: universities and program tracks with a status and its date, on the device (`wadih:plan`); the server draws each row's next step from a POST and stores nothing (`app/plan.py`); «احفظ» on every high-school track; the homepage's return line; old saves move in. New check: `node scripts/check_plan.mjs` (18 checks, Arabic and English).
 - **Not checked:** a real phone, Safari, screen reader. **Owner to-dos:** save a university and الرواد on your phone, change a status, come back.
 
