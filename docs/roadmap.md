@@ -11,8 +11,8 @@ Keep this page short: update the sections below in place, tick the stages, and p
 - **Phase 1 (now → 2026-11-25, decision 078):** Part A fixes what misleads students (A1–A5); Part B grows «قائمتي» into «خطتي» on the device. No accounts.
 - **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want the AI assistant; «خطتي» moves into the account.
 - **Pace:** ~5 hours per week.
-- **Just merged:** Phase 1 A1, «معي قبول جامعي» on the Custodian program page (`#ready`).
-- **Next session:** A2–A5 (next step 1); الرواد closes 15 Nov.
+- **Just merged:** Phase 1 Part A (A1–A5, decisions 078–079).
+- **Next session:** Part B «خطتي» (next step 2); الرواد closes 15 Nov.
 
 ## Next steps
 
@@ -20,10 +20,10 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
 
 1. **Phase 1 Part A (decision 078; الرواد closes 15 Nov):**
    - [x] A1 «معي قبول جامعي» steps (`#ready`) on the Custodian program page.
-   - [ ] A2 `apply_when` per track: «مفتوح للتقديم الآن» and «البرامج» grouped by when you apply.
-   - [ ] A3 whole-word major search, and a sourced health-majors answer.
-   - [ ] A4 grade 12 «من أين تبدأ؟» and an honest «ابدأ الآن».
-   - [ ] A5 copy fixes (the bare 0, «108 جامعات») and the 404 handbook source.
+   - [x] A2 `apply_when` per track: «مفتوح للتقديم الآن» and «البرامج» grouped by when you apply.
+   - [x] A3 whole-word major search, and a sourced health-majors answer.
+   - [x] A4 grade 12 «من أين تبدأ؟» and an honest «ابدأ الآن».
+   - [x] A5 copy fixes (the bare 0, «108 جامعات») and the 404 handbook source (removed, decision 079).
 2. **Phase 1 Part B:** «خطتي» on the device (`wadih:plan`, `app/plan.py`, a POST view, statuses, next steps, the return strip).
 3. **Usability test with 3–5 students.** Write the script (`docs/research/usability-test.md`, Stage 1e step 5) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
 4. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.

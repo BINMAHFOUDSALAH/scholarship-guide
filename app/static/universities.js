@@ -26,6 +26,19 @@
       .toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
   }
 
+  // Majors match by whole words, as on the server (decision 078, A3): «ال» is dropped, and a word of 4+
+  // letters may start a longer one, but «طب» finds «الطب», never «الغاز الطبيعي».
+  function words(text) {
+    return text.split(" ").filter(Boolean).map((w) => (w.startsWith("ال") && w.length >= 4 ? w.slice(2) : w));
+  }
+
+  function wordsMatch(qWords, keyWords) {
+    for (let i = 0; i + qWords.length <= keyWords.length; i++) {
+      if (qWords.every((q, j) => keyWords[i + j] === q || (q.length >= 4 && keyWords[i + j].startsWith(q)))) return true;
+    }
+    return false;
+  }
+
   // ---------- 1. suggestions (an ARIA combobox) ----------
 
   let data = null;
@@ -34,7 +47,7 @@
     const response = await fetch(url);
     if (!response.ok) throw new Error("suggestions " + response.status);
     data = await response.json();
-    for (const g of data.fields) for (const m of g.majors) m.key = normalize(m.name_ar + " " + m.name_en);
+    for (const g of data.fields) for (const m of g.majors) m.words = words(normalize(m.name_ar + " " + m.name_en));
     for (const u of data.universities) u.key = normalize((u.name_ar || "") + " " + u.name_en);
     return data;
   }
@@ -99,6 +112,7 @@
       // The first load can finish after the student left the box; opening then would push the results down.
       if (document.activeElement !== input) return;
       const q = normalize(input.value);
+      const qWords = words(q);
       panel.replaceChildren();
       options = [];
       active = -1;
@@ -116,7 +130,7 @@
       let room = q ? 8 : Infinity;
       let hidden = 0;
       for (const g of d.fields) {
-        const all = q ? g.majors.filter((m) => m.key.includes(q)) : g.majors;
+        const all = q ? g.majors.filter((m) => qWords.length && wordsMatch(qWords, m.words)) : g.majors;
         const majors = all.slice(0, Math.max(room, 0));
         hidden += all.length - majors.length;
         room -= majors.length;

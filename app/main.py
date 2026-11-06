@@ -43,6 +43,16 @@ TRACK_STATUS_LABELS = {
     "none_open": "لا يوجد برنامج مفتوح الآن",
 }
 
+# When a student can apply (decision 078, A2): each track in paths.json has an apply_when, and the homepage
+# and «البرامج» group by it, so «مفتوح الآن» doesn't read as "apply today" to a school student who can't.
+# In the order a student meets them. Each label restates a sourced fact on the program's page («لمن؟»).
+APPLY_WHEN = {
+    "in_school": "تتقدم وأنت في ثالث ثانوي",
+    "after_school": "تتقدم بعد التخرج من الثانوية",
+    "after_admission": "تتقدم بعد قبول من جامعة في القائمة",
+    "with_scholarship": "تتقدم بعد أن تُبتعث",
+}
+
 # When two news items were added on the same day, the more urgent kind comes first.
 NEWS_PRIORITY = {"opening": 0, "deadline": 1, "closing": 2, "announcement": 3}
 
@@ -166,6 +176,7 @@ def status_board():
                 "who_ar": track.get("apply_with_ar"),
                 # «تقدم الآن ↗» while open, for tracks whose data names where to apply (sourced in the track).
                 "apply_url": track.get("apply_url") if status == "open" else None,
+                "when": track.get("apply_when"),
             }
             until = track.get("status_until")
             if status == "open":
@@ -189,6 +200,7 @@ def status_board():
             "page": f"/waaid#{g['id']}", "source_url": w["source_url"],
             "who_ar": waaid_who(g),  # every واعد row says who it is for, one way (no tag)
             "sort_last": g["hs_count"] == 0,
+            "when": "after_school",
         }
         if g["is_open"]:
             groups["open"].append({**item, "status": "open", "until": g["apply_to"], "apply_url": w["apply_url"]})
@@ -202,6 +214,21 @@ def status_board():
     groups["open"].sort(key=lambda i: (i.get("sort_last", False), i.get("until") is None, i.get("until") or ""))
     groups["recent"].sort(key=lambda i: i["closed_on"], reverse=True)
     return groups
+
+
+def open_by_when(board):
+    """The homepage's «مفتوح للتقديم الآن» in two parts (decision 078, A2):
+    - school: what a school student applies to themselves (open, or the next to open), so they see it first;
+    - later: what is open now but needs a step first (an admission, a scholarship, graduating)."""
+    school = [i for i in board["open"] + board["waiting"] if i.get("when") == "in_school"]
+    later = [i for i in board["open"] if i.get("when") != "in_school"]
+    return {"school": school, "later": later}
+
+
+def programs_by_when():
+    """«البرامج» grouped by when you apply, in APPLY_WHEN's order; groups with no program are left out."""
+    return [{"when": w, "title_ar": label, "paths": [p for p in paths if p.get("apply_when") == w]}
+            for w, label in APPLY_WHEN.items() if any(p.get("apply_when") == w for p in paths)]
 
 
 def track_status(track):
@@ -296,6 +323,7 @@ templates.env.globals["site"] = site
 templates.env.globals["asset_version"] = asset_version
 templates.env.globals["show_drafts"] = SHOW_DRAFTS
 templates.env.globals["track_status_labels"] = TRACK_STATUS_LABELS
+templates.env.globals["apply_when_labels"] = APPLY_WHEN
 templates.env.globals["tracks"] = TRACKS
 explorer.waaid = waaid  # the explorer lists واعد programs from the same data as the homepage
 templates.env.globals["waaid"] = waaid
@@ -336,12 +364,15 @@ templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     show_quote = featured_quote["status"] == "verified" or SHOW_DRAFTS
+    board = status_board()
     return render(
         request,
         "home.html",
         {
             "paths": paths,
-            "board": status_board(),
+            "board": board,
+            "open_now": open_by_when(board),
+            "program_groups": programs_by_when(),
             "home": home_text,
             "path_names": path_names,
             "quote": featured_quote if show_quote else None,

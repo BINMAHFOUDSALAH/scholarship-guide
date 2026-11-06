@@ -821,3 +821,30 @@ def test_result_rows_label_each_fact():
     assert len(groups) == 1 and groups[0]["labels"] == ["IELTS", "TOEFL iBT", "Duolingo"]
     # Scores are never joined, so two scales are never read as one.
     assert all(len(g["labels"]) == 1 for g in ex.key_facts("massachusetts-institute-of-technology-mit")["english_groups"])
+
+
+# ---------- whole-word major search and the health answer (decision 078, A3) ----------
+
+def test_major_search_matches_whole_words():
+    from app.universities import Explorer
+    e = Explorer()
+    names = lambda q: {m["name_ar"] for m in e.matching_majors(q)}  # noqa: E731
+    assert not any("الطبيعي" in n for n in names("طب"))  # «طب» once found «هندسة النفط والغاز الطبيعي»
+    assert "الذكاء الاصطناعي" in names("ذكاء اصطناعي")  # without the article, still a match
+    assert "هندسة البرمجيات" in names("هندس")  # 4+ letters may start a longer word
+    assert names("هندسة") <= names("هندس")
+
+
+def test_health_search_gets_a_sourced_answer():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    client = TestClient(app)
+    for q in ("طب", "تمريض", "الصيدلة", "nursing"):
+        html = client.get("/universities", params={"q": q}).text
+        assert "data-health-answer" in html, q
+        answer = html.split("data-health-answer")[1].split("</div>")[0]
+        assert "object.moe.gov.sa" in answer and "conditions/info-6/" in answer  # the guide + الرواد's rule
+        assert "تأكد من الإملاء" not in html, q  # no "check your spelling" for a real major
+    en = client.get("/en/universities", params={"q": "medicine"}).text
+    assert "Health majors" in en
+    assert "data-health-answer" not in client.get("/universities", params={"q": "هندسة"}).text

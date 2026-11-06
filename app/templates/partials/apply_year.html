@@ -17,9 +17,9 @@
       <p class="year-title">{{ r.title_ar }}</p>
       <p class="year-action">{{ r.action_ar }}</p>
       {% if r.computed == "early" %}
-      <p class="year-fact"><span class="tag">{{ _("من بياناتنا") }}</span> {{ _f("في {early} من {total} جامعة من قوائم الابتعاث جمعنا مواعيدها، يوجد موعد تقديم في أكتوبر أو نوفمبر.", early=timeline_stats.early, total=timeline_stats.with_deadlines) }}</p>
+      <p class="year-fact"><span class="tag">{{ _("من بياناتنا") }}</span> {{ _f("في {early} من {total} من قوائم الابتعاث جمعنا مواعيدها، يوجد موعد تقديم في أكتوبر أو نوفمبر.", early=timeline_stats.early, total=timeline_stats.with_deadlines | count_ar("universities")) }}</p>
       {% elif r.computed == "regular" %}
-      <p class="year-fact"><span class="tag">{{ _("من بياناتنا") }}</span> {{ _f("{january} من {total} جامعة من قوائم الابتعاث جمعنا مواعيدها لها موعد تقديم في يناير.", january=timeline_stats.january, total=timeline_stats.with_deadlines) }}</p>
+      <p class="year-fact"><span class="tag">{{ _("من بياناتنا") }}</span> {{ _f("{january} من {total} من قوائم الابتعاث جمعنا مواعيدها لها موعد تقديم في يناير.", january=timeline_stats.january, total=timeline_stats.with_deadlines | count_ar("universities")) }}</p>
       {% endif %}
       {% for f in r.facts %}
       <p class="year-fact"><span class="tag">{{ _("موعد رسمي") }}</span> {{ f.text_ar }}

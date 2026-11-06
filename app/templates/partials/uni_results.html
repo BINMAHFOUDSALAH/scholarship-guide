@@ -31,6 +31,17 @@
 <p class="notice">{{ _("هل تقصد الدولة «") }}{{ explorer.countries[r.country_match].name_ar }}{{ _("»؟") }} <a href="{{ url_for('universities_page') }}?country={{ r.country_match }}">{{ _("اعرض جامعاتها في القوائم") }}</a></p>
 {% endif %}
 
+{# Health majors (decision 078, A3): the guide has no health field; الرواد takes every major. Both sourced. #}
+{% if r.health %}
+<div class="notice major-summary" data-health-answer>
+  <p class="notice-title">{{ _("التخصصات الصحية، مثل الطب والتمريض والصيدلة") }}</p>
+  <ul class="major-summary-list">
+    <li>{{ _f("دليل الوزارة لقوائم الجامعات {year} لا يذكر مجالًا للصحة، فلا قائمة لها في إمداد.", year=explorer.source.academic_year | replace("-", "–")) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></li>
+    <li>{{ _("مسار الرواد يقبل كل التخصصات في جامعاته الثلاثين، فتأكد من موقع الجامعة أنها تدرّس التخصص.") }} <a class="src" href="https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></li>
+  </ul>
+</div>
+{% endif %}
+
 {% if r.mode == "major" %}
 <div class="notice major-summary">
   {% set m0 = r.majors[0] %}
@@ -58,7 +69,9 @@
       {%- if s.field %}<span class="result-field field-tone tone-{{ s.field.id }}">: <span class="tone-dot" aria-hidden="true"></span>{{ s.field.name_ar }}</span>{% endif %}
     </h2>
     <p class="result-count">
-      {% if s.waaid is defined %}{{ s.waaid | length | count_ar("programs") }}{% elif s.rows is defined %}{{ s.rows | length | count_ar("universities") }}{% else %}{{ s.universities | length | count_ar("universities") }}{% endif %}
+      {#- No bare «0 جامعة» (decision 078, A5): an empty section says why in its own line below. #}
+      {%- set n = (s.waaid if s.waaid is defined else s.rows if s.rows is defined else s.universities) | length %}
+      {% if n %}{{ n | count_ar("programs" if s.waaid is defined else "universities") }}{% endif %}
       {% if s.track == "rnd" %}{{ _("، للدكتوراه فقط") }}{% endif %}
     </p>
   </header>

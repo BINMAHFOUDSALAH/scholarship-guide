@@ -1,12 +1,29 @@
 ---
-translated_from: 21773cde2d349222
+translated_from: 9653a33ecee8ffc5
 title: Grade 12
 stage_ar: Apply and follow up
 description: The application year. Three kinds of applications, each with its own platform and dates, and none replaces the others.
+start:
+  - title_ar: You want to study abroad on the scholarship
+    text_ar: First get an admission from a university on the track's list, then apply for the scholarship.
+    href: /programs/custodian-scholarship#ready
+    link_label_ar: The “I have a university admission” steps
+  - title_ar: You want Aramco or KAUST
+    text_ar: You apply to them yourself while in grade 12, and each has its own conditions and dates.
+    href: /#programs-in_school
+    link_label_ar: Programs you apply to while at school
+  - title_ar: You want a Saudi public university
+    text_ar: You apply after your high school certificate, through the National Unified Admission Platform.
+    href: https://www.uap.sa/
+    link_label_ar: National Unified Admission Platform
+  - title_ar: You haven't decided yet
+    text_ar: Start with the fields that attract you, then move on to the major and the university.
+    href: /resources/undecided
+    link_label_ar: Not decided yet?
 activity:
-  text_ar: "For each university in “My list”, write down: the application platform, the deadline and its official source, and the tests whose results you will send."
-  href: /my-list
-  link_label_ar: Open My list
+  text_ar: "Search for your major in the scholarship lists and save the universities that interest you. Each university's page shows its application platform, its dates and their official source."
+  href: /universities
+  link_label_ar: Search the universities
 resources:
   - title_ar: National Unified Admission Platform
     url: https://www.uap.sa/

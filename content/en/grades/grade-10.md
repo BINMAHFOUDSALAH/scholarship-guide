@@ -1,5 +1,5 @@
 ---
-translated_from: 16e0cf3a7c82e5a1
+translated_from: 734878e055013b80
 title: Grade 10
 stage_ar: Explore and prepare
 description: A common year before you choose your track. You don't need to decide your future now, but this year counts.

@@ -14,7 +14,7 @@
   {% set items = board[key] %}
   <section class="board-group board-group--{{ key }}" aria-labelledby="board-{{ key }}">
     <div class="board-head">
-      <h2 id="board-{{ key }}" class="board-title">{{ title }} <span class="board-count">{{ items | length }}</span></h2>
+      <h2 id="board-{{ key }}" class="board-title">{{ title }} {% if items %}<span class="board-count">{{ items | length }}</span>{% endif %}</h2>
       <p class="board-hint">{{ hint }}</p>
     </div>
     {% if items %}
@@ -23,7 +23,7 @@
       <li class="board-item">
         <div class="board-main">
           <p class="board-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
-          <p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">{{ _("لخريجي الثانوية") }}</span>{% endif %}</p>
+          {% if item.program_ar != item.title_ar %}<p class="board-program">{{ item.program_ar }}{% if item.for_high_school %} <span class="tag">{{ _("لخريجي الثانوية") }}</span>{% endif %}</p>{% endif %}
           {% if item.who_ar %}<p class="board-who">{{ _("لمن:") }} {{ item.who_ar }}</p>{% endif %}
         </div>
         <p class="board-when">

@@ -89,7 +89,6 @@
           {% if first.apply_url %}<a class="btn btn--primary" href="{{ first.apply_url }}" target="_blank" rel="noopener">{{ _("قدّم عبر منصة قبول ↗") }}</a>
           {% elif program.apply_url %}<a class="btn btn--primary" href="{{ program.apply_url }}" target="_blank" rel="noopener">{{ _("صفحة التقديم الرسمية ↗") }}</a>{% endif %}
         </div>
-        <p class="fact-note">{{ _("ستنتقل إلى منصة قبول. واضح دليل مستقل، ولا يرى طلبك ولا يستقبله.") }}</p>
         {% else %}
         <p class="fact-note">{{ _("لم يُعلن موعد النافذة القادمة. أكمل قبولك الجامعي، وسنعرض الموعد هنا مع مصدره عند إعلانه.") }}</p>
         {% endif %}
@@ -100,7 +99,6 @@
       </li>
       {% endfor %}
     </ol>
-    <p class="fact-note">{{ _("هذه الخطوات تساعدك على الترتيب، والقرار في حالتك للوزارة وحدها.") }}</p>
   </section>
   {% endif %}
 

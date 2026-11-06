@@ -1,5 +1,5 @@
 ---
-translated_from: aa535efc22ef13ca
+translated_from: a9bb9b7e6b22eb04
 title: Not decided yet?
 description: How to discover the fields that draw you, what to try this term, and how to go from a field to a major and a university.
 next_step: Choose two fields that draw you or make you curious, and try an activity from each of them this month.
@@ -27,12 +27,6 @@ Two decisions are ahead of you:
 3. **Volunteer or take part:** in an event at your school or in your neighbourhood, or in a competition.
 
 After each try, write two lines: what did you enjoy? And what wore you out?
-
-## The official measure and the student counsellor {#official}
-
-- The Ministry of Education's career guidance handbook mentions the "career interests measure" and defines it as "a tool to uncover the student's main, most preferred career interests, linked to the specialised track that suits them" (our translation) ([career guidance handbook](https://www.moe.gov.sa/ar/aboutus/aboutministry/RPRLibrary/%D8%AF%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D8%AA%D9%88%D8%AC%D9%8A%D9%87%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D9%8A%20%D9%A1%D9%A4%D9%A4%D9%A4.pdf)). Ask the student counsellor at your school about it, and read its result as fields to explore, not a judgement of you.
-- In the same handbook, the student counsellor's role includes discovering students' interests and abilities and guiding them to the majors that suit them ([source](https://www.moe.gov.sa/ar/aboutus/aboutministry/RPRLibrary/%D8%AF%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D8%AA%D9%88%D8%AC%D9%8A%D9%87%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D9%8A%20%D9%A1%D9%A4%D9%A4%D9%A4.pdf)). So show them what you have tried and what you noticed.
-- The handbook also describes the student's **career achievement file**, with a "Discover yourself" section for values, skills, career interests and hobbies ([source](https://www.moe.gov.sa/ar/aboutus/aboutministry/RPRLibrary/%D8%AF%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D8%AA%D9%88%D8%AC%D9%8A%D9%87%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D9%8A%20%D9%A1%D9%A4%D9%A4%D9%A4.pdf)). Write in it what you learn about yourself from each try.
 
 ## From the field to the major to the university {#fields}
 

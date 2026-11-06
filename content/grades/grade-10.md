@@ -28,8 +28,6 @@ sources:
     url: https://www.moe.gov.sa/ar/education/generaleducation/StudyPlans/Pages/SecondarySchoolTracks.aspx
   - title: الثانوية العامة، وثيقة تعريفية 2025
     url: https://www.moe.gov.sa/media/uploads/a4/a4273fc1d0b5a4085feab6b28899cf97f22b330e8e88718ceae4c597b861843f.pdf
-  - title: دليل التوجيه المهني 1444هـ، وزارة التعليم
-    url: https://www.moe.gov.sa/ar/aboutus/aboutministry/RPRLibrary/دليل%20التوجيه%20المهني%20١٤٤٤.pdf
   - title: برنامج الابتعاث الجامعي لخريجي الثانوية، أرامكو (الدورة السابقة)
     url: https://www.aramco.com/ar/careers/for-saudi-applicants/student-opportunities/college-degree-program
 ---
