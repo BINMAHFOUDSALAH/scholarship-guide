@@ -1,5 +1,5 @@
 ---
-translated_from: a9bb9b7e6b22eb04
+translated_from: 405c64480a29edcc
 title: Not decided yet?
 description: How to discover the fields that draw you, what to try this term, and how to go from a field to a major and a university.
 next_step: Choose two fields that draw you or make you curious, and try an activity from each of them this month.
@@ -18,7 +18,6 @@ Two decisions are ahead of you:
 - **I know what I like, but not the majors:** go [from the field to the major](#fields).
 - **I like more than one field:** try two fields this month, then compare them.
 - **My family expects a particular major:** read [If your family sees it differently](#family).
-- **I don't know whether I can do it:** read [Interest is not ability](#not-the-same).
 
 ## Try before you decide {#try}
 
@@ -53,11 +52,3 @@ Instead of arguing:
 2. Learn enough about the major they suggest: what is studied in it, which track suits it, and try an activity from it.
 3. Show them what you have tried in the field that draws you, and what you learned from it.
 4. Ask the student counsellor to help you with this conversation.
-
-## Interest is not ability, and ability is not admission {#not-the-same}
-
-- **Interest:** what you enjoy today, and it may change when you try new things.
-- **Ability:** what you can do, and it grows with learning and practice.
-- **Admission:** the conditions of the university or the program, such as the track, the average and the tests, which you find on their official pages.
-
-Don't judge a field by one of these alone.

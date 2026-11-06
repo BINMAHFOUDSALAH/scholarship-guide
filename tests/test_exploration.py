@@ -369,7 +369,7 @@ def test_english_pages_are_english(drafts):
 def test_the_guide_is_public_and_routes_onward(live):
     r = client.get("/resources/undecided")
     assert r.status_code == 200
-    for href in ("/grades/grade-10#tracks", "/universities?track=emdad&amp;field=ict", "#family", "#not-the-same"):
+    for href in ("/grades/grade-10#tracks", "/universities?track=emdad&amp;field=ict", "#family"):
         assert href in r.text, href
     assert "moe.gov.sa" in r.text  # the official handbook and track pages
     assert '/resources/undecided"' in client.get("/").text  # in the homepage's guides (absolute links there)
