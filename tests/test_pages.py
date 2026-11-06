@@ -444,6 +444,41 @@ def test_program_page_compares_every_track():
         assert track["levels_ar"] in html
 
 
+def test_ready_steps_link_existing_sourced_facts():
+    """«معي قبول جامعي» (A1) repeats no official fact: every step and admission type links a sourced fact
+    that the page shows, and the English page links the same facts in the same order."""
+    program = main.paths_by_id["custodian-scholarship"]
+    shown = main.ready_facts(program)
+    page = load_page("programs", "custodian-scholarship")
+    assert page["ready"] and page["admission_types"]
+    for item in page["ready"] + page["admission_types"]:
+        assert set(item.get("facts", [])) <= set(shown), item
+    assert all(t["facts"] for t in page["admission_types"])
+    html = client.get("/programs/custodian-scholarship").text
+    for fid in {f for item in page["ready"] + page["admission_types"] for f in item.get("facts", [])}:
+        assert f'href="#fact-{fid}"' in html and f'id="fact-{fid}"' in html, fid
+    assert 'id="ready"' in html and 'href="#ready"' in html
+
+    import frontmatter
+    from app.content import CONTENT_DIR, EN_DIR
+    ar = frontmatter.load(CONTENT_DIR / "programs" / "custodian-scholarship.md").metadata
+    en = frontmatter.load(EN_DIR / "programs" / "custodian-scholarship.md").metadata
+    for key in ("ready", "admission_types"):
+        strip = lambda items: [(i.get("facts"), i.get("show"), i.get("href")) for i in items]  # noqa: E731
+        assert strip(ar[key]) == strip(en[key]), key
+
+
+@pytest.mark.parametrize("status", ["open", "closed"])
+def test_ready_step_says_when_applying_is_open(monkeypatch, status):
+    """Open: the apply link and the leaving notice. Closed: no link, and the honest «window closed» line."""
+    monkeypatch.setitem(main.templates.env.globals, "track_status", lambda track: status)
+    ready = client.get("/programs/custodian-scholarship").text.split('id="ready"')[1].split("</section>")[0]
+    if status == "open":
+        assert "https://www.uap.sa/" in ready and "ولا يرى طلبك ولا يستقبله" in ready
+    else:
+        assert "https://www.uap.sa/" not in ready and "لم يُعلن موعد النافذة القادمة" in ready
+
+
 def test_program_page_explains_conditional_admission():
     """The language exception must be on the page, next to its official source."""
     html = client.get("/programs/custodian-scholarship").text

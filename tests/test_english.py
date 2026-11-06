@@ -224,7 +224,8 @@ def test_glossary_terms():
 
 # ---------- pages written in Markdown ----------
 
-ENGLISH_KEYS = {"translated_from", "title", "description", "stage_ar", "activity", "resources", "next_step"}
+ENGLISH_KEYS = {"translated_from", "title", "description", "stage_ar", "activity", "resources", "next_step",
+                "ready", "admission_types"}
 
 
 @pytest.mark.parametrize("section", ["grades", "programs", "resources"])

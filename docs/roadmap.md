@@ -8,21 +8,29 @@ Keep this page short: update the sections below in place, tick the stages, and p
 
 - **Live:** https://wadihguide.com (Arabic) and https://wadihguide.com/en/ (English).
 - **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
-- **Launch 2 (after Stage 4):** accounts + guided start + personal plan (decision 014).
+- **Phase 1 (now → 2026-11-25, decision 078):** Part A fixes what misleads students (A1–A5); Part B grows «قائمتي» into «خطتي» on the device. No accounts.
+- **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want the AI assistant; «خطتي» moves into the account.
 - **Pace:** ~5 hours per week.
-- **Just merged:** the colour pass, a tone for each field (decision 075, PR #38), after «جرّب قبل أن تقرر»'s redesigned result (073, PR #35).
-- **Next session:** the owner's iPhone check of that journey and the new colours, then next step 1.
+- **Just merged:** Phase 1 A1, «معي قبول جامعي» on the Custodian program page (`#ready`).
+- **Next session:** A2–A5 (next step 1); الرواد closes 15 Nov.
 
 ## Next steps
 
 In order (direction: a deep study-abroad core plus thin doors to official tools, decision 057).
 
-1. **Usability test with 3–5 students.** Write the script (`docs/research/usability-test.md`, Stage 1e step 5) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
-2. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.
-3. **P1 from the [product audit](research/product-audit-2026-10-13.md):** «الدراسة في السعودية», the alternatives section, the fee-waiver class split.
-4. **Accessibility:** a screen-reader run on a real phone and the broken-link check (Stage 1e step 6).
-5. **Search, the road to RAG ([spec](specs/search.md), decision 045):** keyword search is done. Next: chunks with `last_checked` / `owner_reviewed`, then search by meaning (embeddings; ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
-6. **إمداد requirements, the rest:** China 40, Korea 9, Japan 5 (counted 2026-10-13). They need their own brief (language of instruction, the conditional-admission exception) and a scope decision against Launch 1.
+1. **Phase 1 Part A (decision 078; الرواد closes 15 Nov):**
+   - [x] A1 «معي قبول جامعي» steps (`#ready`) on the Custodian program page.
+   - [ ] A2 `apply_when` per track: «مفتوح للتقديم الآن» and «البرامج» grouped by when you apply.
+   - [ ] A3 whole-word major search, and a sourced health-majors answer.
+   - [ ] A4 grade 12 «من أين تبدأ؟» and an honest «ابدأ الآن».
+   - [ ] A5 copy fixes (the bare 0, «108 جامعات») and the 404 handbook source.
+2. **Phase 1 Part B:** «خطتي» on the device (`wadih:plan`, `app/plan.py`, a POST view, statuses, next steps, the return strip).
+3. **Usability test with 3–5 students.** Write the script (`docs/research/usability-test.md`, Stage 1e step 5) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
+4. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.
+5. **P1 from the [product audit](research/product-audit-2026-10-13.md):** «الدراسة في السعودية», the alternatives section, the fee-waiver class split.
+6. **Accessibility:** a screen-reader run on a real phone and the broken-link check (Stage 1e step 6).
+7. **Search, the road to RAG ([spec](specs/search.md), decision 045):** keyword search is done. Next: chunks with `last_checked` / `owner_reviewed`, then search by meaning (embeddings; ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
+8. **إمداد requirements, the rest:** China 40, Korea 9, Japan 5 (counted 2026-10-13). They need their own brief (language of instruction, the conditional-admission exception) and a scope decision against Launch 1.
 
 **Later or optional:**
 - FAQ from real student questions (Stage 1e step 4).

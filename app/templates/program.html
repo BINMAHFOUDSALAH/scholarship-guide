@@ -35,10 +35,80 @@
     </div>
   </header>
 
+  {#
+    «معي قبول جامعي» (Phase 1 A1): the steps come from the page's frontmatter; each links the sourced facts
+    further down this page (ready_facts in main.py), so no official fact is written here twice.
+  #}
+  {% macro fact_links(ids) %}
+  {% set found = ids | select("in", ready_facts) | list %}
+  {% if found | length == 1 and not ready_facts[found[0]].track %}
+  <p class="source-stamp ready-facts"><a href="#fact-{{ found[0] }}">{{ _("اقرأ المعلومة ومصدرها في هذه الصفحة") }}</a></p>
+  {% elif found %}
+  <p class="source-stamp ready-facts">
+    <span class="source-stamp-label">{{ _("الشرط ومصدره في هذه الصفحة:") }}</span>
+    {% for fid in found %}{% set rf = ready_facts[fid] %}<a href="#fact-{{ fid }}">{{ rf.track.name_ar if rf.track else _("المعلومة ومصدرها") }}</a>{% if not loop.last %}<span aria-hidden="true">{{ _("،") }}</span> {% endif %}{% endfor %}
+  </p>
+  {% endif %}
+  {% endmacro %}
+
+  {% if page.ready %}
+  <section class="program-section ready measure" id="ready" aria-labelledby="ready-title">
+    <h2 id="ready-title">{{ _("معي قبول جامعي") }}</h2>
+    <p class="lead">{{ _("ما تفعله الآن لتتقدم على الابتعاث في مساري الرواد وإمداد.") }}</p>
+    <ol class="path-steps">
+      {% for step in page.ready %}
+      <li class="path-step">
+        <h3 class="path-step-title">{{ step.title_ar }}</h3>
+        <p>{{ step.text_ar }}</p>
+
+        {% if step.show == "admission_types" and page.admission_types %}
+        <dl class="summary-list ready-types">
+          {% for t in page.admission_types %}
+          <div class="summary-row">
+            <dt>{{ t.label_ar }}</dt>
+            <dd><p>{{ t.says_ar }}</p>{{ fact_links(t.facts) }}</dd>
+          </div>
+          {% endfor %}
+        </dl>
+        {% endif %}
+
+        {% if step.show == "status" %}
+        {% set tracks = program.tracks | selectattr("id", "in", ["arruaad", "emdad"]) | list %}
+        <ul class="ready-status">
+          {% for track in tracks %}
+          {% set st = track_status(track) %}
+          <li><span class="ready-status-name">{{ track.name_ar }}</span>
+            {% if st and (track.status_source or track.owner_confirmed) %}{{ c.status_tag(st, track.status_until) }}{% else %}<span class="track-note">{{ _("لا نتابع حالته في هذا الدليل") }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% set open_tracks = [] %}{% for t in tracks if track_status(t) == "open" and (t.status_source or t.owner_confirmed) %}{% set _x = open_tracks.append(t) %}{% endfor %}
+        {% if open_tracks %}
+        {% set first = open_tracks[0] %}
+        <div class="actions">
+          {% if first.apply_url %}<a class="btn btn--primary" href="{{ first.apply_url }}" target="_blank" rel="noopener">{{ _("قدّم عبر منصة قبول ↗") }}</a>
+          {% elif program.apply_url %}<a class="btn btn--primary" href="{{ program.apply_url }}" target="_blank" rel="noopener">{{ _("صفحة التقديم الرسمية ↗") }}</a>{% endif %}
+        </div>
+        <p class="fact-note">{{ _("ستنتقل إلى منصة قبول. واضح دليل مستقل، ولا يرى طلبك ولا يستقبله.") }}</p>
+        {% else %}
+        <p class="fact-note">{{ _("لم يُعلن موعد النافذة القادمة. أكمل قبولك الجامعي، وسنعرض الموعد هنا مع مصدره عند إعلانه.") }}</p>
+        {% endif %}
+        {% endif %}
+
+        {% if step.facts %}{{ fact_links(step.facts) }}{% endif %}
+        {% if step.href %}<p class="ready-link"><a href="{{ url_for('universities_page') if step.href == '/universities' else step.href }}">{{ step.link_label_ar }}</a></p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+    <p class="fact-note">{{ _("هذه الخطوات تساعدك على الترتيب، والقرار في حالتك للوزارة وحدها.") }}</p>
+  </section>
+  {% endif %}
+
   {# «في هذه الصفحة»: the page's sections, including the h2s of the Markdown explainer (content.py). #}
   <nav class="page-contents measure" aria-label="{{ _('في هذه الصفحة') }}">
     <p class="page-contents-title">{{ _("في هذه الصفحة") }}</p>
     <ul>
+      {% if page.ready %}<li><a href="#ready">{{ _("معي قبول جامعي") }}</a></li>{% endif %}
       <li><a href="#tracks-title">{{ _("المسارات") }}</a></li>
       {% if program.facts %}<li><a href="#facts-title">{{ _("ما يجب أن تعرفه قبل التقديم") }}</a></li>{% endif %}
       {% if program.target_universities %}<li><a href="#targets-title">{{ _("الجامعات المستهدفة") }}</a></li>{% endif %}

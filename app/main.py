@@ -397,7 +397,19 @@ def program_page(request: Request, slug: str):
     page = load_page("programs", slug) if program else None
     if page is None:
         raise HTTPException(status_code=404)
-    return render(request, "program.html", {"program": program, "page": page, "explorer": explorer})
+    return render(request, "program.html", {"program": program, "page": page, "explorer": explorer,
+                                            "ready_facts": ready_facts(program)})
+
+
+def ready_facts(program):
+    """The program's shown facts by id, each with the track it belongs to (or None).
+
+    «معي قبول جامعي» (#ready) links these instead of repeating them, so every step points at a sourced fact on
+    the same page. Only facts the page shows (sourced or conflict, like components.fact) are kept."""
+    facts = {f["id"]: {"fact": f, "track": None} for f in program.get("facts", [])}
+    for track in program.get("tracks", []):
+        facts.update({f["id"]: {"fact": f, "track": track} for f in track.get("facts", [])})
+    return {fid: v for fid, v in facts.items() if v["fact"].get("status") in ("sourced", "conflict")}
 
 
 @app.get("/waaid", response_class=HTMLResponse)

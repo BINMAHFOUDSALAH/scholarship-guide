@@ -14,6 +14,44 @@ sources:
   - title: الأسئلة الشائعة للبرنامج
     url: https://sites.moe.gov.sa/scholarship-program/faqs/
 next_step: افتح الدليل الاسترشادي 2026–2027، وتأكد أن الجامعة والتخصص اللذين تستهدفهما موجودان في قائمة المسار الذي ستقدّم عليه.
+# «معي قبول جامعي» (#ready, Phase 1 A1): each step only restates the sourced facts it links (data/paths.json),
+# so nothing official lives here. show: admission_types / status adds a block rendered from the data.
+ready:
+  - title_ar: تأكد أن الجامعة والتخصص في قائمة مسارك
+    text_ar: لكل مسار قائمته في الدليل الاسترشادي لسنة التقديم، ووجود الدولة في القائمة لا يعني أن كل جامعاتها مقبولة.
+    facts: [arruaad-rule, emdad-rule]
+    href: /universities
+    link_label_ar: ابحث عن جامعتك وتخصصك في القوائم
+  - title_ar: ما نوع قبولك؟
+    text_ar: الأصل أن يكون القبول نهائيًا غير مشروط. ابحث عن حالتك في خطاب القبول.
+    show: admission_types
+    href: "#conditional"
+    link_label_ar: القبول المشروط بالتفصيل
+  - title_ar: جهّز المستندات
+    text_ar: ومنها خطاب القبول الرسمي غير المشروط، يوضح التخصص وتاريخ بدء الدراسة واسم الجامعة.
+    facts: [documents]
+  - title_ar: هل التقديم مفتوح؟
+    text_ar: يكون التقديم عبر منصة قبول.
+    facts: [platform]
+    show: status
+  - title_ar: بعد أن تقدّم
+    text_ar: يمكنك رفع ثلاثة قبولات على الأكثر، ويُختار لك طلب واحد فقط بالمفاضلة. وبعد الترشيح تُفتح لك الخدمات الإلكترونية، مثل الضمان المالي وقرار الابتعاث وخطاب السفارة.
+    facts: [one-application]
+    href: "#admission-vs-scholarship"
+    link_label_ar: القبول في الجامعة ليس هو الابتعاث
+admission_types:
+  - label_ar: غير مشروط
+    says_ar: هذا هو الأصل في مساري الرواد وإمداد.
+    facts: [arruaad-rule, emdad-rule]
+  - label_ar: مشروط بدراسة لغة الدولة
+    says_ar: يُقبل إذا كانت الدولة غير ناطقة بالإنجليزية، ويتاح الابتعاث لدراسة اللغة.
+    facts: [arruaad-rule, emdad-rule]
+  - label_ar: سنة تحضيرية
+    says_ar: "لها شروط إضافية منذ 2025–2026: معدل الثانوية 90% فأعلى وآيلتس 5.5 فأعلى أو ما يعادله."
+    facts: [prep-year]
+  - label_ar: مشروط بشرط آخر
+    says_ar: مثل درجة معيّنة أو إنهاء الثانوية أو اختبار إنجليزي. لا تذكره الشروط، فلا تفترض أنه مقبول، واسأل الوزارة قبل أن تبني قرارك.
+    facts: [arruaad-rule, emdad-rule]
 ---
 
 ## القبول المشروط: متى يُقبل؟ {#conditional}
