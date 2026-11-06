@@ -1,8 +1,44 @@
 ---
-translated_from: 7f0ba38447968f71
+translated_from: 344ca79f83d4078d
 title: Custodian of the Two Holy Mosques Scholarship Program
 description: The program's four tracks, who each track is for, when a conditional admission is accepted, and the difference between university admission and the scholarship. From the official sources.
 next_step: Open the 2026–2027 official guide, and check that the university and major you are aiming for are in the list of the track you will apply to.
+ready:
+  - title_ar: Check that the university and the major are in your track's list
+    text_ar: Each track has its own list in the official guide for the application year, and a country being on the list doesn't mean all its universities are accepted.
+    facts: [arruaad-rule, emdad-rule]
+    href: /universities
+    link_label_ar: Find your university and major in the lists
+  - title_ar: What kind of admission do you have?
+    text_ar: The rule is that the admission is final and unconditional. Find your case in the admission letter.
+    show: admission_types
+    href: "#conditional"
+    link_label_ar: Conditional admission in detail
+  - title_ar: Prepare the documents
+    text_ar: They include the official unconditional admission letter, stating the major, the study start date and the university's name.
+    facts: [documents]
+  - title_ar: Is applying open?
+    text_ar: You apply through the Qabool platform.
+    facts: [platform]
+    show: status
+  - title_ar: After you apply
+    text_ar: You can upload three admissions at most, and only one application is chosen for you through competitive selection. After the nomination, the e-services open for you, such as the financial guarantee, the scholarship decision and the embassy letter.
+    facts: [one-application]
+    href: "#admission-vs-scholarship"
+    link_label_ar: University admission isn't the scholarship
+admission_types:
+  - label_ar: Unconditional
+    says_ar: This is the rule in the Arruaad and Emdad tracks.
+    facts: [arruaad-rule, emdad-rule]
+  - label_ar: Conditional on studying the country's language
+    says_ar: Accepted if the country isn't English-speaking, and the scholarship is available for studying the language.
+    facts: [arruaad-rule, emdad-rule]
+  - label_ar: Foundation year
+    says_ar: "It has extra conditions since 2025–2026: a high school average of 90% or more and IELTS 5.5 or more, or its equivalent."
+    facts: [prep-year]
+  - label_ar: Conditional on something else
+    says_ar: Such as a particular grade, finishing high school, or an English test. The conditions don't mention it, so don't assume it is accepted, and ask the Ministry before you build your decision on it.
+    facts: [arruaad-rule, emdad-rule]
 ---
 
 ## Conditional admission: when is it accepted? {#conditional}

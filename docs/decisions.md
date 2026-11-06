@@ -1262,3 +1262,20 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **Pinned versions** (`claude-sonnet-5-5`): identical behaviour over time, but needs updating by hand and breaks when the version is retired. Wadih doesn't need identical runs.
 **Not verified:** no side-by-side run of Haiku and Sonnet on Wadih's tasks yet. A first check: run `fact-checker` on Sonnet over a page Haiku checked before and compare.
 
+
+## 078 — Phase 1 then Phase 2: «خطتي» on the device first, accounts with the AI assistant from 25 Nov (updates 014, 015, 016, 035)
+**Date:** 2026-11-06
+**Context:** walking the live site (375px and desktop) showed excellent sourced pages with no thread between them. Buttons promise progress the site can't hold («اكتب… لكل جامعة في «قائمتي»», «أعد النشاط بعد شهر… وقارن»); «مفتوح للتقديم الآن» points school students at tracks they can't apply to today (الرواد needs an admission, SDAIA a scholarship); health majors get misleading answers («طب» matches «هندسة النفط والغاز الطبيعي»; «تمريض» → «تأكد من الإملاء»). The owner wants a product a student can use: arrive confused, leave with a next step, come back and continue.
+**Decision:**
+- **Phase 1 (now → 2026-11-25): no accounts, no database.**
+  - **Part A, trust and the core journey:** A1 «معي قبول جامعي» steps on the Custodian program page (`#ready`); A2 `apply_when` per track, so «مفتوح للتقديم الآن» and «البرامج» are grouped by when you apply; A3 whole-word major search and a sourced health-majors answer; A4 grade 12 «من أين تبدأ؟» and an honest «ابدأ الآن»; A5 copy fixes and the handbook source.
+  - **Part B, «خطتي» replaces «قائمتي»:** one personal place on the device (`localStorage["wadih:plan"]`, ids, statuses and dates only), rendered by the server from a POST that stores nothing. The same JSON shape Phase 2 stores per account.
+  - Each part on its own branch from `main`, reviewed by the owner before the next.
+- **Phase 2 (from 2026-11-25): accounts + the AI assistant.** Students who want the assistant create an account with **email + password** (the owner's choice; updates 014–016, which allowed Google too); their «خطتي» moves into it. Spec first (`docs/specs/accounts.md`); ask before anything that costs money (database, email service, Claude API), and check the PDPL rules on under-18 consent and transfers abroad before collecting data.
+- **The owner sees totals only**, never one student's plan.
+- **A1's rule:** every step links a sourced fact already on the page (`data/paths.json`), so nothing official is written twice. Until «خطتي» exists, step 5 says what happens after you apply (up to 3 admissions, one chosen by المفاضلة, then the e-services); Part B adds «سجّل ذلك في خطتك».
+**Alternatives:**
+- **Accounts first:** the plan would wait on a database, email and privacy work; the device-only plan helps students before Launch 1.
+- **Keep «قائمتي» beside a new plan:** two personal places to explain; one is clearer.
+- **Google sign-in as well:** less typing, but another provider to set up and explain to minors; can be added later.
+**Not verified:** no students have tried the journey yet; the 5-student test runs on the finished Phase 1 before Launch 1.

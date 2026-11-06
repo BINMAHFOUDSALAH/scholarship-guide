@@ -4,6 +4,12 @@ What each working session did and left open, newest first. Notes are kept as the
 ones can be out of date. Today's plan and to-dos are in [roadmap.md](roadmap.md); the reasons for each
 choice are in [decisions.md](decisions.md).
 
+## 2026-11-06
+
+**2026-11-06 (decision 078, Phase 1 A1):** the Phase 1 plan is in the repo (decision 078: Part A fixes, Part B «خطتي» on the device, Phase 2 accounts + the AI assistant from 25 Nov). A1 built on `feature/phase1-part-a`: «معي قبول جامعي» on the Custodian program page (`#ready`), five steps from the page's frontmatter, each linking a sourced fact on the same page; step 4 shows الرواد/إمداد status and «قدّم عبر منصة قبول ↗» only while open. Tests: every step links an existing sourced fact; open and closed windows.
+- **Not checked:** a real phone, screen reader, keyboard. **Owner to-dos:** look at `#ready` on your phone.
+- **Git rule (owner):** once verified, Claude commits, pushes a branch, opens a PR and merges after CI, without asking (CLAUDE.md).
+
 ## 2026-11-05
 
 **2026-11-05 (/update-site):** nothing new or past to change (KGSP, the universities guide, الرواد, إمداد, Aramco and Cambridge unchanged; SDAIA refused scripts). Fixed: the site read "today" on the server's UTC clock, so a deadline lasted until 3 am in Riyadh; now `app/clock.py` gives the day in Riyadh (UTC+3) and every deadline follows it.
