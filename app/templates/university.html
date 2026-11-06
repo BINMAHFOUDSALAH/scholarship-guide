@@ -25,13 +25,13 @@
       {% if u.country_note %}<p class="fact-note">{{ _("ملاحظة: في الدليل يظهر بجانبها علم دولة أخرى، والجامعة في") }} {{ u.country_info.name_ar }}.</p>{% endif %}
     </div>
 
-    {# «احفظ في قائمتي»: works with JavaScript only (mylist.js), so it starts hidden. #}
+    {# «احفظ في خطتي»: works with JavaScript only (mylist.js), so it starts hidden. #}
     <div class="save-area">
       <button class="btn btn--secondary save-toggle" type="button" data-save="{{ u.id }}" hidden>
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.75h8v12.5l-4-3-4 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        <span data-save-label>{{ _("احفظ في قائمتي") }}</span>
+        <span data-save-label>{{ _("احفظ في خطتي") }}</span>
       </button>
-      <p class="save-note" data-save-note="{{ u.id }}" hidden>{{ _("✓ محفوظة في") }} <a href="{{ url_for('my_list') }}">{{ _("قائمتي") }}</a> {{ _("على هذا الجهاز.") }}</p>
+      <p class="save-note" data-save-note="{{ u.id }}" hidden>{{ _("✓ محفوظة في") }} <a href="{{ url_for('my_plan') }}">{{ _("خطتي") }}</a> {{ _("على هذا الجهاز.") }}</p>
     </div>
   </header>
 

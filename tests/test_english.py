@@ -203,7 +203,7 @@ def test_not_listed_is_never_translated_as_not_accepted():
 
 def test_glossary_terms():
     t = translations()
-    assert t["قائمتي"] == "My list"
+    assert t["خطتي"] == "My plan"
     assert t["الأدلة"] == "Guides"
     assert t["واضح"] == "Wadih"
     assert t["لا يُقبل لإثبات اللغة"] == "Not accepted as proof of English"

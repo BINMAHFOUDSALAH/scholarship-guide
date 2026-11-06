@@ -13,7 +13,7 @@ from fastapi.templating import Jinja2Templates
 from jinja2 import pass_context
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app import exploration, i18n
+from app import exploration, i18n, plan
 from app.content import SLUG_PATTERN, english_titles, list_slugs, load_page
 from app.i18n import tf, tr
 from app.search import SiteSearch
@@ -347,6 +347,10 @@ templates.env.globals["not_listed_ar"] = NOT_LISTED_AR
 # list the same grades, program pages and guides. Guide titles come from their Markdown (read at startup).
 resource_titles = {slug: load_page("resources", slug)["title"] for slug in list_slugs("resources")}
 templates.env.globals["grade_links"] = home_text["grades"]
+# «خطتي» (decision 078, Part B): the programs a student can add, by id (a track's id, or Aramco's program id).
+plan_programs = plan.program_targets(paths)
+plan_ids = {(path["id"], track.get("id")): pid for pid, (path, track) in plan_programs.items()}
+templates.env.globals["plan_id"] = lambda path, track: plan_ids.get((path["id"], track.get("id")))
 templates.env.globals["program_links"] = [{"slug": p["id"], "name_ar": load_page("programs", p["id"])["title"]}
                                           for p in paths if p["id"] in program_slugs()]
 templates.env.globals["guide_groups"] = [
@@ -498,20 +502,33 @@ def university_page(request: Request, uid: str, from_: str | None = Query(None, 
                                        "prep_year_fact": PREP_YEAR_FACT})
 
 
-@app.get("/my-list", response_class=HTMLResponse)
-def my_list(request: Request, ids: str = "", partial: bool = False):
-    """«قائمتي» (decision 035). The list itself lives in the student's browser (mylist.js); the page
-    asks for its rows with ?partial=1&ids=a,b. Only ids of universities we know are drawn, in the
-    student's order, at most 100. Nothing is stored here."""
-    if not partial:
-        return render(request, "my_list.html", {})
-    wanted = []
-    for uid in ids.split(",")[:100]:
-        uid = uid.strip()
-        if SLUG_PATTERN.match(uid) and uid in explorer.universities and uid not in wanted:
-            wanted.append(uid)
-    return render(request, "partials/my_list_rows.html",
-                                      {"unis": [explorer.universities[uid] for uid in wanted], "explorer": explorer})
+@app.get("/my-list")
+def my_list_moved(request: Request):
+    """«قائمتي» became «خطتي» (decision 078, Part B); old links and bookmarks land on the plan."""
+    return RedirectResponse(str(url_for_language({"request": request}, "my_plan")), status_code=301)
+
+
+@app.get("/my-plan", response_class=HTMLResponse)
+def my_plan(request: Request):
+    """«خطتي»: the page. The plan itself lives in the student's browser (mylist.js), which POSTs it here."""
+    return render(request, "my_plan.html", {"statuses": plan.STATUSES})
+
+
+@app.post("/my-plan", response_class=HTMLResponse)
+async def my_plan_rows(request: Request):
+    """Draws the rows for the plan the browser sends (JSON: {"items": [...]}). Only valid items are drawn,
+    in the student's order, at most 100; nothing is stored or logged here (decision 078)."""
+    body = await request.body()
+    if len(body) > 20_000:
+        raise HTTPException(status_code=413)
+    try:
+        raw = json.loads(body or b"{}")
+    except ValueError:
+        raise HTTPException(status_code=400)
+    items = plan.clean(raw, explorer.universities, plan_programs)
+    return render(request, "partials/my_plan_rows.html", {
+        "rows": plan.rows(items, explorer, plan_programs, track_status, APPLY_WHEN, program_slugs()),
+        "statuses": plan.STATUSES, "explorer": explorer})
 
 
 def explore_or_404():

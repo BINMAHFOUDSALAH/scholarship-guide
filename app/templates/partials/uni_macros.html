@@ -1,4 +1,4 @@
-{# Small pieces shared by the explorer, the university page, and «قائمتي». #}
+{# Small pieces shared by the explorer, the university page, and «خطتي». #}
 {% import "components.html" as c %}
 
 {#
@@ -14,11 +14,14 @@
 {% endmacro %}
 
 {#
-  Save from a result row (decision 039): «احفظ» / «✓ في قائمتك». Invisible (but keeping its space, so
+  Save from a result row (decision 039): «احفظ» / «✓ في خطتك». Invisible (but keeping its space, so
   "back to results" lands on the same row) until mylist.js knows the browser can keep the list;
   without JavaScript or with storage blocked, it never shows.
 #}
 {% macro save_button(u) %}<button class="save-mini" type="button" data-save="{{ u.id }}" data-save-name="{{ u.name_ar or u.name_en }}" data-pending tabindex="-1"><span data-save-label>{{ _("احفظ") }}</span></button>{% endmacro %}
+
+{# The same for a program track in «خطتي» (decision 078, Part B); pid from plan.program_targets. #}
+{% macro save_program(pid, name) %}<button class="save-mini" type="button" data-save="{{ pid }}" data-save-type="program" data-save-name="{{ name }}" data-pending tabindex="-1"><span data-save-label>{{ _("احفظ") }}</span></button>{% endmacro %}
 
 {# The notes the official guide attaches to a listing. #}
 {% macro listing_notes(l) %}
@@ -44,7 +47,7 @@
 
 {#
   One university date in words: «آخر موعد للتقديم، Early Decision، لخريف 2027». Shared by the
-  result rows, «قائمتي», and the university page (decision 038). Arabic commas, not dots (decision 062).
+  result rows, «خطتي», and the university page (decision 038). Arabic commas, not dots (decision 062).
 #}
 {% macro date_words(x) %}{{ x.event_ar }}{% if x.round_ar %}{{ _("،") }} <bdi>{{ x.round_ar }}</bdi>{% endif %}{{ _("، ل") }}{{ x.cycle_ar }}{% endmacro %}
 

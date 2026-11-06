@@ -6,6 +6,9 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-06
 
+**2026-11-06 (decision 080, Phase 1 Part B done):** «خطتي» replaces «قائمتي»: universities and program tracks with a status and its date, on the device (`wadih:plan`); the server draws each row's next step from a POST and stores nothing (`app/plan.py`); «احفظ» on every high-school track; the homepage's return line; old saves move in. New check: `node scripts/check_plan.mjs` (18 checks, Arabic and English).
+- **Not checked:** a real phone, Safari, screen reader. **Owner to-dos:** save a university and الرواد on your phone, change a status, come back.
+
 **2026-11-06 (decision 079, Phase 1 Part A done):** A2: «مفتوح للتقديم الآن» and «البرامج» grouped by when you apply (`apply_when`); A3: whole-word major search, a sourced answer for health majors; A4: grade 12's «من أين تبدأ؟» and an honest «ابدأ الآن»; A5: no bare zeros, «108 جامعات», the dead handbook no longer cited. Owner: removed lines that tell students what they know (the Qabool notice, «القرار… للوزارة وحدها», the footer's "not affiliated", kept on /about).
 - **Checked:** pytest, both explorer checks (Arabic, English), the activity check; screenshots at 390px and 1280px. **Not checked:** a real phone, screen reader.
 

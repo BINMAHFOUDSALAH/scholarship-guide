@@ -96,10 +96,10 @@
       <div class="header-tools">
         {# The same page in the other language (decision 066). Each label is in its own language. #}
         {% if is_en() %}<a class="lang-toggle" data-lang-switch href="{{ links.ar }}" hreflang="ar" lang="ar" dir="rtl">{{ ar("العربية") }}</a>{% else %}<a class="lang-toggle" href="{{ links.en }}" hreflang="en" lang="en" dir="ltr">English</a>{% endif %}
-        {# «قائمتي»: always visible, so students can find it (decision 039); mylist.js adds the count. #}
-        <a class="mylist-link" href="{{ url_for('my_list') }}" data-mylist-link{% if page_path == url_for('my_list').path %} aria-current="page"{% endif %}>
+        {# «خطتي» (was «قائمتي»): always visible, so students can find it (decisions 039, 078); mylist.js adds the count. #}
+        <a class="mylist-link" href="{{ url_for('my_plan') }}" data-mylist-link{% if page_path == url_for('my_plan').path %} aria-current="page"{% endif %}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.75h8v12.5l-4-3-4 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-          <span class="mylist-label">{{ _("قائمتي") }}</span>
+          <span class="mylist-label">{{ _("خطتي") }}</span>
           <span class="mylist-count" data-mylist-count></span>
         </a>
         {# Sun by day, crescent by night: the same disc, with a shadow that slides across it (decision 060). #}
@@ -168,7 +168,7 @@
             {% for p in program_links %}<li><a href="{{ url_for('program_page', slug=p.slug) }}">{{ p.name_ar }}</a></li>{% endfor %}
             <li><a href="{{ url_for('universities_page') }}">{{ _("الجامعات في قوائم الابتعاث") }}</a></li>
             <li><a href="{{ url_for('news_page') }}">{{ _("مواعيد التقديم") }}</a></li>
-            <li><a href="{{ url_for('my_list') }}">{{ _("قائمتي") }}</a></li>
+            <li><a href="{{ url_for('my_plan') }}">{{ _("خطتي") }}</a></li>
           </ul>
         </div>
         <div class="footer-col">

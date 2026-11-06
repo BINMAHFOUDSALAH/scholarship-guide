@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
+{% import "partials/uni_macros.html" as um with context %}
 
 {% block title %}{{ page.title }} | {{ site.name }}{% endblock %}
 {% block description %}{{ page.description or site.description }}{% endblock %}
@@ -95,6 +96,8 @@
         {% endif %}
 
         {% if step.facts %}{{ fact_links(step.facts) }}{% endif %}
+        {# Part B (decision 078): after applying, the student records it in «خطتي». #}
+        {% if step.plan %}<p class="ready-link">{{ _("قدّمت؟ سجّل ذلك في") }} <a href="{{ url_for('my_plan') }}">{{ _("خطتي") }}</a>{{ _("، مع حالة كل قبول.") }}</p>{% endif %}
         {% if step.href %}<p class="ready-link"><a href="{{ url_for('universities_page') if step.href == '/universities' else step.href }}">{{ step.link_label_ar }}</a></p>{% endif %}
       </li>
       {% endfor %}
@@ -145,6 +148,8 @@
             {% else %}
             <span class="track-note">{{ _("لا نتابع حالته في هذا الدليل") }}</span>
             {% endif %}
+            {% set pid = plan_id(program, track) %}
+            {% if pid %}{{ um.save_program(pid, track.name_ar) }}{% endif %}
           </td>
         </tr>
         {% endfor %}

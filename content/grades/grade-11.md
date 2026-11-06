@@ -6,7 +6,7 @@ status: sourced
 owner_reviewed: false
 last_checked: 2026-10-13
 activity:
-  text_ar: "ابحث عن تخصص يهمك، واحفظ ثلاث جامعات في «قائمتي». ثم افتح صفحة كل واحدة واكتب: هل تطلب SAT؟ وكم درجة الإنجليزية؟"
+  text_ar: "ابحث عن تخصص يهمك، واحفظ ثلاث جامعات في «خطتي». ثم افتح صفحة كل واحدة واكتب: هل تطلب SAT؟ وكم درجة الإنجليزية؟"
   href: /universities
   link_label_ar: ابحث في الجامعات
 tool: tests

@@ -733,7 +733,7 @@ def test_program_page_leads_with_the_next_step_and_lists_its_sections():
 
 def test_owner_x_link_is_in_the_footer_only():
     """The owner's X account: in the global footer on every page, never in the nav; safe new tab; labelled."""
-    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/my-list"):
+    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/my-plan"):
         html = client.get(page).text
         header, footer = html.split("</header>")[0], html.split('<footer class="site-footer">')[1]
         assert "x.com/salahmetaverse" not in header

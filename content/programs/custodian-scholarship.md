@@ -37,6 +37,7 @@ ready:
   - title_ar: بعد أن تقدّم
     text_ar: يمكنك رفع ثلاثة قبولات على الأكثر، ويُختار لك طلب واحد فقط بالمفاضلة. وبعد الترشيح تُفتح لك الخدمات الإلكترونية، مثل الضمان المالي وقرار الابتعاث وخطاب السفارة.
     facts: [one-application]
+    plan: true
     href: "#admission-vs-scholarship"
     link_label_ar: القبول في الجامعة ليس هو الابتعاث
 admission_types:

@@ -1,0 +1,37 @@
+{#
+  Rows of «خطتي», drawn for the plan the student's browser sends (see my_plan_rows in main.py).
+  Each row: the item, its status (a select the student changes; mylist.js saves it), the date it changed,
+  and the next step, from data the site already publishes.
+#}
+{% import "components.html" as c %}
+{% import "partials/uni_macros.html" as um with context %}
+{% for r in rows %}
+{% set key = r.type ~ ":" ~ r.id %}
+{% set name = (r.university.name_ar or r.university.name_en) if r.university else r.name_ar %}
+<li class="mylist-item plan-item" data-mylist-item="{{ key }}">
+  <div class="mylist-main">
+    {% if r.university %}
+    {{ um.uni_name(r.university) }}
+    <div class="uni-item-meta">{{ um.country(r.university) }}</div>
+    {{ um.key_facts(r.university) }}
+    {% else %}
+    <p class="plan-name">{% if r.path.id in program_links | map(attribute="slug") | list %}<a href="{{ url_for('program_page', slug=r.path.id) }}">{{ r.name_ar }}</a>{% else %}{{ r.name_ar }}{% endif %}</p>
+    <p class="plan-program">{% if r.program_ar != r.name_ar %}{{ r.program_ar }}{% endif %}{% if r.track_now %} {{ c.status_tag(r.track_now, r.track.status_until) }}{% endif %}</p>
+    {% endif %}
+
+    <div class="plan-status">
+      <label class="plan-status-label" for="status-{{ loop.index }}">{{ _("أين وصلت؟") }}</label>
+      <select class="select plan-status-select" id="status-{{ loop.index }}" data-status="{{ key }}">
+        {% for value, label in statuses.items() %}<option value="{{ value }}"{% if value == r.status %} selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+      {% if r.dated_ar %}<span class="plan-date">{{ _f(r.dated_ar, date=r.updated | arabic_date) }}</span>{% endif %}
+    </div>
+
+    {% if r.step %}
+    <p class="plan-step"><strong class="plan-step-label">{{ _("خطوتك التالية:") }}</strong> {{ r.step.text_ar }}{% if r.step.date %} <strong>{{ r.step.date | arabic_date }}</strong>.{% endif %}
+      {% if r.step.href %}{% if r.step.external %}<a href="{{ r.step.href }}" target="_blank" rel="noopener">{{ r.step.label_ar }}</a>{% else %}<a href="{{ r.step.href }}">{{ r.step.label_ar }}</a>{% endif %}{% endif %}</p>
+    {% endif %}
+  </div>
+  <button class="btn btn--secondary btn--small" type="button" data-remove="{{ key }}" aria-label="{{ _f('إزالة {name} من خطتي', name=name) }}">{{ _("إزالة") }}</button>
+</li>
+{% endfor %}

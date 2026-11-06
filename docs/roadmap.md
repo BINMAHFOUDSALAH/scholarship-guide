@@ -8,11 +8,11 @@ Keep this page short: update the sections below in place, tick the stages, and p
 
 - **Live:** https://wadihguide.com (Arabic) and https://wadihguide.com/en/ (English).
 - **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified. No accounts.
-- **Phase 1 (now → 2026-11-25, decision 078):** Part A fixes what misleads students (A1–A5); Part B grows «قائمتي» into «خطتي» on the device. No accounts.
+- **Phase 1 (now → 2026-11-25, decision 078):** Part A fixes what misleads students (A1–A5); Part B grew «قائمتي» into «خطتي» on the device. Both done (decisions 079–080). No accounts.
 - **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want the AI assistant; «خطتي» moves into the account.
 - **Pace:** ~5 hours per week.
-- **Just merged:** Phase 1 Part A (A1–A5, decisions 078–079).
-- **Next session:** Part B «خطتي» (next step 2); الرواد closes 15 Nov.
+- **Just merged:** Phase 1, Parts A and B (decisions 078–080).
+- **Next session:** the usability test script (next step 3), then Phase 2's spec (`docs/specs/accounts.md`) before 25 Nov; الرواد closes 15 Nov.
 
 ## Next steps
 
@@ -24,7 +24,7 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
    - [x] A3 whole-word major search, and a sourced health-majors answer.
    - [x] A4 grade 12 «من أين تبدأ؟» and an honest «ابدأ الآن».
    - [x] A5 copy fixes (the bare 0, «108 جامعات») and the 404 handbook source (removed, decision 079).
-2. **Phase 1 Part B:** «خطتي» on the device (`wadih:plan`, `app/plan.py`, a POST view, statuses, next steps, the return strip).
+2. [x] **Phase 1 Part B:** «خطتي» on the device (`wadih:plan`, `app/plan.py`, a POST view, statuses, next steps, the return strip; decision 080).
 3. **Usability test with 3–5 students.** Write the script (`docs/research/usability-test.md`, Stage 1e step 5) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
 4. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.
 5. **P1 from the [product audit](research/product-audit-2026-10-13.md):** «الدراسة في السعودية», the alternatives section, the fee-waiver class split.
@@ -187,7 +187,7 @@ Teaches responsive/RTL polish, content workflow, CI, and shipping.
 - Then **Launch 1**.
 
 ### Stage 4: Accounts, email alerts, guided start → Launch 2
-- «قائمتي» exists on the device (decision 035): at sign-in, offer to move the device list into the account; later a per-university checklist and a deadlines view built from the saved list.
+- «خطتي» exists on the device (decisions 035, 080): at sign-in, offer to move the device plan (same JSON shape) into the account; later a per-university checklist and a deadlines view built from the saved list.
 Teaches databases, authentication (incl. OAuth), email delivery, security, privacy, and rules-based recommendation logic.
 - Specs first: `docs/specs/accounts.md`, `docs/specs/email-alerts.md`, `docs/specs/guided-start.md`.
 - Database: SQLite locally → Postgres in production (check free-tier limits then); tables like `users`, `plans`, `saved_universities`, `alert_subscriptions`; migrations (Alembic).

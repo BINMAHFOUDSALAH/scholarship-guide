@@ -1,5 +1,5 @@
 ---
-translated_from: 344ca79f83d4078d
+translated_from: eb463b2f7c9fe43d
 title: Custodian of the Two Holy Mosques Scholarship Program
 description: The program's four tracks, who each track is for, when a conditional admission is accepted, and the difference between university admission and the scholarship. From the official sources.
 next_step: Open the 2026–2027 official guide, and check that the university and major you are aiming for are in the list of the track you will apply to.
@@ -24,6 +24,7 @@ ready:
   - title_ar: After you apply
     text_ar: You can upload three admissions at most, and only one application is chosen for you through competitive selection. After the nomination, the e-services open for you, such as the financial guarantee, the scholarship decision and the embassy letter.
     facts: [one-application]
+    plan: true
     href: "#admission-vs-scholarship"
     link_label_ar: University admission isn't the scholarship
 admission_types:
