@@ -7,7 +7,7 @@
 
 {% block content %}
 <article class="program page-wide theme-{{ program.theme }}">
-  {{ c.back_link(url_for('home') ~ "#programs", "كل البرامج") }}
+  {{ c.back_link(url_for('programs_index'), "كل البرامج") }}
   <header class="program-header measure">
     {% if program.logo %}
     <img class="program-logo{% if program.logo.plate == 'dark' %} program-logo--dark{% endif %}" src="{{ url_for('static', path=program.logo.file ~ '-500.png') }}"

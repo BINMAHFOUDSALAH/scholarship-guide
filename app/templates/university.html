@@ -309,7 +309,7 @@
         {% endfor %}
       </ul>
       {% for tid in hs_tracks if p.by_track[tid] %}{{ c.window_note(scholarship[tid]) }}{% endfor %}
-      <p class="result-note">{{ _("كل مواعيد الابتعاث والبرامج في") }} <a href="{{ url_for('news_page') }}">{{ _("مواعيد التقديم") }}</a>{{ _(". وكيف تتوافق مواعيد الجامعة مع الابتعاث:") }} <a href="{{ url_for('grade_page', slug='grade-12') }}#year">{{ _("سنة التقديم شهرًا بشهر") }}</a></p>
+      <p class="result-note">{{ _("كل مواعيد الابتعاث والبرامج في") }} <a href="{{ url_for('programs_index') }}">{{ _("البرامج ومواعيدها") }}</a>{{ _(". وكيف تتوافق مواعيد الجامعة مع الابتعاث:") }} <a href="{{ url_for('grade_page', slug='grade-12') }}#year">{{ _("سنة التقديم شهرًا بشهر") }}</a></p>
     </div>
 
     <div class="date-block">

@@ -101,7 +101,7 @@ def program_step(item, path, track, status_now, apply_when_ar, has_page):
         return {"text_ar": "تابع حالة طلبك في الموقع الرسمي.", **official}
     if status == "accepted":
         return {"text_ar": "تابع الخطوات التالية في الموقع الرسمي.", **official}
-    return {"text_ar": "انظر البرامج الأخرى، ومتى تتقدم على كل منها.", "href": "/#programs", "label_ar": "البرامج"}
+    return {"text_ar": "انظر البرامج الأخرى، ومتى تتقدم على كل منها.", "href": "/programs", "label_ar": "البرامج"}
 
 
 def rows(items, explorer, programs, track_status, apply_when, program_pages):

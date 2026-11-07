@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _("الأدلة |") }} {{ site.name }}{% endblock %}
+{% block description %}{{ _("أدلة واضح: قبل أن تقرر، والاختبارات، والتقديم على الجامعات، كل دليل من مصادره الرسمية.") }}{% endblock %}
+
+{#- «الأدلة» as its own page (decision 083): the nav's fourth section. The same groups as the homepage and the footer. #}
+{% block content %}
+<div class="page-wide guides-page">
+  <header class="page-header">
+    <h1>{{ _("الأدلة") }}</h1>
+    <p class="lead">{{ _("ما تحتاج أن تعرفه قبل أن تقرر وقبل أن تتقدم، وكل معلومة بمصدرها الرسمي.") }}</p>
+  </header>
+  {% include "partials/guide_groups.html" %}
+  <p class="guides-search">{{ _("تبحث عن معلومة بعينها؟") }} <a href="{{ url_for('search_page') }}">{{ _("ابحث في واضح") }}</a></p>
+</div>
+{% endblock %}

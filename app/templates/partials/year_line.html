@@ -1,0 +1,58 @@
+{#
+  «السنة في سطر» (decision 083): the application year, August to July, as one line with today on it (main.year_line()).
+  Only what the data dates:
+  - the six phases of a university application year (apply_year.json; what usually happens, each university sets its
+    own dates), with the counts computed from our requirement files;
+  - the scholarship's announced deadline (a track's status_until, with its source);
+  - واعد windows that include programs for high school graduates.
+  A program with no announced date isn't drawn. Months are as wide as their days, so every date sits where it falls.
+  On phones the line scrolls sideways and year.js centres today; it reads the same without JavaScript.
+#}
+{% set y = year %}
+<section class="section year-line" id="year-line" aria-labelledby="year-line-title">
+  <div class="section-head">
+    <h2 id="year-line-title" class="section-title">{{ _("السنة في سطر") }}</h2>
+    <p class="section-note">{{ _("من أغسطس إلى يوليو: متى تُقدَّم طلبات الجامعات عادة، وما أعلنته البرامج من مواعيد.") }}</p>
+  </div>
+  <div class="yl-scroll" tabindex="0" role="region" aria-label="{{ _('السنة في سطر') }}" data-year-scroll>
+    <div class="yl" style="--today: {{ y.today_at }}%; --months: {% for m in y.months %}{{ m.days }}fr {% endfor %};">
+      <ol class="yl-months" aria-hidden="true">
+        {% for m in y.months %}<li class="yl-month{% if m.is_now %} is-now{% endif %}">{{ _(month_names[m.n - 1]) }}</li>{% endfor %}
+      </ol>
+
+      <h3 class="yl-row-label">{{ _("طلبات الجامعات، غالبًا") }}</h3>
+      <ol class="yl-phases">
+        {% for ph in y.phases %}
+        <li class="yl-phase{% if ph.is_now %} is-now{% endif %}" style="grid-column: {{ ph.col }} / span {{ ph.span }}"{% if ph.is_now %} aria-current="date"{% endif %}>
+          <a class="yl-phase-link" href="{{ url_for('grade_page', slug='grade-12') }}#year">
+            <span class="yl-phase-when">{{ ph.when_ar }}</span>
+            <span class="yl-phase-title">{{ ph.title_ar }}</span>
+            {% if ph.count %}<span class="yl-phase-count">{{ _f("{n} من جامعات القوائم", n=ph.count) }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+
+      {% if y.marks or y.windows %}
+      <h3 class="yl-row-label">{{ _("الابتعاث وبرامج واعد") }}</h3>
+      <ul class="yl-events">
+        {% for m in y.marks %}
+        <li class="yl-event yl-event--mark{% if m.past %} is-past{% endif %}{% if m.at > 62 %} is-late{% endif %}" style="--at: {{ m.at }}%">
+          <span class="yl-diamond" aria-hidden="true"></span>
+          <span class="yl-event-text">{% if m.page %}<a href="{{ m.page }}">{{ m.title_ar }}</a>{% else %}{{ m.title_ar }}{% endif %}{{ _("،") }} {{ _("آخر موعد") }} <time datetime="{{ m.date }}">{{ m.date | arabic_date }}</time> <a class="src" href="{{ m.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></span>
+        </li>
+        {% endfor %}
+        {% for w in y.windows %}
+        <li class="yl-event yl-event--window{% if w.past %} is-past{% endif %}{% if w.is_open %} is-open{% endif %}{% if w.at > 62 %} is-late{% endif %}" style="--at: {{ w.at }}%; --width: {{ w.width }}%">
+          <span class="yl-bar" aria-hidden="true"></span>
+          <span class="yl-event-text"><a href="{{ w.href }}">{{ _f("واعد: {company}", company=w.title_ar) }}</a>{{ _("،") }} {% set a %}<time datetime="{{ w.from }}">{{ w.from | arabic_date }}</time>{% endset %}{% set b %}<time datetime="{{ w.to }}">{{ w.to | arabic_date }}</time>{% endset %}{{ _f("من {start} إلى {end}", start=a, end=b) }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <div class="yl-today" aria-hidden="true"><span class="yl-today-label">{{ _("اليوم") }}</span></div>
+    </div>
+  </div>
+  <p class="yl-note">{{ _("برامج لم تُعلن مواعيدها بعد لا تظهر على السطر.") }} <a href="{{ url_for('grade_page', slug='grade-12') }}#year">{{ _("سنة التقديم شهرًا بشهر") }}</a></p>
+</section>

@@ -241,13 +241,14 @@
     return params.toString();
   }
 
-  // Search boxes outside the explorer (the homepage): a major runs the search, a university opens.
+  // Search boxes outside the explorer (the homepage's one box, /search): a university opens its page, a major opens
+  // its lists in the explorer; anything else typed is submitted to the site search (decision 083).
   for (const input of document.querySelectorAll("input[data-suggest]")) {
     const form = input.form;
     if (!form || form.hasAttribute("data-explorer")) continue;
     setupCombobox(input,
       (u) => { location.href = universityUrl(u, null); },
-      (m) => { input.value = m.name_ar; form.submit(); });
+      (m) => { location.href = BASE + "/universities?q=" + encodeURIComponent(m.name_ar); });
   }
 
   // ---------- 2. the explorer ----------

@@ -56,21 +56,21 @@
     (section, label, route, #anchor). The section of the current page gets aria-current:
     "page" on the page itself, "true" on a page inside that section (decision 035).
   #}
+  {#- Four sections (decision 083): the grades (and «جرّب قبل أن تقرر»), the programs with their dates, the universities,
+      the guides. «خطتي» and, from Phase 2, «دخول» sit with the tools. #}
   {% set nav_links = [
     ("grades", "حسب صفك", "home", "#grades"),
-    ("programs", "البرامج", "home", "#programs"),
+    ("programs", "البرامج", "programs_index", ""),
     ("universities", "الجامعات", "universities_page", ""),
-    ("news", "مواعيد التقديم", "news_page", ""),
-    ("guides", "الأدلة", "home", "#guides"),
+    ("guides", "الأدلة", "guides_index", ""),
   ] %}
   {% set path = request.url.path %}
   {% set page_path = links.en_path if is_en() else links.ar_path %}
   {% set current_section = (
-    "grades" if path.startswith("/grades/") else
-    "programs" if path.startswith("/programs/") else
+    "grades" if path.startswith("/grades/") or path.startswith("/explore") else
+    "programs" if path.startswith("/programs") or path == "/waaid" else
     "universities" if path.startswith("/universities") else
-    "news" if path == "/news" else
-    "guides" if path.startswith("/resources/") else "") %}
+    "guides" if path.startswith("/resources/") or path == "/guides" else "") %}
   {% macro nav_items() %}
   {% for key, label, route, anchor in nav_links %}
   {% set href = url_for(route) ~ anchor %}
@@ -102,6 +102,14 @@
           <span class="mylist-label">{{ _("خطتي") }}</span>
           <span class="mylist-count" data-mylist-count></span>
         </a>
+        {#- Phase 2's sign-in, for students who choose وضّاح (decisions 078, 082): the slot is here and stays empty until
+            data/waddah.json opens accounts. The site never needs it. #}
+        {% if waddah.accounts_open %}<a class="signin-link" href="{{ waddah.signin_path }}">{{ _("دخول") }}</a>{% endif %}
+        {# The one box, from any page (decision 083): the site search, which also answers universities and majors. #}
+        <a class="search-link" href="{{ url_for('search_page') }}"{% if page_path == url_for('search_page').path %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12.6 12.6L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="search-link-label">{{ _("ابحث") }}</span>
+        </a>
         {# Sun by day, crescent by night: the same disc, with a shadow that slides across it (decision 060). #}
         <button class="theme-toggle" type="button" hidden>
           <svg class="theme-icon" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false">
@@ -122,6 +130,7 @@
           <div class="menu-panel">
             <nav class="menu-nav" aria-label="{{ _('القائمة') }}">
               {{ nav_items() }}
+              <a class="menu-search" href="{{ url_for('search_page') }}">{{ _("ابحث في واضح") }}</a>
             </nav>
           </div>
         </details>
@@ -167,7 +176,7 @@
           <ul>
             {% for p in program_links %}<li><a href="{{ url_for('program_page', slug=p.slug) }}">{{ p.name_ar }}</a></li>{% endfor %}
             <li><a href="{{ url_for('universities_page') }}">{{ _("الجامعات في قوائم الابتعاث") }}</a></li>
-            <li><a href="{{ url_for('news_page') }}">{{ _("مواعيد التقديم") }}</a></li>
+            <li><a href="{{ url_for('programs_index') }}">{{ _("البرامج ومواعيدها") }}</a></li>
             <li><a href="{{ url_for('my_plan') }}">{{ _("خطتي") }}</a></li>
           </ul>
         </div>
@@ -175,7 +184,8 @@
           <h2 class="footer-title">{{ _("الأدلة") }}</h2>
           <ul>
             {% for group in guide_groups %}{% for item in group["items"] %}<li><a href="{{ url_for('resource_page', slug=item.slug) }}">{{ item.title_ar }}</a></li>{% endfor %}{% endfor %}
-            <li><a href="{{ url_for('search_page') }}">{{ _("البحث في الدليل") }}</a></li>
+            <li><a href="{{ url_for('guides_index') }}">{{ _("كل الأدلة") }}</a></li>
+            <li><a href="{{ url_for('search_page') }}">{{ _("البحث في واضح") }}</a></li>
           </ul>
         </div>
       </nav>

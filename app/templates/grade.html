@@ -28,6 +28,11 @@
   <header class="page-header">
     <h1>{{ page.title }}: {{ page.stage_ar }}</h1>
     <p class="lead">{{ page.description }}</p>
+    {#- «هذا صفّي» (decision 083): the grade is remembered on this device only (mylist.js, localStorage "wadih:grade"),
+        so the homepage marks it «صفّك». A toggle; hidden until the script knows the browser can keep it. #}
+    <button class="save-mini grade-mine" type="button" data-my-grade="{{ page.slug }}" aria-pressed="false" hidden>
+      <span data-my-grade-label>{{ _("هذا صفّي") }}</span>
+    </button>
   </header>
 
   {# «من أين تبدأ؟» (decision 078, A4): grade 12 starts from what the student wants, each with where to go next. #}

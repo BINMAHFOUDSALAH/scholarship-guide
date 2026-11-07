@@ -227,7 +227,8 @@ def test_live_on_the_site(live):
     assert 'href="/explore"' in client.get("/resources/undecided").text  # the guide's door
     home = client.get("/").text
     assert "لم تقرر ماذا تدرس؟" in home and '/explore"' in home  # the homepage's door, under the grades
-    assert home.index('id="grades"') < home.index("hero-door") < home.index("hero-search")
+    # Decision 083: the grades first, then the one box, then the smaller door for students who haven't decided.
+    assert home.index('id="grades"') < home.index("hero-search") < home.index("hero-door")
     assert 'name="robots" content="noindex"' not in client.get("/explore").text  # public now: search engines may list it
 
 

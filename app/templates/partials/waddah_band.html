@@ -1,0 +1,37 @@
+{#
+  وضّاح's teaser on the homepage (decisions 082, 083): «قادم في ديسمبر». A night band behind a paper-cut horizon; the sky
+  lightens a little each night (--dawn, from main.waddah_dawn(): Riyadh's date, 0 = night) and holds at the edge of dawn
+  in December. On launch day (data/waddah.json "launched") dawn breaks. Nothing loops; with reduced motion the light
+  simply stands where the day puts it.
+#}
+{% import "partials/waddah.html" as w %}
+{% set dawn = waddah_dawn() %}
+<section class="waddah-band" style="--dawn: {{ dawn }}" aria-labelledby="waddah-band-title" data-dawn="{{ dawn }}">
+  <svg class="waddah-sky" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="dawn-glow" cx="0.5" cy="1" r="0.75">
+        <stop offset="0" class="dawn-glow-in"/>
+        <stop offset="1" class="dawn-glow-out"/>
+      </radialGradient>
+    </defs>
+    <rect class="dawn-ground" width="1440" height="420"/>
+    <rect class="dawn-glow" width="1440" height="420" fill="url(#dawn-glow)"/>
+    <g class="dawn-stars">{% for x, y, r, tier in sky_stars.hero[:44] %}<circle cx="{{ x }}" cy="{{ (y * 0.62) | round(1) }}" r="{{ r }}" class="dawn-star dawn-star--{{ tier }}"/>{% endfor %}</g>
+    <g class="dawn-light" transform="translate(1040 330)">
+      <g class="dawn-light-rise">
+        <circle class="dawn-light-halo" r="56"/>
+        <path class="dawn-light-shape" d="M0 -26 Q4.2 -4.2 26 0 Q4.2 4.2 0 26 Q-4.2 4.2 -26 0 Q-4.2 -4.2 0 -26Z"/>
+      </g>
+    </g>
+    {# The horizon, three layers of cut paper (our own drawing, decision 073's way). #}
+    <path class="dawn-hill dawn-hill--far" d="M0 330 C180 300 300 318 470 306 C640 294 760 262 940 286 C1110 308 1240 290 1440 300 L1440 420 L0 420Z"/>
+    <path class="dawn-hill dawn-hill--mid" d="M0 360 C150 340 330 352 520 336 C700 322 860 344 1030 334 C1200 324 1320 344 1440 338 L1440 420 L0 420Z"/>
+    <path class="dawn-hill dawn-hill--near" d="M0 392 C220 378 420 396 640 384 C860 372 1060 394 1260 386 C1350 382 1400 388 1440 386 L1440 420 L0 420Z"/>
+  </svg>
+  <div class="container waddah-band-inner">
+    <p class="waddah-kicker">{{ waddah.teaser.kicker_ar }}</p>
+    <h2 id="waddah-band-title" class="waddah-title">{{ w.wordmark() }} <span class="waddah-title-rest">{{ _("قادم في ديسمبر") }}</span></h2>
+    <p class="waddah-line">{{ waddah.teaser.line_ar }}</p>
+    <a class="btn btn--on-night" href="{{ url_for('waddah_page') }}">{{ waddah.teaser.cta_ar }}</a>
+  </div>
+</section>

@@ -133,6 +133,51 @@
     if (status) status.textContent = t(saved ? "أُزيل من خطتك." : "حُفظ في خطتك على هذا الجهاز.");
   }
 
+  // ---------- the student's grade (decision 083) ----------
+  // «هذا صفّي» on a grade page keeps the grade in this browser ("wadih:grade", a grade page's slug), so the homepage
+  // marks it «صفّك». One value, nothing else; pressing again forgets it.
+  const GRADE_KEY = "wadih:grade";
+  const GRADE = /^grade-1[0-2]$/;
+
+  function readGrade() {
+    try {
+      const g = localStorage.getItem(GRADE_KEY);
+      return GRADE.test(g || "") ? g : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function renderGrade() {
+    const mine = readGrade();
+    for (const button of document.querySelectorAll("button[data-my-grade]")) {
+      const on = button.dataset.myGrade === mine;
+      button.setAttribute("aria-pressed", String(on));
+      button.classList.toggle("is-saved", on);
+      button.hidden = false;
+    }
+    for (const stop of document.querySelectorAll("[data-grade-stop]")) {
+      const on = stop.dataset.gradeStop === mine;
+      stop.classList.toggle("is-here", on);
+      const here = stop.querySelector("[data-grade-here]");
+      if (here) here.hidden = !on;
+    }
+  }
+
+  function toggleGrade(button) {
+    const status = document.querySelector("[data-save-status]");
+    const on = readGrade() === button.dataset.myGrade;
+    try {
+      if (on) localStorage.removeItem(GRADE_KEY);
+      else localStorage.setItem(GRADE_KEY, button.dataset.myGrade);
+    } catch (e) {
+      if (status) status.textContent = t("تعذّر الحفظ في هذا المتصفح.");
+      return;
+    }
+    renderGrade();
+    if (status) status.textContent = t(on ? "لن نذكّرك بصفّك." : "حُفظ صفّك على هذا الجهاز.");
+  }
+
   // ---------- the «خطتي» page ----------
 
   async function setupPlanPage() {
@@ -237,14 +282,18 @@
   // Storage blocked (e.g. some private modes): no save buttons, so nothing pretends to be saved.
   if (!canStore) return;
   renderButtons();
+  renderGrade();
   // One listener for every save button, including result rows drawn later by live updates.
   document.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-save]");
     if (button) toggle(button);
+    const grade = event.target.closest("button[data-my-grade]");
+    if (grade) toggleGrade(grade);
   });
   document.addEventListener("wadih:results", (event) => renderButtons(event.detail.root));
   // Another tab changed the plan: keep this one in step.
   window.addEventListener("storage", (event) => {
+    if (event.key === GRADE_KEY) renderGrade();
     if (event.key !== KEY) return;
     renderHeader();
     renderButtons();

@@ -1,46 +1,83 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
+{% import "partials/uni_macros.html" as um with context %}
 
-{% block title %}{% if q %}{{ q }}: {% endif %}{{ _("البحث في الدليل |") }} {{ site.name }}{% endblock %}
+{% block title %}{% if q %}{{ q }}: {% endif %}{{ _("البحث في واضح |") }} {{ site.name }}{% endblock %}
 {% block description %}{{ _("ابحث في صفحات") }} {{ site.name }} {{ _("ومعلوماتها الرسمية، مع مصدر كل نتيجة.") }}{% endblock %}
 {# Result pages change with every query: nothing for search engines to index. #}
 {% block head_extra %}<meta name="robots" content="noindex">{% endblock %}
 
+{#
+  The one box (decision 083): a university, a major or a topic. First what the university lists say (one link into the
+  explorer, which holds the details and the sources), then the guides' own sections. In Phase 2 this box becomes
+  «اسأل وضّاح»; these results stay as its "sources mode".
+#}
 {% block content %}
 <div class="measure site-search">
   <header class="page-header">
-    <h1>{{ _("البحث في الدليل") }}</h1>
-    <p class="lead">{{ _("ابحث في صفحات الدليل ومعلوماته الرسمية.") }}</p>
+    <h1>{{ _("البحث في واضح") }}</h1>
   </header>
 
-  <form method="get" action="{{ url_for('search_page') }}" role="search" aria-label="{{ _('البحث في الدليل') }}">
-    <label class="field-label" for="search-q">{{ _("ماذا تريد أن تعرف؟") }}</label>
-    <p class="field-hint" id="search-hint">{{ _("مثل: آيلتس، القبول المشروط، القدرات. للجامعات والتخصصات استخدم") }} <a href="{{ url_for('universities_page') }}">{{ _("البحث في الجامعات") }}</a>.</p>
-    <div class="site-search-row">
-      <input class="input" type="search" id="search-q" name="q" value="{{ q }}" maxlength="200" aria-describedby="search-hint">
+  <form method="get" action="{{ url_for('search_page') }}" role="search" aria-label="{{ _('البحث في واضح') }}">
+    <label class="field-label" for="search-q">{{ _("جامعة، تخصص، أو موضوع") }}</label>
+    <p class="field-hint" id="search-hint">{{ _("مثل: ستانفورد، هندسة البرمجيات، آيلتس، القبول المشروط.") }}</p>
+    <div class="site-search-row search-box">
+      <input class="input" type="search" id="search-q" name="q" value="{{ q }}" maxlength="200" autocomplete="off"
+             role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-q-suggest"
+             aria-describedby="search-hint" data-suggest="{{ url_for('suggestions_api') }}">
       <button class="btn btn--primary" type="submit">{{ _("ابحث") }}</button>
+      <div id="search-q-suggest" class="suggest" role="listbox" aria-label="{{ _('اقتراحات') }}" tabindex="-1" hidden></div>
     </div>
   </form>
 
   {% if q %}
-  <p class="site-search-count" role="status">
-    {% if results %}{{ results | length | count_ar("results") }} {{ _("عن «") }}{{ q }}{{ _("»") }}{% else %}{{ _("لا نتائج عن «") }}{{ q }}{{ _("»") }}{% endif %}
-  </p>
-  {% if results %}
-  <ol class="rows site-search-results">
-    {% for r in results %}
-    <li>
-      <h2 class="site-search-title"><a href="{{ r.url }}">{{ r.title }}{% if r.heading %}: {{ r.heading }}{% endif %}</a></h2>
-      <p class="site-search-snippet">{{ r.snippet }}</p>
-      {{ c.source_stamp(r.sources) }}
-    </li>
-    {% endfor %}
-  </ol>
-  {% else %}
-  <div class="notice">
-    <p>{{ _("جرّب كلمة أخرى بنفس المعنى (مثل «ابتعاث» بدل «منحة»)، أو كلمة واحدة فقط. البحث هنا يجد الكلمات المكتوبة في الدليل، لا معناها.") }}</p>
-  </div>
+  {% if lists %}
+  <section class="search-lists" aria-labelledby="lists-title">
+    <h2 id="lists-title" class="search-group-title">{{ _("في قوائم الجامعات") }}</h2>
+    {% if lists.universities %}
+    <ul class="rows search-unis">
+      {% for u in lists.universities %}
+      <li>{{ um.uni_name(u) }} <span class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</span></li>
+      {% endfor %}
+    </ul>
+    {% if lists.total > lists.universities | length %}<p class="section-link"><a href="{{ lists.href }}">{{ _f("كل النتائج ({n})", n=lists.total | count_ar("universities")) }}</a></p>{% endif %}
+    {% elif lists.majors %}
+    <p class="search-answer">{% if lists.majors | length == 1 %}{{ _f("تخصص «{name}» في قوائم الابتعاث.", name=lists.majors[0]) }}{% else %}{{ _f("«{q}» في أسماء {n} في قوائم الابتعاث.", q=q, n=lists.majors | length | count_ar("majors")) }}{% endif %}
+      <a href="{{ lists.href }}">{{ _("اعرض جامعاته وترتيبها") if lists.majors | length == 1 else _("اعرض التخصصات وجامعاتها") }}</a></p>
+    {% elif lists.health %}
+    <p class="search-answer">{{ _("التخصصات الصحية في قوائم الابتعاث.") }} <a href="{{ lists.href }}">{{ _("اعرض الإجابة ومصادرها") }}</a></p>
+    {% endif %}
+    {% if lists.country %}
+    <p class="search-answer">{{ _f("جامعات {country} في القوائم.", country=explorer.countries[lists.country].name_ar) }} <a href="{{ url_for('universities_page') }}?country={{ lists.country }}">{{ _("اعرض القائمة") }}</a></p>
+    {% endif %}
+  </section>
   {% endif %}
+
+  <section class="search-guides" aria-labelledby="guides-results-title">
+    <h2 id="guides-results-title" class="search-group-title">{{ _("في الأدلة") }}</h2>
+    <p class="site-search-count" role="status">
+      {% if results %}{{ results | length | count_ar("results") }} {{ _("عن «") }}{{ q }}{{ _("»") }}{% else %}{{ _("لا نتائج عن «") }}{{ q }}{{ _("»") }}{% endif %}
+    </p>
+    {% if results %}
+    <ol class="rows site-search-results">
+      {% for r in results %}
+      <li>
+        <h3 class="site-search-title"><a href="{{ r.url }}">{{ r.title }}{% if r.heading %}: {{ r.heading }}{% endif %}</a></h3>
+        <p class="site-search-snippet">{{ r.snippet }}</p>
+        {{ c.source_stamp(r.sources) }}
+      </li>
+      {% endfor %}
+    </ol>
+    {% elif not lists %}
+    <div class="notice">
+      <p>{{ _("جرّب كلمة أخرى بنفس المعنى (مثل «ابتعاث» بدل «منحة»)، أو كلمة واحدة فقط. البحث هنا يجد الكلمات المكتوبة في الدليل، لا معناها.") }}</p>
+    </div>
+    {% endif %}
+  </section>
   {% endif %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>
 {% endblock %}

@@ -538,9 +538,9 @@ def test_my_plan_next_steps_follow_the_status():
 
 
 def test_every_high_school_track_can_join_the_plan():
-    """Save buttons on the homepage's tracks: every track a school student can follow has a plan id."""
+    """Save buttons on «البرامج»'s tracks: every track a school student can follow has a plan id."""
     import app.main as main
-    home = client.get("/").text
+    home = client.get("/programs").text
     for pid, (path, track) in main.plan_programs.items():
         assert f'data-save="{pid}" data-save-type="program"' in home, pid
     assert "rnd" not in main.plan_programs  # doctorate only
