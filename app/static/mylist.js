@@ -130,7 +130,36 @@
     }
     renderButtons();
     renderHeader();
+    if (!saved) flyToPlan(button);
     if (status) status.textContent = t(saved ? "أُزيل من خطتك." : "حُفظ في خطتك على هذا الجهاز.");
+  }
+
+  // "Light travels" (decision 083): a saved item's light flies to «خطتي» in the header, so the student sees where it
+  // went. Once, short, and not at all with reduced motion or when the header link is out of sight.
+  function flyToPlan(from) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const to = [...document.querySelectorAll("[data-mylist-link]")].find((l) => l.offsetParent);
+    if (!to || !from.animate) return;
+    const a = from.getBoundingClientRect();
+    const b = to.getBoundingClientRect();
+    if (b.bottom < 0) return;
+    const light = document.createElement("span");
+    light.className = "plan-light";
+    light.setAttribute("aria-hidden", "true");
+    light.style.left = a.left + a.width / 2 - 7 + "px";
+    light.style.top = a.top + a.height / 2 - 7 + "px";
+    document.body.append(light);
+    const dx = b.left + b.width / 2 - (a.left + a.width / 2);
+    const dy = b.top + b.height / 2 - (a.top + a.height / 2);
+    light.animate([
+      { transform: "translate(0, 0) rotate(45deg) scale(1)", opacity: 1 },
+      { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 40}px) rotate(45deg) scale(1.2)`, opacity: 1, offset: 0.5 },
+      { transform: `translate(${dx}px, ${dy}px) rotate(45deg) scale(0.5)`, opacity: 0.2 },
+    ], { duration: 650, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }).finished.then(() => {
+      light.remove();
+      to.classList.add("is-arrived");
+      setTimeout(() => to.classList.remove("is-arrived"), 600);
+    }, () => light.remove());
   }
 
   // ---------- the student's grade (decision 083) ----------
@@ -189,11 +218,13 @@
     const failed = page.querySelector("[data-mylist-error]");
     const status = page.querySelector("[data-mylist-status]");
     const heading = page.querySelector("h1");
+    const hub = page.querySelector("[data-plan-hub]");
 
     const showEmpty = () => {
       rows.replaceChildren();
       rows.hidden = true;
       empty.hidden = false;
+      if (hub) hub.hidden = true;
     };
 
     if (!canStore) {
@@ -217,6 +248,15 @@
         });
         if (!response.ok) throw new Error("rows " + response.status);
         rows.innerHTML = await response.text();
+        // The hub (the route of statuses, «قريبًا», the calendar file) comes with the rows: move it above them.
+        const part = rows.querySelector('template[data-plan-part="hub"]');
+        if (part) {
+          if (hub) {
+            hub.replaceChildren(part.content.cloneNode(true));
+            hub.hidden = false;
+          }
+          part.remove();
+        }
       } catch (e) {
         failed.hidden = false;
         return;
@@ -249,7 +289,39 @@
         return;
       }
       status.textContent = t("حُفظ: {status}.").replace("{status}", select.options[select.selectedIndex].text);
-      draw(key); // the next step and the date follow the new status
+      // The next step and the date follow the new status. «قُبلت» lights the row once (decision 083).
+      draw(key).then(() => {
+        if (select.value !== "accepted") return;
+        const row = rows.querySelector('[data-mylist-item="' + key + '"]');
+        if (row) row.classList.add("is-accepted");
+      });
+    });
+
+    // «أضف المواعيد إلى تقويمك»: the server turns the plan into an .ics file and forgets it; the phone opens it.
+    if (hub) hub.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-plan-ics]");
+      if (!button) return;
+      button.disabled = true;
+      try {
+        const response = await fetch(hub.dataset.icsUrl, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ v: 1, items: read() }),
+        });
+        if (!response.ok) throw new Error("ics " + response.status);
+        const url = URL.createObjectURL(await response.blob());
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "wadih-plan.ics";
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        status.textContent = t("نُزّل ملف المواعيد. افتحه لتضيفها إلى تقويمك.");
+      } catch (e) {
+        status.textContent = t("تعذّر تجهيز ملف المواعيد. حاول مرة أخرى.");
+      } finally {
+        button.disabled = false;
+      }
     });
 
     rows.addEventListener("click", (event) => {

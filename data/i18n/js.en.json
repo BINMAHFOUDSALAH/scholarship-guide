@@ -29,5 +29,7 @@
  "أُزيل {name} من خطتك.": "{name} was removed from your plan.",
  "حُفظ: {status}.": "Saved: {status}.",
  "لن نذكّرك بصفّك.": "Your grade is no longer kept.",
- "حُفظ صفّك على هذا الجهاز.": "Your grade is kept on this device."
+ "حُفظ صفّك على هذا الجهاز.": "Your grade is kept on this device.",
+ "نُزّل ملف المواعيد. افتحه لتضيفها إلى تقويمك.": "The calendar file has downloaded. Open it to add the dates to your calendar.",
+ "تعذّر تجهيز ملف المواعيد. حاول مرة أخرى.": "We couldn’t prepare the calendar file. Try again."
 }

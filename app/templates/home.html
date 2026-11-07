@@ -2,6 +2,7 @@
 {% import "components.html" as c %}
 {% import "partials/sky.html" as sky %}
 {% import "partials/now.html" as now_ui with context %}
+{% import "partials/world_map.html" as wm with context %}
 
 {#
   The homepage (decisions 062, 083). One clear way in, then a second and a third:
@@ -105,6 +106,16 @@
   {{ now_ui.now_groups(now, heading_level=3, limit=4, more_href=url_for('programs_index')) }}
 </section>
 
+{#- «إلى أين؟» (decision 083): every country in the official lists, sized by its universities; a country opens them. #}
+{% set world = world_of(explorer.universities.values()) %}
+<section id="where" class="section where" aria-labelledby="where-title">
+  <div class="section-head">
+    <h2 id="where-title" class="section-title">{{ _("إلى أين؟") }}</h2>
+    <p class="section-note">{{ _f("{n} في {countries} في قوائم الابتعاث. اختر دولة لترى جامعاتها.", n=explorer.universities | length | count_ar("universities"), countries=world.countries | length | count_ar("countries")) }}</p>
+  </div>
+  {{ wm.world_map(world, url_for('universities_page') ~ "?", _("الدول في قوائم الابتعاث")) }}
+</section>
+
 {# The programs, one short row each, grouped by when you apply (decision 078, A2). Details on «البرامج». #}
 <section id="programs" class="section" aria-labelledby="programs-title">
   <div class="section-head">
@@ -150,5 +161,6 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>
+<script src="{{ url_for('static', path='map.js') }}?v={{ asset_version('map.js') }}" defer></script>
 {% if quote and quote.youtube_id %}<script src="{{ url_for('static', path='video.js') }}?v={{ asset_version('video.js') }}" defer></script>{% endif %}
 {% endblock %}

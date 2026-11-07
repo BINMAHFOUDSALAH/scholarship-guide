@@ -4,6 +4,9 @@
 {% block title %}{{ waddah.teaser.title_ar }} | {{ site.name }}{% endblock %}
 {% block description %}{{ waddah.teaser.line_ar }}{% endblock %}
 {% block body_class %}page-waddah{% endblock %}
+{# Its own share card (marketing/src/waddah_cards.mjs draws it from data/waddah.json). #}
+{% block og_image %}waddah-og.png{% endblock %}
+{% block og_image_alt %}{{ waddah.teaser.title_ar }}{% endblock %}
 
 {#
   /waddah (decision 082): what وضّاح will do and won't, example questions (labelled as examples), and a short FAQ.

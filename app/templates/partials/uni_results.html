@@ -3,6 +3,7 @@
   universities.js updates the results as the student types.
 #}
 {% import "partials/uni_macros.html" as um with context %}
+{% import "partials/world_map.html" as wm with context %}
 {% set r = result %}
 {% set back = view.query %}
 
@@ -88,6 +89,16 @@
     </p>
   </header>
   {% if s.note_ar %}<p class="result-note">{{ s.note_ar }}</p>{% endif %}
+  {#- The map view (decision 083): where this list's universities are, folded so the list stays first. Not for الرواد's
+      own list (its opening already draws «خريطة الثلاثين») or when a country is chosen. #}
+  {% set listed = s.rows if s.rows is defined else (s.universities or []) %}
+  {% set world = world_of(listed) if (listed and not r.country and not (s.track == "arruaad" and r.mode == "browse")) else None %}
+  {% if world and world.countries | length > 1 %}
+  <details class="map-view">
+    <summary>{{ _f("على الخريطة: {n}", n=world.countries | length | count_ar("countries")) }}</summary>
+    {{ wm.world_map(world, url_for('universities_page') ~ "?" ~ (back ~ "&" if back else ""), _("جامعات هذه القائمة حسب الدولة")) }}
+  </details>
+  {% endif %}
 
   {% if s.waaid is defined %}
     <p class="result-note">{{ _("واعد لا يعتمد على قوائم الجامعات: كل برنامج مرتبط بجهة توظيف ويحدد مؤسسته التعليمية وشروطه، وفترة التقديم قصيرة غالبًا. المصدر:") }} <a href="https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/" target="_blank" rel="noopener">{{ _("صفحة مسار واعد") }}</a></p>

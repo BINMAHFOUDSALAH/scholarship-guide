@@ -1279,10 +1279,27 @@ main:has(> .tuwaiq) {
 }
 
 /* A small "source" link at the end of a value. */
+/*
+  The source chip (decision 083): one look for every official source beside a fact, on pages and, from Phase 2, under
+  وضّاح's answers. Small, tinted forest, no underline, the ↗ drawn after it: present, but quieter than the answer.
+*/
 .src {
-  font-size: var(--text-sm);
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--action) 9%, transparent);
+  color: var(--action);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1.9;
+  text-decoration: none;
   white-space: nowrap;
+  vertical-align: 0.05em;
+}
+
+.src:hover {
+  background: color-mix(in srgb, var(--action) 17%, transparent);
 }
 
 /* Back link: back to where the student came from (GOV.UK "back link"). In RTL, "back" points right. */
@@ -1691,74 +1708,13 @@ main:has(> .tuwaiq) {
 
 /* ---------- Homepage sections ---------- */
 
-/* «مفتوح للتقديم الآن»: one row per open item; the status sits next to the name, not across the page. */
-.open-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line-strong);
-}
-
-.open-item {
-  display: grid;
-  gap: var(--space-1) var(--space-4);
-  padding-block: var(--space-3);
-  border-bottom: 1px solid var(--line);
-}
-
-.open-item p {
-  margin: 0;
-}
-
-.open-name {
-  font-size: var(--text-md);
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.open-name a {
-  text-decoration: none;
-}
-
-.open-name a:hover {
-  text-decoration: underline;
-}
-
-.open-program {
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
-/* «لمن: …»: who can act on it today (full text colour, it changes the decision). */
-.open-who,
-.board-who {
-  font-size: var(--text-sm);
-  color: var(--ink);
-}
-
-.open-when {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1) var(--space-2);
-}
-
-@media (min-width: 760px) {
-  .open-item {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(12rem, auto) auto;
-    align-items: baseline;
-  }
-}
-
-/* The two parts of «مفتوح للتقديم الآن», and the groups of «البرامج» (decision 078, A2): when you apply. */
-.open-group-title,
+/* The groups of «البرامج» (decision 078, A2): when you apply. */
 .path-group-title {
   margin-block: var(--space-5) var(--space-2);
   font-size: var(--text-base);
   color: var(--ink);
 }
 
-.open-group-title:first-of-type,
 .path-group-title:first-of-type {
   margin-block-start: 0;
 }
@@ -3728,7 +3684,7 @@ a.uni-name:hover .uni-name-en:only-child {
   .rowwad-text { grid-area: text; }
   .rowwad-aside { grid-area: aside; }
   .rowwad-chart { grid-area: chart; }
-  .country-chips { grid-area: chips; }
+  .rowwad .country-chips { grid-area: chips; }
 }
 
 @media (max-width: 1023px) {
@@ -4248,150 +4204,11 @@ a.uni-name:hover .uni-name-en:only-child {
   font-size: var(--text-sm);
 }
 
-/* The homepage's return strip: shown by mylist.js only when this browser holds a plan. */
-.plan-strip {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-1) var(--space-3);
-  padding-block: var(--space-3);
-  border-bottom: 1px solid var(--line);
-}
-
-.plan-strip[hidden] {
-  display: none;
-}
-
-.plan-strip p {
-  margin: 0;
-}
-
-/* ---------- Application deadlines (/news): one column in the order a student acts on it ---------- */
-
-.board {
-  display: grid;
-  gap: var(--space-5);
-}
-
-.board-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-1) var(--space-4);
-  margin-bottom: var(--space-2);
-  padding-bottom: var(--space-2);
-  border-bottom: 2px solid var(--ink);
-}
-
-.board-title {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-  margin: 0;
-  font-size: 1.625rem;
-}
-
-.board-count {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--ink-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.board-hint {
-  margin: 0;
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
-.board-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.board-item {
-  display: grid;
-  gap: var(--space-1) var(--space-4);
-  padding-block: var(--space-3);
-  border-bottom: 1px solid var(--line);
-}
-
-.board-item p {
-  margin: 0;
-}
-
-.board-name {
-  font-size: var(--text-md);
-  font-weight: 700;
-  line-height: 1.55;
-}
-
-.board-name a {
-  text-decoration: none;
-}
-
-.board-name a:hover {
-  text-decoration: underline;
-}
-
-.board-program,
-.board-empty {
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
-.board-empty {
-  padding-block: var(--space-3);
-}
-
-.board-when {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1) var(--space-2);
-  font-size: var(--text-sm);
-}
+/* ---------- «البرامج»: dates and the official accounts (was /news) ---------- */
 
 .board-date {
   color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
-}
-
-.board-links {
-  font-size: var(--text-sm);
-}
-
-.board-more {
-  margin: var(--space-3) 0 0;
-  font-size: var(--text-sm);
-  font-weight: 700;
-}
-
-/* What opened and closed recently: a compact dated list, quieter than what's open. */
-.board-group--recent .board-item {
-  padding-block: var(--space-2);
-}
-
-.board-group--recent .board-name {
-  font-size: var(--text-base);
-}
-
-.board-group--news .board-name {
-  font-size: var(--text-base);
-}
-
-@media (min-width: 760px) {
-  .board-item {
-    grid-template-columns: minmax(0, 1fr) minmax(11rem, auto) 5.5rem;
-    align-items: baseline;
-  }
-
-  .board-group--recent .board-item {
-    grid-template-columns: minmax(0, 1fr) 11rem 5.5rem;
-  }
 }
 
 .news-follow {
@@ -5170,7 +4987,7 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .dawn-glow-in {
-  stop-color: color-mix(in oklab, var(--lime) calc(var(--dawn) * 70%), var(--chart-ground));
+  stop-color: color-mix(in oklab, var(--lime) calc(var(--dawn) * 50%), var(--chart-ground));
 }
 
 .dawn-glow-out {
@@ -5444,6 +5261,309 @@ a.uni-name:hover .uni-name-en:only-child {
   mask: var(--icon) center / contain no-repeat;
 }
 
+/* ---------- «خطتي» as a hub (decision 083) ---------- */
+
+.plan-hub-wrap {
+  display: grid;
+  gap: var(--space-5);
+  margin-block: var(--space-4) var(--space-5);
+}
+
+.plan-hub-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+}
+
+/* The route of statuses: the logo's diamonds, lit lime up to the furthest step reached. */
+.plan-route {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan-route-stop {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding-top: 28px;
+}
+
+.plan-route-stop:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  inset-inline: 22px 4px;
+  height: 2px;
+  background: var(--line-strong);
+}
+
+.plan-route-stop.is-reached:not(.is-here)::before {
+  background: var(--action);
+}
+
+.plan-route-mark {
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 2px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--line-strong);
+  background: var(--paper);
+  transform: rotate(45deg);
+}
+
+.plan-route-stop.is-reached .plan-route-mark {
+  border-color: var(--action);
+  background: var(--action);
+}
+
+.plan-route-stop.is-here .plan-route-mark {
+  border-color: var(--guide-edge);
+  background: var(--lime);
+}
+
+.plan-route-name {
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.plan-route-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.plan-route-stop:not(.is-reached) .plan-route-count {
+  color: var(--ink-muted);
+}
+
+.plan-route-turn {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.plan-soon-range {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.plan-soon-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.plan-soon-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px var(--space-3);
+  align-items: baseline;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.plan-soon-date {
+  grid-column: 1 / -1;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.plan-soon-what {
+  font-size: var(--text-sm);
+}
+
+.plan-soon-empty {
+  color: var(--ink-muted);
+}
+
+.plan-ics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin: var(--space-3) 0 0;
+}
+
+.plan-ics-note {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+@media (min-width: 760px) {
+  .plan-hub-wrap {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: start;
+  }
+
+  .plan-soon-item {
+    grid-template-columns: 9.5rem minmax(0, 1fr) auto;
+  }
+
+  .plan-soon-date {
+    grid-column: auto;
+  }
+}
+
+/* The light that flies from «احفظ» to «خطتي» (mylist.js), and the header link catching it. */
+.plan-light {
+  position: fixed;
+  z-index: 50;
+  width: 14px;
+  height: 14px;
+  background: var(--lime);
+  box-shadow: 0 0 0 2px var(--guide-edge), 0 0 18px 4px color-mix(in srgb, var(--lime) 60%, transparent);
+  pointer-events: none;
+  transform: rotate(45deg);
+}
+
+.mylist-link.is-arrived {
+  border-color: var(--action);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lime) 70%, transparent);
+  transition: box-shadow 0.3s ease;
+}
+
+/* «قُبلت»: the row lights once, a lime band that fades (the only celebration; nothing loops). */
+@media (prefers-reduced-motion: no-preference) {
+  .plan-item.is-accepted {
+    animation: accepted-glow 1.6s ease-out 1;
+  }
+}
+
+.plan-item.is-accepted {
+  box-shadow: inset 4px 0 0 var(--lime);
+}
+
+[dir="rtl"] .plan-item.is-accepted {
+  box-shadow: inset -4px 0 0 var(--lime);
+}
+
+@keyframes accepted-glow {
+  from { background: color-mix(in srgb, var(--lime) 45%, transparent); }
+  to { background: transparent; }
+}
+
+/* ---------- The map (decision 083): any set of universities, one circle per country ---------- */
+
+.world-wrap {
+  --chart-ink: #f6f4ee;
+  --chart-path: var(--lime);
+  --star-show: 1;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.world-map {
+  position: relative;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .where .world-wrap,
+  .plan-where .world-wrap {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-5);
+  }
+}
+
+/* A destination: a paper circle with a soft halo; its area follows the count. */
+.world-dot {
+  fill: var(--chart-ink);
+  transition: fill 0.25s ease;
+}
+
+.world-glow {
+  fill: var(--chart-ink);
+  opacity: 0.08;
+}
+
+.world-label {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A country in focus (its chip pointed at or focused): it lights lime, the path of light draws, the rest recede. */
+.world-map[data-active] .world-country {
+  opacity: 0.28;
+  transition: opacity 0.3s ease;
+}
+
+.world-map[data-active] .world-country.is-active {
+  opacity: 1;
+}
+
+.world-country.is-active .world-dot {
+  fill: var(--lime);
+}
+
+.world-country.is-active .chart-path {
+  stroke-dashoffset: 0;
+}
+
+.world-chips .country-chip:hover,
+.world-chips .country-chip:focus-visible {
+  border-color: var(--action);
+}
+
+@media (max-width: 699px) {
+  .world-label {
+    display: none;
+  }
+}
+
+/* The explorer's map view: folded under the list's title, so the list stays first. */
+.map-view {
+  margin-block: var(--space-2) var(--space-4);
+}
+
+.map-view > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--action);
+  cursor: pointer;
+  list-style: none;
+}
+
+.map-view > summary::-webkit-details-marker {
+  display: none;
+}
+
+.map-view > summary::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.map-view[open] > summary {
+  margin-bottom: var(--space-3);
+  border-color: var(--action);
+}
+
+.plan-where {
+  grid-column: 1 / -1;
+}
+
 /* ---------- Narrow phones ---------- */
 
 /* Phones up to 479px (most iPhones are 375–430px): icons only in the header, so it never overflows. */
@@ -5564,15 +5684,6 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .waaid-latest-link {
   font-weight: 700;
-}
-
-/* «تقدم الآن ↗» beside the source, on the homepage rows and the board (decision 063). */
-.open-actions,
-.board-links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-3);
 }
 
 /* ---------- English pages (decision 066) ---------- */

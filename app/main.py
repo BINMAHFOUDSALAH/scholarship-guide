@@ -2,7 +2,7 @@ import hashlib
 import json
 import os
 from functools import cache
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 
 from app.clock import date
 from pathlib import Path
@@ -20,7 +20,7 @@ from app import exploration, i18n, plan
 from app.content import SLUG_PATTERN, english_titles, list_slugs, load_page
 from app.i18n import tf, tr
 from app.search import SiteSearch
-from app.sky import rowwad_chart, star_field
+from app.sky import rowwad_chart, star_field, world_chart
 from app.universities import COUNT_FORMS, NOT_LISTED_AR, PROGRAMS_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
 
 APP_DIR = Path(__file__).parent
@@ -404,6 +404,19 @@ templates.env.globals["sky_stars"] = {
     "chart": star_field(90, 1000, 520, seed=5),
 }
 templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
+
+
+def world_of(universities):
+    """The map (decision 083) for any set of universities (dicts, or (listing, university) rows): one circle per
+    country, sized by how many of them are there. None when there are none."""
+    counts = {}
+    for u in universities:
+        u = u[1] if isinstance(u, tuple) else u
+        counts[u["country"]] = counts.get(u["country"], 0) + 1
+    return world_chart(counts, {c: explorer.countries[c]["name_ar"] for c in counts})
+
+
+templates.env.globals["world_of"] = world_of
 # «جرّب قبل أن تقرر» (decision 069): its door on the «لم تقرر بعد؟» guide shows only while the activity is public.
 templates.env.globals["explore_public"] = lambda: exploration.is_public(SHOW_DRAFTS)
 templates.env.globals["explore_why"] = exploration.why_text
@@ -606,10 +619,8 @@ def my_plan(request: Request):
     return render(request, "my_plan.html", {"statuses": plan.STATUSES})
 
 
-@app.post("/my-plan", response_class=HTMLResponse)
-async def my_plan_rows(request: Request):
-    """Draws the rows for the plan the browser sends (JSON: {"items": [...]}). Only valid items are drawn,
-    in the student's order, at most 100; nothing is stored or logged here (decision 078)."""
+async def posted_plan(request: Request):
+    """The plan as the browser sent it (JSON: {"items": [...]}), cleaned to known ids and statuses. Never stored."""
     body = await request.body()
     if len(body) > 20_000:
         raise HTTPException(status_code=413)
@@ -617,10 +628,40 @@ async def my_plan_rows(request: Request):
         raw = json.loads(body or b"{}")
     except ValueError:
         raise HTTPException(status_code=400)
-    items = plan.clean(raw, explorer.universities, plan_programs)
+    return plan.clean(raw, explorer.universities, plan_programs)
+
+
+@app.post("/my-plan", response_class=HTMLResponse)
+async def my_plan_rows(request: Request):
+    """Draws the rows for the plan the browser sends, in the student's order, at most 100, plus the hub's parts
+    (decision 083): «قريبًا» (dates in the next 30 days) and the route of statuses. Nothing is stored or logged."""
+    items = await posted_plan(request)
+    today = date.today()
+    soon_until = (today + timedelta(days=plan.SOON_DAYS)).isoformat()
+    upcoming = plan.dates(items, explorer, plan_programs, track_status, today.isoformat())
     return render(request, "partials/my_plan_rows.html", {
         "rows": plan.rows(items, explorer, plan_programs, track_status, APPLY_WHEN, program_slugs()),
-        "statuses": plan.STATUSES, "explorer": explorer})
+        "statuses": plan.STATUSES, "explorer": explorer,
+        "soon": [d for d in upcoming if d["date"] <= soon_until], "later_count": len([d for d in upcoming if d["date"] > soon_until]),
+        "progress": plan.progress(items), "route": plan.ROUTE, "today": today.isoformat()})
+
+
+@app.post("/my-plan.ics")
+async def my_plan_calendar(request: Request):
+    """«أضف المواعيد إلى تقويمك» (decision 083): the plan's upcoming dates as an .ics file for the student's own
+    calendar, built from the posted plan and forgotten. Each event links its page and names its official source."""
+    items = await posted_plan(request)
+    events = []
+    for d in plan.dates(items, explorer, plan_programs, track_status, date.today().isoformat()):
+        what = (f"{d['what']['event_ar']}، {d['what']['round_ar']}" if d["kind"] == "university" and d["what"].get("round_ar")
+                else d["what"]["event_ar"] if d["kind"] == "university" else d["what_ar"])
+        summary = tr(what) + tr("، ") + tr(d["name_ar"]) if not i18n.is_english() else f"{tr(d['name_ar'])}: {tr(what)}"
+        events.append({**d, "summary": summary, "href": i18n.prefix() + d["href"],
+                       "description": tf("المصدر الرسمي: {url}", url=d["source_url"] or "")})
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    body = plan.ics(events, site["base_url"], stamp, tr("خطتي في واضح"))
+    return Response(content=body, media_type="text/calendar; charset=utf-8",
+                    headers={"Content-Disposition": 'attachment; filename="wadih-plan.ics"', "Cache-Control": "no-store"})
 
 
 def explore_or_404():

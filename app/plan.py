@@ -126,3 +126,80 @@ def rows(items, explorer, programs, track_status, apply_when, program_pages):
         out.append(row)
     return out
 
+
+
+# ---------- the hub (decision 083): what's coming, progress, and the calendar file ----------
+
+SOON_DAYS = 30  # «قريبًا»: the dates in the next month
+# The route a plan item walks; «لم أُقبل» is a turn, not a step.
+ROUTE = ("thinking", "preparing", "applied", "accepted")
+
+
+def dates(items, explorer, programs, track_status, today):
+    """Every upcoming date in the plan, soonest first, each with where it comes from:
+    - a university's own dates (its requirement file; each date has its official source);
+    - an open program track's deadline (status_until, shown only with its status_source).
+    Items the student has finished with («قُبلت», «لم أُقبل») add no dates."""
+    out = []
+    for item in items:
+        if item["status"] in ("accepted", "not_accepted"):
+            continue
+        if item["type"] == "university":
+            u = explorer.universities[item["id"]]
+            for d in (explorer.details.get(u["id"]) or {}).get("dates") or []:
+                if d.get("date") and d["date"] >= today and not d.get("reference_only"):
+                    out.append({"date": d["date"], "kind": "university", "university": u, "what": d,
+                                "name_ar": u["name_ar"] or u["name_en"], "href": f"/universities/{u['id']}#dates",
+                                "source_url": d.get("source_url"), "uid": f"{u['id']}-{d['date']}"})
+        else:
+            path, track = programs[item["id"]]
+            until = track.get("status_until")
+            if until and until >= today and track.get("status_source") and track_status(track) == "open":
+                several = len([t for t in path["tracks"] if t.get("for_high_school") is not False]) > 1
+                out.append({"date": until, "kind": "program", "name_ar": track["name_ar"] if several else path["name_ar"],
+                            "what_ar": "آخر موعد للتقديم", "href": f"/programs/{path['id']}",
+                            "source_url": track["status_source"], "uid": f"{item['id']}-{until}"})
+    return sorted(out, key=lambda x: (x["date"], x["name_ar"]))
+
+
+def progress(items):
+    """How many items stand at each step of the route, and the furthest step reached (for the hub's route)."""
+    counts = {s: sum(1 for i in items if i["status"] == s) for s in STATUSES}
+    reached = max((ROUTE.index(i["status"]) for i in items if i["status"] in ROUTE), default=-1)
+    return {"counts": counts, "reached": reached, "total": len(items)}
+
+
+def _ics_text(text):
+    """iCalendar text: escape \\ ; , and newlines (RFC 5545, 3.3.11)."""
+    return text.replace("\\", "\\\\").replace(";", "\;").replace(",", "\\,").replace("\n", "\\n")
+
+
+def _fold(line):
+    """Lines over 75 octets are folded with CRLF + space (RFC 5545, 3.1), never inside a UTF-8 character."""
+    out, cur = [], b""
+    for ch in line:
+        b = ch.encode("utf-8")
+        if len(cur) + len(b) > 74:
+            out.append(cur.decode("utf-8"))
+            cur = b" "
+        cur += b
+    out.append(cur.decode("utf-8"))
+    return "\r\n".join(out)
+
+
+def ics(events, base_url, stamp, title_ar):
+    """The plan's dates as a calendar file the student adds to their own phone (decision 083): one all-day event per
+    date, with a reminder three days before, its page and its official source. Built from the posted plan; nothing
+    is stored, and no address or name is in it."""
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//wadihguide.com//khutati//AR", "CALSCALE:GREGORIAN",
+             "METHOD:PUBLISH", f"X-WR-CALNAME:{_ics_text(title_ar)}"]
+    for e in events:
+        day = e["date"].replace("-", "")
+        summary = e["summary"]
+        lines += ["BEGIN:VEVENT", f"UID:{e['uid']}@wadihguide.com", f"DTSTAMP:{stamp}",
+                  f"DTSTART;VALUE=DATE:{day}", f"SUMMARY:{_ics_text(summary)}",
+                  f"DESCRIPTION:{_ics_text(e['description'])}", f"URL:{base_url}{e['href']}",
+                  "BEGIN:VALARM", "ACTION:DISPLAY", f"DESCRIPTION:{_ics_text(summary)}", "TRIGGER:-P3D", "END:VALARM",
+                  "END:VEVENT"]
+    lines.append("END:VCALENDAR")
+    return "\r\n".join(_fold(line) for line in lines) + "\r\n"

@@ -9,7 +9,7 @@
 <section class="waddah-band" style="--dawn: {{ dawn }}" aria-labelledby="waddah-band-title" data-dawn="{{ dawn }}">
   <svg class="waddah-sky" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
     <defs>
-      <radialGradient id="dawn-glow" cx="0.5" cy="1" r="0.75">
+      <radialGradient id="dawn-glow" cx="0.23" cy="1" r="0.6">
         <stop offset="0" class="dawn-glow-in"/>
         <stop offset="1" class="dawn-glow-out"/>
       </radialGradient>
@@ -17,7 +17,7 @@
     <rect class="dawn-ground" width="1440" height="420"/>
     <rect class="dawn-glow" width="1440" height="420" fill="url(#dawn-glow)"/>
     <g class="dawn-stars">{% for x, y, r, tier in sky_stars.hero[:44] %}<circle cx="{{ x }}" cy="{{ (y * 0.62) | round(1) }}" r="{{ r }}" class="dawn-star dawn-star--{{ tier }}"/>{% endfor %}</g>
-    <g class="dawn-light" transform="translate(1040 330)">
+    <g class="dawn-light" transform="translate(330 330)">
       <g class="dawn-light-rise">
         <circle class="dawn-light-halo" r="56"/>
         <path class="dawn-light-shape" d="M0 -26 Q4.2 -4.2 26 0 Q4.2 4.2 0 26 Q-4.2 4.2 -26 0 Q-4.2 -4.2 0 -26Z"/>
