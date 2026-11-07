@@ -52,7 +52,7 @@ Gathered from the session notes in [log.md](log.md). The ones that could be chec
 ### For Part C (the redesign and وضّاح)
 - [ ] On your phone (Safari), in both themes: the homepage (grade → box → door), «الآن», «البرامج» and «السنة في سطر», a major search, «خطتي» (save, «هذا صفّي», the calendar file). Say what feels off.
 - [ ] Compare the site with the [direction board](https://claude.ai/artifact/BVq4dD2Rzmeyx9iEGUdjWh): the board couldn't be opened in the C2–C6 session, so its choices came from the 7 Nov log.
-- [ ] Check «وضّاح» / "Waddah" in the Saudi trademark register (SAIP), the App Store and Google Play, and for an X handle. **Then** set `"public": true` in `data/waddah.json` (the band and `/waddah` go live) and post from `marketing/waddah-teaser.md`.
+- [x] Name check done (owner, 2026-11-07); `"public": true` set. Post from `marketing/waddah-teaser.md`.
 - [ ] Read وضّاح's copy in `data/waddah.json` (promises, limits, examples, FAQ) and the two specs (`docs/specs/agent.md`, `accounts.md`).
 - [ ] Optional: show the name to ~10 students (girls and boys) and 2 counsellors: do they remember it after a minute, do they trust it, any bad associations?
 - [ ] Before Phase 2: an Anthropic API key, billing and a spend limit; the PDPL review for accounts and under-18 users (consent, transfer abroad).
