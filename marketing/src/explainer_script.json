@@ -1,0 +1,71 @@
+{
+  "_note": "The explainer video's words (marketing/README.md §9). One line = one caption = one voice clip (voice/<lang>/<id>.wav or .mp3, optional). *stars* mark the words drawn in lime. dur = the scene's length in seconds without a voice; with one, a scene grows to fit its clips. Only what the live site shows: the rank is the place in the track's list (the site's own note: not a world ranking), and not every university has its requirements yet (184 of 290 on 2026-11-07), so no line says «لكل جامعة».",
+  "scenes": [
+    {
+      "id": "hook", "dur": 4.2,
+      "lines": [
+        { "id": "01", "at": 0.7, "ar": "بعد الثانوية… من أين تبدأ؟", "en": "After high school… where do you start?" }
+      ]
+    },
+    {
+      "id": "brand", "dur": 4.6,
+      "lines": [
+        { "id": "02", "at": 0.5, "ar": "واضح: دليل *مجاني* لطلاب الثانوية في السعودية.", "en": "Wadih: a *free* guide for Saudi high school students." }
+      ]
+    },
+    {
+      "id": "explorer", "dur": 5.2,
+      "lines": [
+        { "id": "03", "at": 0.6, "ar": "في *مستكشف الجامعات*: جامعات قوائم الابتعاث في مكان واحد.", "en": "The *universities explorer*: the scholarship lists' universities, in one place." }
+      ]
+    },
+    {
+      "id": "filters", "dur": 7.0,
+      "lines": [
+        { "id": "04", "at": 0.3, "ar": "اختر *المسار*، و*المجال*، و*الدولة*…", "en": "Pick the *track*, the *field* and the *country*…" }
+      ]
+    },
+    {
+      "id": "results", "dur": 5.4,
+      "lines": [
+        { "id": "05", "at": 0.2, "ar": "…فترى الجامعات *بترتيبها* في قائمة المسار.", "en": "…and see the universities in their *order* on the track's list." }
+      ]
+    },
+    {
+      "id": "row", "dur": 6.4,
+      "lines": [
+        { "id": "06", "at": 0.3, "ar": "وترى *اختبارات الإنجليزية* التي تطلبها الجامعة، و*أقرب موعد* فيها.", "en": "See a university's *English tests* and its *next deadline*." }
+      ]
+    },
+    {
+      "id": "uni", "dur": 6.8,
+      "lines": [
+        { "id": "07", "at": 1.2, "ar": "وكل معلومة معها رابط *مصدرها الرسمي*.", "en": "And every fact links to its *official source*." }
+      ]
+    },
+    {
+      "id": "waddah", "dur": 10.0,
+      "lines": [
+        { "id": "08", "at": 1.0, "ar": "وقريبًا: *وضّاح*، دليلك الذكي في واضح.", "en": "Coming soon: *Waddah*, your AI guide on Wadih." },
+        { "id": "09", "at": 4.2, "ar": "اسأله عن الابتعاث والجامعات والاختبارات.", "en": "Ask it about scholarships, universities and tests." },
+        { "id": "10", "at": 7.2, "ar": "*قادم في ديسمبر.*", "en": "*Coming in December.*" }
+      ]
+    },
+    {
+      "id": "end", "dur": 4.6,
+      "lines": [
+        { "id": "11", "at": 0.6, "ar": "ابدأ الآن، *مجانًا*.", "en": "Start now. It's *free*." }
+      ]
+    }
+  ],
+  "screen": {
+    "kicker": { "ar": "قريبًا في واضح", "en": "Coming to Wadih" },
+    "waddah": { "ar": "وضّاح", "en": "Waddah" },
+    "when": { "ar": "قادم في ديسمبر", "en": "is coming in December" },
+    "line": { "ar": "دليلك الذكي في واضح: اسأله عن الابتعاث والجامعات والاختبارات.", "en": "Your AI guide on Wadih: ask it about scholarships, universities and tests." },
+    "name": { "ar": "واضح", "en": "Wadih" },
+    "tagline": { "ar": "مستقبلك بعد الثانوية، بوضوح", "en": "Your future after high school, clearly" },
+    "free": { "ar": "مجاني", "en": "Free" },
+    "independent": { "ar": "دليل طلابي مستقل، لا يتبع أي جهة رسمية", "en": "An independent student guide, not affiliated with any official body" }
+  }
+}

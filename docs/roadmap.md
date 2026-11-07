@@ -56,6 +56,7 @@ Gathered from the session notes in [log.md](log.md). The ones that could be chec
 - [x] Name check done (owner, 2026-11-07); `"public": true` set. Post from `marketing/waddah-teaser.md`.
 - [ ] Read the two specs (`docs/specs/agent.md`, `accounts.md`). وضّاح's promises, examples and FAQ left `data/waddah.json` until launch (084): rewrite them for the page that comes back with the guide.
 - [ ] On your phone: the new map, the program pictures in «الآن», الرواد's logos, and the teaser's drawing. If you post the teaser, regenerate the kit first (`node marketing/src/waddah_cards.mjs`): the old share image quoted the removed line.
+- [ ] The explainer video (089): watch both cuts in `marketing/out/`. For the Arabic voice, try HUMAIN Voice's playground, pick a Najdi-sounding male voice, and ask HUMAIN whether it can be used commercially before you post (marketing/README.md §9).
 - [ ] Optional: show the name to ~10 students (girls and boys) and 2 counsellors: do they remember it after a minute, do they trust it, any bad associations?
 - [ ] Before Phase 2: an Anthropic API key, billing and a spend limit; the PDPL review for accounts and under-18 users (consent, transfer abroad).
 

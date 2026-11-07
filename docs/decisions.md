@@ -1429,3 +1429,20 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A full Holland score (R, I, A…) instead of fields:** needs validation in Arabic before any score is shown (decision 069).
 **Also (owner, same day):** the video's line «يُحمَّل من يوتيوب عند الضغط فقط» is removed; the video still loads only on a press.
 **Verified:** pytest (807); the browser at 375px: a tap answers one question and moves on once, a full run to the result, English, both themes, no console errors. **Not verified:** `scripts/check_explore.mjs` was updated for the new flow but not run (Playwright isn't installed on this laptop; it runs in cloud sessions); a real iPhone; students.
+
+## 089 — An explainer video told by وضّاح's own agent, in Arabic and English (marketing; updates 044, 087)
+**Date:** 2026-11-07
+**Context:** the owner asked for an explainer video of the main things: the universities explorer, how easy it is to see the universities in order with the filters, each university's requirements and deadline, and وضّاح coming soon. They suggested "Cartoon Claude" (ghost.fail/cartoon-claude) as the character.
+**Decision:**
+- **The narrator is the teaser's agent** (`partials/waddah_band.html`: the visor with two lights, the light on its antenna, no human face, 082), drawn bigger. It points at what each line is about and lands in the teaser's night scene as one of وضّاح's three agents.
+- **Not Cartoon Claude** (the owner's choice after the check): it's a fan design by Theia Vogel, not Anthropic's; the page gives no licence; and since it's drawn from Anthropic's logo, an ad with it could suggest Anthropic endorses واضح.
+- **The format:** vertical 1080×1920, 54 s, Arabic and English, captions = the voice script.
+- **Real screens only:** recaptured on every build. The music is synthesised in the script ($0, no licence question).
+- **The words follow the site:**
+  - «بترتيبها في قائمة المسار», never "world ranking": the site says the rank is the place in the track's list.
+  - No «لكل جامعة»: 184 of 290 universities had requirements on 2026-11-07.
+  - وضّاح's words are the teaser's own.
+  - Simple فصحى, which a Saudi voice can read naturally.
+- **The voice:** the owner wants a Saudi male voice with a Najdi accent from HUMAIN Voice. It isn't made yet: no published voice is marked Najdi, commercial use isn't stated, and API access goes through HUMAIN (marketing/README.md §9). The build fits each scene to its clip when one is added.
+**Alternatives:** Cartoon Claude (rights and the look of endorsement); وضّاح's star with a face (082: no face); a screen recording with no character (flatter, and the owner wanted one); 16:9 (students watch on phones).
+**Verified:** stills of every scene in both languages, the full renders, `pytest`. **Not verified:** the voice, a real phone's playback, students.
