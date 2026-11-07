@@ -3,7 +3,7 @@
   heading over both (the homepage's «مفتوح للتقديم الآن» used to list Aramco and KAUST before they opened). Shared by the
   homepage and «البرامج». Every row says who can apply («لمن»), because "open" alone read as "apply today" to students
   who can't yet. An open row shows its closing date in its status tag (no countdown, decision 084).
-  Each row has its program's picture (partials/program_art.html); الرواد's and SDAIA's rows also show a few of their universities.
+  Each row has its program's picture (partials/program_art.html); الرواد's row also shows a few of its universities; SDAIA's links to its official list (PDF).
   A واعد announcement is one row however many programs it has (decision 063).
 #}
 {% import "components.html" as c %}
@@ -27,8 +27,11 @@
         <li><a class="now-uni" href="{{ url_for('university_page', uid=u.id) }}"><img src="{{ url_for('static', path=u.file) }}" width="{{ u.width }}" height="{{ u.height }}" alt="{{ _('شعار') }} {{ u.name_ar }}" loading="lazy" decoding="async"></a></li>
         {% endfor %}
       </ul>
-      {% if item.unis_href %}<a class="now-unis-more" href="{{ item.unis_href }}">{{ _("كل جامعات المسار") if item.unis_track in ("arruaad",) else _("كل جامعات البرنامج") }}</a>{% endif %}
+      {% if item.unis_href %}<a class="now-unis-more" href="{{ item.unis_href }}">{{ _("كل جامعات المسار") }}</a>{% endif %}
     </div>
+    {% elif item.list_url %}
+    {#- A program whose universities are in its own official PDF (SDAIA): one link to it, no logos (owner 2026-11-07). #}
+    <div class="now-unis"><a class="now-unis-more" href="{{ item.list_url }}" target="_blank" rel="noopener">{{ _("كل جامعات البرنامج") }}</a></div>
     {% endif %}
   </div>
   <div class="now-actions">
