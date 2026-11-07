@@ -4,6 +4,11 @@ What each working session did and left open, newest first. Notes are kept as the
 ones can be out of date. Today's plan and to-dos are in [roadmap.md](roadmap.md); the reasons for each
 choice are in [decisions.md](decisions.md).
 
+## 2026-11-07
+
+**2026-11-07 (decisions 081–082, plan only):** studied the live site (15 page types at 390px and 1280px, both themes), the code and 8 references (BigFuture, Stripe, Duolingo, Unifrog, Linear, ArcGIS StoryMaps, Apple; Niche blocks automated browsers), and proposed the next level. The owner chose: keep the look and rebuild the structure («الطريق والنجوم»); the AI guide is **وضّاح**; Part C now (the redesign, وضّاح's identity and teaser, Phase 2's preparation); the guide itself in Phase 2 behind sign-in; the teaser says «قادم في ديسمبر». The plan is in `docs/research/design-direction-2026-11-07.md`; the direction board was created empty (link in the plan).
+- **No site changes.** **Owner to-dos:** the name check (SAIP, app stores, X); react to the board in the next session.
+
 ## 2026-11-06
 
 **2026-11-06 (owner):** «لم تقرر بعد؟»: removed the section «الميل غير القدرة، والقدرة غير القبول» and the line that linked to it (owner: vague, not helpful).

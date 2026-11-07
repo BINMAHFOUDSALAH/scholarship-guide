@@ -46,7 +46,8 @@ The evidence behind the site: what was read on official pages, when, and what co
 
 **Design and UX**
 
-- [design-direction-2026-10-17.md](research/design-direction-2026-10-17.md): the current design direction (decision 062)
+- [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md): the current plan: the «الطريق والنجوم» redesign, the AI guide وضّاح and its teaser (decisions 081–082)
+- [design-direction-2026-10-17.md](research/design-direction-2026-10-17.md): the previous design direction (decision 062), whose palette, type and rules stay
 - [ux-audit-2026-10-16.md](research/ux-audit-2026-10-16.md): UX audit and targeted redesign
 - [design-audit-2026-10.md](research/design-audit-2026-10.md): design audit and improvement pass
 - [ux-redesign-2026-10.md](research/ux-redesign-2026-10.md): audit, research and direction for the first redesign
