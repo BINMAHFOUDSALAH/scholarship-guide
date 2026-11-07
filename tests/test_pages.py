@@ -1114,3 +1114,10 @@ def test_a_touch_lights_a_country_before_opening_it():
     js = (main.APP_DIR / "static" / "map.js").read_text(encoding="utf-8")
     assert '"touch"' in js and "preventDefault" in js and "is-picked" in js
     assert ".country-chip.is-picked" in (main.APP_DIR / "static" / "style.css").read_text(encoding="utf-8")
+
+
+def test_rowwad_title_opens_its_universities_map():
+    """«مسار الرواد» in «الآن» opens the الرواد map (/universities?track=arruaad), not the scholarship's page."""
+    rows = [i for g in main.status_board().values() for i in g if i.get("unis_track") == "arruaad"]
+    assert rows and all(i["page"] == "/universities?track=arruaad" for i in rows)
+    assert 'class="rowwad-title"' in client.get("/universities?track=arruaad").text
