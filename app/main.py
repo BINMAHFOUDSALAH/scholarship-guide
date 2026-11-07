@@ -167,17 +167,30 @@ TRACK_PAGES = {"arruaad": "/universities?track=arruaad"}
 LOGO_COUNT = 5
 
 
+def logo_row(u):
+    """One university's small logo for a «الآن» row (decision 049's files, their copies from scripts/logo_thumbs.py)."""
+    return {"id": u["id"], "name_ar": u["name_ar"] or u["name_en"], "file": f"img/universities/small/{u['id']}.png",
+            "width": round(explorer.logos[u["id"]]["width"] * 22 / explorer.logos[u["id"]]["height"]), "height": 22}
+
+
+def has_small_logo(uid):
+    return uid in explorer.logos and (APP_DIR / "static" / "img" / "universities" / "small" / f"{uid}.png").is_file()
+
+
 def track_logos(track_id):
-    """The track's first universities in the official list's order that have a logo (decision 049's files, their
-    small copies from scripts/logo_thumbs.py), for its «الآن» row. Empty for other tracks."""
+    """The track's first universities in the official list's order that have a logo, for its «الآن» row.
+    Empty for other tracks."""
     if track_id not in LOGO_TRACKS:
         return []
     rows = sorted(explorer.listings(track_id), key=lambda r: r[0]["rank"])
-    return [{"id": u["id"], "name_ar": u["name_ar"] or u["name_en"],
-             "file": f"img/universities/small/{u['id']}.png",
-             "width": round(explorer.logos[u["id"]]["width"] * 22 / explorer.logos[u["id"]]["height"]), "height": 22}
-            for _, u in rows if u["id"] in explorer.logos
-            and (APP_DIR / "static" / "img" / "universities" / "small" / f"{u['id']}.png").is_file()][:LOGO_COUNT]
+    return [logo_row(u) for _, u in rows if has_small_logo(u["id"])][:LOGO_COUNT]
+
+
+def target_logos(path):
+    """A program with its own official university list (SDAIA's PDF, "target_universities"): its first universities
+    in that list's order that have a logo, for its «الآن» row (owner 2026-11-07, like الرواد's)."""
+    return [logo_row(explorer.universities[t["id"]]) for t in path.get("target_universities", [])
+            if t.get("id") and has_small_logo(t["id"])][:LOGO_COUNT]
 
 
 def status_board():
@@ -215,8 +228,11 @@ def status_board():
                 "when": track.get("apply_when"),
                 "pid": plan_ids.get((path["id"], track.get("id"))),  # «احفظ» in «خطتي»
                 "art": program_art(path), "art_logo": path.get("logo") or path.get("now_logo"),  # the row's picture (decision 084)
-                "unis": track_logos(track.get("id")),  # a few of the track's universities, by their logos
+                # A few of its universities, by their logos, and where its full list is: الرواد's map, or the
+                # program page's list of its own official universities (SDAIA).
+                "unis": track_logos(track.get("id")) or target_logos(path),
                 "unis_track": track.get("id"),
+                "unis_href": TRACK_PAGES.get(track.get("id")) or (f"{page}#targets-title" if page else None),
             }
             until = track.get("status_until")
             if status == "open":
