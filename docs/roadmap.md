@@ -12,7 +12,7 @@ Keep this page short: update the sections below in place, tick the stages, and p
 - **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want وضّاح, the AI guide; «خطتي» moves into the account. وضّاح launches in December (the teaser says «قادم في ديسمبر», no fixed day).
 - **Pace:** ~5 hours per week.
 - **Just done:** C1, the direction board (12 artboards on the private canvas linked at the top of the plan). No site changes yet.
-- **Next session:** C2. First the owner's review of the board (comments on the canvas, or in chat: the "Decide" notes list the open choices); then C2 writes the approved parts into `design.md`, CLAUDE.md and architecture. The owner runs one step per session; each step is built, verified and merged, then ticked here.
+- **Next session:** C2 and C3 together (owner, 2026-11-07). C2 writes the board's choices into `design.md`, CLAUDE.md and architecture (the owner's first feedback is already on the board: no repeated explanatory copy, every map drawn like the live الرواد chart); C3 puts the teaser live (the dawn band, `/waddah` in both languages, `data/waddah.json`). Each step is built, verified and merged, then ticked here.
 
 ## Next steps
 
