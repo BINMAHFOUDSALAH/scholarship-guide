@@ -24,8 +24,6 @@
     {{ now_ui.now_groups(now, heading_level=3) }}
   </section>
 
-  {% include "partials/year_line.html" %}
-
   <section id="all-programs" class="section" aria-labelledby="all-programs-title">
     <div class="section-head">
       <h2 id="all-programs-title" class="section-title">{{ _("كل البرامج") }}</h2>
@@ -153,6 +151,3 @@
 </div>
 {% endblock %}
 
-{% block scripts %}
-<script src="{{ url_for('static', path='year.js') }}?v={{ asset_version('year.js') }}" defer></script>
-{% endblock %}
