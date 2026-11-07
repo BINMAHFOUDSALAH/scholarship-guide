@@ -119,8 +119,9 @@
     {% include "partials/uni_results.html" %}
   </div>
   {# The basis of every list on this page (decision 041: below the results, so search comes first on phones). #}
-  <p class="explorer-source">{{ _("مصدر القوائم:") }} <a href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ explorer.source.title_ar }} (PDF) ↗</a>{{ _("،") }} {{ explorer.source.publisher_ar }}.</p>
+  <p class="explorer-source">{{ _("مصدر القوائم:") }} <a href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ explorer.source.title_ar }} (PDF)</a>{{ _("،") }} {{ explorer.source.publisher_ar }}.</p>
 </div>
 {% endblock %}
 
-{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>
+<script src="{{ url_for('static', path='map.js') }}?v={{ asset_version('map.js') }}" defer></script>{% endblock %}

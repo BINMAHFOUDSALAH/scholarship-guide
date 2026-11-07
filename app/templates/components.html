@@ -54,7 +54,7 @@
 
 {# Back to where the student came from (GOV.UK "back link"). In RTL, "back" points right. #}
 {% macro back_link(href, text) %}
-<p class="back-link-wrap"><a class="back-link" href="{{ href }}" data-back-link><span aria-hidden="true">{{ _("→") }}</span> {{ text }}</a></p>
+<p class="back-link-wrap"><a class="back-link" href="{{ href }}" data-back-link><span class="icon icon--back" aria-hidden="true"></span> {{ text }}</a></p>
 {% endmacro %}
 
 {# The one place lime is used: what the student should do next. #}

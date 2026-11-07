@@ -12,6 +12,7 @@ import html
 import re
 import sqlite3
 import threading
+from pathlib import Path
 
 from app.content import list_slugs, load_page
 from app.i18n import is_english, tf, tr
@@ -35,6 +36,12 @@ SYNONYMS = {
     "سات": "sat",
     "يوكاس": "ucas",
 }
+
+# Words a question is built from that say nothing about its subject (هل، ما، متى، كيف…), dropped by retrieve().
+# Students type dialect, so its fillers are in the list too; they are input words, never shown on a page, so the
+# list lives in its own file (app/question_words.txt) beside the formal-Arabic test's scope (tests/test_content.py).
+QUESTION_STOPWORDS = {w for line in (Path(__file__).parent / "question_words.txt").read_text(encoding="utf-8").splitlines()
+                      if not line.startswith("#") for w in line.split()}
 
 H2 = re.compile(r'<h2 id="([^"]+)">(.*?)</h2>', re.S)
 TAG = re.compile(r"<[^>]+>")
@@ -146,6 +153,23 @@ class SiteSearch:
             rows = self.db.execute(
                 "SELECT n FROM chunks WHERE chunks MATCH ? ORDER BY bm25(chunks, 3.0, 6.0, 1.0) LIMIT ?",
                 (match, MAX_RESULTS)).fetchall()
+        return [self.result(self.chunks[n], words) for (n,) in rows]
+
+    def retrieve(self, question, k=5):
+        """The retrieval step for وضّاح (docs/specs/agent.md §4): a whole question, in فصحى or dialect, as typed.
+
+        search() needs every word to match, which suits a few search words but finds nothing for «هل أستطيع التقديم
+        على مسار الرواد وأنا في ثالث ثانوي؟». Here the question words and fillers are dropped, any remaining word may
+        match, and bm25 ranks the chunks that share the most (and rarest) words first. Same chunks, same sources."""
+        words = [w for w in search_form(question[:500]).split()
+                 if w not in QUESTION_STOPWORDS and w not in ENGLISH_STOPWORDS and len(w) > 1][:16]
+        if not words:
+            return []
+        match = " OR ".join(f'"{w}"*' for w in dict.fromkeys(words))
+        with self.lock:
+            rows = self.db.execute(
+                "SELECT n FROM chunks WHERE chunks MATCH ? ORDER BY bm25(chunks, 3.0, 6.0, 1.0) LIMIT ?",
+                (match, k)).fetchall()
         return [self.result(self.chunks[n], words) for (n,) in rows]
 
     def result(self, chunk, words):

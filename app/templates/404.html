@@ -13,6 +13,6 @@
     <button class="btn btn--primary" type="submit">{{ _("ابحث") }}</button>
   </div>
 </form>
-<p><a href="{{ url_for('home') }}">{{ _("→ الرجوع إلى الرئيسية") }}</a></p>
+<p><a class="back-link" href="{{ url_for('home') }}"><span class="icon icon--back" aria-hidden="true"></span> {{ _("الرجوع إلى الرئيسية") }}</a></p>
 </div>
 {% endblock %}

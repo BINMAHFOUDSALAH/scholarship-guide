@@ -1,0 +1,8 @@
+# Question words and fillers dropped by app/search.py's retrieve(), in search_form's spelling
+# (أ/إ → ا, ة → ه, ى → ي). Dialect is here because students type it; nothing in this file is shown on a page.
+هل ما ماذا لماذا متي كيف كم اين اي ايش وش ليش
+من في علي عن الي او ام انا وانا اني لي لنا
+هو هي هم هذا هذه ذلك تلك التي الذي اللي ان اذا
+لو لا لم لن قد مع عند عندي كان يكون ابي ابغي
+ابغا ابيه ابغاه اقدر استطيع يمكن يمكنني ممكن الحين الان اريد اود
+ابدا ابدء بعض كل يا ثم حتي

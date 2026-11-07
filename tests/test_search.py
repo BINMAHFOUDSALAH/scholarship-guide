@@ -99,8 +99,25 @@ def test_kgsp_is_searchable():
 
 
 def test_guide_search_is_linked_from_home_and_404():
-    assert '/search">ابحث في الدليل' in client.get("/").text
+    """The one box (decision 083): the homepage's search goes to the site search, linked from every header and the 404."""
+    assert 'action="http://testserver/search"' in client.get("/").text
+    assert 'class="search-link" href="http://testserver/search"' in client.get("/about").text
     assert '/search" role="search"' in client.get("/no-such-page").text
+
+
+def test_the_one_box_answers_from_the_lists_then_the_guides():
+    """A university, a major, a country or a health major is answered from the lists first, with one link into the
+    explorer; a topic only from the guides."""
+    stanford = client.get("/search?q=ستانفورد").text
+    assert 'id="lists-title"' in stanford and "/universities/stanford-university" in stanford
+    major = client.get("/search?q=هندسة البرمجيات").text
+    assert "تخصص «هندسة البرمجيات» في قوائم الابتعاث." in major and "/universities?q=" in major
+    vague = client.get("/search?q=هندسة").text
+    assert "في أسماء" in vague
+    assert "/universities?country=GB" in client.get("/search?q=بريطانيا").text
+    assert "التخصصات الصحية في قوائم الابتعاث." in client.get("/search?q=طب").text
+    ielts = client.get("/search?q=آيلتس").text
+    assert 'id="lists-title"' not in ielts and 'href="/resources/ielts' in ielts
 
 
 def test_search_page():

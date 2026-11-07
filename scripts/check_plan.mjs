@@ -28,8 +28,8 @@ const english = process.argv.includes("--en");
 const host = process.argv.slice(2).find((a) => a.startsWith("http")) || "http://127.0.0.1:8000";
 const base = host + (english ? "/en" : "");
 const L = english
-  ? { save: "Save", saved: "✓ In your plan", empty: "Your plan is empty.", applied: "Applied on" }
-  : { save: "احفظ", saved: "✓ في خطتك", empty: "خطتك فارغة.", applied: "قدّمت في" };
+  ? { save: "Save", saved: "In your plan", empty: "Your plan is empty.", applied: "Applied on" }
+  : { save: "احفظ", saved: "في خطتك", empty: "خطتك فارغة.", applied: "قدّمت في" };
 const results = [];
 const check = (name, ok, detail = "") => results.push([ok ? "PASS" : "FAIL", name, detail]);
 
@@ -88,6 +88,38 @@ check("the status is saved", (await stored()).items[0].status === "applied");
 await page.reload();
 await page.waitForSelector("[data-mylist-rows]:not([hidden])");
 check("a reload keeps the status", (await page.locator('select[data-status="university:stanford-university"]').inputValue()) === "applied");
+
+// 3b. The hub (decision 083): the route of statuses, «قريبًا», the calendar file.
+const hub = page.locator("[data-plan-hub]");
+check("the hub shows above the rows", await hub.isVisible() && await page.evaluate(() => {
+  const h = document.querySelector("[data-plan-hub]"), r = document.querySelector("[data-mylist-rows]");
+  return h.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING;
+}));
+check("the route counts one item applied, lit to that step", (await hub.locator(".plan-route-stop.is-here .plan-route-count").innerText()) === "1"
+  && (await hub.locator(".plan-route-stop.is-reached").count()) === 3);
+check("no template is left in the rows", (await page.locator("[data-mylist-rows] template").count()) === 0);
+const [download] = await Promise.all([page.waitForEvent("download"), hub.locator("[data-plan-ics]").tap()]);
+const icsPath = await download.path();
+const ics = (await import("node:fs")).readFileSync(icsPath, "utf8");
+check("the calendar file is an .ics with the plan's dates", download.suggestedFilename() === "wadih-plan.ics"
+  && ics.startsWith("BEGIN:VCALENDAR") && ics.includes("DTSTART;VALUE=DATE:") && ics.includes("TRIGGER:-P3D"), ics.slice(0, 80));
+check("the calendar file holds no name or address", !/ATTENDEE|ORGANIZER|MAILTO/i.test(ics));
+const accepted = page.locator('select[data-status="program:arruaad"]');
+await accepted.selectOption("accepted");
+await page.waitForFunction(() => document.querySelector('[data-mylist-item="program:arruaad"].is-accepted'));
+check("«قُبلت» lights its row and the route reaches it", (await hub.locator(".plan-route-stop.is-here .plan-route-name").innerText()) === (english ? "Accepted" : "قُبلت"));
+
+// 3c. «هذا صفّي» (decision 083): the grade kept on the device, marked on the homepage.
+await page.goto(base + "/grades/grade-12");
+const mine = page.locator("button[data-my-grade]");
+await mine.tap();
+check("«هذا صفّي» keeps the grade", (await page.evaluate(() => localStorage.getItem("wadih:grade"))) === "grade-12"
+  && (await mine.getAttribute("aria-pressed")) === "true");
+await page.goto(base + "/");
+check("the homepage marks the grade «صفّك»", await page.locator('[data-grade-stop="grade-12"] [data-grade-here]').isVisible()
+  && !(await page.locator('[data-grade-stop="grade-10"] [data-grade-here]').isVisible()));
+await page.goto(base + "/my-plan");
+await page.waitForSelector("[data-mylist-rows]:not([hidden])");
 
 // 4. Remove everything.
 for (let i = 0; i < 3; i++) await page.locator("button[data-remove]").first().tap();

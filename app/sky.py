@@ -94,3 +94,35 @@ def rowwad_chart(explorer):
         })
     stars.sort(key=lambda s: s["rank"])
     return {"stars": stars, "countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H}
+
+
+# ---------- Any set of universities on the map (decision 083) ----------
+
+# Every country in the lists, on the same schematic map as the الرواد chart (west on the left).
+WORLD_AT = {
+    "US": (205, 270), "CA": (240, 118),
+    "GB": (446, 146), "NL": (498, 132), "DE": (540, 160), "FR": (470, 205), "CH": (522, 214),
+    "ES": (430, 262), "IT": (556, 254),
+    "IN": (742, 334), "CN": (806, 214), "KR": (874, 200), "JP": (928, 176), "SG": (796, 410), "AU": (884, 452),
+}
+
+
+def world_chart(counts, names):
+    """One circle per country for any set of universities: the homepage's «إلى أين؟», the explorer's map view and
+    «خطتي»'s constellation. A circle is a destination (the diamond stays a step); its area follows the count, and the
+    path of light comes from home, as on the الرواد chart. counts = {code: n}; names = {code: Arabic name}."""
+    if not counts:
+        return None
+    biggest = max(counts.values())
+    spare = iter((x, 482) for x in range(120, 1000, 110))
+    countries = []
+    for code, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])):
+        x, y = WORLD_AT.get(code) or next(spare)
+        r = round(5 + 15 * math.sqrt(n / biggest), 1)
+        (hx, hy), angle = HOME, math.atan2(y - HOME[1], x - HOME[0])
+        ex, ey = x - math.cos(angle) * (r + 7), y - math.sin(angle) * (r + 7)
+        mx, my = (hx + ex) / 2, min(hy, ey) - 0.18 * math.dist((hx, hy), (ex, ey))
+        countries.append({"code": code, "name_ar": names[code], "count": n, "x": x, "y": y, "r": r,
+                          "label_y": round(y + r + 20, 1),
+                          "path": f"M{hx} {hy} Q{mx:.1f} {my:.1f} {ex:.1f} {ey:.1f}"})
+    return {"countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H}

@@ -2,8 +2,11 @@ import hashlib
 import json
 import os
 from functools import cache
+from datetime import datetime, timedelta, timezone
+
 from app.clock import date
 from pathlib import Path
+from urllib.parse import quote
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exception_handlers import http_exception_handler
@@ -17,7 +20,7 @@ from app import exploration, i18n, plan
 from app.content import SLUG_PATTERN, english_titles, list_slugs, load_page
 from app.i18n import tf, tr
 from app.search import SiteSearch
-from app.sky import rowwad_chart, star_field
+from app.sky import rowwad_chart, star_field, world_chart
 from app.universities import COUNT_FORMS, NOT_LISTED_AR, PROGRAMS_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
 
 APP_DIR = Path(__file__).parent
@@ -102,6 +105,7 @@ path_names = {path["id"]: path["name_ar"] for path in paths}
 paths_by_id = {path["id"]: path for path in paths}
 explorer = Explorer(show_drafts=SHOW_DRAFTS)
 waaid_data = load_json("waaid_programs.json")
+waddah = load_json("waddah.json")  # the AI guide's identity, teaser and Phase 2 switches (decisions 082, 083)
 
 
 def waaid():
@@ -177,6 +181,7 @@ def status_board():
                 # «تقدم الآن ↗» while open, for tracks whose data names where to apply (sourced in the track).
                 "apply_url": track.get("apply_url") if status == "open" else None,
                 "when": track.get("apply_when"),
+                "pid": plan_ids.get((path["id"], track.get("id"))),  # «احفظ» in «خطتي»
             }
             until = track.get("status_until")
             if status == "open":
@@ -216,13 +221,15 @@ def status_board():
     return groups
 
 
-def open_by_when(board):
-    """The homepage's «مفتوح للتقديم الآن» in two parts (decision 078, A2):
-    - school: what a school student applies to themselves (open, or the next to open), so they see it first;
-    - later: what is open now but needs a step first (an admission, a scholarship, graduating)."""
-    school = [i for i in board["open"] + board["waiting"] if i.get("when") == "in_school"]
-    later = [i for i in board["open"] if i.get("when") != "in_school"]
-    return {"school": school, "later": later}
+def now_board(board):
+    """The homepage's «الآن» (2026-11-07, decision 083): what is open today, then what hasn't opened yet, each under
+    its own heading. «مفتوح للتقديم الآن» used to list Aramco and KAUST, which hadn't opened, because it merged the two.
+    Each open item with a deadline carries the days left, on Riyadh's date (app/clock.py)."""
+    today = date.today()
+    opened = [{**i, "days_left": (date.fromisoformat(i["until"]) - today).days if i.get("until") else None}
+              for i in board["open"]]
+    upcoming = [i for i in board["waiting"] if i["status"] in ("not_open", "opening_soon")]
+    return {"open": opened, "upcoming": upcoming, "today": today.isoformat()}
 
 
 def programs_by_when():
@@ -240,6 +247,70 @@ def track_status(track):
     if status == "open" and until and date.today().isoformat() > until:
         return "closed"
     return status
+
+
+def waddah_public():
+    """The teaser is public only once the owner has checked the name (decision 082); drafts show it locally."""
+    return bool(waddah.get("public")) or SHOW_DRAFTS
+
+
+def waddah_dawn(today=None):
+    """How far dawn has come on the teaser (decision 082): 0 = night on dawn_from, rising a little each night on
+    Riyadh's date, holding at the edge of dawn (0.9) until launch day, which is a switch in the data, never a date."""
+    if waddah["launched"]:
+        return 1.0
+    today = today or date.today()
+    start, end = date.fromisoformat(waddah["dawn_from"]), date.fromisoformat(waddah["dawn_to"])
+    step = (today - start).days / max(1, (end - start).days)
+    return round(max(0.0, min(0.9, step * 0.9)), 3)
+
+
+# The application year runs from August to July (the US applications open in August, apply_year.json).
+YEAR_MONTHS = (8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7)
+
+
+def year_line(today=None):
+    """«السنة في سطر» (decision 083): the application year as one line, with today on it.
+
+    Only what the data dates: the six phases of a university application year (apply_year.json, with the counts
+    the Explorer computes), the scholarship's dated deadline (a track's status_until, with its source), and the
+    واعد windows that include programs for high school graduates. A program with no announced date isn't drawn."""
+    today = today or date.today()
+    year = today.year if today.month >= 8 else today.year - 1
+    start, end = date(year, 8, 1), date(year + 1, 8, 1)
+    span = (end - start).days
+
+    def at(d):
+        return round(max(0.0, min(1.0, (d - start).days / span)) * 100, 2)
+
+    months = []
+    for m in YEAR_MONTHS:
+        first = date(year if m >= 8 else year + 1, m, 1)
+        nxt = date(first.year + (m == 12), m % 12 + 1, 1)
+        months.append({"n": m, "days": (nxt - first).days, "is_now": m == today.month})
+    stats = explorer.timeline_stats()
+    phases = []
+    for r in apply_year["rows"]:
+        first, last = YEAR_MONTHS.index(r["months"][0]), YEAR_MONTHS.index(r["months"][-1])
+        count = stats.get("early") if r.get("computed") == "early" else stats.get("january") if r.get("computed") == "regular" else None
+        phases.append({"title_ar": r["title_ar"], "when_ar": r["when_ar"], "col": first + 1, "span": last - first + 1,
+                       "is_now": today.month in r["months"], "count": count})
+    marks, windows = [], []
+    for path in paths:
+        for track in path["tracks"]:
+            until = track.get("status_until")
+            if track.get("status") == "open" and until and track.get("status_source") and start <= date.fromisoformat(until) < end:
+                marks.append({"title_ar": track["name_ar"], "date": until, "at": at(date.fromisoformat(until)),
+                              "past": until < today.isoformat(), "source_url": track["status_source"],
+                              "page": f"/programs/{path['id']}" if path["id"] in program_slugs() else None})
+    for g in waaid()["groups"]:
+        a, b = date.fromisoformat(g["apply_from"]), date.fromisoformat(g["apply_to"])
+        if g["hs_count"] and b >= start and a < end:
+            windows.append({"title_ar": g["company_ar"], "from": g["apply_from"], "to": g["apply_to"], "at": at(a),
+                            "width": max(0.6, round(at(b + timedelta(days=1)) - at(a), 2)), "href": f"/waaid#{g['id']}",
+                            "is_open": g["is_open"], "past": g["apply_to"] < today.isoformat()})
+    return {"start": start.isoformat(), "months": months, "phases": phases, "marks": marks, "windows": windows,
+            "today": today.isoformat(), "today_at": at(today), "stats": stats}
 
 
 def program_slugs():
@@ -329,12 +400,29 @@ explorer.waaid = waaid  # the explorer lists واعد programs from the same dat
 templates.env.globals["waaid"] = waaid
 templates.env.globals["waaid_who"] = waaid_who
 templates.env.globals["track_status"] = track_status
+templates.env.globals["waddah"] = waddah
+templates.env.globals["waddah_dawn"] = waddah_dawn
+templates.env.globals["waddah_public"] = waddah_public
+templates.env.globals["month_names"] = ARABIC_MONTHS
 # The sky drawings (decisions 060, 062): the homepage's night stars and the الرواد chart, computed once.
 templates.env.globals["sky_stars"] = {
     "hero": star_field(70, 1440, 560, seed=7),
     "chart": star_field(90, 1000, 520, seed=5),
 }
 templates.env.globals["rowwad_chart"] = rowwad_chart(explorer)
+
+
+def world_of(universities):
+    """The map (decision 083) for any set of universities (dicts, or (listing, university) rows): one circle per
+    country, sized by how many of them are there. None when there are none."""
+    counts = {}
+    for u in universities:
+        u = u[1] if isinstance(u, tuple) else u
+        counts[u["country"]] = counts.get(u["country"], 0) + 1
+    return world_chart(counts, {c: explorer.countries[c]["name_ar"] for c in counts})
+
+
+templates.env.globals["world_of"] = world_of
 # «جرّب قبل أن تقرر» (decision 069): its door on the «لم تقرر بعد؟» guide shows only while the activity is public.
 templates.env.globals["explore_public"] = lambda: exploration.is_public(SHOW_DRAFTS)
 templates.env.globals["explore_why"] = exploration.why_text
@@ -375,7 +463,7 @@ def home(request: Request):
         {
             "paths": paths,
             "board": board,
-            "open_now": open_by_when(board),
+            "now": now_board(board),
             "program_groups": programs_by_when(),
             "home": home_text,
             "path_names": path_names,
@@ -386,11 +474,37 @@ def home(request: Request):
     )
 
 
-@app.get("/news", response_class=HTMLResponse)
+@app.get("/programs", response_class=HTMLResponse)
+def programs_index(request: Request):
+    # «البرامج» (decision 083): what's open, what opens later, every program by when you apply, and the
+    # announcements. One place for programs and their dates (/news redirects here).
+    board = status_board()
+    return render(request, "programs.html", {
+        "board": board, "now": now_board(board), "program_groups": programs_by_when(),
+        "announcements": news, "path_names": path_names, "program_pages": program_slugs(),
+        "year": year_line(),
+    })
+
+
+@app.get("/news")
 def news_page(request: Request):
-    # Everything on the board (no limits) plus the announcements from data/news.json.
-    return render(request, "news.html",
-                                      {"board": status_board(), "announcements": news, "path_names": path_names})
+    # «مواعيد التقديم» is now part of «البرامج» (decision 083).
+    return RedirectResponse(str(url_for_language({"request": request}, "programs_index")), status_code=301)
+
+
+@app.get("/waddah", response_class=HTMLResponse)
+def waddah_page(request: Request):
+    # وضّاح's page (decision 082): what it will do and won't, example questions, the FAQ. Nothing to sign up for yet.
+    # Not on the live site until the owner's name check (data/waddah.json "public").
+    if not waddah_public():
+        raise HTTPException(status_code=404)
+    return render(request, "waddah.html", {})
+
+
+@app.get("/guides", response_class=HTMLResponse)
+def guides_index(request: Request):
+    # «الأدلة» as a page of its own (decision 083): the same groups as the homepage and the footer.
+    return render(request, "guides.html", {})
 
 
 @app.get("/about", response_class=HTMLResponse)
@@ -514,10 +628,11 @@ def my_plan(request: Request):
     return render(request, "my_plan.html", {"statuses": plan.STATUSES})
 
 
-@app.post("/my-plan", response_class=HTMLResponse)
-async def my_plan_rows(request: Request):
-    """Draws the rows for the plan the browser sends (JSON: {"items": [...]}). Only valid items are drawn,
-    in the student's order, at most 100; nothing is stored or logged here (decision 078)."""
+async def posted_plan(request: Request):
+    """The plan as the browser sent it (JSON: {"items": [...]}), cleaned to known ids and statuses. Never stored."""
+    length = request.headers.get("content-length") or "0"
+    if length.isdigit() and int(length) > 20_000:  # refuse before reading a large body
+        raise HTTPException(status_code=413)
     body = await request.body()
     if len(body) > 20_000:
         raise HTTPException(status_code=413)
@@ -525,10 +640,42 @@ async def my_plan_rows(request: Request):
         raw = json.loads(body or b"{}")
     except ValueError:
         raise HTTPException(status_code=400)
-    items = plan.clean(raw, explorer.universities, plan_programs)
+    return plan.clean(raw, explorer.universities, plan_programs)
+
+
+@app.post("/my-plan", response_class=HTMLResponse)
+async def my_plan_rows(request: Request):
+    """Draws the rows for the plan the browser sends, in the student's order, at most 100, plus the hub's parts
+    (decision 083): «قريبًا» (dates in the next 30 days) and the route of statuses. Nothing is stored or logged."""
+    items = await posted_plan(request)
+    today = date.today()
+    soon_until = (today + timedelta(days=plan.SOON_DAYS)).isoformat()
+    upcoming = plan.dates(items, explorer, plan_programs, track_status, today.isoformat())
     return render(request, "partials/my_plan_rows.html", {
         "rows": plan.rows(items, explorer, plan_programs, track_status, APPLY_WHEN, program_slugs()),
-        "statuses": plan.STATUSES, "explorer": explorer})
+        "statuses": plan.STATUSES, "explorer": explorer,
+        "soon": [d for d in upcoming if d["date"] <= soon_until], "later_count": len([d for d in upcoming if d["date"] > soon_until]),
+        "progress": plan.progress(items), "route": plan.ROUTE, "today": today.isoformat()})
+
+
+@app.post("/my-plan.ics")
+async def my_plan_calendar(request: Request):
+    """«أضف المواعيد إلى تقويمك» (decision 083): the plan's upcoming dates as an .ics file for the student's own
+    calendar, built from the posted plan and forgotten. Each event links its page and names its official source."""
+    items = await posted_plan(request)
+    events = []
+    for d in plan.dates(items, explorer, plan_programs, track_status, date.today().isoformat()):
+        # Each part is translated on its own (a joined Arabic string has no English key), then joined per language.
+        parts = ([d["what"]["event_ar"]] + ([d["what"]["round_ar"]] if d["what"].get("round_ar") else [])
+                 if d["kind"] == "university" else [d["what_ar"]])
+        what = tr("، ").join(tr(p) for p in parts)
+        summary = f"{tr(d['name_ar'])}: {what}" if i18n.is_english() else what + tr("، ") + d["name_ar"]
+        events.append({**d, "summary": summary, "href": i18n.prefix() + d["href"],
+                       "description": tf("المصدر الرسمي: {url}", url=d["source_url"] or "")})
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    body = plan.ics(events, site["base_url"], stamp, tr("خطتي في واضح"))
+    return Response(content=body, media_type="text/calendar; charset=utf-8",
+                    headers={"Content-Disposition": 'attachment; filename="wadih-plan.ics"', "Cache-Control": "no-store"})
 
 
 def explore_or_404():
@@ -579,11 +726,25 @@ async def explore_result(request: Request):
     })
 
 
+def lists_answer(q):
+    """The one box (decision 083): what the university lists say about q, shown above the guides' results.
+    Universities by name (the first few, and how many), a major (its lists in the explorer), a country, or the
+    health answer: each one link into the explorer, which holds the details and the sources."""
+    if not q:
+        return None
+    r = explorer.search(q=q)
+    hits = next((s["universities"] for s in r["sections"] if "universities" in s and not s.get("outside_filters")), [])
+    answer = {"href": f"/universities?q={quote(q)}", "mode": r["mode"], "universities": hits[:5], "total": len(hits),
+              "majors": r.get("major_names", []), "country": r.get("country_match"), "health": r["health"]}
+    return answer if (hits or answer["majors"] or answer["country"] or answer["health"]) else None
+
+
 @app.get("/search", response_class=HTMLResponse)
 def search_page(request: Request, q: str = ""):
     # Works without JavaScript: the form reloads this page with ?q=.
     q = q.strip()[:200]
-    return render(request, "search.html", {"q": q, "results": current_search().search(q) if q else []})
+    return render(request, "search.html", {"q": q, "results": current_search().search(q) if q else [],
+                                           "lists": lists_answer(q), "explorer": explorer})
 
 
 @app.get("/api/search")
@@ -615,7 +776,7 @@ def robots():
 def sitemap():
     # The list of public pages for search engines. Grade and program pages come from content/.
     page_paths = (
-        ["/", "/about", "/news"]
+        ["/", "/about", "/programs", "/guides"] + (["/waddah"] if waddah_public() else [])
         + [f"/grades/{slug}" for slug in list_slugs("grades")]
         + [f"/programs/{slug}" for slug in program_slugs()]
         + ["/waaid"]

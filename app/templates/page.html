@@ -12,7 +12,7 @@
 {% block content %}
 <article class="doc{% if page.contents | length > 2 %} doc--with-contents{% endif %}">
   <header class="page-header doc-header">
-    <p class="doc-kind"><a href="{{ url_for('home') }}#guides">{{ _("الأدلة") }}</a></p>
+    <p class="doc-kind"><a href="{{ url_for('guides_index') }}">{{ _("الأدلة") }}</a></p>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
   </header>

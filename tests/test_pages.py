@@ -37,7 +37,8 @@ def test_grade_buttons_are_visible_in_the_hero():
 
 
 def test_each_path_row_has_its_theme_and_facts():
-    html = client.get("/").text
+    """The full program rows live on «البرامج» (decision 083); the homepage has one short row each."""
+    html = client.get("/programs").text
     for path in main.paths:
         assert f'class="path-row theme-{path["theme"]}"' in html
         assert path["provider_ar"] in html
@@ -47,8 +48,9 @@ def test_each_path_row_has_its_theme_and_facts():
 def test_header_nav_on_desktop_and_phone_menu():
     html = client.get("/about").text
     header = html.split("</header>")[0]
-    for label in ("حسب صفك", "البرامج", "مواعيد التقديم"):
+    for label in ("حسب صفك", "البرامج", "الجامعات", "الأدلة"):
         assert header.count(f">{label}</a>") == 2, label  # desktop nav + phone menu
+    assert ">مواعيد التقديم</a>" not in header  # folded into «البرامج» (decision 083)
     assert ">عن الدليل</a>" not in header  # removed from the menu (owner, 2026-10-12); the footer links to /about
     assert '<details class="menu">' in header
 
@@ -56,7 +58,10 @@ def test_header_nav_on_desktop_and_phone_menu():
 @pytest.mark.parametrize("url, label, value", [
     ("/universities", "الجامعات", "page"),
     ("/universities/stanford-university", "الجامعات", "true"),  # a page inside the section
-    ("/news", "مواعيد التقديم", "page"),
+    ("/programs", "البرامج", "page"),
+    ("/waaid", "البرامج", "true"),
+    ("/guides", "الأدلة", "page"),
+    ("/resources/ielts", "الأدلة", "true"),
     ("/grades/grade-11", "حسب صفك", "true"),
     ("/programs/custodian-scholarship", "البرامج", "true"),
 ])
@@ -70,7 +75,7 @@ def test_nav_marks_where_you_are(url, label, value):
 def test_home_marks_no_nav_item_and_every_page_has_a_skip_link():
     html = client.get("/").text
     assert "aria-current=" not in html.split("</header>")[0]
-    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/grades/grade-10"):
+    for page in ("/", "/universities", "/universities/harvard-university", "/programs", "/grades/grade-10"):
         html = client.get(page).text
         assert '<a class="skip-link" href="#main">' in html
         assert '<main id="main" tabindex="-1">' in html
@@ -86,18 +91,22 @@ def test_footer_says_we_are_independent_and_links_the_image_credits():
 
 
 def test_homepage_order():
-    """Decision 035: hero (grades, then search) → what's open now → programs.
-    The journey, tests, «كيف نعمل», and the decorative drawing are not on the homepage."""
+    """Decision 083: the start (grades, then the one box, then the door for the undecided) → «الآن» → the programs →
+    وضّاح → the guides. The journey, tests, «كيف نعمل», and the decorative drawing are not on the homepage."""
     html = client.get("/").text
-    assert html.index('id="grades"') < html.index('class="hero-search"') < html.index('id="open-now"') < html.index('id="programs"')
+    order = ['id="grades"', 'class="hero-search"', 'class="hero-door"', 'id="now"', 'id="programs"',
+             *(['class="waddah-band"'] if main.waddah_public() else []), 'id="guides"']
+    positions = [html.index(x) for x in order]
+    assert positions == sorted(positions)
     for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل", "hero-visual"):
         assert gone not in html
 
 
 def test_homepage_search_goes_to_the_explorer_with_real_examples():
+    """The one box (decision 083) submits to the site search, which answers from the lists and the guides."""
     html = client.get("/").text
     hero = html.split('<section class="hero')[1].split("</section>")[0]
-    assert 'action="http://testserver/universities"' in hero and 'name="q"' in hero
+    assert 'action="http://testserver/search"' in hero and 'name="q"' in hero and "data-suggest" in hero
     assert 'data-suggest="http://testserver/api/suggestions"' in hero
     assert "/universities/stanford-university" in hero  # an example that opens a university
     n = len(main.explorer.universities)
@@ -134,8 +143,8 @@ def test_theme_follows_the_device_until_the_student_chooses():
 
 
 def test_path_images_load_and_are_credited_on_about():
-    """Photos and logos load on the homepage; their credits live on /about, not on the image."""
-    html = client.get("/").text
+    """Photos and logos load on «البرامج»; their credits live on /about, not on the image."""
+    html = client.get("/programs").text
     about = client.get("/about").text
     assert 'class="photo-credit"' not in html
     for path in main.paths:
@@ -198,34 +207,74 @@ def test_home_lists_every_path():
 
 
 def test_home_shows_whats_open_now_and_links_the_full_board():
-    """Decision 035: the homepage shows only what's open (soonest deadline first); /news has all three groups."""
+    """Decision 083: «الآن» shows what's open (soonest deadline first) and, under its own heading, what hasn't opened.
+    «البرامج» has the whole board; /news redirects there."""
     html = client.get("/").text
-    section = html.split('id="open-now"')[1].split("</section>")[0]
-    assert "مفتوح للتقديم الآن" in section and "/news" in section
+    section = html.split('id="now"')[1].split("</section>")[0]
+    assert "مفتوح للتقديم الآن" not in html  # the old heading that sat over programs not open yet
+    assert "/programs" in section
     for item in main.status_board()["open"][:4]:
         assert item["title_ar"] in section
-    assert "فُتح وأُغلق مؤخرًا" not in html
-    news = client.get("/news").text
-    for title in ("مفتوح الآن", "مغلق أو لم يفتح بعد", "فُتح وأُغلق مؤخرًا"):
-        assert title in news
+    assert "أُغلق في" not in section
+    programs = client.get("/programs").text
+    for title in ("مفتوح الآن", "لم يفتح بعد", "مغلق الآن"):
+        assert title in programs
+    r = client.get("/news", follow_redirects=False)
+    assert r.status_code == 301 and r.headers["location"].endswith("/programs")
+    assert client.get("/en/news", follow_redirects=False).headers["location"].endswith("/en/programs")
+
+
+def test_open_and_not_yet_open_never_share_a_heading(monkeypatch):
+    """2026-11-07: «مفتوح للتقديم الآن» listed Aramco («لم يفتح بعد») and KAUST («يفتح قريبًا»). Every row under
+    «مفتوح الآن» is open today; the others sit under «لم يفتح بعد»."""
+    now = main.now_board(main.status_board())
+    assert now["open"] and all(i["status"] == "open" for i in now["open"])
+    assert all(i["status"] in ("not_open", "opening_soon") for i in now["upcoming"])
+    html = client.get("/").text.split('id="now"')[1].split("</section>")[0]
+    opened = html.split('id="now-open-3"')[1].split('id="now-upcoming-3"')[0]
+    upcoming = html.split('id="now-upcoming-3"')[1]
+    assert 'status--not_open"' not in opened and 'status--opening_soon"' not in opened
+    assert 'status--open"' not in upcoming
+    for item in now["upcoming"]:
+        assert item["title_ar"] in upcoming
+
+
+def test_open_rows_count_the_days_left(monkeypatch):
+    """An open row with a deadline shows the days left, on Riyadh's date, in correct Arabic."""
+    import datetime
+
+    def fixed(day):
+        class Day(datetime.date):
+            @classmethod
+            def today(cls):
+                return cls(day.year, day.month, day.day)
+        return Day
+
+    for day, words in ((datetime.date(2026, 11, 7), ("يُغلق بعد", ">8<", "أيام")),
+                       (datetime.date(2026, 11, 13), ("يُغلق بعد", "يومين")),
+                       (datetime.date(2026, 11, 15), ("يُغلق", "اليوم"))):
+        monkeypatch.setattr(main, "date", fixed(day))
+        row = client.get("/").text.split('id="now-open-3"')[1].split("مسار الرواد")[0]
+        for w in words:
+            assert w in row, (day, w)
 
 
 def test_open_items_say_who_can_apply():
     """«مفتوح الآن» alone read as "apply today" to grade 12 students who can't yet (الرواد needs an admission,
-    SDAIA a scholarship), so every open track carries its «لمن» line on the homepage and /news."""
+    SDAIA a scholarship), so every open track carries its «لمن» line on the homepage and «البرامج»."""
     tracks = [t for p in main.paths for t in p["tracks"] if t.get("for_high_school") is not False]
     for t in tracks:
         if not t.get("latest_programs"):  # واعد: each program has its own conditions
             assert t.get("apply_with_ar"), t.get("id") or t["name_ar"]
-    home = client.get("/").text.split('id="open-now"')[1].split("</section>")[0]
-    news = client.get("/news").text
+    home = client.get("/").text.split('id="now"')[1].split("</section>")[0]
+    programs = client.get("/programs").text
     for item in main.status_board()["open"]:
         if item.get("who_ar"):
-            assert f"لمن: {item['who_ar']}" in news
+            assert f'لمن:</span> {item["who_ar"]}' in programs
     for item in main.status_board()["open"][:4]:
         if item.get("who_ar"):
-            assert f"لمن: {item['who_ar']}" in home
-    assert "يمكنك التقديم عليه اليوم" not in news
+            assert f'لمن:</span> {item["who_ar"]}' in home
+    assert "يمكنك التقديم عليه اليوم" not in programs
 
 
 def test_open_window_warns_grade_12_students_on_program_and_university_pages(monkeypatch):
@@ -317,10 +366,12 @@ def test_arruaad_moves_to_recently_closed_after_its_deadline(monkeypatch):
     assert "مسار الرواد" not in [i["title_ar"] for i in board["open"]]
 
 
-def test_news_page_lists_everything():
-    html = client.get("/news").text
-    assert "المستجدات" in html and "إعلانات" in html
-    for item in main.status_board()["recent"]:
+def test_programs_page_lists_everything():
+    """«البرامج» (decision 083) holds the whole board and the announcements, where /news used to."""
+    html = client.get("/programs").text
+    assert "إعلانات" in html and 'id="year-line"' in html
+    board = main.status_board()
+    for item in board["recent"] + board["open"] + board["waiting"]:
         assert item["title_ar"] in html
 
 
@@ -545,7 +596,7 @@ def test_waaid_programs_are_newest_first_and_linked_from_the_program_page():
     assert closing == sorted(closing, reverse=True)
     html = client.get("/programs/custodian-scholarship").text
     assert 'id="waaid-latest"' in html and '/waaid"' in html
-    assert '/waaid"' in client.get("/").text
+    assert '/waaid"' in client.get("/programs").text
 
 
 def test_waaid_page_lists_every_program_under_its_own_anchor():
@@ -635,7 +686,7 @@ def test_a_waaid_announcement_is_one_row_with_who_and_apply(monkeypatch):
     assert row["who_ar"] == "3 برامج لخريجي الثانوية، و8 برامج لغير خريجي الثانوية"
     assert row["apply_url"] == main.waaid_data["apply_url"] == "https://www.uap.sa/"
     home = client.get("/").text
-    assert "برامج شركة الاتصالات" in home and "تقدم الآن ↗" in home and "https://www.uap.sa/" in home
+    assert "برامج شركة الاتصالات" in home and "تقدم الآن" in home and "https://www.uap.sa/" in home
 
 
 def test_announcement_anchor_survives_a_program_added_later(monkeypatch):
@@ -653,10 +704,10 @@ def test_waaid_lifecycle_before_during_after(monkeypatch):
     """Nothing is edited by hand: the same data reads «لم يفتح بعد», then open with «تقدم الآن», then closed."""
     monkeypatch.setitem(main.waaid_data, "programs", [waaid_program("p1", True, "2026-10-25", "2026-11-05")])
     for day, group, page_has, page_lacks in (
-        ("2026-10-20", "waiting", 'id="waaid-upcoming"', "تقدم الآن ↗"),
-        ("2026-10-25", "open", "تقدم الآن ↗", 'id="waaid-upcoming"'),
-        ("2026-11-05", "open", "تقدم الآن ↗", 'id="waaid-closed"'),
-        ("2026-11-06", "recent", 'id="waaid-closed"', "تقدم الآن ↗"),
+        ("2026-10-20", "waiting", 'id="waaid-upcoming"', "تقدم الآن"),
+        ("2026-10-25", "open", "تقدم الآن", 'id="waaid-upcoming"'),
+        ("2026-11-05", "open", "تقدم الآن", 'id="waaid-closed"'),
+        ("2026-11-06", "recent", 'id="waaid-closed"', "تقدم الآن"),
     ):
         fix_today(monkeypatch, day)
         board = main.status_board()
@@ -733,11 +784,11 @@ def test_program_page_leads_with_the_next_step_and_lists_its_sections():
 
 def test_owner_x_link_is_in_the_footer_only():
     """The owner's X account: in the global footer on every page, never in the nav; safe new tab; labelled."""
-    for page in ("/", "/universities", "/universities/harvard-university", "/news", "/my-plan"):
+    for page in ("/", "/universities", "/universities/harvard-university", "/programs", "/my-plan"):
         html = client.get(page).text
         header, footer = html.split("</header>")[0], html.split('<footer class="site-footer">')[1]
         assert "x.com/salahmetaverse" not in header
-        link = footer.split('class="footer-x"')[1].split("</a>")[0]
+        link = footer.split('class="footer-x no-ext"')[1].split("</a>")[0]
         assert 'href="https://x.com/salahmetaverse"' in link
         assert 'target="_blank"' in link and 'rel="noopener noreferrer"' in link
         assert "عندك ملاحظة أو اقتراح؟ راسلني على X" in link and 'aria-hidden="true"' in link
@@ -919,7 +970,7 @@ def test_homepage_route_leads_from_the_grades_to_the_programs():
     hero = client.get("/").text.split('<section class="hero')[1].split("</section>")[0]
     route = hero.split('class="route-stops"')[1].split("</ol>")[0]
     hrefs = re.findall(r'class="route-link" href="([^"]+)"', route)
-    assert hrefs == [f"http://testserver/grades/{g['slug']}" for g in main.home_text["grades"]] + ["#programs"]
+    assert hrefs == [f"http://testserver/grades/{g['slug']}" for g in main.home_text["grades"]] + ["http://testserver/programs"]
     assert route.count('class="route-mark" aria-hidden="true"') == 4
 
 
@@ -940,7 +991,7 @@ def test_every_guide_is_in_the_homepage_index_and_the_footer():
 
 
 @pytest.mark.parametrize("page", ["/", "/universities?track=arruaad", "/universities/university-of-cambridge",
-                                  "/news", "/grades/grade-12", "/programs/custodian-scholarship"])
+                                  "/programs", "/grades/grade-12", "/programs/custodian-scholarship", "/waddah"])
 def test_no_values_joined_by_dots(page):
     """Values sit under their own labels or are joined by Arabic punctuation, never chained with «·» (decision 062)."""
     assert "·" not in client.get(page).text
@@ -974,26 +1025,15 @@ def test_every_program_and_track_says_when_you_apply():
                 assert t.get("apply_when") in main.APPLY_WHEN, t.get("id") or t["name_ar"]
 
 
-def test_open_now_puts_school_programs_first_and_the_rest_after_a_step(monkeypatch):
-    """الرواد (needs an admission) and SDAIA (needs a scholarship) never sit under «تتقدم عليه وأنت في الثانوية»."""
-    html = client.get("/").text.split('id="open-now"')[1].split("</section>")[0]
-    school = html.split('id="open-school"')[1].split('id="open-later"')[0]
-    assert "مسار الرواد" not in school and "الذكاء الاصطناعي" not in school
-    board = main.open_by_when(main.status_board())
-    assert all(i["when"] == "in_school" for i in board["school"])
-    assert all(i["when"] != "in_school" and i["status"] == "open" for i in board["later"])
-    if any(i["title_ar"] == "مسار الرواد" for i in main.status_board()["open"]):
-        assert "مسار الرواد" in html.split('id="open-later"')[1]
-
-
 def test_programs_are_grouped_by_when_you_apply():
-    html = client.get("/").text.split('id="programs"')[1].split("</section>")[0]
     groups = main.programs_by_when()
     assert sum(len(g["paths"]) for g in groups) == len(main.paths)
-    positions = [html.index(f'id="programs-{g["when"]}"') for g in groups]
-    assert positions == sorted(positions)
-    # KGSP (in grade 12) comes before the Custodian program (after an admission).
-    assert html.index('id="program-kaust-kgsp"') < html.index('id="program-custodian-scholarship"')
+    for url, split in (("/", 'id="programs"'), ("/programs", 'id="all-programs"')):
+        html = client.get(url).text.split(split)[1].split("</section>")[0]
+        positions = [html.index(f'id="programs-{g["when"]}"') for g in groups]
+        assert positions == sorted(positions)
+        # KGSP (in grade 12) comes before the Custodian program (after an admission).
+        assert html.index("كاوست") < html.index("برنامج خادم الحرمين الشريفين")
 
 
 def test_grade_12_says_where_to_start_and_promises_only_what_the_site_does():
@@ -1014,4 +1054,16 @@ def test_no_bare_zero_counts(monkeypatch):
     assert "منها 0" not in custodian
     empty = client.get("/universities", params={"q": "zzzz"}).text
     assert not re.search(r"(?<![\d٠-٩])0 جامعة", empty)
-    assert ">0<" not in client.get("/news").text.replace(" ", "")
+    assert ">0<" not in client.get("/programs").text.replace(" ", "")
+
+
+@pytest.mark.parametrize("url", ["/", "/universities?track=arruaad", "/universities/stanford-university",
+                                 "/programs/custodian-scholarship", "/grades/grade-12", "/resources/ielts", "/waaid"])
+def test_no_symbol_characters_that_fonts_lack(url):
+    """Decision 083: ↗, ✓ and → aren't in the self-hosted fonts and showed as empty boxes on some phones.
+    They are drawn in CSS now (a new-tab link gets ↗ by itself), so no page prints them."""
+    for lang in ("", "/en"):
+        html = client.get(lang + url).text
+        body = html.split("<body", 1)[1]
+        for ch in "↗✓→←":
+            assert ch not in body, f"{lang + url}: {ch!r} in the page"

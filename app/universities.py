@@ -118,6 +118,9 @@ LANGUAGE_AR = {"english": "الإنجليزية", "other": "غير الإنجل�
 
 # The search parameters a results link may carry back from a university page (decision 035).
 SEARCH_PARAMS = ("q", "track", "field", "country", "lang")
+# A major search shows this many places of each field's ranked list, then links to the whole list.
+MAJOR_PREVIEW = 10
+MAJOR_PREVIEW_MANY = 5  # when the word matches majors in several fields
 # What الرواد's list means for a major: every major at these universities is covered (owner, 2026-10-12;
 # shortened from decision 041's wording).
 ARRUAAD_NOTE = "مسار الرواد يقبل كل التخصصات في هذه الجامعات."
@@ -149,11 +152,15 @@ PROGRAMS_AR = ("برنامج واحد", "برنامجان", "برامج", "بر�
 FIELDS_AR = ("مجال واحد", "مجالان", "مجالات", "مجالًا", "مجال")
 COUNTRIES_AR = ("دولة واحدة", "دولتان", "دول", "دولة", "دولة")
 RESULTS_AR = ("نتيجة واحدة", "نتيجتان", "نتائج", "نتيجة", "نتيجة")
+MAJORS_AR = ("تخصص واحد", "تخصصان", "تخصصات", "تخصصًا", "تخصص")
+DAYS_AR = ("يوم واحد", "يومان", "أيام", "يومًا", "يوم")
 # English counts, by the Arabic form for "one".
 COUNT_EN = {UNIVERSITIES_AR[0]: ("university", "universities"), PROGRAMS_AR[0]: ("program", "programs"),
-            FIELDS_AR[0]: ("field", "fields"), COUNTRIES_AR[0]: ("country", "countries"), RESULTS_AR[0]: ("result", "results")}
+            FIELDS_AR[0]: ("field", "fields"), COUNTRIES_AR[0]: ("country", "countries"), RESULTS_AR[0]: ("result", "results"),
+            MAJORS_AR[0]: ("major", "majors"), DAYS_AR[0]: ("day", "days")}
 COUNT_FORMS = {"universities": UNIVERSITIES_AR, "programs": PROGRAMS_AR, "fields": FIELDS_AR,
-               "countries": COUNTRIES_AR, "results": RESULTS_AR}
+               "countries": COUNTRIES_AR, "results": RESULTS_AR, "majors": MAJORS_AR,
+               "days": DAYS_AR}
 
 ARABIC_DIACRITICS = re.compile(r"[\u064b-\u0652\u0640]")  # short vowels + tatweel, as escapes (the marks are invisible)
 
@@ -329,6 +336,14 @@ class Explorer:
         if majors and (not name_hits or any(normalize(q) in (normalize(m["name_ar"]), normalize(m["name_en"])) for m in majors)):
             result["mode"] = "major"
             result["majors"] = majors
+            # The summary names each major once, grouped by its field in إمداد (2026-11-07: «هندسة» matched 85
+            # majors and printed the same field sentence 85 times).
+            result["major_names"] = list(dict.fromkeys(m["name_ar"] for m in majors))
+            result["major_fields"] = [
+                {"field": self.field("emdad", fid),
+                 "majors": list(dict.fromkeys(m["name_ar"] for m in majors if m["track"] == "emdad" and m["field"] == fid)),
+                 "masters_only": all(m.get("masters_only") for m in majors if m["track"] == "emdad" and m["field"] == fid)}
+                for fid in dict.fromkeys(m["field"] for m in majors if m["track"] == "emdad")]
             if track in ("", "arruaad"):
                 rows = [(l, u) for l, u in self.listings("arruaad") if keep(u)]
                 # The same 30 for every major, so a compact ranked list here; the field list below is the
@@ -336,6 +351,9 @@ class Explorer:
                 full = urlencode({k: v for k, v in (("track", "arruaad"), ("country", country), ("lang", language)) if v})
                 result["sections"].append({"track": "arruaad", "field": None, "rows": rows, "compact": True,
                                            "full_href": "/universities?" + full, "note_ar": ARRUAAD_NOTE})
+            # A vague word («هندسة») matches several fields: fewer places each, and the summary says to be precise.
+            fields_shown = len({(m["track"], m["field"]) for m in majors if m["track"] == "emdad" or track == "rnd"})
+            preview = MAJOR_PREVIEW if fields_shown <= 1 else MAJOR_PREVIEW_MANY
             for t in ("emdad", "rnd"):
                 if track not in ("", t) or (t == "rnd" and track != "rnd"):
                     continue
@@ -343,7 +361,11 @@ class Explorer:
                     names = [m for m in majors if m["track"] == t and m["field"] == fid]
                     rows = [(l, u) for l, u in self.listings(t, fid) if keep(u)]
                     field = self.field(t, fid)
+                    # The field's top places here; the whole ranked list is one tap away (a field list was up to
+                    # 69 rows, three times over for «هندسة»).
+                    full = urlencode({k: v for k, v in (("track", t), ("field", fid), ("country", country), ("lang", language)) if v})
                     result["sections"].append({"track": t, "field": field, "rows": rows, "matched_majors": names,
+                                               "preview": preview, "full_href": "/universities?" + full,
                                                # The guide ranks universities by field, not by major (decision 041).
                                                "note_ar": tf("هذا ترتيب مجال «{field}» كله في الدليل، وليس قائمة بتخصص «{major}» وحده. تأكد أن الجامعة تدرّس التخصص من موقعها.",
                                                                field=field["name_ar"], major=names[0]["name_ar"])})
@@ -397,11 +419,16 @@ class Explorer:
             result["sections"].append(section)
         else:
             rows = [(l, u) for l, u in self.listings("arruaad") if keep(u)]
-            result["sections"].append({"track": "arruaad", "field": None, "rows": rows, "note_ar": ARRUAAD_NOTE})
-            if country or language:
+            section = {"track": "arruaad", "field": None, "rows": rows, "note_ar": ARRUAAD_NOTE}
+            emdad = [u for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())
+                     if keep(u) and any(l["track"] == "emdad" for l in u["listings"])] if (country or language) else []
+            if track == "arruaad" and not rows and emdad:
+                # الرواد chosen and nothing here: say where this country's universities are, never switch lists
+                # silently (2026-11-07: الرواد + a country used to show إمداد's list under it).
+                section["elsewhere"] = {"track": "emdad", "count": len(emdad)}
+            result["sections"].append(section)
+            if (country or language) and not track:
                 # A country without a track: every list with matches, not only الرواد (decision 041).
-                emdad = [u for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())
-                         if keep(u) and any(l["track"] == "emdad" for l in u["listings"])]
                 if emdad:
                     if not rows:
                         result["sections"].pop()

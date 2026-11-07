@@ -101,7 +101,7 @@
       if (button.classList.contains("save-mini")) {
         // A short visible label, with the item's name for screen readers.
         const name = button.dataset.saveName || "";
-        label.textContent = t(isSaved ? "✓ في خطتك" : "احفظ");
+        label.textContent = t(isSaved ? "في خطتك" : "احفظ");
         button.setAttribute("aria-label", t(isSaved ? "أزِل {name} من خطتي" : "احفظ {name} في خطتي").replace("{name}", name));
       } else {
         label.textContent = t(isSaved ? "أزِل من خطتي" : "احفظ في خطتي");
@@ -130,7 +130,81 @@
     }
     renderButtons();
     renderHeader();
+    if (!saved) flyToPlan(button);
     if (status) status.textContent = t(saved ? "أُزيل من خطتك." : "حُفظ في خطتك على هذا الجهاز.");
+  }
+
+  // "Light travels" (decision 083): a saved item's light flies to «خطتي» in the header, so the student sees where it
+  // went. Once, short, and not at all with reduced motion or when the header link is out of sight.
+  function flyToPlan(from) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const to = [...document.querySelectorAll("[data-mylist-link]")].find((l) => l.offsetParent);
+    if (!to || !from.animate) return;
+    const a = from.getBoundingClientRect();
+    const b = to.getBoundingClientRect();
+    if (b.bottom < 0) return;
+    const light = document.createElement("span");
+    light.className = "plan-light";
+    light.setAttribute("aria-hidden", "true");
+    light.style.left = a.left + a.width / 2 - 7 + "px";
+    light.style.top = a.top + a.height / 2 - 7 + "px";
+    document.body.append(light);
+    const dx = b.left + b.width / 2 - (a.left + a.width / 2);
+    const dy = b.top + b.height / 2 - (a.top + a.height / 2);
+    light.animate([
+      { transform: "translate(0, 0) rotate(45deg) scale(1)", opacity: 1 },
+      { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 40}px) rotate(45deg) scale(1.2)`, opacity: 1, offset: 0.5 },
+      { transform: `translate(${dx}px, ${dy}px) rotate(45deg) scale(0.5)`, opacity: 0.2 },
+    ], { duration: 650, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }).finished.then(() => {
+      light.remove();
+      to.classList.add("is-arrived");
+      setTimeout(() => to.classList.remove("is-arrived"), 600);
+    }, () => light.remove());
+  }
+
+  // ---------- the student's grade (decision 083) ----------
+  // «هذا صفّي» on a grade page keeps the grade in this browser ("wadih:grade", a grade page's slug), so the homepage
+  // marks it «صفّك». One value, nothing else; pressing again forgets it.
+  const GRADE_KEY = "wadih:grade";
+  const GRADE = /^grade-1[0-2]$/;
+
+  function readGrade() {
+    try {
+      const g = localStorage.getItem(GRADE_KEY);
+      return GRADE.test(g || "") ? g : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function renderGrade() {
+    const mine = readGrade();
+    for (const button of document.querySelectorAll("button[data-my-grade]")) {
+      const on = button.dataset.myGrade === mine;
+      button.setAttribute("aria-pressed", String(on));
+      button.classList.toggle("is-saved", on);
+      button.hidden = false;
+    }
+    for (const stop of document.querySelectorAll("[data-grade-stop]")) {
+      const on = stop.dataset.gradeStop === mine;
+      stop.classList.toggle("is-here", on);
+      const here = stop.querySelector("[data-grade-here]");
+      if (here) here.hidden = !on;
+    }
+  }
+
+  function toggleGrade(button) {
+    const status = document.querySelector("[data-save-status]");
+    const on = readGrade() === button.dataset.myGrade;
+    try {
+      if (on) localStorage.removeItem(GRADE_KEY);
+      else localStorage.setItem(GRADE_KEY, button.dataset.myGrade);
+    } catch (e) {
+      if (status) status.textContent = t("تعذّر الحفظ في هذا المتصفح.");
+      return;
+    }
+    renderGrade();
+    if (status) status.textContent = t(on ? "لن نذكّرك بصفّك." : "حُفظ صفّك على هذا الجهاز.");
   }
 
   // ---------- the «خطتي» page ----------
@@ -144,11 +218,13 @@
     const failed = page.querySelector("[data-mylist-error]");
     const status = page.querySelector("[data-mylist-status]");
     const heading = page.querySelector("h1");
+    const hub = page.querySelector("[data-plan-hub]");
 
     const showEmpty = () => {
       rows.replaceChildren();
       rows.hidden = true;
       empty.hidden = false;
+      if (hub) hub.hidden = true;
     };
 
     if (!canStore) {
@@ -172,6 +248,15 @@
         });
         if (!response.ok) throw new Error("rows " + response.status);
         rows.innerHTML = await response.text();
+        // The hub (the route of statuses, «قريبًا», the calendar file) comes with the rows: move it above them.
+        const part = rows.querySelector('template[data-plan-part="hub"]');
+        if (part) {
+          if (hub) {
+            hub.replaceChildren(part.content.cloneNode(true));
+            hub.hidden = false;
+          }
+          part.remove();
+        }
       } catch (e) {
         failed.hidden = false;
         return;
@@ -204,7 +289,39 @@
         return;
       }
       status.textContent = t("حُفظ: {status}.").replace("{status}", select.options[select.selectedIndex].text);
-      draw(key); // the next step and the date follow the new status
+      // The next step and the date follow the new status. «قُبلت» lights the row once (decision 083).
+      draw(key).then(() => {
+        if (select.value !== "accepted") return;
+        const row = rows.querySelector('[data-mylist-item="' + key + '"]');
+        if (row) row.classList.add("is-accepted");
+      });
+    });
+
+    // «أضف المواعيد إلى تقويمك»: the server turns the plan into an .ics file and forgets it; the phone opens it.
+    if (hub) hub.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-plan-ics]");
+      if (!button) return;
+      button.disabled = true;
+      try {
+        const response = await fetch(hub.dataset.icsUrl, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ v: 1, items: read() }),
+        });
+        if (!response.ok) throw new Error("ics " + response.status);
+        const url = URL.createObjectURL(await response.blob());
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "wadih-plan.ics";
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        status.textContent = t("نُزّل ملف المواعيد. افتحه لتضيفها إلى تقويمك.");
+      } catch (e) {
+        status.textContent = t("تعذّر تجهيز ملف المواعيد. حاول مرة أخرى.");
+      } finally {
+        button.disabled = false;
+      }
     });
 
     rows.addEventListener("click", (event) => {
@@ -217,11 +334,17 @@
       write(read().filter((i) => keyOf(i) !== key));
       // Keep the keyboard in a sensible place: the next row's button, else the previous one, else the title.
       const next = item.nextElementSibling || item.previousElementSibling;
+      const nextKey = next && next.dataset.mylistItem;
       item.remove();
       renderHeader();
       status.textContent = t("أُزيل {name} من خطتك.").replace("{name}", name);
-      if (next) {
+      if (nextKey) {
         next.querySelector("button[data-remove]").focus();
+        // The hub's counts, dates and map follow the plan (the rows are redrawn, then focus is put back).
+        draw().then(() => {
+          const again = rows.querySelector('button[data-remove="' + nextKey + '"]');
+          if (again) again.focus();
+        });
       } else {
         showEmpty();
         heading.setAttribute("tabindex", "-1");
@@ -237,14 +360,18 @@
   // Storage blocked (e.g. some private modes): no save buttons, so nothing pretends to be saved.
   if (!canStore) return;
   renderButtons();
+  renderGrade();
   // One listener for every save button, including result rows drawn later by live updates.
   document.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-save]");
     if (button) toggle(button);
+    const grade = event.target.closest("button[data-my-grade]");
+    if (grade) toggleGrade(grade);
   });
   document.addEventListener("wadih:results", (event) => renderButtons(event.detail.root));
   // Another tab changed the plan: keep this one in step.
   window.addEventListener("storage", (event) => {
+    if (event.key === GRADE_KEY) renderGrade();
     if (event.key !== KEY) return;
     renderHeader();
     renderButtons();

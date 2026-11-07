@@ -5,6 +5,62 @@
 #}
 {% import "components.html" as c %}
 {% import "partials/uni_macros.html" as um with context %}
+{% import "partials/world_map.html" as wm with context %}
+{#
+  The hub (decision 083), sent with the rows; mylist.js moves it above them:
+  - the route of statuses: how many items stand at each step, lit up to the furthest one reached;
+  - «قريبًا»: the plan's dates in the next 30 days, each with its official source;
+  - «أضف المواعيد إلى تقويمك»: every upcoming date as an .ics file for the student's own calendar (POST, nothing kept).
+#}
+{% if progress %}
+<template data-plan-part="hub">
+  <section class="plan-hub" aria-labelledby="plan-route-title">
+    <h2 id="plan-route-title" class="plan-hub-title">{{ _("أين وصلت") }}</h2>
+    <ol class="plan-route">
+      {% for s in route %}
+      <li class="plan-route-stop{% if loop.index0 <= progress.reached %} is-reached{% endif %}{% if loop.index0 == progress.reached %} is-here{% endif %}" style="--step: {{ loop.index0 }}">
+        <span class="plan-route-mark" aria-hidden="true"></span>
+        <span class="plan-route-name">{{ statuses[s] }}</span>
+        <span class="plan-route-count">{{ progress.counts[s] }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+    {% if progress.counts.not_accepted %}<p class="plan-route-turn">{{ statuses["not_accepted"] }}: {{ progress.counts.not_accepted }}</p>{% endif %}
+  </section>
+
+  <section class="plan-soon" aria-labelledby="plan-soon-title">
+    <h2 id="plan-soon-title" class="plan-hub-title">{{ _("قريبًا") }} <span class="plan-soon-range">{{ _("الثلاثون يومًا القادمة") }}</span></h2>
+    {% if soon %}
+    <ul class="plan-soon-list">
+      {% for d in soon %}
+      <li class="plan-soon-item">
+        <time class="plan-soon-date" datetime="{{ d.date }}">{{ d.date | arabic_date }}</time>
+        <span class="plan-soon-what"><a href="{{ d.href }}">{{ d.name_ar }}</a>{{ _("،") }} {% if d.kind == "university" %}{{ um.date_short(d.what) }}{% else %}{{ d.what_ar }}{% endif %}</span>
+        {% if d.source_url %}<a class="src" href="{{ d.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="plan-soon-empty">{{ _("لا مواعيد في خطتك خلال الثلاثين يومًا القادمة.") }}</p>
+    {% endif %}
+    {% if soon or later_count %}
+    <p class="plan-ics">
+      <button class="btn btn--secondary btn--small" type="button" data-plan-ics>{{ _("أضف المواعيد إلى تقويمك") }}</button>
+      <span class="plan-ics-note">{{ _f("كل المواعيد القادمة في خطتك ({n})، مع تذكير قبل كل موعد بثلاثة أيام.", n=soon | length + later_count) }}</span>
+    </p>
+    {% endif %}
+  </section>
+
+  {#- Your constellation (decision 083): where the universities you saved are, a path of light from home to each. #}
+  {% set world = world_of(rows | selectattr("university") | map(attribute="university") | list) %}
+  {% if world %}
+  <section class="plan-where" aria-labelledby="plan-where-title">
+    <h2 id="plan-where-title" class="plan-hub-title">{{ _("إلى أين تتجه") }}</h2>
+    {{ wm.world_map(world, url_for('universities_page') ~ "?", _("جامعات خطتك حسب الدولة")) }}
+  </section>
+  {% endif %}
+</template>
+{% endif %}
 {% for r in rows %}
 {% set key = r.type ~ ":" ~ r.id %}
 {% set name = (r.university.name_ar or r.university.name_en) if r.university else r.name_ar %}

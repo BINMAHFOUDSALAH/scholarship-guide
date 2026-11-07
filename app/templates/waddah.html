@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% import "partials/waddah.html" as w %}
+
+{% block title %}{{ waddah.teaser.title_ar }} | {{ site.name }}{% endblock %}
+{% block description %}{{ waddah.teaser.line_ar }}{% endblock %}
+{% block body_class %}page-waddah{% endblock %}
+{# Its own share card (marketing/src/waddah_cards.mjs draws it from data/waddah.json). #}
+{% block og_image %}waddah-og.png{% endblock %}
+{% block og_image_alt %}{{ waddah.teaser.title_ar }}{% endblock %}
+
+{#
+  /waddah (decision 082): what وضّاح will do and won't, example questions (labelled as examples), and a short FAQ.
+  Nothing to sign up for yet: the only action is to tell us what you'd ask, on X. Guardrails: it says it's AI, no
+  accuracy figures, no privacy promise beyond what the site already holds to (no names, grades or ID).
+#}
+{% block hero %}
+<section class="waddah-hero stage" aria-labelledby="waddah-title" style="--dawn: {{ waddah_dawn() }}">
+  <div class="container waddah-hero-inner">
+    <p class="waddah-kicker">{{ waddah.teaser.kicker_ar }}</p>
+    <h1 id="waddah-title" class="waddah-hero-title">{{ w.wordmark("waddah-mark--large") }}</h1>
+    <p class="waddah-when">{{ _("قادم في ديسمبر") }}</p>
+    <p class="waddah-hero-line">{{ waddah.teaser.line_ar }}</p>
+    <p class="waddah-name-note">{{ waddah.name_note_ar }}</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="measure waddah-page">
+  <section class="section" aria-labelledby="promises-title">
+    <h2 id="promises-title" class="section-title">{{ _("ثلاثة وعود") }}</h2>
+    <ol class="waddah-promises">
+      {% for p in waddah.promises %}
+      <li class="waddah-promise">
+        <h3 class="waddah-promise-title">{{ p.title_ar }}</h3>
+        <p>{{ p.text_ar }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="examples-title">
+    <h2 id="examples-title" class="section-title">{{ _("أسئلة يمكن أن تسأله إياها") }}</h2>
+    <p class="section-note">{{ _("أمثلة فقط: الأجوبة ستأتي من صفحات واضح ومصادرها الرسمية.") }}</p>
+    <ul class="waddah-examples">
+      {% for q in waddah.examples_ar %}<li class="waddah-example">{{ q }}</li>{% endfor %}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="wont-title">
+    <h2 id="wont-title" class="section-title">{{ _("ما لن يفعله") }}</h2>
+    <ul class="waddah-wont">
+      {% for x in waddah.wont_ar %}<li>{{ x }}</li>{% endfor %}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="section-title">{{ _("أسئلة شائعة") }}</h2>
+    <dl class="summary-list waddah-faq">
+      {% for f in waddah.faq %}
+      <div class="summary-row"><dt>{{ f.q_ar }}</dt><dd>{{ f.a_ar }}</dd></div>
+      {% endfor %}
+    </dl>
+  </section>
+
+  <aside class="next-step waddah-ask" aria-labelledby="ask-title">
+    <p class="next-step-label" id="ask-title"><span class="diamond" aria-hidden="true"></span>{{ _("ماذا ستسأل وضّاح؟") }}</p>
+    <p class="next-step-text">{{ _("اكتب لنا سؤالك على X، فأسئلتكم هي ما سنختبر به وضّاح قبل أن يصل.") }}</p>
+    <a class="next-step-link" href="{{ waddah.x_url }}" target="_blank" rel="noopener noreferrer">{{ _("اكتب سؤالك على X") }}</a>
+  </aside>
+
+  <p class="waddah-meanwhile">{{ _("وحتى يصل، كل ما في واضح متاح لك الآن بلا حساب:") }} <a href="{{ url_for('home') }}#grades">{{ _("ابدأ بصفك") }}</a>{{ _("، أو") }} <a href="{{ url_for('search_page') }}">{{ _("ابحث في واضح") }}</a>.</p>
+</div>
+{% endblock %}

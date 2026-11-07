@@ -19,7 +19,7 @@
  "النشاط {n} من {total}": "Activity {n} of {total}",
  "التالي": "Next",
  "تخطَّ": "Skip",
- "✓ في خطتك": "✓ In your plan",
+ "في خطتك": "In your plan",
  "أزِل {name} من خطتي": "Remove {name} from my plan",
  "احفظ {name} في خطتي": "Save {name} to my plan",
  "أزِل من خطتي": "Remove from my plan",
@@ -27,5 +27,9 @@
  "أُزيل من خطتك.": "Removed from your plan.",
  "حُفظ في خطتك على هذا الجهاز.": "Saved to your plan on this device.",
  "أُزيل {name} من خطتك.": "{name} was removed from your plan.",
- "حُفظ: {status}.": "Saved: {status}."
+ "حُفظ: {status}.": "Saved: {status}.",
+ "لن نذكّرك بصفّك.": "Your grade is no longer kept.",
+ "حُفظ صفّك على هذا الجهاز.": "Your grade is kept on this device.",
+ "نُزّل ملف المواعيد. افتحه لتضيفها إلى تقويمك.": "The calendar file has downloaded. Open it to add the dates to your calendar.",
+ "تعذّر تجهيز ملف المواعيد. حاول مرة أخرى.": "We couldn’t prepare the calendar file. Try again."
 }

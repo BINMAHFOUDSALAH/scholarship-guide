@@ -1,0 +1,64 @@
+{#
+  «الآن» (decision 083): what is open today, then what hasn't opened yet, each under its own heading, never one heading
+  over both (the homepage's «مفتوح للتقديم الآن» used to list Aramco and KAUST before they opened). Shared by the
+  homepage and «البرامج». Every row says who can apply («لمن»), because "open" alone read as "apply today" to students
+  who can't yet. An open row with a deadline shows the days left as its one big number (Riyadh's date).
+  A واعد announcement is one row however many programs it has (decision 063).
+#}
+{% import "components.html" as c %}
+{% import "partials/uni_macros.html" as um with context %}
+
+{% macro now_row(item, key) %}
+<li class="now-item{% if key == 'open' and item.days_left is not none %} has-count{% endif %}">
+  {% if key == "open" and item.days_left is not none %}
+  {#- The days left, the row's picture: «يُغلق بعد 8 أيام» with the number in display numerals (Riyadh's date). #}
+  {% set d = item.days_left %}
+  <p class="now-count" aria-hidden="true">
+    <span class="now-count-label">{{ _("يُغلق") if d == 0 else _("يُغلق بعد") }}</span>
+    {% if d == 0 %}<span class="now-count-word">{{ _("اليوم") }}</span>
+    {% elif d == 1 %}<span class="now-count-word">{{ _("يوم واحد") }}</span>
+    {% elif d == 2 %}<span class="now-count-word">{{ _("يومين") }}</span>
+    {% else %}<span class="now-count-n">{{ d }}</span> <span class="now-count-unit">{{ _("أيام") if d <= 10 else _("يومًا") }}</span>{% endif %}
+  </p>
+  {% endif %}
+  <div class="now-main">
+    <h4 class="now-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</h4>
+    {% if item.program_ar != item.title_ar %}<p class="now-program">{{ item.program_ar }}</p>{% endif %}
+    {% if item.who_ar %}<p class="now-who"><span class="now-who-label">{{ _("لمن:") }}</span> {{ item.who_ar }}</p>{% endif %}
+    <p class="now-status">{{ c.status_tag(item.status, item.until) }}{% if item.opens %} <span class="status-until">{{ _("يفتح في") }} <time datetime="{{ item.opens }}">{{ item.opens | arabic_date }}</time></span>{% endif %}
+      {%- if key == "open" and item.days_left is not none %}<span class="sr-only">{{ _("،") }} {{ _("يُغلق اليوم") if item.days_left == 0 else (_("يُغلق بعد يومين") if item.days_left == 2 else _f("يُغلق بعد {n}", n=item.days_left | count_ar("days"))) }}</span>{% endif %}</p>
+  </div>
+  <div class="now-actions">
+    {% if key == "open" and item.apply_url %}<a class="btn btn--primary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="{{ _f('تقدم الآن: {title}، في منصة قبول', title=item.title_ar) }}">{{ _("تقدم الآن") }}</a>{% endif %}
+    {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}
+    {% if item.pid %}{{ um.save_program(item.pid, item.title_ar) }}{% endif %}
+  </div>
+</li>
+{% endmacro %}
+
+{#- heading_level: 3 on the homepage (under «الآن»), 2 on «البرامج». limit: rows per group (None = all). #}
+{% macro now_groups(now, heading_level=3, limit=None, more_href=None) %}
+{% set h = "h" ~ heading_level %}
+<div class="now-groups">
+  <div class="now-group now-group--open">
+    <{{ h }} class="now-group-title" id="now-open-{{ heading_level }}"><span class="now-group-mark" aria-hidden="true"></span>{{ _("مفتوح الآن") }}{% if now.open %} <span class="now-group-count">{{ now.open | length }}</span>{% endif %}</{{ h }}>
+    {% if now.open %}
+    <ul class="now-list" aria-labelledby="now-open-{{ heading_level }}">
+      {% for item in (now.open[:limit] if limit else now.open) %}{{ now_row(item, "open") }}{% endfor %}
+    </ul>
+    {% if limit and now.open | length > limit %}<p class="section-link section-link--after"><a href="{{ more_href }}">{{ _f("وغيرها ({n})", n=now.open | length - limit) }}</a></p>{% endif %}
+    {% else %}
+    <p class="now-empty">{{ _("لا يوجد الآن برنامج نتابعه مفتوحًا للتقديم.") }}</p>
+    {% endif %}
+  </div>
+
+  {% if now.upcoming %}
+  <div class="now-group now-group--upcoming">
+    <{{ h }} class="now-group-title" id="now-upcoming-{{ heading_level }}"><span class="now-group-mark" aria-hidden="true"></span>{{ _("لم يفتح بعد") }} <span class="now-group-count">{{ now.upcoming | length }}</span></{{ h }}>
+    <ul class="now-list" aria-labelledby="now-upcoming-{{ heading_level }}">
+      {% for item in now.upcoming %}{{ now_row(item, "upcoming") }}{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+{% endmacro %}

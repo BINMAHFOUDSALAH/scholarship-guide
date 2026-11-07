@@ -28,6 +28,11 @@
   <header class="page-header">
     <h1>{{ page.title }}: {{ page.stage_ar }}</h1>
     <p class="lead">{{ page.description }}</p>
+    {#- «هذا صفّي» (decision 083): the grade is remembered on this device only (mylist.js, localStorage "wadih:grade"),
+        so the homepage marks it «صفّك». A toggle; hidden until the script knows the browser can keep it. #}
+    <button class="save-mini grade-mine" type="button" data-my-grade="{{ page.slug }}" aria-pressed="false" hidden>
+      <span data-my-grade-label>{{ _("هذا صفّي") }}</span>
+    </button>
   </header>
 
   {# «من أين تبدأ؟» (decision 078, A4): grade 12 starts from what the student wants, each with where to go next. #}
@@ -39,7 +44,7 @@
       <li>
         <p class="start-title">{{ s.title_ar }}</p>
         <p class="start-text">{{ s.text_ar }}</p>
-        <p class="start-link">{% if s.href.startswith("/") %}<a href="{{ s.href }}">{{ s.link_label_ar }}</a>{% else %}<a href="{{ s.href }}" target="_blank" rel="noopener">{{ s.link_label_ar }} ↗</a>{% endif %}</p>
+        <p class="start-link">{% if s.href.startswith("/") %}<a href="{{ s.href }}">{{ s.link_label_ar }}</a>{% else %}<a href="{{ s.href }}" target="_blank" rel="noopener">{{ s.link_label_ar }}</a>{% endif %}</p>
       </li>
       {% endfor %}
     </ul>
@@ -62,7 +67,7 @@
     <ul class="rows resource-list">
       {% for r in page.resources %}
       <li>
-        {% if r.url.startswith("/") %}<a href="{{ r.url }}">{{ r.title_ar }}</a>{% else %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title_ar }} ↗</a>{% endif %}
+        {% if r.url.startswith("/") %}<a href="{{ r.url }}">{{ r.title_ar }}</a>{% else %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title_ar }}</a>{% endif %}
         <span class="resource-why">{{ r.why_ar }}</span>
       </li>
       {% endfor %}
