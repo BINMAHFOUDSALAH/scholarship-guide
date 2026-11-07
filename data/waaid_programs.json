@@ -7,6 +7,7 @@
   "programs": [
     {
       "id": "sar-railway-training",
+      "company_logo": {"file": "img/programs/sar-logo", "width": 500, "height": 279, "name_ar": "الخطوط الحديدية السعودية (سار)", "source_url": "https://commons.wikimedia.org/wiki/File:Saudi_Arabia_Railways_Logo.svg", "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Saudi_Arabia_Railways_Logo.svg/500px-Saudi_Arabia_Railways_Logo.svg.png", "licence": "Public domain (Wikimedia Commons)", "retrieved": "2026-11-07", "note": "Shown only in the واعد row of SAR's program (decision 085)."},
       "company_ar": "شركة الخطوط الحديدية السعودية (سار)",
       "program_ar": "تدريب في قطاع السكك الحديدية",
       "level_ar": "تدريب",

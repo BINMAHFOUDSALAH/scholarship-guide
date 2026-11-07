@@ -939,7 +939,18 @@
         "apply_when": "in_school"
       }
     ],
-    "apply_when": "in_school"
+    "apply_when": "in_school",
+    "now_logo": {
+      "file": "img/programs/aramco-logo",
+      "width": 500,
+      "height": 145,
+      "name_ar": "أرامكو السعودية",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Saudi_aramco_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Saudi_aramco_logo.svg/500px-Saudi_aramco_logo.svg.png",
+      "licence": "Public domain (Wikimedia Commons)",
+      "retrieved": "2026-11-07",
+      "note": "Shown only in the program's «الآن» row (decision 085). Commons' 500px PNG rendering, palette copies at 160 and 500px."
+    }
   },
   {
     "id": "kaust-kgsp",
@@ -1114,6 +1125,18 @@
         "note_ar": "صفحة تفاصيل المنحة نفسها تحيل إلى صفحة الطلاب المتقدمين لمعرفة طريقة القبول. تابع صفحة الطلاب المتقدمين عند فتح التقديم."
       }
     ],
-    "apply_when": "in_school"
+    "apply_when": "in_school",
+    "now_logo": {
+      "file": "img/programs/kaust-logo",
+      "svg": true,
+      "width": 63,
+      "height": 61,
+      "name_ar": "جامعة الملك عبدالله للعلوم والتقنية (كاوست)",
+      "source_url": "https://www.kaust.edu.sa/en/",
+      "asset_url": "https://www.kaust.edu.sa/ResourcePackages/KAUSTMain/assets/dist/images/kaust-logo.svg",
+      "licence": "Official website, trademark of KAUST",
+      "retrieved": "2026-11-07",
+      "note": "The emblem from the header of KAUST's homepage; shown only in the program's «الآن» row (decision 085). XML comments and doctype removed; no scripts or links in the file."
+    }
   }
 ]

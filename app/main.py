@@ -156,7 +156,7 @@ PROGRAM_ART = {"custodian-scholarship": "abroad", "sdaia-ai-scholarship": "sdaia
 
 
 def program_art(path):
-    if path["id"] != "sdaia-ai-scholarship" and path.get("logo"):
+    if path["id"] != "sdaia-ai-scholarship" and (path.get("logo") or path.get("now_logo")):
         return "logo"
     return PROGRAM_ART.get(path["id"])
 # Tracks whose «الآن» row shows a few of their universities' logos (decision 084, the owner's request for الرواد).
@@ -211,7 +211,7 @@ def status_board():
                 "apply_url": track.get("apply_url") if status == "open" else None,
                 "when": track.get("apply_when"),
                 "pid": plan_ids.get((path["id"], track.get("id"))),  # «احفظ» in «خطتي»
-                "art": program_art(path), "art_logo": path.get("logo"),  # the row's picture (decision 084)
+                "art": program_art(path), "art_logo": path.get("logo") or path.get("now_logo"),  # the row's picture (decision 084)
                 "unis": track_logos(track.get("id")),  # a few of the track's universities, by their logos
                 "unis_track": track.get("id"),
             }

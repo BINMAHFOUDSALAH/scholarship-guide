@@ -25,7 +25,7 @@
 {% macro art(name, logo=None) %}
 {% if name == "logo" and logo %}
 {#- The program's (or company's) official logo, on the plate it was made for (decision 085). #}
-<span class="program-art program-art--logo{% if logo.plate == 'dark' %} program-art--logo-dark{% endif %}" aria-hidden="true"><img src="{{ url_for('static', path=logo.file ~ '-160.png') }}" srcset="{{ url_for('static', path=logo.file ~ '-160.png') }} 160w, {{ url_for('static', path=logo.file ~ '-500.png') }} 500w" sizes="(min-width: 760px) 152px, 88px" width="{{ logo.width }}" height="{{ logo.height }}" alt="" loading="lazy" decoding="async"></span>
+<span class="program-art program-art--logo{% if logo.plate == 'dark' %} program-art--logo-dark{% endif %}" aria-hidden="true">{% if logo.svg %}<img src="{{ url_for('static', path=logo.file ~ '.svg') }}" width{% else %}<img src="{{ url_for('static', path=logo.file ~ '-160.png') }}" srcset="{{ url_for('static', path=logo.file ~ '-160.png') }} 160w, {{ url_for('static', path=logo.file ~ '-500.png') }} 500w" sizes="(min-width: 760px) 152px, 88px" width{% endif %}="{{ logo.width }}" height="{{ logo.height }}" alt="" loading="lazy" decoding="async"></span>
 {% elif name in ("abroad", "sdaia", "waaid", "aramco", "kaust") %}
 <span class="program-art program-art--{{ name }}" aria-hidden="true">
 <svg viewBox="0 0 160 112" focusable="false" preserveAspectRatio="xMidYMid slice">
