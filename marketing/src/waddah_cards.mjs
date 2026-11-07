@@ -1,11 +1,11 @@
-// وضّاح's teaser kit (decisions 082, 083), drawn in a headless browser with the site's own fonts (they join Arabic
+// وضّاح's teaser kit (decisions 082–084), drawn in a headless browser with the site's own fonts (they join Arabic
 // correctly, which many image tools don't). $0, nothing uploaded anywhere.
-//   1. app/static/img/waddah-og.png        1200×630, the share preview of /waddah (committed)
+//   1. marketing/out/waddah-og.png         1200×630, a share image (no page uses it: وضّاح has no page until launch, 084)
 //   2. marketing/out/waddah-story.png      1080×1920, a still for Snapchat / X / WhatsApp status
 //   3. marketing/out/waddah-dawn.mp4       1080×1920, 6 s: the night lightening until the light rises (needs ffmpeg)
 //
 // Start the site, then:   node marketing/src/waddah_cards.mjs [http://127.0.0.1:8000] [--no-clip]
-// The words come from data/waddah.json through the live /waddah page, so the kit never says what the site doesn't.
+// The words come from data/waddah.json, the homepage teaser's own copy, so the kit never says what the site doesn't.
 
 import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
@@ -66,7 +66,7 @@ function card(w, h, dawn) {
   <p class="when">قادم في ديسمبر</p>
   <p class="line">${data.teaser.line_ar}</p>
 </div>
-<p class="site">wadihguide.com/waddah</p>
+<p class="site">wadihguide.com</p>
 </body></html>`;
 }
 
@@ -81,9 +81,9 @@ async function shoot(w, h, dawn, path) {
 }
 
 // The stills show the edge of dawn, as the band will look late in November.
-await shoot(1200, 630, 0.85, join(root, "app", "static", "img", "waddah-og.png"));
+await shoot(1200, 630, 0.85, join(out, "waddah-og.png"));
 await shoot(1080, 1920, 0.85, join(out, "waddah-story.png"));
-console.log("wrote app/static/img/waddah-og.png and marketing/out/waddah-story.png");
+console.log("wrote marketing/out/waddah-og.png and marketing/out/waddah-story.png");
 
 if (clip) {
   // 6 seconds at 30 frames: night for a second, then dawn rises and holds.

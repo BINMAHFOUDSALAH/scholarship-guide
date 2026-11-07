@@ -239,24 +239,49 @@ def test_open_and_not_yet_open_never_share_a_heading(monkeypatch):
         assert item["title_ar"] in upcoming
 
 
-def test_open_rows_count_the_days_left(monkeypatch):
-    """An open row with a deadline shows the days left, on Riyadh's date, in correct Arabic."""
-    import datetime
+def test_open_rows_show_their_closing_date_not_a_countdown():
+    """Decision 084: an open row says when it closes (its status tag, «حتى 15 نوفمبر 2026»), with no countdown, and
+    «الآن» shows no today's date: the site isn't updated every day, so a date that moves would look stale."""
+    html = client.get("/").text
+    now = html.split('id="now"')[1].split("</section>")[0]
+    assert "now-count" not in now and "now-today" not in now and "يُغلق بعد" not in now
+    track = next(t for t in main.paths_by_id["custodian-scholarship"]["tracks"] if t["id"] == "arruaad")
+    if main.track_status(track) == "open":
+        row = now.split("مسار الرواد")[1].split("</li>")[0]
+        assert main.arabic_date(track["status_until"]) in row
 
-    def fixed(day):
-        class Day(datetime.date):
-            @classmethod
-            def today(cls):
-                return cls(day.year, day.month, day.day)
-        return Day
 
-    for day, words in ((datetime.date(2026, 11, 7), ("يُغلق بعد", ">8<", "أيام")),
-                       (datetime.date(2026, 11, 13), ("يُغلق بعد", "يومين")),
-                       (datetime.date(2026, 11, 15), ("يُغلق", "اليوم"))):
-        monkeypatch.setattr(main, "date", fixed(day))
-        row = client.get("/").text.split('id="now-open-3"')[1].split("مسار الرواد")[0]
-        for w in words:
-            assert w in row, (day, w)
+def test_each_now_row_has_its_programs_picture():
+    """Decision 084: every program in «الآن» has its own drawing (no text, no outside request); SDAIA's has its logo,
+    and الرواد's row shows a few of its universities by their logos, each opening its page."""
+    now = client.get("/").text.split('id="now"')[1].split("</section>")[0]
+    rows = now.split('<li class="now-item')[1:]
+    assert rows and all('program-art program-art--' in r for r in rows)
+    for r in rows:
+        art = r.split('<span class="program-art')[1].split("</svg>")[0]
+        assert "http" not in art and "<script" not in art and "<text" not in art
+        assert 'aria-hidden="true"' in r.split("program-art--")[1].split(">")[0]
+    sdaia = next((r for r in rows if "program-art--sdaia" in r), None)
+    if sdaia:
+        assert "sdaia-logo-320.png" in sdaia
+    rowwad = next((r for r in rows if "مسار الرواد" in r), None)
+    if rowwad:
+        logos = re.findall(r'href="[^"]*/universities/([a-z0-9-]+)"><img src="[^"]*/static/img/universities/small/\1\.png"',
+                           rowwad)
+        assert len(logos) == main.LOGO_COUNT
+        listed = [u["id"] for _, u in sorted(main.explorer.listings("arruaad"), key=lambda r: r[0]["rank"])]
+        assert logos == [uid for uid in listed if uid in main.explorer.logos][:main.LOGO_COUNT]  # the list's order
+        assert '/universities?track=arruaad"' in rowwad
+
+
+def test_every_logo_has_its_small_copy():
+    """scripts/logo_thumbs.py makes the small logos the rows show (decision 084): one per logo, light enough to show
+    several at once."""
+    small = main.APP_DIR / "static" / "img" / "universities" / "small"
+    for uid in main.explorer.logos:
+        f = small / f"{uid}.png"
+        assert f.is_file(), f"{uid}: run python scripts/logo_thumbs.py"
+        assert f.stat().st_size < 8_000, uid
 
 
 def test_open_items_say_who_can_apply():
@@ -991,7 +1016,7 @@ def test_every_guide_is_in_the_homepage_index_and_the_footer():
 
 
 @pytest.mark.parametrize("page", ["/", "/universities?track=arruaad", "/universities/university-of-cambridge",
-                                  "/programs", "/grades/grade-12", "/programs/custodian-scholarship", "/waddah"])
+                                  "/programs", "/grades/grade-12", "/programs/custodian-scholarship"])
 def test_no_values_joined_by_dots(page):
     """Values sit under their own labels or are joined by Arabic punctuation, never chained with «·» (decision 062)."""
     assert "·" not in client.get(page).text

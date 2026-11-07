@@ -1,12 +1,31 @@
 {#
-  وضّاح's teaser on the homepage (decisions 082, 083): «قادم في ديسمبر». A night band behind a paper-cut horizon; the sky
-  lightens a little each night (--dawn, from main.waddah_dawn(): Riyadh's date, 0 = night) and holds at the edge of dawn
-  in December. On launch day (data/waddah.json "launched") dawn breaks. Nothing loops; with reduced motion the light
-  simply stands where the day puts it.
+  وضّاح's teaser on the homepage (decisions 082–084): «قادم في ديسمبر», and only a teaser: no page of its own and no
+  details until launch (decision 084). A night band behind a paper-cut horizon; the sky lightens a little each night
+  (--dawn, from main.waddah_dawn(): Riyadh's date, 0 = night) and holds at the edge of dawn in December. On launch day
+  (data/waddah.json "launched") dawn breaks. Nothing loops; with reduced motion the light simply stands where the day
+  puts it.
+  Beside the words, what وضّاح will do, drawn (the owner's request, decision 084): a student on the hill with a laptop,
+  and three small agents bringing what they found: an official page, a search, the light of an answer. Each agent carries
+  وضّاح's light on its antenna; none has a human face (decision 082).
 #}
 {% import "partials/waddah.html" as w %}
 {% set dawn = waddah_dawn() %}
-<section class="waddah-band" style="--dawn: {{ dawn }}" aria-labelledby="waddah-band-title" data-dawn="{{ dawn }}">
+{% macro star(x, y, s) %}{% set k = (s * 0.16) | round(2) %}<path d="M{{ x }} {{ y - s }}Q{{ x + k }} {{ y - k }} {{ x + s }} {{ y }}Q{{ x + k }} {{ y + k }} {{ x }} {{ y + s }}Q{{ x - k }} {{ y + k }} {{ x - s }} {{ y }}Q{{ x - k }} {{ y - k }} {{ x }} {{ y - s }}Z"/>{% endmacro %}
+{#- An agent: a rounded head with a visor and two indicator lights looking towards the student (look = -1 or 1), an
+    antenna with the light, a small body, and the soft light it floats on. Its arms and what it carries are drawn apart. #}
+{% macro agent(x, y, look) %}
+<g class="agent" transform="translate({{ x }} {{ y }})">
+  <ellipse class="agent-hover" cx="0" cy="40" rx="13" ry="3.2"/>
+  <line class="agent-antenna" x1="0" y1="-16" x2="0" y2="-27"/>
+  <g class="agent-light">{{ star(0, -31, 5.5) }}</g>
+  <rect class="agent-body" x="-11" y="11" width="22" height="19" rx="7"/>
+  <rect class="agent-head" x="-17" y="-17" width="34" height="26" rx="9"/>
+  <rect class="agent-visor" x="-12" y="-11" width="24" height="13" rx="6.5"/>
+  <circle class="agent-eye" cx="{{ look * 3 - 4.5 }}" cy="-4.5" r="2.3"/>
+  <circle class="agent-eye" cx="{{ look * 3 + 4.5 }}" cy="-4.5" r="2.3"/>
+</g>
+{% endmacro %}
+<section id="waddah" class="waddah-band" style="--dawn: {{ dawn }}" aria-labelledby="waddah-band-title" data-dawn="{{ dawn }}">
   <svg class="waddah-sky" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
     <defs>
       <radialGradient id="dawn-glow" cx="0.23" cy="1" r="0.6">
@@ -29,9 +48,47 @@
     <path class="dawn-hill dawn-hill--near" d="M0 392 C220 378 420 396 640 384 C860 372 1060 394 1260 386 C1350 382 1400 388 1440 386 L1440 420 L0 420Z"/>
   </svg>
   <div class="container waddah-band-inner">
-    <p class="waddah-kicker">{{ waddah.teaser.kicker_ar }}</p>
-    <h2 id="waddah-band-title" class="waddah-title">{{ w.wordmark() }} <span class="waddah-title-rest">{{ _("قادم في ديسمبر") }}</span></h2>
-    <p class="waddah-line">{{ waddah.teaser.line_ar }}</p>
-    <a class="btn btn--on-night" href="{{ url_for('waddah_page') }}">{{ waddah.teaser.cta_ar }}</a>
+    <div class="waddah-band-text">
+      <p class="waddah-kicker">{{ waddah.teaser.kicker_ar }}</p>
+      <h2 id="waddah-band-title" class="waddah-title">{{ w.wordmark() }} <span class="waddah-title-rest">{{ _("قادم في ديسمبر") }}</span></h2>
+      <p class="waddah-line">{{ waddah.teaser.line_ar }}</p>
+    </div>
+    <svg class="waddah-help" viewBox="0 0 420 270" aria-hidden="true" focusable="false">
+      {#- The paths of light: what each agent found, travelling to the student's screen. #}
+      <g class="help-paths">
+        <path d="M128 132Q190 126 238 178"/>
+        <path d="M290 98Q268 132 252 170"/>
+        <path d="M338 186Q300 186 268 180"/>
+      </g>
+      {#- The student, a paper cut-out seen from the side, on the hill with a laptop. #}
+      <path class="help-rock" d="M108 270C114 232 152 214 204 214C258 214 292 234 298 270Z"/>
+      <path class="help-leg" d="M206 210L262 202L265 246"/>
+      <path class="help-shoe" d="M258 244h20a5 5 0 0 1 0 10h-20z"/>
+      <path class="help-body" d="M181 214C176 184 180 158 195 147C209 139 223 145 226 158L231 214Z"/>
+      <circle class="help-head" cx="205" cy="124" r="17.5"/>
+      <path class="help-hair" d="M188 126C184 106 198 96 212 99C221 101 226 108 224 115C213 110 200 113 196 128Z"/>
+      <ellipse class="help-glow" cx="250" cy="182" rx="26" ry="18"/>
+      <path class="help-laptop" d="M224 196L268 192"/>
+      <path class="help-screen" d="M264 193L272 162"/>
+      <path class="help-arm" d="M213 160C222 176 230 186 244 191"/>
+      {#- 1. An official page, with its source. #}
+      {{ agent(92, 96, 1) }}
+      <path class="agent-arm" d="M104 112L118 124"/>
+      <g transform="rotate(-8 132 132)">
+        <rect class="help-doc" x="116" y="114" width="30" height="38" rx="3"/>
+        <path class="help-doc-lines" d="M122 124h18M122 131h18M122 138h11"/>
+        <rect class="help-doc-src" x="122" y="143" width="14" height="5" rx="2.5"/>
+      </g>
+      {#- 2. A search. #}
+      {{ agent(318, 52, -1) }}
+      <path class="agent-arm" d="M306 70L294 84"/>
+      <circle class="help-lens" cx="288" cy="92" r="9"/>
+      <path class="help-lens-handle" d="M294 99L300 106"/>
+      {#- 3. The answer: the light, held out to the student. #}
+      {{ agent(368, 160, -1) }}
+      <path class="agent-arm" d="M356 178L344 186"/>
+      <circle class="help-answer-glow" cx="336" cy="187" r="12"/>
+      <g class="help-answer">{{ star(336, 187, 8) }}</g>
+    </svg>
   </div>
 </section>

@@ -4498,16 +4498,6 @@ a.uni-name:hover .uni-name-en:only-child {
   font-weight: 700;
 }
 
-/* «الآن»: today's date beside the title, quiet. */
-.now-today {
-  margin: 0;
-  margin-inline-end: auto;
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--ink-muted);
-  font-variant-numeric: tabular-nums;
-}
-
 .now-groups {
   display: grid;
   gap: var(--space-5);
@@ -4567,32 +4557,81 @@ a.uni-name:hover .uni-name-en:only-child {
   margin: 0;
 }
 
-/* The days left: the row's one big number (display numerals, decision 081). */
-.now-count {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0 6px;
-  line-height: 1.2;
+/*
+  The program's picture (decision 084): a small drawing of what it is about, with its logo where we have one. Its own
+  ground on both themes, with a thin paper edge so a night picture doesn't melt into the dark page.
+*/
+.program-art {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 10 / 7;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(246, 244, 238, 0.14);
 }
 
-.now-count-label {
+.program-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* SDAIA's logo sits on its own navy under the network. */
+.program-art-logo {
+  position: absolute;
+  inset-inline: 11%;
+  bottom: 5%;
+  width: 78%;
+  height: auto;
+}
+
+/* الرواد's row: a few of its universities, each logo on the white plate it was made for (decision 049). */
+.now-unis {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.now-unis-label {
   flex-basis: 100%;
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   font-weight: 700;
   color: var(--ink-muted);
 }
 
-.now-count-n {
-  font-size: 2.5rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+.now-unis-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.now-count-unit,
-.now-count-word {
-  font-size: var(--text-md);
+.now-uni {
+  display: grid;
+  place-items: center;
+  min-height: 36px;
+  padding: 6px 9px;
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.now-uni img {
+  display: block;
+  width: auto;
+  height: 22px;
+}
+
+.now-uni:hover {
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.now-unis-more {
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
@@ -4646,14 +4685,37 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink-muted);
 }
 
+/* Phones: the picture beside the name, the actions under both. */
+.now-item.has-art {
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  align-items: start;
+}
+
+.now-item.has-art .now-actions {
+  grid-column: 1 / -1;
+}
+
+/* On phones the logos also use the width under the picture. */
+@media (max-width: 759px) {
+  .now-item.has-art .now-unis {
+    margin-inline-start: calc(-5.5rem - var(--space-4));
+  }
+}
+
 @media (min-width: 760px) {
-  .now-item {
+  .now-item,
+  .now-item.has-art {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
   }
 
-  .now-item.has-count {
-    grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  .now-item.has-art {
+    grid-template-columns: 9.5rem minmax(0, 1fr) auto;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .now-item.has-art .now-actions {
+    grid-column: auto;
   }
 
   .now-actions {
@@ -5054,9 +5116,106 @@ a.uni-name:hover .uni-name-en:only-child {
   fill: #0a2119;
 }
 
+/* The words, then the drawing standing on the horizon (beside the words on wide screens). */
 .waddah-band-inner {
-  padding-block: var(--space-6) calc(var(--space-6) + 90px);
+  display: grid;
+  gap: var(--space-2) var(--space-6);
+  padding-block: var(--space-6) 0;
 }
+
+.waddah-band-text {
+  align-self: center;
+}
+
+.waddah-band .waddah-line {
+  margin-bottom: 0;
+}
+
+@media (min-width: 860px) {
+  .waddah-band-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 430px);
+    align-items: end;
+  }
+
+  .waddah-band-text {
+    padding-bottom: calc(var(--space-6) + 60px);
+  }
+}
+
+/*
+  What وضّاح will do, drawn (decision 084): a student on the hill, three agents bringing an official page, a search and
+  the light of an answer. Paper cut-outs on the night; lime only for the light (the agents' antennas, the paths, the
+  screen it reaches). Static: nothing moves.
+*/
+.waddah-help {
+  display: block;
+  width: min(100%, 380px);
+  height: auto;
+  margin-inline: auto;
+}
+
+@media (min-width: 860px) {
+  .waddah-help {
+    width: 100%;
+  }
+}
+
+.help-paths path {
+  fill: none;
+  stroke: var(--lime);
+  stroke-opacity: 0.6;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 2 5;
+}
+
+.help-rock {
+  fill: #0e3125;
+}
+
+:root[data-theme="dark"] .help-rock {
+  fill: #0a2119;
+}
+
+.help-leg,
+.help-arm,
+.help-laptop,
+.help-screen,
+.agent-arm,
+.agent-antenna,
+.help-lens-handle,
+.help-doc-lines {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.help-leg { stroke: #c9d3cd; stroke-width: 16; }
+.help-arm { stroke: #dfe5e1; stroke-width: 9; }
+.help-shoe { fill: #f6f4ee; }
+.help-body { fill: #dfe5e1; }
+.help-head { fill: #f6f4ee; }
+.help-hair { fill: #184b3a; }
+.help-glow { fill: var(--lime); opacity: 0.2; }
+.help-laptop { stroke: #9fb3aa; stroke-width: 5; }
+.help-screen { stroke: var(--lime); stroke-width: 4.5; }
+
+.agent-hover { fill: var(--lime); opacity: 0.28; }
+.agent-antenna { stroke: #f6f4ee; stroke-width: 2; }
+.agent-light,
+.agent-eye,
+.help-answer { fill: var(--lime); }
+.agent-body { fill: #c9d3cd; }
+.agent-head { fill: #f6f4ee; }
+.agent-visor { fill: #10372a; }
+.agent-arm { stroke: #c9d3cd; stroke-width: 4; }
+
+.help-doc { fill: #f6f4ee; }
+.help-doc-lines { stroke: #9fb3aa; stroke-width: 2.2; }
+.help-doc-src { fill: #184b3a; }
+.help-lens { fill: rgba(216, 237, 155, 0.16); stroke: #f6f4ee; stroke-width: 3; }
+.help-lens-handle { stroke: #f6f4ee; stroke-width: 4; }
+.help-answer-glow { fill: var(--lime); opacity: 0.24; }
 
 .waddah-kicker {
   margin: 0 0 var(--space-2);
@@ -5112,112 +5271,6 @@ a.uni-name:hover .uni-name-en:only-child {
 .waddah-band .waddah-light-shape,
 .stage .waddah-light-shape {
   stroke: none;
-}
-
-/* A button on the night: paper on night, like the stage's search button. */
-.btn.btn--on-night {
-  border-color: #f6f4ee;
-  background: #f6f4ee;
-  color: #10372a;
-}
-
-.btn.btn--on-night:hover {
-  border-color: var(--lime);
-  background: var(--lime);
-}
-
-.btn.btn--on-night:focus-visible {
-  outline-color: var(--lime);
-}
-
-/* /waddah: the same night, with the name large. */
-.waddah-hero {
-  padding-block: var(--space-6);
-  background: var(--chart-ground);
-}
-
-.waddah-hero-title {
-  margin: 0;
-  font-size: clamp(2.75rem, 2rem + 3.5vw, 4.5rem);
-  line-height: 1.3;
-}
-
-.waddah-mark--large .waddah-light {
-  width: 0.8em;
-  height: 0.8em;
-}
-
-.waddah-when {
-  margin: var(--space-2) 0 var(--space-3);
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--lime);
-}
-
-.waddah-hero-line {
-  max-width: 34em;
-  font-size: var(--text-md);
-  line-height: 1.75;
-}
-
-.waddah-name-note {
-  margin: 0;
-  font-size: var(--text-sm);
-  color: var(--on-stage-muted);
-}
-
-.waddah-promises {
-  display: grid;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: none;
-  border-top: 1px solid var(--line-strong);
-}
-
-.waddah-promise {
-  padding-block: var(--space-3);
-  border-bottom: 1px solid var(--line);
-}
-
-.waddah-promise p {
-  margin: 0;
-}
-
-.waddah-promise-title {
-  margin: 0 0 var(--space-1);
-  font-family: var(--font-body);
-  font-size: var(--text-md);
-}
-
-.waddah-examples {
-  display: grid;
-  gap: var(--space-2);
-  margin: var(--space-3) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* An example question, drawn as what a student would type: a quiet field, never a button. */
-.waddah-example {
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: inset 0 0 0 1px var(--line-strong);
-}
-
-.waddah-wont {
-  margin: 0;
-  padding-inline-start: 1.2em;
-}
-
-.waddah-wont li + li {
-  margin-top: var(--space-2);
-}
-
-.waddah-meanwhile {
-  color: var(--ink-muted);
 }
 
 /* The one box's results: the lists first, then the guides. */
@@ -5452,7 +5505,7 @@ a.uni-name:hover .uni-name-en:only-child {
   to { background: transparent; }
 }
 
-/* ---------- The map (decision 083): any set of universities, one circle per country ---------- */
+/* ---------- The map (decisions 083, 084): any set of universities, drawn like the الرواد chart ---------- */
 
 .world-wrap {
   --chart-ink: #f6f4ee;
@@ -5462,13 +5515,12 @@ a.uni-name:hover .uni-name-en:only-child {
   gap: var(--space-3);
 }
 
+/* The night of the الرواد chart, as the figure's own background (an SVG gradient would need an id per map). */
 .world-map {
   position: relative;
   margin: 0;
-}
-
-.world-ground {
-  fill: color-mix(in srgb, var(--chart-ground) 85%, #2a5a48);
+  border-radius: var(--radius-panel);
+  background: radial-gradient(ellipse 75% 75% at 62% 55%, color-mix(in srgb, var(--chart-ground) 70%, #2a5a48), var(--chart-ground));
 }
 
 @media (min-width: 1024px) {
@@ -5480,20 +5532,19 @@ a.uni-name:hover .uni-name-en:only-child {
   }
 }
 
-/* A destination: a paper circle with a soft halo; its area follows the count. */
-.world-dot {
+/* One star per university, as on the الرواد chart; a constellation per country, joined by faint lines. */
+.world-stars {
   fill: var(--chart-ink);
+  filter: drop-shadow(0 0 2px rgba(246, 244, 238, 0.5));
   transition: fill 0.25s ease;
 }
 
-.world-glow {
-  fill: var(--chart-ink);
-  opacity: 0.08;
-}
-
-.world-label {
-  font-size: 15px;
-  font-variant-numeric: tabular-nums;
+.world-links {
+  fill: none;
+  stroke: var(--chart-ink);
+  stroke-opacity: 0.32;
+  stroke-width: 1;
+  transition: stroke-opacity 0.3s ease;
 }
 
 /* A country in focus (its chip pointed at or focused): it lights lime, the path of light draws, the rest recede. */
@@ -5506,8 +5557,12 @@ a.uni-name:hover .uni-name-en:only-child {
   opacity: 1;
 }
 
-.world-country.is-active .world-dot {
+.world-country.is-active .world-stars {
   fill: var(--lime);
+}
+
+.world-country.is-active .world-links {
+  stroke-opacity: 0.8;
 }
 
 .world-country.is-active .chart-path {
@@ -5519,11 +5574,6 @@ a.uni-name:hover .uni-name-en:only-child {
   border-color: var(--action);
 }
 
-@media (max-width: 699px) {
-  .world-label {
-    display: none;
-  }
-}
 
 /* The explorer's map view: folded under the list's title, so the list stays first. */
 .map-view {
