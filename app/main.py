@@ -186,13 +186,6 @@ def track_logos(track_id):
     return [logo_row(u) for _, u in rows if has_small_logo(u["id"])][:LOGO_COUNT]
 
 
-def target_logos(path):
-    """A program with its own official university list (SDAIA's PDF, "target_universities"): its first universities
-    in that list's order that have a logo, for its «الآن» row (owner 2026-11-07, like الرواد's)."""
-    return [logo_row(explorer.universities[t["id"]]) for t in path.get("target_universities", [])
-            if t.get("id") and has_small_logo(t["id"])][:LOGO_COUNT]
-
-
 def status_board():
     """The news board, built from the data that already holds each status (decision 033):
     - open: tracks open today (soonest deadline first) and واعد programs open today (those not for
@@ -228,11 +221,11 @@ def status_board():
                 "when": track.get("apply_when"),
                 "pid": plan_ids.get((path["id"], track.get("id"))),  # «احفظ» in «خطتي»
                 "art": program_art(path), "art_logo": path.get("logo") or path.get("now_logo"),  # the row's picture (decision 084)
-                # A few of its universities, by their logos, and where its full list is: الرواد's map, or the
-                # program page's list of its own official universities (SDAIA).
-                "unis": track_logos(track.get("id")) or target_logos(path),
+                "unis": track_logos(track.get("id")),  # a few of the track's universities, by their logos
                 "unis_track": track.get("id"),
-                "unis_href": TRACK_PAGES.get(track.get("id")) or (f"{page}#targets-title" if page else None),
+                "unis_href": TRACK_PAGES.get(track.get("id")),
+                # A program with its own official university list (SDAIA's PDF): one link to it, no logos (owner 2026-11-07).
+                "list_url": path.get("targets_guide_url"),
             }
             until = track.get("status_until")
             if status == "open":

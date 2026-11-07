@@ -1123,10 +1123,10 @@ def test_rowwad_title_opens_its_universities_map():
     assert 'class="rowwad-title"' in client.get("/universities?track=arruaad").text
 
 
-def test_sdaia_row_shows_some_of_its_universities():
-    """SDAIA's «الآن» row shows a few universities from its own official list (PDF order) and links to the full list."""
+def test_sdaia_row_links_to_its_official_list():
+    """SDAIA's «الآن» row shows no logos, only «كل جامعات البرنامج», opening SDAIA's official PDF (owner 2026-11-07)."""
+    pdf = main.paths_by_id["sdaia-ai-scholarship"]["targets_guide_url"]
     sdaia = [i for g in main.status_board().values() for i in g if i["page"] == "/programs/sdaia-ai-scholarship"]
-    assert sdaia and sdaia[0]["unis"] and sdaia[0]["unis_href"] == "/programs/sdaia-ai-scholarship#targets-title"
-    listed = [t["id"] for t in main.paths_by_id["sdaia-ai-scholarship"]["target_universities"] if t.get("id")]
-    assert all(u["id"] in listed for u in sdaia[0]["unis"])
-    assert 'href="/programs/sdaia-ai-scholarship#targets-title"' in client.get("/").text
+    assert sdaia and not sdaia[0]["unis"] and sdaia[0]["list_url"] == pdf
+    row = client.get("/").text.split('href="/programs/sdaia-ai-scholarship"')[1].split("</li>")[0]
+    assert f'href="{pdf}"' in row and "كل جامعات البرنامج" in row and "now-uni " not in row
