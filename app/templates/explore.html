@@ -2,9 +2,9 @@
 
 {#
   «جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test.
-  The whole activity is one form, so it works without JavaScript. explore.js shows one step at a time
-  (parts 1–3, one activity per screen in part 2: a tap on an answer moves on), with progress and «السابق» / «التالي»;
-  the last step's button goes straight to the result (decision 073).
+  The whole activity is one form, so it works without JavaScript. explore.js shows one question at a time
+  (14 activities, a tap on an answer moves on, then the subjects; decision 087), with progress and «السابق» /
+  «التالي»; the last step's button goes straight to the result (decision 073).
   No answer is pre-selected: a skipped question counts as skipped.
   Answers are posted once (never in a URL) and nothing is stored.
 #}
@@ -18,7 +18,7 @@
   <header class="page-header">
     <p class="doc-kind"><a href="/resources/undecided">{{ _("لم تقرر بعد؟") }}</a></p>
     <h1>{{ _("جرّب قبل أن تقرر") }}</h1>
-    <p class="lead">{{ _("نحو عشر دقائق. يقترح مجالات تجربها، ولا يحدد تخصصك.") }}</p>
+    <p class="lead">{{ _("نحو ثلاث دقائق. يقترح مجالات تجربها، ولا يحدد تخصصك.") }}</p>
   </header>
 
   {% if x.draft %}
@@ -26,71 +26,35 @@
   {% endif %}
 
   <div class="explore-progress" data-explore-progress hidden>
-    <p class="explore-progress-part" data-progress-part></p>
     <p class="explore-progress-count" data-progress-count></p>
     <progress class="explore-progress-bar" data-progress-bar max="1" value="0"></progress>
   </div>
 
   <form class="explore-form" method="post" action="/explore/result" data-explore novalidate>
 
-    {# ---------- Part 1 ---------- #}
-    <section class="explore-step" data-step data-part="1" aria-labelledby="part1-title">
-      <h2 class="explore-part-title" id="part1-title" tabindex="-1">{{ _("ما الذي يصعّب عليك القرار؟") }}</h2>
-      <fieldset class="explore-group" data-label="{{ _('ما الذي يصعّب عليك القرار؟') }}">
-        <legend class="explore-legend">{{ _("اختر ما ينطبق عليك.") }}</legend>
-        <div class="explore-options">
-          {% for d in x.difficulties %}
-          <label class="explore-option"><input type="checkbox" name="difficulty" value="{{ d.id }}"> <span>{{ d.label_ar }}</span></label>
-          {% endfor %}
-        </div>
-      </fieldset>
-      <fieldset class="explore-group" data-label="{{ _('صفك') }}">
-        <legend class="explore-legend">{{ _("في أي صف أنت؟") }} <span class="explore-optional">{{ _("(اختياري)") }}</span></legend>
-        <div class="explore-options explore-options--row">
-          {% for g in x.grades %}
-          <label class="explore-option"><input type="radio" name="grade" value="{{ g.id }}"> <span>{{ g.label_ar }}</span></label>
-          {% endfor %}
-        </div>
-      </fieldset>
-    </section>
-
-    {# ---------- Part 2: one activity per screen ---------- #}
-    <section class="explore-part" aria-labelledby="part2-title">
-      <h2 class="explore-part-title" id="part2-title">{{ _("كيف تجد هذه الأنشطة؟") }}</h2>
+    {# ---------- 14 activities, one per screen (decision 087) ---------- #}
+    <section class="explore-part" aria-labelledby="activities-title">
+      <h2 class="explore-part-title" id="activities-title">{{ _("كيف تجد هذا النشاط؟") }}</h2>
       {% for a in activities %}
-      <fieldset class="explore-step explore-card" data-step data-part="2" id="q-{{ a.id }}" data-label="{{ a.text_ar }}">
+      <fieldset class="explore-step explore-card" data-step data-part="activity" id="q-{{ a.id }}" data-label="{{ a.text_ar }}">
         <legend class="explore-question" tabindex="-1">{{ a.text_ar }}</legend>
-        <div class="explore-options">
+        <div class="explore-options explore-options--answers">
           {% for ans in x.answers %}
-          {% if loop.index0 and ans.group != loop.previtem.group %}<span class="explore-divider" aria-hidden="true"></span>{% endif %}
-          <label class="explore-option explore-option--{{ ans.group }}"><input type="radio" name="a-{{ a.id }}" value="{{ ans.id }}"> <span>{{ ans.label_ar }}</span></label>
+          <label class="explore-option explore-option--{{ ans.id }}"><input type="radio" name="a-{{ a.id }}" value="{{ ans.id }}"> <span>{{ ans.label_ar }}</span></label>
           {% endfor %}
         </div>
       </fieldset>
       {% endfor %}
     </section>
 
-    {# ---------- Part 3 ---------- #}
-    <section class="explore-step" data-step data-part="3" aria-labelledby="part3a-title">
-      <h2 class="explore-part-title" id="part3a-title" tabindex="-1">{{ _("ما الذي لاحظته عن نفسك؟") }}</h2>
+    {# ---------- The last question: where the student has seen themselves progress ---------- #}
+    <section class="explore-step" data-step data-part="subjects" aria-labelledby="subjects-title">
+      <h2 class="explore-part-title" id="subjects-title" tabindex="-1">{{ _("في أي المواد أو الأنشطة لاحظت أنك تتقدم؟") }}</h2>
       <fieldset class="explore-group" data-label="{{ _('مواد لاحظت فيها تقدمك') }}">
-        <legend class="explore-legend">{{ _("في أي المواد أو الأنشطة لاحظت أنك تتقدم؟") }}</legend>
+        <legend class="explore-legend">{{ _("اختر ما ينطبق عليك.") }}</legend>
         <div class="explore-options explore-options--grid">
           {% for s in x.subjects %}
           <label class="explore-option"><input type="checkbox" name="subject" value="{{ s.id }}"> <span>{{ s.label_ar }}</span></label>
-          {% endfor %}
-        </div>
-      </fieldset>
-    </section>
-
-    <section class="explore-step" data-step data-part="3" aria-labelledby="part3b-title">
-      <h2 class="explore-part-title" id="part3b-title" tabindex="-1">{{ _("هل هناك مجال تفكر فيه، أو يتوقعه منك أهلك؟") }}</h2>
-      <fieldset class="explore-group" data-label="{{ _('مجال تفكر فيه أو يتوقعه أهلك') }}">
-        <legend class="explore-legend">{{ _("سنعرضه في نتيجتك.") }}</legend>
-        <div class="explore-options explore-options--grid">
-          <label class="explore-option"><input type="radio" name="considered" value=""> <span>{{ _("لا يوجد") }}</span></label>
-          {% for f in x.fields %}
-          <label class="explore-option"><input type="radio" name="considered" value="{{ f.id }}"> <span>{{ f.title_ar }}</span></label>
           {% endfor %}
         </div>
       </fieldset>

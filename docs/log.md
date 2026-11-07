@@ -6,6 +6,8 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-07
 
+**2026-11-07 (decision 087, owner):** «جرّب قبل أن تقرر» is 15 questions (14 activities round Holland's six types, then the subjects), three answers as pills in a question card; the grade, the difficulties and the family question are gone; «نحو ثلاث دقائق». The video's YouTube line is removed. Checked: 807 tests; the browser at 375px. Not checked: `check_explore.mjs` (updated, not run: no Playwright here), a real iPhone.
+
 **2026-11-07 (decision 086, owner):** removed «السنة في سطر» from «البرامج» (template, `year.js`, `year_line()`, styles, strings, tests).
 
 **2026-11-07 (decision 085, owner):** الرواد's row shows the King scholarship's logo; a program or واعد company with an official logo shows it (Aramco and SAR from Wikimedia Commons, public domain; KAUST's emblem from kaust.edu.sa; after the owner's yes). On a phone, the first tap on a country's chip lights it on the map and the second opens it. Back keeps your place (`back.js`; for Safari on iPhone, which can land at the top). Checked: 806 tests; the taps and Back in Chromium at 375px. Not checked: iPhone Safari.

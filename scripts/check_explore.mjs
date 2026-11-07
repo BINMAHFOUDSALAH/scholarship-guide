@@ -1,4 +1,5 @@
-// Drives «جرّب قبل أن تقرر» (/explore) on an emulated iPhone, with touch taps (decisions 069–072).
+// Drives «جرّب قبل أن تقرر» (/explore) on an emulated iPhone, with touch taps (decisions 069–072, 087: 15 questions,
+// 14 activities then the subjects).
 // pytest checks the HTML and that the result page follows the rules; this checks what only a browser shows:
 // - nothing is chosen for the student; a tap on an activity's answer moves on once, by itself (decision 072);
 // - the double taps that once answered the next question for the student (owner's iPhone, 2026-11-04): a second
@@ -33,8 +34,8 @@ const engine = process.argv.includes("--webkit") ? webkit : chromium; // Safari'
 const host = process.argv.slice(2).find((a) => a.startsWith("http")) || "http://127.0.0.1:8000";
 const url = host + (english ? "/en" : "") + "/explore";
 const L = english
-  ? { skip: "Skip", next: "Next", part1: "Part 1 of 3", part3: "Part 3 of 3", activity: (n) => `Activity ${n} of 30` }
-  : { skip: "تخطَّ", next: "التالي", part1: "الجزء 1 من 3", part3: "الجزء 3 من 3", activity: (n) => `النشاط ${n} من 30` };
+  ? { skip: "Skip", next: "Next", activity: (n) => `Question ${n} of 15` }
+  : { skip: "تخطَّ", next: "التالي", activity: (n) => `السؤال ${n} من 15` };
 const results = [];
 const check = (name, ok, detail = "") => results.push([ok ? "PASS" : "FAIL", name, detail]);
 
@@ -47,7 +48,7 @@ page.on("pageerror", (e) => errors.push(String(e)));
 const step = () => page.locator("[data-step]:not([hidden])");
 const counter = () => page.locator("[data-progress-count]").innerText();
 const nextLabel = () => page.locator("[data-next]").innerText();
-const checkedValues = (n) => page.evaluate((n) => [...document.querySelectorAll('[data-step][data-part="2"]')]
+const checkedValues = (n) => page.evaluate((n) => [...document.querySelectorAll('[data-step][data-part="activity"]')]
   .slice(0, n).map((s) => (s.querySelector("input:checked") || {}).value || "-").join(" "), n);
 const tapAnswer = async (value) => {
   const label = step().locator(`label:has(input[value="${value}"])`);
@@ -84,7 +85,6 @@ check("no answer is pre-selected", (await page.locator("input:checked").count())
 check("with nothing chosen the button says skip", (await nextLabel()) === L.skip, await nextLabel());
 
 // A tap on an answer moves on, once, and records only that answer.
-await tapNext();
 await tapAnswer("enjoy");
 await settle();
 check("a tap on an answer moves on", (await counter()) === L.activity(2), await counter());
@@ -93,7 +93,6 @@ check("and records only that answer", (await checkedValues(3)) === "enjoy - -", 
 // The double taps: before the move (same question) and just after it (inside the guard). One answer, one move.
 for (const gap of [150, 350]) {
   await page.goto(url);
-  await tapNext();
   await tapTwiceAt(step().locator('label:has(input[value="enjoy"])'), gap);
   await settle();
   check(`a double tap (${gap}ms apart) answers one question and moves once`,
@@ -102,7 +101,6 @@ for (const gap of [150, 350]) {
 
 // Changing your mind before the move: the last choice wins, one move.
 await page.goto(url);
-await tapNext();
 const [enjoyAt, dislikeAt] = [await spot("enjoy"), await spot("dislike")];
 await fingerTap(enjoyAt);
 await page.waitForTimeout(100);
@@ -113,14 +111,13 @@ check("changing your mind before the move keeps the last choice", (await checked
 
 // A double press on «تخطَّ»: one step, nothing answered.
 await page.goto(url);
-await tapNext();
+await page.waitForTimeout(450);
 await tapTwiceAt(page.locator("[data-next]"), 120);
 check("a double press on skip moves one step and answers nothing",
   (await counter()) === L.activity(2) && (await checkedValues(2)) === "- -", `${await checkedValues(2)} at ${await counter()}`);
 
 // «السابق» shows the student's answer; tapping it again moves on; changing it replaces it.
 await page.goto(url);
-await tapNext();
 await tapAnswer("enjoy");
 await settle();
 await page.locator("[data-prev]").tap();
@@ -139,14 +136,12 @@ check("changing an answer replaces it", (await checkedValues(2)) === "ok -" && (
 await page.reload();
 await page.waitForTimeout(400);
 check("a reload starts clean", (await page.locator("input:checked").count()) === 0
-  && (await page.locator("[data-progress-part]").innerText()) === L.part1);
+  && (await counter()) === L.activity(1));
 
 // A full run by taps only: answered activities move on by themselves, skipped ones with «تخطَّ».
-const pattern = ["enjoy", "curious", "ok", "dislike", null, "cold"];
+const pattern = ["enjoy", "ok", "dislike", null];
 const tapped = {};
-await page.locator("input[name=grade]").first().tap();
-await tapNext();
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 14; i++) {
   const value = pattern[i % pattern.length];
   const before = await counter();
   if (value) {
@@ -157,7 +152,7 @@ for (let i = 0; i < 30; i++) {
   } else {
     await tapNext();
   }
-  if (i < 29 && (await counter()) === before) { check(`activity ${i + 1} moved on`, false, before); break; }
+  if (i < 13 && (await counter()) === before) { check(`activity ${i + 1} moved on`, false, before); break; }
 }
 await tapNext(); // subjects: skipped
 // The last question: its button goes straight to the result; there is no page in between.
@@ -204,22 +199,20 @@ check("and closes them again", !(await detail.isVisible()));
 await page.goBack();
 await page.waitForTimeout(600);
 check("Back from the result opens the last question", await page.locator("[data-submit]").isVisible()
-  && (await page.locator("[data-progress-part]").innerText()) === L.part3, await page.locator("[data-progress-part]").innerText());
-check("with the answers kept", (await page.locator("input:checked").count()) === Object.keys(tapped).length + 1);
+  && (await counter()) === L.activity(15), await counter());
+check("with the answers kept", (await page.locator("input:checked").count()) === Object.keys(tapped).length);
 
 // A double tap on the button before the last question: the buttons are pinned in place here, the worst case, so the
 // second tap lands exactly on the result's button.
 await page.goto(url);
 await page.addStyleTag({ content: ".explore-nav{position:fixed!important;bottom:20px;left:16px;right:16px;z-index:9;margin:0!important}" });
-for (let i = 0; i < 31; i++) await tapNext();
+for (let i = 0; i < 13; i++) await tapNext();
 const beforeLast = page.url();
 await tapTwiceAt(page.locator("[data-next]"), 120);
 check("a double tap on the step before the last never sends the form", page.url() === beforeLast
   && await page.locator("[data-submit]").isVisible(), page.url());
 // The keyboard: Space and the arrow keys choose without moving on; Enter moves on; nothing is held up.
 await page.goto(url);
-await page.locator("[data-next]").focus();
-await page.keyboard.press("Enter");
 await step().locator('input[value="enjoy"]').focus();
 await page.keyboard.press("Space");
 await page.waitForTimeout(600);
@@ -240,7 +233,7 @@ check("Enter moves on, and fast key presses all count", (await counter()) === L.
 
 // The guard's own job: a tap on an answer right after moving on (the second tap of a double tap) is ignored.
 await page.goto(url);
-await tapNext();
+await page.waitForTimeout(450);
 const nextAt = await page.locator("[data-next]").boundingBox();
 const answerAt = await spot("ok"); // the answers sit in the same place on the next question
 await page.touchscreen.tap(nextAt.x + nextAt.width / 2, nextAt.y + nextAt.height / 2); // skip activity 1: moves to activity 2 and starts the guard

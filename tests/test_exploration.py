@@ -1,4 +1,4 @@
-"""«جرّب قبل أن تقرر» and the «لم تقرر بعد؟» guide (decision 069).
+"""«جرّب قبل أن تقرر» and the «لم تقرر بعد؟» guide (decisions 069, 087).
 
 The activity is an exploration, not a test: these tests pin down the rules a student can read on the result
 page, that nothing is stored or put in a URL, that it stays hidden on the live site while it's a draft, and that
@@ -35,7 +35,7 @@ def post(data, prefix=""):
 
 
 def answers_for(field, answer):
-    return {f"a-{a['id']}": answer for a in ex.DATA["activities"] if a["field"] == field}
+    return {f"a-{a['id']}": answer for a in ex.DATA["activities"] if field in a["fields"]}
 
 
 # ---------- the data ----------
@@ -45,7 +45,7 @@ def test_data_hangs_together():
     tracks = {t["name_ar"] for t in main.school_tracks["tracks"]}
     assert len(fields) == 10  # UNESCO's broad fields, as in the research note
     for f in ex.DATA["fields"]:
-        assert sum(a["field"] == f["id"] for a in ex.DATA["activities"]) >= 2, f["id"]
+        assert sum(f["id"] in a["fields"] for a in ex.DATA["activities"]) >= 2, f["id"]
         assert set(f["tracks"]) <= tracks and "المسار العام" in f["tracks"], f["id"]
         assert len(f["try_ar"]) >= 1
         if f.get("guide_field"):
@@ -57,7 +57,18 @@ def test_data_hangs_together():
     for s in ex.DATA["subjects"]:
         assert set(s["fields"]) <= fields, s["id"]
     assert len({a["id"] for a in ex.DATA["activities"]}) == len(ex.DATA["activities"])
-    assert {a["group"] for a in ex.DATA["answers"]} == {"tried", "untried"}
+    assert all(1 <= len(a["fields"]) <= 3 and set(a["fields"]) <= fields for a in ex.DATA["activities"])
+
+
+def test_fifteen_questions_three_answers():
+    """Decision 087 (owner, 2026-11-07): 15 questions, 14 activities and the subjects; three answers; no grade, no
+    "what makes it hard", no field the family expects."""
+    assert len(ex.DATA["activities"]) == 14
+    assert [a["label_ar"] for a in ex.DATA["answers"]] == ["يعجبني", "لا بأس", "لا يجذبني"]
+    assert not {"difficulties", "grades"} & set(ex.DATA)
+    html = client.get("/explore").text
+    assert html.count("data-step") == 15
+    assert 'name="grade"' not in html and 'name="difficulty"' not in html and 'name="considered"' not in html
 
 
 def test_health_and_education_are_the_fields_the_guide_does_not_list():
@@ -69,9 +80,12 @@ def test_health_and_education_are_the_fields_the_guide_does_not_list():
     assert not missing & guide
 
 
-def test_activities_never_ask_the_same_field_twice_in_a_row():
-    order = [a["field"] for a in ex.activities()]
-    assert len(order) == len(ex.DATA["activities"])
+def test_activities_cover_holland_s_six_types_and_move_round_them():
+    """Short interest measures spread their items over Holland's six types (O*NET Mini-IP, 18REST; decision 087):
+    every type is asked, none more than three times, and no type comes twice in a row."""
+    order = [a["type"] for a in ex.activities()]
+    assert set(order) == set("RIASEC")
+    assert max(order.count(t) for t in "RIASEC") <= 3
     assert all(a != b for a, b in zip(order, order[1:]))
 
 
@@ -139,31 +153,27 @@ def counts(**given):
     ({"enjoy": 3}, False, "draws"),
     ({"enjoy": 2, "dislike": 1}, False, "try"),      # mixed: worth trying, not "draws"
     ({"enjoy": 1}, False, "try"),
-    ({"curious": 1, "dislike": 2}, False, "try"),    # wanting to try counts
-    ({"ok": 2}, True, "try"),                        # fine + progress in a close subject
-    ({"ok": 3}, False, "not_now"),
+    ({"enjoy": 1}, True, "draws"),                   # liked + progress in a close subject
+    ({"enjoy": 1, "dislike": 1}, True, "try"),
+    ({"ok": 1}, False, "try"),                       # «لا بأس»: worth trying
+    ({"ok": 1, "dislike": 2}, False, "try"),
     ({"dislike": 3}, False, "not_now"),
-    ({"cold": 3}, False, "not_now"),
-    ({}, False, "not_now"),
+    ({}, True, "not_now"),
 ])
 def test_bands(given, progress, expected):
     assert ex.band(counts(**given), progress) == expected
 
 
 def test_parse_keeps_only_our_own_ids():
-    body = urlencode({"a-first-aid": "enjoy", "a-nope": "enjoy", "a-design-poster": "maybe",
-                      "difficulty": ["family", "evil"], "subject": ["math", "math"], "grade": "13",
-                      "considered": "health"}, doseq=True).encode()
+    body = urlencode({"a-care-someone": "enjoy", "a-nope": "enjoy", "a-design-poster": "maybe",
+                      "subject": ["math", "math", "evil"], "grade": "12"}, doseq=True).encode()
     choices = ex.parse(body)
-    assert choices["answers"] == {"first-aid": "enjoy"}
-    assert choices["difficulties"] == ["family"]
-    assert choices["subjects"] == ["math"]
-    assert choices["grade"] is None and choices["considered"] == "health"
+    assert choices == {"answers": {"care-someone": "enjoy"}, "subjects": ["math"]}
 
 
 def test_no_answers_means_try_first():
     r = ex.score(ex.parse(b""))
-    assert r["nothing_yet"] and r["thin"] and r["tried"] == 0 and r["skipped"] == len(ex.DATA["activities"])
+    assert r["nothing_yet"] and r["thin"] and r["answered"] == 0 and r["skipped"] == len(ex.DATA["activities"])
     assert not r["bands"]["draws"] and not r["bands"]["try"]
 
 
@@ -172,14 +182,13 @@ def test_enjoying_everything_draws_every_field():
     assert len(r["bands"]["draws"]) == 10 and not r["thin"] and not r["nothing_yet"]
 
 
-def test_strongest_first_and_the_considered_field_apart():
-    data = {**answers_for("engineering", "enjoy"), **answers_for("ict", "enjoy"), "subject": "digital",
-            **answers_for("health", "cold"), "considered": "health"}
+def test_strongest_first():
+    data = {**answers_for("ict", "enjoy"), "subject": "digital", "a-care-someone": "dislike"}
     r = ex.score(ex.parse(urlencode(data).encode()))
-    draws = [f["id"] for f in r["bands"]["draws"]]
-    assert draws[:2] == ["ict", "engineering"]  # same enjoyment; ICT first in the data's order, both have progress
-    assert r["considered"]["id"] == "health" and r["considered"]["band"] == "not_now"
-    assert "health" not in [f["id"] for band in r["bands"].values() for f in band]
+    assert [f["id"] for f in r["bands"]["draws"]] == ["ict", "engineering"]  # three liked, then two; both have progress
+    assert [f["id"] for f in r["bands"]["try"]] == ["business-law", "natural-sciences"]  # one liked each: data order
+    assert "health" in [f["id"] for f in r["bands"]["not_now"]]
+    assert len([f for band in r["bands"].values() for f in band]) == 10
 
 
 def field_of(data, fid):
@@ -188,28 +197,28 @@ def field_of(data, fid):
 
 
 @pytest.mark.parametrize("data, expected", [
-    ({"a-small-program": "enjoy"}, "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة."),
-    ({"a-small-program": "enjoy", "a-fix-app": "enjoy", "subject": "digital"},
-     "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة، وبحل مشكلة في جهاز أو تطبيق لا يعمل، ولاحظت تقدمك في الحاسب والتقنية الرقمية."),
-    ({"a-small-program": "enjoy", "a-fix-app": "enjoy", "a-simple-site": "enjoy"},
-     "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة، وبحل مشكلة في جهاز أو تطبيق لا يعمل، وبنشاط آخر منه."),
-    ({"a-small-program": "enjoy", "a-fix-app": "curious"},
-     "لأنك تستمتع بكتابة برنامج صغير أو تعديل لعبة، وتودّ أن تجرّب حل مشكلة في جهاز أو تطبيق لا يعمل."),
-    ({"a-fix-app": "curious"}, "لأنك تودّ أن تجرّب حل مشكلة في جهاز أو تطبيق لا يعمل."),
-    ({"a-fix-app": "curious", "a-simple-site": "curious"},
-     "لأنك تودّ أن تجرّب حل مشكلة في جهاز أو تطبيق لا يعمل، وتصميم صفحة موقع أو تطبيق بسيط."),
-    ({"a-simple-site": "ok", "subject": ["math", "digital"]}, "لأنك لاحظت تقدمك في الرياضيات والحاسب والتقنية الرقمية."),
+    ({"a-take-apart": "enjoy"}, "لأنك تحب تفكيك جهاز أو إصلاحه لمعرفة كيف يعمل."),
+    ({"a-take-apart": "enjoy", "a-data-table": "enjoy", "subject": "digital"},
+     "لأنك تحب تفكيك جهاز أو إصلاحه لمعرفة كيف يعمل، وترتيب بيانات في جدول ومراجعتها بدقة، ولاحظت تقدمك في الحاسب والتقنية الرقمية."),
+    ({"a-take-apart": "enjoy", "a-data-table": "enjoy", "a-hard-problem": "enjoy"},
+     "لأنك تحب تفكيك جهاز أو إصلاحه لمعرفة كيف يعمل، وترتيب بيانات في جدول ومراجعتها بدقة، ونشاطًا آخر منه."),
+    ({"a-take-apart": "enjoy", "a-data-table": "ok"}, "لأنك تحب تفكيك جهاز أو إصلاحه لمعرفة كيف يعمل."),
+    ({"a-data-table": "ok"}, "لأنك قلت «لا بأس» عن ترتيب بيانات في جدول ومراجعتها بدقة."),
+    ({"a-data-table": "ok", "a-hard-problem": "ok"},
+     "لأنك قلت «لا بأس» عن ترتيب بيانات في جدول ومراجعتها بدقة، وحل مسألة صعبة في الرياضيات أو البرمجة."),
+    ({"a-data-table": "dislike", "subject": ["math", "digital"]}, "لأنك لاحظت تقدمك في الرياضيات والحاسب والتقنية الرقمية."),
 ])
 def test_why_is_one_short_sentence_from_the_students_own_answers(data, expected):
     assert ex.why_text(field_of(data, "ict")) == expected
 
 
 def test_why_in_english():
-    data = {"a-small-program": "enjoy", "a-fix-app": "curious", "subject": ["math", "digital"]}
+    data = {"a-take-apart": "enjoy", "a-data-table": "ok", "subject": ["math", "digital"]}
     with i18n.use_lang("en"):
-        assert ex.why_text(field_of(data, "ict")) == ("You enjoy writing a small program or modifying a game. "
-                                                      "You'd like to try fixing a problem with a device or an app that doesn't work. "
+        assert ex.why_text(field_of(data, "ict")) == ("You like taking apart or fixing a device to see how it works. "
                                                       "You've noticed your progress in: Mathematics, Computing and digital technology.")
+        assert ex.why_text(field_of({"a-data-table": "ok"}, "ict")) == (
+            "You said \u201cit's okay\u201d to organising data in a table and checking it carefully.")
 
 
 def test_the_lead_names_the_fields_clearly_in_both_languages():
@@ -222,7 +231,7 @@ def test_the_lead_names_the_fields_clearly_in_both_languages():
 
 def test_live_on_the_site(live):
     assert client.get("/explore").status_code == 200
-    assert post({"a-first-aid": "enjoy"}).status_code == 200
+    assert post({"a-care-someone": "enjoy"}).status_code == 200
     assert "/explore</loc>" in client.get("/sitemap.xml").text and "/en/explore</loc>" in client.get("/sitemap.xml").text
     assert 'href="/explore"' in client.get("/resources/undecided").text  # the guide's door
     home = client.get("/").text
@@ -236,7 +245,7 @@ def test_the_draft_switch_still_hides_it(live, monkeypatch):
     """Setting "draft": true again hides the page, its doors and its sitemap entry."""
     monkeypatch.setitem(ex.DATA, "draft", True)
     assert client.get("/explore").status_code == 404
-    assert post({"a-first-aid": "enjoy"}).status_code == 404
+    assert post({"a-care-someone": "enjoy"}).status_code == 404
     assert "/explore</loc>" not in client.get("/sitemap.xml").text
     assert 'href="/explore"' not in client.get("/resources/undecided").text
     assert "hero-door" not in client.get("/").text
@@ -247,7 +256,7 @@ def test_form_works_without_javascript(drafts):
     assert r.status_code == 200
     html = r.text
     assert '<form class="explore-form" method="post" action="/explore/result"' in html
-    assert html.count('class="explore-step explore-card" data-step data-part="2"') == len(ex.DATA["activities"])
+    assert html.count('class="explore-step explore-card" data-step data-part="activity"') == len(ex.DATA["activities"])
     assert " checked" not in html.split("<form", 1)[1]  # no answer is ever chosen for the student
     assert html.count('type="radio" name="a-') == len(ex.DATA["activities"]) * len(ex.DATA["answers"])
     assert "explore.js" in html
@@ -265,13 +274,13 @@ def test_the_last_question_goes_straight_to_the_result():
 
 
 def test_a_card_says_what_it_is_why_what_you_study_and_one_thing_to_do(drafts):
-    html = post({**answers_for("ict", "enjoy"), **answers_for("health", "cold"), **answers_for("arts-humanities", "curious"),
+    html = post({**answers_for("ict", "enjoy"), **answers_for("health", "dislike"), **answers_for("arts-humanities", "ok"),
                  "subject": "digital"}).text
     card = html.split('id="field-ict"', 1)[1].split('<section class="explore-field', 1)[0]
     assert "/static/img/fields/ict.svg" in card and 'alt=""' in card  # the title says it; a screen reader needn't hear it twice
     assert "التقنية وعلوم الحاسب" in card                             # the plain title…
     assert "تقنية الاتصالات والمعلومات" in card                        # …and the guide's name beside the explorer link
-    assert "لأنك تستمتع بكتابة برنامج صغير" in card
+    assert "لأنك تحب تفكيك جهاز" in card
     assert "الذكاء الاصطناعي" in card
     assert main.explorer.source["url"] in card                         # the majors' source beside them
     assert card.count("<summary") == 1 and "استكشف هذا المجال" in card  # one action
@@ -299,18 +308,16 @@ def test_only_the_three_strongest_fields_of_a_band_stay_open(drafts):
 
 
 def test_result_explains_itself(drafts):
-    data = {**answers_for("ict", "enjoy"), **answers_for("arts-humanities", "curious"),
-            "difficulty": "family", "grade": "10", "considered": "education"}
+    data = {**answers_for("ict", "enjoy"), **answers_for("arts-humanities", "ok"), "a-explain-lesson": "ok"}
     r = post(data)
     assert r.status_code == 200
     html = r.text
     assert 'name="robots" content="noindex"' in html
-    assert "تجذبك الآن" in html and "تستحق التجربة" in html and "المجال الذي ذكرته" in html
+    assert "تجذبك الآن" in html and "تستحق التجربة" in html
     assert "/universities?track=emdad&amp;field=ict" in html          # its majors and universities
     assert 'href="/programs/sdaia-ai-scholarship"' in html            # a program for one of its majors
     assert "لا يذكر دليل الوزارة لقوائم الجامعات 2026–2027 هذا المجال" in html  # education
-    assert 'href="/resources/undecided#family"' in html               # the family tip
-    assert 'href="/grades/grade-10#tracks"' in html                   # grade 10's next step
+    assert 'href="/grades/grade-10#tracks"' in html                   # grade 10's next step, for whoever is there
     assert main.explorer.source["url"] in html and main.school_tracks["source"]["url"] in html
     text = re.sub(r"<[^>]+>", " ", html.split("<main", 1)[1].split("</main>", 1)[0])  # the words, not the links
     assert not re.search(r"\d+\s*%", text)  # no percentages
@@ -338,21 +345,19 @@ def test_oversized_posts_are_refused(drafts):
 
 
 def every_answer():
-    """Every activity answered (all five answers used), every difficulty, subject and grade 12: the result then
-    shows every field's text, every tip and every answer label."""
+    """Every activity answered (all three answers used) and every subject: the result then shows every field's text
+    and every answer label."""
     labels = list(ex.ANSWERS)
     data = {f"a-{a['id']}": labels[i % len(labels)] for i, a in enumerate(ex.DATA["activities"])}
-    return {**data, "difficulty": list(ex.DIFFICULTIES), "subject": list(ex.SUBJECTS), "grade": "12"}
+    return {**data, "subject": list(ex.SUBJECTS)}
 
 
 def test_english_pages_are_english(drafts):
     form = client.get("/en/explore").text
     assert 'action="/en/explore/result"' in form
-    pages = [form] + [post({**every_answer(), "considered": fid}, prefix="/en").text for fid in ("", "health", "ict")]
-    for grade in ("10", "11"):
-        pages.append(post({**every_answer(), "grade": grade}, prefix="/en").text)
-    ict = [a["id"] for a in ex.DATA["activities"] if a["field"] == "ict"]
-    for answers in (["enjoy"], ["enjoy", "enjoy"], ["enjoy"] * 3, ["enjoy", "curious"], ["curious"], ["curious"] * 2, ["curious"] * 3):
+    pages = [form, post(every_answer(), prefix="/en").text]
+    ict = [a["id"] for a in ex.DATA["activities"] if "ict" in a["fields"]]
+    for answers in (["enjoy"], ["enjoy", "enjoy"], ["enjoy"] * 3, ["enjoy", "ok"], ["ok"], ["ok"] * 2, ["ok"] * 3):
         pages.append(post({f"a-{aid}": answer for aid, answer in zip(ict, answers)}, prefix="/en").text)
     pages.append(post({f"a-{ict[0]}": "ok", "subject": "math"}, prefix="/en").text)
     pages.append(post({f"a-{a['id']}": "enjoy" for a in ex.DATA["activities"]}, prefix="/en").text)  # «مجالات أخرى»
@@ -383,15 +388,15 @@ def test_the_guide_opens_the_activity_when_it_is_public(drafts):
 
 # ---------- the result page shows exactly what the rules say ----------
 
-BAND_MARKERS = {'id="draws-title"': "draws", 'id="try-title"': "try", 'id="considered-title"': "considered",
-                'class="explore-not-now"': "not_now", 'id="help-title"': None, 'id="next-title"': None}
+BAND_MARKERS = {'id="draws-title"': "draws", 'id="try-title"': "try",
+                'class="explore-not-now"': "not_now", 'id="next-title"': None}
 FIELD_CARD = r'<section class="explore-field[^"]*" id="field-([\w-]+)"'
 
 
 def page_bands(html):
     """Field ids per band, in page order: each field belongs to the last band heading above it."""
     marks = sorted((html.index(m), band) for m, band in BAND_MARKERS.items() if m in html)
-    bands = {"draws": [], "try": [], "considered": [], "not_now": []}
+    bands = {"draws": [], "try": [], "not_now": []}
     for found in re.finditer(FIELD_CARD, html):
         band = [b for pos, b in marks if pos < found.start()][-1]
         bands[band].append(found.group(1))
@@ -408,9 +413,6 @@ def test_result_page_matches_the_rules_for_random_students(live):
     for _ in range(40):
         data = {f"a-{a['id']}": v for a in ex.DATA["activities"] if (v := rng.choice(choices))}
         data["subject"] = rng.sample(list(ex.SUBJECTS), rng.randint(0, 3))
-        data["difficulty"] = rng.sample(list(ex.DIFFICULTIES), rng.randint(0, 2))
-        if rng.random() < 0.6:
-            data["considered"] = rng.choice(list(ex.FIELDS))
         html = post(data).text
         r = ex.score(ex.parse(urlencode(data, doseq=True).encode()))
         expected = {band: [f["id"] for f in fields] for band, fields in r["bands"].items()}
@@ -418,8 +420,7 @@ def test_result_page_matches_the_rules_for_random_students(live):
         assert shown["draws"] == expected["draws"], data
         assert shown["try"] == expected["try"], data
         assert shown["not_now"] == expected["not_now"], data
-        assert shown["considered"] == ([r["considered"]["id"]] if r["considered"] else []), data
-        for fields in [*r["bands"].values(), [r["considered"]] if r["considered"] else []]:
+        for fields in r["bands"].values():
             for f in fields:
                 block = html.split(f'id="field-{f["id"]}"', 1)[1].split('<section class="explore-field', 1)[0]
                 reasons = re.findall(r'<span class="explore-why-activity">([^<]+)</span> '

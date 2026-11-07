@@ -1,7 +1,8 @@
 """«جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test.
 
-The student answers about concrete activities («أستمتع به»… «لم أجرّبه، وأودّ أن أجرّبه»), and the result
-groups the broad fields into three bands, each explained by the student's own answers. Fixed, readable
+The student answers 14 concrete activities («يعجبني / لا بأس / لا يجذبني», decision 087) and says where they've
+seen themselves progress; the result groups the broad fields into three bands, each explained by the student's own
+answers. Fixed, readable
 rules, no scores or percentages shown, no AI: the same answers always give the same result, and a test
 can check every rule.
 
@@ -20,12 +21,10 @@ DATA = json.loads((Path(__file__).parent.parent / "data" / "exploration.json").r
 
 ANSWERS = {a["id"]: a for a in DATA["answers"]}
 FIELDS = {f["id"]: f for f in DATA["fields"]}
-DIFFICULTIES = {d["id"]: d for d in DATA["difficulties"]}
 SUBJECTS = {s["id"]: s for s in DATA["subjects"]}
-GRADES = {g["id"]: g for g in DATA["grades"]}
 
-# Fewer tried activities than this and the result leads with «جرّب أولًا»: too little to go on.
-THIN_EVIDENCE = 10
+# Fewer answered activities than this (half of them) and the result says to try more first: too little to go on.
+THIN_EVIDENCE = 7
 # The form is small (about 2 KB); anything much bigger isn't ours.
 MAX_BODY = 20_000
 
@@ -36,12 +35,8 @@ def is_public(show_drafts):
 
 
 def activities():
-    """The activities in the order asked: one from each field in turn, so no field comes twice in a row."""
-    by_field = {}
-    for a in DATA["activities"]:
-        by_field.setdefault(a["field"], []).append(a)
-    rounds = max(len(items) for items in by_field.values())
-    return [items[i] for i in range(rounds) for items in by_field.values() if i < len(items)]
+    """The activities in the order asked: the data's order, which moves round Holland's six types (decision 087)."""
+    return DATA["activities"]
 
 
 def parse(body):
@@ -57,24 +52,18 @@ def parse(body):
         return [v for v in dict.fromkeys(form.get(name, [])) if v in allowed]
 
     answers = {a["id"]: one(f"a-{a['id']}", ANSWERS) for a in DATA["activities"]}
-    return {
-        "answers": {k: v for k, v in answers.items() if v},
-        "difficulties": many("difficulty", DIFFICULTIES),
-        "subjects": many("subject", SUBJECTS),
-        "grade": one("grade", GRADES),
-        "considered": one("considered", FIELDS),
-    }
+    return {"answers": {k: v for k, v in answers.items() if v}, "subjects": many("subject", SUBJECTS)}
 
 
 def band(counts, progress):
-    """Which band a field goes in, from its answers. The rules, in words:
-    - «تجذبك الآن»: you enjoy at least two of its activities and dislike none.
-    - «تستحق التجربة»: you enjoy one, or want to try one, or it's fine for you and you've seen yourself progress
-      in a subject close to it.
+    """Which band a field goes in, from its answers. The rules, in words (decision 087):
+    - «تجذبك الآن»: none of its activities fails to draw you, and you like at least two of them, or one and you've
+      seen yourself progress in a subject close to it.
+    - «تستحق التجربة»: you like one of its activities, or one is «لا بأس» for you.
     - «لا تجذبك الآن»: everything else (for now; it's still shown)."""
-    if counts["enjoy"] >= 2 and counts["dislike"] == 0:
+    if counts["dislike"] == 0 and (counts["enjoy"] >= 2 or (counts["enjoy"] >= 1 and progress)):
         return "draws"
-    if counts["enjoy"] >= 1 or counts["curious"] >= 1 or (progress and counts["ok"] >= 1):
+    if counts["enjoy"] >= 1 or counts["ok"] >= 1:
         return "try"
     return "not_now"
 
@@ -89,7 +78,7 @@ def score(choices):
 
     fields = []
     for order, f in enumerate(DATA["fields"]):
-        mine = [a for a in DATA["activities"] if a["field"] == f["id"]]
+        mine = [a for a in DATA["activities"] if f["id"] in a["fields"]]
         counts = {aid: 0 for aid in ANSWERS}
         why = []
         for a in mine:
@@ -101,25 +90,18 @@ def score(choices):
         fields.append({"id": f["id"], "order": order, "counts": counts, "why": why, "progress": progress,
                        "band": band(counts, bool(progress))})
 
-    # Strongest first inside a band: more enjoyed, then more wanted, then progress; ties keep the data's order.
+    # Strongest first inside a band: more liked, then progress, then more «لا بأس»; ties keep the data's order.
     def strength(f):
-        return (-f["counts"]["enjoy"], -f["counts"]["curious"], -len(f["progress"]), f["order"])
+        return (-f["counts"]["enjoy"], -len(f["progress"]), -f["counts"]["ok"], f["order"])
 
-    considered = choices["considered"]
-    bands = {name: sorted((f for f in fields if f["band"] == name and f["id"] != considered), key=strength)
+    bands = {name: sorted((f for f in fields if f["band"] == name), key=strength)
              for name in ("draws", "try", "not_now")}
-    tried = sum(1 for v in answers.values() if ANSWERS[v]["group"] == "tried")
-    untried = len(answers) - tried
     return {
         "bands": bands,
-        "considered": next((f for f in fields if f["id"] == considered), None),
-        "tried": tried,
-        "untried": untried,
+        "answered": len(answers),
         "skipped": len(DATA["activities"]) - len(answers),
-        "thin": tried < THIN_EVIDENCE,
+        "thin": len(answers) < THIN_EVIDENCE,
         "nothing_yet": not any(f["band"] in ("draws", "try") for f in fields),
-        "difficulties": [DIFFICULTIES[d] for d in choices["difficulties"]],
-        "grade": choices["grade"],
     }
 
 
@@ -129,24 +111,22 @@ def list_text(titles):
 
 
 def why_text(f):
-    """Why a field was suggested, in one short sentence from the student's own answers (decision 073): what they
-    enjoy, else what they'd like to try, and where they've seen themselves progress. At most two activities are
+    """Why a field was suggested, in one short sentence from the student's own answers (decisions 073, 087): what
+    they like, else what is «لا بأس» for them, and where they've seen themselves progress. At most two activities are
     named; every answer stays listed in the card's details. Built when shown, so it follows the page's language."""
     def said(answer):
         names = [i18n.tr(w["activity_ar"]) for w in f["why"] if w["answer"] == answer]
         return [n[:1].lower() + n[1:] for n in names] if i18n.is_english() else names  # mid-sentence in English
 
-    enjoy, curious = said("enjoy"), said("curious")
+    enjoy, ok = said("enjoy"), said("ok")
     progress = [i18n.tr(p) for p in f["progress"]]
     parts = []
     if enjoy:
-        pattern = {1: "لأنك تستمتع ب{a}", 2: "لأنك تستمتع ب{a}، وب{b}"}.get(len(enjoy), "لأنك تستمتع ب{a}، وب{b}، وبنشاط آخر منه")
+        pattern = {1: "لأنك تحب {a}", 2: "لأنك تحب {a}، و{b}"}.get(len(enjoy), "لأنك تحب {a}، و{b}، ونشاطًا آخر منه")
         parts.append(i18n.tf(pattern, a=enjoy[0], b=enjoy[1] if len(enjoy) > 1 else ""))
-        if curious and len(enjoy) == 1:
-            parts.append(i18n.tf("وتودّ أن تجرّب {a}", a=curious[0]))
-    elif curious:
-        pattern = {1: "لأنك تودّ أن تجرّب {a}", 2: "لأنك تودّ أن تجرّب {a}، و{b}"}.get(len(curious), "لأنك تودّ أن تجرّب {a}، و{b}، ونشاطًا آخر منه")
-        parts.append(i18n.tf(pattern, a=curious[0], b=curious[1] if len(curious) > 1 else ""))
+    elif ok:
+        pattern = {1: "لأنك قلت «لا بأس» عن {a}", 2: "لأنك قلت «لا بأس» عن {a}، و{b}"}.get(len(ok), "لأنك قلت «لا بأس» عن {a}، و{b}، ونشاط آخر منه")
+        parts.append(i18n.tf(pattern, a=ok[0], b=ok[1] if len(ok) > 1 else ""))
     if progress:
         pattern = "ولاحظت تقدمك في {p}" if parts else "لأنك لاحظت تقدمك في {p}"
         parts.append(i18n.tf(pattern, p=(", " if i18n.is_english() else " و").join(progress)))
