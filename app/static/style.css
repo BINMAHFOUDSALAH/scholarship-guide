@@ -4950,7 +4950,7 @@ a.uni-name:hover .uni-name-en:only-child {
 
 @media (min-width: 860px) {
   .waddah-band-inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 430px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
     align-items: end;
   }
 
@@ -4960,13 +4960,14 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 /*
-  What وضّاح will do, drawn (decision 084): a student on the hill, three agents bringing an official page, a search and
-  the light of an answer. Paper cut-outs on the night; lime only for the light (the agents' antennas, the paths, the
-  screen it reaches). Static: nothing moves.
+  What وضّاح will do, drawn (decisions 084, 087): a night in cut paper. Flat layers in the forest's own tones (the far
+  skyline of destinations, the dune with its palm, the near dune that meets the band's horizon), paper for the student,
+  the agents and what they bring. Lime only for the light: the agents' antennas and eyes, the paths that join the stars
+  into one constellation, the screen and its glow on the student. Static: nothing moves.
 */
 .waddah-help {
   display: block;
-  width: min(100%, 380px);
+  width: min(100%, 420px);
   height: auto;
   margin-inline: auto;
 }
@@ -4977,27 +4978,49 @@ a.uni-name:hover .uni-name-en:only-child {
   }
 }
 
+.art-moon { fill: #f6f4ee; opacity: 0.92; }
+.art-stars { fill: #f6f4ee; opacity: 0.6; }
+
+.art-city { fill: #1d5040; }
+.art-city-cols path { fill: none; stroke: #10372a; stroke-width: 3; }
+.art-city-clock { fill: #10372a; }
+.art-dune--mid { fill: #154434; }
+.art-dune-edge { fill: none; stroke: #f6f4ee; stroke-opacity: 0.14; stroke-width: 1.5; }
+.art-dune--near { fill: #0e3125; }
+.art-palm-trunk { fill: #7f998d; }
+.art-palm-frond { fill: #9fb3aa; }
+.art-palm-frond--back { fill: #6f8a7e; }
+
+:root[data-theme="dark"] .art-city { fill: #143b2e; }
+:root[data-theme="dark"] .art-city-cols path,
+:root[data-theme="dark"] .art-city-clock { stroke: #091510; fill: #091510; }
+:root[data-theme="dark"] .art-city-cols path { fill: none; }
+:root[data-theme="dark"] .art-dune--mid { fill: #0f3126; }
+:root[data-theme="dark"] .art-dune--near { fill: #0a2119; }
+
 .help-paths path {
   fill: none;
   stroke: var(--lime);
-  stroke-opacity: 0.6;
+  stroke-opacity: 0.65;
   stroke-width: 1.6;
   stroke-linecap: round;
+  stroke-linejoin: round;
   stroke-dasharray: 2 5;
 }
 
-.help-rock {
-  fill: #0e3125;
-}
-
-:root[data-theme="dark"] .help-rock {
-  fill: #0a2119;
+.help-nodes circle {
+  fill: #f6f4ee;
+  stroke: var(--lime);
+  stroke-opacity: 0.45;
+  stroke-width: 3;
+  paint-order: stroke;
 }
 
 .help-leg,
 .help-arm,
 .help-laptop,
 .help-screen,
+.help-rim,
 .agent-arm,
 .agent-antenna,
 .help-lens-handle,
@@ -5007,22 +5030,26 @@ a.uni-name:hover .uni-name-en:only-child {
   stroke-linejoin: round;
 }
 
-.help-leg { stroke: #c9d3cd; stroke-width: 16; }
+.help-leg { stroke: #c9d3cd; stroke-width: 15; }
 .help-arm { stroke: #dfe5e1; stroke-width: 9; }
 .help-shoe { fill: #f6f4ee; }
 .help-body { fill: #dfe5e1; }
 .help-head { fill: #f6f4ee; }
-.help-hair { fill: #184b3a; }
-.help-glow { fill: var(--lime); opacity: 0.2; }
+.help-hair { fill: #081d16; }
+.help-ear { fill: #f6f4ee; }
+.help-rim { stroke: var(--lime); stroke-width: 2.2; stroke-opacity: 0.85; }
+.help-glow { fill: var(--lime); opacity: 0.18; }
 .help-laptop { stroke: #9fb3aa; stroke-width: 5; }
 .help-screen { stroke: var(--lime); stroke-width: 4.5; }
 
+.agent-beam { fill: var(--lime); opacity: 0.1; }
 .agent-hover { fill: var(--lime); opacity: 0.28; }
 .agent-antenna { stroke: #f6f4ee; stroke-width: 2; }
 .agent-light,
 .agent-eye,
 .help-answer { fill: var(--lime); }
 .agent-body { fill: #c9d3cd; }
+.agent-bolt { fill: #9fb3aa; }
 .agent-head { fill: #f6f4ee; }
 .agent-visor { fill: #10372a; }
 .agent-arm { stroke: #c9d3cd; stroke-width: 4; }
@@ -5935,7 +5962,7 @@ a.uni-name:hover .uni-name-en:only-child {
   outline-offset: 2px;
 }
 
-/* An activity's three answers (decision 087): one row of pills, the same on every phone, so choosing is one look and
+/* An activity's three answers (decision 088): one row of pills, the same on every phone, so choosing is one look and
    one tap. A pill chooses (083); the chosen one fills forest. The radio stays in the page for keyboards and screen
    readers, drawn by the pill itself. */
 .explore-options--answers {

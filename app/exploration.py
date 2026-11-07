@@ -1,6 +1,6 @@
 """«جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test.
 
-The student answers 14 concrete activities («يعجبني / لا بأس / لا يجذبني», decision 087) and says where they've
+The student answers 14 concrete activities («يعجبني / لا بأس / لا يجذبني», decision 088) and says where they've
 seen themselves progress; the result groups the broad fields into three bands, each explained by the student's own
 answers. Fixed, readable
 rules, no scores or percentages shown, no AI: the same answers always give the same result, and a test
@@ -35,7 +35,7 @@ def is_public(show_drafts):
 
 
 def activities():
-    """The activities in the order asked: the data's order, which moves round Holland's six types (decision 087)."""
+    """The activities in the order asked: the data's order, which moves round Holland's six types (decision 088)."""
     return DATA["activities"]
 
 
@@ -56,7 +56,7 @@ def parse(body):
 
 
 def band(counts, progress):
-    """Which band a field goes in, from its answers. The rules, in words (decision 087):
+    """Which band a field goes in, from its answers. The rules, in words (decision 088):
     - «تجذبك الآن»: none of its activities fails to draw you, and you like at least two of them, or one and you've
       seen yourself progress in a subject close to it.
     - «تستحق التجربة»: you like one of its activities, or one is «لا بأس» for you.
@@ -111,7 +111,7 @@ def list_text(titles):
 
 
 def why_text(f):
-    """Why a field was suggested, in one short sentence from the student's own answers (decisions 073, 087): what
+    """Why a field was suggested, in one short sentence from the student's own answers (decisions 073, 088): what
     they like, else what is «لا بأس» for them, and where they've seen themselves progress. At most two activities are
     named; every answer stays listed in the card's details. Built when shown, so it follows the page's language."""
     def said(answer):

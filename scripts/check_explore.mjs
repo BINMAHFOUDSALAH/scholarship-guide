@@ -1,4 +1,4 @@
-// Drives «جرّب قبل أن تقرر» (/explore) on an emulated iPhone, with touch taps (decisions 069–072, 087: 15 questions,
+// Drives «جرّب قبل أن تقرر» (/explore) on an emulated iPhone, with touch taps (decisions 069–072, 088: 15 questions,
 // 14 activities then the subjects).
 // pytest checks the HTML and that the result page follows the rules; this checks what only a browser shows:
 // - nothing is chosen for the student; a tap on an activity's answer moves on once, by itself (decision 072);

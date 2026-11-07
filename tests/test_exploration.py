@@ -1,4 +1,4 @@
-"""«جرّب قبل أن تقرر» and the «لم تقرر بعد؟» guide (decisions 069, 087).
+"""«جرّب قبل أن تقرر» and the «لم تقرر بعد؟» guide (decisions 069, 088).
 
 The activity is an exploration, not a test: these tests pin down the rules a student can read on the result
 page, that nothing is stored or put in a URL, that it stays hidden on the live site while it's a draft, and that
@@ -61,7 +61,7 @@ def test_data_hangs_together():
 
 
 def test_fifteen_questions_three_answers():
-    """Decision 087 (owner, 2026-11-07): 15 questions, 14 activities and the subjects; three answers; no grade, no
+    """Decision 088 (owner, 2026-11-07): 15 questions, 14 activities and the subjects; three answers; no grade, no
     "what makes it hard", no field the family expects."""
     assert len(ex.DATA["activities"]) == 14
     assert [a["label_ar"] for a in ex.DATA["answers"]] == ["يعجبني", "لا بأس", "لا يجذبني"]
@@ -81,7 +81,7 @@ def test_health_and_education_are_the_fields_the_guide_does_not_list():
 
 
 def test_activities_cover_holland_s_six_types_and_move_round_them():
-    """Short interest measures spread their items over Holland's six types (O*NET Mini-IP, 18REST; decision 087):
+    """Short interest measures spread their items over Holland's six types (O*NET Mini-IP, 18REST; decision 088):
     every type is asked, none more than three times, and no type comes twice in a row."""
     order = [a["type"] for a in ex.activities()]
     assert set(order) == set("RIASEC")

@@ -1,5 +1,5 @@
 // «جرّب قبل أن تقرر» (decision 069): turns the one long form into steps, one question per screen.
-// - 15 questions (decision 087): 14 activities, one per screen, then the subjects where the student has seen
+// - 15 questions (decision 088): 14 activities, one per screen, then the subjects where the student has seen
 //   progress. The last step's button goes straight to the result (decision 073: no review page; «السابق» changes
 //   an answer on the way).
 // - On an activity, tapping an answer moves on to the next one after a short moment (AUTO_NEXT_MS), so the

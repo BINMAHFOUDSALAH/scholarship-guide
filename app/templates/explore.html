@@ -3,7 +3,7 @@
 {#
   «جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test.
   The whole activity is one form, so it works without JavaScript. explore.js shows one question at a time
-  (14 activities, a tap on an answer moves on, then the subjects; decision 087), with progress and «السابق» /
+  (14 activities, a tap on an answer moves on, then the subjects; decision 088), with progress and «السابق» /
   «التالي»; the last step's button goes straight to the result (decision 073).
   No answer is pre-selected: a skipped question counts as skipped.
   Answers are posted once (never in a URL) and nothing is stored.
@@ -32,7 +32,7 @@
 
   <form class="explore-form" method="post" action="/explore/result" data-explore novalidate>
 
-    {# ---------- 14 activities, one per screen (decision 087) ---------- #}
+    {# ---------- 14 activities, one per screen (decision 088) ---------- #}
     <section class="explore-part" aria-labelledby="activities-title">
       <h2 class="explore-part-title" id="activities-title">{{ _("كيف تجد هذا النشاط؟") }}</h2>
       {% for a in activities %}

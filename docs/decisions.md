@@ -1400,7 +1400,17 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 **Decision (owner):** the year line on «البرامج» is gone ("not needed"): `year_line()`, `partials/year_line.html`, `year.js` and their styles and strings. The programs' dates stay in «الآن» and each program's own section; grade 12's «سنة التقديم شهرًا بشهر» (`partials/apply_year.html`, 040) is unchanged.
 **Alternatives:** keep it folded under a summary (still a second place for the same dates).
 
-## 087 — «جرّب قبل أن تقرر»: 15 questions, three answers, chosen from short interest measures (updates 069, 071–073)
+## 087 — وضّاح's teaser drawn as a night in cut paper, the agents' paths as a constellation (updates 084)
+**Date:** 2026-11-07
+**Context:** the owner, on the live homepage: the teaser's drawing (a student with a laptop on a plain hill, three small agents) "looks too basic"; it asked for real creativity and art.
+**Decision:** the same story, drawn as a scene (`partials/waddah_band.html`, our own inline SVG, no text, no outside request):
+- **Depth in flat paper layers (073's style):** a crescent and a few stars; on the far horizon the destinations (a dome, a clock tower, a hall of columns, a spire); nearer, home (a dune and its palm, in muted tones); the near dune meets the band's own horizon.
+- **The student is seen from behind,** sitting on the near dune, the laptop's light glowing on the screen and tracing the student's edge in lime (no face to draw, and the student looks where we look: towards the destinations).
+- **«الطريق والنجوم» (083):** the three agents (a search far off, an official page with its source, the light of an answer held out) float at three depths; their paths of light pass through stars and join into one constellation that ends at the screen. The agents keep the light on their antennas, a visor with two lights, no human face (082).
+- Lime only for the light (antennas, eyes, paths, the screen and its glow); everything else is paper and the forest's own tones, with darker values in the dark theme. Static: nothing moves.
+**Alternatives:** a large lit wordmark star over the dunes (decoration; the light is not for decoration, 083); the agents walking a road of diamonds (diamonds are for real sequences); a photo or AI picture (no photos that aren't real and credited; our own drawings only).
+
+## 088 — «جرّب قبل أن تقرر»: 15 questions, three answers, chosen from short interest measures (updates 069, 071–073)
 **Date:** 2026-11-07
 **Context:** the owner: the questions look messy, with too many questions and options (five answers with a divider, the grade, «ما الذي يصعّب عليك القرار؟», 30 activities, the subjects, a field the family expects: 34 screens). They asked for 15 questions, the ones that matter most, chosen from research and expert practice.
 **Research (read 2026-11-07):**

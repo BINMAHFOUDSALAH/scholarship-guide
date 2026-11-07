@@ -6,7 +6,9 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-07
 
-**2026-11-07 (decision 087, owner):** «جرّب قبل أن تقرر» is 15 questions (14 activities round Holland's six types, then the subjects), three answers as pills in a question card; the grade, the difficulties and the family question are gone; «نحو ثلاث دقائق». The video's YouTube line is removed. Checked: 807 tests; the browser at 375px. Not checked: `check_explore.mjs` (updated, not run: no Playwright here), a real iPhone.
+**2026-11-07 (decision 088, owner):** «جرّب قبل أن تقرر» is 15 questions (14 activities round Holland's six types, then the subjects), three answers as pills in a question card; the grade, the difficulties and the family question are gone; «نحو ثلاث دقائق». The video's YouTube line is removed. Checked: 807 tests; the browser at 375px. Not checked: `check_explore.mjs` (updated, not run: no Playwright here), a real iPhone.
+
+**2026-11-07 (decision 087, owner):** وضّاح's teaser drawing redrawn as a night in cut paper: far skyline of destinations, a dune with a palm, the student seen from behind lit by the screen, three agents at three depths whose paths join stars into a constellation ending at the screen. Checked: 806 tests (the teaser test now also checks the constellation and no text); the browser at 375px and 1280px, both themes, Arabic and English, no sideways scroll. Not checked: a real phone, Safari.
 
 **2026-11-07 (decision 086, owner):** removed «السنة في سطر» from «البرامج» (template, `year.js`, `year_line()`, styles, strings, tests).
 
