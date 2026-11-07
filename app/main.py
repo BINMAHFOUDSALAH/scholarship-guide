@@ -148,6 +148,27 @@ def waaid_who(group):
 RECENT_DAYS = 120
 
 
+# Each program's picture in «الآن» (decision 084): partials/program_art.html draws them.
+PROGRAM_ART = {"custodian-scholarship": "abroad", "sdaia-ai-scholarship": "sdaia",
+               "aramco-cdpne": "aramco", "kaust-kgsp": "kaust"}
+# Tracks whose «الآن» row shows a few of their universities' logos (decision 084, the owner's request for الرواد).
+LOGO_TRACKS = {"arruaad"}
+LOGO_COUNT = 5
+
+
+def track_logos(track_id):
+    """The track's first universities in the official list's order that have a logo (decision 049's files, their
+    small copies from scripts/logo_thumbs.py), for its «الآن» row. Empty for other tracks."""
+    if track_id not in LOGO_TRACKS:
+        return []
+    rows = sorted(explorer.listings(track_id), key=lambda r: r[0]["rank"])
+    return [{"id": u["id"], "name_ar": u["name_ar"] or u["name_en"],
+             "file": f"img/universities/small/{u['id']}.png",
+             "width": round(explorer.logos[u["id"]]["width"] * 22 / explorer.logos[u["id"]]["height"]), "height": 22}
+            for _, u in rows if u["id"] in explorer.logos
+            and (APP_DIR / "static" / "img" / "universities" / "small" / f"{u['id']}.png").is_file()][:LOGO_COUNT]
+
+
 def status_board():
     """The news board, built from the data that already holds each status (decision 033):
     - open: tracks open today (soonest deadline first) and واعد programs open today (those not for
@@ -182,6 +203,9 @@ def status_board():
                 "apply_url": track.get("apply_url") if status == "open" else None,
                 "when": track.get("apply_when"),
                 "pid": plan_ids.get((path["id"], track.get("id"))),  # «احفظ» in «خطتي»
+                "art": PROGRAM_ART.get(path["id"]), "art_logo": path.get("logo"),  # the row's picture (decision 084)
+                "unis": track_logos(track.get("id")),  # a few of the track's universities, by their logos
+                "unis_track": track.get("id"),
             }
             until = track.get("status_until")
             if status == "open":
@@ -206,6 +230,7 @@ def status_board():
             "who_ar": waaid_who(g),  # every واعد row says who it is for, one way (no tag)
             "sort_last": g["hs_count"] == 0,
             "when": "after_school",
+            "art": "waaid",
         }
         if g["is_open"]:
             groups["open"].append({**item, "status": "open", "until": g["apply_to"], "apply_url": w["apply_url"]})
@@ -224,12 +249,9 @@ def status_board():
 def now_board(board):
     """The homepage's «الآن» (2026-11-07, decision 083): what is open today, then what hasn't opened yet, each under
     its own heading. «مفتوح للتقديم الآن» used to list Aramco and KAUST, which hadn't opened, because it merged the two.
-    Each open item with a deadline carries the days left, on Riyadh's date (app/clock.py)."""
-    today = date.today()
-    opened = [{**i, "days_left": (date.fromisoformat(i["until"]) - today).days if i.get("until") else None}
-              for i in board["open"]]
+    An open row shows its closing date (its status tag), not a countdown or today's date (decision 084)."""
     upcoming = [i for i in board["waiting"] if i["status"] in ("not_open", "opening_soon")]
-    return {"open": opened, "upcoming": upcoming, "today": today.isoformat()}
+    return {"open": board["open"], "upcoming": upcoming}
 
 
 def programs_by_when():
@@ -492,13 +514,13 @@ def news_page(request: Request):
     return RedirectResponse(str(url_for_language({"request": request}, "programs_index")), status_code=301)
 
 
-@app.get("/waddah", response_class=HTMLResponse)
+@app.get("/waddah")
 def waddah_page(request: Request):
-    # وضّاح's page (decision 082): what it will do and won't, example questions, the FAQ. Nothing to sign up for yet.
-    # Not on the live site until the owner's name check (data/waddah.json "public").
+    # وضّاح has no page until launch, only the homepage's teaser (decision 084): a link already shared lands on it.
+    # A temporary redirect, because the page comes back with the guide.
     if not waddah_public():
         raise HTTPException(status_code=404)
-    return render(request, "waddah.html", {})
+    return RedirectResponse(str(url_for_language({"request": request}, "home")) + "#waddah", status_code=302)
 
 
 @app.get("/guides", response_class=HTMLResponse)
@@ -776,7 +798,7 @@ def robots():
 def sitemap():
     # The list of public pages for search engines. Grade and program pages come from content/.
     page_paths = (
-        ["/", "/about", "/programs", "/guides"] + (["/waddah"] if waddah_public() else [])
+        ["/", "/about", "/programs", "/guides"]
         + [f"/grades/{slug}" for slug in list_slugs("grades")]
         + [f"/programs/{slug}" for slug in program_slugs()]
         + ["/waaid"]

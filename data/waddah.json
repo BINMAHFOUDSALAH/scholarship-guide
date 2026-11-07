@@ -1,5 +1,5 @@
 {
-  "_note": "وضّاح, the AI guide (decisions 082, 083). Drives the homepage's dawn band and /waddah now; in Phase 2 the box («اسأل وضّاح») and the sign-in slot. The copy is the plan's draft (docs/research/design-direction-2026-11-07.md §6), for the owner to review. public = the teaser (the homepage band, /waddah) is on the live site: false until the owner has checked the name (SAIP, app stores, X; decision 082), shown locally with WADIH_SHOW_DRAFTS=1; launched = launch day (a switch, never a date); accounts_open = the header shows «دخول». The dawn lightens from dawn_from to dawn_to on Riyadh's date and holds at the edge of dawn until launched.",
+  "_note": "وضّاح, the AI guide (decisions 082–084). Drives the homepage's teaser band now (only a teaser: no page of its own until launch, decision 084); in Phase 2 the box («اسأل وضّاح») and the sign-in slot. public = the teaser band is on the live site (the owner checked the name, decision 082), shown locally with WADIH_SHOW_DRAFTS=1; launched = launch day (a switch, never a date); accounts_open = the header shows «دخول». The dawn lightens from dawn_from to dawn_to on Riyadh's date and holds at the edge of dawn until launched.",
   "name_ar": "وضّاح",
   "name_en": "Waddah",
   "public": true,
@@ -13,31 +13,6 @@
   "teaser": {
     "kicker_ar": "قريبًا في واضح",
     "title_ar": "وضّاح قادم في ديسمبر",
-    "line_ar": "دليلك الذكي في واضح: اسأله عن الابتعاث والجامعات والاختبارات، فيجيبك من المصادر الرسمية ويريك من أين عرف.",
-    "cta_ar": "ماذا سيفعل وضّاح؟"
-  },
-  "name_note_ar": "«وضّاح» من الجذر الذي جاء منه «واضح»: المضيء الذي يوضّح الطريق.",
-  "promises": [
-    {"title_ar": "من المصدر", "text_ar": "مع كل جواب رابط مصدره الرسمي، ولا يعرض جملة لا يجد مصدرها."},
-    {"title_ar": "بلا تخمين", "text_ar": "إن لم يجد الجواب قال «لا أعرف»، ودلّك على الجهة المختصة."},
-    {"title_ar": "بلا بياناتك", "text_ar": "لا يسألك عن اسمك أو درجاتك أو رقم هويتك."}
-  ],
-  "wont_ar": [
-    "لا يتوقع قبولك، ولا يعطيك «فرصة» بالأرقام.",
-    "لا يرتّب الجامعات بغير القوائم الرسمية.",
-    "لا يقدّم نصيحة طبية أو نفسية أو قانونية، بل يدلّك على المرشد الطلابي أو الجهة الرسمية.",
-    "لا يتحدث باسم وزارة التعليم ولا باسم أي جهة رسمية."
-  ],
-  "examples_ar": [
-    "هل أستطيع التقديم على مسار الرواد وأنا في ثالث ثانوي؟",
-    "كم درجة آيلتس تطلبها جامعة مانشستر؟",
-    "متى يفتح التسجيل في برنامج أرامكو؟",
-    "أيهما أنسب لي: دولينجو أم آيلتس؟"
-  ],
-  "faq": [
-    {"q_ar": "هل هو مجاني؟", "a_ar": "نعم، مثل واضح كله."},
-    {"q_ar": "هل أحتاج حسابًا؟", "a_ar": "ستحتاج إلى حساب بالبريد الإلكتروني لتستخدم وضّاح. أما واضح نفسه فيبقى كما هو: كل صفحاته وأدواته بلا حساب."},
-    {"q_ar": "هل هو إنسان؟", "a_ar": "لا. وضّاح ذكاء اصطناعي يجيب من صفحات واضح الموثّقة فقط، ولهذا يظهر نورًا لا وجهًا."},
-    {"q_ar": "متى يصل بالضبط؟", "a_ar": "في ديسمبر. سنعلن اليوم في هذه الصفحة حين يتأكد."}
-  ]
+    "line_ar": "دليلك الذكي في واضح: اسأله عن الابتعاث والجامعات والاختبارات."
+  }
 }

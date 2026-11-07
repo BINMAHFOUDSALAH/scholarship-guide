@@ -1,16 +1,17 @@
 {#
-  A map of where a set of universities is (decision 083): the الرواد chart's night and grid, one circle per country
-  (a circle is a destination; its area follows the count), and a path of light from المملكة to the country in focus.
-  The drawing is a picture (aria-hidden); the country chips under it are the list you read and tap. map.js lights a
-  country while its chip is pointed at or focused. chart = sky.world_chart(); href = the link before "country=".
+  A map of where a set of universities is (decisions 083, 084), drawn like the الرواد chart: the same night, grid and
+  faint stars, one four-point star per university, one constellation per country under its name, and a path of light
+  from المملكة to the country in focus. The drawing is a picture (aria-hidden); the country chips beside it are the
+  list you read and tap. map.js lights a country while its chip is pointed at or focused.
+  chart = sky.world_chart(); href = the link before "country=".
 #}
 {% import "partials/sky.html" as sky %}
 {% macro world_map(chart, href, label) %}
 <div class="world-wrap" data-world-wrap>
   <figure class="world-map" data-world>
     <svg class="chart-svg" viewBox="0 0 {{ chart.w }} {{ chart.h }}" aria-hidden="true" focusable="false">
-      {#- A plain night ground (no gradient): a page can hold several maps, and a gradient needs an id of its own. #}
-      <rect class="chart-ground world-ground" width="{{ chart.w }}" height="{{ chart.h }}" rx="14"/>
+      {#- The night is the figure's own background (CSS): a page can hold several maps, and an SVG gradient needs an id. #}
+      <g class="chart-sky">{{ sky.stars(sky_stars.chart) }}</g>
       <g class="chart-grid">
         {% for x in range(100, 1000, 100) %}<path d="M{{ x }} 18 Q{{ x + (x - 500) * 0.14 }} 260 {{ x }} 502"/>{% endfor %}
         {% for y in range(86, 520, 86) %}<path d="M18 {{ y }} Q500 {{ y - 22 }} 982 {{ y }}"/>{% endfor %}
@@ -19,9 +20,9 @@
       {% for k in chart.countries %}
       <g class="world-country" data-country="{{ k.code }}">
         <path class="chart-path" d="{{ k.path }}" pathLength="1"/>
-        <circle class="world-glow" cx="{{ k.x }}" cy="{{ k.y }}" r="{{ (k.r * 1.9) | round(1) }}"/>
-        <circle class="world-dot" cx="{{ k.x }}" cy="{{ k.y }}" r="{{ k.r }}"/>
-        <text class="chart-label world-label" x="{{ k.x }}" y="{{ k.label_y }}" text-anchor="middle">{{ k.count }}</text>
+        {% if k.lines_d %}<path class="world-links" d="{{ k.lines_d }}"/>{% endif %}
+        <path class="world-stars" d="{{ k.stars_d }}"/>
+        <text class="chart-label world-label" x="{{ k.x }}" y="{{ k.label_y }}" text-anchor="middle">{{ k.name_ar }}</text>
       </g>
       {% endfor %}
       {{ sky.guide_star(chart.home[0], chart.home[1], 11, "chart-home") }}

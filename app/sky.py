@@ -7,6 +7,7 @@ shown to students; the chart's universities, ranks and countries come from the E
 
 import math
 import random
+from functools import lru_cache
 
 
 # Fixed seeds, so the sky is the same on every visit.
@@ -96,33 +97,115 @@ def rowwad_chart(explorer):
     return {"stars": stars, "countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H}
 
 
-# ---------- Any set of universities on the map (decision 083) ----------
+# ---------- Any set of universities on the map (decisions 083, 084) ----------
 
-# Every country in the lists, on the same schematic map as the الرواد chart (west on the left).
+# Every country in the lists, on the same schematic map as the الرواد chart (west on the left). These are where each
+# constellation would like to be; world_chart() moves them apart when a big list makes them meet.
 WORLD_AT = {
-    "US": (205, 270), "CA": (240, 118),
-    "GB": (446, 146), "NL": (498, 132), "DE": (540, 160), "FR": (470, 205), "CH": (522, 214),
-    "ES": (430, 262), "IT": (556, 254),
-    "IN": (742, 334), "CN": (806, 214), "KR": (874, 200), "JP": (928, 176), "SG": (796, 410), "AU": (884, 452),
+    "US": (190, 260), "CA": (215, 92),
+    "GB": (420, 118), "NL": (500, 92), "DE": (566, 138), "FR": (444, 222), "CH": (530, 222),
+    "ES": (372, 300), "IT": (520, 318),
+    "IN": (760, 352), "CN": (800, 200), "KR": (888, 120), "JP": (930, 236), "SG": (812, 452), "AU": (912, 430),
 }
+HOME_BOX = (HOME[0] - 34, HOME[1] - 26, HOME[0] + 34, HOME[1] + 44)  # the home star and «المملكة» under it
+FRAME = (26, 26, CHART_W - 26, CHART_H - 26)
+LABEL_GAP, LABEL_H, CHAR_W = 12, 22, 6.6  # the country's name under its stars; CHAR_W ≈ one Arabic letter at 16px
+
+
+def _star_d(x, y, s):
+    """One four-point star (the shape of the الرواد chart's stars) as a relative sub-path, so a whole constellation
+    is one <path>: 290 stars on the homepage stay small in the page."""
+    k = round(s * 0.16, 2)
+    return (f"M{x:.1f} {y - s:.1f}q{k} {s - k:.2f} {s} {s}q{k - s:.2f} {k} {-s} {s}"
+            f"q{-k} {k - s:.2f} {-s} {-s}q{s - k:.2f} {-k} {s} {-s}z")
+
+
+def _spread(boxes, fixed):
+    """Moves the constellations apart until none overlaps another, the home star or the frame. boxes are dicts with
+    x, y (the centre) and the box's reach around it (left, top, right, bottom); each is pulled gently back to where
+    it wants to be, so the map keeps its shape. Deterministic: the same list always gives the same map."""
+    def rect(b):
+        return (b["x"] - b["l"], b["y"] - b["t"], b["x"] + b["r"], b["y"] + b["b"])
+
+    for _ in range(240):
+        moved = False
+        for i, a in enumerate(boxes):
+            for other in boxes[i + 1:] + fixed:
+                ax0, ay0, ax1, ay1 = rect(a)
+                bx0, by0, bx1, by1 = other if isinstance(other, tuple) else rect(other)
+                ox = min(ax1, bx1) - max(ax0, bx0) + 10
+                oy = min(ay1, by1) - max(ay0, by0) + 10
+                if ox <= 0 or oy <= 0:
+                    continue
+                moved = True
+                share = 1.0 if isinstance(other, tuple) else 0.5
+                if ox < oy:
+                    d = ox * (1 if (ax0 + ax1) >= (bx0 + bx1) else -1)
+                    a["x"] += d * share
+                    if share < 1:
+                        other["x"] -= d * share
+                else:
+                    d = oy * (1 if (ay0 + ay1) >= (by0 + by1) else -1)
+                    a["y"] += d * share
+                    if share < 1:
+                        other["y"] -= d * share
+        for b in boxes:
+            b["x"] += (b["ax"] - b["x"]) * 0.04
+            b["y"] += (b["ay"] - b["y"]) * 0.04
+            x0, y0, x1, y1 = FRAME
+            b["x"] = min(max(b["x"], x0 + b["l"]), x1 - b["r"])
+            b["y"] = min(max(b["y"], y0 + b["t"]), y1 - b["b"])
+        if not moved:
+            break
+
+
+@lru_cache(maxsize=256)
+def _world_chart(items):
+    counts = dict((code, n) for code, n, _ in items)
+    names = {code: name for code, _, name in items}
+    total = sum(counts.values())
+    # One star per university, as on the الرواد chart. The more stars, the closer they sit, so the homepage's 290
+    # fit; a short list (a plan) is drawn at the الرواد chart's own spacing.
+    gap = min(23.0, max(9.5, 23 * math.sqrt(30 / total)))
+    size = round(min(8.0, max(3.6, gap * 0.36)), 2)
+    spare = iter((x, 470) for x in range(120, 1000, 110))
+    boxes = []
+    for code, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])):
+        rng = random.Random(f"{code}{n}")
+        # A sunflower spiral, shaken a little so a big cluster doesn't show the spiral's pattern, and a little wider
+        # than tall, like the map itself.
+        offsets = [(dx * 1.12 + rng.uniform(-0.28, 0.28) * gap, dy * 0.88 + rng.uniform(-0.28, 0.28) * gap)
+                   for dx, dy in _spiral(n, gap)] if n > 1 else [(0.0, 0.0)]
+        reach = max([math.hypot(dx, dy) for dx, dy in offsets] + [0]) + size
+        half_label = len(names[code]) * CHAR_W / 2
+        ax, ay = WORLD_AT.get(code) or next(spare)
+        boxes.append({"code": code, "n": n, "offsets": offsets, "reach": reach, "ax": ax, "ay": ay, "x": ax, "y": ay,
+                      "l": max(reach, half_label), "r": max(reach, half_label), "t": reach,
+                      "b": reach + LABEL_GAP + LABEL_H})
+    _spread(boxes, [HOME_BOX])
+
+    countries = []
+    for b in boxes:
+        cx, cy = round(b["x"], 1), round(b["y"], 1)
+        points = [(cx + dx, cy + dy) for dx, dy in b["offsets"]]
+        (hx, hy), angle = HOME, math.atan2(cy - HOME[1], cx - HOME[0])
+        ex, ey = cx - math.cos(angle) * (b["reach"] + 8), cy - math.sin(angle) * (b["reach"] + 8)
+        mx, my = (hx + ex) / 2, min(hy, ey) - 0.18 * math.dist((hx, hy), (ex, ey))
+        countries.append({
+            "code": b["code"], "name_ar": names[b["code"]], "count": b["n"], "x": cx, "y": cy,
+            "stars": [(round(x, 1), round(y, 1)) for x, y in points],
+            "stars_d": "".join(_star_d(x, y, size) for x, y in points),
+            "lines_d": "".join(f"M{a[0]:.1f} {a[1]:.1f}L{c[0]:.1f} {c[1]:.1f}" for a, c in _tree(points)),
+            "label_y": round(cy + b["reach"] + LABEL_GAP + 14, 1),
+            "path": f"M{hx} {hy} Q{mx:.1f} {my:.1f} {ex:.1f} {ey:.1f}",
+        })
+    return {"countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H, "star": size}
 
 
 def world_chart(counts, names):
-    """One circle per country for any set of universities: the homepage's «إلى أين؟», the explorer's map view and
-    «خطتي»'s constellation. A circle is a destination (the diamond stays a step); its area follows the count, and the
-    path of light comes from home, as on the الرواد chart. counts = {code: n}; names = {code: Arabic name}."""
+    """The map for any set of universities (the homepage's «إلى أين؟», the explorer's map view, «خطتي»): drawn like
+    the الرواد chart (decision 084), one four-point star per university, one constellation per country under its
+    name, and a path of light from home to the country in focus. counts = {code: n}; names = {code: Arabic name}."""
     if not counts:
         return None
-    biggest = max(counts.values())
-    spare = iter((x, 482) for x in range(120, 1000, 110))
-    countries = []
-    for code, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])):
-        x, y = WORLD_AT.get(code) or next(spare)
-        r = round(5 + 15 * math.sqrt(n / biggest), 1)
-        (hx, hy), angle = HOME, math.atan2(y - HOME[1], x - HOME[0])
-        ex, ey = x - math.cos(angle) * (r + 7), y - math.sin(angle) * (r + 7)
-        mx, my = (hx + ex) / 2, min(hy, ey) - 0.18 * math.dist((hx, hy), (ex, ey))
-        countries.append({"code": code, "name_ar": names[code], "count": n, "x": x, "y": y, "r": r,
-                          "label_y": round(y + r + 20, 1),
-                          "path": f"M{hx} {hy} Q{mx:.1f} {my:.1f} {ex:.1f} {ey:.1f}"})
-    return {"countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H}
+    return _world_chart(tuple(sorted((code, n, names[code]) for code, n in counts.items())))

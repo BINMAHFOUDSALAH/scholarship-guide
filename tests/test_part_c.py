@@ -131,6 +131,33 @@ def test_the_homepage_map_has_every_country_with_its_count():
     assert 'aria-hidden="true" focusable="false"' in html  # the drawing is a picture; the chips are the list
 
 
+@pytest.mark.parametrize("counts", [None, {"US": 3, "GB": 2, "SG": 1}, {"FR": 1}])
+def test_the_map_is_drawn_like_the_rowwad_chart(counts):
+    """Decision 084: one four-point star per university, a constellation per country under its name, all inside the
+    frame, and no constellation (with its name) on top of another or of home. counts=None is the homepage's 290."""
+    from app.sky import CHART_H, CHART_W, CHAR_W, HOME_BOX, LABEL_GAP, LABEL_H, WORLD_AT, world_chart
+    if counts is None:
+        counts = {}
+        for u in main.explorer.universities.values():
+            counts[u["country"]] = counts.get(u["country"], 0) + 1
+    names = {c: main.explorer.countries[c]["name_ar"] for c in counts}
+    chart = world_chart(counts, names)
+    assert {k["code"]: len(k["stars"]) for k in chart["countries"]} == counts
+    assert all(k["stars_d"].count("z") == k["count"] for k in chart["countries"])
+    assert set(counts) <= set(WORLD_AT)  # a new country in the lists gets a place chosen for it
+    boxes = []
+    for k in chart["countries"]:
+        xs, ys = [x for x, _ in k["stars"]], [y for _, y in k["stars"]]
+        half = len(k["name_ar"]) * CHAR_W / 2
+        box = (min(min(xs), k["x"] - half), min(ys), max(max(xs), k["x"] + half), k["label_y"] + 4)
+        assert 0 < box[0] and box[2] < CHART_W and 0 < box[1] and box[3] < CHART_H, (k["code"], box)
+        boxes.append((k["code"], box))
+    for i, (a, ba) in enumerate(boxes):
+        for b, bb in boxes[i + 1:] + [("home", HOME_BOX)]:
+            apart = ba[2] <= bb[0] or bb[2] <= ba[0] or ba[3] <= bb[1] or bb[3] <= ba[1]
+            assert apart, (a, b)
+
+
 def test_the_explorer_offers_a_map_for_lists_across_countries_only():
     assert 'class="map-view"' in client.get("/universities?track=emdad&field=ict").text
     assert 'class="map-view"' not in client.get("/universities?track=emdad&field=ict&country=GB").text
@@ -155,9 +182,8 @@ def test_the_teaser_waits_for_the_owners_name_check(monkeypatch):
     monkeypatch.setattr(main, "SHOW_DRAFTS", False)
     assert 'class="waddah-band"' not in client.get("/").text
     assert client.get("/waddah").status_code == 404 and client.get("/en/waddah").status_code == 404
-    assert "/waddah</loc>" not in client.get("/sitemap.xml").text
     monkeypatch.setattr(main, "SHOW_DRAFTS", True)
-    assert client.get("/waddah").status_code == 200
+    assert 'class="waddah-band"' in client.get("/").text
 
 
 @pytest.fixture
@@ -166,25 +192,29 @@ def teaser_public(monkeypatch):
 
 
 @pytest.mark.parametrize("prefix", ["", "/en"])
-def test_waddah_page_says_what_it_will_and_wont_do(prefix, teaser_public):
-    r = client.get(prefix + "/waddah")
-    assert r.status_code == 200
-    html = r.text
-    assert "waddah-og.png" in html and f"{main.site['base_url']}{prefix}/waddah</loc>" in client.get("/sitemap.xml").text
-    if not prefix:
-        for p in main.waddah["promises"]:
-            assert p["title_ar"] in html
-        for x in main.waddah["wont_ar"] + main.waddah["examples_ar"]:
-            assert x in html
-        assert "قادم في ديسمبر" in html and "ذكاء اصطناعي" in html  # it says it's AI
-    assert client.get(prefix + "/static/img/waddah-og.png").status_code == 200
+def test_waddah_is_only_a_teaser_until_launch(prefix, teaser_public):
+    """Decision 084: no page and no details before launch. A /waddah link already shared lands on the homepage's
+    teaser (a temporary redirect: the page comes back with the guide), and the sitemap doesn't list it."""
+    r = client.get(prefix + "/waddah", follow_redirects=False)
+    assert r.status_code == 302 and r.headers["location"].endswith(f"{prefix}/#waddah")
+    assert "/waddah</loc>" not in client.get("/sitemap.xml").text
+    assert not (main.APP_DIR / "templates" / "waddah.html").exists()
+    for key in ("promises", "wont_ar", "examples_ar", "faq"):  # the page's details aren't published, even as data
+        assert key not in main.waddah
 
 
 def test_the_teaser_band_is_on_the_homepage_with_todays_dawn(monkeypatch, teaser_public):
     on(monkeypatch, 2026, 11, 20)
     html = client.get("/").text
     band = html.split('class="waddah-band"')[1].split("</section>")[0]
-    assert f'--dawn: {main.waddah_dawn(datetime.date(2026, 11, 20))}' in band and "/waddah" in band
+    assert f'--dawn: {main.waddah_dawn(datetime.date(2026, 11, 20))}' in band
+    assert 'id="waddah"' in html.split('class="waddah-band"')[0][-200:]
+    assert "/waddah" not in band and "<a " not in band  # nothing to open yet
+    assert "فيجيبك من المصادر الرسمية" not in band and main.waddah["teaser"]["line_ar"] in band
+    # What وضّاح will do, drawn: a student and three agents, each with the light on its antenna; no faces.
+    art = band.split('class="waddah-help"')[1].split("</svg>")[0]
+    assert art.count('class="agent"') == 3 and art.count('class="agent-light"') == 3
+    assert 'class="help-head"' in art
 
 
 def test_sign_in_waits_for_its_switch(monkeypatch):
@@ -259,8 +289,7 @@ def test_now_says_so_when_nothing_is_open(monkeypatch):
 
 
 def test_the_teaser_in_english_is_english(teaser_public):
-    """/en/waddah and the English homepage's band leave the sitemap while the teaser waits, so they're checked here."""
-    for url in ("/en/waddah", "/en/"):
-        html = client.get(url).text
-        assert not arabic_outside_lang_ar(html), (url, arabic_outside_lang_ar(html)[:5])
-    assert "is coming in December" in client.get("/en/").text
+    """The English homepage's band, checked here whether or not the teaser is public on the live site."""
+    html = client.get("/en/").text
+    assert not arabic_outside_lang_ar(html), arabic_outside_lang_ar(html)[:5]
+    assert "is coming in December" in html and "ask it about scholarships, universities and tests." in html

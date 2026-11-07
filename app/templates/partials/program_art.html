@@ -1,0 +1,116 @@
+{#
+  Each program's picture in «الآن» (decision 084, the owner's request): our own small drawing of what the program is
+  about, in the paper cut-out style of the field drawings (decision 073), with the program's official logo where we have
+  one (SDAIA's, on its own navy). Decorative: the program's name is written beside it, so the picture is aria-hidden.
+  The same on both themes; no text, no script, no outside request.
+    abroad  the scholarship's destinations: a night with three constellations and the home star (the الرواد chart's)
+    sdaia   artificial intelligence: a small neural network over SDAIA's logo
+    waaid   training with an employer: two gears and a workshop roof
+    aramco  energy: a refinery at dusk over the dunes
+    kaust   science by the sea: an atom, a molecule and the Red Sea's waves
+#}
+
+{#- A four-point star (the shape of the الرواد chart's stars). #}
+{% macro star(x, y, s) %}{% set k = (s * 0.16) | round(2) %}<path d="M{{ x }} {{ y - s }}Q{{ x + k }} {{ y - k }} {{ x + s }} {{ y }}Q{{ x + k }} {{ y + k }} {{ x }} {{ y + s }}Q{{ x - k }} {{ y + k }} {{ x - s }} {{ y }}Q{{ x - k }} {{ y - k }} {{ x }} {{ y - s }}Z"/>{% endmacro %}
+
+{#- A gear: a body, teeth drawn as a dashed ring, and a hole. #}
+{% macro gear(x, y, r, teeth, fill, ground) %}{% set ring = r + 2 %}{% set per = (2 * 3.14159 * ring / teeth) | round(3) %}
+<circle cx="{{ x }}" cy="{{ y }}" r="{{ ring }}" fill="none" stroke="{{ fill }}" stroke-width="{{ (r * 0.36) | round(1) }}" stroke-dasharray="{{ (per * 0.5) | round(3) }} {{ (per * 0.5) | round(3) }}"/>
+<circle cx="{{ x }}" cy="{{ y }}" r="{{ r }}" fill="{{ fill }}"/>
+<circle cx="{{ x }}" cy="{{ y }}" r="{{ (r * 0.32) | round(1) }}" fill="{{ ground }}"/>
+{% endmacro %}
+
+{% macro art(name, logo=None) %}
+{% if name in ("abroad", "sdaia", "waaid", "aramco", "kaust") %}
+<span class="program-art program-art--{{ name }}" aria-hidden="true">
+<svg viewBox="0 0 160 112" focusable="false" preserveAspectRatio="xMidYMid slice">
+{% if name == "abroad" %}
+  <rect width="160" height="112" fill="#10372a"/>
+  <ellipse cx="98" cy="62" rx="92" ry="62" fill="#2a5a48" opacity=".45"/>
+  <g fill="none" stroke="#f6f4ee" stroke-opacity=".09">
+    <path d="M40 0Q33 56 40 112M80 0V112M120 0Q127 56 120 112M0 38Q80 30 160 38M0 76Q80 68 160 76"/>
+  </g>
+  <g fill="#f6f4ee" opacity=".45">
+    <circle cx="12" cy="14" r=".9"/><circle cx="66" cy="8" r=".9"/><circle cx="150" cy="12" r=".8"/><circle cx="8" cy="72" r=".8"/>
+    <circle cx="62" cy="100" r=".9"/><circle cx="150" cy="96" r=".8"/><circle cx="104" cy="10" r=".7"/><circle cx="26" cy="94" r=".7"/>
+    <circle cx="140" cy="70" r=".7"/><circle cx="88" cy="104" r=".7"/>
+  </g>
+  {#- The path of light from home to a destination, as on the الرواد chart. #}
+  <path d="M112 80Q100 52 90 42" fill="none" stroke="#d8ed9b" stroke-opacity=".7" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1.5 3"/>
+  <g fill="none" stroke="#f6f4ee" stroke-opacity=".42" stroke-width=".8">
+    <path d="M22 42L32 28L46 34L42 50L28 54"/><path d="M70 24L84 16L92 30L82 38"/><path d="M124 28L140 22L146 38L134 46"/>
+  </g>
+  <g fill="#f6f4ee">
+    {{ star(22, 42, 3.4) }}{{ star(32, 28, 3.8) }}{{ star(46, 34, 3.2) }}{{ star(42, 50, 3.4) }}{{ star(28, 54, 3) }}
+    {{ star(70, 24, 3.2) }}{{ star(84, 16, 3.6) }}{{ star(92, 30, 3.4) }}{{ star(82, 38, 3) }}
+    {{ star(124, 28, 3.2) }}{{ star(140, 22, 3.6) }}{{ star(146, 38, 3) }}{{ star(134, 46, 3.4) }}
+  </g>
+  <circle cx="112" cy="82" r="15" fill="#d8ed9b" opacity=".16"/>
+  <g fill="#d8ed9b">{{ star(112, 82, 7.5) }}</g>
+{% elif name == "sdaia" %}
+  <rect width="160" height="112" fill="#0d0e58"/>
+  <ellipse cx="80" cy="30" rx="86" ry="44" fill="#2b33a8" opacity=".5"/>
+  {% set layers = [(26, [14, 30, 46]), (60, [8, 22, 36, 50]), (98, [14, 30, 46]), (132, [22, 40])] %}
+  <g stroke="#7fe7ff" stroke-opacity=".22" stroke-width=".7">
+    {% for i in range(3) %}{% set a = layers[i] %}{% set b = layers[i + 1] %}
+    {% for y1 in a[1] %}{% for y2 in b[1] %}<line x1="{{ a[0] }}" y1="{{ y1 }}" x2="{{ b[0] }}" y2="{{ y2 }}"/>{% endfor %}{% endfor %}
+    {% endfor %}
+  </g>
+  {#- One path through the network, lit: a question finding its way to an answer. #}
+  <path d="M26 30L60 22L98 30L132 22" fill="none" stroke="#7fe7ff" stroke-opacity=".9" stroke-width="1.3"/>
+  <g fill="#f6f4ee">
+    {% for x, ys in layers %}{% for y in ys %}<circle cx="{{ x }}" cy="{{ y }}" r="3.1"/>{% endfor %}{% endfor %}
+  </g>
+  <g fill="#7fe7ff">
+    <circle cx="26" cy="30" r="7" opacity=".22"/><circle cx="132" cy="22" r="7" opacity=".22"/>
+    <circle cx="26" cy="30" r="3.4"/><circle cx="60" cy="22" r="3.4"/><circle cx="98" cy="30" r="3.4"/><circle cx="132" cy="22" r="3.4"/>
+  </g>
+{% elif name == "waaid" %}
+  <rect width="160" height="112" fill="#0f3a40"/>
+  <ellipse cx="70" cy="46" rx="86" ry="56" fill="#1f5f63" opacity=".55"/>
+  <path d="M0 112V86L18 74V86L36 74V86L54 74V86L72 74V86H96V64H118V86H160V112Z" fill="#17494f"/>
+  <g fill="#ffc56b"><rect x="101" y="70" width="6" height="6" rx="1"/><rect x="110" y="70" width="5" height="6" rx="1" opacity=".6"/><rect x="128" y="94" width="8" height="5" rx="1" opacity=".7"/></g>
+  {{ gear(54, 44, 19, 12, "#f6f4ee", "#0f3a40") }}
+  {{ gear(90, 26, 10, 8, "#c9dcd8", "#0f3a40") }}
+  {{ gear(122, 48, 7, 7, "#9fc4bf", "#0f3a40") }}
+{% elif name == "aramco" %}
+  <rect width="160" height="112" fill="#1d2a38"/>
+  <ellipse cx="104" cy="98" rx="96" ry="44" fill="#e9a35b" opacity=".3"/>
+  <g fill="#f6f4ee" opacity=".5"><circle cx="18" cy="14" r=".9"/><circle cx="62" cy="10" r=".8"/><circle cx="146" cy="16" r=".9"/><circle cx="96" cy="22" r=".7"/></g>
+  <g fill="#f6f4ee">
+    <rect x="34" y="26" width="13" height="76" rx="6.5"/>
+    <rect x="54" y="42" width="11" height="60" rx="5.5"/>
+    <circle cx="92" cy="76" r="13"/><rect x="85" y="84" width="3" height="18"/><rect x="96" y="84" width="3" height="18"/>
+    <rect x="121" y="24" width="4" height="78"/>
+    <rect x="45" y="60" width="11" height="3"/><rect x="64" y="66" width="16" height="3"/>
+  </g>
+  <g fill="#1d2a38" opacity=".55"><rect x="34" y="46" width="13" height="2"/><rect x="34" y="62" width="13" height="2"/><rect x="34" y="78" width="13" height="2"/><rect x="54" y="62" width="11" height="2"/><rect x="54" y="78" width="11" height="2"/></g>
+  <path d="M123 23C118 17 121 11 123 6C125 11 129 15 126 21C125 22 124 23 123 23Z" fill="#ffc56b"/>
+  <path d="M0 112V102C28 97 58 104 90 100C118 96 140 101 160 98V112Z" fill="#3a3226"/>
+{% elif name == "kaust" %}
+  <rect width="160" height="112" fill="#13294f"/>
+  <ellipse cx="74" cy="42" rx="84" ry="52" fill="#2f4f8f" opacity=".5"/>
+  <g fill="none" stroke="#f6f4ee" stroke-width="1.3" stroke-opacity=".85">
+    <ellipse cx="66" cy="44" rx="30" ry="10"/>
+    <ellipse cx="66" cy="44" rx="30" ry="10" transform="rotate(60 66 44)"/>
+    <ellipse cx="66" cy="44" rx="30" ry="10" transform="rotate(-60 66 44)"/>
+  </g>
+  <circle cx="66" cy="44" r="5.5" fill="#ffe27a"/>
+  <g fill="#f6f4ee"><circle cx="96" cy="44" r="2.6"/><circle cx="51" cy="18" r="2.6"/><circle cx="51" cy="70" r="2.6"/></g>
+  <g fill="none" stroke="#f6f4ee" stroke-opacity=".55" stroke-width="1.2">
+    <path d="M130 14L139 19V29L130 34L121 29V19Z"/><path d="M139 19L148 14M130 34V42"/>
+  </g>
+  <rect y="86" width="160" height="26" fill="#0c1d3b"/>
+  <g fill="none" stroke="#f6f4ee" stroke-linecap="round">
+    <path d="M0 86q10-5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0" stroke-opacity=".55" stroke-width="1.4"/>
+    <path d="M-8 96q10-5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0" stroke-opacity=".3" stroke-width="1.2"/>
+    <path d="M0 106q10-5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0" stroke-opacity=".15" stroke-width="1"/>
+  </g>
+{% endif %}
+</svg>
+{%- if name == "sdaia" and logo %}
+<img class="program-art-logo" src="{{ url_for('static', path=logo.file ~ '-320.png') }}" width="320" height="112" alt="" loading="lazy" decoding="async">
+{%- endif %}
+</span>
+{% endif %}
+{% endmacro %}

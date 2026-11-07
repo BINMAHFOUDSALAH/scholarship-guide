@@ -83,7 +83,7 @@ def text_pairs(t):
         (t["ink"], t["sand"], "the quote band"),
         (t["ink-muted"], t["sand"], "secondary text on the quote band"),
         (t["action"], t["sand"], "links and buttons on the quote band"),
-        # Decision 083: the source chip, the year line's «اليوم», وضّاح's night band and /waddah.
+        # Decision 083: the source chip, the year line's «اليوم», وضّاح's night band.
         (t["action"], mix(t["action"], 9, t["paper"]), "the source chip on the page"),
         (t["action"], mix(t["action"], 9, t["surface"]), "the source chip on a panel"),
         (t["action"], mix(t["action"], 17, t["paper"]), "the source chip, hovered"),
@@ -92,8 +92,6 @@ def text_pairs(t):
         ("#f6f4ee", t["chart-ground"], "وضّاح's title on the night band"),
         ("#dfe5e1", t["chart-ground"], "the line on the night band"),
         ("#c3cdc6", t["chart-ground"], "«قريبًا في واضح» on the night band"),
-        ("#10372a", "#f6f4ee", "the button on the night band"),
-        (t["lime"], t["chart-ground"], "«قادم في ديسمبر» on /waddah"),
     ]
 
 

@@ -8,10 +8,11 @@ Keep this page short: update the sections below in place, tick the stages, and p
 
 - **Live:** https://wadihguide.com (Arabic) and https://wadihguide.com/en/ (English).
 - **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified, in the new design, after a 5-student test. No accounts.
-- **Phase 1 (decisions 078–083):** Part A fixed what misleads students, Part B grew «قائمتي» into «خطتي» on the device (079–080), **Part C is built (083):** the «الطريق والنجوم» redesign, وضّاح's identity and teaser (waiting on the owner's name check), and Phase 2's specs. Plan: [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md). No accounts.
+- **Phase 1 (decisions 078–084):** Part A fixed what misleads students, Part B grew «قائمتي» into «خطتي» on the device (079–080), **Part C is built (083):** the «الطريق والنجوم» redesign, وضّاح's identity and teaser (only a teaser until launch, 084), and Phase 2's specs. Plan: [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md). No accounts.
 - **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want وضّاح, the AI guide; «خطتي» moves into the account. وضّاح launches in December (the teaser says «قادم في ديسمبر», no fixed day).
 - **Pace:** ~5 hours per week.
-- **Just done (2026-11-07):** C2–C6 in one pass (decision 083): the bugs the owner listed (الرواد + بريطانيا showing إمداد, «مفتوح للتقديم الآن» listing programs not open, ↗ as empty boxes) and a 65,000px «هندسة» page; a clear start (grade, then one box, then the explore door); «الآن» and «البرامج» (`/news` redirects); compact result rows; the map and «السنة في سطر»; «خطتي» as a hub with an `.ics`; وضّاح's teaser and `/waddah` behind `public: false`; `agent.md`, `accounts.md`, the eval seed and `retrieve()`.
+- **Just done (2026-11-07, decision 084, owner's requests):** the map drawn like the الرواد chart (a star per university, a constellation per country); «الآن» without today's date or a countdown, with a picture per program (AI for SDAIA with its logo) and 5 الرواد university logos; وضّاح only a teaser (no `/waddah` page or button, a drawing of a student helped by three agents).
+- **Before that (2026-11-07):** C2–C6 in one pass (decision 083): the bugs the owner listed (الرواد + بريطانيا showing إمداد, «مفتوح للتقديم الآن» listing programs not open, ↗ as empty boxes) and a 65,000px «هندسة» page; a clear start (grade, then one box, then the explore door); «الآن» and «البرامج» (`/news` redirects); compact result rows; the map and «السنة في سطر»; «خطتي» as a hub with an `.ics`; وضّاح's teaser and `/waddah` behind `public: false`; `agent.md`, `accounts.md`, the eval seed and `retrieve()`.
 - **Next session:** the owner's checks below (phone, the name, the copy), then write the 5-student test script on the new design (step 4). If the name is clear: `"public": true` in `data/waddah.json`, post the teaser (`marketing/waddah-teaser.md`).
 
 ## Next steps
@@ -53,7 +54,8 @@ Gathered from the session notes in [log.md](log.md). The ones that could be chec
 - [ ] On your phone (Safari), in both themes: the homepage (grade → box → door), «الآن», «البرامج» and «السنة في سطر», a major search, «خطتي» (save, «هذا صفّي», the calendar file). Say what feels off.
 - [ ] Compare the site with the [direction board](https://claude.ai/artifact/BVq4dD2Rzmeyx9iEGUdjWh): the board couldn't be opened in the C2–C6 session, so its choices came from the 7 Nov log.
 - [x] Name check done (owner, 2026-11-07); `"public": true` set. Post from `marketing/waddah-teaser.md`.
-- [ ] Read وضّاح's copy in `data/waddah.json` (promises, limits, examples, FAQ) and the two specs (`docs/specs/agent.md`, `accounts.md`).
+- [ ] Read the two specs (`docs/specs/agent.md`, `accounts.md`). وضّاح's promises, examples and FAQ left `data/waddah.json` until launch (084): rewrite them for the page that comes back with the guide.
+- [ ] On your phone: the new map, the program pictures in «الآن», الرواد's logos, and the teaser's drawing. If you post the teaser, regenerate the kit first (`node marketing/src/waddah_cards.mjs`): the old share image quoted the removed line.
 - [ ] Optional: show the name to ~10 students (girls and boys) and 2 counsellors: do they remember it after a minute, do they trust it, any bad associations?
 - [ ] Before Phase 2: an Anthropic API key, billing and a spend limit; the PDPL review for accounts and under-18 users (consent, transfer abroad).
 
