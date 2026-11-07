@@ -149,8 +149,16 @@ RECENT_DAYS = 120
 
 
 # Each program's picture in «الآن» (decision 084): partials/program_art.html draws them.
+# A program with an official logo shows it (decision 085: the owner asked for the real logos); SDAIA's keeps its network
+# drawn over its logo; the others keep our drawing until their logo is added.
 PROGRAM_ART = {"custodian-scholarship": "abroad", "sdaia-ai-scholarship": "sdaia",
                "aramco-cdpne": "aramco", "kaust-kgsp": "kaust"}
+
+
+def program_art(path):
+    if path["id"] != "sdaia-ai-scholarship" and path.get("logo"):
+        return "logo"
+    return PROGRAM_ART.get(path["id"])
 # Tracks whose «الآن» row shows a few of their universities' logos (decision 084, the owner's request for الرواد).
 LOGO_TRACKS = {"arruaad"}
 LOGO_COUNT = 5
@@ -203,7 +211,7 @@ def status_board():
                 "apply_url": track.get("apply_url") if status == "open" else None,
                 "when": track.get("apply_when"),
                 "pid": plan_ids.get((path["id"], track.get("id"))),  # «احفظ» in «خطتي»
-                "art": PROGRAM_ART.get(path["id"]), "art_logo": path.get("logo"),  # the row's picture (decision 084)
+                "art": program_art(path), "art_logo": path.get("logo"),  # the row's picture (decision 084)
                 "unis": track_logos(track.get("id")),  # a few of the track's universities, by their logos
                 "unis_track": track.get("id"),
             }
@@ -230,7 +238,9 @@ def status_board():
             "who_ar": waaid_who(g),  # every واعد row says who it is for, one way (no tag)
             "sort_last": g["hs_count"] == 0,
             "when": "after_school",
-            "art": "waaid",
+            # The company's logo where we have it (waaid_programs.json "company_logo"), else our drawing.
+            "art": "logo" if g["programs"][0].get("company_logo") else "waaid",
+            "art_logo": g["programs"][0].get("company_logo"),
         }
         if g["is_open"]:
             groups["open"].append({**item, "status": "open", "until": g["apply_to"], "apply_url": w["apply_url"]})

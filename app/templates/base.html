@@ -203,6 +203,7 @@
   {# Announces «حُفظت» / «أُزيلت» after a save button is used, on any page (mylist.js). #}
   <p class="sr-only" role="status" data-save-status></p>
   <script src="{{ url_for('static', path='mylist.js') }}?v={{ asset_version('mylist.js') }}" defer></script>
+  <script src="{{ url_for('static', path='back.js') }}?v={{ asset_version('back.js') }}" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

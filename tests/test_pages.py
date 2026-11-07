@@ -258,9 +258,16 @@ def test_each_now_row_has_its_programs_picture():
     rows = now.split('<li class="now-item')[1:]
     assert rows and all('program-art program-art--' in r for r in rows)
     for r in rows:
+        assert 'aria-hidden="true"' in r.split("program-art--")[1].split(">")[0]
+        if "program-art--logo" in r:  # an official logo, self-hosted (decision 085)
+            tile = r.split('<span class="program-art')[1].split("</span>")[0]
+            assert re.search(r'src="[^"]*/static/img/(programs|paths)/[a-z0-9-]+-160\.png"', tile), tile
+            continue
         art = r.split('<span class="program-art')[1].split("</svg>")[0]
         assert "http" not in art and "<script" not in art and "<text" not in art
-        assert 'aria-hidden="true"' in r.split("program-art--")[1].split(">")[0]
+    rowwad = next((r for r in rows if "مسار الرواد" in r), None)
+    if rowwad:  # the King scholarship's logo (decision 085)
+        assert "program-art--logo" in rowwad and "custodian-logo-160.png" in rowwad
     sdaia = next((r for r in rows if "program-art--sdaia" in r), None)
     if sdaia:
         assert "sdaia-logo-320.png" in sdaia
@@ -1092,3 +1099,18 @@ def test_no_symbol_characters_that_fonts_lack(url):
         body = html.split("<body", 1)[1]
         for ch in "↗✓→←":
             assert ch not in body, f"{lang + url}: {ch!r} in the page"
+
+
+def test_every_page_keeps_its_place_on_back():
+    """Decision 085: Safari on iPhone sometimes lands at the top on Back; back.js puts the student where they were."""
+    for page in ("/", "/programs", "/about", "/en/"):
+        assert "/static/back.js?v=" in client.get(page).text, page
+    js = (main.APP_DIR / "static" / "back.js").read_text(encoding="utf-8")
+    assert "back_forward" in js and "sessionStorage" in js and 'getElementById("results")' in js
+
+
+def test_a_touch_lights_a_country_before_opening_it():
+    """Decision 085: on a phone the first tap on a country's chip lights it on the map; the second opens it."""
+    js = (main.APP_DIR / "static" / "map.js").read_text(encoding="utf-8")
+    assert '"touch"' in js and "preventDefault" in js and "is-picked" in js
+    assert ".country-chip.is-picked" in (main.APP_DIR / "static" / "style.css").read_text(encoding="utf-8")
