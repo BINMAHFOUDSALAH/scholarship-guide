@@ -1,4 +1,4 @@
-"""Phase 1 Part C (decisions 081–083): «خطتي» as a hub, the calendar file, «السنة في سطر», the map, وضّاح's teaser
+"""Phase 1 Part C (decisions 081–083): «خطتي» as a hub, the calendar file, the map, وضّاح's teaser
 and the Phase 2 switches. The pages' own structure is in test_pages.py; these are the new pieces' rules."""
 
 import datetime
@@ -98,26 +98,6 @@ def test_your_constellation_maps_only_your_universities(monkeypatch):
     hub = client.post("/my-plan", json=PLAN).text.split('<template data-plan-part="hub">')[1].split("</template>")[0]
     codes = re.findall(r'data-world-chip="([A-Z]{2})"', hub)
     assert sorted(codes) == ["GB", "SG", "US"]
-
-
-# ---------- «السنة في سطر» ----------
-
-def test_the_year_line_draws_only_dated_facts(monkeypatch):
-    on(monkeypatch, 2026, 11, 7)
-    y = main.year_line()
-    assert y["start"] == "2026-08-01" and len(y["months"]) == 12 and sum(m["days"] for m in y["months"]) == 365
-    assert 0 < y["today_at"] < 100
-    assert [m["title_ar"] for m in y["marks"]] == ["مسار الرواد"] and y["marks"][0]["source_url"]
-    assert all(w["href"].startswith("/waaid#") for w in y["windows"])
-    names = " ".join(m["title_ar"] for m in y["marks"]) + " ".join(w["title_ar"] for w in y["windows"])
-    assert "أرامكو" not in names and "كاوست" not in names  # no announced date, so not on the line
-    assert sum(1 for p in y["phases"] if p["is_now"]) == 1
-
-
-def test_the_year_line_starts_in_august_even_in_spring(monkeypatch):
-    on(monkeypatch, 2027, 3, 1)
-    y = main.year_line()
-    assert y["start"] == "2026-08-01" and [m["n"] for m in y["months"] if m["is_now"]] == [3]
 
 
 # ---------- the map ----------

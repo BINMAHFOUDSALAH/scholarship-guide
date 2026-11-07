@@ -297,54 +297,6 @@ def waddah_dawn(today=None):
     return round(max(0.0, min(0.9, step * 0.9)), 3)
 
 
-# The application year runs from August to July (the US applications open in August, apply_year.json).
-YEAR_MONTHS = (8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7)
-
-
-def year_line(today=None):
-    """«السنة في سطر» (decision 083): the application year as one line, with today on it.
-
-    Only what the data dates: the six phases of a university application year (apply_year.json, with the counts
-    the Explorer computes), the scholarship's dated deadline (a track's status_until, with its source), and the
-    واعد windows that include programs for high school graduates. A program with no announced date isn't drawn."""
-    today = today or date.today()
-    year = today.year if today.month >= 8 else today.year - 1
-    start, end = date(year, 8, 1), date(year + 1, 8, 1)
-    span = (end - start).days
-
-    def at(d):
-        return round(max(0.0, min(1.0, (d - start).days / span)) * 100, 2)
-
-    months = []
-    for m in YEAR_MONTHS:
-        first = date(year if m >= 8 else year + 1, m, 1)
-        nxt = date(first.year + (m == 12), m % 12 + 1, 1)
-        months.append({"n": m, "days": (nxt - first).days, "is_now": m == today.month})
-    stats = explorer.timeline_stats()
-    phases = []
-    for r in apply_year["rows"]:
-        first, last = YEAR_MONTHS.index(r["months"][0]), YEAR_MONTHS.index(r["months"][-1])
-        count = stats.get("early") if r.get("computed") == "early" else stats.get("january") if r.get("computed") == "regular" else None
-        phases.append({"title_ar": r["title_ar"], "when_ar": r["when_ar"], "col": first + 1, "span": last - first + 1,
-                       "is_now": today.month in r["months"], "count": count})
-    marks, windows = [], []
-    for path in paths:
-        for track in path["tracks"]:
-            until = track.get("status_until")
-            if track.get("status") == "open" and until and track.get("status_source") and start <= date.fromisoformat(until) < end:
-                marks.append({"title_ar": track["name_ar"], "date": until, "at": at(date.fromisoformat(until)),
-                              "past": until < today.isoformat(), "source_url": track["status_source"],
-                              "page": f"/programs/{path['id']}" if path["id"] in program_slugs() else None})
-    for g in waaid()["groups"]:
-        a, b = date.fromisoformat(g["apply_from"]), date.fromisoformat(g["apply_to"])
-        if g["hs_count"] and b >= start and a < end:
-            windows.append({"title_ar": g["company_ar"], "from": g["apply_from"], "to": g["apply_to"], "at": at(a),
-                            "width": max(0.6, round(at(b + timedelta(days=1)) - at(a), 2)), "href": f"/waaid#{g['id']}",
-                            "is_open": g["is_open"], "past": g["apply_to"] < today.isoformat()})
-    return {"start": start.isoformat(), "months": months, "phases": phases, "marks": marks, "windows": windows,
-            "today": today.isoformat(), "today_at": at(today), "stats": stats}
-
-
 def program_slugs():
     """Programs that have their own page: an entry in paths.json plus content/programs/<id>.md."""
     return [slug for slug in list_slugs("programs") if slug in paths_by_id]
@@ -514,7 +466,6 @@ def programs_index(request: Request):
     return render(request, "programs.html", {
         "board": board, "now": now_board(board), "program_groups": programs_by_when(),
         "announcements": news, "path_names": path_names, "program_pages": program_slugs(),
-        "year": year_line(),
     })
 
 

@@ -401,7 +401,7 @@ def test_arruaad_moves_to_recently_closed_after_its_deadline(monkeypatch):
 def test_programs_page_lists_everything():
     """«البرامج» (decision 083) holds the whole board and the announcements, where /news used to."""
     html = client.get("/programs").text
-    assert "إعلانات" in html and 'id="year-line"' in html
+    assert "إعلانات" in html and 'id="year-line"' not in html  # «السنة في سطر» removed (decision 086)
     board = main.status_board()
     for item in board["recent"] + board["open"] + board["waiting"]:
         assert item["title_ar"] in html

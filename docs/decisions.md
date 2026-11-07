@@ -1394,3 +1394,8 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 **Alternatives:** a separate "open" button under the map (one more control; the second tap is what the owner described); `history.scrollRestoration = "manual"` everywhere (would take over Chrome's restore, which already works).
 **Not verified:** iPhone Safari itself (not available here): Chromium restores natively, so the fix was checked only for not interfering.
 **Update (same day, owner said yes to the downloads):** Aramco's and SAR's logos are Wikimedia Commons' PNG renderings (public domain), KAUST's is the emblem from the header of kaust.edu.sa (an official trademark; XML comments removed, no scripts or links). They are `now_logo` on Aramco's and KAUST's programs in `paths.json` and `company_logo` on SAR's واعد program, used only in «الآن» (the photos stay elsewhere), each with its source, licence and date, credited on /about.
+
+## 086 — «السنة في سطر» removed from «البرامج» (updates 083)
+**Date:** 2026-11-07
+**Decision (owner):** the year line on «البرامج» is gone ("not needed"): `year_line()`, `partials/year_line.html`, `year.js` and their styles and strings. The programs' dates stay in «الآن» and each program's own section; grade 12's «سنة التقديم شهرًا بشهر» (`partials/apply_year.html`, 040) is unchanged.
+**Alternatives:** keep it folded under a summary (still a second place for the same dates).
