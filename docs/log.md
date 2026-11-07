@@ -6,6 +6,8 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-07
 
+**2026-11-07 (decision 087, owner):** وضّاح's teaser drawing redrawn as a night in cut paper: far skyline of destinations, a dune with a palm, the student seen from behind lit by the screen, three agents at three depths whose paths join stars into a constellation ending at the screen. Checked: 806 tests (the teaser test now also checks the constellation and no text); the browser at 375px and 1280px, both themes, Arabic and English, no sideways scroll. Not checked: a real phone, Safari.
+
 **2026-11-07 (decision 086, owner):** removed «السنة في سطر» from «البرامج» (template, `year.js`, `year_line()`, styles, strings, tests).
 
 **2026-11-07 (decision 085, owner):** الرواد's row shows the King scholarship's logo; a program or واعد company with an official logo shows it (Aramco and SAR from Wikimedia Commons, public domain; KAUST's emblem from kaust.edu.sa; after the owner's yes). On a phone, the first tap on a country's chip lights it on the map and the second opens it. Back keeps your place (`back.js`; for Safari on iPhone, which can land at the top). Checked: 806 tests; the taps and Back in Chromium at 375px. Not checked: iPhone Safari.

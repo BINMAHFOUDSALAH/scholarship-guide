@@ -195,6 +195,9 @@ def test_the_teaser_band_is_on_the_homepage_with_todays_dawn(monkeypatch, teaser
     art = band.split('class="waddah-help"')[1].split("</svg>")[0]
     assert art.count('class="agent"') == 3 and art.count('class="agent-light"') == 3
     assert 'class="help-head"' in art
+    # Their paths join stars into one constellation that reaches the screen (decision 087); no text in the drawing.
+    assert art.count('<circle', art.index('class="help-nodes"'), art.index('class="help-nodes"') + 400) >= 4
+    assert "<text" not in art
 
 
 def test_sign_in_waits_for_its_switch(monkeypatch):
