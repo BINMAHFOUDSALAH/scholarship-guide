@@ -1121,3 +1121,12 @@ def test_rowwad_title_opens_its_universities_map():
     rows = [i for g in main.status_board().values() for i in g if i.get("unis_track") == "arruaad"]
     assert rows and all(i["page"] == "/universities?track=arruaad" for i in rows)
     assert 'class="rowwad-title"' in client.get("/universities?track=arruaad").text
+
+
+def test_sdaia_row_shows_some_of_its_universities():
+    """SDAIA's «الآن» row shows a few universities from its own official list (PDF order) and links to the full list."""
+    sdaia = [i for g in main.status_board().values() for i in g if i["page"] == "/programs/sdaia-ai-scholarship"]
+    assert sdaia and sdaia[0]["unis"] and sdaia[0]["unis_href"] == "/programs/sdaia-ai-scholarship#targets-title"
+    listed = [t["id"] for t in main.paths_by_id["sdaia-ai-scholarship"]["target_universities"] if t.get("id")]
+    assert all(u["id"] in listed for u in sdaia[0]["unis"])
+    assert 'href="/programs/sdaia-ai-scholarship#targets-title"' in client.get("/").text
