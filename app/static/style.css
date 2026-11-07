@@ -3664,13 +3664,15 @@ a.uni-name:hover .uni-name-en:only-child {
   border-color: var(--ink);
 }
 
-.country-chip[aria-current] {
+.country-chip[aria-current],
+.country-chip.is-picked {
   border-color: var(--lime);
   background: var(--lime);
   color: var(--on-lime);
 }
 
-.country-chip[aria-current] .country-chip-count {
+.country-chip[aria-current] .country-chip-count,
+.country-chip.is-picked .country-chip-count {
   color: var(--on-lime);
 }
 
@@ -4574,6 +4576,27 @@ a.uni-name:hover .uni-name-en:only-child {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* An official logo (decision 085): centred on the white plate it was made for, with room around it. */
+.program-art--logo {
+  display: grid;
+  place-items: center;
+  padding: 8%;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.program-art--logo-dark {
+  background: #184b3a;
+}
+
+.program-art--logo img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
 
 /* SDAIA's logo sits on its own navy under the network. */

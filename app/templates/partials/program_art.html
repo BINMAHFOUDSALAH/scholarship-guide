@@ -3,6 +3,8 @@
   about, in the paper cut-out style of the field drawings (decision 073), with the program's official logo where we have
   one (SDAIA's, on its own navy). Decorative: the program's name is written beside it, so the picture is aria-hidden.
   The same on both themes; no text, no script, no outside request.
+  Since decision 085 a program with an official logo shows the logo instead (the King scholarship, Aramco, KAUST, a
+  واعد company); SDAIA keeps its network over its logo.
     abroad  the scholarship's destinations: a night with three constellations and the home star (the الرواد chart's)
     sdaia   artificial intelligence: a small neural network over SDAIA's logo
     waaid   training with an employer: two gears and a workshop roof
@@ -21,7 +23,10 @@
 {% endmacro %}
 
 {% macro art(name, logo=None) %}
-{% if name in ("abroad", "sdaia", "waaid", "aramco", "kaust") %}
+{% if name == "logo" and logo %}
+{#- The program's (or company's) official logo, on the plate it was made for (decision 085). #}
+<span class="program-art program-art--logo{% if logo.plate == 'dark' %} program-art--logo-dark{% endif %}" aria-hidden="true"><img src="{{ url_for('static', path=logo.file ~ '-160.png') }}" srcset="{{ url_for('static', path=logo.file ~ '-160.png') }} 160w, {{ url_for('static', path=logo.file ~ '-500.png') }} 500w" sizes="(min-width: 760px) 152px, 88px" width="{{ logo.width }}" height="{{ logo.height }}" alt="" loading="lazy" decoding="async"></span>
+{% elif name in ("abroad", "sdaia", "waaid", "aramco", "kaust") %}
 <span class="program-art program-art--{{ name }}" aria-hidden="true">
 <svg viewBox="0 0 160 112" focusable="false" preserveAspectRatio="xMidYMid slice">
 {% if name == "abroad" %}

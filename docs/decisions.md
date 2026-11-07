@@ -1383,3 +1383,13 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **Keep `/waddah` as a short page:** the owner wants nothing shared before launch; a redirect keeps shared links working without a page.
 - **Keep the countdown, hide the date:** the countdown has the same staleness problem (a cached or unrefreshed page shows a wrong number) and repeats the date beside it.
 **Not verified:** a real phone and Safari, a screen reader, students. Checked: 804 tests (new: the map's layout for 290, 6 and 1 universities, the row pictures and logos, the small logos, the teaser without a page), `english_leaks.py` 0, the browser at 375 and 1100px in both themes and both languages.
+
+## 085 — Official logos in «الآن», the map on a phone, Back keeps your place (updates 084)
+**Date:** 2026-11-07
+**Context:** the owner, on the live site after 084: الرواد's row should show the King scholarship's logo, not our drawing; Aramco, KAUST and the railway program (SAR, واعد) should show their real logos; on a phone a country's chip opened its list at once, while on a laptop pointing at it first lit it on the map; and on a phone, Back from a program returned to the top of the homepage.
+**Decision:**
+- **A program with an official logo shows it** in its «الآن» row, on the plate it was made for (`program_art(path)`; the King scholarship's is already on the site, 028). SDAIA keeps its network over its logo. A واعد row shows its company's logo when its program has `company_logo`. Aramco, KAUST and SAR keep our drawings until their logo files are added (downloads wait for the owner's yes).
+- **On a touch screen, the first tap on a country's chip lights it** (the chip turns lime, its stars and path of light show, as pointing does on a laptop); a second tap on it opens its universities; tapping elsewhere clears it. Mouse and keyboard are unchanged (Enter opens).
+- **Back keeps your place** (`static/back.js`, every page): each page remembers its scroll position for this tab (sessionStorage, a number per path) and, on Back, puts the student there if the browser left them at the top (Safari on iPhone restores before the page has its full height). Pages with a hash, and the explorer (which restores its own row), are left alone.
+**Alternatives:** a separate "open" button under the map (one more control; the second tap is what the owner described); `history.scrollRestoration = "manual"` everywhere (would take over Chrome's restore, which already works).
+**Not verified:** iPhone Safari itself (not available here): Chromium restores natively, so the fix was checked only for not interfering.
