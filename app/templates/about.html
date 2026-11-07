@@ -21,6 +21,7 @@
 
 {% if is_en() %}<p id="translation">{{ _("الصفحات الإنجليزية ترجمتنا للنص العربي. المصدر الرسمي هو المرجع، وكثير من المصادر الرسمية بالعربية فقط.") }}</p>{% endif %}
 
+{% macro logo_credit(lg) %}<li>{{ _("شعار") }} {{ lg.name_ar }}{{ _(": من") }} <a href="{{ lg.source_url }}" target="_blank" rel="noopener">{{ _("مصدره") }}</a>{{ _("،") }} <span lang="en" dir="ltr">{{ lg.licence }}</span>{{ _(". نعرضه للتعريف بالبرنامج فقط، و") }}{{ site.name }} {{ _("لا يتبع الجهة المالكة له.") }}</li>{% endmacro %}
 <h2 id="credits">{{ _("الصور والشعارات") }}</h2>
 <ul class="credits">
   {% for path in paths %}
@@ -30,7 +31,10 @@
   <li>{{ path.photo.alt_ar }}: <a href="{{ path.photo.source_url }}" target="_blank" rel="noopener">{{ _("صورة:") }} <span lang="en" dir="ltr">{{ path.photo.credit }}</span></a>{{ _("،") }}
     {% if path.photo.license_url %}<a href="{{ path.photo.license_url }}" target="_blank" rel="noopener" lang="en" dir="ltr">{{ path.photo.license }}</a>{% else %}{{ path.photo.license }}{% endif %}</li>
   {% endif %}
+  {% if path.now_logo %}{{ logo_credit(path.now_logo) }}{% endif %}
   {% endfor %}
+  {#- The logos in «الآن» (decision 085): programs and واعد companies. #}
+  {% for p in waaid().programs if p.company_logo %}{{ logo_credit(p.company_logo) }}{% endfor %}
 </ul>
 
 {# University logos and flags (decision 049): shown on each university's page, credited here. #}

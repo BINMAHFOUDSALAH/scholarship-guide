@@ -20,7 +20,7 @@ spec.loader.exec_module(stale_facts)
 
 def count_check_dates(node, parent_key=None):
     """Check-date fields anywhere in a JSON tree, skipping logos (images, not facts)."""
-    if parent_key == "logo":
+    if parent_key in ("logo", "now_logo", "company_logo"):
         return 0
     if isinstance(node, dict):
         return sum((key in CHECK_KEYS and isinstance(value, str)) + count_check_dates(value, key)

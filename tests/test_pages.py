@@ -261,7 +261,7 @@ def test_each_now_row_has_its_programs_picture():
         assert 'aria-hidden="true"' in r.split("program-art--")[1].split(">")[0]
         if "program-art--logo" in r:  # an official logo, self-hosted (decision 085)
             tile = r.split('<span class="program-art')[1].split("</span>")[0]
-            assert re.search(r'src="[^"]*/static/img/(programs|paths)/[a-z0-9-]+-160\.png"', tile), tile
+            assert re.search(r'src="[^"]*/static/img/(programs|paths)/[a-z0-9-]+(-160\.png|\.svg)"', tile), tile
             continue
         art = r.split('<span class="program-art')[1].split("</svg>")[0]
         assert "http" not in art and "<script" not in art and "<text" not in art
