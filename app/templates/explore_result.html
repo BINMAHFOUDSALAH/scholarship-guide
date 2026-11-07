@@ -66,14 +66,13 @@
 {% endmacro %}
 
 {# One field. compact: the fields that don't draw the student now, a small picture and no reason to give. #}
-{% macro field_card(f, v, note=None, compact=False, first=False) %}
+{% macro field_card(f, v, compact=False, first=False) %}
 <section class="explore-field field-tone tone-{{ v.id }}{% if compact %} explore-field--compact{% endif %}" id="field-{{ v.id }}" aria-labelledby="fh-{{ v.id }}">
   {% set art = "img/fields/" ~ v.id ~ ".svg" %}
   <img class="explore-field-art" src="{{ url_for('static', path=art) }}?v={{ asset_version(art) }}" alt="" width="640" height="320" decoding="async"{% if not first %} loading="lazy"{% endif %}>
   <div class="explore-field-body">
     <h3 class="explore-field-name" id="fh-{{ v.id }}">{{ v.title_ar }}</h3>
-    {% if note %}<p class="explore-field-why">{{ note }}</p>
-    {% elif not compact %}<p class="explore-field-why">{{ explore_why(f) }}</p>{% endif %}
+    {% if not compact %}<p class="explore-field-why">{{ explore_why(f) }}</p>{% endif %}
     <div class="explore-field-majors">
       <p class="explore-label">{{ _("أمثلة من تخصصاته") }}</p>
       <ul class="explore-majors">{% for m in v.majors %}<li>{{ m }}</li>{% endfor %}</ul>
@@ -122,20 +121,11 @@
   {% if r.nothing_yet %}
   <div class="notice"><p>{{ _("لم يجذبك شيء من هذه الأنشطة بعد. جرّب كل أسبوع شيئًا من مجال مختلف، ثم أعد النشاط بعد شهر.") }}</p></div>
   {% elif r.thin %}
-  <div class="notice"><p>{{ _("جرّبت أنشطة قليلة، فجرّب أكثر قبل أن تعتمد على هذه النتيجة.") }}</p></div>
+  <div class="notice"><p>{{ _("أجبت عن أنشطة قليلة، فجرّب أكثر قبل أن تعتمد على هذه النتيجة.") }}</p></div>
   {% endif %}
 
   {% if r.bands.draws %}{{ band(r.bands.draws, "draws-title", _("تجذبك الآن"), _("مجالات أخرى تجذبك"), lead=True) }}{% endif %}
   {% if r.bands.try %}{{ band(r.bands.try, "try-title", _("تستحق التجربة"), _("مجالات أخرى تستحق التجربة"), lead=not r.bands.draws) }}{% endif %}
-
-  {% if r.considered %}
-  {% set f = r.considered %}
-  <section class="section explore-band" aria-labelledby="considered-title">
-    <h2 class="section-title" id="considered-title">{{ _("المجال الذي ذكرته") }}</h2>
-    {% set note = _("لم تختر من أنشطته ما يجذبك بعد، وهذا لا يعني أنه لا يناسبك.") if f.band == "not_now" else None %}
-    <div class="explore-fields">{{ field_card(f, views[f.id], note) }}</div>
-  </section>
-  {% endif %}
 
   {% if r.bands.not_now %}
   <details class="explore-not-now">
@@ -146,28 +136,12 @@
   </details>
   {% endif %}
 
-  {% if r.difficulties %}
-  <section class="section explore-band" aria-labelledby="help-title">
-    <h2 class="section-title" id="help-title">{{ _("ما يساعدك الآن") }}</h2>
-    <ul class="explore-tips">
-      {% for d in r.difficulties %}<li>{{ d.tip_ar }}{% if d.link %} <a href="{{ d.link.href }}">{{ d.link.label_ar }}</a>{% endif %}</li>{% endfor %}
-    </ul>
-  </section>
-  {% endif %}
-
   <section class="section explore-band" aria-labelledby="next-title">
     <h2 class="section-title" id="next-title">{{ _("بعد هذه الصفحة") }}</h2>
     {{ c.next_step(_("اختر مجالًا واحدًا مما سبق، وجرّب نشاطًا منه هذا الأسبوع."), label=_("خطوتك التالية")) }}
     <ul class="explore-next">
-      {% if r.grade == "10" %}
-      <li>{{ _("قارن المسارات الخمسة قبل أن تُسكَّن في أحدها.") }} <a href="/grades/grade-10#tracks">{{ _("المسارات الخمسة") }}</a></li>
-      <li>{{ _("اسأل الموجه الطالبي في مدرستك عن المجالات التي ظهرت لك هنا.") }}</li>
-      {% elif r.grade == "11" %}
-      <li>{{ _("اقرأ ما يهم في ثاني ثانوي.") }} <a href="/grades/grade-11">{{ _("ثاني ثانوي") }}</a></li>
-      {% elif r.grade == "12" %}
+      <li>{{ _("في أول ثانوي؟ قارن المسارات الخمسة قبل أن تُسكَّن في أحدها.") }} <a href="/grades/grade-10#tracks">{{ _("المسارات الخمسة") }}</a></li>
       <li>{{ _("ابحث عن تخصصات المجال الذي يجذبك وجامعاته في مستكشف الجامعات.") }} <a href="/universities">{{ _("الجامعات") }}</a></li>
-      <li>{{ _("اقرأ ما يهم في ثالث ثانوي.") }} <a href="/grades/grade-12">{{ _("ثالث ثانوي") }}</a></li>
-      {% endif %}
       <li>{{ _("اعرض هذه الصفحة على الموجه الطالبي في مدرستك. وإن كان لك ملف إنجاز مهني، فأضفها إلى قسم «اكتشف ذاتك» فيه.") }}</li>
       <li>{{ _("أعد النشاط بعد شهر من التجربة، وانظر هل تغيّر ما يجذبك.") }}</li>
     </ul>

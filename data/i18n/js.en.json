@@ -15,8 +15,6 @@
  "حاول مرة أخرى": "Try again",
  " في القائمة أدناه": " in the list below",
  "المقطع الأصلي": "The original clip",
- "الجزء {n} من {total}": "Part {n} of {total}",
- "النشاط {n} من {total}": "Activity {n} of {total}",
  "التالي": "Next",
  "تخطَّ": "Skip",
  "في خطتك": "In your plan",
@@ -31,5 +29,6 @@
  "لن نذكّرك بصفّك.": "Your grade is no longer kept.",
  "حُفظ صفّك على هذا الجهاز.": "Your grade is kept on this device.",
  "نُزّل ملف المواعيد. افتحه لتضيفها إلى تقويمك.": "The calendar file has downloaded. Open it to add the dates to your calendar.",
- "تعذّر تجهيز ملف المواعيد. حاول مرة أخرى.": "We couldn’t prepare the calendar file. Try again."
+ "تعذّر تجهيز ملف المواعيد. حاول مرة أخرى.": "We couldn’t prepare the calendar file. Try again.",
+ "السؤال {n} من {total}": "Question {n} of {total}"
 }

@@ -710,8 +710,6 @@ async def explore_result(request: Request):
             raise HTTPException(status_code=413)
     result = exploration.score(exploration.parse(body))
     shown = [f["id"] for band in result["bands"].values() for f in band]
-    if result["considered"]:
-        shown.append(result["considered"]["id"])
     views = {fid: exploration.field_view(fid, explorer, school_tracks) for fid in shown}
     return render(request, "explore_result.html", {
         "r": result, "views": views, "x": exploration.DATA, "program_names": path_names,

@@ -1,5 +1,5 @@
 {
-  "_note": "«جرّب قبل أن تقرر» (decision 069): an exploration activity, not a test. No scores are shown, nothing is stored. The activities, the subject-to-field map and the 'try' ideas are our own advice, not official facts; published by the owner on 2026-11-04 before a counsellor review (decision 070); expert_reviewed records that the review is still to come (docs/research/career-exploration-evaluation-2026-11.md §8–9). School tracks and the official field names come from the sourced data (school_tracks.json, universities.json). title_ar is our own plain title for a field; majors_ar are real names only, from the Ministry's guide (majors_from: guide; a test checks each one is in universities.json) or from the Ministry's Saudi unified classification where the guide has none or one (majors_from: classification; decision 073, docs/research/field-majors-classification-2026-11.md).",
+  "_note": "«جرّب قبل أن تقرر» (decisions 069, 088): an exploration activity, not a test. 14 activities, each counting for one to three fields, spread over Holland's six interest types (type: R I A S E C; every type at least once, every field at least twice), three answers, and one question on subjects. No scores are shown, nothing is stored. The activities, the subject-to-field map and the 'try' ideas are our own advice, not official facts; published by the owner on 2026-11-04 before a counsellor review (decision 070); expert_reviewed records that the review is still to come (docs/research/career-exploration-evaluation-2026-11.md §8–9). School tracks and the official field names come from the sourced data (school_tracks.json, universities.json). title_ar is our own plain title for a field; majors_ar are real names only, from the Ministry's guide (majors_from: guide; a test checks each one is in universities.json) or from the Ministry's Saudi unified classification where the guide has none or one (majors_from: classification; decision 073, docs/research/field-majors-classification-2026-11.md).",
   "draft": false,
   "expert_reviewed": false,
   "owner_reviewed": false,
@@ -11,29 +11,9 @@
      "read_on": "2026-11-04"}
   ],
   "answers": [
-    {"id": "enjoy", "group": "tried", "label_ar": "أستمتع به"},
-    {"id": "ok", "group": "tried", "label_ar": "لا بأس به"},
-    {"id": "dislike", "group": "tried", "label_ar": "لا أستمتع به"},
-    {"id": "curious", "group": "untried", "label_ar": "لم أجرّبه، وأودّ أن أجرّبه"},
-    {"id": "cold", "group": "untried", "label_ar": "لم أجرّبه، ولا يجذبني"}
-  ],
-  "difficulties": [
-    {"id": "untried", "label_ar": "لم أجرّب أشياء كثيرة بعد",
-     "tip_ar": "ابدأ بالمجالات التي تستحق التجربة أدناه، وجرّب نشاطًا واحدًا منها هذا الأسبوع."},
-    {"id": "info", "label_ar": "أعرف ما أحب، ولا أعرف التخصصات",
-     "tip_ar": "افتح تخصصات كل مجال أدناه، ثم ابحث عن جامعاتها في مستكشف الجامعات."},
-    {"id": "multiple", "label_ar": "يعجبني أكثر من مجال",
-     "tip_ar": "جرّب مجالين هذا الشهر، ثم قارن بينهما."},
-    {"id": "family", "label_ar": "أهلي يتوقعون تخصصًا معينًا",
-     "tip_ar": "اعرف عن هذا التخصص ما يكفي لتتحدث عنه بهدوء، واقرأ كيف تحاور أهلك.",
-     "link": {"href": "/resources/undecided#family", "label_ar": "إذا كان لأهلك رأي آخر"}},
-    {"id": "ability", "label_ar": "لا أعرف هل أقدر عليه",
-     "tip_ar": "القدرة تنمو بالتعلم والتدريب. اعرف ما يتطلبه المجال من مواد ومسار، واسأل الموجه الطالبي في مدرستك."}
-  ],
-  "grades": [
-    {"id": "10", "label_ar": "أول ثانوي"},
-    {"id": "11", "label_ar": "ثاني ثانوي"},
-    {"id": "12", "label_ar": "ثالث ثانوي"}
+    {"id": "enjoy", "label_ar": "يعجبني"},
+    {"id": "ok", "label_ar": "لا بأس"},
+    {"id": "dislike", "label_ar": "لا يجذبني"}
   ],
   "subjects": [
     {"id": "math", "label_ar": "الرياضيات", "fields": ["natural-sciences", "engineering", "ict", "business-law"]},
@@ -113,35 +93,19 @@
                 "اسأل شخصًا يعمل في السياحة أو الرياضة أو الضيافة عن عمله."]}
   ],
   "activities": [
-    {"id": "body-illness", "field": "health", "text_ar": "قراءة كيف يتعامل جسم الإنسان مع المرض"},
-    {"id": "care-someone", "field": "health", "text_ar": "مساعدة شخص مريض أو كبير في السن في احتياجاته"},
-    {"id": "first-aid", "field": "health", "text_ar": "تعلّم الإسعافات الأولية"},
-    {"id": "explain-lesson", "field": "education", "text_ar": "شرح درس صعب لزميل حتى يفهمه"},
-    {"id": "review-questions", "field": "education", "text_ar": "إعداد أسئلة مراجعة لزملائك قبل الاختبار"},
-    {"id": "help-child", "field": "education", "text_ar": "مساعدة طفل في واجباته المدرسية"},
-    {"id": "design-poster", "field": "arts-humanities", "text_ar": "تصميم شعار أو ملصق لنادٍ مدرسي"},
-    {"id": "write-story", "field": "arts-humanities", "text_ar": "كتابة قصة أو مقال أو قصيدة"},
-    {"id": "history-place", "field": "arts-humanities", "text_ar": "قراءة تاريخ مكان أو حضارة والبحث في مصادره"},
-    {"id": "photo-report", "field": "social-sciences", "text_ar": "إعداد تقرير مصوّر عن حدث في مدرستك"},
-    {"id": "survey", "field": "social-sciences", "text_ar": "تصميم استبيان لزملائك وتحليل نتائجه"},
-    {"id": "news-causes", "field": "social-sciences", "text_ar": "متابعة خبر اقتصادي أو اجتماعي ومناقشة أسبابه"},
-    {"id": "school-sale", "field": "business-law", "text_ar": "تنظيم بيع منتجات في فعالية مدرسية وحساب الربح"},
-    {"id": "project-plan", "field": "business-law", "text_ar": "إعداد خطة لمشروع صغير وميزانيته"},
-    {"id": "read-rules", "field": "business-law", "text_ar": "قراءة لائحة أو نظام لمعرفة ما يسمح به وما يمنعه"},
-    {"id": "lab-experiment", "field": "natural-sciences", "text_ar": "إجراء تجربة في المختبر وتسجيل نتائجها"},
-    {"id": "hard-problem", "field": "natural-sciences", "text_ar": "حل مسألة رياضيات صعبة بأكثر من طريقة"},
-    {"id": "observe-nature", "field": "natural-sciences", "text_ar": "مراقبة السماء أو الطبيعة وتدوين ما تلاحظه"},
-    {"id": "small-program", "field": "ict", "text_ar": "كتابة برنامج صغير أو تعديل لعبة"},
-    {"id": "fix-app", "field": "ict", "text_ar": "حل مشكلة في جهاز أو تطبيق لا يعمل"},
-    {"id": "simple-site", "field": "ict", "text_ar": "تصميم صفحة موقع أو تطبيق بسيط"},
-    {"id": "take-apart", "field": "engineering", "text_ar": "تفكيك جهاز قديم لمعرفة كيف يعمل"},
-    {"id": "build-model", "field": "engineering", "text_ar": "بناء مجسم أو نموذج لمشروع مدرسي"},
-    {"id": "draw-plan", "field": "engineering", "text_ar": "رسم مخطط لغرفة أو مبنى بمقاسات دقيقة"},
-    {"id": "grow-plants", "field": "agriculture", "text_ar": "العناية بنباتات ومتابعة نموها"},
-    {"id": "care-animal", "field": "agriculture", "text_ar": "رعاية حيوان والاهتمام بغذائه وصحته"},
-    {"id": "food-source", "field": "agriculture", "text_ar": "معرفة مصدر طعامك وكيف يُنتج"},
-    {"id": "plan-trip", "field": "services", "text_ar": "تنظيم رحلة أو فعالية لمجموعة"},
-    {"id": "host-guests", "field": "services", "text_ar": "استقبال ضيوف وترتيب ضيافتهم"},
-    {"id": "coach-team", "field": "services", "text_ar": "تدريب فريق رياضي أو المشاركة في تنظيم مباراة"}
+    {"id": "take-apart", "type": "R", "fields": ["engineering", "ict"], "text_ar": "تفكيك جهاز أو إصلاحه لمعرفة كيف يعمل"},
+    {"id": "lab-experiment", "type": "I", "fields": ["natural-sciences", "health", "agriculture"], "text_ar": "إجراء تجربة في المختبر وتسجيل نتائجها"},
+    {"id": "design-poster", "type": "A", "fields": ["arts-humanities", "social-sciences"], "text_ar": "تصميم ملصق أو شعار أو مقطع فيديو"},
+    {"id": "explain-lesson", "type": "S", "fields": ["education"], "text_ar": "شرح درس صعب لزميل حتى يفهمه"},
+    {"id": "project-plan", "type": "E", "fields": ["business-law"], "text_ar": "إعداد خطة لمشروع صغير وميزانيته"},
+    {"id": "data-table", "type": "C", "fields": ["business-law", "ict"], "text_ar": "ترتيب بيانات في جدول ومراجعتها بدقة"},
+    {"id": "grow-care", "type": "R", "fields": ["agriculture"], "text_ar": "العناية بنباتات أو حيوانات ومتابعة نموها"},
+    {"id": "hard-problem", "type": "I", "fields": ["natural-sciences", "engineering", "ict"], "text_ar": "حل مسألة صعبة في الرياضيات أو البرمجة"},
+    {"id": "write-story", "type": "A", "fields": ["arts-humanities", "social-sciences"], "text_ar": "كتابة قصة أو مقال"},
+    {"id": "care-someone", "type": "S", "fields": ["health"], "text_ar": "مساعدة شخص مريض أو كبير في السن"},
+    {"id": "plan-trip", "type": "E", "fields": ["services", "business-law"], "text_ar": "تنظيم رحلة أو فعالية لمجموعة"},
+    {"id": "people-behave", "type": "S", "fields": ["social-sciences", "education"], "text_ar": "فهم لماذا يتصرف الناس كما يتصرفون"},
+    {"id": "coach-team", "type": "E", "fields": ["services", "education"], "text_ar": "تدريب فريق رياضي أو تنظيم مباراة"},
+    {"id": "news-causes", "type": "I", "fields": ["social-sciences", "business-law"], "text_ar": "متابعة خبر اقتصادي أو اجتماعي ومناقشة أسبابه"}
   ]
 }

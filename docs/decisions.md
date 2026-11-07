@@ -1409,3 +1409,23 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **«الطريق والنجوم» (083):** the three agents (a search far off, an official page with its source, the light of an answer held out) float at three depths; their paths of light pass through stars and join into one constellation that ends at the screen. The agents keep the light on their antennas, a visor with two lights, no human face (082).
 - Lime only for the light (antennas, eyes, paths, the screen and its glow); everything else is paper and the forest's own tones, with darker values in the dark theme. Static: nothing moves.
 **Alternatives:** a large lit wordmark star over the dunes (decoration; the light is not for decoration, 083); the agents walking a road of diamonds (diamonds are for real sequences); a photo or AI picture (no photos that aren't real and credited; our own drawings only).
+
+## 088 — «جرّب قبل أن تقرر»: 15 questions, three answers, chosen from short interest measures (updates 069, 071–073)
+**Date:** 2026-11-07
+**Context:** the owner: the questions look messy, with too many questions and options (five answers with a divider, the grade, «ما الذي يصعّب عليك القرار؟», 30 activities, the subjects, a field the family expects: 34 screens). They asked for 15 questions, the ones that matter most, chosen from research and expert practice.
+**Research (read 2026-11-07):**
+- O\*NET's Mini Interest Profiler (Rounds et al. 2016, [report](https://www.onetcenter.org/dl_files/Mini-IP.pdf)): a 30-item mobile version, five items per Holland type, chosen for content coverage and gender balance; its five-item scales kept α = .70–.75.
+- 18REST ([Psicologia: Reflexão e Crítica 2018](https://pmc.ncbi.nlm.nih.gov/articles/PMC6967077/)): three activities per type, written as activities anyone can enjoy without training, chosen for coverage and balance across types; revised in 2025 with 63,128 Brazilian school students.
+- Already in the 2026-11 research note: social cognitive career theory (interests grow from experiences of progress), so the subjects question stays; the Ministry's guidance handbook names Holland's theory.
+**Decision (the owner chose the answers and what to drop):**
+- **15 questions:** 14 concrete activities, one per screen, then «في أي المواد أو الأنشطة لاحظت أنك تتقدم؟». The activities move round Holland's six types (each at least once, none more than three times, never twice in a row) and each counts for one to three of the 10 fields, so every field rests on at least two (tests check both).
+- **Three answers:** «يعجبني / لا بأس / لا يجذبني», as one row of pills in a question card. "Haven't tried it" is gone with the owner's choice of three; «لا بأس» now makes a field worth trying.
+- **Removed:** the grade, «ما الذي يصعّب عليك القرار؟» with its tips, and the field the family expects (the owner: it doesn't make sense here). The result's next steps no longer depend on the grade: grade 10's track comparison is offered to whoever is in grade 10.
+- **The rules:** «تجذبك الآن» = nothing disliked and two liked, or one liked plus progress in a close subject; «تستحق التجربة» = one liked or one «لا بأس»; the rest «لا تجذبك الآن». Thin evidence = fewer than 7 activities answered. The why sentence: «لأنك تحب …», else «لأنك قلت «لا بأس» عن …», then the progress.
+- «نحو ثلاث دقائق» replaces «نحو عشر دقائق» on the page and its doors.
+**Alternatives:**
+- **12 activities + the difficulties question:** exactly two per type, but some fields would rest on one activity.
+- **Keep five answers:** separates "never tried" from "dislike", the point of the old design, but it was the busiest part of each screen.
+- **A full Holland score (R, I, A…) instead of fields:** needs validation in Arabic before any score is shown (decision 069).
+**Also (owner, same day):** the video's line «يُحمَّل من يوتيوب عند الضغط فقط» is removed; the video still loads only on a press.
+**Verified:** pytest (807); the browser at 375px: a tap answers one question and moves on once, a full run to the result, English, both themes, no console errors. **Not verified:** `scripts/check_explore.mjs` was updated for the new flow but not run (Playwright isn't installed on this laptop; it runs in cloud sessions); a real iPhone; students.

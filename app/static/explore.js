@@ -1,9 +1,9 @@
 // «جرّب قبل أن تقرر» (decision 069): turns the one long form into steps, one question per screen.
-// - Part 1 (what makes the decision hard, the grade), part 2 (one activity per screen), part 3 (progress in
-//   subjects, a field the student or their family has in mind). The last step's button goes straight to the result
-//   (decision 073: no review page; «السابق» changes an answer on the way).
-// - In part 2, tapping an answer moves on to the next activity after a short moment (AUTO_NEXT_MS), so the
-//   student sees their choice first (owner, 2026-11-04: pressing «التالي» 30 times is too slow). Only taps do this:
+// - 15 questions (decision 088): 14 activities, one per screen, then the subjects where the student has seen
+//   progress. The last step's button goes straight to the result (decision 073: no review page; «السابق» changes
+//   an answer on the way).
+// - On an activity, tapping an answer moves on to the next one after a short moment (AUTO_NEXT_MS), so the
+//   student sees their choice first (owner, 2026-11-04: pressing «التالي» after every answer is too slow). Only taps do this:
 //   with the keyboard, arrow keys change the choice and the student moves on with Enter or «التالي».
 //   «تخطَّ» skips a question; «التالي» shows when a question already has an answer (e.g. after «السابق»).
 // - A survey must never record an answer nobody chose. The first version of moving on by itself let a second tap
@@ -41,17 +41,15 @@
   if (!form) return;
 
   const steps = Array.from(form.querySelectorAll("[data-step]"));
-  const activities = steps.filter((s) => s.dataset.part === "2");
-  const partTwo = form.querySelector(".explore-part");
+  const isActivity = (step) => step.dataset.part === "activity";
+  const activityPart = form.querySelector(".explore-part");
   const last = steps.length - 1;
   const prev = form.querySelector("[data-prev]");
   const next = form.querySelector("[data-next]");
   const submit = form.querySelector("[data-submit]");
   const progress = document.querySelector("[data-explore-progress]");
-  const partText = progress.querySelector("[data-progress-part]");
   const countText = progress.querySelector("[data-progress-count]");
   const bar = progress.querySelector("[data-progress-bar]");
-  const PARTS = 3;
   let current = 0;
   const STEP_LOCK_MS = 400;  // the second tap of a double tap: too soon to have read the new question
   const AUTO_NEXT_MS = 300;  // a tap on an answer: long enough to see it chosen, short enough not to wait
@@ -67,13 +65,9 @@
     current = Math.max(0, Math.min(index, last));
     const step = steps[current];
     steps.forEach((s, i) => { s.hidden = i !== current; });
-    const part = step.dataset.part;
-    partTwo.hidden = part !== "2";
-    partText.textContent = fill("الجزء {n} من {total}", { n: part, total: PARTS });
-    countText.textContent = part === "2"
-      ? fill("النشاط {n} من {total}", { n: activities.indexOf(step) + 1, total: activities.length }) : "";
-    countText.hidden = !countText.textContent;
-    bar.value = current / last;
+    activityPart.hidden = !isActivity(step);
+    countText.textContent = fill("السؤال {n} من {total}", { n: current + 1, total: steps.length });
+    bar.value = (current + 1) / steps.length;
     prev.hidden = current === 0;
     next.hidden = current === last;
     submit.hidden = current !== last;
@@ -124,7 +118,7 @@
   form.addEventListener("click", (event) => {
     const step = steps[current];
     const input = event.target;
-    if (!(input instanceof HTMLInputElement) || input.type !== "radio" || step.dataset.part !== "2") return;
+    if (!(input instanceof HTMLInputElement) || input.type !== "radio" || !isActivity(step)) return;
     if (!step.contains(input) || Date.now() - tappedAt > 1000) return;
     window.clearTimeout(autoNext);
     autoNext = window.setTimeout(() => { if (steps[current] === step) forward(); }, AUTO_NEXT_MS);
