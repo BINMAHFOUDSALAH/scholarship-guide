@@ -161,6 +161,9 @@ def program_art(path):
     return PROGRAM_ART.get(path["id"])
 # Tracks whose «الآن» row shows a few of their universities' logos (decision 084, the owner's request for الرواد).
 LOGO_TRACKS = {"arruaad"}
+# A track with its own page: its row's title opens it rather than the program's page
+# (الرواد → its universities map, owner 2026-11-07).
+TRACK_PAGES = {"arruaad": "/universities?track=arruaad"}
 LOGO_COUNT = 5
 
 
@@ -202,7 +205,7 @@ def status_board():
             item = {
                 "title_ar": track["name_ar"] if len(path["tracks"]) > 1 else path["name_ar"],
                 "program_ar": path["name_ar"] if len(path["tracks"]) > 1 else path["provider_ar"],
-                "status": status, "page": page, "source_url": track.get("status_source"),
+                "status": status, "page": TRACK_PAGES.get(track.get("id"), page), "source_url": track.get("status_source"),
                 "until": track.get("status_until") if status == "open" else None,
                 # Who can act on it: «مفتوح الآن» alone read as "apply today" to students who can't yet
                 # (الرواد needs a university admission first; SDAIA needs a scholarship).
