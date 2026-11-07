@@ -98,8 +98,8 @@
       <p class="open-when">{{ c.status_tag(item.status, item.until) }}</p>
       {% if (item.apply_url and item.status == "open") or item.source_url %}
       <p class="open-actions">
-        {% if item.apply_url and item.status == "open" %}<a class="btn btn--primary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="{{ _f('تقدم الآن: {title}، في منصة قبول', title=item.title_ar) }}">{{ _("تقدم الآن ↗") }}</a>{% endif %}
-        {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي ↗") }}</a>{% endif %}
+        {% if item.apply_url and item.status == "open" %}<a class="btn btn--primary btn--small" href="{{ item.apply_url }}" target="_blank" rel="noopener" aria-label="{{ _f('تقدم الآن: {title}، في منصة قبول', title=item.title_ar) }}">{{ _("تقدم الآن") }}</a>{% endif %}
+        {% if item.source_url %}<a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي") }}</a>{% endif %}
       </p>
       {% endif %}
     </li>
@@ -208,7 +208,7 @@
         {# Two actions per program (decision 061): the details here, the official site there. #}
         <p class="path-actions">
           {% if path.id in program_pages %}<a class="btn btn--secondary" href="{{ url_for('program_page', slug=path.id) }}">{{ _("الشروط والتفاصيل") }}</a>{% endif %}
-          <a class="path-link" href="{{ path.official_url }}" target="_blank" rel="noopener">{{ _("الموقع الرسمي ↗") }}</a>
+          <a class="path-link" href="{{ path.official_url }}" target="_blank" rel="noopener">{{ _("الموقع الرسمي") }}</a>
         </p>
       </div>
     </article>

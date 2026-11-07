@@ -36,27 +36,39 @@
 <div class="notice major-summary" data-health-answer>
   <p class="notice-title">{{ _("التخصصات الصحية، مثل الطب والتمريض والصيدلة") }}</p>
   <ul class="major-summary-list">
-    <li>{{ _f("دليل الوزارة لقوائم الجامعات {year} لا يذكر مجالًا للصحة، فلا قائمة لها في إمداد.", year=explorer.source.academic_year | replace("-", "–")) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></li>
-    <li>{{ _("مسار الرواد يقبل كل التخصصات في جامعاته الثلاثين، فتأكد من موقع الجامعة أنها تدرّس التخصص.") }} <a class="src" href="https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></li>
+    <li>{{ _f("دليل الوزارة لقوائم الجامعات {year} لا يذكر مجالًا للصحة، فلا قائمة لها في إمداد.", year=explorer.source.academic_year | replace("-", "–")) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></li>
+    <li>{{ _("مسار الرواد يقبل كل التخصصات في جامعاته الثلاثين، فتأكد من موقع الجامعة أنها تدرّس التخصص.") }} <a class="src" href="https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" target="_blank" rel="noopener">{{ _("المصدر") }}</a></li>
   </ul>
 </div>
 {% endif %}
 
 {% if r.mode == "major" %}
+{#- Each major once, grouped by its field in إمداد. A word like «هندسة» matches dozens of majors: then the summary
+    counts them per field and shows a few, instead of one line per major (2026-11-07). #}
 <div class="notice major-summary">
+  {% if r.major_names | length == 1 %}
   {% set m0 = r.majors[0] %}
   <p class="notice-title">{{ _f("تخصص «{name}»", name=m0.name_ar) }}{% if not is_en() %} <span class="term-en" lang="en" dir="ltr">{{ m0.name_en }}</span>{% endif %}</p>
   <ul class="major-summary-list">
-    {% for m in r.majors if m.track == "emdad" %}
-    <li>{{ _f("في إمداد يتبع مجال «{field}»", field=explorer.field("emdad", m.field).name_ar) }}{% if m.masters_only %}{{ _("،") }} <strong>{{ _("ولدرجة الماجستير فقط") }}</strong>{% endif %}.</li>
+    {% for mf in r.major_fields %}
+    <li>{{ _f("في إمداد يتبع مجال «{field}»", field=mf.field.name_ar) }}{% if mf.masters_only %}{{ _("،") }} <strong>{{ _("ولدرجة الماجستير فقط") }}</strong>{% endif %}.</li>
     {% endfor %}
-    {% if not (r.majors | selectattr("track", "equalto", "emdad") | list) %}
+  {% else %}
+  <p class="notice-title">{{ _f("«{q}» في أسماء {n}", q=r.q, n=r.major_names | length | count_ar("majors")) }}</p>
+  <ul class="major-summary-list">
+    {% for mf in r.major_fields %}
+    {% set shown = mf.majors[:3] %}
+    <li>{{ _f("في إمداد، مجال «{field}»:", field=mf.field.name_ar) }} {% if mf.majors | length > 1 %}{{ _f("{n}، منها", n=mf.majors | length | count_ar("majors")) }} {% endif %}{% for name in shown %}{{ _("«") }}{{ name }}{{ _("»") }}{% if not loop.last %}{{ _("،") }} {% endif %}{% endfor %}{% if mf.majors | length > 3 %}{{ _("، وغيرها") }}{% endif %}.</li>
+    {% endfor %}
+  {% endif %}
+    {% if not r.major_fields %}
     <li>{{ _("هذا التخصص ليس في قائمة تخصصات إمداد، لكن الرواد يشمل كل التخصصات.") }}</li>
     {% endif %}
     {% if r.track != "rnd" and (r.majors | selectattr("track", "equalto", "rnd") | list) %}
     <li>{{ _("وله قائمة في البحث والتطوير (للدكتوراه فقط):") }} <a href="{{ url_for('universities_page') }}?q={{ r.q | urlencode }}&amp;track=rnd">{{ _("اعرضها") }}</a>.</li>
     {% endif %}
   </ul>
+  {% if r.major_names | length > 1 %}<p class="major-summary-hint">{{ _("اكتب اسم التخصص كاملًا لترى مجاله وحده، مثل «هندسة البرمجيات».") }}</p>{% endif %}
 </div>
 {% endif %}
 
@@ -78,7 +90,7 @@
   {% if s.note_ar %}<p class="result-note">{{ s.note_ar }}</p>{% endif %}
 
   {% if s.waaid is defined %}
-    <p class="result-note">{{ _("واعد لا يعتمد على قوائم الجامعات: كل برنامج مرتبط بجهة توظيف ويحدد مؤسسته التعليمية وشروطه، وفترة التقديم قصيرة غالبًا. المصدر:") }} <a href="https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/" target="_blank" rel="noopener">{{ _("صفحة مسار واعد ↗") }}</a></p>
+    <p class="result-note">{{ _("واعد لا يعتمد على قوائم الجامعات: كل برنامج مرتبط بجهة توظيف ويحدد مؤسسته التعليمية وشروطه، وفترة التقديم قصيرة غالبًا. المصدر:") }} <a href="https://sites.moe.gov.sa/scholarship-program/paths/path-waaid/" target="_blank" rel="noopener">{{ _("صفحة مسار واعد") }}</a></p>
     {% if s.waaid %}
     <ul class="waaid-list waaid-list--results">{% for p in s.waaid %}{{ um.waaid_item(p) }}{% endfor %}</ul>
     {% else %}
@@ -86,35 +98,43 @@
     {% endif %}
   {% elif s.rows is defined and s.compact and s.rows %}
     {# A major search: الرواد as a compact ranked list of names; details are one click away. #}
+    {# The first ten here; all 30, with requirements and dates, one tap away. #}
     <ol class="compact-list">
-      {% for l, u in s.rows %}
+      {% for l, u in s.rows[:10] %}
       <li><span class="compact-rank">{{ l.rank }}</span> {{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</li>
       {% endfor %}
     </ol>
-    <p class="section-link"><a href="{{ s.full_href }}">{{ _("الرواد بالتفاصيل: المتطلبات والمواعيد") }}</a></p>
+    <p class="section-link"><a href="{{ s.full_href }}">{{ _f("اعرض القائمة كاملة ({n})", n=s.rows | length | count_ar("universities")) }}</a></p>
   {% elif s.rows is defined %}
     {% if s.rows %}
     {% if not ns.explained %}{% set ns.explained = true %}
     {# What the rank means, once, above the first ranked list. #}
     <p class="result-explain">{{ _("«الترتيب» هو مكان الجامعة في قائمة المسار بالدليل الاسترشادي، وليس تصنيفًا عالميًا.") }}</p>
     {% endif %}
+    {% set shown = s.rows[:s.preview] if s.preview else s.rows %}
     <table class="uni-table">
       <caption class="sr-only">{{ tracks[s.track].name_ar }}{% if s.field %}: {{ s.field.name_ar }}{% endif %}</caption>
-      <thead><tr><th scope="col">{{ _("الترتيب") }}</th><th scope="col">{{ _("الجامعة") }}</th><th scope="col">{{ _("الدولة") }}</th><th scope="col">{{ _("المتطلبات والمواعيد") }}</th></tr></thead>
+      <thead><tr><th scope="col">{{ _("الترتيب") }}</th><th scope="col">{{ _("الجامعة") }}</th><th scope="col">{{ _("الدولة") }}</th><th scope="col">{{ _("المتطلبات والمواعيد") }}</th><th scope="col"><span class="sr-only">{{ _("خطتي") }}</span></th></tr></thead>
       <tbody>
-        {% for l, u in s.rows %}
+        {% for l, u in shown %}
         <tr>
           <td class="uni-rank"><span class="sr-only">{{ _("المرتبة") }} </span>{{ l.rank }}</td>
           <th scope="row">{{ um.uni_name(u, back=back) }}</th>
           <td class="uni-cell-country">{{ um.country(u) }}</td>
-          <td class="uni-cell-notes"><div class="uni-notes-main">{% set notes = um.listing_notes(l) %}{% if notes | trim %}<span class="tags">{{ notes }}</span>{% endif %}{{ um.key_facts(u, quiet=True, link=False) }}</div><div class="uni-notes-side">{{ um.save_button(u) }}{{ um.admissions_link(u) }}</div></td>
+          <td class="uni-cell-notes">{% set notes = um.listing_notes(l) %}{% if notes | trim %}<span class="tags">{{ notes }}</span>{% endif %}{{ um.key_facts(u, quiet=True, link=False) }}{{ um.admissions_link(u) }}</td>
+          <td class="uni-cell-save">{{ um.save_button(u) }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+    {% if shown | length < s.rows | length %}
+    <p class="section-link section-link--after"><a href="{{ s.full_href }}">{{ _f("اعرض القائمة كاملة ({n})", n=s.rows | length | count_ar("universities")) }}</a></p>
+    {% endif %}
     {% else %}
     {% set cinfo = explorer.countries.get(r.country) if r.country else None %}
-    {% if cinfo and r.language and ((r.language == "english") != cinfo.english) %}
+    {% if s.elsewhere and cinfo %}
+    <p class="result-empty">{{ _f("لا توجد جامعات من {country} في قائمة الرواد.", country=cinfo.name_ar) }} <a href="{{ url_for('universities_page') }}?track={{ s.elsewhere.track }}&amp;country={{ r.country }}">{{ _f("اعرض جامعاتها في إمداد ({n})", n=s.elsewhere.count) }}</a></p>
+    {% elif cinfo and r.language and ((r.language == "english") != cinfo.english) %}
     <p class="result-empty">{{ _f("{country} لغتها الرسمية {language}، فلا تجتمع مع فلتر «{filter}».", country=cinfo.name_ar, language="الإنجليزية" if cinfo.english else cinfo.language_ar, filter="الإنجليزية" if r.language == "english" else "غير الإنجليزية") }} <a href="{{ url_for('universities_page') }}?country={{ r.country }}{% if r.track %}&amp;track={{ r.track }}{% endif %}">{{ _("اعرض جامعات") }} {{ cinfo.name_ar }}</a></p>
     {% else %}
     <p class="result-empty">{{ _("لا توجد جامعات في هذه القائمة مع الفلاتر الحالية. أزل أحد الفلاتر أعلاه، أو اختر مسارًا آخر.") }}</p>

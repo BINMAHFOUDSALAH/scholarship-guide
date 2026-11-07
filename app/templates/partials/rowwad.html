@@ -27,7 +27,7 @@
       <div class="rowwad-status">
         <p class="rowwad-status-line">{{ c.status_tag(st, t.status_until) }}</p>
         {% if t.apply_with_ar %}<p class="rowwad-who">{{ _("لمن:") }} {{ t.apply_with_ar }}</p>{% endif %}
-        {% if t.status_source %}<p class="rowwad-source"><a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي ↗") }}</a></p>{% endif %}
+        {% if t.status_source %}<p class="rowwad-source"><a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">{{ _("المصدر الرسمي") }}</a></p>{% endif %}
       </div>
       {{ c.window_note(t) }}
       {% endif %}

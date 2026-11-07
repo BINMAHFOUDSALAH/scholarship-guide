@@ -39,7 +39,7 @@
       <li>
         <p class="start-title">{{ s.title_ar }}</p>
         <p class="start-text">{{ s.text_ar }}</p>
-        <p class="start-link">{% if s.href.startswith("/") %}<a href="{{ s.href }}">{{ s.link_label_ar }}</a>{% else %}<a href="{{ s.href }}" target="_blank" rel="noopener">{{ s.link_label_ar }} ↗</a>{% endif %}</p>
+        <p class="start-link">{% if s.href.startswith("/") %}<a href="{{ s.href }}">{{ s.link_label_ar }}</a>{% else %}<a href="{{ s.href }}" target="_blank" rel="noopener">{{ s.link_label_ar }}</a>{% endif %}</p>
       </li>
       {% endfor %}
     </ul>
@@ -62,7 +62,7 @@
     <ul class="rows resource-list">
       {% for r in page.resources %}
       <li>
-        {% if r.url.startswith("/") %}<a href="{{ r.url }}">{{ r.title_ar }}</a>{% else %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title_ar }} ↗</a>{% endif %}
+        {% if r.url.startswith("/") %}<a href="{{ r.url }}">{{ r.title_ar }}</a>{% else %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title_ar }}</a>{% endif %}
         <span class="resource-why">{{ r.why_ar }}</span>
       </li>
       {% endfor %}

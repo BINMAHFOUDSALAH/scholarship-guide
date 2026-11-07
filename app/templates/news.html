@@ -25,7 +25,7 @@
         <div class="board-main">
           <p class="board-name">
             {% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>
-            {% elif item.source_url %}<a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }} ↗</a>
+            {% elif item.source_url %}<a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.title_ar }}</a>
             {% else %}{{ item.title_ar }}{% endif %}
           </p>
           <p class="board-program">{{ path_names[item.path_id] }}</p>
@@ -36,6 +36,6 @@
   </section>
   {% endif %}
 
-  <p class="news-follow">{{ _("تابع أيضًا الحسابات الرسمية:") }} <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">{{ _("برنامج خادم الحرمين الشريفين للابتعاث على X ↗") }}</a></p>
+  <p class="news-follow">{{ _("تابع أيضًا الحسابات الرسمية:") }} <a href="https://x.com/SA_Scholarships" target="_blank" rel="noopener">{{ _("برنامج خادم الحرمين الشريفين للابتعاث على X") }}</a></p>
 </div>
 {% endblock %}

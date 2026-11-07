@@ -101,7 +101,7 @@
       if (button.classList.contains("save-mini")) {
         // A short visible label, with the item's name for screen readers.
         const name = button.dataset.saveName || "";
-        label.textContent = t(isSaved ? "✓ في خطتك" : "احفظ");
+        label.textContent = t(isSaved ? "في خطتك" : "احفظ");
         button.setAttribute("aria-label", t(isSaved ? "أزِل {name} من خطتي" : "احفظ {name} في خطتي").replace("{name}", name));
       } else {
         label.textContent = t(isSaved ? "أزِل من خطتي" : "احفظ في خطتي");

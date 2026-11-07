@@ -38,11 +38,11 @@
         <span class="video-play" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M8 5 L19 12 L8 19 Z" fill="currentColor"/></svg>
         </span>
-        <span class="video-label">{{ _("شاهد المقطع الأصلي ↗") }}</span>
+        <span class="video-label">{{ _("شاهد المقطع الأصلي") }}</span>
       </a>
       {% endif %}
       {% if quote.youtube_id or quote.video_url %}
-      <p class="video-source">{{ _("المصدر:") }} <a href="{{ quote.video_url }}" target="_blank" rel="noopener">{{ quote.video_publisher }} {{ _("على يوتيوب ↗") }}</a></p>
+      <p class="video-source">{{ _("المصدر:") }} <a href="{{ quote.video_url }}" target="_blank" rel="noopener">{{ quote.video_publisher }} {{ _("على يوتيوب") }}</a></p>
       {% elif show_drafts %}
       <div class="video-facade video-facade--empty">
         <span class="video-label">{{ _("مكان المقطع الأصلي") }}</span>

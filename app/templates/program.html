@@ -22,16 +22,16 @@
     {% if program.universities_guide_url or program.apply_url %}
     <div class="actions">
       {% if program.universities_guide_url %}<a class="btn btn--primary" href="{{ url_for('universities_page') }}">{{ _("ابحث عن جامعتك وتخصصك في القوائم") }}</a>{% endif %}
-      {% if program.apply_url %}<a class="btn btn--secondary" href="{{ program.apply_url }}" target="_blank" rel="noopener">{{ _("صفحة التقديم الرسمية ↗") }}</a>{% endif %}
+      {% if program.apply_url %}<a class="btn btn--secondary" href="{{ program.apply_url }}" target="_blank" rel="noopener">{{ _("صفحة التقديم الرسمية") }}</a>{% endif %}
     </div>
     {% endif %}
     <div class="program-links">
       <p class="program-links-title">{{ _("روابط رسمية") }}</p>
       <ul>
-        <li><a href="{{ program.official_url }}" target="_blank" rel="noopener">{{ _("الموقع الرسمي ↗") }}</a></li>
-        {% if program.universities_guide_url %}<li><a href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">{{ _("قائمة الجامعات والتخصصات (PDF) ↗") }}</a></li>{% endif %}
-        {% if program.targets_guide_url %}<li><a href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">{{ _("الجامعات المستهدفة (PDF) ↗") }}</a></li>{% endif %}
-        {% if program.social_url %}<li><a href="{{ program.social_url }}" target="_blank" rel="noopener">{{ program.social_label_ar }} ↗</a></li>{% endif %}
+        <li><a href="{{ program.official_url }}" target="_blank" rel="noopener">{{ _("الموقع الرسمي") }}</a></li>
+        {% if program.universities_guide_url %}<li><a href="{{ program.universities_guide_url }}" target="_blank" rel="noopener">{{ _("قائمة الجامعات والتخصصات (PDF)") }}</a></li>{% endif %}
+        {% if program.targets_guide_url %}<li><a href="{{ program.targets_guide_url }}" target="_blank" rel="noopener">{{ _("الجامعات المستهدفة (PDF)") }}</a></li>{% endif %}
+        {% if program.social_url %}<li><a href="{{ program.social_url }}" target="_blank" rel="noopener">{{ program.social_label_ar }}</a></li>{% endif %}
       </ul>
     </div>
   </header>
@@ -87,8 +87,8 @@
         {% if open_tracks %}
         {% set first = open_tracks[0] %}
         <div class="actions">
-          {% if first.apply_url %}<a class="btn btn--primary" href="{{ first.apply_url }}" target="_blank" rel="noopener">{{ _("قدّم عبر منصة قبول ↗") }}</a>
-          {% elif program.apply_url %}<a class="btn btn--primary" href="{{ program.apply_url }}" target="_blank" rel="noopener">{{ _("صفحة التقديم الرسمية ↗") }}</a>{% endif %}
+          {% if first.apply_url %}<a class="btn btn--primary" href="{{ first.apply_url }}" target="_blank" rel="noopener">{{ _("قدّم عبر منصة قبول") }}</a>
+          {% elif program.apply_url %}<a class="btn btn--primary" href="{{ program.apply_url }}" target="_blank" rel="noopener">{{ _("صفحة التقديم الرسمية") }}</a>{% endif %}
         </div>
         {% else %}
         <p class="fact-note">{{ _("لم يُعلن موعد النافذة القادمة. أكمل قبولك الجامعي، وسنعرض الموعد هنا مع مصدره عند إعلانه.") }}</p>

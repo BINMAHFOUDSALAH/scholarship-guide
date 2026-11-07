@@ -635,7 +635,7 @@ def test_a_waaid_announcement_is_one_row_with_who_and_apply(monkeypatch):
     assert row["who_ar"] == "3 برامج لخريجي الثانوية، و8 برامج لغير خريجي الثانوية"
     assert row["apply_url"] == main.waaid_data["apply_url"] == "https://www.uap.sa/"
     home = client.get("/").text
-    assert "برامج شركة الاتصالات" in home and "تقدم الآن ↗" in home and "https://www.uap.sa/" in home
+    assert "برامج شركة الاتصالات" in home and "تقدم الآن" in home and "https://www.uap.sa/" in home
 
 
 def test_announcement_anchor_survives_a_program_added_later(monkeypatch):
@@ -653,10 +653,10 @@ def test_waaid_lifecycle_before_during_after(monkeypatch):
     """Nothing is edited by hand: the same data reads «لم يفتح بعد», then open with «تقدم الآن», then closed."""
     monkeypatch.setitem(main.waaid_data, "programs", [waaid_program("p1", True, "2026-10-25", "2026-11-05")])
     for day, group, page_has, page_lacks in (
-        ("2026-10-20", "waiting", 'id="waaid-upcoming"', "تقدم الآن ↗"),
-        ("2026-10-25", "open", "تقدم الآن ↗", 'id="waaid-upcoming"'),
-        ("2026-11-05", "open", "تقدم الآن ↗", 'id="waaid-closed"'),
-        ("2026-11-06", "recent", 'id="waaid-closed"', "تقدم الآن ↗"),
+        ("2026-10-20", "waiting", 'id="waaid-upcoming"', "تقدم الآن"),
+        ("2026-10-25", "open", "تقدم الآن", 'id="waaid-upcoming"'),
+        ("2026-11-05", "open", "تقدم الآن", 'id="waaid-closed"'),
+        ("2026-11-06", "recent", 'id="waaid-closed"', "تقدم الآن"),
     ):
         fix_today(monkeypatch, day)
         board = main.status_board()
@@ -737,7 +737,7 @@ def test_owner_x_link_is_in_the_footer_only():
         html = client.get(page).text
         header, footer = html.split("</header>")[0], html.split('<footer class="site-footer">')[1]
         assert "x.com/salahmetaverse" not in header
-        link = footer.split('class="footer-x"')[1].split("</a>")[0]
+        link = footer.split('class="footer-x no-ext"')[1].split("</a>")[0]
         assert 'href="https://x.com/salahmetaverse"' in link
         assert 'target="_blank"' in link and 'rel="noopener noreferrer"' in link
         assert "عندك ملاحظة أو اقتراح؟ راسلني على X" in link and 'aria-hidden="true"' in link
@@ -1015,3 +1015,15 @@ def test_no_bare_zero_counts(monkeypatch):
     empty = client.get("/universities", params={"q": "zzzz"}).text
     assert not re.search(r"(?<![\d٠-٩])0 جامعة", empty)
     assert ">0<" not in client.get("/news").text.replace(" ", "")
+
+
+@pytest.mark.parametrize("url", ["/", "/universities?track=arruaad", "/universities/stanford-university",
+                                 "/programs/custodian-scholarship", "/grades/grade-12", "/resources/ielts", "/waaid"])
+def test_no_symbol_characters_that_fonts_lack(url):
+    """Decision 083: ↗, ✓ and → aren't in the self-hosted fonts and showed as empty boxes on some phones.
+    They are drawn in CSS now (a new-tab link gets ↗ by itself), so no page prints them."""
+    for lang in ("", "/en"):
+        html = client.get(lang + url).text
+        body = html.split("<body", 1)[1]
+        for ch in "↗✓→←":
+            assert ch not in body, f"{lang + url}: {ch!r} in the page"

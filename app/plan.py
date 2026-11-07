@@ -90,11 +90,11 @@ def university_step(item, u, explorer):
 def program_step(item, path, track, status_now, apply_when_ar, has_page):
     """The next step for a program track, by the student's status and the track's status today."""
     page = f"/programs/{path['id']}" if has_page else None
-    official = {"href": path["official_url"], "label_ar": "الموقع الرسمي ↗", "external": True}
+    official = {"href": path["official_url"], "label_ar": "الموقع الرسمي", "external": True}
     status = item["status"]
     if status in ("thinking", "preparing"):
         if status_now == "open" and track.get("apply_url") and track.get("apply_when") == "in_school":
-            return {"text_ar": "مفتوح الآن.", "href": track["apply_url"], "label_ar": "تقدم الآن ↗", "external": True}
+            return {"text_ar": "مفتوح الآن.", "href": track["apply_url"], "label_ar": "تقدم الآن", "external": True}
         step = {"text_ar": apply_when_ar}
         return {**step, "href": page, "label_ar": "الشروط والتفاصيل"} if page else {**step, **official}
     if status == "applied":

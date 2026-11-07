@@ -28,8 +28,8 @@ const english = process.argv.includes("--en");
 const host = process.argv.slice(2).find((a) => a.startsWith("http")) || "http://127.0.0.1:8000";
 const base = host + (english ? "/en" : "");
 const L = english
-  ? { save: "Save", saved: "✓ In your plan", empty: "Your plan is empty.", applied: "Applied on" }
-  : { save: "احفظ", saved: "✓ في خطتك", empty: "خطتك فارغة.", applied: "قدّمت في" };
+  ? { save: "Save", saved: "In your plan", empty: "Your plan is empty.", applied: "Applied on" }
+  : { save: "احفظ", saved: "في خطتك", empty: "خطتك فارغة.", applied: "قدّمت في" };
 const results = [];
 const check = (name, ok, detail = "") => results.push([ok ? "PASS" : "FAIL", name, detail]);
 

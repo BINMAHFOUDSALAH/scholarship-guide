@@ -42,10 +42,10 @@
   {% set sch = apply_year.scholarship %}
   <div class="notice year-scholarship">
     <h3>{{ sch.title_ar }}</h3>
-    <p>{{ sch.rule_ar }} <a class="src" href="{{ sch.rule_source }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></p>
+    <p>{{ sch.rule_ar }} <a class="src" href="{{ sch.rule_source }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
     {% set t = arruaad_track %}
     {% set st_now = track_status(t) %}
-    <p>{{ _("موعد التقديم يُعلن كل سنة.") }}{% if st_now and (t.status_source or t.owner_confirmed) %} {{ t.name_ar }} {{ _("الآن:") }} {{ c.status_tag(st_now, t.status_until) }}{% if t.status_source %} <a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a>{% endif %}{% endif %} {{ _("وكل المواعيد المعلنة في") }} <a href="{{ url_for('news_page') }}">{{ _("مواعيد التقديم") }}</a>.</p>
-    <p><strong>{{ _("إن أُغلق قبل نتائجك:") }}</strong> {{ sch.conflict_ar }} <a class="src" href="{{ sch.conflict_source }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a></p>
+    <p>{{ _("موعد التقديم يُعلن كل سنة.") }}{% if st_now and (t.status_source or t.owner_confirmed) %} {{ t.name_ar }} {{ _("الآن:") }} {{ c.status_tag(st_now, t.status_until) }}{% if t.status_source %} <a class="src" href="{{ t.status_source }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}{% endif %} {{ _("وكل المواعيد المعلنة في") }} <a href="{{ url_for('news_page') }}">{{ _("مواعيد التقديم") }}</a>.</p>
+    <p><strong>{{ _("إن أُغلق قبل نتائجك:") }}</strong> {{ sch.conflict_ar }} <a class="src" href="{{ sch.conflict_source }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
   </div>
 </section>

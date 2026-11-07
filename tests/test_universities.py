@@ -892,3 +892,29 @@ def test_health_search_gets_a_sourced_answer():
     en = client.get("/en/universities", params={"q": "medicine"}).text
     assert "Health majors" in en
     assert "data-health-answer" not in client.get("/universities", params={"q": "هندسة"}).text
+
+
+def test_every_filter_combination_shows_only_what_it_says():
+    """2026-11-07: الرواد + بريطانيا showed إمداد's list under it. For every track, country and language, each section
+    belongs to the chosen track, and every university is in that country and on that track's list."""
+    explorer = main.explorer
+    for track in ("", "arruaad", "emdad", "rnd"):
+        for country in ("", *explorer.countries):
+            for lang in ("", "english", "other"):
+                result = explorer.search(track=track, country=country, language=lang)
+                for s in result["sections"]:
+                    assert not track or s["track"] == track, (track, country, lang, s["track"])
+                    unis = [u for _, u in s.get("rows", [])] + list(s.get("universities", []))
+                    for u in unis:
+                        assert not country or u["country"] == country, (track, country, u["id"])
+                        assert not track or any(l["track"] == track for l in u["listings"]), (track, u["id"])
+                summary = explorer.describe(result)["summary_ar"]
+                if track == "arruaad":
+                    assert "إمداد" not in summary, (country, lang, summary)
+
+
+def test_arruaad_with_a_country_outside_it_points_to_emdad():
+    html = client.get("/universities?track=arruaad&country=DE").text
+    assert "لا توجد جامعات من ألمانيا في قائمة الرواد." in html
+    assert "/universities?track=emdad&amp;country=DE" in html
+    assert 'data-summary="مسار الرواد: لا توجد نتائج"' in html

@@ -14,7 +14,7 @@
 {% endmacro %}
 
 {#
-  Save from a result row (decision 039): «احفظ» / «✓ في خطتك». Invisible (but keeping its space, so
+  Save from a result row (decision 039): «احفظ» / «في خطتك» (with a ✓ drawn in CSS). Invisible (but keeping its space, so
   "back to results" lands on the same row) until mylist.js knows the browser can keep the list;
   without JavaScript or with storage blocked, it never shows.
 #}
@@ -63,20 +63,22 @@
 {% macro key_facts(u, quiet=False, link=True) %}
 {% set k = explorer.key_facts(u.id) %}
 {% if k.researched %}
+{#- A strip of labelled cells (2026-11-07): the English tests in an aligned column, then SAT/ACT and the next date
+    side by side, so the same fact sits in the same place on every row. #}
 <dl class="key-facts">
-  <div class="kf-row">
+  <div class="kf-cell kf-cell--english">
     <dt>{{ _("الإنجليزية") }}</dt>
     <dd>{% if k.english_groups %}<ul class="kf-tests">{% for g in k.english_groups %}<li><bdi class="kf-test" lang="en">{{ g.labels | join(" / ") }}</bdi> <span class="kf-val">{{ g.text }}</span></li>{% endfor %}</ul>{% else %}{{ k.english_none_ar }}{% endif %}</dd>
   </div>
   {% if k.sat_ar %}
-  <div class="kf-row">
+  <div class="kf-cell">
     <dt><bdi lang="en">SAT/ACT</bdi></dt>
-    <dd>{{ k.sat_ar }}</dd>
+    <dd><span class="kf-val">{{ k.sat_ar }}</span></dd>
   </div>
   {% endif %}
-  <div class="kf-row">
+  <div class="kf-cell">
     <dt>{{ _("أقرب موعد في الجامعة") }}</dt>
-    <dd>{% if k.next %}<strong class="kf-date">{{ k.next.date | arabic_date }}</strong> <span class="kf-date-what">{{ date_short(k.next) }}</span>{% else %}{{ _("لا يوجد لدينا موعد قادم مؤكد") }}{% endif %}</dd>
+    <dd>{% if k.next %}<strong class="kf-date">{{ k.next.date | arabic_date }}</strong> <span class="kf-date-what">{{ date_short(k.next) }}</span>{% else %}<span class="kf-none">{{ _("لا يوجد لدينا موعد قادم مؤكد") }}</span>{% endif %}</dd>
   </div>
 </dl>
 {% if link %}{{ admissions_link(u) }}{% endif %}
@@ -88,7 +90,7 @@
 {# The university's official admissions page, from its requirements file (a result row puts it beside «احفظ»). #}
 {% macro admissions_link(u) %}
 {% set url = (explorer.details.get(u.id) or {}).get("admissions_url") %}
-{% if url %}<p class="kf-link"><a class="src" href="{{ url }}" target="_blank" rel="noopener">{{ _("صفحة القبول الرسمية ↗") }}</a></p>{% endif %}
+{% if url %}<p class="kf-link"><a class="src" href="{{ url }}" target="_blank" rel="noopener">{{ _("صفحة القبول الرسمية") }}</a></p>{% endif %}
 {% endmacro %}
 
 {#
@@ -102,7 +104,7 @@
 {%- if waiver_ar[f.waiver] %}<span class="fee-line">{{ waiver_ar[f.waiver] }}</span>{% endif %}
 {%- if f.note_ar %}<span class="fee-line fee-note">{{ f.note_ar }}</span>{% endif %}
 <span class="fee-line fee-links">
-{%- if source %}<a class="src" href="{{ f.source_url }}" target="_blank" rel="noopener">{{ _("المصدر ↗") }}</a>{% if f.waiver_source_url %} <a class="src" href="{{ f.waiver_source_url }}" target="_blank" rel="noopener">{{ _("مصدر الإعفاء ↗") }}</a>{% endif %}{% endif %}
+{%- if source %}<a class="src" href="{{ f.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% if f.waiver_source_url %} <a class="src" href="{{ f.waiver_source_url }}" target="_blank" rel="noopener">{{ _("مصدر الإعفاء") }}</a>{% endif %}{% endif %}
 {%- if u.country == "US" and f.waiver in ("accepts_common_app", "own_waiver") %}{% if source %} {% endif %}<a href="{{ url_for('resource_page', slug='us-applications') }}#fee-waiver">{{ _("كيف تطلب الإعفاء؟") }}</a>{% endif %}
 </span>
 {% endmacro %}
