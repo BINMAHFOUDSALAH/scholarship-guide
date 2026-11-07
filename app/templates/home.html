@@ -128,9 +128,10 @@
     {% for path in group.paths %}
     <li class="program-row">
       {% if path.logo %}{% set lg = path.logo %}
-      <span class="program-thumb{% if lg.plate == 'dark' %} program-thumb--dark{% endif %}"><img src="{{ url_for('static', path=lg.file ~ '-500.png') }}" width="{{ lg.width }}" height="{{ lg.height }}" alt="" loading="lazy" decoding="async"></span>
+      {#- 160px thumbnails of the same licensed images (credits on /about); the 500px file only on sharp, wide screens. #}
+      <span class="program-thumb{% if lg.plate == 'dark' %} program-thumb--dark{% endif %}"><img src="{{ url_for('static', path=lg.file ~ '-160.png') }}" srcset="{{ url_for('static', path=lg.file ~ '-160.png') }} 160w, {{ url_for('static', path=lg.file ~ '-500.png') }} 500w" sizes="64px" width="{{ lg.width }}" height="{{ lg.height }}" alt="" loading="lazy" decoding="async"></span>
       {% elif path.photo %}{% set ph = path.photo %}
-      <span class="program-thumb program-thumb--photo"><img src="{{ url_for('static', path=ph.file ~ '-500.jpg') }}" width="{{ ph.width }}" height="{{ ph.height }}" alt="" loading="lazy" decoding="async" style="object-position: {{ ph.focus }}"></span>
+      <span class="program-thumb program-thumb--photo"><img src="{{ url_for('static', path=ph.file ~ '-160.jpg') }}" srcset="{{ url_for('static', path=ph.file ~ '-160.jpg') }} 160w, {{ url_for('static', path=ph.file ~ '-500.jpg') }} 500w" sizes="64px" width="{{ ph.width }}" height="{{ ph.height }}" alt="" loading="lazy" decoding="async" style="object-position: {{ ph.focus }}"></span>
       {% else %}<span class="program-thumb" aria-hidden="true"></span>{% endif %}
       <div class="program-row-main">
         <h4 class="program-row-name">{% if path.id in program_pages %}<a href="{{ url_for('program_page', slug=path.id) }}">{{ path.name_ar }}</a>{% else %}<a href="{{ url_for('programs_index') }}#program-{{ path.id }}">{{ path.name_ar }}</a>{% endif %}</h4>
@@ -144,7 +145,7 @@
 {% endblock %}
 
 {% block after_content %}
-{% include "partials/waddah_band.html" %}
+{% if waddah_public() %}{% include "partials/waddah_band.html" %}{% endif %}
 
 {# The guides index (decision 062): before deciding, the tests, the application systems, each in one line (069). #}
 <div class="container">

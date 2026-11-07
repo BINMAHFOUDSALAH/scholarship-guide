@@ -8,11 +8,11 @@ Keep this page short: update the sections below in place, tick the stages, and p
 
 - **Live:** https://wadihguide.com (Arabic) and https://wadihguide.com/en/ (English).
 - **Launch 1 (~2026-12-09):** public guides + the government scholarship path, fully verified, in the new design, after a 5-student test. No accounts.
-- **Phase 1 (decisions 078–082):** Part A fixed what misleads students, Part B grew «قائمتي» into «خطتي» on the device (both done, 079–080). **Part C (now): the «الطريق والنجوم» redesign (keep the look, rebuild the structure), the AI guide وضّاح's identity and teaser, and Phase 2's preparation.** Plan: [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md). No accounts.
+- **Phase 1 (decisions 078–083):** Part A fixed what misleads students, Part B grew «قائمتي» into «خطتي» on the device (079–080), **Part C is built (083):** the «الطريق والنجوم» redesign, وضّاح's identity and teaser (waiting on the owner's name check), and Phase 2's specs. Plan: [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md). No accounts.
 - **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want وضّاح, the AI guide; «خطتي» moves into the account. وضّاح launches in December (the teaser says «قادم في ديسمبر», no fixed day).
 - **Pace:** ~5 hours per week.
-- **Just done:** C1, the direction board (12 artboards on the private canvas linked at the top of the plan). No site changes yet.
-- **Next session:** C2 and C3 together (owner, 2026-11-07). C2 writes the board's choices into `design.md`, CLAUDE.md and architecture (the owner's first feedback is already on the board: no repeated explanatory copy, every map drawn like the live الرواد chart); C3 puts the teaser live (the dawn band, `/waddah` in both languages, `data/waddah.json`). Each step is built, verified and merged, then ticked here.
+- **Just done (2026-11-07):** C2–C6 in one pass (decision 083): the bugs the owner listed (الرواد + بريطانيا showing إمداد, «مفتوح للتقديم الآن» listing programs not open, ↗ as empty boxes) and a 65,000px «هندسة» page; a clear start (grade, then one box, then the explore door); «الآن» and «البرامج» (`/news` redirects); compact result rows; the map and «السنة في سطر»; «خطتي» as a hub with an `.ics`; وضّاح's teaser and `/waddah` behind `public: false`; `agent.md`, `accounts.md`, the eval seed and `retrieve()`.
+- **Next session:** the owner's checks below (phone, the name, the copy), then write the 5-student test script on the new design (step 4). If the name is clear: `"public": true` in `data/waddah.json`, post the teaser (`marketing/waddah-teaser.md`).
 
 ## Next steps
 
@@ -27,11 +27,11 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
 2. [x] **Phase 1 Part B:** «خطتي» on the device (`wadih:plan`, `app/plan.py`, a POST view, statuses, next steps, the return strip; decision 080).
 3. **Phase 1 Part C: the redesign and وضّاح (decisions 081–082; details, files to reuse and checks in the [plan](research/design-direction-2026-11-07.md)):**
    - [x] C1 **Direction board** on the private canvas: phone-first mockups of the homepage (first visit and returning), the «خطتي» hub, a compact explorer row, a program page as a story, «السنة في سطر», وضّاح's wordmark, light, states and answer view, the teaser band on three nights, `/waddah`, the share card. No site code in this step. Done 2026-11-07: 12 artboards, real data as of 6 Nov, light/dark switch on each.
-   - [ ] C2 **Rules and docs** from the approved board: `.claude/rules/design.md` (the dot's second meaning, data drawings beyond the الرواد chart, the source chip, the signature motion), CLAUDE.md, architecture.
-   - [ ] C3 **Teaser live:** the dawn band on the homepage, `/waddah` and `/en/waddah`, `data/waddah.json` (with the `launched` switch), its share image, the X post, a 9:16 clip from the page (`marketing/src`, $0).
-   - [ ] C4 **Structure pass:** four sections and the one box «ابحث أو اسأل», the homepage's «الآن» and returning state (grade remembered on the device), compact explorer rows, programs and dates merged (`/news` redirects), the source chip, the «دخول» slot.
-   - [ ] C5 **«خطتي» hub v2** (constellation, this week, `.ics`, share, «قُبلت»), «السنة في سطر», the map view.
-   - [ ] C6 **Phase 2 ready:** `docs/specs/agent.md` and `docs/specs/accounts.md`, the eval seed (questions from the guides and the teaser's X replies).
+   - [x] C2 **Rules and docs:** `.claude/rules/design.md` (three shapes, three jobs; the light; controls; the source chip; drawn icons; data drawings; motion), decision 083, CLAUDE.md, architecture.
+   - [x] C3 **Teaser:** the dawn band, `/waddah` and `/en/waddah`, `data/waddah.json` (`public`, `launched`, `accounts_open`), the share image, the X post drafts and a 9:16 clip (`marketing/src/waddah_cards.mjs`, $0). **Off the live site until the owner's name check** (`public: false`).
+   - [x] C4 **Structure pass:** four sections; one box («ابحث» until وضّاح exists); the homepage's «الآن» and returning state («هذا صفّي» → «صفّك»); compact rows; `/programs` (`/news` redirects); the source chip; the «دخول» slot.
+   - [x] C5 **«خطتي» hub v2** (the route of statuses, «قريبًا», `.ics`, «قُبلت», the constellation), «السنة في سطر», the map view. Deferred: «شارك خريطتك» (growth, not the student's next step; after the test).
+   - [x] C6 **Phase 2 ready:** `docs/specs/agent.md`, `docs/specs/accounts.md`, `docs/specs/eval-seed.json` (35 questions), `SiteSearch.retrieve()` (23 of 28 found).
 4. **Usability test with 3–5 students, on the new design** (after C4–C5, ~1–7 Dec). Write the script (`docs/research/usability-test.md`, Stage 1e step 5) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
 5. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.
 6. **P1 from the [product audit](research/product-audit-2026-10-13.md):** «الدراسة في السعودية», the alternatives section, the fee-waiver class split.
@@ -50,8 +50,10 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
 Gathered from the session notes in [log.md](log.md). The ones that could be checked in the repo or on GitHub on 2026-11-04 are accurate; the rest may already be done, so tick or delete them.
 
 ### For Part C (the redesign and وضّاح)
-- [ ] Look at the [direction board](https://claude.ai/artifact/BVq4dD2Rzmeyx9iEGUdjWh) (C1, private to you) and say what to change; the blue "Decide" notes list the open choices.
-- [ ] Check «وضّاح» / "Waddah" in the Saudi trademark register (SAIP), the App Store and Google Play, and for an X handle.
+- [ ] On your phone (Safari), in both themes: the homepage (grade → box → door), «الآن», «البرامج» and «السنة في سطر», a major search, «خطتي» (save, «هذا صفّي», the calendar file). Say what feels off.
+- [ ] Compare the site with the [direction board](https://claude.ai/artifact/BVq4dD2Rzmeyx9iEGUdjWh): the board couldn't be opened in the C2–C6 session, so its choices came from the 7 Nov log.
+- [ ] Check «وضّاح» / "Waddah" in the Saudi trademark register (SAIP), the App Store and Google Play, and for an X handle. **Then** set `"public": true` in `data/waddah.json` (the band and `/waddah` go live) and post from `marketing/waddah-teaser.md`.
+- [ ] Read وضّاح's copy in `data/waddah.json` (promises, limits, examples, FAQ) and the two specs (`docs/specs/agent.md`, `accounts.md`).
 - [ ] Optional: show the name to ~10 students (girls and boys) and 2 counsellors: do they remember it after a minute, do they trust it, any bad associations?
 - [ ] Before Phase 2: an Anthropic API key, billing and a spend limit; the PDPL review for accounts and under-18 users (consent, transfer abroad).
 

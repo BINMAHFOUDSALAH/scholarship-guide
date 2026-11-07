@@ -9,13 +9,8 @@
 <div class="world-wrap" data-world-wrap>
   <figure class="world-map" data-world>
     <svg class="chart-svg" viewBox="0 0 {{ chart.w }} {{ chart.h }}" aria-hidden="true" focusable="false">
-      <defs>
-        <radialGradient id="world-night" cx="0.62" cy="0.55" r="0.75">
-          <stop offset="0" class="night-in"/>
-          <stop offset="1" class="night-out"/>
-        </radialGradient>
-      </defs>
-      <rect class="chart-ground" width="{{ chart.w }}" height="{{ chart.h }}" rx="14" fill="url(#world-night)"/>
+      {#- A plain night ground (no gradient): a page can hold several maps, and a gradient needs an id of its own. #}
+      <rect class="chart-ground world-ground" width="{{ chart.w }}" height="{{ chart.h }}" rx="14"/>
       <g class="chart-grid">
         {% for x in range(100, 1000, 100) %}<path d="M{{ x }} 18 Q{{ x + (x - 500) * 0.14 }} 260 {{ x }} 502"/>{% endfor %}
         {% for y in range(86, 520, 86) %}<path d="M18 {{ y }} Q500 {{ y - 22 }} 982 {{ y }}"/>{% endfor %}

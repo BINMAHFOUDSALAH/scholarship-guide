@@ -1,8 +1,10 @@
-{# The guides in groups (decision 062), from data/home.json: the homepage, «الأدلة» and the footer list the same ones. #}
+{# The guides in groups (decision 062), from data/home.json: the homepage, «الأدلة» and the footer list the same ones.
+   group_level: the group titles' heading level (h3 under the homepage's h2, h2 on /guides under its h1). #}
+{% set gh = "h" ~ (group_level | default(3)) %}
 <div class="guide-groups">
   {% for group in guide_groups %}
   <div class="guide-group">
-    <h3 class="guide-group-title">{{ group.title_ar }}</h3>
+    <{{ gh }} class="guide-group-title">{{ group.title_ar }}</{{ gh }}>
     <ul class="guide-list">
       {% for item in group["items"] %}
       <li><a class="guide-link" href="{{ url_for('resource_page', slug=item.slug) }}"><span class="guide-name">{{ item.title_ar }}</span><span class="guide-hint">{{ item.hint_ar }}</span></a></li>

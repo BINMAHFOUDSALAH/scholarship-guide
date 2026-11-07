@@ -10,6 +10,7 @@
     <h1>{{ _("الأدلة") }}</h1>
     <p class="lead">{{ _("ما تحتاج أن تعرفه قبل أن تقرر وقبل أن تتقدم، وكل معلومة بمصدرها الرسمي.") }}</p>
   </header>
+  {% set group_level = 2 %}
   {% include "partials/guide_groups.html" %}
   <p class="guides-search">{{ _("تبحث عن معلومة بعينها؟") }} <a href="{{ url_for('search_page') }}">{{ _("ابحث في واضح") }}</a></p>
 </div>

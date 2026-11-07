@@ -148,8 +148,25 @@ def test_dawn_rises_by_the_riyadh_date_and_holds_until_launch(monkeypatch):
     assert main.waddah_dawn(d(2026, 11, 7)) == 1.0
 
 
+def test_the_teaser_waits_for_the_owners_name_check(monkeypatch):
+    """Decision 082: the owner checks the name (SAIP, app stores, X) before the teaser. Until data/waddah.json says
+    public, the live site has no band, no /waddah and no sitemap entry; WADIH_SHOW_DRAFTS shows it locally."""
+    monkeypatch.setitem(main.waddah, "public", False)
+    monkeypatch.setattr(main, "SHOW_DRAFTS", False)
+    assert 'class="waddah-band"' not in client.get("/").text
+    assert client.get("/waddah").status_code == 404 and client.get("/en/waddah").status_code == 404
+    assert "/waddah</loc>" not in client.get("/sitemap.xml").text
+    monkeypatch.setattr(main, "SHOW_DRAFTS", True)
+    assert client.get("/waddah").status_code == 200
+
+
+@pytest.fixture
+def teaser_public(monkeypatch):
+    monkeypatch.setitem(main.waddah, "public", True)
+
+
 @pytest.mark.parametrize("prefix", ["", "/en"])
-def test_waddah_page_says_what_it_will_and_wont_do(prefix):
+def test_waddah_page_says_what_it_will_and_wont_do(prefix, teaser_public):
     r = client.get(prefix + "/waddah")
     assert r.status_code == 200
     html = r.text
@@ -163,7 +180,7 @@ def test_waddah_page_says_what_it_will_and_wont_do(prefix):
     assert client.get(prefix + "/static/img/waddah-og.png").status_code == 200
 
 
-def test_the_teaser_band_is_on_the_homepage_with_todays_dawn(monkeypatch):
+def test_the_teaser_band_is_on_the_homepage_with_todays_dawn(monkeypatch, teaser_public):
     on(monkeypatch, 2026, 11, 20)
     html = client.get("/").text
     band = html.split('class="waddah-band"')[1].split("</section>")[0]
@@ -229,3 +246,21 @@ def test_retrieval_already_finds_most_guide_questions():
     # A whole question finds sections where the strict site search finds none.
     assert not main.site_search.search("هل أستطيع التقديم على مسار الرواد وأنا في ثالث ثانوي؟")
     assert main.site_search.retrieve("هل أستطيع التقديم على مسار الرواد وأنا في ثالث ثانوي؟")
+
+
+def test_now_says_so_when_nothing_is_open(monkeypatch):
+    """An empty «الآن»: a plain sentence, no bare zero, and no «لم يفتح بعد» heading over nothing."""
+    monkeypatch.setattr(main, "status_board", lambda: {"open": [], "waiting": [], "recent": []})
+    html = client.get("/").text.split('id="now"')[1].split("</section>")[0]
+    assert "لا يوجد الآن برنامج نتابعه مفتوحًا للتقديم." in html
+    assert 'id="now-upcoming-3"' not in html and ">0<" not in html.replace(" ", "")
+    en = client.get("/en/").text.split('id="now"')[1].split("</section>")[0]
+    assert "None of the programs we follow is open for applications right now." in en
+
+
+def test_the_teaser_in_english_is_english(teaser_public):
+    """/en/waddah and the English homepage's band leave the sitemap while the teaser waits, so they're checked here."""
+    for url in ("/en/waddah", "/en/"):
+        html = client.get(url).text
+        assert not arabic_outside_lang_ar(html), (url, arabic_outside_lang_ar(html)[:5])
+    assert "is coming in December" in client.get("/en/").text

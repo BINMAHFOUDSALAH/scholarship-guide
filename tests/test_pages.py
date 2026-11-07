@@ -95,7 +95,7 @@ def test_homepage_order():
     وضّاح → the guides. The journey, tests, «كيف نعمل», and the decorative drawing are not on the homepage."""
     html = client.get("/").text
     order = ['id="grades"', 'class="hero-search"', 'class="hero-door"', 'id="now"', 'id="programs"',
-             'class="waddah-band"', 'id="guides"']
+             *(['class="waddah-band"'] if main.waddah_public() else []), 'id="guides"']
     positions = [html.index(x) for x in order]
     assert positions == sorted(positions)
     for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل", "hero-visual"):

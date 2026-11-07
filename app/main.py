@@ -249,6 +249,11 @@ def track_status(track):
     return status
 
 
+def waddah_public():
+    """The teaser is public only once the owner has checked the name (decision 082); drafts show it locally."""
+    return bool(waddah.get("public")) or SHOW_DRAFTS
+
+
 def waddah_dawn(today=None):
     """How far dawn has come on the teaser (decision 082): 0 = night on dawn_from, rising a little each night on
     Riyadh's date, holding at the edge of dawn (0.9) until launch day, which is a switch in the data, never a date."""
@@ -397,6 +402,7 @@ templates.env.globals["waaid_who"] = waaid_who
 templates.env.globals["track_status"] = track_status
 templates.env.globals["waddah"] = waddah
 templates.env.globals["waddah_dawn"] = waddah_dawn
+templates.env.globals["waddah_public"] = waddah_public
 templates.env.globals["month_names"] = ARABIC_MONTHS
 # The sky drawings (decisions 060, 062): the homepage's night stars and the الرواد chart, computed once.
 templates.env.globals["sky_stars"] = {
@@ -489,6 +495,9 @@ def news_page(request: Request):
 @app.get("/waddah", response_class=HTMLResponse)
 def waddah_page(request: Request):
     # وضّاح's page (decision 082): what it will do and won't, example questions, the FAQ. Nothing to sign up for yet.
+    # Not on the live site until the owner's name check (data/waddah.json "public").
+    if not waddah_public():
+        raise HTTPException(status_code=404)
     return render(request, "waddah.html", {})
 
 
@@ -767,7 +776,7 @@ def robots():
 def sitemap():
     # The list of public pages for search engines. Grade and program pages come from content/.
     page_paths = (
-        ["/", "/about", "/programs", "/guides", "/waddah"]
+        ["/", "/about", "/programs", "/guides"] + (["/waddah"] if waddah_public() else [])
         + [f"/grades/{slug}" for slug in list_slugs("grades")]
         + [f"/programs/{slug}" for slug in program_slugs()]
         + ["/waaid"]

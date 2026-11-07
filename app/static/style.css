@@ -3145,7 +3145,7 @@ main:has(> .tuwaiq) {
   }
 
   .uni-cell-country {
-    margin-block: 2px var(--space-3);
+    margin-block: 0 var(--space-2);
   }
 
   /* The facts take the row's whole width, under the rank too: a narrow column made every label wrap. */
@@ -3194,9 +3194,9 @@ a.uni-name:hover .uni-name-en:only-child {
 .key-facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3) var(--space-4);
+  gap: var(--space-2) var(--space-4);
   margin: 0;
-  padding-block-start: var(--space-3);
+  padding-block-start: var(--space-2);
   border-top: 1px solid var(--line);
   font-size: var(--text-sm);
   line-height: 1.6;
@@ -4596,6 +4596,13 @@ a.uni-name:hover .uni-name-en:only-child {
   font-weight: 700;
 }
 
+.now-name,
+.program-row-name,
+.waddah-title,
+.yl-phase-title {
+  text-wrap: balance; /* no one-word last line under a title */
+}
+
 .now-name {
   font-size: var(--text-md);
   line-height: 1.5;
@@ -4711,14 +4718,11 @@ a.uni-name:hover .uni-name-en:only-child {
   line-height: 1.5;
 }
 
+/* «لمن؟» in full: a clamp would hide a condition (an age limit, a track) behind «…». */
 .program-row-who {
   font-size: var(--text-sm);
   color: var(--ink-muted);
   line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 /* «البرامج» page: what's closed, the announcements. */
@@ -4906,7 +4910,10 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 .yl-event-text {
+  z-index: 1; /* above today's line, on the page's own colour */
   inset-inline-start: calc(var(--at) + var(--width, 0%) + 12px);
+  padding-inline: 4px;
+  background: var(--paper);
   white-space: nowrap;
   font-weight: 700;
 }
@@ -5460,6 +5467,10 @@ a.uni-name:hover .uni-name-en:only-child {
   margin: 0;
 }
 
+.world-ground {
+  fill: color-mix(in srgb, var(--chart-ground) 85%, #2a5a48);
+}
+
 @media (min-width: 1024px) {
   .where .world-wrap,
   .plan-where .world-wrap {
@@ -5582,6 +5593,15 @@ a.uni-name:hover .uni-name-en:only-child {
 
 /* Very narrow phones (e.g. 320–379px). */
 @media (max-width: 379px) {
+  /* The four stops of the route stay on one line each. */
+  .route-name {
+    font-size: 1rem;
+  }
+
+  .route-link {
+    padding-inline-end: var(--space-1);
+  }
+
   .brand-mark {
     width: 36px;
     height: 36px;
