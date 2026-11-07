@@ -1308,3 +1308,33 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A date field the student types:** more to fill on a phone; the date of the last change is enough to see progress.
 - **Tests in the plan:** the owner chose universities and programs only, to keep it simple.
 **Not verified:** a real phone and a screen reader; no student has used it yet (the Phase 1 test).
+
+## 081 — «الطريق والنجوم»: keep the look, rebuild the structure around the student's journey (Phase 1 Part C; updates 060, 062, 078)
+**Date:** 2026-11-07 · **Plan:** [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md)
+**Context:** the owner asked for the next level: the most useful, intuitive, visually impressive and trusted student guide in Saudi Arabia, and a complete overhaul if needed. The live site was studied at 390px and 1280px (15 page types, both themes) with the code and 8 references (BigFuture, Stripe, Duolingo, Unifrog, Linear, ArcGIS StoryMaps, Apple; Niche blocks automated browsers). The findings: a library organised by content type, not a journey; very long phone pages (a major search about 29 screens, the homepage about 10); everything at the same weight; sources competing with answers (the IELTS guide has 203 links); two search boxes; the grade forgotten; «خطتي» a form rather than a place; nothing built to be shared or for counsellors.
+**Decision (owner, 2026-11-07):**
+- **Evolve the look, rebuild the structure.** The logo, palette and its meanings, the Naskh/Plex pair and the paper cut-out drawings stay.
+- **One idea, «الطريق والنجوم»:** by day you walk the road (the grades, the steps of an application: 062's route); by night you read the stars (destinations: the الرواد chart, generalised). Every star is data or a function, never decoration.
+- **Structure:** four sections (حسب صفك، البرامج with its dates folded in, الجامعات، الأدلة) plus «خطتي»; one box «ابحث أو اسأل»; a homepage with a «الآن» band and a board for returning students (the grade remembered on the device); compact explorer rows; «السنة في سطر» (the year as a timeline); «خطتي» as a hub; one source chip for pages and answers; a signature motion, "light travels".
+- **Order:** a private direction board for the owner first (no site code), then the rules and the teaser, then the structure pass after الرواد closes (15 Nov), then a 5-student test of the new design before Launch 1 (~9 Dec). The steps are in the roadmap; the details in the plan.
+- **`design.md` changes when the board is approved** (step C2): the dot's second meaning (وضّاح's light), data drawings beyond the الرواد chart, the source chip, the motion. Until then the current rules apply.
+**Alternatives:**
+- **A full visual rebrand as well:** about 1–2 more weeks before Launch 1, and a third restyle after 060, 062 and 075; the problems found were structure and density, not the visual system.
+- **Structure only:** fixes the journey, but leaves the site without the moments that make students want to share it.
+**Not verified:** no students, no real phone; the board, the 5-student test and the owner's phone checks come first.
+
+## 082 — The AI guide is «وضّاح»; a teaser now, the guide in Phase 2 behind sign-in (updates 045, 078)
+**Date:** 2026-11-07 · **Plan:** [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md) §5–§7
+**Decision (owner, 2026-11-07):**
+- **Name: وضّاح** ("radiant, the one who makes things clear"), the same root as واضح, with the logo's letter ض at its centre. English: "Waddah". Before the teaser, the owner checks the name in the Saudi trademark register (SAIP), the app stores and on X.
+- **Look:** the wordmark draws the ض's dot as the logo's lime rhombus; the guide's light is that dot drawn out into a four-point star. No face, no body (an AI must not pass for a person, and the light reads as neither a man nor a woman). States: idle, listening, searching, answering, and an outline when it doesn't know. The logo itself never changes.
+- **Voice:** honest (only واضح's verified pages, a source under every answer, «لا أعرف» readily), short, practical (one next step), calm, aware of its limits (no admission predictions, no advice outside the guide); understands dialect, answers in simple فصحى.
+- **Phases:** Phase 1 (now) builds the identity, the teaser and everything Phase 2 needs (the «دخول» slot, the one box and its states, the answer view, `data/waddah.json`, `docs/specs/agent.md`, `docs/specs/accounts.md`, an eval seed). Phase 2 builds the guide, with **sign-in for students who want to use it** (as 078).
+- **The teaser says «وضّاح قادم في ديسمبر»**, with no fixed day: the homepage's night band lightens a little each night (from the Riyadh date) and dawn breaks on launch day, a switch in the data. Once the day is certain, the day and a calendar reminder (an `.ics` file, nothing collected) are added. Below «مفتوح للتقديم الآن» until الرواد closes on 15 Nov.
+- **Trust rules for the guide (Phase 2):** a sentence the model can't cite isn't shown; every date, score or count must appear in a cited passage, or the answer falls back to "sources mode" (the verified passages with links, nothing generated), also used when the daily spend cap is reached.
+**Alternatives:**
+- **سُهيل** (the star Arabian travellers steered by): the strongest story, but a man's given name with no tie to the brand's root.
+- **«اسأل واضح» with no persona** (045's working name): simplest, but no reveal and less memorable.
+- **A firm 1 December:** more anticipation, but a public promise; the owner chose «في ديسمبر».
+- **The guide without an account in v1:** recommended in the plan to avoid a rushed review of accounts for minors; the owner chose sign-in for the guide, as 078 planned.
+**Not verified:** the name's availability (owner's check) and how students read it (an optional quick test with ~10 students and 2 counsellors).
