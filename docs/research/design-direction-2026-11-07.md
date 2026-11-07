@@ -17,7 +17,7 @@
 - **Phase 2:** build the guide, with **sign-in for students who want to use it** (as decision 078).
 - **The teaser says «في ديسمبر»**, with no fixed day.
 
-**Dates:** الرواد closes **Sun 15 Nov** (don't destabilise the site that week) · Phase 2 starts **Wed 25 Nov** · Launch 1 **~Wed 9 Dec**, after a 5-student test of the new design · وضّاح: **in December**. Owner time ≈ 5 h/week: Claude builds, the owner decides, reviews and tests on a phone.
+**Dates:** Phase 2 starts **Wed 25 Nov** · Launch 1 **~Wed 9 Dec**, after a 5-student test of the new design · وضّاح: **in December**. Owner time ≈ 5 h/week: Claude builds, the owner decides, reviews and tests on a phone.
 
 **How I studied it:** the live site in Chromium at 390px and 1280px, both themes, 15 page types (plus a saved plan, the activity's result, the الرواد chart in use); the code (`home.html`, `base.html`, `style.css` tokens, `sky.py`, `plan.py`, `search.py`, `rowwad.html`); decisions 057–080, the roadmap, the design rules, the 062 design research, the search/RAG spec, the marketing guide. References opened live: BigFuture, Stripe, Duolingo, Unifrog, Linear, Apple, and an ArcGIS StoryMaps story. **Limits:** Niche blocks automated browsers (its patterns are used from what's well known about it, not a live read); no real phone, no students, no analytics.
 
@@ -109,7 +109,7 @@
 ### The name
 - **وضّاح** = "radiant, the one who makes things clear", from the same root as **واضح** (و ض ح), like Duo and Duolingo. **The name carries the logo's letter ض at its centre.** Classical Arabic uses «الوضّاح» for bright morning light («الصبح الوضّاح»): it fits a light that shows the way.
 - **English:** "Waddah", always spelled the same way; the English pages say once that both names share a root meaning "clear, bright".
-- **To check before the teaser (owner):** the Saudi trademark register (SAIP), the app stores, an X handle; and, in a quick name test with ~10 students (girls and boys) and 2 counsellors, any associations (it is a man's given name, and the name of a classical poet, وضّاح اليمن).
+- **To check (owner):** the Saudi trademark register (SAIP), the app stores, an X handle; and, in a quick name test with ~10 students (girls and boys) and 2 counsellors, any associations (it is a man's given name, and the name of a classical poet, وضّاح اليمن).
 
 ### Look
 - **Wordmark:** «وضّاح» in Naskh Bold with **the ض's dot drawn as the logo's lime rhombus**: the same construction as the logo, so they read as one family while the logo stays untouched (typeset with care: the shadda sits beside the dot).
@@ -146,7 +146,7 @@
 2. **Once the day is certain:** the day appears, with «ذكّرني» (a calendar `.ics` file, so the reminder lives on the student's phone and we collect nothing) and a count in nights.
 
 **Placements**
-1. **Homepage band**, under «مفتوح للتقديم الآن» until الرواد closes on 15 Nov, then higher.
+1. **Homepage band** on the homepage.
 2. **`/waddah`** (and `/en/waddah`): what it will do (three promises), what it won't do, example questions labelled as examples, a short FAQ: free? (yes) · account? («ستحتاج إلى حساب بالبريد الإلكتروني لتستخدمه») · data? (we never ask for names, grades or ID).
 3. **«ماذا ستسأل وضّاح؟»:** invite questions as replies on your X account: engagement now, and real student questions for Phase 2's accuracy check.
 4. **Social, $0:** a 9:16 clip of dawn breaking over the horizon, recorded from the real page with the existing `marketing/src` pipeline (headless browser + ffmpeg), plus 3 still posts, one per promise. Snapchat first.
@@ -194,10 +194,10 @@
 
 | When | Step | Priority |
 |---|---|---|
-| Nov 8–10 | **Direction board:** a private page (artifact) with phone-first mockups: homepage (both states), «خطتي» hub, compact explorer row, program story, «السنة في سطر», وضّاح's wordmark, light and states, the answer view, the teaser band at three nights, `/waddah`, the share card. **No site code changes.** You react. | must |
+| Nov 8–10 | **Direction board:** a private page (artifact) with phone-first mockups: homepage (both states), «خطتي» hub, compact explorer row, program story, «السنة في سطر», وضّاح's wordmark, light and states, the answer view, the teaser band at three nights, `/waddah`, the share card. No site code in this step. | must |
 | Nov 10–11 | **Record and prepare:** decisions 081 (direction) and 082 (وضّاح and the teaser), `design.md` (the dot's second meaning, data drawings beyond the الرواد chart, the source chip, the signature motion), roadmap, CLAUDE.md, architecture. Name check (you). | must |
-| Nov 11–13 | **Teaser live:** the dawn band, `/waddah` in both languages, its share image, the X post, the clip. Additive, so safe before 15 Nov. | must |
-| Nov 16–24 (after الرواد closes) | **Structure pass:** nav and the one box, homepage «الآن» and the returning state, compact explorer rows, programs + dates merged, the source chip, the «دخول» slot. | must |
+| Nov 11–13 | **Teaser live:** the dawn band, `/waddah` in both languages, its share image, the X post, the clip. | must |
+| Nov 12–24 | **Structure pass:** nav and the one box, homepage «الآن» and the returning state, compact explorer rows, programs + dates merged, the source chip, the «دخول» slot. | must |
 | Nov 22–30 | «خطتي» hub v2 (constellation, this week, `.ics`, share, celebration), «السنة في سطر», the map view. | should |
 | Nov 25–30 | **Phase 2 specs** (`agent.md`, `accounts.md`) and the eval seed; your decisions on API billing and the PDPL review. | must |
 | Dec 1–7 | **5-student test** of the new design; fixes. | must |
@@ -209,7 +209,7 @@
 
 ## 10. Your to-dos
 - The name check (SAIP, app stores, X), and optionally the 10-student name test.
-- React to the direction board.
+- Look at the direction board and say what to change.
 - Before Phase 2: API key, billing and a spend limit; the PDPL review for accounts and under-18 users.
 - 5 students for the test before Launch 1.
 
