@@ -12,7 +12,7 @@ Keep this page short: update the sections below in place, tick the stages, and p
 - **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want وضّاح, the AI guide; «خطتي» moves into the account. وضّاح launches in December (the teaser says «قادم في ديسمبر», no fixed day).
 - **Pace:** ~5 hours per week.
 - **Just merged:** the Part C plan (decisions 081–082). No site changes yet.
-- **Next session:** Part C step C1: fill the direction board (the empty canvas linked at the top of the plan) from the plan, then stop for the owner's reaction before any site code. الرواد closes 15 Nov: nothing that could unsettle the site before then (the teaser, C3, only adds a band and a page).
+- **Next session:** the next unticked step of Part C, starting with C1: fill the direction board (the empty canvas linked at the top of the plan) from the plan. The owner runs one step per session; each step is built, verified and merged, then ticked here.
 
 ## Next steps
 
@@ -26,10 +26,10 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
    - [x] A5 copy fixes (the bare 0, «108 جامعات») and the 404 handbook source (removed, decision 079).
 2. [x] **Phase 1 Part B:** «خطتي» on the device (`wadih:plan`, `app/plan.py`, a POST view, statuses, next steps, the return strip; decision 080).
 3. **Phase 1 Part C: the redesign and وضّاح (decisions 081–082; details, files to reuse and checks in the [plan](research/design-direction-2026-11-07.md)):**
-   - [ ] C1 **Direction board** on the private canvas: phone-first mockups of the homepage (first visit and returning), the «خطتي» hub, a compact explorer row, a program page as a story, «السنة في سطر», وضّاح's wordmark, light, states and answer view, the teaser band on three nights, `/waddah`, the share card. No site code. The owner reacts.
+   - [ ] C1 **Direction board** on the private canvas: phone-first mockups of the homepage (first visit and returning), the «خطتي» hub, a compact explorer row, a program page as a story, «السنة في سطر», وضّاح's wordmark, light, states and answer view, the teaser band on three nights, `/waddah`, the share card. No site code in this step.
    - [ ] C2 **Rules and docs** from the approved board: `.claude/rules/design.md` (the dot's second meaning, data drawings beyond the الرواد chart, the source chip, the signature motion), CLAUDE.md, architecture.
-   - [ ] C3 **Teaser live** (additive, safe before 15 Nov): the dawn band on the homepage, `/waddah` and `/en/waddah`, `data/waddah.json` (with the `launched` switch), its share image, the X post, a 9:16 clip from the page (`marketing/src`, $0).
-   - [ ] C4 **Structure pass** (after 15 Nov): four sections and the one box «ابحث أو اسأل», the homepage's «الآن» and returning state (grade remembered on the device), compact explorer rows, programs and dates merged (`/news` redirects), the source chip, the «دخول» slot.
+   - [ ] C3 **Teaser live:** the dawn band on the homepage, `/waddah` and `/en/waddah`, `data/waddah.json` (with the `launched` switch), its share image, the X post, a 9:16 clip from the page (`marketing/src`, $0).
+   - [ ] C4 **Structure pass:** four sections and the one box «ابحث أو اسأل», the homepage's «الآن» and returning state (grade remembered on the device), compact explorer rows, programs and dates merged (`/news` redirects), the source chip, the «دخول» slot.
    - [ ] C5 **«خطتي» hub v2** (constellation, this week, `.ics`, share, «قُبلت»), «السنة في سطر», the map view.
    - [ ] C6 **Phase 2 ready:** `docs/specs/agent.md` and `docs/specs/accounts.md`, the eval seed (questions from the guides and the teaser's X replies).
 4. **Usability test with 3–5 students, on the new design** (after C4–C5, ~1–7 Dec). Write the script (`docs/research/usability-test.md`, Stage 1e step 5) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
@@ -50,8 +50,8 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
 Gathered from the session notes in [log.md](log.md). The ones that could be checked in the repo or on GitHub on 2026-11-04 are accurate; the rest may already be done, so tick or delete them.
 
 ### For Part C (the redesign and وضّاح)
-- [ ] React to the direction board (C1).
-- [ ] Before the teaser (C3): check «وضّاح» / "Waddah" in the Saudi trademark register (SAIP), the App Store and Google Play, and for an X handle.
+- [ ] Look at the direction board (C1) and say what to change.
+- [ ] Check «وضّاح» / "Waddah" in the Saudi trademark register (SAIP), the App Store and Google Play, and for an X handle.
 - [ ] Optional: show the name to ~10 students (girls and boys) and 2 counsellors: do they remember it after a minute, do they trust it, any bad associations?
 - [ ] Before Phase 2: an Anthropic API key, billing and a spend limit; the PDPL review for accounts and under-18 users (consent, transfer abroad).
 

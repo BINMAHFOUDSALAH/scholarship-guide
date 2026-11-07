@@ -1322,6 +1322,7 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A full visual rebrand as well:** about 1–2 more weeks before Launch 1, and a third restyle after 060, 062 and 075; the problems found were structure and density, not the visual system.
 - **Structure only:** fixes the journey, but leaves the site without the moments that make students want to share it.
 **Not verified:** no students, no real phone; the board, the 5-student test and the owner's phone checks come first.
+**Update (same day, owner):** no waiting for الرواد's 15 Nov close (nobody depends on the site yet). Part C runs one step per session, C1 to C6, each built, verified and merged in turn; the plan and the roadmap no longer pause between steps.
 
 ## 082 — The AI guide is «وضّاح»; a teaser now, the guide in Phase 2 behind sign-in (updates 045, 078)
 **Date:** 2026-11-07 · **Plan:** [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md) §5–§7
@@ -1338,3 +1339,4 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A firm 1 December:** more anticipation, but a public promise; the owner chose «في ديسمبر».
 - **The guide without an account in v1:** recommended in the plan to avoid a rushed review of accounts for minors; the owner chose sign-in for the guide, as 078 planned.
 **Not verified:** the name's availability (owner's check) and how students read it (an optional quick test with ~10 students and 2 counsellors).
+**Update (same day, owner):** the teaser band doesn't wait for الرواد's close; it goes on the homepage when C3 is built (see 081's update).
