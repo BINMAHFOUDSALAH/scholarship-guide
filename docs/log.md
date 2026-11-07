@@ -6,6 +6,11 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-07
 
+**2026-11-07 (Part C, C1 done):** filled the direction board (the private canvas linked in the plan) with 12 artboards, built from the site's own tokens, fonts, logo and real data (today's open programs, the الرواد chart's counts, the universities' facts and dates, all as of 6 Nov): the system board; the homepage first visit (~4 phone screens, ~10 today) and returning; «خطتي» as a hub; compact explorer rows; the Custodian program as a story; «السنة في سطر»; وضّاح's wordmark, light, states, voice and answer view (answer, «لا أعرف», sources mode, the signed-out sheet); the teaser on three nights and launch day; `/waddah`; two 9:16 share cards. Each artboard has a light/dark switch.
+- **Proposed on the board, decided in C2:** grades as a short horizontal route; three shapes with three jobs (diamond = a step, circle = a destination, four-point star = وضّاح); dawn in lime, not sun (sun keeps its one job); the source chip, numbered in وضّاح's answers. New draft copy is listed on the board for review.
+- **Checked:** every artboard rendered in headless Chromium at its size (plain HTML) and fixed until clean; the dark switch on two artboards. **Not checked:** the canvas page itself (the browser pane isn't signed in to claude.ai), a real phone. **No site changes.**
+- **Owner to-dos:** open the board, comment on what to change (the blue "Decide" notes list the choices); then C2.
+
 **2026-11-07 (decisions 081–082, plan only):** studied the live site (15 page types at 390px and 1280px, both themes), the code and 8 references (BigFuture, Stripe, Duolingo, Unifrog, Linear, ArcGIS StoryMaps, Apple; Niche blocks automated browsers), and proposed the next level. The owner chose: keep the look and rebuild the structure («الطريق والنجوم»); the AI guide is **وضّاح**; Part C now (the redesign, وضّاح's identity and teaser, Phase 2's preparation); the guide itself in Phase 2 behind sign-in; the teaser says «قادم في ديسمبر». The plan is in `docs/research/design-direction-2026-11-07.md`; the direction board was created empty (link in the plan).
 - **No site changes.** **Owner to-dos:** the name check (SAIP, app stores, X); react to the board in the next session.
 

@@ -11,8 +11,8 @@ Keep this page short: update the sections below in place, tick the stages, and p
 - **Phase 1 (decisions 078–082):** Part A fixed what misleads students, Part B grew «قائمتي» into «خطتي» on the device (both done, 079–080). **Part C (now): the «الطريق والنجوم» redesign (keep the look, rebuild the structure), the AI guide وضّاح's identity and teaser, and Phase 2's preparation.** Plan: [design-direction-2026-11-07.md](research/design-direction-2026-11-07.md). No accounts.
 - **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want وضّاح, the AI guide; «خطتي» moves into the account. وضّاح launches in December (the teaser says «قادم في ديسمبر», no fixed day).
 - **Pace:** ~5 hours per week.
-- **Just merged:** the Part C plan (decisions 081–082). No site changes yet.
-- **Next session:** the next unticked step of Part C, starting with C1: fill the direction board (the empty canvas linked at the top of the plan) from the plan. The owner runs one step per session; each step is built, verified and merged, then ticked here.
+- **Just done:** C1, the direction board (12 artboards on the private canvas linked at the top of the plan). No site changes yet.
+- **Next session:** C2 and C3 together (owner, 2026-11-07). C2 writes the board's choices into `design.md`, CLAUDE.md and architecture (the owner's first feedback is already on the board: no repeated explanatory copy, every map drawn like the live الرواد chart); C3 puts the teaser live (the dawn band, `/waddah` in both languages, `data/waddah.json`). Each step is built, verified and merged, then ticked here.
 
 ## Next steps
 
@@ -26,7 +26,7 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
    - [x] A5 copy fixes (the bare 0, «108 جامعات») and the 404 handbook source (removed, decision 079).
 2. [x] **Phase 1 Part B:** «خطتي» on the device (`wadih:plan`, `app/plan.py`, a POST view, statuses, next steps, the return strip; decision 080).
 3. **Phase 1 Part C: the redesign and وضّاح (decisions 081–082; details, files to reuse and checks in the [plan](research/design-direction-2026-11-07.md)):**
-   - [ ] C1 **Direction board** on the private canvas: phone-first mockups of the homepage (first visit and returning), the «خطتي» hub, a compact explorer row, a program page as a story, «السنة في سطر», وضّاح's wordmark, light, states and answer view, the teaser band on three nights, `/waddah`, the share card. No site code in this step.
+   - [x] C1 **Direction board** on the private canvas: phone-first mockups of the homepage (first visit and returning), the «خطتي» hub, a compact explorer row, a program page as a story, «السنة في سطر», وضّاح's wordmark, light, states and answer view, the teaser band on three nights, `/waddah`, the share card. No site code in this step. Done 2026-11-07: 12 artboards, real data as of 6 Nov, light/dark switch on each.
    - [ ] C2 **Rules and docs** from the approved board: `.claude/rules/design.md` (the dot's second meaning, data drawings beyond the الرواد chart, the source chip, the signature motion), CLAUDE.md, architecture.
    - [ ] C3 **Teaser live:** the dawn band on the homepage, `/waddah` and `/en/waddah`, `data/waddah.json` (with the `launched` switch), its share image, the X post, a 9:16 clip from the page (`marketing/src`, $0).
    - [ ] C4 **Structure pass:** four sections and the one box «ابحث أو اسأل», the homepage's «الآن» and returning state (grade remembered on the device), compact explorer rows, programs and dates merged (`/news` redirects), the source chip, the «دخول» slot.
@@ -50,7 +50,7 @@ In order (direction: a deep study-abroad core plus thin doors to official tools,
 Gathered from the session notes in [log.md](log.md). The ones that could be checked in the repo or on GitHub on 2026-11-04 are accurate; the rest may already be done, so tick or delete them.
 
 ### For Part C (the redesign and وضّاح)
-- [ ] Look at the direction board (C1) and say what to change.
+- [ ] Look at the [direction board](https://claude.ai/artifact/BVq4dD2Rzmeyx9iEGUdjWh) (C1, private to you) and say what to change; the blue "Decide" notes list the open choices.
 - [ ] Check «وضّاح» / "Waddah" in the Saudi trademark register (SAIP), the App Store and Google Play, and for an X handle.
 - [ ] Optional: show the name to ~10 students (girls and boys) and 2 counsellors: do they remember it after a minute, do they trust it, any bad associations?
 - [ ] Before Phase 2: an Anthropic API key, billing and a spend limit; the PDPL review for accounts and under-18 users (consent, transfer abroad).
