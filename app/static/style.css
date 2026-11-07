@@ -5433,19 +5433,11 @@ a.uni-name:hover .uni-name-en:only-child {
   transition: box-shadow 0.3s ease;
 }
 
-/* «قُبلت»: the row lights once, a lime band that fades (the only celebration; nothing loops). */
+/* «قُبلت»: the row lights once and fades (the plan's one celebration; nothing stays lit, nothing loops). */
 @media (prefers-reduced-motion: no-preference) {
   .plan-item.is-accepted {
     animation: accepted-glow 1.6s ease-out 1;
   }
-}
-
-.plan-item.is-accepted {
-  box-shadow: inset 4px 0 0 var(--lime);
-}
-
-[dir="rtl"] .plan-item.is-accepted {
-  box-shadow: inset -4px 0 0 var(--lime);
 }
 
 @keyframes accepted-glow {
@@ -5618,7 +5610,10 @@ a.uni-name:hover .uni-name-en:only-child {
   .route-mark,
   .chart-path,
   .chart-star-shape,
-  .rowwad-chart[data-active] .chart-country {
+  .rowwad-chart[data-active] .chart-country,
+  .world-dot,
+  .world-map[data-active] .world-country,
+  .mylist-link.is-arrived {
     transition: none;
   }
 }

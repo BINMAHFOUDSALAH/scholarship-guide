@@ -17,7 +17,7 @@ Nothing is fetched from the internet while a student waits.
 | 2 | Chunks with full source tracking (`last_checked`, `owner_reviewed` per chunk) | next |
 | 3 | Search by meaning: embeddings + vector index, combined with keywords (hybrid) | |
 | 4 | Eval set: ~50 real student questions, each with its expected chunk; a test scores retrieval | |
-| 5 | Chatbot «اسأل واضح»: answers only from retrieved chunks, with citations; refuses when unsure | ask first (paid API) |
+| 5 | وضّاح (was «اسأل واضح»): answers only from retrieved chunks, with citations; refuses when unsure. Spec: [agent.md](agent.md); `retrieve()` and the eval seed are in place (C6) | Phase 2, ask first (paid API) |
 | 6 | Operations: rate limits, daily spend cap, caching, logs without personal data | |
 | 7 | Update-monitor agent: watches official pages, drafts changes, waits for the owner's approval | |
 
@@ -28,4 +28,4 @@ Nothing is fetched from the internet while a student waits.
 - Every result has at least one official (`https://`) source.
 
 ## Privacy
-The app doesn't store queries. But `/search?q=…` is a normal web address, so Render's access logs record it, like every page address. That's acceptable for short search words. The chatbot, where students type longer questions, must send them in the request body (POST) so they stay out of the logs. The chatbot (step 5) will follow the same rule: no accounts needed, a notice not to type personal data, no chat text stored with anything identifying.
+The app doesn't store queries. But `/search?q=…` is a normal web address, so Render's access logs record it, like every page address. That's acceptable for short search words. The chatbot, where students type longer questions, must send them in the request body (POST) so they stay out of the logs. The chatbot (step 5, وضّاح) follows the same rule: POST, a notice not to type personal data, personal data stripped before sending, no question or answer text stored. Since decisions 078 and 082 it needs an account (email + password, [accounts.md](accounts.md)); the site itself never does.

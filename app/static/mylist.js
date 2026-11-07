@@ -334,11 +334,17 @@
       write(read().filter((i) => keyOf(i) !== key));
       // Keep the keyboard in a sensible place: the next row's button, else the previous one, else the title.
       const next = item.nextElementSibling || item.previousElementSibling;
+      const nextKey = next && next.dataset.mylistItem;
       item.remove();
       renderHeader();
       status.textContent = t("أُزيل {name} من خطتك.").replace("{name}", name);
-      if (next) {
+      if (nextKey) {
         next.querySelector("button[data-remove]").focus();
+        // The hub's counts, dates and map follow the plan (the rows are redrawn, then focus is put back).
+        draw().then(() => {
+          const again = rows.querySelector('button[data-remove="' + nextKey + '"]');
+          if (again) again.focus();
+        });
       } else {
         showEmpty();
         heading.setAttribute("tabindex", "-1");

@@ -621,6 +621,9 @@ def my_plan(request: Request):
 
 async def posted_plan(request: Request):
     """The plan as the browser sent it (JSON: {"items": [...]}), cleaned to known ids and statuses. Never stored."""
+    length = request.headers.get("content-length") or "0"
+    if length.isdigit() and int(length) > 20_000:  # refuse before reading a large body
+        raise HTTPException(status_code=413)
     body = await request.body()
     if len(body) > 20_000:
         raise HTTPException(status_code=413)
@@ -653,9 +656,11 @@ async def my_plan_calendar(request: Request):
     items = await posted_plan(request)
     events = []
     for d in plan.dates(items, explorer, plan_programs, track_status, date.today().isoformat()):
-        what = (f"{d['what']['event_ar']}، {d['what']['round_ar']}" if d["kind"] == "university" and d["what"].get("round_ar")
-                else d["what"]["event_ar"] if d["kind"] == "university" else d["what_ar"])
-        summary = tr(what) + tr("، ") + tr(d["name_ar"]) if not i18n.is_english() else f"{tr(d['name_ar'])}: {tr(what)}"
+        # Each part is translated on its own (a joined Arabic string has no English key), then joined per language.
+        parts = ([d["what"]["event_ar"]] + ([d["what"]["round_ar"]] if d["what"].get("round_ar") else [])
+                 if d["kind"] == "university" else [d["what_ar"]])
+        what = tr("، ").join(tr(p) for p in parts)
+        summary = f"{tr(d['name_ar'])}: {what}" if i18n.is_english() else what + tr("، ") + d["name_ar"]
         events.append({**d, "summary": summary, "href": i18n.prefix() + d["href"],
                        "description": tf("المصدر الرسمي: {url}", url=d["source_url"] or "")})
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

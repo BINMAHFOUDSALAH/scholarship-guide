@@ -43,6 +43,8 @@ ARABIC_LETTER = "؀-ۿ"
 
 
 def test_site_text_is_formal_arabic():
+    # Not scanned on purpose: app/question_words.txt, the dialect words students type that retrieval ignores
+    # (decision 083). It is read by app/search.py only and never shown.
     root = Path(__file__).parent.parent
     files = [*root.glob("app/templates/**/*.html"), *root.glob("content/**/*.md"), *root.glob("data/**/*.json"),
              *root.glob("app/*.py"), *root.glob("app/static/*.js")]

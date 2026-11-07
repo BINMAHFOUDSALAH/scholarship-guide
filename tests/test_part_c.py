@@ -81,8 +81,16 @@ def test_the_hub_in_english_is_english(monkeypatch):
     on(monkeypatch, 2026, 11, 7)
     html = client.post("/en/my-plan", json=PLAN).text
     assert not arabic_outside_lang_ar(html), arabic_outside_lang_ar(html)[:5]
-    ics = client.post("/en/my-plan.ics", json=PLAN).text
-    assert "My plan on Wadih" in ics and "Official source:" in ics.replace("\r\n ", "")
+    ics = client.post("/en/my-plan.ics", json=PLAN).text.replace("\r\n ", "")
+    assert "My plan on Wadih" in ics and "Official source:" in ics
+    # Stanford's dates have a round («Regular Decision»): each part is translated, never a joined Arabic string.
+    assert "Regular Decision" in ics and not re.search(r"[\u0600-\u06ff]", ics), re.findall(r"SUMMARY:.*", ics)
+
+
+def test_two_dates_on_one_day_are_two_events():
+    items = plan.clean(PLAN, main.explorer.universities, main.plan_programs)
+    uids = [d["uid"] for d in plan.dates(items, main.explorer, main.plan_programs, main.track_status, "2026-01-01")]
+    assert len(uids) == len(set(uids))
 
 
 def test_your_constellation_maps_only_your_universities(monkeypatch):
@@ -191,3 +199,33 @@ def test_the_homepage_route_can_mark_the_students_grade():
     for g in main.home_text["grades"]:
         assert f'data-grade-stop="{g["slug"]}"' in html
     assert html.count("data-grade-here hidden") == 3
+
+
+# ---------- the eval seed (docs/specs/eval-seed.json, agent.md §8) ----------
+
+def test_every_eval_question_points_at_a_section_that_exists():
+    seed = json.loads((main.APP_DIR.parent / "docs" / "specs" / "eval-seed.json").read_text(encoding="utf-8"))
+    ids = [q["id"] for q in seed["questions"]]
+    assert len(ids) == len(set(ids))
+    for q in seed["questions"]:
+        assert q["kind"] in ("answer", "explorer", "no_date", "unknown", "refuse"), q["id"]
+        if q["kind"] in ("answer", "explorer"):
+            assert q["expected"], q["id"]
+        for url in q["expected"]:
+            path, _, anchor = url.partition("#")
+            r = client.get(path)
+            assert r.status_code == 200, (q["id"], url)
+            if anchor:
+                assert f'id="{anchor}"' in r.text, (q["id"], url)
+
+
+def test_retrieval_already_finds_most_guide_questions():
+    """agent.md §8: before any paid call, retrieval should find an expected section in its top 5 for the seed's
+    answerable questions. A floor that rises as retrieval improves (measured 23/28 on 2026-11-07), not the launch bar."""
+    seed = json.loads((main.APP_DIR.parent / "docs" / "specs" / "eval-seed.json").read_text(encoding="utf-8"))
+    guide = [q for q in seed["questions"] if q["kind"] == "answer"]
+    found = sum(1 for q in guide if any(r["url"] in q["expected"] for r in main.site_search.retrieve(q["q_ar"])))
+    assert found / len(guide) >= 0.8, f"{found}/{len(guide)}"
+    # A whole question finds sections where the strict site search finds none.
+    assert not main.site_search.search("هل أستطيع التقديم على مسار الرواد وأنا في ثالث ثانوي؟")
+    assert main.site_search.retrieve("هل أستطيع التقديم على مسار الرواد وأنا في ثالث ثانوي؟")

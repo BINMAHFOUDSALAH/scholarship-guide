@@ -139,18 +139,19 @@ def dates(items, explorer, programs, track_status, today):
     """Every upcoming date in the plan, soonest first, each with where it comes from:
     - a university's own dates (its requirement file; each date has its official source);
     - an open program track's deadline (status_until, shown only with its status_source).
-    Items the student has finished with («قُبلت», «لم أُقبل») add no dates."""
+    Items the student has finished with («قُبلت», «لم أُقبل») add no dates, and a date without its official source is
+    never shown (trust rule). Each date has its own uid, so two rounds on one day stay two calendar events."""
     out = []
     for item in items:
         if item["status"] in ("accepted", "not_accepted"):
             continue
         if item["type"] == "university":
             u = explorer.universities[item["id"]]
-            for d in (explorer.details.get(u["id"]) or {}).get("dates") or []:
-                if d.get("date") and d["date"] >= today and not d.get("reference_only"):
+            for n, d in enumerate((explorer.details.get(u["id"]) or {}).get("dates") or []):
+                if d.get("date") and d["date"] >= today and not d.get("reference_only") and d.get("source_url"):
                     out.append({"date": d["date"], "kind": "university", "university": u, "what": d,
                                 "name_ar": u["name_ar"] or u["name_en"], "href": f"/universities/{u['id']}#dates",
-                                "source_url": d.get("source_url"), "uid": f"{u['id']}-{d['date']}"})
+                                "source_url": d["source_url"], "uid": f"{u['id']}-{d['date']}-{n}"})
         else:
             path, track = programs[item["id"]]
             until = track.get("status_until")
@@ -171,7 +172,7 @@ def progress(items):
 
 def _ics_text(text):
     """iCalendar text: escape \\ ; , and newlines (RFC 5545, 3.3.11)."""
-    return text.replace("\\", "\\\\").replace(";", "\;").replace(",", "\\,").replace("\n", "\\n")
+    return text.replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\n", "\\n")
 
 
 def _fold(line):
