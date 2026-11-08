@@ -4847,225 +4847,76 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 /*
-  وضّاح's teaser (decision 082): a night band, a paper-cut horizon, and a light that rises a little each night.
-  --dawn (0 = night … 0.9 = the edge of dawn, 1 = launch day) mixes the sky from the chart's night towards lime at
-  the horizon. The night stays dark behind the text, so the words keep their contrast at every step.
+  وضّاح's teaser (decisions 082, 093): the owner's paper-cut picture of وضّاح helping a student is the band's ground.
+  Its empty paper is on the right (the start of an Arabic line) and the words sit there; on a phone the picture's
+  left part stands above the words. The band takes the picture's own paper colour and keeps it on both themes, like
+  the program pictures, so its text colours are fixed too (each pair is in test_design's text_pairs).
 */
 .waddah-band {
+  --waddah-paper: #fae5c5;
   position: relative;
   isolation: isolate;
   overflow: hidden;
   margin-block: var(--space-6) 0;
-  color: #f6f4ee;
-  background: var(--chart-ground);
+  color: #101713;
+  background: var(--waddah-paper);
 }
 
-.waddah-sky {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+.waddah-art img {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
-.dawn-ground {
-  fill: var(--chart-ground);
-}
-
-.dawn-glow-in {
-  stop-color: color-mix(in oklab, var(--lime) calc(var(--dawn) * 50%), var(--chart-ground));
-}
-
-.dawn-glow-out {
-  stop-color: var(--chart-ground);
-  stop-opacity: 0;
-}
-
-.dawn-glow {
-  opacity: calc(0.25 + var(--dawn) * 0.75);
-}
-
-.dawn-star {
-  fill: #f6f4ee;
-  opacity: calc((1 - var(--dawn)) * 0.7);
-}
-
-.dawn-star--0 {
-  opacity: calc((1 - var(--dawn)) * 0.35);
-}
-
-/* The light sits below the horizon at night and rises with the dawn. */
-.dawn-light-rise {
-  transform: translateY(calc((1 - var(--dawn)) * 70px));
-}
-
-.dawn-light-halo {
-  fill: var(--lime);
-  opacity: calc(0.08 + var(--dawn) * 0.22);
-}
-
-.dawn-light-shape {
-  fill: var(--lime);
-}
-
-/* The horizon: three layers of cut paper, deep forest to the stage's own. */
-.dawn-hill--far {
-  fill: color-mix(in oklab, #184b3a 70%, var(--chart-ground));
-}
-
-.dawn-hill--mid {
-  fill: color-mix(in oklab, #184b3a 85%, #0b2a20);
-}
-
-.dawn-hill--near {
-  fill: #0e3125;
-}
-
-:root[data-theme="dark"] .dawn-hill--far {
-  fill: #12362a;
-}
-
-:root[data-theme="dark"] .dawn-hill--mid {
-  fill: #0e2c22;
-}
-
-:root[data-theme="dark"] .dawn-hill--near {
-  fill: #0a2119;
-}
-
-/* The words, then the drawing standing on the horizon (beside the words on wide screens). */
 .waddah-band-inner {
-  display: grid;
-  gap: var(--space-2) var(--space-6);
-  padding-block: var(--space-6) 0;
+  padding-block: var(--space-3) var(--space-6);
 }
 
-.waddah-band-text {
-  align-self: center;
+@media (min-width: 860px) {
+  .waddah-band {
+    display: grid;
+    align-items: center;
+    aspect-ratio: 3 / 1;
+    min-height: 340px;
+    max-height: 560px;
+  }
+
+  .waddah-art {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .waddah-art img {
+    height: 100%;
+    object-fit: cover;
+    object-position: left center; /* the student and وضّاح stay in view; only empty paper is cut */
+  }
+
+  .waddah-band-inner {
+    width: 100%;
+    padding-block: var(--space-6);
+  }
+
+  .waddah-band-text {
+    max-width: min(46%, 34rem);
+  }
+
+  /* The paper is on the right in both languages: in English the words keep to it too. */
+  html[dir="ltr"] .waddah-band-text {
+    margin-inline-start: auto;
+  }
 }
 
 .waddah-band .waddah-line {
   margin-bottom: 0;
 }
 
-@media (min-width: 860px) {
-  .waddah-band-inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
-    align-items: end;
-  }
-
-  .waddah-band-text {
-    padding-bottom: calc(var(--space-6) + 60px);
-  }
-}
-
-/*
-  What وضّاح will do, drawn (decisions 084, 087): a night in cut paper. Flat layers in the forest's own tones (the far
-  skyline of destinations, the dune with its palm, the near dune that meets the band's horizon), paper for the student,
-  the agents and what they bring. Lime only for the light: the agents' antennas and eyes, the paths that join the stars
-  into one constellation, the screen and its glow on the student. Static: nothing moves.
-*/
-.waddah-help {
-  display: block;
-  width: min(100%, 420px);
-  height: auto;
-  margin-inline: auto;
-}
-
-@media (min-width: 860px) {
-  .waddah-help {
-    width: 100%;
-  }
-}
-
-.art-moon { fill: #f6f4ee; opacity: 0.92; }
-.art-stars { fill: #f6f4ee; opacity: 0.6; }
-
-.art-city { fill: #1d5040; }
-.art-city-cols path { fill: none; stroke: #10372a; stroke-width: 3; }
-.art-city-clock { fill: #10372a; }
-.art-dune--mid { fill: #154434; }
-.art-dune-edge { fill: none; stroke: #f6f4ee; stroke-opacity: 0.14; stroke-width: 1.5; }
-.art-dune--near { fill: #0e3125; }
-.art-palm-trunk { fill: #7f998d; }
-.art-palm-frond { fill: #9fb3aa; }
-.art-palm-frond--back { fill: #6f8a7e; }
-
-:root[data-theme="dark"] .art-city { fill: #143b2e; }
-:root[data-theme="dark"] .art-city-cols path,
-:root[data-theme="dark"] .art-city-clock { stroke: #091510; fill: #091510; }
-:root[data-theme="dark"] .art-city-cols path { fill: none; }
-:root[data-theme="dark"] .art-dune--mid { fill: #0f3126; }
-:root[data-theme="dark"] .art-dune--near { fill: #0a2119; }
-
-.help-paths path {
-  fill: none;
-  stroke: var(--lime);
-  stroke-opacity: 0.65;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 2 5;
-}
-
-.help-nodes circle {
-  fill: #f6f4ee;
-  stroke: var(--lime);
-  stroke-opacity: 0.45;
-  stroke-width: 3;
-  paint-order: stroke;
-}
-
-.help-leg,
-.help-arm,
-.help-laptop,
-.help-screen,
-.help-rim,
-.agent-arm,
-.agent-antenna,
-.help-lens-handle,
-.help-doc-lines {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.help-leg { stroke: #c9d3cd; stroke-width: 15; }
-.help-arm { stroke: #dfe5e1; stroke-width: 9; }
-.help-shoe { fill: #f6f4ee; }
-.help-body { fill: #dfe5e1; }
-.help-head { fill: #f6f4ee; }
-.help-hair { fill: #081d16; }
-.help-ear { fill: #f6f4ee; }
-.help-rim { stroke: var(--lime); stroke-width: 2.2; stroke-opacity: 0.85; }
-.help-glow { fill: var(--lime); opacity: 0.18; }
-.help-laptop { stroke: #9fb3aa; stroke-width: 5; }
-.help-screen { stroke: var(--lime); stroke-width: 4.5; }
-
-.agent-beam { fill: var(--lime); opacity: 0.1; }
-.agent-hover { fill: var(--lime); opacity: 0.28; }
-.agent-antenna { stroke: #f6f4ee; stroke-width: 2; }
-.agent-light,
-.agent-eye,
-.help-answer { fill: var(--lime); }
-.agent-body { fill: #c9d3cd; }
-.agent-bolt { fill: #9fb3aa; }
-.agent-head { fill: #f6f4ee; }
-.agent-visor { fill: #10372a; }
-.agent-arm { stroke: #c9d3cd; stroke-width: 4; }
-
-.help-doc { fill: #f6f4ee; }
-.help-doc-lines { stroke: #9fb3aa; stroke-width: 2.2; }
-.help-doc-src { fill: #184b3a; }
-.help-lens { fill: rgba(216, 237, 155, 0.16); stroke: #f6f4ee; stroke-width: 3; }
-.help-lens-handle { stroke: #f6f4ee; stroke-width: 4; }
-.help-answer-glow { fill: var(--lime); opacity: 0.24; }
-
 .waddah-kicker {
   margin: 0 0 var(--space-2);
   font-size: var(--text-sm);
   font-weight: 700;
-  color: #c3cdc6;
+  color: #57503f;
 }
 
 .waddah-title {
@@ -5076,7 +4927,7 @@ a.uni-name:hover .uni-name-en:only-child {
   margin: 0 0 var(--space-3);
   font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
   line-height: 1.4;
-  color: #f6f4ee;
+  color: #101713;
 }
 
 .waddah-line {
@@ -5084,16 +4935,23 @@ a.uni-name:hover .uni-name-en:only-child {
   margin: 0 0 var(--space-4);
   font-size: var(--text-md);
   line-height: 1.75;
-  color: #dfe5e1;
+  color: #2b2a24;
 }
 
-/* The wordmark: the light, then the name in Naskh Bold. */
+/* The wordmark: وضّاح's mascot, then the name in Naskh Bold. */
 .waddah-mark {
   display: inline-flex;
   align-items: center;
-  gap: 0.3em;
+  gap: 0.25em;
   font-family: var(--font-title);
   font-weight: 700;
+}
+
+.waddah-mascot {
+  flex: none;
+  width: auto;
+  height: 1.7em;
+  margin-block: -0.2em;
 }
 
 .waddah-light {
@@ -5112,7 +4970,6 @@ a.uni-name:hover .uni-name-en:only-child {
   stroke-width: 1.2;
 }
 
-.waddah-band .waddah-light-shape,
 .stage .waddah-light-shape {
   stroke: none;
 }
