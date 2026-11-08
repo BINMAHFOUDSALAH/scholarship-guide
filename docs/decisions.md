@@ -1527,3 +1527,27 @@ The owner chose (2026-11-07): improve our own Hijaz score (no ElevenLabs account
 - New poses: Claude can't draw new 3D renders of him; new ones come from the owner's tool, from these as the reference.
 **Alternatives:** the picture as a framed card on the night band (keeps the dawn, but a paper picture pasted on night reads as a photo, and its empty paper, made for words, would be cut off).
 **Verified:** pytest (807), no Arabic on English pages, the band in the browser on a phone and a desktop width, Arabic and English.
+
+## 094 — The explainer in two formats, 9:16 on the phone site and 16:9 on the desktop site, with free Mixkit music (updates 092)
+**Date:** 2026-11-07
+**Context:** after 092's cut, the owner removed «نجومًا على خريطة» (now «خريطة جامعات الرواد.»), found the synthesised music basic, tried and then dropped a female voice (HUMAIN, Nourah), and asked for two polished versions: horizontal 16:9 showing the desktop site and vertical 9:16 showing the mobile site, each designed for its format (not a crop), improved from A to Z (story, hook, features, pacing, transitions, Arabic type, composition, sound, ending), keeping واضح's identity and وضّاح's design, highlighting the most useful features and setting upcoming ones clearly apart from those available now, with free, properly licensed music and sounds (preferably Mixkit; no paid audio), simple and quiet; then render, review and fix before delivering.
+**Decision:**
+- **One script, two films** (`WadihTall` 1080×1920, `WadihWide` 1920×1080), both 82.8 s at 60 fps, from one timeline module (`timeline.mjs`: `GEOM` holds each format's frame, device, scale and menus; `buildTall`, `buildWide` hold each film's camera, cursor and screens). The site is captured twice: 390 CSS px in a phone, and 1440 CSS px (900 showing) in a browser window.
+- **The wide film is designed for 16:9:** the browser on the left with its address bar reading each page, the words in a column on the right (where an Arabic reader starts) at 64 px, وضّاح under them; the window stays still and the page zooms inside it; the wheel scrolls under a still cursor; the official page opens in a new tab (closed again for «خطتي»); وضّاح's chat is a card of its own, since he has no page until launch (084).
+- **A new feature scene, «خطتي»** (079–080): «احفظ في خطتي» on the university's page, the light flying to «خطتي» in the header (design.md's motion), then the plan with its route of statuses and the university's «أين وصلت؟». The plan holds one program saved earlier (إمداد, «أستعد»), set in the capture's browser only.
+- **Coming soon is said, not implied:** «وقريبًا…» replaces «وشيءٌ أخير…»; «قادم في ديسمبر» stays under his name and in the chat's header. Everything before it is live on the site.
+- **Sound from Mixkit** (licences read 2026-11-07: free, no credit, fine for YouTube, social media and online ads; not for CDs, DVDs, games or broadcast): «A Peaceful World» (Michael Ramir C., Arabic-tagged, instrumental, ~117 BPM), edited to the picture (its soft opening under the question, its band arriving with the logo, eight bars cut on a downbeat in وضّاح's night, its soft ending under the end card), and 20 real sounds, one per action (`explainer_audio.json`). Mixed to −16 LUFS, peaks under −1 dB. The files are downloaded by `explainer.mjs`, not stored in git. The synthesised score stays behind `--synth`.
+- **Reviewed before delivery (Shotcraft's rule):** an independent read-only reviewer (Sonnet) checked 34 frames of the tall film and 31 of the wide one. Fixed from its reports:
+  - the captions' backing is solid (page text showed through it);
+  - the homepage push frames the whole program card (its start was cut off);
+  - «احفظ في خطتي» is seen before the tap, and the header's count changes when the light lands, not before;
+  - the mascot's pose switch is quick enough to leave no ghost;
+  - the mess is darker under its words;
+  - the end line is «واضح متاح الآن، مجانًا.» (after the chat, «ابدأ الآن» could read as "start وضّاح now");
+  - the second answer names دولينجو;
+  - the chat answer sits higher, clear of the platforms' bottom bar;
+  - in the wide film the browser window never moves while you read: the camera zooms the page inside it (at rest 1.25×, the site's whole content column), so nothing slides under the column of words; وضّاح's night titles stay in the column;
+  - the page falls away before «وقريبًا…» (its white words were lost on the light page), and the wide opening no longer shows the browser's edge.
+  Kept as they are: the dates on screen are the day's (re-run before posting), and the shadda in «وضّاح» sits where the site's own Naskh puts it.
+**Alternatives:** the Shotcraft skill's own BGM (house and hip-hop from Mixkit: too busy for «quiet»); «Lazy Camel» (lively but loud and dense); «Harp Relax» (calm, 70 BPM, too slow for the tour); a 16:9 crop of the phone film (the owner asked for a design per format); the chat inside the browser (it would suggest a page that doesn't exist yet).
+**Not verified:** the music and sounds by ear (Claude can't listen; checked by loudness, the beat grid and where each sound starts), real phones and screens.

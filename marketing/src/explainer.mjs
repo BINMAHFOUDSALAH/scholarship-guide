@@ -22,6 +22,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameS
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { soundtrack } from "./explainer_music.mjs";
+import { mixkitSoundtrack } from "./explainer_audio.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const argv = process.argv.slice(2);
@@ -35,7 +36,14 @@ const SKIP_CAPTURE = argv.includes("--skip-capture");
 const AUDIO_ONLY = argv.includes("--audio-only");
 const EDGE = "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe";
 const ASSETS = join(ROOT, "marketing", "assets", "explainer");
-const SHOTS = join(ASSETS, "ar");
+// Two films from one script (decision 094): the phone site upright (9:16) and the desktop site wide (16:9).
+const FORMATS = {
+  tall: { W: 390, H: 724, mobile: true, dir: "ar", trackY: 190, comp: "WadihTall", out: "9x16" },
+  wide: { W: 1440, H: 900, mobile: false, dir: "ar-wide", trackY: 230, comp: "WadihWide", out: "16x9" },
+};
+const ONLY = opt("format", null);
+const FMTS = ONLY ? [ONLY] : ["tall", "wide"];
+for (const f of FMTS) if (!FORMATS[f]) throw new Error(`--format is tall or wide, not ${f}`);
 const OUT = join(ROOT, "marketing", "out");
 const SCRIPT = JSON.parse(readFileSync(join(ROOT, "marketing", "src", "explainer_script.json"), "utf8"));
 const F = SCRIPT.filters;
@@ -86,17 +94,19 @@ async function edge(port, flags = []) {
   return { send, once, js, close: async () => { ws.close(); proc.kill(); await exited; } };
 }
 
-// ---------- 1. Capture the site at phone size ----------
-// 390 CSS px wide on a 640 px screen; the page sits under a 52 px status bar, so 724 CSS px of it show.
-const W = 390, H = 724, DSF = 2;
+// ---------- 1. Capture the site, at phone size (390 CSS px on a 640 px screen, 724 CSS px of the page showing under
+// the status bar) and at desktop size (1440 CSS px, 900 showing in a browser window) ----------
+const DSF = 2;
 
-async function capture() {
+async function capture(fmt) {
+  const { W, H, mobile, dir, trackY: TRACK_Y } = FORMATS[fmt];
+  const SHOTS = join(ASSETS, dir);
   rmSync(SHOTS, { recursive: true, force: true });
   mkdirSync(SHOTS, { recursive: true });
-  const b = await edge(9351, ["--lang=ar"]);
-  const metrics = () => b.send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: DSF, mobile: true });
+  const b = await edge(fmt === "tall" ? 9351 : 9352, ["--lang=ar"]);
+  const metrics = () => b.send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: DSF, mobile });
   await metrics();
-  await b.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
+  if (mobile) await b.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
   await b.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-color-scheme", value: "light" }, { name: "prefers-reduced-motion", value: "reduce" }] });
   const screens = {}, rects = {}, menus = {};
 
@@ -132,7 +142,10 @@ async function capture() {
   const box = (expr) => b.js(`(${BOX})(${expr})`);
   const need = (v, what) => { if (!v) throw new Error(`not found on the site: ${what}`); return v; };
 
-  // The homepage: «الآن», the programs with their dates, one card each.
+  // The homepage: «الآن», the programs with their dates, one card each. «خطتي» already holds one program (a student
+  // who saved her track earlier), so its count reads 1 in the header from the start, and 2 after the save below.
+  await go("/");
+  await b.js(`localStorage.setItem("wadih:plan", JSON.stringify({ v: 1, items: [{ type: "program", id: "${F.plan_program}", status: "preparing", updated: "2026-11-01" }] }))`);
   await go("/");
   rects.home = need(await b.js(`(() => {
     const B = ${BOX};
@@ -158,29 +171,33 @@ async function capture() {
     return { chart: B(chart), readout: B(chart.querySelector('[data-chart-readout]')), stars,
       toggle: B(document.querySelector('[data-filters-toggle]')) };
   })()`), "the الرواد chart");
-  if (!rects.rw.toggle) throw new Error("not found on the site: the filters button");
+  // On a phone the filters fold behind a button; on a desktop they're always open.
+  if (mobile && !(rects.rw.toggle && rects.rw.toggle.w)) throw new Error("not found on the site: the filters button");
+  if (!mobile) rects.rw.toggle = null;
   const star = rects.rw.stars.find((s) => s.rank === F.star_rank) || rects.rw.stars[0];
   rects.rw.star = star;
-  await full("rw0", rects.rw.toggle.y + 1400);
+  rects.rw.panel = need(await box("document.querySelector('#filters-panel')"), "the filters");
+  const below = mobile ? rects.rw.toggle.y : rects.rw.panel.y;
+  await full("rw0", below + 1400);
   // Pointing at a star names it under the chart (universities.js).
   rects.rw.hover = await b.js(`(() => {
     const s = document.querySelector('.chart-star[data-rank="${star.rank}"]');
     s.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
     return document.querySelector('[data-chart-readout]').textContent.trim();
   })()`);
-  await full("rw1", rects.rw.toggle.y + 1400);
+  await full("rw1", below + 1400);
   await b.js(`document.querySelector('.chart-star[data-rank="${star.rank}"]').dispatchEvent(new PointerEvent('pointerout', { bubbles: true }))`);
 
   // The filters, opened on the same page, then each menu's real options with them.
-  await b.js("document.querySelector('[data-filters-toggle]').click()");
+  await b.js("(() => { const t = document.querySelector('[data-filters-toggle]'); if (t && t.offsetParent) t.click(); })()");
   await sleep(400);
   const reopen = async () => {
     // A whole-page capture resizes the page for a moment, which can fold the panel again.
-    await b.js(`(() => { const t = document.querySelector('[data-filters-toggle]'); if (t.getAttribute('aria-expanded') !== 'true') t.click(); })()`);
+    await b.js(`(() => { const t = document.querySelector('[data-filters-toggle]'); if (t && t.offsetParent && t.getAttribute('aria-expanded') !== 'true') t.click(); })()`);
     await sleep(300);
   };
   const state = async () => ({
-    toggle: need(await box("document.querySelector('[data-filters-toggle]')"), "the filters button"),
+    toggle: mobile ? need(await box("document.querySelector('[data-filters-toggle]')"), "the filters button") : null,
     track: need(await box("document.querySelector('#track')"), "#track"),
     field: need(await box("document.querySelector('#field')"), "#field"),
     country: need(await box("document.querySelector('#country')"), "#country"),
@@ -194,7 +211,6 @@ async function capture() {
     const shown = opts.filter((o) => o.parentElement.tagName !== 'OPTGROUP' || o.parentElement.dataset.track === track);
     return { items: shown.map((o) => o.textContent.trim()), current: shown.findIndex((o) => o.selected), pick: shown.findIndex((o) => o.value === '${value}') };
   })()`);
-  const TRACK_Y = 190;
   await reopen();
   rects.f0 = await state();
   menus.track = await options("track", F.track);
@@ -239,16 +255,39 @@ async function capture() {
     button: need(await box("document.querySelector('.uni-summary .actions .btn--primary') || document.querySelector('.actions .btn--primary')"), "the admissions button"),
     href: await b.js("(document.querySelector('.uni-summary .actions .btn--primary') || document.querySelector('.actions .btn--primary')).href"),
   };
+  rects.uni.save = need(await box("document.querySelector('.save-toggle[data-save]')"), "the «احفظ في خطتي» button");
+  rects.uni.planLink = need(await box("document.querySelector('[data-mylist-link]')"), "the header's «خطتي» link");
   await full("uni", rects.uni.button.y + 900);
+
+  // «احفظ في خطتي»: the same page saved (the button's label, the note under it, the header's count), then «خطتي».
+  await b.js("document.querySelector('.save-toggle[data-save]').click()");
+  await sleep(700);
+  rects.uni.note = await box("document.querySelector('[data-save-note]:not([hidden])')");
+  rects.uni.count = await b.js("(document.querySelector('[data-mylist-count]') || {}).textContent || ''");
+  await full("uniS", Math.max(H, rects.uni.save.y + 700));
+  await go("/my-plan");
+  for (let i = 0; i < 40 && !(await b.js("!!document.querySelector('[data-mylist-rows]:not([hidden]) li')")); i++) await sleep(250);
+  await sleep(600);
+  rects.plan = need(await b.js(`(() => {
+    const B = ${BOX};
+    const rows = [...document.querySelectorAll('[data-mylist-rows] > li')];
+    if (!rows.length) return null;
+    const mine = rows.find((r) => r.querySelector('a[href*="/${F.university}"]')) || rows[0];
+    const st = mine.querySelector('select, .status, [data-status]');
+    const hub = document.querySelector('[data-plan-hub]:not([hidden])');
+    return { title: B(document.querySelector('.mylist-header h1')), hub: hub ? B(hub) : null, rows: rows.map(B), mine: B(mine), status: st ? B(st) : null };
+  })()`), "the rows of «خطتي»");
+  const lastRow = rects.plan.rows[rects.plan.rows.length - 1];
+  await full("plan", Math.max(H, lastRow.y + lastRow.h + 300));
 
   // Where that button goes: the university's own page, as a student's phone would open it.
   await go(rects.uni.href);
   rects.official = { url: await b.js("location.href"), host: await b.js("location.hostname") };
   await shot("official");
 
-  writeFileSync(join(SHOTS, "screens.json"), JSON.stringify({ W, H, DSF, site: SITE, captured: new Date().toISOString(), screens, rects, menus }, null, 2));
+  writeFileSync(join(SHOTS, "screens.json"), JSON.stringify({ fmt, W, H, DSF, site: SITE, captured: new Date().toISOString(), screens, rects, menus }, null, 2));
   await b.close();
-  console.log(`captured ${Object.keys(screens).length} screens; the button opens ${rects.official.host}; hovering star ${star.rank} reads «${rects.rw.hover}»`);
+  console.log(`${fmt}: captured ${Object.keys(screens).length} screens; the button opens ${rects.official.host}; hovering star ${star.rank} reads «${rects.rw.hover}»`);
 }
 
 // ---------- 2. The plan: scene times on the beat, stretched to fit any voice clips ----------
@@ -318,55 +357,96 @@ function copyInto(dir, files) {
 function remotion(args) {
   execFileSync("npx", ["remotion", ...args], { cwd: VIDEO, stdio: "inherit", shell: true });
 }
+// The free Mixkit files the soundtrack uses (explainer_audio.json): downloaded once, kept out of git.
+async function fetchAudio() {
+  const cfg = JSON.parse(readFileSync(join(ROOT, "marketing", "src", "explainer_audio.json"), "utf8"));
+  const dir = join(ASSETS, "mixkit");
+  mkdirSync(join(dir, "sfx"), { recursive: true });
+  const get = async (url, to) => {
+    const r = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+    if (!r.ok) return false;
+    writeFileSync(to, Buffer.from(await r.arrayBuffer()));
+    return true;
+  };
+  if (!existsSync(join(dir, cfg.music.file))) {
+    console.log(`downloading «${cfg.music.title}» from Mixkit`);
+    if (!(await get(cfg.music.url, join(dir, cfg.music.file)))) throw new Error(`could not download ${cfg.music.url}`);
+  }
+  for (const sfx of cfg.sfx) {
+    if (["wav", "mp3"].some((e) => existsSync(join(dir, "sfx", `${sfx.id}.${e}`)))) continue;
+    const base = `https://assets.mixkit.co/active_storage/sfx/${sfx.id}/${sfx.id}`;
+    console.log(`downloading Mixkit sound ${sfx.id} (${sfx.title})`);
+    if (!(await get(`${base}.wav`, join(dir, "sfx", `${sfx.id}.wav`))) && !(await get(`${base}-preview.mp3`, join(dir, "sfx", `${sfx.id}.mp3`)))) throw new Error(`could not download Mixkit sound ${sfx.id}`);
+  }
+  return { cfg, dir };
+}
+
 async function render() {
-  const cap = JSON.parse(readFileSync(join(SHOTS, "screens.json"), "utf8"));
   const p = plan();
-  const data = { plan: p, screens: cap.screens, rects: cap.rects, menus: cap.menus, text: SCRIPT.screen, chat: chatConfig() };
   const mascot = join(ASSETS, "..", "waddah");
   for (const pose of POSES) if (!existsSync(join(mascot, `${pose}.webp`))) throw new Error(`وضّاح's pose is missing: marketing/assets/waddah/${pose}.webp`);
-  copyInto(join(PUB, "shots"), Object.values(cap.screens).map((s) => [join(SHOTS, s.file), s.file]));
   const fonts = join(ROOT, "app", "static", "fonts");
   copyInto(join(PUB, "fonts"), readdirSync(fonts).filter((f) => f.endsWith(".woff2")).map((f) => [join(fonts, f), f]));
   copyInto(join(PUB, "waddah"), POSES.map((pose) => [join(mascot, `${pose}.webp`), `${pose}.webp`]));
   copyFileSync(join(ROOT, "app", "static", "favicon.svg"), join(PUB, "logo.svg"));
-  writeFileSync(join(PUB, "data.json"), JSON.stringify(data));
+  for (const old of ["data.json", "shots", "soundtrack.wav", "sfx-only.wav"]) rmSync(join(PUB, old), { recursive: true, force: true });
+  // Both films' data are always written (the composition imports both); only the asked-for ones are rendered.
+  const datas = {};
+  for (const fmt of Object.keys(FORMATS)) {
+    const capDir = join(ASSETS, FORMATS[fmt].dir), capFile = join(capDir, "screens.json");
+    if (!existsSync(capFile)) throw new Error(`no ${fmt} capture yet: run without --skip-capture`);
+    const cap = JSON.parse(readFileSync(capFile, "utf8"));
+    datas[fmt] = { fmt, plan: p, screens: cap.screens, rects: cap.rects, menus: cap.menus, text: SCRIPT.screen, chat: chatConfig(), filters: F };
+    copyInto(join(PUB, `shots-${fmt}`), Object.values(cap.screens).map((s) => [join(capDir, s.file), s.file]));
+    writeFileSync(join(PUB, `data-${fmt}.json`), JSON.stringify(datas[fmt]));
+  }
   const { buildTimeline } = await import(pathToFileURL(join(VIDEO, "src", "timeline.mjs")).href);
-  const tl = buildTimeline(data);
   const voiced = p.scenes.flatMap((s) => s.lines).filter((l) => l.voice).length;
   console.log(`${p.total.toFixed(1)} s, ${voiced} voice clip(s), ${FPS} fps`);
 
   if (STILLS) {
-    const dir = join(OUT, "explainer-stills");
-    rmSync(dir, { recursive: true, force: true });
-    const frames = STILLS.split(",").map((s) => Math.round(Number(s) * FPS));
-    mkdirSync(dir, { recursive: true });
-    const props = join(dir, "props.json");
-    writeFileSync(props, JSON.stringify({ audio: null }));
-    remotion(["render", "WadihExplainer", dir, "--sequence", `--frames=${frames.join(",")}`, "--image-format=png", `--props=${props}`, "--log=error"]);
-    rmSync(props);
-    console.log(`stills in ${dir}`);
+    for (const fmt of FMTS) {
+      const dir = join(OUT, `explainer-stills-${fmt}`);
+      rmSync(dir, { recursive: true, force: true });
+      mkdirSync(dir, { recursive: true });
+      const frames = STILLS.split(",").map((x) => Math.round(Number(x) * FPS));
+      const props = join(dir, "props.json");
+      writeFileSync(props, JSON.stringify({ audio: null }));
+      remotion(["render", FORMATS[fmt].comp, dir, "--sequence", `--frames=${frames.join(",")}`, "--image-format=png", `--props=${props}`, "--log=error"]);
+      rmSync(props);
+      console.log(`stills in ${dir}`);
+    }
     return;
   }
 
-  const music = ["mp3", "wav", "m4a"].map((e) => join(ASSETS, `music.${e}`)).find(existsSync) || null;
-  soundtrack(p, tl.events, join(PUB, "soundtrack.wav"), { music, sfxOnly: join(PUB, "sfx-only.wav") });
+  // The music: free Mixkit files by default; --synth keeps the score synthesised in explainer_music.mjs (and the voice).
+  const audio = argv.includes("--synth") ? null : await fetchAudio();
   mkdirSync(OUT, { recursive: true });
-  const out = join(OUT, `wadih-explainer-ar-9x16${VOICE ? `-${VOICE}` : ""}.mp4`);
-  // The same picture with the sounds but no music (Shotcraft's rule: so a licensed track can go under it later).
-  const swap = (wav, to) => execFileSync("ffmpeg", ["-y", "-v", "error", "-i", out, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-shortest", "-movflags", "+faststart", to]);
-  if (AUDIO_ONLY) {
-    if (!existsSync(out)) throw new Error("no video to put the soundtrack in: run without --audio-only first");
-    if (Math.abs(probe(out) - p.total) > 0.1) throw new Error("the timing changed (a new voice clip?): run without --audio-only");
-    const tmp = out.replace(/\.mp4$/, ".tmp.mp4");
-    swap(join(PUB, "soundtrack.wav"), tmp);
-    rmSync(out);
-    renameSync(tmp, out);
-  } else {
-    remotion(["render", "WadihExplainer", out, "--codec=h264", "--crf=17", "--pixel-format=yuv420p", "--audio-codec=aac", "--audio-bitrate=256k", "--log=error"]);
+  for (const fmt of FMTS) {
+    const tl = buildTimeline(datas[fmt]);
+    const wav = join(PUB, `soundtrack-${fmt}.wav`), sfx = join(PUB, `sfx-only-${fmt}.wav`);
+    if (audio) mixkitSoundtrack(p, tl.events, { fmt, cfg: audio.cfg, dir: audio.dir, file: wav, sfxOnly: sfx });
+    else {
+      const music = ["mp3", "wav", "m4a"].map((e) => join(ASSETS, `music.${e}`)).find(existsSync) || null;
+      soundtrack(p, tl.events, wav, { music, sfxOnly: sfx });
+    }
+    const out = join(OUT, `wadih-explainer-ar-${FORMATS[fmt].out}${VOICE ? `-${VOICE}` : ""}.mp4`);
+    // The same picture with the sounds but no music (Shotcraft's rule: so a licensed track can go under it later).
+    const swap = (from, to) => execFileSync("ffmpeg", ["-y", "-v", "error", "-i", out, "-i", from, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-shortest", "-movflags", "+faststart", to]);
+    if (AUDIO_ONLY) {
+      if (!existsSync(out)) throw new Error(`no ${fmt} video to put the soundtrack in: run without --audio-only first`);
+      if (Math.abs(probe(out) - p.total) > 0.1) throw new Error("the timing changed: run without --audio-only");
+      const tmp = out.replace(/\.mp4$/, ".tmp.mp4");
+      swap(wav, tmp);
+      rmSync(out);
+      renameSync(tmp, out);
+    } else {
+      remotion(["render", FORMATS[fmt].comp, out, "--codec=h264", "--crf=17", "--pixel-format=yuv420p", "--audio-codec=aac", "--audio-bitrate=256k", "--log=error"]);
+    }
+    swap(sfx, out.replace(/\.mp4$/, "-no-music.mp4"));
+    console.log(`wrote ${out} (and …-no-music.mp4)`);
   }
-  swap(join(PUB, "sfx-only.wav"), out.replace(/\.mp4$/, "-no-music.mp4"));
-  console.log(`wrote ${out} (and …-no-music.mp4)`);
 }
 
-if (!SKIP_CAPTURE && !AUDIO_ONLY) await capture();
+if (!SKIP_CAPTURE && !AUDIO_ONLY) for (const f of FMTS) await capture(f);
 if (!argv.includes("--capture-only")) await render();

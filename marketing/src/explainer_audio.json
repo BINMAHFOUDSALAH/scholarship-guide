@@ -1,0 +1,29 @@
+{
+  "_note": "The explainer's music and sounds (decision 094): free Mixkit files under the Mixkit Stock Music Free License and the Mixkit Sound Effects Free License (https://mixkit.co/license/, read 2026-11-07: royalty free, no attribution required; not for CDs, DVDs, video games or TV/radio broadcast). The files stay out of git (marketing/assets/ is ignored): explainer.mjs downloads any that are missing into marketing/assets/explainer/mixkit/. gain is each sound's level after it is normalised to its own peak; role is the video event it plays on.",
+  "license": "https://mixkit.co/license/",
+  "read": "2026-11-07",
+  "music": { "id": 1051, "title": "A Peaceful World", "artist": "Michael Ramir C.", "url": "https://assets.mixkit.co/music/1051/1051.mp3", "file": "music-1051.mp3" },
+  "sfx": [
+    { "id": 1113, "title": "Mouse click close", "role": "click", "gain": 0.5 },
+    { "id": 2997, "title": "Clear mouse clicks", "role": "click", "gain": 0.42 },
+    { "id": 2573, "title": "Interface option select", "role": "open", "gain": 0.3 },
+    { "id": 3005, "title": "Explainer video pops whoosh light pop", "role": "pop", "gain": 0.45 },
+    { "id": 1530, "title": "Paper slide", "role": "paper", "gain": 0.45 },
+    { "id": 2380, "title": "Paper quick movement", "role": "paper", "gain": 0.42 },
+    { "id": 1104, "title": "Page turn single", "role": "paper", "gain": 0.4 },
+    { "id": 2386, "title": "Pages of paper moving", "role": "paper", "gain": 0.38 },
+    { "id": 1489, "title": "Air woosh", "role": "whoosh", "gain": 0.42 },
+    { "id": 175, "title": "Short transition sweep", "role": "swipe", "gain": 0.22 },
+    { "id": 175, "title": "Short transition sweep", "role": "wheel", "gain": 0.12 },
+    { "id": 166, "title": "Fast small sweep transition", "role": "whip", "gain": 0.4 },
+    { "id": 1393, "title": "Smartphone typing", "role": "type-tall", "gain": 0.32 },
+    { "id": 1376, "title": "Typing on an electronic device", "role": "type-wide", "gain": 0.3 },
+    { "id": 2354, "title": "Message pop alert", "role": "send", "gain": 0.3 },
+    { "id": 2356, "title": "Dry pop up notification alert", "role": "recv", "gain": 0.28 },
+    { "id": 2578, "title": "Opening software interface", "role": "load", "gain": 0.22 },
+    { "id": 2350, "title": "Magic sparkle whoosh", "role": "twinkle", "gain": 0.22 },
+    { "id": 1120, "title": "Modern click box check", "role": "save", "gain": 0.42 },
+    { "id": 2867, "title": "Confirmation tone", "role": "light", "gain": 0.2 },
+    { "id": 2489, "title": "Arabian mystery harp notification", "role": "shimmer", "gain": 0.4 }
+  ]
+}

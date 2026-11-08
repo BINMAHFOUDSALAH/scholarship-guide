@@ -6,6 +6,8 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-07
 
+**2026-11-07 (decision 094, owner):** the explainer in two formats from one script: 9:16 on the phone site and 16:9 on the desktop site (a browser window with its address bar, the words in a right-hand column, وضّاح's chat as its own card). New: a «خطتي» scene (save, the light to «خطتي», the plan); «وقريبًا…» before وضّاح; «خريطة جامعات الرواد.». Music and sounds now free Mixkit files («A Peaceful World», edited to the picture; 20 sounds), −16 LUFS. The female voice was tried and dropped. Not checked: the sound by ear, real devices.
+
 **2026-11-07 (decision 093, owner):** وضّاح's identity on the site: the owner's mascot beside his name, and the homepage teaser rebuilt on the owner's paper-cut picture of وضّاح helping a student (its own paper, both themes; a phone crop; Arabic and English descriptions). The night band, its dawn (`waddah_dawn`) and the three-agent drawing are retired. Poses kept in `marketing/assets/waddah/` for later. Verified: pytest 807, English leaks 0, the browser at phone and desktop widths. Not committed (the branch holds the explainer's PR, on hold).
 
 **2026-11-07 (decision 092, owner):** the explainer rebuilt in Remotion (`marketing/video/`), hosted by وضّاح's new mascot (seven poses: corner host during the tour, cheering on the reveal, beside the phone in the chat, waving at the end), opening with «تفكّر بالابتعاث والدراسة بالخارج؟». Our Hijaz score made warmer (B♭ and F major in the chorus, riq, Gulf claps), the sounds subtler; a no-music cut too. Skills installed at user level: Remotion, Video Shotcraft, ElevenLabs (unused: no account). `explainer_stage.html` retired. Not checked: the music by ear, a real phone.

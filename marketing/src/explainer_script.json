@@ -1,5 +1,5 @@
 {
-  "_note": "The explainer video's words (marketing/README.md §9, decisions 089–092). Arabic only. Times are in beats of the music (100 BPM: a beat is 0.6 s, a bar 4 beats); bars = the scene's length; \"until\" (optional) takes a line off screen early. One line = the words on screen and, in a voiced build, one clip (voice/ar/<voice>/<id>.wav); *stars* mark the words drawn in lime; \"say\" (optional) is what the voice reads when the plain text could be misread (vowel marks). Only what the live site shows: the rank is the place in the scholarship lists (not a world ranking), and not every university has its requirements yet, so no line says «لكل جامعة». وضّاح isn't live: the chat shows how it will answer, from واضح's own pages and data. Its first answer is the Duolingo guide's own steps (checked against the page at build time); its second is read from data/university_details/ at build time, never typed here.",
+  "_note": "The explainer video's words (marketing/README.md §9, decisions 089–092). Arabic only. Two films from these words (decision 094): 9:16 on the phone site, 16:9 on the desktop site. Times are in beats of the music (100 BPM: a beat is 0.6 s, a bar 4 beats); bars = the scene's length; \"until\" (optional) takes a line off screen early. One line = the words on screen and, in a voiced build, one clip (voice/ar/<voice>/<id>.wav); *stars* mark the words drawn in lime; \"say\" (optional) is what the voice reads when the plain text could be misread (vowel marks). Only what the live site shows: the rank is the place in the scholarship lists (not a world ranking), and not every university has its requirements yet, so no line says «لكل جامعة». وضّاح isn't live: the chat shows how it will answer, from واضح's own pages and data. Its first answer is the Duolingo guide's own steps (checked against the page at build time); its second is read from data/university_details/ at build time, never typed here.",
   "bpm": 100,
   "scenes": [
     {
@@ -122,13 +122,24 @@
       ]
     },
     {
+      "id": "plan",
+      "bars": 2.5,
+      "lines": [
+        {
+          "id": "16",
+          "at": 0.4,
+          "text": "واحفظها في *خطتي*، لتتابع حالتها."
+        }
+      ]
+    },
+    {
       "id": "waddah",
       "bars": 3,
       "lines": [
         {
           "id": "12",
-          "at": 0.6,
-          "text": "وشيءٌ أخير…"
+          "at": 1.4,
+          "text": "وقريبًا…"
         }
       ]
     },
@@ -157,7 +168,7 @@
         {
           "id": "15",
           "at": 0.5,
-          "text": "ابدأ الآن، *مجانًا*."
+          "text": "واضح متاح الآن، *مجانًا*."
         }
       ]
     }
@@ -188,13 +199,14 @@
     "q2": "وكم تطلب جامعة مينيسوتا؟",
     "a2_university": "university-of-minnesota-twin-cities",
     "a2_test": "duolingo",
-    "a2_prefix": "الحد الأدنى في جامعة مينيسوتا:"
+    "a2_prefix": "الحد الأدنى لدولينجو في جامعة مينيسوتا:"
   },
   "filters": {
     "track": "emdad",
     "field": "business-law",
     "country": "US",
     "university": "university-of-minnesota-twin-cities",
-    "star_rank": "1"
+    "star_rank": "1",
+    "plan_program": "emdad"
   }
 }
