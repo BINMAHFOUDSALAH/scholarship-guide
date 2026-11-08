@@ -4,7 +4,7 @@ The first ad for واضح: a 30-second vertical video (plus 15s and 6s cutdowns)
 
 This folder is separate from the website: nothing in `app/` uses it. Only the scripts in `src/` and this guide are in git; the media stays on the owner's laptop.
 
-**Also here:** the explainer video (explorer, filters, requirements and dates, وضّاح), built and $0, waiting only for its Arabic voice: [§9](#9-the-explainer-video-decision-089-2026-11-07).
+**Also here:** the explainer video (Remotion, hosted by وضّاح's mascot: the programs, the الرواد map, the explorer, requirements and dates, the official page, وضّاح's chat), Arabic, $0; a voiced cut is optional: [§9](#9-the-explainer-video-decisions-089092-2026-11-07).
 
 **Status (2026-10-12): paused, no budget for paid tools yet.**
 - Built and verified: the real site footage, captions, end card, and the build pipeline.
@@ -201,14 +201,20 @@ All 9:16 at 1080×1920, H.264 + AAC, captions burned in (most people watch muted
 - Snapchat in Saudi Arabia (25M+ monthly users, 90% aged 13–34), Gulf News: https://gulfnews.com/world/gulf/saudi/snapchat-dominates-among-saudi-youth-with-90-of-users-aged-13-34-1.500043687
 - **Not verified:** TikTok's exact rule on AI likenesses of minors. Its guidelines page didn't render for Claude, and the claim comes from a third-party blog: https://www.cinerads.com/blog/tiktok-ai-content-policy. The ad avoids identifiable AI faces either way. Check TikTok's own guidelines before any paid TikTok ad.
 
-## 9. The explainer video (decision 089, 2026-11-07)
+## 9. The explainer video (decisions 089–092, 2026-11-07)
 
-A 54-second vertical video (1080×1920) in Arabic and in English, told by **وضّاح's own agent** from the homepage teaser
-(the visor with two lights and the light on its antenna). It shows four things, all on real captures of the site:
-1. the universities explorer;
-2. its filters (المسار، المجال، الدولة) and the universities in their order on the track's list;
-3. a university's English tests and next deadline, with the official source;
-4. وضّاح «قادم في ديسمبر» in the teaser's own night scene.
+A 77-second vertical video (1080×1920, 60 fps), **in Arabic**, made with **Remotion** and hosted by **وضّاح's mascot**
+(decision 092). The camera follows a cursor through the real site. In order:
+1. **The question:** «تفكّر بالابتعاث والدراسة بالخارج؟», with a route drawn from home to a pin far away.
+2. **The mess:** tabs, PDFs and notes pile up («قوائم… شروط… مواعيد… في كل مكان.»). One swipe clears them.
+3. **The logo:** «كل هذا، في مكان واحد.», وضّاح waving under it. From here he stands in a corner and guides the tour.
+4. **The homepage:** «الآن», the programs and their status, then the other programs.
+5. **The الرواد star map:** the stars light up; the cursor points at one and the line under the chart names it.
+6. **The filters,** opened under the map: إمداد, الأعمال والإدارة والقانون, الولايات المتحدة الأمريكية.
+7. **The list,** down to the **University of Minnesota**, then its page: its next date, then its English tests.
+8. **The official page:** «صفحة القبول في موقع الجامعة» opens admissions.tc.umn.edu (captured live).
+9. **وضّاح:** «وشيءٌ أخير…», he rises and cheers on the drop with his name, «قادم في ديسمبر», then his chat: «كيف أستعد لاختبار دولينجو؟» and «وكم تطلب جامعة مينيسوتا؟», with him beside the phone.
+10. **The end card:** wadihguide.com, وضّاح waving.
 
 **Make it ($0, on your laptop).** Start the site, then:
 
@@ -216,40 +222,45 @@ A 54-second vertical video (1080×1920) in Arabic and in English, told by **وض
 node marketing/src/explainer.mjs --site http://127.0.0.1:8000
 ```
 
-- It re-captures the site each time (so dates on screen are today's), then writes `marketing/out/wadih-explainer-ar-9x16.mp4` and `-en-`.
-- `--lang ar` builds one language only.
-- `--stills 3,20,45` writes stills at those seconds (into `marketing/out/explainer-stills/`) instead of the video.
+- It re-captures the site and the official page (Edge), fills `marketing/video/public/`, builds the soundtrack, and has Remotion render `marketing/out/wadih-explainer-ar-9x16.mp4` plus `…-no-music.mp4` (the same picture and sounds without the music).
+- `--stills 3,20,45` renders stills at those seconds (into `marketing/out/explainer-stills/`).
+- `--skip-capture` reuses the last screens; `--capture-only` only captures.
+- `--audio-only` rebuilds just the music and sounds and swaps them into the last video (seconds, not minutes).
+- `--voice nourah` adds the voice clips in `marketing/assets/explainer/voice/ar/nourah/` and writes `…-9x16-nourah.mp4`.
+- To preview and scrub it: `cd marketing/video` then `npm run dev` (Remotion Studio), after one run of the command above.
+- First time on a new machine: `npm install` in `marketing/video/` (Remotion, about 310 MB, not in git). Remotion downloads its own headless Chrome on the first render. Its licence is free for an individual.
 
 **The pieces.**
-- `explainer_script.json` holds the words, one line per caption and voice clip. Edit them there.
-- `explainer_stage.html` is the animated page Edge films frame by frame.
-- `explainer.mjs` captures the site, builds the music (synthesised in the script, so no licence question), films and encodes.
+- `explainer_script.json`: the words, timed in beats of the music (100 BPM), the chat, and the filters and university it shows.
+- `marketing/video/src/timeline.mjs`: every time in the film (camera, cursor, clicks, menus, rings, the mascot's poses, the chat), from the captured data. The picture and the music both read it.
+- `marketing/video/src/Explainer.tsx`: the Remotion composition (the scenes, the phone, the chat, the mascot); `styles.ts` its look; `fonts.ts` the site's own fonts.
+- `explainer_music.mjs`: the music, synthesised in code, so there's no licence question. Maqam Hijaz on D over a modern beat: an oud-like lead, a darbuka playing maqsum, a riq, Gulf handclaps, drums, bass, pads, bells, reverb, plus a soft sound for each click, swipe, keystroke and message.
+- `explainer.mjs`: captures the site, fills `public/`, builds the soundtrack, calls Remotion.
+- `make_voice_humain.mjs`: makes the voice clips with HUMAIN Voice.
+- وضّاح's poses: `marketing/assets/waddah/` (wave, present, point, clipboard, cheer, laptop, read), the owner's files.
+
+**Your own music.** To use a track you're licensed to use (for example from YouTube Audio Library), save it as `marketing/assets/explainer/music.mp3`. It replaces the synthesised music; the click and swipe sounds stay.
 
 **Honesty rules.**
-- **The rank is not a world ranking.** It is the university's place in the track's list (the site says so under every list). The words say «بترتيبها في قائمة المسار».
-- **No line says «لكل جامعة».** On 2026-11-07, 184 of 290 universities had their requirements.
-- The وضّاح scene uses only the teaser's own words (`data/waddah.json`).
+- **The rank is not a world ranking.** It is the university's place in the scholarship lists (the site says so under every list). The words say «بترتيبها في قوائم الابتعاث».
+- **No line says «لكل جامعة».** Only some universities have their requirements yet.
+- **The mess is generic.** Its tabs, PDFs and notes hold no real list, date or score.
+- **وضّاح isn't live, and the chat says so** («قادم في ديسمبر» in its header). His answers come from the site, never typed in by hand: the first is the Duolingo guide's own three steps (the build stops if the page stops saying them), the second is Minnesota's sourced Duolingo minimum from `data/university_details/`. Each has its source's domain on a chip.
+- **Dated screens.** The program status («مفتوح الآن حتى 15 نوفمبر 2026») and the official page's banner are what the sites showed on the day of the capture. Run it again before posting later.
 
 **Why not "Cartoon Claude".** ghost.fail's Cartoon Claude is a fan design by Theia Vogel (@voooooogel), not Anthropic's.
 - The page gives no licence.
 - It's drawn from Anthropic's logo, so using it in an ad could suggest Anthropic endorses واضح.
 - The owner chose our own agent instead.
 
-### The Arabic voice (not done yet)
+### The voice (optional)
 
-The owner wants a Saudi male voice with a Najdi accent from **HUMAIN Voice** (voice.humain.com, read 2026-11-07).
+HUMAIN Voice (voice.humain.com) has Najdi voices (`ars` in its list): two male (`mul_abdullah`, `mul_abdulaziz`) and two female (`mul_nourah`, `mul_sara`). The second cut used Abdulaziz; its clips are in `voice/ar/` and are not used by the third cut. **Not answered:** whether the voices can be used commercially. Ask HUMAIN before posting a voiced cut.
 
-**What its pages say:**
-- Three APIs: speech-to-text, text-to-speech, speech-to-speech.
-- Seven multilingual voices, one of them `mul_youssef`. The docs say each voice has a dialect, but they don't list which. So **a Najdi male voice isn't confirmed**: listen first.
-- A "Try it" playground, no sign-up needed.
-- Plans: Free has 5,000 credits, no card; Starter is 49 SAR/month for 75,000 credits.
-- **Not answered:** whether the voices can be used commercially. The FAQ asks it, but no answer showed. Its "console" link pointed to `localhost:3000`, and the docs say API keys come "through your organization's approved access flow". **Ask HUMAIN before using a voice in a public ad.**
-
-**Steps:**
-1. On voice.humain.com, open **Try it → Text to Speech**. Paste line `01` from `explainer_script.json` (without the `*` marks) and try the voices. Pick the one that sounds Najdi.
-2. Ask HUMAIN (their contact form) whether the audio can be used in a free student site's social video.
-3. With a yes, make each Arabic line `01`–`11` with that voice. Use the playground if it lets you download, or the free plan's credits. Save them as `marketing/assets/explainer/voice/ar/01.wav` … `11.wav` (`.mp3` works too).
-4. Run `explainer.mjs --lang ar` again. Each scene grows to fit its clip, and the music steps back under the voice.
+**Steps** (the SDK is installed in `marketing/`, not in git; the key stays in your terminal):
+1. In PowerShell: `$env:HUMAIN_API_KEY = "<your key>"`.
+2. `node marketing/src/make_voice_humain.mjs --list` shows the voices and their ids.
+3. `node marketing/src/make_voice_humain.mjs --voice <id> --out nourah` makes every line into `voice/ar/nourah/`. Each line reads its `say` text when it has one (vowel marks, so «تتقدّم» isn't misread). Redo one line with `--line 06`.
+4. `node marketing/src/explainer.mjs --site http://127.0.0.1:8000 --voice nourah`. Each scene grows to fit its clip (in half bars, so the cuts stay on the beat), and the music steps back under the voice.
 
 **Other Saudi voices to compare** (vendor claims, not checked): SILMA (silma.ai), Munsit (munsit.com), Nabrah (nabrah.ai).

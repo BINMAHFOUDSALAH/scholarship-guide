@@ -1,71 +1,197 @@
 {
-  "_note": "The explainer video's words (marketing/README.md §9). One line = one caption = one voice clip (voice/<lang>/<id>.wav or .mp3, optional). *stars* mark the words drawn in lime. dur = the scene's length in seconds without a voice; with one, a scene grows to fit its clips. Only what the live site shows: the rank is the place in the track's list (the site's own note: not a world ranking), and not every university has its requirements yet (184 of 290 on 2026-11-07), so no line says «لكل جامعة».",
+  "_note": "The explainer video's words (marketing/README.md §9, decisions 089–092). Arabic only. Times are in beats of the music (100 BPM: a beat is 0.6 s, a bar 4 beats); bars = the scene's length; \"until\" (optional) takes a line off screen early. One line = the words on screen and, in a voiced build, one clip (voice/ar/<voice>/<id>.wav); *stars* mark the words drawn in lime; \"say\" (optional) is what the voice reads when the plain text could be misread (vowel marks). Only what the live site shows: the rank is the place in the scholarship lists (not a world ranking), and not every university has its requirements yet, so no line says «لكل جامعة». وضّاح isn't live: the chat shows how it will answer, from واضح's own pages and data. Its first answer is the Duolingo guide's own steps (checked against the page at build time); its second is read from data/university_details/ at build time, never typed here.",
+  "bpm": 100,
   "scenes": [
     {
-      "id": "hook", "dur": 4.2,
+      "id": "intro",
+      "bars": 1.5,
       "lines": [
-        { "id": "01", "at": 0.7, "ar": "بعد الثانوية… من أين تبدأ؟", "en": "After high school… where do you start?" }
+        {
+          "id": "00",
+          "at": 0.5,
+          "text": "تفكّر بالابتعاث والدراسة بالخارج؟",
+          "say": "تُفَكِّرُ بالابتعاثِ والدِّراسةِ بالخارج؟"
+        }
       ]
     },
     {
-      "id": "brand", "dur": 4.6,
+      "id": "chaos",
+      "bars": 2,
       "lines": [
-        { "id": "02", "at": 0.5, "ar": "واضح: دليل *مجاني* لطلاب الثانوية في السعودية.", "en": "Wadih: a *free* guide for Saudi high school students." }
+        {
+          "id": "01",
+          "at": 1.5,
+          "text": "قوائم…"
+        },
+        {
+          "id": "02",
+          "at": 3,
+          "text": "شروط…"
+        },
+        {
+          "id": "03",
+          "at": 4.5,
+          "text": "مواعيد…"
+        },
+        {
+          "id": "04",
+          "at": 5.75,
+          "text": "في كل مكان."
+        }
       ]
     },
     {
-      "id": "explorer", "dur": 5.2,
+      "id": "brand",
+      "bars": 1.5,
       "lines": [
-        { "id": "03", "at": 0.6, "ar": "في *مستكشف الجامعات*: جامعات قوائم الابتعاث في مكان واحد.", "en": "The *universities explorer*: the scholarship lists' universities, in one place." }
+        {
+          "id": "05",
+          "at": 1.5,
+          "text": "كل هذا، في *مكان واحد*."
+        }
       ]
     },
     {
-      "id": "filters", "dur": 7.0,
+      "id": "home",
+      "bars": 2.5,
       "lines": [
-        { "id": "04", "at": 0.3, "ar": "اختر *المسار*، و*المجال*، و*الدولة*…", "en": "Pick the *track*, the *field* and the *country*…" }
+        {
+          "id": "06",
+          "at": 1.5,
+          "text": "*البرامج*، ومتى تتقدّم على كلٍّ منها.",
+          "say": "البرامجُ، ومتى تَتَقَدَّمُ على كلٍّ منها."
+        }
       ]
     },
     {
-      "id": "results", "dur": 5.4,
+      "id": "map",
+      "bars": 2,
       "lines": [
-        { "id": "05", "at": 0.2, "ar": "…فترى الجامعات *بترتيبها* في قائمة المسار.", "en": "…and see the universities in their *order* on the track's list." }
+        {
+          "id": "07",
+          "at": 0.5,
+          "text": "جامعات *الرواد*، نجومًا على خريطة."
+        }
       ]
     },
     {
-      "id": "row", "dur": 6.4,
+      "id": "filters",
+      "bars": 4,
       "lines": [
-        { "id": "06", "at": 0.3, "ar": "وترى *اختبارات الإنجليزية* التي تطلبها الجامعة، و*أقرب موعد* فيها.", "en": "See a university's *English tests* and its *next deadline*." }
+        {
+          "id": "08",
+          "at": 1,
+          "text": "اختر *المسار* و*المجال* و*الدولة*…"
+        }
       ]
     },
     {
-      "id": "uni", "dur": 6.8,
+      "id": "results",
+      "bars": 2,
       "lines": [
-        { "id": "07", "at": 1.2, "ar": "وكل معلومة معها رابط *مصدرها الرسمي*.", "en": "And every fact links to its *official source*." }
+        {
+          "id": "09",
+          "at": 0.3,
+          "text": "…فتظهر الجامعات *بترتيبها* في قوائم الابتعاث."
+        }
       ]
     },
     {
-      "id": "waddah", "dur": 10.0,
+      "id": "uni",
+      "bars": 3,
       "lines": [
-        { "id": "08", "at": 1.0, "ar": "وقريبًا: *وضّاح*، دليلك الذكي في واضح.", "en": "Coming soon: *Waddah*, your AI guide on Wadih." },
-        { "id": "09", "at": 4.2, "ar": "اسأله عن الابتعاث والجامعات والاختبارات.", "en": "Ask it about scholarships, universities and tests." },
-        { "id": "10", "at": 7.2, "ar": "*قادم في ديسمبر.*", "en": "*Coming in December.*" }
+        {
+          "id": "10",
+          "at": 0.6,
+          "text": "*أقرب موعد* للتقديم، و*اختبارات اللغة*.",
+          "say": "أقربُ موعدٍ للتَّقديم، واختباراتُ اللغة."
+        }
       ]
     },
     {
-      "id": "end", "dur": 4.6,
+      "id": "official",
+      "bars": 2,
       "lines": [
-        { "id": "11", "at": 0.6, "ar": "ابدأ الآن، *مجانًا*.", "en": "Start now. It's *free*." }
+        {
+          "id": "11",
+          "at": 1.5,
+          "text": "وبضغطة، أنت في *موقعها الرسمي*."
+        }
+      ]
+    },
+    {
+      "id": "waddah",
+      "bars": 3,
+      "lines": [
+        {
+          "id": "12",
+          "at": 0.6,
+          "text": "وشيءٌ أخير…"
+        }
+      ]
+    },
+    {
+      "id": "chat",
+      "bars": 6,
+      "lines": [
+        {
+          "id": "13",
+          "at": 0.8,
+          "text": "اسأله عن أي خطوة في *رحلتك*…"
+        },
+        {
+          "id": "14",
+          "at": 12,
+          "until": 18,
+          "text": "…ويتابع معك، *سؤالًا بعد سؤال*."
+        }
+      ]
+    },
+    {
+      "id": "end",
+      "bars": 2.5,
+      "lines": [
+        {
+          "id": "15",
+          "at": 0.5,
+          "text": "ابدأ الآن، *مجانًا*."
+        }
       ]
     }
   ],
   "screen": {
-    "kicker": { "ar": "قريبًا في واضح", "en": "Coming to Wadih" },
-    "waddah": { "ar": "وضّاح", "en": "Waddah" },
-    "when": { "ar": "قادم في ديسمبر", "en": "is coming in December" },
-    "line": { "ar": "دليلك الذكي في واضح: اسأله عن الابتعاث والجامعات والاختبارات.", "en": "Your AI guide on Wadih: ask it about scholarships, universities and tests." },
-    "name": { "ar": "واضح", "en": "Wadih" },
-    "tagline": { "ar": "مستقبلك بعد الثانوية، بوضوح", "en": "Your future after high school, clearly" },
-    "free": { "ar": "مجاني", "en": "Free" },
-    "independent": { "ar": "دليل طلابي مستقل، لا يتبع أي جهة رسمية", "en": "An independent student guide, not affiliated with any official body" }
+    "name": "واضح",
+    "waddah": "وضّاح",
+    "when": "قادم في ديسمبر",
+    "line": "دليلك الذكي في واضح",
+    "independent": "دليل طلابي مستقل، لا يتبع أي جهة رسمية"
+  },
+  "chat": {
+    "greeting": "أهلًا، أنا وضّاح. اسألني عن الابتعاث والجامعات والاختبارات.",
+    "placeholder": "اسأل وضّاح…",
+    "q1": "كيف أستعد لاختبار دولينجو؟",
+    "a1": [
+      "جرّب الاختبار التجريبي المجاني لتعرف مستواك.",
+      "تأكد أن جامعاتك تقبله، وبأي درجة.",
+      "اختبر قبل مواعيد التقديم بوقت كافٍ."
+    ],
+    "a1_page": "content/resources/duolingo.md",
+    "a1_check": [
+      "الاختبار التجريبي المجاني",
+      "تأكد أن جامعاتك تقبله، وبأي درجة",
+      "اختبر قبل مواعيد التقديم بوقت كافٍ"
+    ],
+    "a1_source": "https://englishtest.duolingo.com/applicants",
+    "q2": "وكم تطلب جامعة مينيسوتا؟",
+    "a2_university": "university-of-minnesota-twin-cities",
+    "a2_test": "duolingo",
+    "a2_prefix": "الحد الأدنى في جامعة مينيسوتا:"
+  },
+  "filters": {
+    "track": "emdad",
+    "field": "business-law",
+    "country": "US",
+    "university": "university-of-minnesota-twin-cities",
+    "star_rank": "1"
   }
 }

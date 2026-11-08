@@ -1,34 +1,46 @@
-// The explainer video (marketing/README.md §9): the universities explorer, its filters and order, a university's
-// requirements and next date with their sources, and وضّاح coming in December, told by وضّاح's own agent.
-// $0: Microsoft Edge (already installed) films explainer_stage.html frame by frame over the DevTools protocol,
-// ffmpeg encodes. Nothing is uploaded anywhere.
+// The explainer video (marketing/README.md §9, decisions 089–091): the mess students start from, then the site's best
+// features, each opened with a cursor: the programs and when to apply, the الرواد star map, the explorer's filters,
+// the universities in their order, the University of Minnesota's next date and English tests, its official admissions
+// page one tap away, then وضّاح «قادم في ديسمبر» answering two questions in a chat. Arabic only.
+// $0: Microsoft Edge (already installed) films explainer_stage.html frame by frame over the DevTools protocol, the
+// music is synthesised in explainer_music.mjs, ffmpeg encodes. Nothing is uploaded anywhere.
 //
 //   1. Start the site:  uvicorn app.main:app   (or the preview server)
-//   2. node marketing/src/explainer.mjs [--site http://127.0.0.1:8000] [--lang ar|en|both] [--skip-capture] [--stills 3,12,40]
+//   2. node marketing/src/explainer.mjs [--site http://127.0.0.1:8000] [--voice <folder>] [--skip-capture]
+//                                       [--stills 3,12,40] [--fps 60] [--audio-only]
 //
-// Output: marketing/out/wadih-explainer-<lang>-9x16.mp4 (1080×1920, 30 fps). Screens are re-captured from the site on
-// every run (so dates on screen are today's), into marketing/assets/explainer/<lang>/.
-// Words: explainer_script.json. Voice (optional): marketing/assets/explainer/voice/<lang>/<line id>.wav|.mp3; a scene
-// grows to fit its clips and the music ducks under them. Without clips the video is captions + music.
+// Output: marketing/out/wadih-explainer-ar-9x16.mp4 (1080×1920), or …-9x16-<voice>.mp4 with --voice. Screens are
+// re-captured from the site on every run (so dates on screen are today's), into marketing/assets/explainer/ar/; the
+// university's official page is captured live from its own site.
+// Words: explainer_script.json. Voice (optional, --voice nourah): marketing/assets/explainer/voice/ar/<folder>/<line id>.wav
+// (make_voice_humain.mjs makes them): a scene grows (in half bars, to stay on the beat) to fit its clips and the music
+// steps back under them. Without --voice the video has music and sounds only.
+// Music (optional): marketing/assets/explainer/music.mp3|.wav replaces the synthesised track (the sounds stay).
 
 import { spawn, execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { soundtrack } from "./explainer_music.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const argv = process.argv.slice(2);
 const opt = (name, dflt) => { const i = argv.indexOf(`--${name}`); return i >= 0 && argv[i + 1] ? argv[i + 1] : dflt; };
 const SITE = opt("site", "http://127.0.0.1:8000").replace(/\/$/, "");
-const LANGS = opt("lang", "both") === "both" ? ["ar", "en"] : [opt("lang")];
-const FPS = Number(opt("fps", "30"));
+const FPS = 60; // the composition's (marketing/video/src/Root.tsx)
 const STILLS = opt("stills", null);
+const VOICE = opt("voice", null);
 const SKIP_CAPTURE = argv.includes("--skip-capture");
+// Rebuild only the soundtrack and swap it into the last video (same timing only: no new voice clips).
+const AUDIO_ONLY = argv.includes("--audio-only");
 const EDGE = "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe";
 const ASSETS = join(ROOT, "marketing", "assets", "explainer");
+const SHOTS = join(ASSETS, "ar");
 const OUT = join(ROOT, "marketing", "out");
 const SCRIPT = JSON.parse(readFileSync(join(ROOT, "marketing", "src", "explainer_script.json"), "utf8"));
+const F = SCRIPT.filters;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const details = (id) => JSON.parse(readFileSync(join(ROOT, "data", "university_details", `${id}.json`), "utf8"));
 
 // ---------- Edge over the Chrome DevTools Protocol (as in capture_site.mjs) ----------
 async function edge(port, flags = []) {
@@ -75,300 +87,286 @@ async function edge(port, flags = []) {
 }
 
 // ---------- 1. Capture the site at phone size ----------
-const W = 390, H = 755, DSF = 2;
+// 390 CSS px wide on a 640 px screen; the page sits under a 52 px status bar, so 724 CSS px of it show.
+const W = 390, H = 724, DSF = 2;
 
-async function capture(lang) {
-  const dir = join(ASSETS, lang);
-  rmSync(dir, { recursive: true, force: true });
-  mkdirSync(dir, { recursive: true });
-  const b = await edge(9351, [`--lang=${lang}`]);
-  const metrics = (h = H) => b.send("Emulation.setDeviceMetricsOverride", { width: W, height: h, deviceScaleFactor: DSF, mobile: true });
+async function capture() {
+  rmSync(SHOTS, { recursive: true, force: true });
+  mkdirSync(SHOTS, { recursive: true });
+  const b = await edge(9351, ["--lang=ar"]);
+  const metrics = () => b.send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: DSF, mobile: true });
   await metrics();
   await b.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
   await b.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-color-scheme", value: "light" }, { name: "prefers-reduced-motion", value: "reduce" }] });
-  const pre = lang === "en" ? "/en" : "";
-  const screens = {}, rects = {};
+  const screens = {}, rects = {}, menus = {};
 
-  async function go(path) {
+  async function go(url) {
     const loaded = b.once("Page.loadEventFired");
-    await b.send("Page.navigate", { url: SITE + path });
-    await loaded;
+    await b.send("Page.navigate", { url: url.startsWith("http") ? url : SITE + url });
+    await Promise.race([loaded, sleep(25000)]);
     await b.js("document.fonts.ready.then(() => true)");
-    await sleep(700);
+    // Lazy images below the fold never load in a whole-page capture: load them all first (the program logos).
+    await b.js(`Promise.all([...document.images].map((i) => { i.loading = "eager"; return i.decode().catch(() => null); })).then(() => true)`);
+    await sleep(900);
   }
-  const scrollY = () => b.js("window.scrollY");
-  // The top of the page, as the phone shows it. (Edge at 2× density shifts any capture that doesn't start at the
-  // page's top, by the scroll or a clip's y, so every capture here starts at y = 0 and the stage does the scrolling.)
+  // Every capture starts at the page's top: Edge at 2× density shifts any capture that doesn't (by the scroll, or a
+  // clip's y), so the stage does all the scrolling.
   async function shot(name) {
     await b.js("window.scrollTo({ top: 0, behavior: 'instant' })");
     const { data } = await b.send("Page.captureScreenshot", { format: "png" });
-    writeFileSync(join(dir, `${name}.png`), Buffer.from(data, "base64"));
-    screens[name] = { file: `${name}.png`, h: H, vh: H, scroll: 0 };
+    writeFileSync(join(SHOTS, `${name}.png`), Buffer.from(data, "base64"));
+    screens[name] = { file: `${name}.png`, h: H, vh: H };
   }
-  // The page from the top down to maxH CSS px, as one tall image (the stage scrolls it).
   async function full(name, maxH) {
-    await b.js("window.scrollTo(0, 0)");
-    const h = Math.min(await b.js("document.documentElement.scrollHeight"), maxH);
+    await b.js("window.scrollTo({ top: 0, behavior: 'instant' })");
+    const h = Math.min(await b.js("document.documentElement.scrollHeight"), Math.ceil(maxH));
     const { data } = await b.send("Page.captureScreenshot", {
       format: "png", captureBeyondViewport: true, clip: { x: 0, y: 0, width: W, height: h, scale: 1 },
     });
-    writeFileSync(join(dir, `${name}.png`), Buffer.from(data, "base64"));
+    writeFileSync(join(SHOTS, `${name}.png`), Buffer.from(data, "base64"));
     await metrics();
-    screens[name] = { file: `${name}.png`, h, vh: H, scroll: 0 };
+    screens[name] = { file: `${name}.png`, h, vh: H };
   }
   // A visible element's box in page coordinates (CSS px).
-  const box = (expr) => b.js(`(() => { const e = ${expr}; if (!e) return null; const r = e.getBoundingClientRect();
-    return { x: r.x, y: r.y + window.scrollY, w: r.width, h: r.height }; })()`);
-  const need = (v, what) => { if (!v) throw new Error(`not found on the ${lang} site: ${what}`); return v; };
+  const BOX = `(e) => { if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.x, y: r.y + window.scrollY, w: r.width, h: r.height }; }`;
+  const box = (expr) => b.js(`(${BOX})(${expr})`);
+  const need = (v, what) => { if (!v) throw new Error(`not found on the site: ${what}`); return v; };
 
-  // The explorer, then its filters one by one.
-  await go(`${pre}/universities`);
-  rects.explorer = {
-    q: need(await box("document.querySelector('#q')"), "#q"),
-    toggle: need(await box("document.querySelector('[data-filters-toggle]')"), "the filters button"),
-  };
-  await shot("explorer");
-  // Tap «الفلاتر»: the panel opens below it. Captured whole (from the top), so the stage can scroll down to it.
+  // The homepage: «الآن», the programs with their dates, one card each.
+  await go("/");
+  rects.home = need(await b.js(`(() => {
+    const B = ${BOX};
+    const sec = document.querySelector('section.now');
+    if (!sec) return null;
+    const items = [...sec.querySelectorAll('.now-item')].map((it) => ({ card: B(it), status: B(it.querySelector('.now-status')) }));
+    return { now: B(sec.querySelector('h2')), items };
+  })()`), "the «الآن» section");
+  if (!rects.home.items.length || !rects.home.items[0].status) throw new Error("no program card with a status in «الآن»");
+  const lastCard = rects.home.items[rects.home.items.length - 1].card;
+  await full("home", lastCard.y + lastCard.h + 200);
+
+  // The الرواد page: its star chart (each star with its rank and name), the line under it, the filters button.
+  await go("/universities?track=arruaad");
+  rects.rw = need(await b.js(`(() => {
+    const B = ${BOX};
+    const chart = document.querySelector('[data-chart]');
+    if (!chart) return null;
+    const stars = [...chart.querySelectorAll('.chart-star')].map((s) => {
+      const r = B(s.querySelector('.chart-star-shape') || s);
+      return { rank: s.dataset.rank, name: s.dataset.name, x: r.x + r.w / 2, y: r.y + r.h / 2 };
+    });
+    return { chart: B(chart), readout: B(chart.querySelector('[data-chart-readout]')), stars,
+      toggle: B(document.querySelector('[data-filters-toggle]')) };
+  })()`), "the الرواد chart");
+  if (!rects.rw.toggle) throw new Error("not found on the site: the filters button");
+  const star = rects.rw.stars.find((s) => s.rank === F.star_rank) || rects.rw.stars[0];
+  rects.rw.star = star;
+  await full("rw0", rects.rw.toggle.y + 1400);
+  // Pointing at a star names it under the chart (universities.js).
+  rects.rw.hover = await b.js(`(() => {
+    const s = document.querySelector('.chart-star[data-rank="${star.rank}"]');
+    s.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    return document.querySelector('[data-chart-readout]').textContent.trim();
+  })()`);
+  await full("rw1", rects.rw.toggle.y + 1400);
+  await b.js(`document.querySelector('.chart-star[data-rank="${star.rank}"]').dispatchEvent(new PointerEvent('pointerout', { bubbles: true }))`);
+
+  // The filters, opened on the same page, then each menu's real options with them.
   await b.js("document.querySelector('[data-filters-toggle]').click()");
   await sleep(400);
-  // Each filter can reflow the page (الرواد's opening leaves when the track changes), so every state is held with
-  // the «المسار» menu at the same height on screen, and measured on its own.
-  const TRACK_Y = 200;
-  // A whole-page capture resizes the page for a moment, which can fold the panel again: reopen it if so.
   const reopen = async () => {
+    // A whole-page capture resizes the page for a moment, which can fold the panel again.
     await b.js(`(() => { const t = document.querySelector('[data-filters-toggle]'); if (t.getAttribute('aria-expanded') !== 'true') t.click(); })()`);
     await sleep(300);
   };
-  const selects = async () => ({
+  const state = async () => ({
+    toggle: need(await box("document.querySelector('[data-filters-toggle]')"), "the filters button"),
     track: need(await box("document.querySelector('#track')"), "#track"),
     field: need(await box("document.querySelector('#field')"), "#field"),
     country: need(await box("document.querySelector('#country')"), "#country"),
+    applied: await box("document.querySelector('.applied')"),
   });
-  rects.f0 = await selects();
-  await full("f0", 2400);
+  // The options a menu shows now (the field menu shows only the chosen track's group), and which one we pick.
+  const options = (id, value) => b.js(`(() => {
+    const s = document.getElementById('${id}');
+    const opts = [...s.options].filter((o) => !o.disabled && !o.hidden && !(o.parentElement.tagName === 'OPTGROUP' && (o.parentElement.disabled || o.parentElement.hidden)));
+    const track = document.getElementById('track').value;
+    const shown = opts.filter((o) => o.parentElement.tagName !== 'OPTGROUP' || o.parentElement.dataset.track === track);
+    return { items: shown.map((o) => o.textContent.trim()), current: shown.findIndex((o) => o.selected), pick: shown.findIndex((o) => o.value === '${value}') };
+  })()`);
+  const TRACK_Y = 190;
+  await reopen();
+  rects.f0 = await state();
+  menus.track = await options("track", F.track);
+  await full("f0", rects.f0.track.y + 2200);
   screens.f0.hold = Math.max(0, Math.round(rects.f0.track.y - TRACK_Y));
-  const choose = async (id, value, name) => {
+  const choose = async (id, value, name, nextId, nextValue) => {
     await b.js(`(() => { const s = document.getElementById('${id}'); s.value = '${value}'; s.dispatchEvent(new Event('change', { bubbles: true })); })()`);
-    await sleep(1200);
+    await sleep(1400);
     await reopen();
-    rects[name] = await selects();
-    await full(name, 2400);
-    screens[name].scroll = Math.max(0, Math.round(rects[name].track.y - TRACK_Y));
+    rects[name] = await state();
+    if (nextId) menus[nextId] = await options(nextId, nextValue);
+    await full(name, rects[name].track.y + 2600);
+    screens[name].hold = Math.max(0, Math.round(rects[name].track.y - TRACK_Y));
   };
-  await choose("track", "emdad", "f1");
-  await choose("field", "ict", "f2");
-  await choose("country", "GB", "f3");
+  await choose("track", F.track, "f1", "field", F.field);
+  await choose("field", F.field, "f2", "country", F.country);
+  await choose("country", F.country, "f3");
+  for (const [k, m] of Object.entries(menus)) if (m.pick < 0) throw new Error(`the ${k} menu has no option «${F[k]}»`);
 
-  // The results: the order on the track's list, then each row's English tests and next date.
-  await go(`${pre}/universities?track=emdad&field=ict&country=GB`);
+  // The results, in their order on the list, down to the University of Minnesota.
+  await go(`/universities?track=${F.track}&field=${F.field}&country=${F.country}`);
   rects.results = {
     applied: need(await box("document.querySelector('.applied')"), "the applied filters"),
-    explain: need(await box("document.querySelector('.result-explain')"), "the rank note"),
     rows: await b.js(`[...document.querySelectorAll('table.uni-table tbody tr')].map((tr) => {
-      const b = (e) => { if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.x, y: r.y + window.scrollY, w: r.width, h: r.height }; };
+      const b = ${BOX};
       const link = tr.querySelector('a[href*="/universities/"]');
-      const cells = [...tr.querySelectorAll('.kf-cell')];
-      return { href: link.getAttribute('href'), manchester: link.getAttribute('href').includes('university-of-manchester'),
-        row: b(tr), rank: b(tr.querySelector('.uni-rank')), name: b(link),
-        english: b(tr.querySelector('.kf-cell--english')), date: b(cells.find((c) => c.querySelector('.kf-date')) || cells[cells.length - 1]) };
+      return { href: link.getAttribute('href'), mine: link.getAttribute('href').includes('/${F.university}'),
+        row: b(tr), rank: b(tr.querySelector('.uni-rank')), name: b(link) };
     })`),
   };
-  if (rects.results.rows.length < 2) throw new Error("expected at least 2 rows in the results");
-  await full("results", 3600);
+  const mine = rects.results.rows.find((r) => r.mine);
+  if (!mine) throw new Error(`${F.university} is not in the results for these filters`);
+  await full("results", Math.ceil(mine.row.y + mine.row.h + 900));
 
-  // A university's page: its summary, the next date and that date's official source.
-  const manc = rects.results.rows.find((r) => r.manchester) || rects.results.rows.at(-1);
-  await go(new URL(manc.href, SITE).pathname + new URL(manc.href, SITE).search);
+  // Its own page: the next date, the English tests, and the button to its official admissions page.
+  const u = new URL(mine.href, SITE);
+  await go(u.pathname + u.search);
+  const row = (label) => `[...document.querySelectorAll('.uni-summary .summary-row')].find((r) => r.querySelector('${label}'))`;
   rects.uni = {
-    date: need(await box("[...document.querySelectorAll('.uni-summary .summary-row')].find((r) => r.querySelector('.summary-date'))"), "the next date"),
-    src: need(await box("[...document.querySelectorAll('.uni-summary .summary-row')].find((r) => r.querySelector('.summary-date'))?.querySelector('a.src')"), "the date's source"),
+    date: need(await box(row(".summary-date")), "the next date"),
+    english: need(await box(row(".glance-tests")), "the English tests"),
+    button: need(await box("document.querySelector('.uni-summary .actions .btn--primary') || document.querySelector('.actions .btn--primary')"), "the admissions button"),
+    href: await b.js("(document.querySelector('.uni-summary .actions .btn--primary') || document.querySelector('.actions .btn--primary')).href"),
   };
-  await full("uni", 2600);
+  await full("uni", rects.uni.button.y + 900);
 
-  writeFileSync(join(dir, "screens.json"), JSON.stringify({ W, H, DSF, site: SITE, captured: new Date().toISOString(), screens, rects }, null, 2));
+  // Where that button goes: the university's own page, as a student's phone would open it.
+  await go(rects.uni.href);
+  rects.official = { url: await b.js("location.href"), host: await b.js("location.hostname") };
+  await shot("official");
+
+  writeFileSync(join(SHOTS, "screens.json"), JSON.stringify({ W, H, DSF, site: SITE, captured: new Date().toISOString(), screens, rects, menus }, null, 2));
   await b.close();
-  console.log(`[${lang}] captured ${Object.keys(screens).length} screens`);
+  console.log(`captured ${Object.keys(screens).length} screens; the button opens ${rects.official.host}; hovering star ${star.rank} reads «${rects.rw.hover}»`);
 }
 
-// ---------- 2. The plan: scene times, stretched to fit any voice clips ----------
+// ---------- 2. The plan: scene times on the beat, stretched to fit any voice clips ----------
+const BEAT = 60 / SCRIPT.bpm, BAR = 4 * BEAT;
 function probe(file) {
   return Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file]).toString().trim());
 }
-function voiceFile(lang, id) {
+function voiceFile(id) {
+  if (!VOICE) return null;
   for (const ext of ["wav", "mp3", "m4a"]) {
-    const f = join(ASSETS, "voice", lang, `${id}.${ext}`);
+    const f = join(ASSETS, "voice", "ar", VOICE, `${id}.${ext}`);
     if (existsSync(f)) return f;
   }
   return null;
 }
-function plan(lang) {
+function plan() {
   let t = 0;
   const scenes = [];
   for (const s of SCRIPT.scenes) {
     let cursor = 0, end = 0;
     const lines = s.lines.map((l) => {
-      const voice = voiceFile(lang, l.id);
+      const voice = voiceFile(l.id);
       const vdur = voice ? probe(voice) : null;
-      const at = Math.max(l.at, cursor);
-      const dur = vdur ?? 0;
-      cursor = at + dur + (vdur ? 0.25 : 0);
-      end = Math.max(end, at + dur);
-      return { id: l.id, text: l[lang], at, voice, vdur };
+      const at = Math.max(l.at * BEAT, cursor);
+      cursor = at + (vdur ? vdur + 0.25 : 0);
+      end = Math.max(end, at + (vdur || 0));
+      const until = l.until != null ? Math.max(l.until * BEAT, at + (vdur || 0) + 0.3) : null;
+      return { id: l.id, text: l.text, at, until, voice, vdur };
     });
-    const dur = Math.max(s.dur, end + 0.7);
+    const base = s.bars * BAR;
+    const dur = Math.max(base, Math.ceil((end + 0.6) / (BAR / 2)) * (BAR / 2));
     scenes.push({ id: s.id, start: t, dur, lines });
     t += dur;
   }
-  return { scenes, total: t };
+  if (VOICE && !scenes.some((s) => s.lines.some((l) => l.voice))) throw new Error(`no clips in marketing/assets/explainer/voice/ar/${VOICE}/`);
+  return { scenes, total: t, beat: BEAT, bar: BAR };
 }
 
-// ---------- 3. Music and sounds, synthesised here (no outside library, no licence question) ----------
-const SR = 48000;
-const NOTE = { D2: 73.42, E2: 82.41, G2: 98.0, A2: 110.0, B2: 123.47, D3: 146.83, E3: 164.81, Fs3: 185.0, G3: 196.0, A3: 220.0, B3: 246.94,
-  Cs4: 277.18, D4: 293.66, E4: 329.63, Fs4: 369.99, D5: 587.33, Fs5: 739.99, A5: 880.0, D6: 1174.66 };
-const CHORDS = {
-  Dmaj9: ["D3", "A3", "Cs4", "E4", "Fs4"], Bm7: ["B2", "Fs3", "A3", "D4", "Fs4"], Gmaj9: ["G2", "D3", "Fs3", "A3", "B3"],
-  Asus: ["A2", "E3", "A3", "B3", "D4"], Em9: ["E2", "B2", "D3", "Fs3", "G3"],
-};
-const SCENE_CHORD = { hook: "Bm7", brand: "Dmaj9", explorer: "Gmaj9", filters: "Asus", results: "Dmaj9", row: "Bm7", uni: "Gmaj9", waddah: "Em9", end: "Dmaj9" };
-
-function decodeVoice(file) {
-  const raw = execFileSync("ffmpeg", ["-v", "error", "-i", file, "-f", "f32le", "-ac", "1", "-ar", String(SR), "-"], { maxBuffer: 1 << 28 });
-  return new Float32Array(raw.buffer, raw.byteOffset, raw.byteLength / 4);
-}
-
-function soundtrack(p, events, file) {
-  const n = Math.ceil((p.total + 0.5) * SR);
-  const L = new Float32Array(n), Rr = new Float32Array(n);
-  // The pad: one soft chord per scene, crossfading.
-  p.scenes.forEach((s, i) => {
-    const notes = CHORDS[SCENE_CHORD[s.id] || "Dmaj9"];
-    const a = s.start, b = s.start + s.dur, att = 0.9, rel = 1.6;
-    const i0 = Math.max(0, Math.floor((a - 0.2) * SR)), i1 = Math.min(n, Math.ceil((b + rel) * SR));
-    notes.forEach((name, j) => {
-      const f = NOTE[name], amp = 0.05 * (j === 0 ? 1.15 : 1), pan = (j / (notes.length - 1)) * 0.6 - 0.3;
-      for (let k = i0; k < i1; k++) {
-        const t = k / SR;
-        const env = t < a ? 0 : Math.min(1, (t - a) / att) * (t > b ? Math.max(0, 1 - (t - b) / rel) : 1);
-        if (env <= 0) continue;
-        const v = (Math.sin(2 * Math.PI * f * t) + Math.sin(2 * Math.PI * f * 1.0018 * t + j) * 0.7 + Math.sin(4 * Math.PI * f * t) * 0.12)
-          * amp * env * (0.85 + 0.15 * Math.sin(2 * Math.PI * 0.21 * t + j * 1.3));
-        L[k] += v * (0.5 - pan); Rr[k] += v * (0.5 + pan);
-      }
-    });
-  });
-  // Events: a bell for reveals, a soft tick for taps, a breath of air for big moves.
-  const add = (t0, dur, fn) => {
-    const i0 = Math.max(0, Math.floor(t0 * SR)), i1 = Math.min(n, Math.ceil((t0 + dur) * SR));
-    for (let k = i0; k < i1; k++) { const [l, r] = fn((k - i0) / SR); L[k] += l; Rr[k] += r; }
+// وضّاح's answers come from the site itself: the first is the Duolingo guide's own steps (checked against the page,
+// so it can't drift from it), the second is the university's sourced minimum from its data file.
+function chatConfig() {
+  const c = SCRIPT.chat;
+  const page = readFileSync(join(ROOT, c.a1_page), "utf8");
+  for (const bit of c.a1_check) if (!page.includes(bit)) throw new Error(`${c.a1_page} no longer says «${bit}»: update the chat's first answer`);
+  const d = details(c.a2_university);
+  const test = d.english?.[c.a2_test];
+  if (!test?.note_ar || !test.source_url) throw new Error(`${c.a2_university}: no sourced ${c.a2_test} note to answer with`);
+  return {
+    greeting: c.greeting, placeholder: c.placeholder,
+    q1: c.q1, a1: c.a1, src1: new URL(c.a1_source).hostname,
+    q2: c.q2, a2: `${c.a2_prefix} ${test.note_ar}`, src2: new URL(test.source_url).hostname,
   };
-  const bell = (t0, f, amp, pan) => add(t0, 2.2, (t) => {
-    const v = (Math.sin(2 * Math.PI * f * t) + 0.25 * Math.sin(2 * Math.PI * f * 2.76 * t) * Math.exp(-t * 6)) * Math.exp(-t * 2.4) * amp;
-    return [v * (0.5 - pan), v * (0.5 + pan)];
-  });
-  let seed = 3;
-  const noise = () => ((seed = (seed * 16807) % 2147483647) / 2147483647) * 2 - 1;
-  for (const e of events) {
-    if (e.type === "chime" || e.type === "spark") {
-      const seq = e.type === "spark" ? ["A5", "D6"] : ["D5", "Fs5", "A5", "D6"];
-      seq.forEach((nm, i) => bell(e.t + i * 0.11, NOTE[nm], e.type === "spark" ? 0.05 : 0.045, (i - 1.5) * 0.12));
-    } else if (e.type === "tap") {
-      add(e.t, 0.08, (t) => { const v = (Math.sin(2 * Math.PI * 1700 * t) * 0.6 + Math.sin(2 * Math.PI * 2550 * t) * 0.4) * Math.exp(-t * 70) * 0.09; return [v, v]; });
-    } else if (e.type === "whoosh") {
-      let lp = 0;
-      add(e.t - 0.1, 0.9, (t) => {
-        const env = Math.sin(Math.PI * Math.min(1, t / 0.9)) ** 2;
-        const c = 0.02 + 0.12 * env; lp += c * (noise() - lp);
-        const v = lp * env * 0.22; return [v, v];
-      });
-    }
-  }
-  // Voice clips on top; the music steps back under them.
-  const duck = new Float32Array(n).fill(1);
-  const voice = new Float32Array(n);
-  for (const s of p.scenes) for (const l of s.lines) {
-    if (!l.voice) continue;
-    const v = decodeVoice(l.voice), i0 = Math.floor((s.start + l.at) * SR);
-    for (let k = 0; k < v.length && i0 + k < n; k++) voice[i0 + k] += v[k];
-    const d0 = Math.max(0, i0 - SR * 0.25), d1 = Math.min(n, i0 + v.length + SR * 0.35);
-    for (let k = d0; k < d1; k++) duck[k] = 0.38;
-  }
-  let g = 1;
-  for (let k = 0; k < n; k++) { g += (duck[k] - g) * 0.0004; L[k] = L[k] * g + voice[k]; Rr[k] = Rr[k] * g + voice[k]; }
-  // Fades and a gentle ceiling.
-  let peak = 0;
-  for (let k = 0; k < n; k++) {
-    const t = k / SR, f = Math.min(1, t / 0.3) * Math.min(1, Math.max(0, (p.total + 0.3 - t) / 1.6));
-    L[k] *= f; Rr[k] *= f; peak = Math.max(peak, Math.abs(L[k]), Math.abs(Rr[k]));
-  }
-  // With a voice, the voice sets the level (only a ceiling); without one, the music is all there is: bring it up.
-  const voiced = voice.some((v) => v !== 0);
-  const scale = voiced ? (peak > 0.89 ? 0.89 / peak : 1) : 0.56 / peak;
-  const buf = Buffer.alloc(44 + n * 4);
-  buf.write("RIFF", 0); buf.writeUInt32LE(36 + n * 4, 4); buf.write("WAVE", 8); buf.write("fmt ", 12);
-  buf.writeUInt32LE(16, 16); buf.writeUInt16LE(1, 20); buf.writeUInt16LE(2, 22); buf.writeUInt32LE(SR, 24);
-  buf.writeUInt32LE(SR * 4, 28); buf.writeUInt16LE(4, 32); buf.writeUInt16LE(16, 34); buf.write("data", 36); buf.writeUInt32LE(n * 4, 40);
-  for (let k = 0; k < n; k++) {
-    buf.writeInt16LE(Math.round(Math.max(-1, Math.min(1, L[k] * scale)) * 32767), 44 + k * 4);
-    buf.writeInt16LE(Math.round(Math.max(-1, Math.min(1, Rr[k] * scale)) * 32767), 46 + k * 4);
-  }
-  writeFileSync(file, buf);
 }
 
-// ---------- 4. Film the stage ----------
-async function render(lang) {
-  const cap = JSON.parse(readFileSync(join(ASSETS, lang, "screens.json"), "utf8"));
-  const p = plan(lang);
-  const text = Object.fromEntries(Object.entries(SCRIPT.screen).map(([k, v]) => [k, v[lang]]));
-  const screens = Object.fromEntries(Object.entries(cap.screens).map(([k, v]) => [k, { ...v, src: pathToFileURL(join(ASSETS, lang, v.file)).href }]));
-  const config = { lang, plan: p, screens, rects: cap.rects, text, logo: pathToFileURL(join(ROOT, "app", "static", "favicon.svg")).href };
-
-  const b = await edge(9352, ["--allow-file-access-from-files", "--force-color-profile=srgb"]);
-  await b.send("Emulation.setDeviceMetricsOverride", { width: 1080, height: 1920, deviceScaleFactor: 1, mobile: false });
-  const loaded = b.once("Page.loadEventFired");
-  await b.send("Page.navigate", { url: pathToFileURL(join(ROOT, "marketing", "src", "explainer_stage.html")).href });
-  await loaded;
-  await b.js(`setup(${JSON.stringify(config)})`);
+// ---------- 3. Film it with Remotion (marketing/video) ----------
+// The composition reads public/: data.json (the plan, the captured screens and their rects, the menus, the chat), the
+// screens, the site's fonts and logo, وضّاح's poses, and the soundtrack. timeline.mjs gives the picture and the music
+// the same times.
+const VIDEO = join(ROOT, "marketing", "video");
+const PUB = join(VIDEO, "public");
+const POSES = ["wave", "present", "point", "clipboard", "cheer", "laptop", "read"];
+function copyInto(dir, files) {
+  rmSync(dir, { recursive: true, force: true });
+  mkdirSync(dir, { recursive: true });
+  for (const [from, name] of files) copyFileSync(from, join(dir, name));
+}
+function remotion(args) {
+  execFileSync("npx", ["remotion", ...args], { cwd: VIDEO, stdio: "inherit", shell: true });
+}
+async function render() {
+  const cap = JSON.parse(readFileSync(join(SHOTS, "screens.json"), "utf8"));
+  const p = plan();
+  const data = { plan: p, screens: cap.screens, rects: cap.rects, menus: cap.menus, text: SCRIPT.screen, chat: chatConfig() };
+  const mascot = join(ASSETS, "..", "waddah");
+  for (const pose of POSES) if (!existsSync(join(mascot, `${pose}.webp`))) throw new Error(`وضّاح's pose is missing: marketing/assets/waddah/${pose}.webp`);
+  copyInto(join(PUB, "shots"), Object.values(cap.screens).map((s) => [join(SHOTS, s.file), s.file]));
+  const fonts = join(ROOT, "app", "static", "fonts");
+  copyInto(join(PUB, "fonts"), readdirSync(fonts).filter((f) => f.endsWith(".woff2")).map((f) => [join(fonts, f), f]));
+  copyInto(join(PUB, "waddah"), POSES.map((pose) => [join(mascot, `${pose}.webp`), `${pose}.webp`]));
+  copyFileSync(join(ROOT, "app", "static", "favicon.svg"), join(PUB, "logo.svg"));
+  writeFileSync(join(PUB, "data.json"), JSON.stringify(data));
+  const { buildTimeline } = await import(pathToFileURL(join(VIDEO, "src", "timeline.mjs")).href);
+  const tl = buildTimeline(data);
   const voiced = p.scenes.flatMap((s) => s.lines).filter((l) => l.voice).length;
-  console.log(`[${lang}] ${p.total.toFixed(1)} s, ${voiced} voice clip(s)`);
+  console.log(`${p.total.toFixed(1)} s, ${voiced} voice clip(s), ${FPS} fps`);
 
   if (STILLS) {
     const dir = join(OUT, "explainer-stills");
+    rmSync(dir, { recursive: true, force: true });
+    const frames = STILLS.split(",").map((s) => Math.round(Number(s) * FPS));
     mkdirSync(dir, { recursive: true });
-    for (const t of STILLS.split(",").map(Number)) {
-      await b.js(`render(${t})`);
-      const { data } = await b.send("Page.captureScreenshot", { format: "png" });
-      writeFileSync(join(dir, `${lang}-${String(t).padStart(5, "0")}.png`), Buffer.from(data, "base64"));
-    }
-    await b.close();
-    console.log(`[${lang}] stills in ${dir}`);
+    const props = join(dir, "props.json");
+    writeFileSync(props, JSON.stringify({ audio: null }));
+    remotion(["render", "WadihExplainer", dir, "--sequence", `--frames=${frames.join(",")}`, "--image-format=png", `--props=${props}`, "--log=error"]);
+    rmSync(props);
+    console.log(`stills in ${dir}`);
     return;
   }
 
-  const events = await b.js("events()");
-  const wav = join(ASSETS, lang, "soundtrack.wav");
-  soundtrack(p, events, wav);
+  const music = ["mp3", "wav", "m4a"].map((e) => join(ASSETS, `music.${e}`)).find(existsSync) || null;
+  soundtrack(p, tl.events, join(PUB, "soundtrack.wav"), { music, sfxOnly: join(PUB, "sfx-only.wav") });
   mkdirSync(OUT, { recursive: true });
-  const out = join(OUT, `wadih-explainer-${lang}-9x16.mp4`);
-  const ff = spawn("ffmpeg", ["-y", "-v", "error", "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "mjpeg", "-i", "-", "-i", wav,
-    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-r", String(FPS),
-    "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", out], { stdio: ["pipe", "inherit", "inherit"] });
-  const done = new Promise((ok, fail) => ff.on("close", (c) => (c === 0 ? ok() : fail(new Error(`ffmpeg exited ${c}`)))));
-  const frames = Math.ceil(p.total * FPS);
-  const t0 = Date.now();
-  for (let f = 0; f < frames; f++) {
-    await b.js(`render(${f / FPS})`);
-    const { data } = await b.send("Page.captureScreenshot", { format: "jpeg", quality: 94 });
-    if (!ff.stdin.write(Buffer.from(data, "base64"))) await new Promise((r) => ff.stdin.once("drain", r));
-    if (f % 150 === 0) console.log(`[${lang}] frame ${f}/${frames} (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
+  const out = join(OUT, `wadih-explainer-ar-9x16${VOICE ? `-${VOICE}` : ""}.mp4`);
+  // The same picture with the sounds but no music (Shotcraft's rule: so a licensed track can go under it later).
+  const swap = (wav, to) => execFileSync("ffmpeg", ["-y", "-v", "error", "-i", out, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-shortest", "-movflags", "+faststart", to]);
+  if (AUDIO_ONLY) {
+    if (!existsSync(out)) throw new Error("no video to put the soundtrack in: run without --audio-only first");
+    if (Math.abs(probe(out) - p.total) > 0.1) throw new Error("the timing changed (a new voice clip?): run without --audio-only");
+    const tmp = out.replace(/\.mp4$/, ".tmp.mp4");
+    swap(join(PUB, "soundtrack.wav"), tmp);
+    rmSync(out);
+    renameSync(tmp, out);
+  } else {
+    remotion(["render", "WadihExplainer", out, "--codec=h264", "--crf=17", "--pixel-format=yuv420p", "--audio-codec=aac", "--audio-bitrate=256k", "--log=error"]);
   }
-  ff.stdin.end();
-  await done;
-  await b.close();
-  console.log(`[${lang}] wrote ${out}`);
+  swap(join(PUB, "sfx-only.wav"), out.replace(/\.mp4$/, "-no-music.mp4"));
+  console.log(`wrote ${out} (and …-no-music.mp4)`);
 }
 
-for (const lang of LANGS) {
-  if (!SKIP_CAPTURE) await capture(lang);
-  await render(lang);
-}
+if (!SKIP_CAPTURE && !AUDIO_ONLY) await capture();
+if (!argv.includes("--capture-only")) await render();

@@ -14,3 +14,6 @@ marketing/.edge-profile/
 
 # Local server logs (never commit)
 *.log
+marketing/node_modules/
+marketing/package.json
+marketing/package-lock.json

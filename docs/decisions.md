@@ -1446,3 +1446,84 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **The voice:** the owner wants a Saudi male voice with a Najdi accent from HUMAIN Voice. It isn't made yet: no published voice is marked Najdi, commercial use isn't stated, and API access goes through HUMAIN (marketing/README.md §9). The build fits each scene to its clip when one is added.
 **Alternatives:** Cartoon Claude (rights and the look of endorsement); وضّاح's star with a face (082: no face); a screen recording with no character (flatter, and the owner wanted one); 16:9 (students watch on phones).
 **Verified:** stills of every scene in both languages, the full renders, `pytest`. **Not verified:** the voice, a real phone's playback, students.
+
+## 090 — The explainer, rebuilt: Arabic only, a cursor through the real site, its own music, وضّاح shown helping (updates 084, 089)
+**Date:** 2026-11-07
+**Context:** after watching the first cut (089), the owner asked for something on a professional video designer's level:
+- better music and visuals;
+- Arabic words that don't repeat;
+- a cursor that opens the filters and menus, not still screens;
+- how وضّاح will help;
+- the University of Minnesota (the owner's university) instead of Manchester;
+- Arabic only (the English cut is dropped).
+**Research (2026-11-07):** no official Anthropic ad for Opus 5.5 turned up. Top product launch videos share a toolkit: smooth cursor moves with automatic zoom (the Screen Studio look), bold moving text as the hero, the product early, cuts on the beat, a sound for every action.
+**Decision:**
+- **Cut to a beat:** 100 BPM. Every scene is a whole or half number of bars, so cuts, clicks and reveals land on it.
+- **Moving text:** three questions as the hook, then words that rise in one by one. Nine short lines, no word repeated from one line to the next.
+- **A camera through the real site:** the phone lands with a tilt, and the camera follows the cursor.
+  - The menus are drawn from each select's real options (captured with the screens).
+  - The camera frames each open menu.
+  - The fast scroll down the list blurs along its direction.
+  - Rings dim the rest of the screen around what they mark.
+- **The University of Minnesota:** reached with إمداد, الأعمال والإدارة والقانون and الولايات المتحدة الأمريكية (35 on that list). Its next deadline (Early Action II) and its source show.
+- **وضّاح shown helping (updates 084 for this video only):** a question is typed in a chat card, the teaser's agents bring light to the student's screen, and the answer comes back with a numbered source chip.
+  - The answer is built from the site's data at render time (Minnesota's sourced IELTS note), never typed in by hand.
+  - «قادم في ديسمبر» stays on screen.
+  - The site itself still shows only the teaser (084).
+- **Music:** synthesised in code ($0, no licence question): drums, bass, a Karplus–Strong plucked lead, pads, reverb, risers and impacts on the brand and on وضّاح's drop, and a sound for each action. A licensed track can replace it (`music.mp3`).
+- **60 fps,** the narrator kept (082), the logo exactly as it is.
+**Alternatives:**
+- A screen recording: real, but stiff, with no camera; native menus don't show in a headless capture.
+- A stock or library track: better production, but a download and a licence to check (left as an option).
+- Keeping English: the owner dropped it.
+**Verified:** stills of every scene, the full render, pytest. **Not verified:** a real phone's playback; how the music sounds to a listener (Claude can measure the levels but can't listen); the voice.
+
+## 091 — The explainer, third cut: from the mess to the site's best features, an Arabic score, وضّاح's chat (updates 090)
+**Date:** 2026-11-07
+**Context:** the owner watched 090 with Abdulaziz's voice and asked for a new cut:
+- music that syncs and ends well, nothing repeated;
+- a better opening: the «أين تدرس؟» questions read like a question waiting for an answer;
+- more of the site: the homepage's programs, the الرواد map, the explorer and its filters, each university's requirements and dates, and a tap that takes you to the official admissions page (Minnesota's);
+- وضّاح in a chat with more detail (preparing for Duolingo, Minnesota's Duolingo score);
+- first without voice, then with a female voice; one word, «تقدّم», was misread by the voice.
+The owner chose (2026-11-07): chaos then order for the opening; the real official page, not a blurred one; modern music with an Arabic touch; وضّاح remembering the chat.
+**Decision:**
+- **Story (74 s, 31 bars at 100 BPM):** the mess (tabs, PDFs, notes; generic, no real fact in them) → one swipe → the logo, «كل هذا، في مكان واحد.» → «الآن» and the programs with their status → a whip pan to the الرواد star map (the stars light up; pointing at one names it, as on the site) → the filters, each menu opened → the list down to Minnesota → its next date and English tests → its «صفحة القبول في موقع الجامعة» button opens the in-app browser on admissions.tc.umn.edu (captured live) → «وشيءٌ أخير…» → وضّاح «قادم في ديسمبر» → the chat → the end card.
+- **The cursor drives a real path through the site** where the site has one (the map page *is* the explorer: its filters open under the chart), and cuts where it doesn't (home → map).
+- **وضّاح's chat** in a phone, as it will look, «قادم في ديسمبر» in its header. Two questions; the second («وكم تطلب جامعة مينيسوتا؟») only makes sense with the first, which is the point.
+  - The first answer is the Duolingo guide's own three steps; the build stops if the page no longer says them.
+  - The second is Minnesota's sourced Duolingo minimum, read from its data file at build time.
+  - Each answer has a small source chip, as `docs/specs/agent.md` plans (the owner didn't ask to feature it, but an answer without a source would misdescribe وضّاح).
+- **Score:** maqam Hijaz on D (D E♭ F♯ G A B♭ C) over a modern beat, all synthesised. An oud-like pluck (a Karplus–Strong string combed near the bridge, through a wooden body resonance) states the motif, the Hijaz run D–E♭–F♯–G–A; a darbuka (doum, tek, ka) plays maqsum. Each scene has its own part, with crashes and swells on the cuts. The breakdown is the oud's tremolo coming down the scale under a riser; the drop lands on «وضّاح». The chorus runs eight bars with no repeated phrase. The ending gives a breath, then the Hijaz cadence (E♭ → D), the motif once more and a held D.
+- **Words:** twelve short captions, no word repeated from one to the next except on purpose («في كل مكان» → «في مكان واحد»). The voice gets a `say` field with vowel marks where the plain text could be misread («تَتَقَدَّمُ»).
+- **Voice builds are separate:** `--voice <folder>` reads `voice/ar/<folder>/<id>.wav` and writes `…-9x16-<folder>.mp4`; without it, no voice. HUMAIN's two female Najdi voices are `mul_nourah` and `mul_sara`.
+**Alternatives:** the big-numbers opening and the road-and-stars opening (the owner chose chaos then order); a blurred official page (the owner chose the real one); modern music without the Arabic touch, or calm lo-fi.
+**Verified:** stills of every scene, the full render. **Not verified:** how it sounds to a listener (Claude measures levels but can't listen), a real phone's playback, the female voice. **Dated on screen:** «مفتوح الآن حتى 15 نوفمبر 2026» and the official page's own banner are what the sites showed on 2026-11-07; run it again before posting later.
+
+## 092 — The explainer in Remotion, hosted by وضّاح's new mascot, with a clear scholarship question first (updates 091)
+**Date:** 2026-11-07
+**Context:** the owner sent وضّاح's new identity (a 3D mascot in a red shemagh and black agal, a dark-green visor with lime eyes; seven poses), to be used on the site and in the video. They asked to rebuild the explainer with three agent skills (Remotion's official skills, Video Shotcraft, ElevenLabs' music and sound effects), keep the branding, make the music warm and uplifting with subtle sounds, make the story and the UI readable, open with a question that says at once it's a scholarship site, keep the Arabic music they liked, no voice yet, and review the video before delivering it.
+The owner chose (2026-11-07): improve our own Hijaz score (no ElevenLabs account: its Free plan has no API and no downloads, its Starter plan costs $6/month); install Remotion; the mascot hosts from the start; «تفكّر بالابتعاث والدراسة بالخارج؟» as the opening.
+**Decision:**
+- **Remotion** (free licence for an individual) renders the video: `marketing/video/` holds the composition (`src/Explainer.tsx`, `src/styles.ts`, `src/fonts.ts`) and `src/timeline.mjs`, the one source of every time, read by the picture and by the music, so each sound lands on its frame. `explainer.mjs` still captures the site with Edge, then fills `public/` and calls Remotion. The old frame-by-frame stage (`explainer_stage.html`) is retired.
+- **وضّاح the host:** the mascot replaces the line-drawn agent. He waves under the logo, then stands in a corner of the tour (presenting the programs, pointing at the map, the list and the official page, holding a checklist at the requirements). At «وشيءٌ أخير…» he rises to the centre, cheers on the drop with his name, then stands beside the phone in the chat: on his laptop while he "thinks", reading while he answers from the guide, pointing at the answer. He waves on the end card. His files stay in `marketing/assets/waddah/` (the site doesn't use them yet).
+- **The story:** «تفكّر بالابتعاث والدراسة بالخارج؟» with a route drawn from home to a pin far away (3.6 s), then the mess, the logo, and the tour as in 091. 77 s.
+- **Shotcraft's rules applied:** the camera no longer drifts by hand (Q3); the logo holds more than a second (R1); one light sweep in the whole film (Q4); captions at 80 px and chat text at 34 px (Q11 and Remotion's layout rules); a word with a lime part never breaks across lines; a cut with the sounds but no music is delivered with it (`…-no-music.mp4`).
+- **Score (still synthesised, $0):** a warm B♭ opening under the question; the chorus now opens onto B♭ and F major (uplifting) before the Hijaz cadence home; a riq (Arabic tambourine) and soft Gulf handclaps in the chorus; hats and shakers quieter. The action sounds are 30% lower and sound like things (a tap, a settle), not UI beeps (Shotcraft S1).
+- **Rules kept on purpose:** Shotcraft wants sound effects from Freesound; ours stay synthesised, so nothing is downloaded and there's no licence to track.
+**Skills installed** (user level, `~/.claude/skills/`, not in the repo): Remotion's 13, Video Shotcraft, ElevenLabs' 12 (not used until there's an account).
+**Alternatives:** ElevenLabs music and sound effects (a paid plan; left for later); the mascot only at the reveal (the owner chose host from the start).
+**Reviewed before delivery (Shotcraft's rule):** an independent read-only reviewer (Sonnet) checked 32 frames. Fixed from its report: the chat's push-in now keeps «قادم في ديسمبر» in frame (it was cut off); lazy program logos are loaded before the capture (two were empty); the mascot is smaller in the corner and ducks while the camera is close (he hid a date and buttons); a stronger backing under the captions; a paper plane leads the opening route; long menu rows end in «…»; the night's crescent no longer sits under the mascot in the chat; the homepage is shown closer. Also fixed: missing spaces in the second answer, and one-word last lines in captions.
+**Verified:** stills of every scene, the full render, its levels (−15.7 LUFS, peak −1 dBFS). **Not verified:** the music by ear, a real phone.
+
+## 093 — وضّاح's identity on the site: the owner's mascot, and his picture of وضّاح helping a student (updates 082–084, 087)
+**Date:** 2026-11-07
+**Context:** the owner chose وضّاح's identity: a 3D mascot (a soft figure in a red shemagh and black agal, a dark-green visor with two lime lights) and a paper-cut picture of وضّاح handing a bookmark to a student who is reading. They asked to use the mascot as his mark and that picture in the homepage's teaser, and shared the poses the site will mainly use.
+**Decision:**
+- **The mark:** the mascot beside «وضّاح» in Naskh Bold (`partials/waddah.html`, `static/img/waddah/waddah.webp`, 11 KB). This replaces 082's "no face, no body": he has a body and a visor with two lights, but still no human face, so an AI still can't pass for a person (082's reason holds). The four-point light stays the sign of a next step and of «المملكة» on the maps.
+- **The teaser band** is now the picture's own paper (`#fae5c5`), the same on both themes like the program pictures: the picture is its ground, the words sit on its empty paper (on the right, in both languages), and on a phone its left part (the student and وضّاح) stands above the words. Two self-hosted sizes (47 KB, and a 41 KB phone crop), with a written description in both languages. Still only a teaser (084): no link, no page.
+- **Retired:** the night band, its dawn that rose with the date (`waddah_dawn`, `dawn_from`/`dawn_to`), and 087's drawing of three agents. The picture says the same thing (وضّاح helps a student) in the identity the owner chose.
+- **The poses** (owner's files, `marketing/assets/waddah/`, not served until a page uses them): wave, present, point, clipboard, cheer, laptop, read, search (magnifier), sources (two cards), wait (hourglass), unsure (shrug), sorry. For Phase 2 they map onto `docs/specs/agent.md`'s states: searching (search), answering with sources (sources), waiting (wait), «لا أعرف» (unsure).
+- New poses: Claude can't draw new 3D renders of him; new ones come from the owner's tool, from these as the reference.
+**Alternatives:** the picture as a framed card on the night band (keeps the dawn, but a paper picture pasted on night reads as a photo, and its empty paper, made for words, would be cut off).
+**Verified:** pytest (807), no Arabic on English pages, the band in the browser on a phone and a desktop width, Arabic and English.

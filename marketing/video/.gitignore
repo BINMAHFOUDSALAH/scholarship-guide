@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Ignore the output video from Git but not videos you import into src/.
+out
+
+# Made by marketing/src/explainer.mjs on every run (captured screens, fonts, poses, soundtrack, data.json)
+public/
