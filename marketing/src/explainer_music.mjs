@@ -45,14 +45,14 @@ const SCORE = {
   intro:    { chords: ["Bb", "D"], pad: [700, 1400, 0.85], kick: "none", hats: 0, clap: 0, bass: "whole", arp: null, bells: "soft" },
   chaos:    { chords: ["Dx", "Dx"], pad: [260, 1200, 1.15], kick: "heart", hats: 0, clap: 0, bass: null, arp: null },
   brand:    { chords: ["D", "D"], pad: [1500, 2000, 0.9], kick: "one", hats: 0, clap: 0, bass: "whole", arp: null },
-  home:     { chords: ["Gm", "Eb", "Cm"], pad: [1100, 1500, 0.6], kick: "half", hats: "shaker", clap: 0, bass: "quarter", arp: [0.5, [0, 1, 2, 1], 0.05], perc: "light" },
-  map:      { chords: ["Eb", "D"], pad: [1700, 2400, 0.7], kick: "none", hats: "shaker", clap: 0, bass: "whole", arp: null, bells: true, perc: "teks" },
-  filters:  { chords: ["Gm", "Eb", "Cm", "D"], pad: [1300, 1600, 0.55], kick: "half", hats: 1, clap: 1, bass: "quarter", arp: [0.5, [0, 1, 2, 3, 2, 1, 2, 1], 0.055], perc: "maqsum" },
+  home:     { chords: ["Gm", "Eb", "Cm"], pad: [1100, 1500, 0.6], kick: "half", hats: "shaker", clap: 1, bass: "maqsum", arp: [0.5, [0, 1, 2, 1], 0.05], perc: "maqsum" },
+  map:      { chords: ["Eb", "D"], pad: [1700, 2400, 0.7], kick: "half", hats: "shaker", clap: 0, bass: "whole", arp: null, bells: true, perc: "light" },
+  filters:  { chords: ["Gm", "Eb", "Cm", "D"], pad: [1300, 1600, 0.55], kick: "half", hats: 1, clap: 2, bass: "maqsum", arp: [0.5, [0, 1, 2, 3, 2, 1, 2, 1], 0.055], perc: "maqsum" },
   results:  { chords: ["Cm", "D"], pad: [1200, 2800, 0.6], kick: "four", hats: 2, clap: 2, bass: "eighth", arp: [0.25, [0, 1, 2, 3], 0.055], roll: true, perc: "maqsum" },
-  uni:      { chords: ["Gm", "Eb", "D"], pad: [1800, 2000, 0.6], kick: "four", hats: 1, clap: 2, bass: "octave", arp: [0.25, [0, 2, 1, 3, 2, 1, 3, 2], 0.045], perc: "maqsum+" },
+  uni:      { chords: ["Gm", "Eb", "D"], pad: [1800, 2000, 0.6], kick: "four", hats: 1, clap: 2, bass: "maqsum", arp: [0.25, [0, 2, 1, 3, 2, 1, 3, 2], 0.045], perc: "maqsum+" },
   official: { chords: ["Eb", "D"], pad: [1600, 2600, 0.65], kick: "half", hats: 1, clap: 0, bass: "whole", arp: null, perc: "light", stop: true },
   break:    { chords: ["Eb"], pad: [500, 3000, 0.95], kick: "none", hats: 0, clap: 0, bass: null, arp: null },
-  drop:     { chords: ["Gm", "Eb", "Bb", "F", "Gm", "Eb", "Cm", "Eb"], pad: [2000, 2400, 0.75], kick: "four", hats: "riq", clap: 2, bass: "octave", arp: [0.5, [0, 2, 1, 3], 0.04], perc: "maqsum+", fills: [3, 7], stop: true, lift: 4, gulf: true },
+  drop:     { chords: ["Gm", "Eb", "Bb", "F", "Gm", "Eb", "Cm", "Eb"], pad: [2000, 2400, 0.75], kick: "four", hats: "riq", clap: 2, bass: "maqsum", arp: [0.5, [0, 2, 1, 3], 0.04], perc: "maqsum+", fills: [3, 7], stop: true, lift: 4, gulf: true },
   end:      { chords: ["D"], pad: [2000, 800, 1.0], kick: "none", hats: 0, clap: 0, bass: "whole", arp: null, once: 4 },
 };
 // The darbuka, in sixteenths: D doum (the low centre), T tek (the rim), k ka (a softer rim).
@@ -77,6 +77,21 @@ const MELODY = {
 };
 // The breakdown: the oud's tremolo (rīsha) down the scale, [beat, note, beats].
 const TREMOLO = [[0, "A4", 1.5], [1.5, "G4", 1], [2.5, "F#4", 0.75], [3.25, "Eb4", 0.75]];
+// The string section (the sound of Arabic pop): legato lines, a note held until the next one ("-" holds). `double`
+// plays an oud line an octave lower, in unison with it, the way a firqa's violins follow the soloist.
+const STRINGS = {
+  brand: { double: "brand", shift: -12, vel: 0.55 },
+  home: { step: 1, vel: 0.32, notes: notes("D5 - C5 Bb4 Bb4 - A4 G4 G4 -") },
+  map: { step: 1, vel: 0.3, notes: notes("G4 - - Bb4 A4 - - F#4") },
+  filters: { step: 1, vel: 0.3, notes: notes("G4 A4 Bb4 - Bb4 C5 Bb4 G4 G4 Eb4 G4 C5 A4 - F#4 -") },
+  results: { step: 0.5, vel: 0.36, notes: notes("C5 D5 Eb5 F5 G5 - Eb5 - F#5 G5 A5 Bb5 A5 - - -") },
+  uni: { double: "uni", shift: -12, vel: 0.5 },
+  official: { step: 1, vel: 0.34, notes: notes("G4 - Bb4 - A4 - F#4 -") },
+  drop: { double: "drop", shift: -12, vel: 0.62 },
+  end: { double: "end", shift: -12, vel: 0.55 },
+};
+// The qanun's runs: a quick sweep up the Hijaz scale into a new part, in 32nd notes ending on its downbeat.
+const RUN = notes("D4 Eb4 F#4 G4 A4 Bb4 C5 D5 Eb5 F#5 G5 A5 Bb5 C6 D6");
 
 // A sine table: fast enough to build a minute of additive synthesis in a few seconds.
 const TS = 8192, SIN = new Float32Array(TS + 1);
@@ -199,6 +214,20 @@ export function soundtrack(plan, events, file, { music = null, sfxOnly = null } 
         oud(t, m, mel.vel, 0.1, dur);
         if (held) tremolo(t + 0.9, m, mel.vel * 0.45, 0.1, 1.6);
       });
+      // The strings.
+      const st = STRINGS[p.id];
+      if (st) {
+        const src = st.double ? MELODY[st.double] : st, ns = src.notes, step = src.step * beat;
+        const stop = p.id === "end" ? p.t1 + 2.5 : quiet(p);
+        ns.forEach((m, i) => {
+          if (m == null) return;
+          const t = p.t0 + i * step;
+          if (t >= stop - 1e-6) return;
+          const next = ns.slice(i + 1).findIndex((x) => x != null);
+          const dur = next < 0 ? stop - t : Math.min((next + 1) * step, stop - t);
+          strings(t, m + (st.shift || 0), dur + 0.03, st.vel);
+        });
+      }
     }
     // The mess: an anxious trill on D and E♭ that grows, under a clock that speeds up.
     for (let t = S.chaos.start + 2 * beat, i = 0; t < S.chaos.start + 7 * beat; t += beat / 4, i++) {
@@ -208,6 +237,11 @@ export function soundtrack(plan, events, file, { music = null, sfxOnly = null } 
     for (let t = S.chaos.start, i = 0; t < S.chaos.start + 7.5 * beat; i++) {
       tick(t, 0.05 + 0.05 * (t - S.chaos.start) / (7.5 * beat));
       t += t < S.chaos.start + 4 * beat ? beat / 2 : beat / 4;
+    }
+    // The qanun sweeps up into the parts that lift: home, the second verse, the chorus.
+    for (const [t1, lo, vel] of [[S.home.start, 0, 0.1], [S.uni.start, 0, 0.12], [dropT, 7, 0.13]]) {
+      const run = RUN.slice(lo, lo + 8);
+      run.forEach((m, i) => qanun(t1 - (run.length - i) * beat / 8, m, vel * (0.6 + 0.4 * i / run.length), (i / run.length - 0.5) * 0.8));
     }
     // The breakdown's tremolo.
     for (const [b, m, d] of TREMOLO) tremolo(wT + b * beat, nm(m), 0.12, -0.1, d * beat);
@@ -281,6 +315,17 @@ export function soundtrack(plan, events, file, { music = null, sfxOnly = null } 
   // ---- reverb (Freeverb's combs and all-passes) on the send ----
   const wet = freeverb(verb);
   for (let k = 0; k < n; k++) { mL[k] += wet[0][k] * 0.32; mR[k] += wet[1][k] * 0.32; }
+
+  // ---- a master EQ on the music: a little less boom under 120 Hz, a little more air above 6 kHz (one-pole shelves) ----
+  for (const ch of [mL, mR]) {
+    const lo = Math.exp(-TAU * 120 / SR), hi = Math.exp(-TAU * 6000 / SR);
+    let l1 = 0, h1 = 0;
+    for (let k = 0; k < n; k++) {
+      const x = ch[k];
+      l1 = x + lo * (l1 - x); h1 = x + hi * (h1 - x);
+      ch[k] = x - 0.22 * l1 + 0.45 * (x - h1);
+    }
+  }
 
   // ---- voice on top; the music steps back under it ----
   const vdk = new Float32Array(n).fill(1), voice = new Float32Array(n);
@@ -364,6 +409,24 @@ export function soundtrack(plan, events, file, { music = null, sfxOnly = null } 
   function bass(t0, t1, c, style) {
     if (!style || t1 <= t0) return;
     const f0 = hz(c.root);
+    // The maqsum bass: root, octave and fifth on the darbuka's syncopations, a little pushed ahead of the beat.
+    if (style === "maqsum") {
+      const pat = [[0, 0, 1], [3, 0, 0.7], [6, 12, 0.8], [8, 0, 1], [10, 7, 0.75], [14, 12, 0.7], [16]];
+      for (let i = 0; i < pat.length - 1; i++) {
+        const t = t0 + pat[i][0] * beat / 4;
+        if (t >= t1 - 1e-6) break;
+        const len = Math.min((pat[i + 1][0] - pat[i][0]) * beat / 4 * 0.82, t1 - t);
+        const f = f0 * Math.pow(2, pat[i][1] / 12), [a, b] = span(t, len + 0.04);
+        for (let k = a; k < b; k++) {
+          const lt = k / SR - t;
+          const env = Math.min(1, lt / 0.006) * (0.55 + 0.45 * Math.exp(-lt / 0.08)) * (lt > len ? Math.max(0, 1 - (lt - len) / 0.04) : 1);
+          const ph = f * lt;
+          const v = (Math.tanh(1.8 * (fsin(ph) + 0.4 * fsin(2 * ph) + 0.15 * fsin(3 * ph))) * 0.15 + fsin(ph) * 0.06) * env * pat[i][2] * duck[k];
+          mL[k] += v; mR[k] += v;
+        }
+      }
+      return;
+    }
     const step = style === "whole" ? t1 - t0 : style === "quarter" ? beat : beat / 2;
     for (let t = t0, i = 0; t < t1 - 1e-6; t += step, i++) {
       const f = style === "octave" && i % 4 === 3 ? f0 * 2 : f0;
@@ -402,6 +465,34 @@ export function soundtrack(plan, events, file, { music = null, sfxOnly = null } 
       mL[k] += v * (1 - pan); mR[k] += v * (1 + pan);
       verb[k] += v * 0.3;
     }
+  }
+  // Strings: three players a few cents apart (an ensemble), each a band-limited saw with a vibrato that comes in
+  // after the note starts, a soft bow attack and a short release; spread across the stereo field.
+  function strings(t0, m, dur, vel) {
+    const f = hz(m), rel = 0.22, [a, b] = span(t0, dur + rel);
+    const H = Math.max(1, Math.min(12, Math.floor(6000 / f)));
+    const w = [];
+    for (let h = 1; h <= H; h++) w.push((1 / h) / Math.sqrt(1 + Math.pow((h * f) / 2800, 4)));
+    [[-0.005, -0.55], [0, 0], [0.0055, 0.55]].forEach(([det, pn], vi) => {
+      const fd = f * (1 + det), vr = 5.1 + vi * 0.45;
+      let ph = vi * 0.37;
+      for (let k = a; k < b; k++) {
+        const lt = k / SR - t0;
+        const env = Math.min(1, lt / 0.07) * (lt > dur ? Math.max(0, 1 - (lt - dur) / rel) : 1);
+        if (env <= 0) continue;
+        ph += (fd * (1 + 0.005 * Math.min(1, Math.max(0, (lt - 0.15) / 0.3)) * fsin(vr * lt + vi))) / SR;
+        let v = 0;
+        for (let h = 0; h < H; h++) v += w[h] * fsin(ph * (h + 1));
+        v *= vel * env * 0.032 * (0.7 + 0.3 * duck[k]);
+        mL[k] += v * (1 - pn); mR[k] += v * (1 + pn);
+        verb[k] += v * 0.5;
+      }
+    });
+  }
+  // The qanun: a bright plucked course of strings (the note and a faint octave), short and sparkling.
+  function qanun(t0, m, vel, pan) {
+    pluck(t0, m, vel, pan, 0.9);
+    pluck(t0 + 0.004, m + 12, vel * 0.3, -pan, 0.5);
   }
   // The oud: a plucked string struck near the bridge (the excitation combed for its nasal bite), through a wooden
   // body (a resonance around 240 Hz) with a little brightness on top; short sustain, like gut on a fretless neck.
