@@ -1,5 +1,5 @@
 {
-  "_note": "وضّاح, the AI guide (decisions 082–084). Drives the homepage's teaser band now (only a teaser: no page of its own until launch, decision 084); in Phase 2 the box («اسأل وضّاح») and the sign-in slot. public = the teaser band is on the live site (the owner checked the name, decision 082), shown locally with WADIH_SHOW_DRAFTS=1; launched = launch day (a switch, never a date); accounts_open = the header shows «دخول». The dawn lightens from dawn_from to dawn_to on Riyadh's date and holds at the edge of dawn until launched.",
+  "_note": "وضّاح, the AI guide (decisions 082–084, 093). Drives the homepage's teaser band now (only a teaser: no page of its own until launch, decision 084); in Phase 2 the box («اسأل وضّاح») and the sign-in slot. public = the teaser band is on the live site (the owner checked the name, decision 082), shown locally with WADIH_SHOW_DRAFTS=1; launched = launch day (a switch, never a date); accounts_open = the header shows «دخول».",
   "name_ar": "وضّاح",
   "name_en": "Waddah",
   "public": true,
@@ -7,8 +7,6 @@
   "accounts_open": false,
   "signin_path": "/signin",
   "launch_date": null,
-  "dawn_from": "2026-11-07",
-  "dawn_to": "2026-12-01",
   "x_url": "https://x.com/salahmetaverse",
   "teaser": {
     "kicker_ar": "قريبًا في واضح",

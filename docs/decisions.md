@@ -1429,3 +1429,15 @@ What stays is text that gives an instruction, a fact with its source, or a cauti
 - **A full Holland score (R, I, A…) instead of fields:** needs validation in Arabic before any score is shown (decision 069).
 **Also (owner, same day):** the video's line «يُحمَّل من يوتيوب عند الضغط فقط» is removed; the video still loads only on a press.
 **Verified:** pytest (807); the browser at 375px: a tap answers one question and moves on once, a full run to the result, English, both themes, no console errors. **Not verified:** `scripts/check_explore.mjs` was updated for the new flow but not run (Playwright isn't installed on this laptop; it runs in cloud sessions); a real iPhone; students.
+
+## 093 — وضّاح's identity on the site: the owner's mascot, and his picture of وضّاح helping a student (updates 082–084, 087)
+**Date:** 2026-11-07
+**Context:** the owner chose وضّاح's identity: a 3D mascot (a soft figure in a red shemagh and black agal, a dark-green visor with two lime lights) and a paper-cut picture of وضّاح handing a bookmark to a student who is reading. They asked to use the mascot as his mark and that picture in the homepage's teaser, and shared the poses the site will mainly use.
+**Decision:**
+- **The mark:** the mascot beside «وضّاح» in Naskh Bold (`partials/waddah.html`, `static/img/waddah/waddah.webp`, 11 KB). This replaces 082's "no face, no body": he has a body and a visor with two lights, but still no human face, so an AI still can't pass for a person (082's reason holds). The four-point light stays the sign of a next step and of «المملكة» on the maps.
+- **The teaser band** is now the picture's own paper (`#fae5c5`), the same on both themes like the program pictures: the picture is its ground, the words sit on its empty paper (on the right, in both languages), and on a phone its left part (the student and وضّاح) stands above the words. Two self-hosted sizes (47 KB, and a 41 KB phone crop), with a written description in both languages. Still only a teaser (084): no link, no page.
+- **Retired:** the night band, its dawn that rose with the date (`waddah_dawn`, `dawn_from`/`dawn_to`), and 087's drawing of three agents. The picture says the same thing (وضّاح helps a student) in the identity the owner chose.
+- **The poses** (owner's files, `marketing/assets/waddah/`, not served until a page uses them): wave, present, point, clipboard, cheer, laptop, read, search (magnifier), sources (two cards), wait (hourglass), unsure (shrug), sorry. For Phase 2 they map onto `docs/specs/agent.md`'s states: searching (search), answering with sources (sources), waiting (wait), «لا أعرف» (unsure).
+- New poses: Claude can't draw new 3D renders of him; new ones come from the owner's tool, from these as the reference.
+**Alternatives:** the picture as a framed card on the night band (keeps the dawn, but a paper picture pasted on night reads as a photo, and its empty paper, made for words, would be cut off).
+**Verified:** pytest (807), no Arabic on English pages, the band in the browser on a phone and a desktop width, Arabic and English.

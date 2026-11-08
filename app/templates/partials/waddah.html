@@ -1,11 +1,11 @@
 {#
-  وضّاح's identity (decision 082): the light is the logo's lime dot drawn out into a four-point star, with a forest edge
-  on light grounds (--guide-edge). No face, no body: an AI must not pass for a person. The wordmark is the name in Naskh
-  Bold beside the light. (Drawing the ض's own dot as the logo's rhombus needs the font's outlines; until then the light
-  stands beside the name, decision 083.)
+  وضّاح's identity (decisions 082, 093). Since 093 his mark is the owner's mascot: a figure in a red shemagh and black
+  agal, with a dark-green visor and two lime lights (a machine, never a human face: an AI must not pass for a person,
+  082). The wordmark is the mascot beside the name in Naskh Bold. The mascot is decorative here: the name is always
+  written. The four-point light (light()) stays the sign of a next step and of «المملكة» on the maps (083).
 #}
 
-{# The light. size in px; cls adds a state (waddah-light--rise on the teaser). Decorative: the name is always written. #}
+{# The light. size in px; cls adds a state. Decorative: what it marks is always written. #}
 {% macro light(size=28, cls="") %}
 <svg class="waddah-light {{ cls }}" width="{{ size }}" height="{{ size }}" viewBox="-16 -16 32 32" aria-hidden="true" focusable="false">
   <circle class="waddah-light-glow" r="15"/>
@@ -14,5 +14,5 @@
 {% endmacro %}
 
 {% macro wordmark(cls="") %}
-<span class="waddah-mark {{ cls }}">{{ light(30) }}<span class="waddah-name">{{ waddah.name_ar }}</span></span>
+<span class="waddah-mark {{ cls }}"><img class="waddah-mascot" src="{{ url_for('static', path='img/waddah/waddah.webp') }}" width="199" height="200" alt="" aria-hidden="true" decoding="async"><span class="waddah-name">{{ waddah.name_ar }}</span></span>
 {% endmacro %}
