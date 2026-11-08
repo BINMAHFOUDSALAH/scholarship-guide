@@ -6,6 +6,8 @@ choice are in [decisions.md](decisions.md).
 
 ## 2026-11-07
 
+**2026-11-07 (decision 093, owner):** وضّاح's identity on the site: the owner's mascot beside his name, and the homepage teaser rebuilt on the owner's paper-cut picture of وضّاح helping a student (its own paper, both themes; a phone crop; Arabic and English descriptions). The night band, its dawn (`waddah_dawn`) and the three-agent drawing are retired. Poses kept in `marketing/assets/waddah/` for later. Verified: pytest 807, English leaks 0, the browser at phone and desktop widths. Shipped alone from `main`; 089–092 are reserved by the explainer's PR #61, on hold.
+
 **2026-11-07 (decision 088, owner):** «جرّب قبل أن تقرر» is 15 questions (14 activities round Holland's six types, then the subjects), three answers as pills in a question card; the grade, the difficulties and the family question are gone; «نحو ثلاث دقائق». The video's YouTube line is removed. Checked: 807 tests; the browser at 375px. Not checked: `check_explore.mjs` (updated, not run: no Playwright here), a real iPhone.
 
 **2026-11-07 (decision 087, owner):** وضّاح's teaser drawing redrawn as a night in cut paper: far skyline of destinations, a dune with a palm, the student seen from behind lit by the screen, three agents at three depths whose paths join stars into a constellation ending at the screen. Checked: 806 tests (the teaser test now also checks the constellation and no text); the browser at 375px and 1280px, both themes, Arabic and English, no sideways scroll. Not checked: a real phone, Safari.

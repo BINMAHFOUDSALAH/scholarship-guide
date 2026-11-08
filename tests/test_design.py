@@ -83,15 +83,16 @@ def text_pairs(t):
         (t["ink"], t["sand"], "the quote band"),
         (t["ink-muted"], t["sand"], "secondary text on the quote band"),
         (t["action"], t["sand"], "links and buttons on the quote band"),
-        # Decision 083: the source chip, the year line's «اليوم», وضّاح's night band.
+        # Decision 083: the source chip, the year line's «اليوم».
         (t["action"], mix(t["action"], 9, t["paper"]), "the source chip on the page"),
         (t["action"], mix(t["action"], 9, t["surface"]), "the source chip on a panel"),
         (t["action"], mix(t["action"], 17, t["paper"]), "the source chip, hovered"),
         (t["paper"], t["ink"], "«اليوم» on the year line"),
         (t["on-lime"], t["lime"], "the current phase on the year line"),
-        ("#f6f4ee", t["chart-ground"], "وضّاح's title on the night band"),
-        ("#dfe5e1", t["chart-ground"], "the line on the night band"),
-        ("#c3cdc6", t["chart-ground"], "«قريبًا في واضح» on the night band"),
+        # Decision 093: وضّاح's band is his picture's own paper, the same on both themes.
+        ("#101713", "#fae5c5", "وضّاح's title on the teaser's paper"),
+        ("#2b2a24", "#fae5c5", "the teaser's line"),
+        ("#57503f", "#fae5c5", "«قريبًا في واضح» on the teaser's paper"),
     ]
 
 

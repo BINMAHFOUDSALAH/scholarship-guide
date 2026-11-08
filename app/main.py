@@ -298,17 +298,6 @@ def waddah_public():
     return bool(waddah.get("public")) or SHOW_DRAFTS
 
 
-def waddah_dawn(today=None):
-    """How far dawn has come on the teaser (decision 082): 0 = night on dawn_from, rising a little each night on
-    Riyadh's date, holding at the edge of dawn (0.9) until launch day, which is a switch in the data, never a date."""
-    if waddah["launched"]:
-        return 1.0
-    today = today or date.today()
-    start, end = date.fromisoformat(waddah["dawn_from"]), date.fromisoformat(waddah["dawn_to"])
-    step = (today - start).days / max(1, (end - start).days)
-    return round(max(0.0, min(0.9, step * 0.9)), 3)
-
-
 def program_slugs():
     """Programs that have their own page: an entry in paths.json plus content/programs/<id>.md."""
     return [slug for slug in list_slugs("programs") if slug in paths_by_id]
@@ -397,7 +386,6 @@ templates.env.globals["waaid"] = waaid
 templates.env.globals["waaid_who"] = waaid_who
 templates.env.globals["track_status"] = track_status
 templates.env.globals["waddah"] = waddah
-templates.env.globals["waddah_dawn"] = waddah_dawn
 templates.env.globals["waddah_public"] = waddah_public
 templates.env.globals["month_names"] = ARABIC_MONTHS
 # The sky drawings (decisions 060, 062): the homepage's night stars and the الرواد chart, computed once.

@@ -1,110 +1,23 @@
 {#
-  وضّاح's teaser on the homepage (decisions 082–084): «قادم في ديسمبر», and only a teaser: no page of its own and no
-  details until launch (decision 084). A night band behind a paper-cut horizon; the sky lightens a little each night
-  (--dawn, from main.waddah_dawn(): Riyadh's date, 0 = night) and holds at the edge of dawn in December. On launch day
-  (data/waddah.json "launched") dawn breaks. Nothing loops; with reduced motion the light simply stands where the day
-  puts it.
-  Beside the words, what وضّاح will do, drawn (decisions 084, 087): a night in cut paper. On the far horizon the
-  destinations (a dome, a clock tower, a hall of columns); nearer, home (a dune and its palm). A student sits on the
-  near dune, seen from behind, lit by the screen. Three agents bring what they found (a search, an official page, the
-  light of an answer) and their paths join stars into one constellation that ends at the screen («الطريق والنجوم»,
-  083). Each agent carries وضّاح's light on its antenna; none has a human face (decision 082).
+  وضّاح's teaser on the homepage (decisions 082–084, 093): «قادم في ديسمبر», and only a teaser: no page of its own and no
+  details until launch (decision 084).
+  Since 093 it carries وضّاح's own identity, the owner's mascot (a figure in a red shemagh and black agal with a dark
+  visor and two lime lights: a machine, never a human face), beside his name, and the owner's paper-cut picture of
+  وضّاح helping a student. The picture is the band's ground: its empty paper is on the right, the start of an Arabic
+  line, where the words sit; on a phone the picture's left part (the student and وضّاح) stands above the words. The
+  same on both themes, like the program pictures (084). Nothing moves.
 #}
-{% import "partials/waddah.html" as w %}
-{% set dawn = waddah_dawn() %}
-{% macro star(x, y, s) %}{% set k = (s * 0.16) | round(2) %}<path d="M{{ x }} {{ y - s }}Q{{ x + k }} {{ y - k }} {{ x + s }} {{ y }}Q{{ x + k }} {{ y + k }} {{ x }} {{ y + s }}Q{{ x - k }} {{ y + k }} {{ x - s }} {{ y }}Q{{ x - k }} {{ y - k }} {{ x }} {{ y - s }}Z"/>{% endmacro %}
-{#- An agent, drawn in its own frame and scaled for distance (s): a rounded head with a visor and two indicator lights
-    looking towards the student, side bolts, an antenna with the light, a small body, and the soft light it floats on.
-    What it brings (its arm and the thing it holds) is the caller's block, in the same frame. #}
-{% macro agent(x, y, s) %}
-<g class="agent" transform="translate({{ x }} {{ y }}) scale({{ s }})">
-  <path class="agent-beam" d="M-7 31L7 31L13 46L-13 46Z"/>
-  <ellipse class="agent-hover" cx="0" cy="46" rx="13" ry="3"/>
-  <line class="agent-antenna" x1="0" y1="-16" x2="0" y2="-27"/>
-  <g class="agent-light">{{ star(0, -31, 5.5) }}</g>
-  <rect class="agent-body" x="-10" y="10" width="20" height="22" rx="9"/>
-  <circle class="agent-bolt" cx="-17" cy="-4" r="3"/>
-  <circle class="agent-bolt" cx="17" cy="-4" r="3"/>
-  <rect class="agent-head" x="-16" y="-17" width="32" height="26" rx="10"/>
-  <rect class="agent-visor" x="-11" y="-11" width="22" height="13" rx="6.5"/>
-  <circle class="agent-eye" cx="-1.5" cy="-4.5" r="2.2"/>
-  <circle class="agent-eye" cx="6.5" cy="-4.5" r="2.2"/>
-  {{ caller() }}
-</g>
-{% endmacro %}
-<section id="waddah" class="waddah-band" style="--dawn: {{ dawn }}" aria-labelledby="waddah-band-title" data-dawn="{{ dawn }}">
-  <svg class="waddah-sky" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
-    <defs>
-      <radialGradient id="dawn-glow" cx="0.23" cy="1" r="0.6">
-        <stop offset="0" class="dawn-glow-in"/>
-        <stop offset="1" class="dawn-glow-out"/>
-      </radialGradient>
-    </defs>
-    <rect class="dawn-ground" width="1440" height="420"/>
-    <rect class="dawn-glow" width="1440" height="420" fill="url(#dawn-glow)"/>
-    <g class="dawn-stars">{% for x, y, r, tier in sky_stars.hero[:44] %}<circle cx="{{ x }}" cy="{{ (y * 0.62) | round(1) }}" r="{{ r }}" class="dawn-star dawn-star--{{ tier }}"/>{% endfor %}</g>
-    <g class="dawn-light" transform="translate(330 330)">
-      <g class="dawn-light-rise">
-        <circle class="dawn-light-halo" r="56"/>
-        <path class="dawn-light-shape" d="M0 -26 Q4.2 -4.2 26 0 Q4.2 4.2 0 26 Q-4.2 4.2 -26 0 Q-4.2 -4.2 0 -26Z"/>
-      </g>
-    </g>
-    {# The horizon, three layers of cut paper (our own drawing, decision 073's way). #}
-    <path class="dawn-hill dawn-hill--far" d="M0 330 C180 300 300 318 470 306 C640 294 760 262 940 286 C1110 308 1240 290 1440 300 L1440 420 L0 420Z"/>
-    <path class="dawn-hill dawn-hill--mid" d="M0 360 C150 340 330 352 520 336 C700 322 860 344 1030 334 C1200 324 1320 344 1440 338 L1440 420 L0 420Z"/>
-    <path class="dawn-hill dawn-hill--near" d="M0 392 C220 378 420 396 640 384 C860 372 1060 394 1260 386 C1350 382 1400 388 1440 386 L1440 420 L0 420Z"/>
-  </svg>
+{% import "partials/waddah.html" as w with context %}
+<section id="waddah" class="waddah-band" aria-labelledby="waddah-band-title">
+  <picture class="waddah-art">
+    <source media="(max-width: 859px)" srcset="{{ url_for('static', path='img/waddah/helps-student-phone.webp') }}" width="760" height="517">
+    <img src="{{ url_for('static', path='img/waddah/helps-student.webp') }}" width="1600" height="534" alt="{{ _('وضّاح يساعد طالبًا يقرأ كتابًا') }}" loading="lazy" decoding="async">
+  </picture>
   <div class="container waddah-band-inner">
     <div class="waddah-band-text">
       <p class="waddah-kicker">{{ waddah.teaser.kicker_ar }}</p>
       <h2 id="waddah-band-title" class="waddah-title">{{ w.wordmark() }} <span class="waddah-title-rest">{{ _("قادم في ديسمبر") }}</span></h2>
       <p class="waddah-line">{{ waddah.teaser.line_ar }}</p>
     </div>
-    <svg class="waddah-help" viewBox="0 0 480 300" aria-hidden="true" focusable="false">
-      {#- The sky over the student: a crescent and a few stars. #}
-      <path class="art-moon" d="M66 28A17 17 0 1 0 66 62A19 19 0 0 1 66 28Z"/>
-      <g class="art-stars"><circle cx="230" cy="30" r="1.4"/><circle cx="292" cy="58" r="1.1"/><circle cx="352" cy="24" r="1.5"/><circle cx="420" cy="70" r="1.2"/><circle cx="24" cy="96" r="1.1"/><circle cx="452" cy="132" r="1"/><circle cx="380" cy="118" r="1.3"/></g>
-      {#- On the far horizon, the destinations: a dome, a clock tower, a hall of columns, a spire, a tower. #}
-      <path class="art-city" d="M62 300V196c0-14 9-24 20-26c11 2 20 12 20 26v18h14v-34l9-14l9 14v34h12v-12l26-16l26 16v12h18v-18l7-24l7 24v18h12V300Z"/>
-      <g class="art-city-cols"><path d="M156 214v-10M164 214v-10M172 214v-10M180 214v-10M188 214v-10M196 214v-10"/></g>
-      <circle class="art-city-clock" cx="125" cy="190" r="3.6"/>
-      {#- Home: the dune and its palm. #}
-      <path class="art-dune art-dune--mid" d="M-10 300C40 262 130 244 250 242C350 240 430 254 490 300Z"/>
-      <path class="art-dune-edge" d="M-10 300C40 262 130 244 250 242C350 240 430 254 490 300"/>
-      <g class="art-palm" transform="translate(418 266) scale(0.78)">
-        <path class="art-palm-trunk" d="M-4 4C-2 -22 -4 -44 2 -64h6C4 -44 6 -22 6 4Z"/>
-        <path class="art-palm-frond" d="M5 -64C-12 -80 -36 -80 -54 -64C-34 -70 -16 -68 5 -64Z"/>
-        <path class="art-palm-frond" d="M5 -64C10 -84 30 -94 54 -88C34 -84 18 -76 5 -64Z"/>
-        <path class="art-palm-frond art-palm-frond--back" d="M5 -64C22 -70 44 -64 58 -44C42 -56 24 -62 5 -64Z"/>
-        <path class="art-palm-frond art-palm-frond--back" d="M5 -64C-10 -60 -28 -46 -34 -28C-22 -44 -10 -56 5 -64Z"/>
-        <path class="art-palm-frond" d="M5 -64C-4 -82 -20 -92 -40 -94C-22 -86 -8 -76 5 -64Z"/>
-      </g>
-      {#- The paths of light: what each agent found, joined like stars into one constellation that reaches the screen. #}
-      <g class="help-paths">
-        <path d="M150 74L182 92L206 126L236 196"/>
-        <path d="M74 166L114 178L162 172L232 204"/>
-        <path d="M212 158L238 200"/>
-      </g>
-      <g class="help-nodes"><circle cx="182" cy="92" r="2.6"/><circle cx="206" cy="126" r="2.6"/><circle cx="114" cy="178" r="2.6"/><circle cx="162" cy="172" r="2.6"/></g>
-      {#- The near dune, and the student on it, a paper cut-out seen from behind, lit by the screen. #}
-      <path class="art-dune art-dune--near" d="M150 300C180 270 240 256 300 255C364 254 420 270 456 300Z"/>
-      <ellipse class="help-glow" cx="240" cy="216" rx="40" ry="28"/>
-      <path class="help-leg" d="M300 254L262 240L254 258"/>
-      <path class="help-shoe" d="M260 256h-22a5 5 0 0 0 0 10h22z"/>
-      <path class="help-laptop" d="M232 238L276 238"/>
-      <path class="help-screen" d="M234 236L226 204"/>
-      <path class="help-body" d="M290 258C284 228 288 204 300 194C308 188 322 188 330 194C342 204 346 228 340 258Z"/>
-      <path class="help-arm" d="M298 210C288 222 276 230 262 234"/>
-      <circle class="help-head" cx="315" cy="174" r="15"/>
-      <path class="help-hair" d="M300.5 178C298 166 304 159 315 159C326 159 331.5 166 329.5 178C328 184 324 187 320 188C316 184 309 183 304 185C302 183 301 181 300.5 178Z"/>
-      <ellipse class="help-ear" cx="301" cy="176" rx="2.6" ry="4"/>
-      <path class="help-rim" d="M291 250C286 226 290 206 300 196M315 159A15 15 0 0 0 300 178"/>
-      {#- 1. A search, far off. #}
-      {% call agent(126, 56, 0.72) %}<path class="agent-arm" d="M10 16L20 24"/><circle class="help-lens" cx="27" cy="31" r="9"/><path class="help-lens-handle" d="M33 38L39 45"/>{% endcall %}
-      {#- 2. An official page, with its source. #}
-      {% call agent(44, 138, 0.9) %}<path class="agent-arm" d="M10 16L22 24"/><g transform="rotate(-8 34 34)"><rect class="help-doc" x="20" y="16" width="26" height="34" rx="3"/><path class="help-doc-lines" d="M25 25h16M25 31h16M25 37h10"/><rect class="help-doc-src" x="25" y="42" width="12" height="4.5" rx="2.25"/></g>{% endcall %}
-      {#- 3. The answer: the light, held out to the student. #}
-      {% call agent(176, 132, 1.05) %}<path class="agent-arm" d="M10 16L22 22"/><circle class="help-answer-glow" cx="31" cy="25" r="13"/><g class="help-answer">{{ star(31, 25, 9) }}</g>{% endcall %}
-    </svg>
   </div>
 </section>

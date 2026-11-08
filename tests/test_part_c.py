@@ -146,15 +146,6 @@ def test_the_explorer_offers_a_map_for_lists_across_countries_only():
 
 # ---------- وضّاح ----------
 
-def test_dawn_rises_by_the_riyadh_date_and_holds_until_launch(monkeypatch):
-    d = datetime.date
-    assert main.waddah_dawn(d(2026, 11, 7)) == 0.0
-    assert 0 < main.waddah_dawn(d(2026, 11, 20)) < main.waddah_dawn(d(2026, 11, 28)) < 0.9
-    assert main.waddah_dawn(d(2026, 12, 20)) == 0.9
-    monkeypatch.setitem(main.waddah, "launched", True)
-    assert main.waddah_dawn(d(2026, 11, 7)) == 1.0
-
-
 def test_the_teaser_waits_for_the_owners_name_check(monkeypatch):
     """Decision 082: the owner checks the name (SAIP, app stores, X) before the teaser. Until data/waddah.json says
     public, the live site has no band, no /waddah and no sitemap entry; WADIH_SHOW_DRAFTS shows it locally."""
@@ -183,21 +174,24 @@ def test_waddah_is_only_a_teaser_until_launch(prefix, teaser_public):
         assert key not in main.waddah
 
 
-def test_the_teaser_band_is_on_the_homepage_with_todays_dawn(monkeypatch, teaser_public):
-    on(monkeypatch, 2026, 11, 20)
-    html = client.get("/").text
+@pytest.mark.parametrize("prefix", ["", "/en"])
+def test_the_teaser_band_shows_waddahs_mascot_and_the_picture_of_him_helping(prefix, teaser_public):
+    """Decision 093: وضّاح's identity is the owner's mascot, beside his written name; the band's picture is the owner's
+    paper-cut drawing of وضّاح helping a student, self-hosted, with a phone crop. Still only a teaser (084)."""
+    html = client.get(prefix + "/").text
     band = html.split('class="waddah-band"')[1].split("</section>")[0]
-    assert f'--dawn: {main.waddah_dawn(datetime.date(2026, 11, 20))}' in band
     assert 'id="waddah"' in html.split('class="waddah-band"')[0][-200:]
-    assert "/waddah" not in band and "<a " not in band  # nothing to open yet
-    assert "فيجيبك من المصادر الرسمية" not in band and main.waddah["teaser"]["line_ar"] in band
-    # What وضّاح will do, drawn: a student and three agents, each with the light on its antenna; no faces.
-    art = band.split('class="waddah-help"')[1].split("</svg>")[0]
-    assert art.count('class="agent"') == 3 and art.count('class="agent-light"') == 3
-    assert 'class="help-head"' in art
-    # Their paths join stars into one constellation that reaches the screen (decision 087); no text in the drawing.
-    assert art.count('<circle', art.index('class="help-nodes"'), art.index('class="help-nodes"') + 400) >= 4
-    assert "<text" not in art
+    assert "<a " not in band and '="/waddah' not in band and '="/en/waddah' not in band  # nothing to open yet
+    assert "فيجيبك من المصادر الرسمية" not in band
+    # The mascot is decorative (the name is written beside it); the picture says what it shows.
+    assert '/static/img/waddah/waddah.webp' in band and 'alt="" aria-hidden="true"' in band
+    assert '/static/img/waddah/helps-student.webp' in band and '/static/img/waddah/helps-student-phone.webp' in band
+    for f in ("waddah.webp", "helps-student.webp", "helps-student-phone.webp"):
+        assert (main.APP_DIR / "static" / "img" / "waddah" / f).stat().st_size < 120_000
+    if prefix:
+        assert 'alt="Waddah helping a student who is reading a book"' in band and "Waddah" in band
+    else:
+        assert 'alt="وضّاح يساعد طالبًا يقرأ كتابًا"' in band and main.waddah["teaser"]["line_ar"] in band
 
 
 def test_sign_in_waits_for_its_switch(monkeypatch):
@@ -213,7 +207,6 @@ def test_sign_in_waits_for_its_switch(monkeypatch):
 def test_the_data_file_has_its_switches_and_no_fixed_day():
     data = json.loads((main.DATA_DIR / "waddah.json").read_text(encoding="utf-8"))
     assert data["launched"] is False and data["launch_date"] is None  # «في ديسمبر», no day (decision 082)
-    assert data["dawn_from"] < data["dawn_to"]
 
 
 # ---------- «هذا صفّي» ----------
