@@ -774,17 +774,20 @@ def test_sdaia_program_page_and_targets():
             assert target["id"] in main.explorer.universities, target
 
 
-def test_sdaia_is_open_with_its_source_and_warns_it_is_not_standalone():
+def test_sdaia_is_closed_by_the_owner_and_warns_it_is_not_standalone():
+    """The 4th cohort closed (owner, 2026-11-09). SDAIA's site rejects scripts and gave no date, so no date is shown."""
     sdaia = main.paths_by_id["sdaia-ai-scholarship"]
     track = sdaia["tracks"][0]
-    assert track["status"] == "open" and track["status_source"].startswith("https://x.com/SDAIA_SA/")
+    assert track["status"] == "closed" and track["owner_confirmed"] and not track.get("status_until")
     html = client.get("/programs/sdaia-ai-scholarship").text
     assert sdaia["not_standalone_ar"] in html
 
 
-def test_board_links_sdaia_to_our_explainer():
-    sdaia = [i for i in main.status_board()["open"] if i["page"] == "/programs/sdaia-ai-scholarship"]
-    assert sdaia and sdaia[0]["source_url"].startswith("https://x.com/SDAIA_SA/")
+def test_board_lists_closed_sdaia_as_waiting_with_our_explainer():
+    board = main.status_board()
+    assert not [i for i in board["open"] if i["page"] == "/programs/sdaia-ai-scholarship"]
+    sdaia = [i for i in board["waiting"] if i["page"] == "/programs/sdaia-ai-scholarship"]
+    assert sdaia and sdaia[0]["status"] == "closed" and not sdaia[0]["apply_url"]
 
 
 def test_scholarship_links_its_official_x_account():
@@ -1128,5 +1131,3 @@ def test_sdaia_row_links_to_its_official_list():
     pdf = main.paths_by_id["sdaia-ai-scholarship"]["targets_guide_url"]
     sdaia = [i for g in main.status_board().values() for i in g if i["page"] == "/programs/sdaia-ai-scholarship"]
     assert sdaia and not sdaia[0]["unis"] and sdaia[0]["list_url"] == pdf
-    row = client.get("/").text.split('href="/programs/sdaia-ai-scholarship"')[1].split("</li>")[0]
-    assert f'href="{pdf}"' in row and "كل جامعات البرنامج" in row and "now-uni " not in row

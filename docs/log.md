@@ -4,6 +4,10 @@ What each working session did and left open, newest first. Notes are kept as the
 ones can be out of date. Today's plan and to-dos are in [roadmap.md](roadmap.md); the reasons for each
 choice are in [decisions.md](decisions.md).
 
+## 2026-11-09
+
+**2026-11-09 (/update-site, owner):** SDAIA's AI scholarship (4th cohort) marked closed on the owner's word: the track is `closed` with `owner_confirmed`, no date (SDAIA's site rejects scripts and published none). It leaves «الآن» and shows «مغلق حتى إشعار آخر» on its page and in «البرامج»; the cohort fact no longer says "no closing date yet" (English updated). Three tests that pinned the open state now pin the closed one. Checked: pytest 807, English leaks 0, the browser at 390px (home, the program page in Arabic and English, «البرامج»). Next: watch SDAIA's page and X for a 5th cohort.
+
 ## 2026-11-07
 
 **2026-11-07 (decision 093, owner):** وضّاح's identity on the site: the owner's mascot beside his name, and the homepage teaser rebuilt on the owner's paper-cut picture of وضّاح helping a student (its own paper, both themes; a phone crop; Arabic and English descriptions). The night band, its dawn (`waddah_dawn`) and the three-agent drawing are retired. Poses kept in `marketing/assets/waddah/` for later. Verified: pytest 807, English leaks 0, the browser at phone and desktop widths. Shipped alone from `main`; 089–092 are reserved by the explainer's PR #61, on hold.
