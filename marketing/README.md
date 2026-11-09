@@ -4,6 +4,8 @@ The first ad for واضح: a 30-second vertical video (plus 15s and 6s cutdowns)
 
 This folder is separate from the website: nothing in `app/` uses it. Only the scripts in `src/` and this guide are in git; the media stays on the owner's laptop.
 
+**Also here:** the explainer video in two formats, 9:16 (phone site) and 16:9 (desktop site), made with Remotion and hosted by وضّاح's mascot (the programs, the الرواد map, the explorer, requirements and dates, the official page, «خطتي», وضّاح coming soon), Arabic, free Mixkit music, $0: [§9](#9-the-explainer-video-decisions-089094-2026-11-07).
+
 **Status (2026-10-12): paused, no budget for paid tools yet.**
 - Built and verified: the real site footage, captions, end card, and the build pipeline.
 - Still placeholders: the 4 AI shots (Higgsfield) and the 9 voice lines (ElevenLabs).
@@ -198,3 +200,78 @@ All 9:16 at 1080×1920, H.264 + AAC, captions burned in (most people watch muted
 - Snapchat Spotlight and wholly AI-generated video (31 Jul 2026), news coverage: https://thenextweb.com/news/snapchat-spotlight-bans-ai-generated-videos-recommendations
 - Snapchat in Saudi Arabia (25M+ monthly users, 90% aged 13–34), Gulf News: https://gulfnews.com/world/gulf/saudi/snapchat-dominates-among-saudi-youth-with-90-of-users-aged-13-34-1.500043687
 - **Not verified:** TikTok's exact rule on AI likenesses of minors. Its guidelines page didn't render for Claude, and the claim comes from a third-party blog: https://www.cinerads.com/blog/tiktok-ai-content-policy. The ad avoids identifiable AI faces either way. Check TikTok's own guidelines before any paid TikTok ad.
+
+## 9. The explainer video (decisions 089–094, 2026-11-07)
+
+**Two films from one script (decision 094)**, both 83 seconds, 60 fps, **in Arabic**, made with **Remotion** and hosted by
+**وضّاح's mascot**:
+- **9:16 (1080×1920), the phone site:** the site in a phone, the words above it, وضّاح in the corner.
+- **16:9 (1920×1080), the desktop site:** the site in a browser window on the left (its address bar shows each page),
+  the words in a column on the right, where an Arabic reader starts, and وضّاح under them. The window stays still and the page zooms inside it; the wheel scrolls, the
+  official page opens in a new tab, and وضّاح's chat is a card of its own (it has no page until it launches).
+
+The camera follows a cursor through the real site. In order:
+1. **The question:** «تفكّر بالابتعاث والدراسة بالخارج؟», with a route drawn from home to a pin far away.
+2. **The mess:** tabs, PDFs and notes pile up («قوائم… شروط… مواعيد… في كل مكان.»). One swipe clears them.
+3. **The logo:** «كل هذا، في مكان واحد.», وضّاح waving beside it.
+4. **The homepage:** «الآن», the programs and their status.
+5. **The الرواد map:** «خريطة جامعات الرواد.» The stars light up; the cursor points at one and the line under the chart names it.
+6. **The filters:** إمداد, الأعمال والإدارة والقانون, الولايات المتحدة الأمريكية.
+7. **The list,** down to the **University of Minnesota**, then its page: its next date, then its English tests.
+8. **The official page:** «صفحة القبول في موقع الجامعة» opens admissions.tc.umn.edu (captured live).
+9. **«خطتي»:** back on the university's page, «احفظ في خطتي»; a light flies to «خطتي» in the header, then the plan itself: the route of statuses with its counts, and the university's row with «أين وصلت؟».
+10. **Coming soon, said plainly:** «وقريبًا…», then وضّاح rises with his name and «قادم في ديسمبر», and his chat (a preview, «قادم في ديسمبر» in its header): «كيف أستعد لاختبار دولينجو؟» and «وكم تطلب جامعة مينيسوتا؟».
+11. **The end card:** wadihguide.com, وضّاح waving.
+
+**Make them ($0, on your laptop).** Start the site, then:
+
+```powershell
+node marketing/src/explainer.mjs --site http://127.0.0.1:8000
+```
+
+- It re-captures the site at phone and desktop sizes (Edge), downloads any missing Mixkit files, builds each film's soundtrack, and has Remotion render `marketing/out/wadih-explainer-ar-9x16.mp4` and `…-16x9.mp4`, each with a `…-no-music.mp4` (the same picture and sounds without the music).
+- `--format tall` or `--format wide` makes only one of them.
+- `--stills 3,20,45` renders stills at those seconds (into `marketing/out/explainer-stills-tall/` and `-wide/`).
+- `--skip-capture` reuses the last screens; `--capture-only` only captures.
+- `--audio-only` rebuilds just the soundtrack and swaps it into the last videos (seconds, not minutes).
+- `--synth` uses the old synthesised Hijaz score (`explainer_music.mjs`) instead of Mixkit; `--voice nourah` (with `--synth`) adds voice clips.
+- To preview and scrub them: `cd marketing/video` then `npm run dev` (Remotion Studio), after one run of the command above.
+- First time on a new machine: `npm install` in `marketing/video/` (Remotion, about 310 MB, not in git). Remotion downloads its own headless Chrome on the first render. Its licence is free for an individual.
+
+**The pieces.**
+- `explainer_script.json`: the words, timed in beats (0.6 s each), the chat, and the filters and university it shows.
+- `marketing/video/src/timeline.mjs`: every time and place in both films (camera, cursor, clicks, menus, rings, the light, the mascot's poses, the chat), from the captured data; `GEOM` holds each format's frame, device and scale. The picture and the sounds both read it.
+- `marketing/video/src/Explainer.tsx`: the Remotion composition, one per format (`WadihTall`, `WadihWide`): the scenes, the phone or the browser, the chat, the mascot; `styles.ts` its look; `fonts.ts` the site's own fonts.
+- `explainer_audio.mjs` and `explainer_audio.json`: the soundtrack from free Mixkit files (below).
+- `explainer.mjs`: captures the site, fills `public/`, builds the soundtracks, calls Remotion.
+- `make_voice_humain.mjs`: makes voice clips with HUMAIN Voice (not used now).
+- وضّاح's poses: `marketing/assets/waddah/` (wave, present, point, clipboard, cheer, laptop, read), the owner's files.
+
+**Music and sounds (Mixkit, free).** All from [mixkit.co](https://mixkit.co/license/): the Stock Music Free License and the Sound Effects Free License (read 2026-11-07): royalty free, no credit required, allowed on YouTube, social media, websites and online ads; **not** for CDs, DVDs, video games or TV/radio broadcast. The files stay out of git (`marketing/assets/explainer/mixkit/`); the list with each file's id, title and level is `explainer_audio.json`.
+- **Music:** «A Peaceful World» by Michael Ramir C. (Mixkit 1051), instrumental, ~117 BPM, kept quiet. Its soft opening plays under the question, its full band arrives as the logo lands, eight bars (a whole phrase, cut on a downbeat) are taken out inside وضّاح's night, and its own soft ending plays under the end card.
+- **Sounds:** one quiet, real sound per action: mouse clicks, a soft select for each menu, paper for the mess, air whooshes for the big changes, short sweeps for scrolls and page changes, typing on a phone (9:16) or a keyboard (16:9) in the chat, message pops, a checkbox tick for «احفظ», a soft tone as the light reaches «خطتي», and an Arabian harp for وضّاح's name.
+- **Levels:** −16 LUFS, peaks under −1 dB, the sounds a little above the music.
+
+**Honesty rules.**
+- **The rank is not a world ranking.** It is the university's place in the scholarship lists (the site says so under every list). The words say «بترتيبها في قوائم الابتعاث».
+- **No line says «لكل جامعة».** Only some universities have their requirements yet.
+- **The mess is generic.** Its tabs, PDFs and notes hold no real list, date or score.
+- **وضّاح isn't live, and the film says so:** «وقريبًا…» before him, «قادم في ديسمبر» under his name and in the chat's header. His answers come from the site, never typed in by hand: the first is the Duolingo guide's own three steps (the build stops if the page stops saying them), the second is Minnesota's sourced Duolingo minimum from `data/university_details/`. Each has its source's domain on a chip.
+- **Dated screens.** The program status («مفتوح الآن حتى 15 نوفمبر 2026») and the official page's banner are what the sites showed on the day of the capture. Run it again before posting later.
+
+**Why not "Cartoon Claude".** ghost.fail's Cartoon Claude is a fan design by Theia Vogel (@voooooogel), not Anthropic's.
+- The page gives no licence.
+- It's drawn from Anthropic's logo, so using it in an ad could suggest Anthropic endorses واضح.
+- The owner chose our own agent instead.
+
+### The voice (optional)
+
+HUMAIN Voice (voice.humain.com) has Najdi voices (`ars` in its list): two male (`mul_abdullah`, `mul_abdulaziz`) and two female (`mul_nourah`, `mul_sara`). The second cut used Abdulaziz; its clips are in `voice/ar/` and are not used by the third cut. **Not answered:** whether the voices can be used commercially. Ask HUMAIN before posting a voiced cut.
+
+**Steps** (the SDK is installed in `marketing/`, not in git; the key stays in your terminal):
+1. In PowerShell: `$env:HUMAIN_API_KEY = "<your key>"`.
+2. `node marketing/src/make_voice_humain.mjs --list` shows the voices and their ids.
+3. `node marketing/src/make_voice_humain.mjs --voice <id> --out nourah` makes every line into `voice/ar/nourah/`. Each line reads its `say` text when it has one (vowel marks, so «تتقدّم» isn't misread). Redo one line with `--line 06`.
+4. `node marketing/src/explainer.mjs --site http://127.0.0.1:8000 --voice nourah`. Each scene grows to fit its clip (in half bars, so the cuts stay on the beat), and the music steps back under the voice.
+
+**Other Saudi voices to compare** (vendor claims, not checked): SILMA (silma.ai), Munsit (munsit.com), Nabrah (nabrah.ai).
