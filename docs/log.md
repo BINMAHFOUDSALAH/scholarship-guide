@@ -9,7 +9,7 @@ removed on 2026-11-16 and kept in git history (`git show f7235f0:docs/decisions.
 Moved here from the old roadmap on 2026-11-16. Tick or delete items as they're done.
 
 ### Next steps, in order
-0. **Version 3 redesign, «عالم وضّاح» (owner, 2026-11-16: redesign first, the launch dates are dropped).** Done: the foundation and the homepage (branch `redesign/v3`, waiting for the owner's look before it is merged). Next, one page at a time: «خطتي» as a dated roadmap, the university page (the answer first), the program page (steps in order), the explorer. Proposed and not yet confirmed by the owner: a device-only profile (grade, goal, fields, destinations; nothing sensitive) that the roadmap and later وضّاح read; scores stay on the device until the PDPL review; Google sign-in plus an email link; وضّاح built as lookups over the data + search over the guides + citations + guards, in stages (cited answers, then plan-aware, then an essay coach that never writes).
+0. **Version 3 redesign, «عالم وضّاح» (owner, 2026-11-16: redesign first, the launch dates are dropped).** Done: the foundation and the homepage (PR #66, merged 2026-11-16 on the owner's word). Next, one page at a time: «خطتي» as a dated roadmap, the university page (the answer first), the program page (steps in order), the explorer. Proposed and not yet confirmed by the owner: a device-only profile (grade, goal, fields, destinations; nothing sensitive) that the roadmap and later وضّاح read; scores stay on the device until the PDPL review; Google sign-in plus an email link; وضّاح built as lookups over the data + search over the guides + citations + guards, in stages (cited answers, then plan-aware, then an essay coach that never writes).
 1. **Usability test with 3–5 students, on version 3** (once its core pages are rebuilt; no date). Write the script (`docs/research/usability-test.md`) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
 2. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.
 3. **P1 from the [product audit](research/product-audit-2026-10-13.md):** «الدراسة في السعودية», the alternatives section, the fee-waiver class split.
@@ -52,7 +52,7 @@ Later or optional: an FAQ from real student questions; page-view counts without 
 - **The homepage:** وضّاح beside «في أي صف أنت؟», standing on one forest panel with the four stops as keys; «الآن» also lists the four nearest university deadlines from the researched files; programs as cards; the header shows «خطتي» by name, and the theme switch moved into the phone menu.
 - **Checked:** pytest 811 (4 new: the start, the deadlines, the header, the typeface; new colour pairs); `english_leaks.py` 0; the browser at 375px and 1280px, both themes, Arabic and English: the homepage, the menu, the explorer, a university page. No sideways scroll.
 - **Not checked:** a real phone, Safari, a screen reader, students. The other pages have the new colours, type and buttons but their old layouts.
-- **Not merged:** the look is the owner's call, so the PR waits for it.
+- **Merged** the same day, after the owner looked at it and said to merge (PR #66). Next session: «خطتي».
 
 ## 2026-11-09
 
