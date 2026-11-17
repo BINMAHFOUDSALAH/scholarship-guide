@@ -6,6 +6,7 @@ A map of the project's documents. To run the code, start with the main [README](
 
 | Document | Read it for |
 |---|---|
+| [plan.md](plan.md) | The vision and the steps to reach it, in order; a session does the first step not marked done |
 | [architecture.md](architecture.md) | How the code fits together |
 | [log.md](log.md) | The open to-dos (at the top), then what each working session did, newest first |
 
