@@ -1,6 +1,6 @@
 # Launch ad «الشلة»: production guide
 
-The first ad for واضح: a 30-second vertical video (plus 15s and 6s cutdowns) that makes a grade 12 student feel understood and gives one clear reason to open wadihguide.com. Why it's built this way: [decision 044](../docs/decisions.md).
+The first ad for واضح: a 30-second vertical video (plus 15s and 6s cutdowns) that makes a grade 12 student feel understood and gives one clear reason to open wadihguide.com. Why it's built this way: decision 044 (in the old `docs/decisions.md`, git history).
 
 This folder is separate from the website: nothing in `app/` uses it. Only the scripts in `src/` and this guide are in git; the media stays on the owner's laptop.
 

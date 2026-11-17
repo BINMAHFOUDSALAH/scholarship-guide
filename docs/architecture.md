@@ -1,6 +1,6 @@
 # Architecture
 
-How واضح is put together. Why each choice was made lives in [decisions.md](decisions.md).
+How واضح is put together. Why each choice was made: the PR descriptions, and before 2026-11-16 the old `docs/decisions.md` (git history: `git show f7235f0:docs/decisions.md`).
 
 ## Big picture
 

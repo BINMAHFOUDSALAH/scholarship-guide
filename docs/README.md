@@ -7,9 +7,28 @@ A map of the project's documents. To run the code, start with the main [README](
 | Document | Read it for |
 |---|---|
 | [architecture.md](architecture.md) | How the code fits together |
-| [decisions.md](decisions.md) | Every design choice, with the alternatives and why |
-| [roadmap.md](roadmap.md) | Where the project is, what's next, and the owner's to-dos |
-| [log.md](log.md) | What each working session did, newest first |
+| [log.md](log.md) | The open to-dos (at the top), then what each working session did, newest first |
+
+The old `decisions.md` (every design choice, 001–094) and `roadmap.md` were removed on 2026-11-16 to keep the repo lean. Both are in git history: `git show f7235f0:docs/decisions.md`.
+
+## Commands
+
+From the repo root, in Windows PowerShell. The everyday ones (run, test) are in [CLAUDE.md](../CLAUDE.md).
+
+```powershell
+pytest tests/test_data.py -v                    # one test file
+pytest tests/test_pages.py::test_about_loads    # one test
+python scripts/stale_facts.py --as-of 2026-12-09 --days 45   # facts to re-check before launch
+python scripts/check_quote.py URL "quote"       # does an official page really say this?
+python scripts/check_sources.py                 # every university fact still on its cited page?
+python scripts/watch.py                         # what needs updating: new واعد programs, passed deadlines, broken pages (--offline: no internet)
+node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
+node scripts/check_explorer.mjs http://127.0.0.1:8000 --en   # the same flows on the English pages
+node scripts/check_plan.mjs                     # «خطتي» on an emulated iPhone: old saves move in, save, status, the hub, the .ics, «هذا صفّي», reload, remove (add --en)
+node scripts/check_explore.mjs                  # «جرّب قبل أن تقرر» on an emulated iPhone: tap-to-advance, double taps, skip, keyboard, Back, reload, the result's cards (add --en, --webkit for Safari's engine)
+node marketing/src/waddah_cards.mjs             # وضّاح's share image, 9:16 still and dawn clip into marketing/out/ (needs ffmpeg; --no-clip)
+python scripts/logo_thumbs.py                   # small university logos for «الآن» (after adding logos)
+```
 
 ## Feature specs
 

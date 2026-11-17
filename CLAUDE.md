@@ -7,12 +7,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **واضح (Wadih, "clear")**: a free, Arabic-first website that helps Saudi high school students go from confusion to action about their future. Tagline: "مستقبلك بعد الثانوية، بوضوح".
 
 - Organized around **programs** («البرامج» on the site, `paths` in code): the government external scholarship (with the Ministry's four tracks, «مسار الرواد»…), Aramco, KAUST, more later. Each has requirements, steps, and official sources; a program with `content/programs/<id>.md` gets its own page. **Resources** (IELTS, SAT, Calculus…) are shared across programs.
-- **Direction (decision 057):** a deep, verified study-abroad core, plus thin doors that route to official tools rather than rebuilding them: «لم تقرر بعد؟», «الدراسة في السعودية», and the grade pages. No scored career quiz: «جرّب قبل أن تقرر» is an unscored exploration activity, live since decision 070; a counsellor review and a student test are still to come. Accounts and the AI guide come in Phase 2 (decisions 078, 082).
-- **Help first.** Guides, path pages, and the universities explorer are public (Google can index them). Login (email + password or Google) unlocks personal features: guided start + saved plan, saved universities, opt-in email alerts (decisions 014–016). Until then, «خطتي» keeps universities and program tracks, with a status each, on the student's device only (decisions 035, 078).
-- **Phase 1 (decisions 078–084):** Part A fixed what misleads students; Part B grew «قائمتي» into «خطتي» on the device (079–080); **Part C (built 2026-11-07, decision 083):** the «الطريق والنجوم» redesign (the grade as the main way in, «الآن» with a picture per program, «البرامج» with their dates, one box, compact rows, the map as constellations like the الرواد chart, «خطتي» as a hub; 084 for the pictures and the map), the AI guide **وضّاح** ("Waddah"), only a teaser on the homepage until launch («قادم في ديسمبر», no page: decision 084), and Phase 2's specs ([agent](docs/specs/agent.md), [accounts](docs/specs/accounts.md), [eval seed](docs/specs/eval-seed.json)); plan: [docs/research/design-direction-2026-11-07.md](docs/research/design-direction-2026-11-07.md). **Next:** the owner's phone check and the 5-student test of the new design. **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want وضّاح, which answers only from verified content, with sources; it launches in December. Launch 1 (~2026-12-09): public guides + the government scholarship path, fully verified, after a 5-student test of the new design.
+- **Direction (decision 057):** a deep, verified study-abroad core, plus thin doors that route to official tools rather than rebuilding them: «لم تقرر بعد؟», «الدراسة في السعودية», and the grade pages. No scored career quiz: «جرّب قبل أن تقرر» is an unscored exploration activity (decision 070).
+- **Help first.** Guides, path pages, and the universities explorer are public (Google can index them). Until accounts exist, «خطتي» keeps universities and program tracks, with a status each, on the student's device only (decisions 035, 078).
+- **Where we are:** Phase 1 is built (the «الطريق والنجوم» redesign, «خطتي», وضّاح's teaser, decisions 078–084). **Next:** the owner's phone check and a 5-student test of the new design, then Launch 1 (~2026-12-09: public guides + the government scholarship path, fully verified). **Phase 2 (from 2026-11-25):** accounts (email + password) for students who want the AI guide **وضّاح**, which answers only from verified content, with sources ([agent](docs/specs/agent.md), [accounts](docs/specs/accounts.md) specs). Open to-dos: the top of [docs/log.md](docs/log.md).
 - The owner is building this to become an AI-focused Forward Deployed Engineer: ship a real product **and** understand it well enough to explain, debug, and improve it.
 
-**Read first:** [docs/roadmap.md](docs/roadmap.md) (current step), [docs/decisions.md](docs/decisions.md) (why), [docs/architecture.md](docs/architecture.md) (how the code fits together). Also: [docs/claude-workflow-guide.md](docs/claude-workflow-guide.md) (which Claude Code feature to use when), [docs/project-files-guide.md](docs/project-files-guide.md) (check before adding a new kind of project file).
+**Docs:** [docs/architecture.md](docs/architecture.md) (how the code fits together), [docs/README.md](docs/README.md) (map of the docs and all script commands). Decision numbers in this file and the code (e.g. "decision 062") point to the old `docs/decisions.md`, removed on 2026-11-16; when the why matters, search it with `git show f7235f0:docs/decisions.md | Select-String "## 062"`, never read it whole (220 KB).
 
 ## Rules
 - A student guide: NOT the Ministry of Education, NOT Safeer, not affiliated with Aramco or KAUST.
@@ -40,16 +40,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   2. Verify with tests (and the browser for UI); say clearly what's untested.
   3. Report briefly: **what changed**, **how I can test it myself**, **the key concept**.
   4. **Recommend the next step** (fix, commit, push, or move on).
-- The key concept goes in the report itself (no separate learning log, decision 059). At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
+- The key concept goes in the report itself. At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
 - **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Quick lookups and small edits stay in the main session.
-  - **Models (decision 077):** `source-researcher` on **Haiku** (bulk reading; the main session checks every quote); `fact-checker` and `reviewer` on **Sonnet** (judgement guards the facts). Aliases, so each always runs the latest version. Set in each agent file; any other subagent defaults to Haiku (`.claude/settings.json`). In cloud sessions settings may not apply (2026-11-04): also pass the agent's model (`model: "haiku"` or `"sonnet"`) and ask it to report its model. If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
+  - **Models (decision 077):** `source-researcher` on **Haiku** (bulk reading; the main session checks every quote); `fact-checker` and `reviewer` on **Sonnet** (judgement guards the facts). Aliases, so each always runs the latest version. Set in each agent file; any other subagent defaults to Haiku (`.claude/settings.json`). In cloud sessions settings may not apply: also pass the agent's model (`model: "haiku"` or `"sonnet"`) and ask it to report its model. If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
   - The agents (`.claude/agents/`) are read-only and return results. The main session saves them, validates them with tests, makes the decisions and flags anything an agent couldn't verify.
   - `source-researcher` for new facts (~5 items per agent, in parallel, with a strict schema + a finished example file), `fact-checker` for what's already published, `reviewer` for a big or risky diff. University requirements: the `research-wave` skill. Bringing the site up to date (new announcements, passed deadlines, Aramco/KAUST/SDAIA/الرواد…): the `update-site` skill.
 - Ask before installing packages, downloading files, or spending money.
 - Git (owner, 2026-11-06): once a task is **verified** (all tests pass, and the browser for UI), commit on a branch, push it, open a PR and merge it after CI passes, without asking. Never merge with failing tests or CI, never push straight to `main`, never force-push. If verification fails or something is unverifiable and risky, stop and tell me instead of merging.
-- Record design choices (with alternatives) in `docs/decisions.md`; tick progress in `docs/roadmap.md`.
-- **Handoff rule:** after any fundamental change (rule, decision, architecture, plan), update `CLAUDE.md` / `docs/roadmap.md` / `docs/decisions.md` / `docs/architecture.md` in the same step. Repo docs are the source of truth. When I say a session is ending, make sure the roadmap's "next session" note is accurate.
-- **Keep the roadmap short:** update its sections in place (where we are, next steps, owner to-dos). What a session did goes in a short dated note at the top of `docs/log.md` (decision 074).
+- Write the why of a design choice (with the alternatives) in its PR description.
+- **Handoff rule:** after any fundamental change (rule, architecture, plan), update `CLAUDE.md` / `docs/architecture.md` in the same step. Repo docs are the source of truth. When a session ends, add a short dated note to `docs/log.md` and keep its "Open" list accurate (tick or delete what's done).
 
 ## Commands (Windows PowerShell, from the repo root)
 ```powershell
@@ -58,20 +57,9 @@ pip install -r requirements-dev.txt             # app + test tools (the live ser
 uvicorn app.main:app --reload                   # run locally at http://127.0.0.1:8000
 $env:WADIH_SHOW_DRAFTS="1"; uvicorn app.main:app --reload   # also show unverified drafts
 pytest                                          # all tests (run before every commit)
-pytest tests/test_data.py -v                    # one file
-pytest tests/test_pages.py::test_about_loads    # one test
-python scripts/stale_facts.py --as-of 2026-12-09 --days 45   # facts to re-check before launch
-python scripts/check_quote.py URL "quote"       # does an official page really say this?
-python scripts/check_sources.py                 # every university fact still on its cited page?
-python scripts/watch.py                         # what needs updating: new واعد programs, passed deadlines, broken pages (--offline: no internet)
-node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
-node scripts/check_explorer.mjs http://127.0.0.1:8000 --en   # the same flows on the English pages
-node scripts/check_plan.mjs                     # «خطتي» on an emulated iPhone: old saves move in, save, status, the hub, the .ics, «هذا صفّي», reload, remove (add --en)
-node scripts/check_explore.mjs                  # «جرّب قبل أن تقرر» on an emulated iPhone: tap-to-advance, double taps, skip, keyboard, Back, reload, the result's cards (add --en, --webkit for Safari's engine)
 python scripts/english_leaks.py                 # Arabic still showing on English pages (should be 0)
-node marketing/src/waddah_cards.mjs             # وضّاح's share image, 9:16 still and dawn clip into marketing/out/ (needs ffmpeg; --no-clip)
-python scripts/logo_thumbs.py                   # small university logos for «الآن» (after adding logos)
 ```
+Fact-checking, watch and browser-check scripts: [docs/README.md](docs/README.md#commands).
 
 ## Deploy
 - Live at https://wadihguide.com: domain at Cloudflare (DNS only), hosted on Render (Frankfurt, $7/month plan so it never sleeps). The old https://wadih-mqni.onrender.com and www redirect there with a 301 (decision 042).

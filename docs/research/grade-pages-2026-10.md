@@ -1,7 +1,7 @@
 # Grade pages and "which tests do I need": sources, audit, open questions
 
 **Date:** 2026-10-12 · **By:** Claude (main session, no subagents) · **Owner review:** not yet
-**Decision record:** [decision 038](../decisions.md).
+**Decision record:** decision 038.
 
 ## 1. How this was read (and its limits)
 - **Method:** pages read directly with `curl` (HTML → text) and PDFs with `pdftotext`, after the owner opened network access on 2026-10-12. Quotes are copied from the text. Ligature artifacts from PDF extraction, such as «األوىل» for «الأولى», are fixed in the quotes below.

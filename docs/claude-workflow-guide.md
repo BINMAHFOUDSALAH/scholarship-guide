@@ -31,7 +31,7 @@ A short, practical guide to working with Claude Code on this project. Sources ar
 | Talking to GitHub, Render, etc. | Command-line tools (`gh`) | MCP when a CLI already works |
 | Connecting a database or other system to Claude, or giving Wadih's AI its data later | **MCP** | Adding servers "just in case" |
 | Switching to an unrelated task | **`/clear`** (fresh context) | One endless session mixing everything |
-| A long task with a checkable end ("until all tests pass and…") | **`/goal`** | A goal file in the repo: the plan lives in `docs/roadmap.md` |
+| A long task with a checkable end ("until all tests pass and…") | **`/goal`** | A goal file in the repo: the open to-dos live at the top of `docs/log.md` |
 | An attempt went wrong | **Rewind** (Esc Esc or `/rewind`), or "undo that" | Correcting the same mistake 3+ times; instead, `/clear` and write a better prompt |
 
 ## Best practices (Anthropic + experienced developers)

@@ -227,6 +227,13 @@ def test_home_shows_whats_open_now_and_links_the_full_board():
 def test_open_and_not_yet_open_never_share_a_heading(monkeypatch):
     """2026-11-07: «مفتوح للتقديم الآن» listed Aramco («لم يفتح بعد») and KAUST («يفتح قريبًا»). Every row under
     «مفتوح الآن» is open today; the others sit under «لم يفتح بعد»."""
+    import datetime
+
+    class Day(datetime.date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 11, 7)  # the day of the bug: الرواد open (until 15 Nov), Aramco and KAUST not yet
+    monkeypatch.setattr(main, "date", Day)
     now = main.now_board(main.status_board())
     assert now["open"] and all(i["status"] == "open" for i in now["open"])
     assert all(i["status"] in ("not_open", "opening_soon") for i in now["upcoming"])
@@ -372,7 +379,14 @@ def test_no_unverified_stamps_or_review_dates_anywhere(page):
     assert "unverified-stamp" not in html
 
 
-def test_board_groups_follow_the_data():
+def test_board_groups_follow_the_data(monkeypatch):
+    import datetime
+
+    class Day(datetime.date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 11, 7)  # الرواد open (until 15 Nov 2026)
+    monkeypatch.setattr(main, "date", Day)
     board = main.status_board()
     open_titles = [i["title_ar"] for i in board["open"]]
     waiting_titles = [i["title_ar"] for i in board["waiting"]]
@@ -790,7 +804,14 @@ def test_board_lists_closed_sdaia_as_waiting_with_our_explainer():
     assert sdaia and sdaia[0]["status"] == "closed" and not sdaia[0]["apply_url"]
 
 
-def test_scholarship_links_its_official_x_account():
+def test_scholarship_links_its_official_x_account(monkeypatch):
+    import datetime
+
+    class Day(datetime.date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 11, 7)  # الرواد open (until 15 Nov 2026)
+    monkeypatch.setattr(main, "date", Day)
     assert "https://x.com/SA_Scholarships" in client.get("/").text
 
 

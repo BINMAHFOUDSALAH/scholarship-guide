@@ -8,7 +8,7 @@ A free, Arabic-first guide for Saudi high school students: the programs open to 
 
 **Live site:** [wadihguide.com](https://wadihguide.com) (Arabic) · [wadihguide.com/en](https://wadihguide.com/en/) (English)
 
-**Status:** live and in active development. The full launch is planned for December 2026 ([roadmap](docs/roadmap.md)).
+**Status:** live and in active development. The full launch is planned for December 2026.
 
 ![The واضح homepage: a route through the three secondary school grades, and a search of the scholarship lists](docs/images/home.png)
 
@@ -73,8 +73,7 @@ pytest
 ## Read more
 
 - [Architecture](docs/architecture.md): how the code fits together
-- [Decisions](docs/decisions.md): every design choice, with the alternatives and why
-- [Roadmap](docs/roadmap.md): where the project is and what's next
+- [Project log](docs/log.md): open to-dos and what each session did
 - [All documentation](docs/README.md)
 
 ## Found a mistake?
