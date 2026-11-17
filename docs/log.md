@@ -1,8 +1,48 @@
 # Project log
 
-What each working session did and left open, newest first. Notes are kept as they were written, so older
-ones can be out of date. Today's plan and to-dos are in [roadmap.md](roadmap.md); the reasons for each
-choice are in [decisions.md](decisions.md).
+The open to-dos first, then what each working session did, newest first. Session notes are kept as they
+were written, so older ones can be out of date. "Decision NNN" refers to the old `docs/decisions.md`,
+removed on 2026-11-16 and kept in git history (`git show f7235f0:docs/decisions.md`).
+
+## Open
+
+Moved here from the old roadmap on 2026-11-16. Tick or delete items as they're done.
+
+### Next steps, in order
+1. **Usability test with 3–5 students, on the new design** (~1–7 Dec). Write the script (`docs/research/usability-test.md`) from the questions in the grade-pages, timeline and audit notes. Add "can you apply to الرواد today?" and "Duolingo or IELTS?". For «جرّب قبل أن تقرر»: can they name a field to explore and one action; does anyone read it as "the site told me what to study"? ([research note](research/career-exploration-evaluation-2026-11.md) §9). Act on the feedback before the full launch.
+2. **Stale facts, before Launch 1.** Run `python scripts/stale_facts.py --as-of 2026-12-09 --days 45`, re-check from the top, update the dates, repeat until empty.
+3. **P1 from the [product audit](research/product-audit-2026-10-13.md):** «الدراسة في السعودية», the alternatives section, the fee-waiver class split.
+4. **Accessibility:** a screen-reader run on a real phone and the broken-link check.
+5. **Search, the road to RAG ([spec](specs/search.md)):** keyword search is done. Next: chunks with `last_checked` / `owner_reviewed`, then search by meaning (embeddings; ask before installing), then an eval set. The chatbot (paid API) comes after; ask first.
+6. **إمداد requirements, the rest:** China 40, Korea 9, Japan 5 (counted 2026-10-13). They need their own brief (language of instruction, the conditional-admission exception) and a scope decision against Launch 1.
+
+Later or optional: an FAQ from real student questions; page-view counts without trackers (for now, Render's Metrics tab); the remaining 143 university logos; the launch ad (paused, a $0 route exists in [marketing/README.md](../marketing/README.md)).
+
+### Owner to-dos
+- [ ] On your phone (Safari), in both themes: the homepage (grade → box → door), «الآن», «البرامج» and «السنة في سطر», a major search, «خطتي» (save, «هذا صفّي», the calendar file), the new map, the program pictures, الرواد's logos and the teaser's drawing. Say what feels off.
+- [ ] Compare the site with the [direction board](https://claude.ai/artifact/BVq4dD2Rzmeyx9iEGUdjWh).
+- [ ] Post the teaser from `marketing/waddah-teaser.md`; regenerate the kit first (`node marketing/src/waddah_cards.mjs`).
+- [ ] Read the two specs (`docs/specs/agent.md`, `accounts.md`). وضّاح's promises, examples and FAQ left `data/waddah.json` until launch: rewrite them for the page that comes back with the guide.
+- [ ] Optional: show the name to ~10 students (girls and boys) and 2 counsellors.
+- [ ] Before Phase 2: an Anthropic API key, billing and a spend limit; the PDPL review for accounts and under-18 users (consent, transfer abroad).
+- [ ] The whole «جرّب قبل أن تقرر» journey on an iPhone, Arabic and English; read the 10 titles and the why sentences.
+- [ ] The live site in both themes, and `/en`. Back to a list can still move slightly before settling (low priority): note the phone, the browser and how Back was done.
+- [ ] Share https://wadihguide.com with testers; feedback comes through the footer's X link.
+- [ ] One Saudi school counsellor reviews the 30 activities, the subject map and the wording; then set `expert_reviewed: true` in `data/exploration.json`.
+- [ ] Optional: a native English reader for the short list in pull request 27; export the Telegram group (JSON) for the FAQ step.
+- [ ] X: [@SDAIA_SA](https://x.com/SDAIA_SA) and [@SA_Scholarships](https://x.com/SA_Scholarships) (does الرواد still close 15 Nov, has إمداد opened?), then `/update-site`. Links to X posts that state الرواد's end date and إمداد's closing → `source_url` in `data/news.json`, `status_source` in `data/paths.json`.
+- [ ] The Ministry's grade 10 interest measure on an official page (press says it counts in placement; not published).
+- [ ] In a browser, sites that block scripts. To read: Durham, Bournemouth, LBS, Griffith, Deakin, Macquarie, Alberta, SMU, Tilburg, Humboldt, Barcelona. To confirm: Virginia (dates, platform), NUS (2027 dates), Michigan (essays, dates, SAT policy), NYU (fee, dates), Saskatchewan (deadline), UChicago (undergraduate English page), UCL (SAT), Gallaudet (SAT).
+- [ ] The Saudi certificate for German universities on anabin (a form query).
+- [ ] القدرات/التحصيلي details (duration, scale, fee, attempts) from etec.gov.sa, and the Saudi TOEFL price from the ETS fee page.
+- [ ] Optional: spot-check Aramco's numbers in a browser (`curl` to aramco.com times out).
+- [ ] Review: the fact-check tables (§5 of each research file, including KGSP's 8 facts); the checklist at the bottom of [paths-research.md](research/paths-research.md); the 15 least-certain Arabic university names ([arabic-names-to-check.md](research/arabic-names-to-check.md)); the copy in `data/home.json`; Toulouse and L'Institut Agro; whether to say "English" on the homepage or in the X bio.
+- [ ] GitHub: the app on your phone for the morning check's pings. Optional: a ruleset on `main` (require `pytest`, block force pushes), Dependabot security updates, private vulnerability reporting. GitHub pauses scheduled workflows after 60 days with no commits.
+
+### Waiting on something
+- **The next universities guide PDF** (expected Dec 2026 / Jan 2027): re-run `scripts/extract_universities.py` (the test `test_every_requirement_file_belongs_to_a_listed_university` flags universities that left the lists); add Arabic names (`university_names_ar.json`); research what's missing with the `research-wave` skill; update the guide link and year everywhere.
+- **New rounds on official pages:** KGSP Cohort 19's dates, Aramco's next cycle, Cambridge's next-cycle dates. `/update-site` checks them.
+- **Ask before installing:** `httpx2` (the test client warns that `httpx` with it is deprecated); Playwright in CI for `scripts/check_explorer.mjs`.
 
 ## 2026-11-09
 

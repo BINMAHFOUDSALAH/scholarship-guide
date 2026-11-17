@@ -63,5 +63,5 @@ After acting on a watched page, update its phrase in `scripts/watch_pages.json` 
 ## 6. Report to the owner
 - A short table: **added**, **removed**, **updated**, **re-checked and unchanged**, **couldn't check** (owner to-dos: X posts, Aramco in a browser).
 - What's time-sensitive: windows closing soon (the check's FYI lines). Open windows mean merge soon.
-- `docs/decisions.md` only if a rule changed; the roadmap's next-session note if something big changed.
+- A dated note at the top of `docs/log.md` if something big changed; its "Open" list if a to-do was done or added.
 - Ask before committing. Once the owner merges, the next morning's check closes the GitHub issue by itself if nothing urgent is left.

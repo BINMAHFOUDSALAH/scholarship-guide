@@ -12,7 +12,7 @@
   - one independently reviewed the finder through real URLs and the source
 - Every finding used below was **re-checked by me** before acting.
 - **Not done:** no students, no Safari, no screen reader.
-- **Decision:** [041](../decisions.md).
+- **Decision:** 041.
 
 ## 1. What works and was kept (and why)
 - **Palette and tokens:** ivory `#F6F4EE`, charcoal, forest `#184B3A`, lime only for "open now" and "next step", amber for restrictions, plus a designed dark theme.

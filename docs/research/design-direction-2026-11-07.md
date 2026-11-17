@@ -1,6 +1,6 @@
 # واضح, the next level: design direction, the AI guide «وضّاح», and its announcement
 
-**Status:** approved by the owner on 2026-11-07 (decisions 081–082). This is Phase 1 Part C's plan; the steps and their order are also in [roadmap.md](../roadmap.md). Kept as approved; where a later decision changes it, the decision wins.
+**Status:** approved by the owner on 2026-11-07 (decisions 081–082). This is Phase 1 Part C's plan; the steps and their order are also in the old `docs/roadmap.md` (git history). Kept as approved; where a later decision changes it, the decision wins.
 
 **Direction board** (step 1, a private design canvas, created empty on 2026-11-07, filled in C1 the same day): https://claude.ai/artifact/BVq4dD2Rzmeyx9iEGUdjWh. Twelve artboards: the system (road, stars, light; colours; type; the source chip; the motion), six phone screens (both homepages, «خطتي», explorer rows, a program story, «السنة في سطر»), وضّاح's identity and answer view, the teaser on three nights and launch day, `/waddah`, two share cards. To change it later, read it first (Artifact tool, `action: "read"`).
 

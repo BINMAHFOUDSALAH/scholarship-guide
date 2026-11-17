@@ -1,7 +1,7 @@
 # UX redesign, October 2026: audit, research, direction
 
 **Date:** 2026-10-11 · **Scope:** homepage, navigation, universities explorer, university pages, «قائمتي», design system.
-**Decision record:** [decision 035](../decisions.md).
+**Decision record:** decision 035.
 
 ## 1. How this was done (and its limits)
 - **The current site:** every template, the CSS, and the JS were read. The site was run locally; it is the same commit as the live site (`bac1345`). Screenshots were taken with Playwright at 360, 768, and 1280px wide, in light and dark. axe-core (WCAG 2.0–2.2 A/AA rules) ran on 14 routes at 320px and 1280px in both themes.
@@ -91,7 +91,7 @@ Three directions were compared:
 In the R&D natural-sciences majors, «الاحياء الدقيقة» (microbiology) is paired with "General biology" in `data/universities.json`; the إمداد list pairs it with "Microbiology". It's either a typo in the guide or an extraction slip. **Owner: check the guide (pages 7–13)**. Nothing was changed, because the data is generated from the PDF.
 
 ## 8. What changed
-The full list is in [decision 035](../decisions.md). In short:
+The full list is in decision 035. In short:
 - **Design system:** colour meanings, one type scale, components, contrast tests.
 - **Navigation:** where you are, a skip link, «مواعيد التقديم», the independence line in the footer.
 - **Homepage:** grades first, search second, what's open now, compact programs.

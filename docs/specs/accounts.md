@@ -63,7 +63,7 @@ grades or IDs by design, so plan-aware answers can't leak them.
 - Most users are under 18. Before launch, the owner reviews the Personal Data Protection Law and its regulations for:
   consent for minors (whether a guardian's consent is needed and how it's recorded); transfer outside the Kingdom
   (the host in Frankfurt, Anthropic's processing); a privacy notice in Arabic and English; the breach notice duty.
-- Until that review is done and written into `docs/decisions.md`, accounts stay off (`accounts_open: false`).
+- Until that review is done and written into this spec, accounts stay off (`accounts_open: false`).
 
 ## 8. Infrastructure (ask before spending, CLAUDE.md)
 

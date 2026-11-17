@@ -23,7 +23,7 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | `.claude/commands/<name>.md` | Older form of a `/name` shortcut. | ❌ | Skills replaced it (same `/name`, plus supporting files). Use a skill. |
 | `.claude/workflows/`, `.claude/agent-memory/`, `.claude/output-styles/` | Saved multi-agent workflow scripts; memory for subagents that set `memory:`; shared response styles. | ❌ | Created only when you use those features. None needed now. |
 | `.mcp.json` (repo root) | MCP servers shared with everyone who opens the project (databases, APIs, browsers). | ❌ for now | When the project needs an external tool that has no CLI, or in the AI stages when we build an MCP server for واضح's verified data. Personal servers go in `~/.claude.json`, not here. |
-| `/goal` | Not a file: a command that keeps Claude working until a condition you state is true (e.g. `/goal all tests pass and the Oxford file has no draft flag`). | as needed | Long tasks with a checkable end. Lasts one session; the plan itself stays in `docs/roadmap.md`. |
+| `/goal` | Not a file: a command that keeps Claude working until a condition you state is true (e.g. `/goal all tests pass and the Oxford file has no draft flag`). | as needed | Long tasks with a checkable end. Lasts one session; open to-dos stay at the top of `docs/log.md`. |
 | `CLAUDE.local.md` | Personal notes Claude reads only on your machine. | ❌ | Only for private preferences; project rules belong in `CLAUDE.md`. |
 | Claude's memory | Notes Claude keeps about you and the project, stored on **your computer**, outside the repo. | automatic | It helps across sessions, but it isn't in git. Anything important for the project belongs in `CLAUDE.md` or `docs/`. |
 
@@ -32,16 +32,14 @@ Legend: ✅ we have it · ⏳ add later (stage noted) · ❌ not needed for us
 | File | What it does | Status | When to use it |
 |---|---|---|---|
 | `docs/README.md` | The map of `docs/`: what each document is for. GitHub shows it when someone opens the folder. | ✅ | Add a line when you add a document. |
-| `docs/roadmap.md` | The living plan: where we are, next steps, the owner's to-dos, and the stages with checkboxes. | ✅ | Update it in place and tick boxes at the end of every step. A new session reads this to know "what's next." Keep it short; the story goes in `docs/log.md`. |
-| `docs/log.md` | A session log: a dated record of what each session did and left open, newest first. | ✅ (decision 074) | A short note at the top when a session ends. Open to-dos go in the roadmap, reasons in `docs/decisions.md`. |
-| `progress.md` | Commonly used for "what's done, what's next." | ❌ | Same job as `docs/roadmap.md`, so we don't add it. |
-| `docs/decisions.md` | Every design choice: what we chose, the alternatives, and why. | ✅ | Add an entry whenever we make a choice someone might later question. Never delete old entries; mark them "Superseded." |
+| `docs/log.md` | The open to-dos ("Open", at the top), then a dated record of what each session did, newest first. | ✅ | Tick or delete open items as they're done; a short dated note when a session ends. |
+| `progress.md` | Commonly used for "what's done, what's next." | ❌ | Same job as the "Open" list in `docs/log.md`, so we don't add it. |
 | `spec.md` / `docs/specs/<feature>.md` | A **specification**: a short document describing exactly what a feature must do *before* building it (goal, inputs, outputs, rules, edge cases, how we'll test it). | ✅ (`search.md`, `universities-explorer.md`) | Before any feature bigger than a page: the compare-paths table, the chatbot (Stage 7), each agent (Stage 8). One spec per feature in `docs/specs/`, not one giant `spec.md`. Specs are also great input for AI: "build what this spec says." |
-| `goal.md`, `PRD.md`, `TODO.md` | Common in other projects: the goal, product requirements, a task list. | ❌ | Same jobs as CLAUDE.md's "Project" section (goal), `docs/specs/` (requirements) and `docs/roadmap.md` (tasks). A second copy would drift. |
+| `goal.md`, `PRD.md`, `TODO.md` | Common in other projects: the goal, product requirements, a task list. | ❌ | Same jobs as CLAUDE.md's "Project" section (goal), `docs/specs/` (requirements) and `docs/log.md` (tasks). A second copy would drift. |
 | `docs/project-files-guide.md` | This file. | ✅ | Look things up here. |
 | `docs/architecture.md` | How the code fits together (moved out of CLAUDE.md to keep it short). | ✅ | Update when the structure changes. |
 | `docs/claude-workflow-guide.md` | How to work with Claude Code: subagents, skills, hooks, MCP, `/goal`, best practices, example prompts. | ✅ | Read when unsure which Claude feature to use. |
-| `LEARNING_LOG.md` | A diary of what was built and learned. | ❌ removed (decision 059) | The owner didn't read it. The key concept is in each task's report; the why is in `docs/decisions.md`. The old file is in git history. |
+| `LEARNING_LOG.md` | A diary of what was built and learned. | ❌ removed (decision 059) | The owner didn't read it. The key concept is in each task's report; the why is in each PR description. The old file is in git history. |
 | `README.md` | The front page of the repo on GitHub: what the project is, the live link, how it works, how to run it. | ✅ | Update it when how to run the project changes. Keep it short and link to `docs/` for detail. Retake `docs/images/home.png` when the homepage changes a lot. |
 | `marketing/README.md` | The launch ad's guide, next to its scripts (decision 044). | ✅ | Update it when the ad work starts again. |
 | `CHANGELOG.md` | A list of what changed in each release, written for users. | ❌ for now | Useful once the site is live and you ship updates people care about. |
