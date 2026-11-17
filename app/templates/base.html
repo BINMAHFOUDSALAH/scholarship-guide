@@ -26,7 +26,7 @@
   <meta property="og:image:alt" content="{% block og_image_alt %}{{ site.name }}: {{ site.tagline }}{% endblock %}">
   <meta name="twitter:card" content="summary_large_image">
 
-  <meta name="theme-color" content="#F6F4EE">
+  <meta name="theme-color" content="#F8F1E4">
   <script>
     // The theme (decision 060): the student's own choice if they made one, otherwise the device's setting.
     // Runs before the page is drawn, so nobody sees a flash of the other theme.
@@ -40,9 +40,8 @@
     } catch (e) {}
   </script>
   <link rel="icon" href="{{ url_for('static', path='favicon.svg') }}" type="image/svg+xml">
-  {% if is_en() %}<link rel="preload" href="{{ url_for('static', path='fonts/ibm-plex-sans-arabic-latin-400.woff2') }}" as="font" type="font/woff2" crossorigin>
-  <script>window.WADIH_I18N = {{ js_strings() | tojson }};</script>{% else %}<link rel="preload" href="{{ url_for('static', path='fonts/ibm-plex-sans-arabic-arabic-400.woff2') }}" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="{{ url_for('static', path='fonts/noto-naskh-arabic-arabic-700.woff2') }}" as="font" type="font/woff2" crossorigin>{% endif %}
+  {% if is_en() %}<link rel="preload" href="{{ url_for('static', path='fonts/readex-pro-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <script>window.WADIH_I18N = {{ js_strings() | tojson }};</script>{% else %}<link rel="preload" href="{{ url_for('static', path='fonts/readex-pro-arabic.woff2') }}" as="font" type="font/woff2" crossorigin>{% endif %}
   <link rel="stylesheet" href="{{ url_for('static', path='fonts.css') }}?v={{ asset_version('fonts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}?v={{ asset_version('style.css') }}">
   <script src="{{ url_for('static', path='theme.js') }}?v={{ asset_version('theme.js') }}" defer></script>
@@ -132,6 +131,18 @@
               {{ nav_items() }}
               <a class="menu-search" href="{{ url_for('search_page') }}">{{ _("ابحث في واضح") }}</a>
             </nav>
+            {#- On phones the theme switch lives here, said in full, so the header keeps room for «خطتي» by name
+                (version 3). theme.js drives every .theme-toggle on the page. #}
+            <button class="theme-toggle menu-theme" type="button" data-long-label hidden>
+              <svg class="theme-icon" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false">
+                <defs><mask id="theme-icon-bite-menu"><rect x="-12" y="-12" width="24" height="24" fill="#fff"/><circle class="theme-icon-shadow" r="4.8" fill="#000"/></mask></defs>
+                <g class="theme-icon-rays" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M0 -10.5v2.4M0 8.1v2.4M-10.5 0h2.4M8.1 0h2.4M-7.4 -7.4l1.7 1.7M5.7 5.7l1.7 1.7M-7.4 7.4l1.7-1.7M5.7 -5.7l1.7-1.7"/>
+                </g>
+                <circle class="theme-icon-disc" r="5.2" fill="currentColor" mask="url(#theme-icon-bite-menu)"/>
+              </svg>
+              <span class="theme-toggle-label">{{ _("التبديل إلى الوضع الداكن") }}</span>
+            </button>
           </div>
         </details>
       </div>

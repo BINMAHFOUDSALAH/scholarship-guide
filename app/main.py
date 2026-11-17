@@ -454,6 +454,8 @@ def home(request: Request):
             "quote": featured_quote if show_quote else None,
             "program_pages": program_slugs(),
             "explorer": explorer,
+            # Version 3: the universities' own nearest deadlines sit in «الآن» beside the scholarship windows.
+            "deadlines": explorer.upcoming_deadlines(limit=4),
         },
     )
 
