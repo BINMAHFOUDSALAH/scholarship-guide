@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% import "components.html" as c %}
-{% import "partials/sky.html" as sky %}
+{% import "partials/uni_macros.html" as um with context %}
 {% import "partials/now.html" as now_ui with context %}
 {% import "partials/world_map.html" as wm with context %}
 
 {#
-  The homepage (decisions 062, 083). One clear way in, then a second and a third:
-  1. the start, on forest: your grade (the main way in: a route of the three years to the programs), then the one box
-     (universities, majors and the guides), then a smaller door for students who haven't decided what to study;
-  2. «الآن»: what is open today and what hasn't opened yet, under separate headings;
-  3. the programs, one short row each, by when you apply (the details are on «البرامج»);
-  4. وضّاح's dawn band (decision 082), then the guides.
+  The homepage (version 3; decisions 062, 083 for the order). One clear way in, then a second and a third:
+  1. the start: وضّاح asks «في أي صف أنت؟» and stands on a forest panel with the four stops (the three years, then
+     the programs); then the one box (universities, majors and the guides); then a smaller door for students who
+     haven't decided what to study;
+  2. «الآن»: what is open today, what hasn't opened yet, and the nearest university deadlines, each under its own
+     heading (a student's "now" is also the universities' own dates, not only the scholarship windows);
+  3. the programs, one card each, by when you apply (the details are on «البرامج»);
+  4. وضّاح's teaser, then the guides.
   A returning student (a grade or a plan kept on this device) sees it on the start: their grade marked «صفّك», and
   their plan one tap away (mylist.js). Nothing is sent anywhere.
 #}
@@ -18,42 +20,45 @@
 {% block body_class %}page-home{% endblock %}
 
 {% block hero %}
-<section class="hero stage" aria-labelledby="hero-title">
-  {# Stars over the start, at night only (dark theme). Decorative. #}
-  {{ sky.night() }}
+<section class="hero" aria-labelledby="hero-title">
   <div class="container hero-inner">
     <h1 id="hero-title" class="hero-title">{{ site.tagline }}</h1>
     <p class="hero-lead">{{ home.lead_ar }}</p>
 
     {#
-      The main way in: your grade. The three years are a real sequence that ends where the programs begin, so they're
-      drawn as one route of the logo's diamonds, in one line on every screen. The grade a student marked on its page
-      («هذا صفّي») is lit lime: "you are here".
+      The main way in: your grade. وضّاح asks the question and stands on the panel that answers it. The three years
+      are a real sequence that ends where the programs begin, so each stop keeps the logo's diamond, in order. The
+      grade a student marked on its page («هذا صفّي») is lit lime: "you are here". The mascot is decorative: the
+      question is written beside him.
     #}
     <nav id="grades" class="route" aria-labelledby="route-title">
-      <h2 id="route-title" class="route-title">{{ _("في أي صف أنت؟") }}</h2>
-      <ol class="route-stops">
-        {% for g in home.grades %}
-        <li class="route-stop" style="--step: {{ loop.index0 }}" data-grade-stop="{{ g.slug }}"><a class="route-link" href="{{ url_for('grade_page', slug=g.slug) }}">
-          <span class="route-mark" aria-hidden="true"></span>
-          <span class="route-name">{{ g.label_ar }}</span>
-          <span class="route-job">{{ g.hint_ar }}</span>
-          <span class="route-line">{{ g.route_ar }}</span>
-          <span class="route-here" data-grade-here hidden>{{ _("صفّك") }}</span>
-        </a></li>
-        {% endfor %}
-        {% set after = home.after_school %}
-        <li class="route-stop route-stop--end" style="--step: 3"><a class="route-link" href="{{ url_for('programs_index') }}">
-          <span class="route-mark" aria-hidden="true"></span>
-          <span class="route-name">{{ after.label_ar }}</span>
-          <span class="route-job">{{ after.hint_ar }}</span>
-          <span class="route-line">{{ after.route_ar }}</span>
-        </a></li>
-      </ol>
+      <div class="route-ask">
+        <h2 id="route-title" class="route-title">{{ _("في أي صف أنت؟") }}</h2>
+        <img class="hero-waddah" src="{{ url_for('static', path='img/waddah/wave-520.webp') }}" width="520" height="473" alt="" aria-hidden="true" decoding="async" fetchpriority="high">
+      </div>
+      <div class="route-panel stage">
+        <ol class="route-stops">
+          {% for g in home.grades %}
+          <li class="route-stop" style="--step: {{ loop.index0 }}" data-grade-stop="{{ g.slug }}"><a class="route-link" href="{{ url_for('grade_page', slug=g.slug) }}">
+            <span class="route-mark" aria-hidden="true"></span>
+            <span class="route-name">{{ g.label_ar }}</span>
+            <span class="route-job">{{ g.hint_ar }}</span>
+            <span class="route-line">{{ g.route_ar }}</span>
+            <span class="route-here" data-grade-here hidden>{{ _("صفّك") }}</span>
+          </a></li>
+          {% endfor %}
+          {% set after = home.after_school %}
+          <li class="route-stop route-stop--end" style="--step: 3"><a class="route-link" href="{{ url_for('programs_index') }}">
+            <span class="route-mark" aria-hidden="true"></span>
+            <span class="route-name">{{ after.label_ar }}</span>
+            <span class="route-job">{{ after.hint_ar }}</span>
+            <span class="route-line">{{ after.route_ar }}</span>
+          </a></li>
+        </ol>
+        {#- A returning student's plan, one line (decision 080), only while this browser holds one (mylist.js). #}
+        <p class="hero-plan" data-plan-strip hidden><span class="diamond" aria-hidden="true"></span>{{ _("لديك خطة محفوظة على هذا الجهاز.") }} <a href="{{ url_for('my_plan') }}">{{ _("تابع خطتك") }}</a></p>
+      </div>
     </nav>
-
-    {#- A returning student's plan, one line (decision 080), only while this browser holds one (mylist.js). #}
-    <p class="hero-plan" data-plan-strip hidden><span class="diamond" aria-hidden="true"></span>{{ _("لديك خطة محفوظة على هذا الجهاز.") }} <a href="{{ url_for('my_plan') }}">{{ _("تابع خطتك") }}</a></p>
 
     {#
       The second way in: one box (decision 083) for a university, a major or a question about the guides. A university
@@ -103,6 +108,24 @@
     <p class="section-link"><a href="{{ url_for('programs_index') }}">{{ _("البرامج ومواعيدها") }}</a></p>
   </div>
   {{ now_ui.now_groups(now, heading_level=3, limit=4, more_href=url_for('programs_index')) }}
+
+  {#- The universities' own nearest deadlines (version 3): a student applies to universities first, so "now" is
+      theirs too. From the researched files, soonest first; each opens the university's dates. #}
+  {% if deadlines %}
+  <div class="now-group now-group--unis">
+    <h3 class="now-group-title" id="now-unis-title"><span class="now-group-mark" aria-hidden="true"></span>{{ _("أقرب مواعيد التقديم في الجامعات") }}</h3>
+    <ul class="deadline-list" aria-labelledby="now-unis-title">
+      {% for x in deadlines %}
+      <li class="deadline"><a class="deadline-link" href="{{ url_for('university_page', uid=x.university.id) }}#dates">
+        <time class="deadline-date" datetime="{{ x.date }}">{{ x.date | arabic_date }}</time>
+        <span class="deadline-name">{{ x.university.name_ar or x.university.name_en }}</span>
+        <span class="deadline-what">{{ um.date_short(x) }}{% if not x.year_stated %} <span class="tag">{{ _("السنة غير مذكورة في الصفحة") }}</span>{% endif %}</span>
+      </a></li>
+      {% endfor %}
+    </ul>
+    <p class="section-link section-link--after"><a href="{{ url_for('grade_page', slug='grade-12') }}">{{ _("سنة التقديم شهرًا بشهر") }}</a></p>
+  </div>
+  {% endif %}
 </section>
 
 {#- «إلى أين؟» (decision 083): every country in the official lists, sized by its universities; a country opens them. #}

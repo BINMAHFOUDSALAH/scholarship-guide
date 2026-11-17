@@ -1152,3 +1152,52 @@ def test_sdaia_row_links_to_its_official_list():
     pdf = main.paths_by_id["sdaia-ai-scholarship"]["targets_guide_url"]
     sdaia = [i for g in main.status_board().values() for i in g if i["page"] == "/programs/sdaia-ai-scholarship"]
     assert sdaia and not sdaia[0]["unis"] and sdaia[0]["list_url"] == pdf
+
+
+def test_the_start_is_waddahs_question_on_one_forest_panel():
+    """Version 3: the mascot stands by the question as decoration (the question is written), and the four stops
+    sit on the one forest panel of the start."""
+    hero = client.get("/").text.split('<section class="hero')[1].split("</section>")[0]
+    assert hero.count('class="route-panel stage"') == 1 and 'class="hero stage"' not in hero
+    mascot = hero.split('<img class="hero-waddah"')[1].split(">")[0]
+    assert 'alt=""' in mascot and 'aria-hidden="true"' in mascot and "/static/img/waddah/wave-520.webp" in mascot
+    assert hero.index("في أي صف أنت؟") < hero.index('class="route-stops"')
+    assert client.get("/static/img/waddah/wave-520.webp").status_code == 200
+
+
+def test_now_lists_the_nearest_university_deadlines():
+    """Version 3: «الآن» also shows the universities' own nearest deadlines (a student applies to universities
+    first): from the researched files, soonest first, each opening that university's dates."""
+    html = client.get("/").text
+    rows = main.explorer.upcoming_deadlines(limit=4)
+    if not rows:
+        assert 'class="deadline-list"' not in html
+        return
+    block = html.split('class="deadline-list"')[1].split("</ul>")[0]
+    dates = re.findall(r'<time class="deadline-date" datetime="([0-9-]+)"', block)
+    assert dates == [r["date"] for r in rows] == sorted(dates)
+    for r in rows:
+        assert f'/universities/{r["university"]["id"]}#dates' in block
+        assert 'id="dates"' in client.get(f'/universities/{r["university"]["id"]}').text
+    assert html.index('id="now"') < html.index('class="deadline-list"') < html.index('id="where"')
+
+
+def test_plan_keeps_its_name_and_the_menu_holds_the_theme_switch():
+    """Version 3: «خطتي» is in the header by name; on phones the theme switch is a row of the menu, said in full."""
+    header = client.get("/about").text.split("</header>")[0]
+    assert '<span class="mylist-label">خطتي</span>' in header
+    menu = header.split('<details class="menu">')[1]
+    assert 'class="theme-toggle menu-theme" type="button" data-long-label hidden' in menu
+    assert header.count('<button class="theme-toggle') == 2
+
+
+def test_one_self_hosted_typeface():
+    """Version 3: one family, Readex Pro, self-hosted with its licence; pages preload only the file they need."""
+    fonts = client.get("/static/fonts.css").text
+    assert set(re.findall(r'font-family: "([^"]+)"', fonts)) == {"Readex Pro"}
+    for file in re.findall(r'url\("(fonts/[^"]+)"\)', fonts):
+        assert client.get(f"/static/{file}").status_code == 200, file
+    assert client.get("/static/fonts/LICENSE-readex-pro.txt").status_code == 200
+    assert "fonts/readex-pro-arabic.woff2" in client.get("/").text.split("</head>")[0]
+    en_head = client.get("/en/").text.split("</head>")[0]
+    assert "fonts/readex-pro-latin.woff2" in en_head and "readex-pro-arabic" not in en_head

@@ -78,8 +78,13 @@ def text_pairs(t):
         (t["stage"], t["on-stage"], "a primary button on the stage (forest text on ivory)"),
         (t["on-stage"], t["stage-deep"], "footer titles"),
         (t["on-stage-muted"], t["stage-deep"], "footer links and the copyright line"),
-        # Warm accents (decision 075): the explore door on the stage, the sand band.
-        (t["on-sun"], t["sun"], "«جرّب قبل أن تقرر» on the stage"),
+        # Version 3: the stops on the homepage's forest panel (a key, its job line), lit lime under a finger.
+        (t["on-stage"], mix(t["on-stage"], 9, t["stage"]), "a stop's name on the homepage's panel"),
+        (t["on-stage-muted"], mix(t["on-stage"], 9, t["stage"]), "a stop's job on the homepage's panel"),
+        (t["on-stage"], t["stage"], "«صفّك» on a lit stop"),
+        (t["on-action"], t["action"], "«خطتي» in the header"),
+        # Warm accents (decision 075): the explore door's button (on its card since version 3), the sand band.
+        (t["on-sun"], t["sun"], "«جرّب قبل أن تقرر»"),
         (t["ink"], t["sand"], "the quote band"),
         (t["ink-muted"], t["sand"], "secondary text on the quote band"),
         (t["action"], t["sand"], "links and buttons on the quote band"),
@@ -145,7 +150,8 @@ def test_controls_and_focus_ring_stand_out(theme, t):
         (t["action"], t["paper"], "secondary button border"),
         (t["lime"], t["stage"], "focus ring and the lit diamond on the stage"),
         (t["lime"], t["stage-deep"], "focus ring in the footer"),
-        (t["sun"], t["stage"], "the sun button on the stage"),
+        (mix(t["sun"], 58, "#000000"), t["surface-strong"], "the sun button's edge on its card"),
+        (t["action"], t["surface-strong"], "a card's edge and lip under a finger"),
     ]:
         assert contrast(fg, bg) >= 3, f"{theme}: {where} ({fg} on {bg}) is {contrast(fg, bg):.2f}:1"
 

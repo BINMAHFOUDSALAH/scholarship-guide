@@ -1,13 +1,15 @@
 /*
-  واضح design system (decision 062).
+  واضح design system, version 3: «عالم وضّاح» (2026-11; rules in .claude/rules/design.md).
   Mobile-first: the main rules are for phones; wider screens are adjusted in media queries.
   Use logical properties (padding-inline, margin-inline-start…), never left/right, so RTL just works.
   The few exceptions (a line that draws from right to left, a select's arrow, the star chart) say so.
 
-  Two surfaces, one rule: you act on forest, you read on paper.
-  - The "stage" (forest, the logo's tile): the homepage's start, the universities search, the footer.
-  - The "page" (ivory, the logo's letter): everything you read.
-  One motif, from the logo: the diamond is a step on your route. Lime = now / your next step; an outline = later.
+  The colours and the shapes come from وضّاح, the guide, and from the logo he shares them with:
+  - clay cream (his body) is the page: everything you read;
+  - forest (his visor, the logo's tile) is where you act: the "stage" panels, buttons, links;
+  - lime (his eyes, the logo's dot) is now / your next step / you are here.
+  One rule of touch: what you can press has a lip (a solid edge under it) and sinks when pressed.
+  One motif, from the logo: the diamond is a step on your route. Lime = now; an outline = later.
 */
 
 /* ---------- Design tokens ---------- */
@@ -28,23 +30,23 @@
 :root {
   color-scheme: light;
 
-  --paper: #f6f4ee;          /* the page: the logo's own letter colour, so the mark reads as cut from it */
-  --surface: #fbfaf6;        /* quiet panels: notices */
-  --surface-strong: #ffffff; /* fields, the summary sheet, menus */
-  --ink: #101713;            /* body text and headings */
-  --ink-muted: #4f5a54;      /* secondary text (≥ 6:1 on paper) */
+  --paper: #f8f1e4;          /* the page: clay cream, the colour of وضّاح's body */
+  --surface: #fcf7ee;        /* quiet panels: notices */
+  --surface-strong: #fffdf9; /* cards, fields, the summary sheet, menus */
+  --ink: #11201a;            /* body text and headings */
+  --ink-muted: #4d5952;      /* secondary text (≥ 6:1 on paper) */
   --action: #184b3a;         /* forest: links, buttons, the current place */
   --action-strong: #0f3a2c;  /* a pressed or hovered button */
   --on-action: #f6f4ee;      /* text on a forest button */
-  --line: #e2ded2;           /* fine rules between rows */
-  --line-strong: #cfc9ba;    /* the rule that opens a list or a table */
+  --line: #e8dcc6;           /* fine rules between rows */
+  --line-strong: #d6c8ab;    /* a card's edge and its lip; the rule that opens a list or a table */
   --control-border: #4f5a54; /* inputs and selects: ≥ 3:1 against the page (WCAG 1.4.11) */
   --lime: #d8ed9b;           /* "open now", "your next step", "you are here" */
   --on-lime: #101713;
   --amber: #774c0c;          /* restrictions and "not open yet" */
   --sun: #f4c95d;            /* the door into exploring, on the stage */
   --on-sun: #101713;
-  --sand: #efe8d8;           /* a warm band of paper */
+  --sand: #f0e2c8;           /* a deeper band of clay */
   --focus: #184b3a;          /* keyboard focus ring */
 
   /* The stage: forest surfaces where the student starts or searches (and the footer). */
@@ -61,17 +63,18 @@
   --star-show: 0;            /* stars are out only at night */
   --guide-edge: #184b3a;     /* the lime guiding star needs an edge on light grounds */
 
-  --font-body: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
-  --font-title: "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif; /* titles: the hand of the manuscripts */
+  /* One family (version 3): Readex Pro, drawn for easy reading in Arabic and Latin. Titles are its 700. */
+  --font-body: "Readex Pro", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+  --font-title: "Readex Pro", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
 
   /* One type scale. Nothing smaller than --text-xs: small Arabic text is hard to read. */
   --text-xs: 0.8125rem;      /* 13px: tags, the copyright line */
-  --text-sm: 0.9375rem;      /* 15px: notes, meta, sources */
-  --text-base: 1.0625rem;    /* 17px: body */
-  --text-md: 1.25rem;        /* 20px: leads, the next step */
-  --text-lg: 1.5rem;         /* 24px: section titles (Naskh) */
-  --text-xl: 2rem;           /* 32px: page titles on phones */
-  --text-display: clamp(2.5rem, 1.75rem + 3.4vw, 4.25rem); /* the homepage's title */
+  --text-sm: 0.875rem;       /* 14px: notes, meta, sources (Readex Pro is a large face) */
+  --text-base: 1rem;         /* 16px: body */
+  --text-md: 1.1875rem;      /* 19px: leads, the next step */
+  --text-lg: 1.5rem;         /* 24px: section titles */
+  --text-xl: 1.875rem;       /* 30px: page titles on phones */
+  --text-display: clamp(2.125rem, 1.5rem + 3.2vw, 3.75rem); /* the homepage's title */
 
   --space-1: 4px;
   --space-2: 8px;
@@ -84,8 +87,10 @@
   --wide: 1200px;            /* the page grid */
   --page: 1080px;            /* tool pages: explorer, university, program, news */
   --measure: 680px;          /* the reading column */
-  --radius: 8px;
-  --radius-panel: 12px;      /* the few panels: the search, the summary sheet, the next step */
+  --radius: 12px;            /* controls: buttons, fields */
+  --radius-panel: 20px;      /* cards and panels */
+  --radius-stage: 28px;      /* a forest panel inside a page (the homepage's start) */
+  --lip: 3px;                /* the solid edge under anything you can press */
 }
 
 /* Values frozen as the page's own, so a forest stage can redefine --ink or --action without losing them:
@@ -209,7 +214,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--text-base);
-  line-height: 1.85;
+  line-height: 1.75;
   overflow-wrap: break-word; /* long URLs and English names wrap instead of widening the page (WCAG 1.4.10) */
 }
 
@@ -222,7 +227,7 @@ h3 {
   /* Never add letter-spacing to Arabic: it breaks the joins between letters. */
 }
 
-/* Titles are set in Naskh; the working headings inside tools stay in Plex. */
+/* One family: titles are its heaviest weight, set tight. */
 h1,
 h2 {
   font-family: var(--font-title);
@@ -230,21 +235,21 @@ h2 {
 
 h1 {
   margin-block: 0 var(--space-3);
-  font-size: clamp(var(--text-xl), 1.55rem + 1.6vw, 2.625rem);
-  line-height: 1.45;
+  font-size: clamp(var(--text-xl), 1.45rem + 1.6vw, 2.5rem);
+  line-height: 1.3;
 }
 
 h2 {
   margin-block: var(--space-6) var(--space-3);
   font-size: var(--text-lg);
-  line-height: 1.55;
+  line-height: 1.4;
 }
 
 h3 {
   margin-block: var(--space-4) var(--space-2);
   font-family: var(--font-body);
-  font-size: 1.1875rem;
-  line-height: 1.55;
+  font-size: 1.125rem;
+  line-height: 1.5;
 }
 
 p {
@@ -311,7 +316,7 @@ a[target="_blank"]:not(.no-ext)::after {
 :focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
 ::selection {
@@ -737,112 +742,127 @@ main:has(> .tuwaiq) {
 
 /* ---------- Homepage: the start ---------- */
 
-/* No overflow clipping here: the search suggestions open below the start, over the page. The stars clip themselves. */
+/*
+  Version 3. The start is on clay, like every page; the one forest thing on it is the panel وضّاح stands on, which
+  answers his question, «في أي صف أنت؟». No overflow clipping here: the search suggestions open below, over the page.
+*/
 .hero {
-  padding-block: var(--space-5) var(--space-6);
+  padding-block: var(--space-4) var(--space-5);
+}
+
+main:has(> .hero:first-child) {
+  padding-top: 0;
 }
 
 .hero-title {
-  margin: 0 0 var(--space-3);
+  max-width: 14em;
+  margin: 0 0 var(--space-2);
   font-size: var(--text-display);
-  line-height: 1.35;
+  line-height: 1.25;
   color: var(--ink);
 }
 
 .hero-lead {
-  max-width: 34em;
+  max-width: 32em;
   margin: 0;
   font-size: var(--text-md);
-  line-height: 1.75;
+  line-height: 1.7;
   color: var(--ink-muted);
   text-wrap: pretty;
 }
 
 /*
-  The route: the three school years, then the programs, as stops on one line of the logo's diamonds, running from
-  the start of the line (right) to the end, on every screen (decision 083: on phones it was a column that took the
-  first screen). Each stop is one large link. The grade a student marked as theirs is lit lime: "you are here".
+  The route: the three school years, then the programs. وضّاح asks; the four stops are large keys on the forest
+  panel, each with the logo's diamond, in order. The grade a student marked as theirs is lit lime: "you are here".
 */
 .route {
-  margin-top: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.route-ask {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2);
 }
 
 .route-title {
   margin: 0 0 var(--space-3);
-  font-family: var(--font-body);
-  font-size: var(--text-md);
-  line-height: 1.5;
+  font-size: var(--text-lg);
+  line-height: 1.4;
+}
+
+/* He stands on the panel's edge: his feet overlap it. Decorative; the question is written beside him. */
+.hero-waddah {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: clamp(116px, 30vw, 210px);
+  height: auto;
+  margin-block-end: -20px;
+  margin-inline-end: var(--space-2);
+  pointer-events: none;
+}
+
+.route-panel {
+  padding: var(--space-3);
+  border-radius: var(--radius-stage);
 }
 
 .route-stops {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.route-stop {
-  position: relative;
-}
-
-/* The line to the next stop, from this diamond towards the end (left in Arabic). */
-.route-stop:not(:last-child)::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: 26px;
-  inset-inline-end: 4px;
-  top: 11px;
-  height: 2px;
-  background: var(--line-strong);
-  transform-origin: right; /* RTL: the line grows from the start (right) */
-}
-
-[dir="ltr"] .route-stop:not(:last-child)::before {
-  transform-origin: left;
-}
-
 .route-link {
+  position: relative;
   display: grid;
   align-content: start;
-  gap: 0;
-  min-height: 88px;
-  padding-block: 34px var(--space-2);
-  padding-inline-end: var(--space-2);
+  gap: 2px;
+  height: 100%;
+  min-height: 92px;
+  padding: 14px;
+  padding-inline-start: 40px;
+  border: 1.5px solid var(--stage-line-strong);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--on-stage) 9%, var(--stage));
+  box-shadow: 0 var(--lip) 0 color-mix(in srgb, var(--stage) 55%, #000000);
   color: var(--ink);
   text-decoration: none;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.15s ease, color 0.15s ease;
 }
 
 .route-mark {
   position: absolute;
-  inset-inline-start: 3px;
-  top: 4px;
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--ink);
-  background: var(--stage);
+  inset-inline-start: 15px;
+  top: 21px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
   transform: rotate(45deg);
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.25s ease;
 }
 
 .route-name {
-  font-family: var(--font-title);
   font-size: 1.125rem;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .route-job {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  line-height: 1.6;
-  color: var(--ink);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
 
 .route-line {
   display: none; /* phones: name and job only */
+  margin-top: var(--space-1);
   font-size: var(--text-sm);
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--ink-muted);
 }
 
@@ -851,27 +871,83 @@ main:has(> .tuwaiq) {
   justify-self: start;
   margin-top: var(--space-1);
   padding: 0 8px;
-  border-radius: 4px;
-  background: var(--lime);
-  color: var(--on-lime);
+  border-radius: 999px;
+  background: var(--stage);
+  color: var(--on-stage);
   font-size: var(--text-xs);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.75;
 }
 
-.route-stop.is-here .route-mark {
+/* Under your finger, and on your own grade, a stop turns lime: "your next step", "you are here". */
+.route-link:hover,
+.route-link:focus-visible,
+.route-stop.is-here .route-link {
   border-color: var(--lime);
   background: var(--lime);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--lime) 25%, transparent);
+  box-shadow: 0 var(--lip) 0 color-mix(in srgb, var(--lime) 68%, #000000);
+  color: var(--on-lime);
 }
 
-@media (min-width: 600px) {
-  .route-name {
-    font-size: 1.375rem;
+.route-link:hover .route-job,
+.route-link:hover .route-line,
+.route-link:focus-visible .route-job,
+.route-link:focus-visible .route-line,
+.route-stop.is-here .route-job,
+.route-stop.is-here .route-line {
+  color: var(--on-lime);
+}
+
+.route-stop.is-here .route-mark {
+  background: currentColor;
+}
+
+.route-link:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--lime) 68%, #000000);
+}
+
+/* Where the route leads: the programs. Its diamond is always lit. */
+.route-stop--end .route-mark {
+  border-color: var(--lime);
+  background: var(--lime);
+}
+
+.route-stop--end .route-link:hover .route-mark,
+.route-stop--end .route-link:focus-visible .route-mark {
+  border-color: var(--on-lime);
+  background: var(--on-lime);
+}
+
+@media (min-width: 700px) {
+  .route-title {
+    font-size: var(--text-xl);
   }
 
-  .route-job {
-    font-size: var(--text-sm);
+  .route-panel {
+    padding: var(--space-4);
+  }
+
+  .route-stops {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .route-link {
+    min-height: 136px;
+    padding: var(--space-3);
+    padding-inline-start: 46px;
+  }
+
+  .route-mark {
+    inset-inline-start: 18px;
+    top: 26px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .route-name {
+    font-size: 1.3125rem;
   }
 
   .route-line {
@@ -879,127 +955,27 @@ main:has(> .tuwaiq) {
   }
 }
 
-@media (min-width: 900px) {
-  .route-name {
-    font-size: 1.5rem;
-  }
-
-  .route-link {
-    padding-block: 40px var(--space-2);
-    padding-inline-end: var(--space-4);
-  }
-
-  .route-stop:not(:last-child)::before {
-    inset-inline-start: 34px;
-    inset-inline-end: 10px;
-    top: 13px;
-  }
-
-  .route-mark {
-    top: 6px;
-    inset-inline-start: 4px;
-  }
-}
-
-/* Choosing a stop lights its diamond lime: "your next step". */
-.route-link:hover .route-mark,
-.route-link:focus-visible .route-mark {
-  border-color: var(--lime);
-  background: var(--lime);
-  transform: rotate(45deg) scale(1.2);
-}
-
-.route-link:hover .route-name,
-.route-link:focus-visible .route-name {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.35em;
-}
-
-/* Where the route leads: the programs, marked by the guiding star (always lit). */
-.route-stop--end .route-mark {
-  border-color: var(--lime);
-  background: var(--lime);
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--lime) 22%, transparent);
-}
-
-/* A returning student's plan (decision 080), one line under the route. */
+/* A returning student's plan (decision 080), one line under the stops, on the panel. */
 .hero-plan {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1) var(--space-2);
-  margin: var(--space-3) 0 0;
+  margin: var(--space-3) var(--space-1) 0;
   font-size: var(--text-sm);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .hero-plan .diamond {
   color: var(--lime);
 }
 
-/* The second way in: search the official lists. */
-/* «لم تقرر ماذا تدرس؟» under the grades (decision 070): a question, an outlined button, how long it takes. */
-.hero-door {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-3);
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--stage-line);
-}
-
-.hero-door-title {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.hero-door-hint {
-  margin: 0;
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
-/* The door's one warm button: sun on forest, ink text (decision 075). Doubled class: .btn comes later. */
-.btn.btn--sun {
-  border-color: var(--sun);
-  background: var(--sun);
-  color: var(--on-sun);
-}
-
-.btn.btn--sun:hover {
-  border-color: color-mix(in srgb, var(--sun) 82%, #ffffff);
-  background: color-mix(in srgb, var(--sun) 82%, #ffffff);
-}
-
-.btn.btn--sun:focus-visible {
-  outline-color: var(--sun);
-}
-
-/* The ten fields' tones in a row: a preview of the result's colours. Decorative (aria-hidden). */
-.hero-door-fields {
-  display: inline-flex;
-  gap: 5px;
-}
-
-.hero-door-fields > span {
-  width: 12px;
-  height: 22px;
-  border-radius: 3px;
-  background: var(--tone-mid);
-}
-
+/* The second way in: the one box, on clay. */
 .hero-search {
   position: relative;
   z-index: 2;
   max-width: 820px;
-  margin-top: var(--space-4);
+  margin-top: var(--space-5);
 }
 
 .hero-search-title {
@@ -1025,26 +1001,86 @@ main:has(> .tuwaiq) {
 }
 
 .hero-search-examples a {
+  font-weight: 600;
+}
+
+/* «لم تقرر ماذا تدرس؟» (decision 070): a card with a question, the one warm button, how long it takes. */
+.hero-door {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  max-width: 820px;
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+}
+
+.hero-door-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
   font-weight: 700;
+  line-height: 1.5;
 }
 
-/* The one orchestrated moment (homepage only, once): the route draws itself, stop by stop. */
+.hero-door-hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+/* The door's one warm button: sun, ink text (decision 075), with its own darker edge and lip. Doubled class:
+   .btn comes later. */
+.btn.btn--sun {
+  border-color: color-mix(in srgb, var(--sun) 58%, #000000);
+  background: var(--sun);
+  color: var(--on-sun);
+  box-shadow: 0 var(--lip) 0 color-mix(in srgb, var(--sun) 58%, #000000);
+}
+
+.btn.btn--sun:hover {
+  background: color-mix(in srgb, var(--sun) 84%, #ffffff);
+}
+
+.btn.btn--sun:active {
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--sun) 58%, #000000);
+}
+
+/* The ten fields' tones in a row: a preview of the result's colours. Decorative (aria-hidden). */
+.hero-door-fields {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.hero-door-fields > span {
+  width: 12px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--tone-mid);
+}
+
+/* The one orchestrated moment (homepage only, once): وضّاح arrives, then the four stops rise in order. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero .route-mark {
-    animation: route-pop 0.35s cubic-bezier(0.2, 0.7, 0.3, 1.3) calc(0.15s + var(--step) * 0.3s) both;
+  .hero .hero-waddah {
+    animation: waddah-in 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.2) 0.05s backwards;
   }
 
-  .hero .route-stop:not(:last-child)::before {
-    animation: route-draw-across 0.35s ease calc(0.3s + var(--step) * 0.3s) both;
+  .hero .route-link {
+    animation: stop-rise 0.4s cubic-bezier(0.2, 0.7, 0.3, 1) calc(0.15s + var(--step) * 0.09s) backwards;
   }
 }
 
-@keyframes route-pop {
-  from { opacity: 0; transform: rotate(45deg) scale(0.3); }
+@keyframes waddah-in {
+  from { opacity: 0; transform: translateY(14px) rotate(-4deg); }
 }
 
-@keyframes route-draw-across {
-  from { transform: scaleX(0); }
+@keyframes stop-rise {
+  from { opacity: 0; transform: translateY(10px); }
 }
 
 /* Switching themes: the page cross-fades briefly (theme.js). */
@@ -1055,7 +1091,8 @@ main:has(> .tuwaiq) {
 
 /* ---------- Shared components ---------- */
 
-/* Buttons: forest = the main action on a page; outlined = the second action. Lime is never a button. */
+/* Buttons: forest = the main action on a page; outlined = the second action. Lime is never a button.
+   Version 3: a button has a lip (a solid edge under it) and sinks onto it when pressed. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -1067,23 +1104,35 @@ main:has(> .tuwaiq) {
   border-radius: var(--radius);
   background: transparent;
   color: var(--action);
+  box-shadow: 0 var(--lip) 0 var(--action);
   font: inherit;
   font-size: var(--text-base);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.4;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--action);
 }
 
 .btn--primary {
   background: var(--action);
   color: var(--on-action);
+  box-shadow: 0 var(--lip) 0 color-mix(in srgb, var(--action) 62%, #000000);
 }
 
 .btn--primary:hover {
   border-color: var(--action-strong);
   background: var(--action-strong);
+}
+
+.btn--primary:active {
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--action) 62%, #000000);
 }
 
 .btn--secondary:hover {
@@ -5344,15 +5393,6 @@ a.uni-name:hover .uni-name-en:only-child {
 
 /* Very narrow phones (e.g. 320–379px). */
 @media (max-width: 379px) {
-  /* The four stops of the route stay on one line each. */
-  .route-name {
-    font-size: 1rem;
-  }
-
-  .route-link {
-    padding-inline-end: var(--space-1);
-  }
-
   .brand-mark {
     width: 36px;
     height: 36px;
@@ -6250,5 +6290,270 @@ a.uni-name:hover .uni-name-en:only-child {
 
   .explore-field {
     break-inside: avoid;
+  }
+}
+
+/* ---------- Version 3: the header, sections and cards ----------
+   Last in the file, so these win over the older rules above with the same selectors. */
+
+/* The header: clay, no rule under it; its tools are pills. «خطتي» is the student's own place: forest, by name. */
+.site-header {
+  border-bottom: 0;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.theme-toggle,
+.menu-button,
+.mylist-link,
+.search-link,
+.signin-link,
+.lang-toggle {
+  border-width: 1.5px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+}
+
+.header-tools .mylist-link,
+.header-tools .mylist-link[aria-current] {
+  border-color: var(--action);
+  background: var(--action);
+  color: var(--on-action);
+}
+
+.header-tools .mylist-link:hover {
+  border-color: var(--action-strong);
+  background: var(--action-strong);
+}
+
+/* On «خطتي» itself the pill wears a ring: where you are, never by colour alone. */
+.header-tools .mylist-link[aria-current] {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.mylist-count {
+  background: var(--lime);
+  color: var(--on-lime);
+  font-weight: 600;
+}
+
+.menu-panel {
+  min-width: 250px;
+  border-width: 1.5px;
+  border-radius: 16px;
+  box-shadow: 0 var(--lip) 0 var(--line-strong);
+}
+
+.menu-panel a {
+  border-radius: 10px;
+}
+
+/* The theme switch inside the phone menu: one more row, said in full. */
+.menu-theme {
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: var(--space-1);
+  padding: 10px var(--space-3);
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 10px 10px;
+  background: transparent;
+}
+
+/* Its words are always shown here (the header's switch hides them on small screens). */
+.menu-theme .theme-toggle-label {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+}
+
+@media (max-width: 1099px) {
+  /* Phones and tablets: «خطتي» keeps its name; the theme switch moves into the menu to make room. */
+  .header-tools .mylist-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+  }
+
+  .header-tools > .theme-toggle {
+    display: none;
+  }
+
+  .header-tools .mylist-link {
+    padding-inline: 14px;
+  }
+}
+
+@media (max-width: 479px) {
+  .header-inner {
+    gap: var(--space-2);
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-name {
+    font-size: 1.375rem;
+  }
+
+  .header-tools .mylist-link,
+  .header-tools .lang-toggle {
+    padding-inline: 12px;
+  }
+}
+
+/* The narrowest phones (320–359px): the icon alone again, its name kept for screen readers. */
+@media (max-width: 359px) {
+  .header-tools .mylist-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}
+
+/* Section titles carry the page: larger, tight. */
+.section-title {
+  font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+  line-height: 1.3;
+}
+
+/* «الآن»: each program is a card (it holds several actions, so it has no lip). */
+.now-list {
+  display: grid;
+  gap: var(--space-2);
+  border-top: 0;
+}
+
+.now-item {
+  padding: var(--space-3);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+}
+
+.now-group--unis {
+  margin-top: var(--space-5);
+}
+
+.now-group--unis .now-group-mark {
+  background: var(--action);
+}
+
+/* The universities' nearest deadlines: one key each, the date first. */
+.deadline-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-2) var(--space-3);
+  margin: 0 0 var(--lip);
+  padding: 0;
+  list-style: none;
+}
+
+.deadline-link {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  height: 100%;
+  padding: var(--space-3);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+  box-shadow: 0 var(--lip) 0 var(--line-strong);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.15s ease;
+}
+
+.deadline-link:hover,
+.deadline-link:focus-visible {
+  border-color: var(--action);
+  box-shadow: 0 var(--lip) 0 var(--action);
+}
+
+.deadline-link:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--action);
+}
+
+.deadline-date {
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.deadline-name {
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--action);
+}
+
+.deadline-what {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* The programs on the homepage: one key each; the whole card opens the program. */
+.program-rows {
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-4);
+  border-top: 0;
+}
+
+.program-row {
+  position: relative;
+  padding: var(--space-3);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+  box-shadow: 0 var(--lip) 0 var(--line-strong);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.15s ease;
+}
+
+.program-row:hover,
+.program-row:has(a:focus-visible) {
+  border-color: var(--action);
+  box-shadow: 0 var(--lip) 0 var(--action);
+}
+
+.program-row:has(a:active) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--action);
+}
+
+.program-row-name a {
+  text-decoration: none;
+}
+
+.program-row-name a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.program-thumb {
+  border-radius: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .route-link,
+  .deadline-link,
+  .program-row {
+    transition: none;
   }
 }

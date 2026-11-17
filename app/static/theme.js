@@ -5,7 +5,7 @@
 
 // Classic scripts share one global scope, so each file names its own helper (a shared `t` broke them).
 const themeText = (text) => (window.WADIH_I18N && window.WADIH_I18N[text]) || text; // English pages (decision 066)
-const THEME_COLORS = { light: "#F6F4EE", dark: "#0c1310" };
+const THEME_COLORS = { light: "#F8F1E4", dark: "#0c1310" };
 const system = window.matchMedia("(prefers-color-scheme: dark)");
 const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
 
