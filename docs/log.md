@@ -47,6 +47,10 @@ Later or optional: an FAQ from real student questions; page-view counts without 
 - **New rounds on official pages:** KGSP Cohort 19's dates, Aramco's next cycle, Cambridge's next-cycle dates. `/update-site` checks them.
 - **Ask before installing:** `httpx2` (the test client warns that `httpx` with it is deprecated); Playwright in CI for `scripts/check_explorer.mjs`.
 
+## 2026-11-25
+
+**2026-11-25 (design tools, owner):** Taste (`design-taste-frontend`, tasteskill 2.5.1, installed in the user's `~/.claude/skills/`, not the repo) may now design and review any page, not only review the homepage (replaces that part of decision 076). `design.md` still beats it: never its palette, fonts, starter files or photographs rule. Updated `CLAUDE.md` and `.claude/rules/design.md`.
+
 ## 2026-11-16
 
 **2026-11-16 (version 3, owner):** the owner asked for a complete redesign and a bigger vision (a bridge from discovering the site to acceptance, with وضّاح as a mentor), then said: redesign first, forget the dates and the public launch. Studied the site at 375px first: «الآن» said nothing was open while the data held university deadlines within weeks; «خطتي»'s next step was generic; the scholarship page was 13,742px with 67 links. Built on `redesign/v3`:
