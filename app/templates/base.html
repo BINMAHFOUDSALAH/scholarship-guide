@@ -166,7 +166,7 @@
         {# Independence on every page, because pages show official logos and data (decision 035). #}
         <p class="footer-promise">{{ site.name }} {{ _("دليل طلابي مستقل ومجاني.") }} <a href="{{ url_for('about') }}">{{ _("عن الدليل") }}</a></p>
         {% if is_en() %}<p class="footer-promise">{{ _("هذه الصفحة بالإنجليزية ترجمتنا، والمصدر الرسمي هو المرجع.") }}</p>{% endif %}
-        {# Who makes it (owner, 2026-11-25), linked to the team's X account (owner, 2026-11-26). The X mark is drawn, never typed. #}
+        {# Who makes it (owner, 2026-11-25), linked to the team's X account and email (owner, 2026-11-26). The X mark is drawn, never typed. #}
         <p class="footer-maker">
           <span class="footer-maker-label">{{ _("أحد منتجات") }}</span>
           <a class="footer-team no-ext" href="https://x.com/NewHorizon___" target="_blank" rel="noopener">
@@ -176,6 +176,14 @@
               <bdi class="footer-team-handle" lang="en" dir="ltr">@NewHorizon___</bdi>
             </span>
             <span class="sr-only">{{ _("(حسابنا على منصة X، يفتح في نافذة جديدة)") }}</span>
+          </a>
+          {# The team's email, so people can reach us (owner, 2026-11-26). The envelope is drawn, never typed. #}
+          <a class="footer-team" href="mailto:newhorizonteam10@gmail.com">
+            <svg class="footer-team-x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 6h18v12H3z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="m3 6 9 7 9-7"/></svg>
+            <span class="footer-team-text">
+              <span class="footer-team-name">{{ _("راسلنا بالبريد") }}</span>
+              <bdi class="footer-team-handle" lang="en" dir="ltr">newhorizonteam10@gmail.com</bdi>
+            </span>
           </a>
         </p>
       </div>
