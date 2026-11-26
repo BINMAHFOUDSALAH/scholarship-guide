@@ -51,15 +51,19 @@
     {% endif %}
   </section>
 
-  {#- Your constellation (decision 083): where the universities you saved are, a path of light from home to each. #}
-  {% set world = world_of(rows | selectattr("university") | map(attribute="university") | list) %}
-  {% if world %}
+</template>
+{#- Your constellation (decision 083): where the universities you saved are, a path of light from home to each. Below
+    the rows since 2026-11-25: the walk showed a student who had just saved a university finding the map, not it, on
+    the first screens. mylist.js moves it under the rows. #}
+{% set world = world_of(rows | selectattr("university") | map(attribute="university") | list) %}
+{% if world %}
+<template data-plan-part="where">
   <section class="plan-where" aria-labelledby="plan-where-title">
     <h2 id="plan-where-title" class="plan-hub-title">{{ _("إلى أين تتجه") }}</h2>
     {{ wm.world_map(world, url_for('universities_page') ~ "?", _("جامعات خطتك حسب الدولة")) }}
   </section>
-  {% endif %}
 </template>
+{% endif %}
 {% endif %}
 {% for r in rows %}
 {% set key = r.type ~ ":" ~ r.id %}

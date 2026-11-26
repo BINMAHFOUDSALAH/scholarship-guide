@@ -877,6 +877,19 @@ def test_major_search_matches_whole_words():
     assert "الذكاء الاصطناعي" in names("ذكاء اصطناعي")  # without the article, still a match
     assert "هندسة البرمجيات" in names("هندس")  # 4+ letters may start a longer word
     assert names("هندسة") <= names("هندس")
+    # The conjunction «و» on a name's word (2026-11-25): «علوم الحاسب» is how students write Computer Science.
+    assert "البرمجة وعلوم الحاسب" in names("علوم الحاسب")
+    assert "البرمجة وعلوم الحاسب" in names("الحاسب")
+    assert not any("الطبيعي" in n for n in names("طب"))  # still whole words after the «و»
+
+
+def test_computer_science_search_answers_from_the_lists():
+    """The walk of 2026-11-25: a student searched «علوم الحاسب» and got «لا نتائج»."""
+    from fastapi.testclient import TestClient
+    from app.main import app
+    html = TestClient(app).get("/search", params={"q": "علوم الحاسب"}).text
+    lists = html.split("search-guides")[0]  # the lists' answer comes before the guides
+    assert "«البرمجة وعلوم الحاسب»" in lists and "/universities?q=" in lists
 
 
 def test_health_search_gets_a_sourced_answer():

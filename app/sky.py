@@ -1,4 +1,6 @@
-"""The sky drawings (decision 060): star fields and the الرواد star chart.
+"""The sky drawings (decision 060): the night's faint dots and the maps of destinations (the الرواد chart, the world
+map). Each university is a round light; «المملكة» is the lime "you are here" mark (owner, 2026-11-25: the four-point
+star is gone from واضح).
 
 Pure layout: positions for decorative SVG, computed once at startup. Nothing here is a fact
 shown to students; the chart's universities, ranks and countries come from the Explorer
@@ -36,7 +38,7 @@ CLUSTER_AT = {
     "CN": (800, 205), "JP": (905, 178), "SG": (782, 392),
 }
 HOME = (640, 300)  # Saudi Arabia: where the student starts
-LABEL_ABOVE = {"GB"}  # its label would sit on France's stars
+LABEL_ABOVE = {"GB"}  # its label would sit on France's lights
 GOLDEN = math.pi * (3 - math.sqrt(5))
 
 
@@ -60,9 +62,9 @@ def _tree(points):
 
 
 def rowwad_chart(explorer):
-    """Stars, constellation lines and labels for the الرواد list, grouped by country.
+    """Lights, constellation lines and labels for the الرواد list, grouped by country.
 
-    Returns {"stars": [...], "countries": [...], "home": (x, y), "w": .., "h": ..}. Each star carries its
+    Returns {"lights": [...], "countries": [...], "home": (x, y), "w": .., "h": ..}. Each light carries its
     university id, Arabic name, rank and country; each country its centre, label place, and the path
     of light from the student's home to it (drawn when that country is chosen).
     """
@@ -72,14 +74,14 @@ def rowwad_chart(explorer):
         by_country.setdefault(u["country"], []).append((listing["rank"], u))
 
     spare = iter((x, 470) for x in range(120, 1000, 140))
-    stars, countries = [], []
+    lights, countries = [], []
     for code, items in sorted(by_country.items(), key=lambda kv: -len(kv[1])):
         cx, cy = CLUSTER_AT.get(code) or next(spare)
         items.sort(key=lambda t: t[0])
         offsets = _spiral(len(items), 23 if len(items) > 6 else 21)
         points = [(round(cx + dx, 1), round(cy + dy, 1)) for dx, dy in offsets]
         for (rank, u), (x, y) in zip(items, points):
-            stars.append({"id": u["id"], "name_ar": u["name_ar"] or u["name_en"], "name_en": u["name_en"],
+            lights.append({"id": u["id"], "name_ar": u["name_ar"] or u["name_en"], "name_en": u["name_en"],
                           "rank": rank, "country": code, "x": x, "y": y})
         reach = max(math.dist((cx, cy), p) for p in points)
         # The path of light: a gentle arc from home, bending upwards, ending at the edge of the cluster.
@@ -93,8 +95,8 @@ def rowwad_chart(explorer):
             "lines": [(a, b) for a, b in _tree(points)],
             "path": f"M{hx} {hy} Q{mx:.1f} {my:.1f} {ex:.1f} {ey:.1f}",
         })
-    stars.sort(key=lambda s: s["rank"])
-    return {"stars": stars, "countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H}
+    lights.sort(key=lambda s: s["rank"])
+    return {"lights": lights, "countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H}
 
 
 # ---------- Any set of universities on the map (decisions 083, 084) ----------
@@ -107,21 +109,19 @@ WORLD_AT = {
     "ES": (372, 300), "IT": (520, 318),
     "IN": (760, 352), "CN": (800, 200), "KR": (888, 120), "JP": (930, 236), "SG": (812, 452), "AU": (912, 430),
 }
-HOME_BOX = (HOME[0] - 34, HOME[1] - 26, HOME[0] + 34, HOME[1] + 44)  # the home star and «المملكة» under it
+HOME_BOX = (HOME[0] - 34, HOME[1] - 26, HOME[0] + 34, HOME[1] + 44)  # the home mark and «المملكة» under it
 FRAME = (26, 26, CHART_W - 26, CHART_H - 26)
-LABEL_GAP, LABEL_H, CHAR_W = 12, 22, 6.6  # the country's name under its stars; CHAR_W ≈ one Arabic letter at 16px
+LABEL_GAP, LABEL_H, CHAR_W = 12, 22, 6.6  # the country's name under its lights; CHAR_W ≈ one Arabic letter at 16px
 
 
-def _star_d(x, y, s):
-    """One four-point star (the shape of the الرواد chart's stars) as a relative sub-path, so a whole constellation
-    is one <path>: 290 stars on the homepage stay small in the page."""
-    k = round(s * 0.16, 2)
-    return (f"M{x:.1f} {y - s:.1f}q{k} {s - k:.2f} {s} {s}q{k - s:.2f} {k} {-s} {s}"
-            f"q{-k} {k - s:.2f} {-s} {-s}q{s - k:.2f} {-k} {s} {-s}z")
+def _light_d(x, y, r):
+    """One round light (a university) as a relative sub-path, so a whole constellation is one <path>: 290 lights on
+    the homepage stay small in the page. Two half arcs, one "z" per light."""
+    return f"M{x - r:.1f} {y:.1f}a{r} {r} 0 1 0 {2 * r:.2f} 0a{r} {r} 0 1 0 {-2 * r:.2f} 0z"
 
 
 def _spread(boxes, fixed):
-    """Moves the constellations apart until none overlaps another, the home star or the frame. boxes are dicts with
+    """Moves the constellations apart until none overlaps another, the home mark or the frame. boxes are dicts with
     x, y (the centre) and the box's reach around it (left, top, right, bottom); each is pulled gently back to where
     it wants to be, so the map keeps its shape. Deterministic: the same list always gives the same map."""
     def rect(b):
@@ -164,10 +164,10 @@ def _world_chart(items):
     counts = dict((code, n) for code, n, _ in items)
     names = {code: name for code, _, name in items}
     total = sum(counts.values())
-    # One star per university, as on the الرواد chart. The more stars, the closer they sit, so the homepage's 290
+    # One light per university, as on the الرواد chart. The more lights, the closer they sit, so the homepage's 290
     # fit; a short list (a plan) is drawn at the الرواد chart's own spacing.
     gap = min(23.0, max(9.5, 23 * math.sqrt(30 / total)))
-    size = round(min(8.0, max(3.6, gap * 0.36)), 2)
+    size = round(min(4.6, max(2.2, gap * 0.2)), 2)  # a light's radius
     spare = iter((x, 470) for x in range(120, 1000, 110))
     boxes = []
     for code, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])):
@@ -193,18 +193,18 @@ def _world_chart(items):
         mx, my = (hx + ex) / 2, min(hy, ey) - 0.18 * math.dist((hx, hy), (ex, ey))
         countries.append({
             "code": b["code"], "name_ar": names[b["code"]], "count": b["n"], "x": cx, "y": cy,
-            "stars": [(round(x, 1), round(y, 1)) for x, y in points],
-            "stars_d": "".join(_star_d(x, y, size) for x, y in points),
+            "lights": [(round(x, 1), round(y, 1)) for x, y in points],
+            "lights_d": "".join(_light_d(x, y, size) for x, y in points),
             "lines_d": "".join(f"M{a[0]:.1f} {a[1]:.1f}L{c[0]:.1f} {c[1]:.1f}" for a, c in _tree(points)),
             "label_y": round(cy + b["reach"] + LABEL_GAP + 14, 1),
             "path": f"M{hx} {hy} Q{mx:.1f} {my:.1f} {ex:.1f} {ey:.1f}",
         })
-    return {"countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H, "star": size}
+    return {"countries": countries, "home": HOME, "w": CHART_W, "h": CHART_H, "light": size}
 
 
 def world_chart(counts, names):
     """The map for any set of universities (the homepage's «إلى أين؟», the explorer's map view, «خطتي»): drawn like
-    the الرواد chart (decision 084), one four-point star per university, one constellation per country under its
+    the الرواد chart (decision 084), one round light per university, one constellation per country under its
     name, and a path of light from home to the country in focus. counts = {code: n}; names = {code: Arabic name}."""
     if not counts:
         return None

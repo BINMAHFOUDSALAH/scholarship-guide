@@ -36,13 +36,21 @@
 
   <ul class="rows mylist-rows" data-mylist-rows hidden></ul>
 
+  {#- Where the saved universities are (the map), under the rows. #}
+  <div class="plan-where-wrap" data-plan-where hidden></div>
+
+  {#- The empty plan (design.md: وضّاح points at a next step): he points across at the first action. Decorative; the
+      words beside him say it. #}
   <div class="mylist-empty" data-mylist-empty hidden>
-    <p class="mylist-empty-title">{{ _("خطتك فارغة.") }}</p>
-    <p>{{ _("اضغط «احفظ» بجانب أي جامعة أو مسار، وستجده هنا مع خطوتك التالية.") }}</p>
-    <p class="actions">
-      <a class="btn btn--primary" href="{{ url_for('universities_page') }}">{{ _("ابحث في الجامعات") }}</a>
-      <a class="btn btn--secondary" href="{{ url_for('programs_index') }}">{{ _("البرامج") }}</a>
-    </p>
+    <div class="mylist-empty-text">
+      <p class="mylist-empty-title">{{ _("خطتك فارغة.") }}</p>
+      <p>{{ _("اضغط «احفظ» بجانب أي جامعة أو مسار، وستجده هنا مع خطوتك التالية.") }}</p>
+      <p class="actions">
+        <a class="btn btn--primary" href="{{ url_for('universities_page') }}">{{ _("ابحث في الجامعات") }}</a>
+        <a class="btn btn--secondary" href="{{ url_for('programs_index') }}">{{ _("البرامج") }}</a>
+      </p>
+    </div>
+    <img class="mylist-empty-waddah" src="{{ url_for('static', path='img/waddah/point-320.webp') }}" width="320" height="301" alt="" aria-hidden="true" decoding="async">
   </div>
 </div>
 {% endblock %}

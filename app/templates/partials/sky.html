@@ -1,6 +1,6 @@
 {#
-  What's left of the sky (decisions 060, 062): the stars, out at night only, and the guiding star, the lime
-  diamond from the logo («your next step»). The sun, the astrolabe rings and the bands are gone: they took the
+  What's left of the sky (decisions 060, 062): the faint dots, out at night only, and the home mark: a lime light in
+  a ring, "you are here" (lime's job), where every path on a map starts. The four-point star is gone (owner, 2026-11-25). The sun, the astrolabe rings and the bands are gone: they took the
   first screen without telling the student anything. Decorative only: hidden from screen readers; colours
   come from CSS so both themes are designed, not inverted.
 #}
@@ -12,12 +12,11 @@
 </g>
 {% endmacro %}
 
-{# A four-point star (the logo's diamond, with drawn-in sides). #}
-{% macro guide_star(x, y, size=14, cls="") %}
-<g class="guide-star {{ cls }}" transform="translate({{ x }} {{ y }})">
-  <circle class="guide-star-glow" r="{{ size * 2.4 }}"/>
-  {% set k = (size * 0.16) | round(2) %}
-  <path class="guide-star-shape" d="M0 -{{ size }} Q{{ k }} -{{ k }} {{ size }} 0 Q{{ k }} {{ k }} 0 {{ size }} Q-{{ k }} {{ k }} -{{ size }} 0 Q-{{ k }} -{{ k }} 0 -{{ size }}Z"/>
+{# The home mark: a lime light inside a ring, "you are here". size is the ring's radius. #}
+{% macro home_mark(x, y, size=11, cls="") %}
+<g class="home-mark {{ cls }}" transform="translate({{ x }} {{ y }})">
+  <circle class="home-mark-ring" r="{{ size }}"/>
+  <circle class="home-mark-light" r="{{ (size * 0.52) | round(1) }}"/>
 </g>
 {% endmacro %}
 

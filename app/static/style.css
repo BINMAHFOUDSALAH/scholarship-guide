@@ -2,7 +2,7 @@
   واضح design system, version 3: «عالم وضّاح» (2026-11; rules in .claude/rules/design.md).
   Mobile-first: the main rules are for phones; wider screens are adjusted in media queries.
   Use logical properties (padding-inline, margin-inline-start…), never left/right, so RTL just works.
-  The few exceptions (a line that draws from right to left, a select's arrow, the star chart) say so.
+  The few exceptions (a line that draws from right to left, a select's arrow, the maps) say so.
 
   The colours and the shapes come from وضّاح, the guide, and from the logo he shares them with:
   - clay cream (his body) is the page: everything you read;
@@ -61,7 +61,7 @@
   --chart-ground: #10372a;   /* the الرواد chart: the night sky in both themes */
   --star: #f6f4ee;
   --star-show: 0;            /* stars are out only at night */
-  --guide-edge: #184b3a;     /* the lime guiding star needs an edge on light grounds */
+  --guide-edge: #184b3a;     /* a lime light (the home mark, the plan's light) needs an edge on light grounds */
 
   /* One family (version 3): Readex Pro, drawn for easy reading in Arabic and Latin. Titles are its 700. */
   --font-body: "Readex Pro", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
@@ -91,6 +91,8 @@
   --radius-panel: 20px;      /* cards and panels */
   --radius-stage: 28px;      /* a forest panel inside a page (the homepage's start) */
   --lip: 3px;                /* the solid edge under anything you can press */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);     /* a press, a state that changes, something arriving */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* something travelling across the screen */
 }
 
 /* Values frozen as the page's own, so a forest stage can redefine --ink or --action without losing them:
@@ -726,18 +728,19 @@ main:has(> .tuwaiq) {
   mask-image: linear-gradient(to left, #000 20%, rgba(0, 0, 0, 0.25) 70%, transparent);
 }
 
-/* The guiding star: the logo's lime diamond. */
-.guide-star-shape {
-  fill: var(--lime);
-  stroke: var(--guide-edge);
-  stroke-width: 1.4;
-  stroke-linejoin: round;
+/* The home mark on a map: a lime light inside a ring, "you are here" (lime's job). Round, like the destinations;
+   the ring is what sets it apart. The four-point star is gone (owner, 2026-11-25). */
+.home-mark-ring {
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 2;
+  stroke-opacity: 0.75;
 }
 
-.guide-star-glow {
+.home-mark-light {
   fill: var(--lime);
-  opacity: 0.16;
-  filter: blur(9px);
+  stroke: var(--guide-edge);
+  stroke-width: 1.2;
 }
 
 /* ---------- Homepage: the start ---------- */
@@ -3399,10 +3402,19 @@ a.uni-name:hover .uni-name-en:only-child {
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.12s var(--ease-out);
 }
 
-.save-mini:hover {
-  background: color-mix(in srgb, var(--action) 10%, transparent);
+/* Hover only with a mouse: on a phone a tap leaves a false hover, so «في خطتك» removed by a tap kept the tint. */
+@media (hover: hover) and (pointer: fine) {
+  .save-mini:not(.is-saved):hover {
+    background: color-mix(in srgb, var(--action) 10%, transparent);
+  }
+}
+
+/* The press answers at once (the pill has no lip to sink onto, so it gives a little). */
+.save-mini:active {
+  transform: scale(0.96);
 }
 
 .save-mini.is-saved {
@@ -3421,6 +3433,26 @@ a.uni-name:hover .uni-name-en:only-child {
   background-color: currentColor;
   -webkit-mask: var(--icon) center / contain no-repeat;
   mask: var(--icon) center / contain no-repeat;
+}
+
+/* The ✓ arrives only on the press that saved (mylist.js sets .is-just-saved), never for rows already saved on load. */
+@media (prefers-reduced-motion: no-preference) {
+  .save-mini.is-just-saved::before {
+    animation: check-in 0.24s var(--ease-out);
+  }
+
+  @keyframes check-in {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .save-mini:active {
+    transform: none;
+  }
 }
 
 /* Until mylist.js is ready: keep the space (no layout jump), but don't show or announce it. */
@@ -3612,7 +3644,7 @@ a.uni-name:hover .uni-name-en:only-child {
   fill: transparent;
 }
 
-.chart-star-shape {
+.chart-light-shape {
   fill: var(--chart-ink);
   filter: drop-shadow(0 0 3px rgba(246, 244, 238, 0.45));
   transform-box: fill-box;
@@ -3620,7 +3652,7 @@ a.uni-name:hover .uni-name-en:only-child {
   transition: transform 0.2s ease, fill 0.2s ease;
 }
 
-.chart-home .guide-star-shape {
+.chart-home .home-mark-light {
   stroke: var(--lime);
 }
 
@@ -3635,21 +3667,21 @@ a.uni-name:hover .uni-name-en:only-child {
   transition: stroke-dashoffset 0.9s cubic-bezier(0.5, 0, 0.2, 1);
 }
 
-.chart-star:hover .chart-star-shape,
-.chart-star:focus .chart-star-shape {
+.chart-light:hover .chart-light-shape,
+.chart-light:focus .chart-light-shape {
   fill: var(--lime);
   transform: scale(1.6);
 }
 
 /* A country chosen (in the chips or the «الدولة» filter): its constellation lights up, the others recede. */
 .rowwad-chart[data-active] .chart-country,
-.rowwad-chart[data-active] .chart-star {
+.rowwad-chart[data-active] .chart-light {
   opacity: 0.3;
   transition: opacity 0.4s ease;
 }
 
 .rowwad-chart[data-active] .chart-country.is-active,
-.rowwad-chart[data-active] .chart-star.is-active {
+.rowwad-chart[data-active] .chart-light.is-active {
   opacity: 1;
 }
 
@@ -3738,14 +3770,14 @@ a.uni-name:hover .uni-name-en:only-child {
   .chart-label--home { font-size: 18px; }
 }
 
-/* Phones: the chart is an overview (too small to tap a star); the country chips do the choosing. */
+/* Phones: the chart is an overview (too small to tap a light); the country chips do the choosing. */
 @media (max-width: 699px) {
   .chart-label,
   .chart-sky {
     display: none;
   }
 
-  .chart-star {
+  .chart-light {
     pointer-events: none;
   }
 
@@ -4184,16 +4216,92 @@ a.uni-name:hover .uni-name-en:only-child {
   flex: 1 1 18rem;
 }
 
-.mylist-empty {
+/* The empty plan: a card that holds (border, no lip), with وضّاح pointing across at the words and the first action.
+   He points to his right, so he stands on the physical left in both languages: column 2 in Arabic, column 1 in English. */
+.mylist-empty:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(96px, 26vw, 220px);
+  align-items: center;
+  gap: var(--space-3);
   margin-top: var(--space-4);
   padding: var(--space-4);
-  border: 1px dashed var(--line-strong);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+}
+
+.mylist-empty-text > :first-child {
+  margin-top: 0;
+}
+
+.mylist-empty-text .actions {
+  margin-bottom: 0;
+}
+
+.mylist-empty-waddah {
+  grid-row: 1;
+  grid-column: 2;
+  width: 100%;
+  height: auto;
+}
+
+[dir="ltr"] .mylist-empty:not([hidden]) {
+  grid-template-columns: clamp(96px, 26vw, 220px) minmax(0, 1fr);
+}
+
+[dir="ltr"] .mylist-empty-waddah {
+  grid-column: 1;
+}
+
+[dir="ltr"] .mylist-empty-text {
+  grid-column: 2;
+}
+
+/* On a phone the figure sits beside the title only; the actions take the card's full width below. */
+@media (max-width: 559px) {
+  .mylist-empty:not([hidden]) {
+    align-items: start;
+  }
+
+  .mylist-empty-text {
+    display: contents;
+  }
+
+  .mylist-empty-title,
+  .mylist-empty-text > p:nth-child(2) {
+    grid-column: 1;
+  }
+
+  .mylist-empty-title {
+    grid-row: 1;
+    align-self: end;
+  }
+
+  .mylist-empty-text > p:nth-child(2) {
+    grid-row: 2;
+    margin: 0;
+  }
+
+  .mylist-empty-waddah {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .mylist-empty-text .actions {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+
+  [dir="ltr"] .mylist-empty-title,
+  [dir="ltr"] .mylist-empty-text > p:nth-child(2) {
+    grid-column: 2;
+  }
 }
 
 .mylist-empty-title {
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .mylist-loading {
@@ -4385,35 +4493,11 @@ a.uni-name:hover .uni-name-en:only-child {
   white-space: nowrap;
 }
 
-/* The X link: an icon tile plus one line inviting feedback (decision 043). */
-.footer-x {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 40px;
+/* Who makes it: one quiet line under the promise (owner, 2026-11-25). */
+.footer-maker {
   margin-top: var(--space-2);
   color: var(--ink);
   font-weight: 600;
-  text-decoration: none;
-}
-
-.footer-x-icon {
-  display: inline-grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-}
-
-.footer-x:hover span:last-child {
-  text-decoration: underline;
-}
-
-.footer-x svg {
-  width: 16px;
-  height: 16px;
 }
 
 /* Phones: two columns, and the guides' own list in two columns under them, so the footer stays short. */
@@ -4896,76 +4980,33 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 /*
-  وضّاح's teaser (decisions 082, 093): the owner's paper-cut picture of وضّاح helping a student is the band's ground.
-  Its empty paper is on the right (the start of an Arabic line) and the words sit there; on a phone the picture's
-  left part stands above the words. The band takes the picture's own paper colour and keeps it on both themes, like
-  the program pictures, so its text colours are fixed too (each pair is in test_design's text_pairs).
+  وضّاح's preview (owner, 2026-11-25): an example of a shortlist and a plan, on the clay page like everything you read.
+  Three cards in order (the question, the shortlist, the plan). They hold things, so a border and no lip. On a wide
+  screen the shortlist, the heaviest, takes the middle and most of the width; on a phone they stack in order.
 */
-.waddah-band {
-  --waddah-paper: #fae5c5;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
+.waddah-preview {
   margin-block: var(--space-6) 0;
-  color: #101713;
-  background: var(--waddah-paper);
 }
 
-.waddah-art img {
-  display: block;
+.waddah-preview-head {
+  display: grid;
+  grid-template-columns: minmax(0, 40rem) clamp(104px, 24vw, 200px);
+  justify-content: start; /* وضّاح stands beside the words, not at the far edge */
+  align-items: end;
+  gap: var(--space-3);
+}
+
+.waddah-preview-figure {
   width: 100%;
   height: auto;
-}
-
-.waddah-band-inner {
-  padding-block: var(--space-3) var(--space-6);
-}
-
-@media (min-width: 860px) {
-  .waddah-band {
-    display: grid;
-    align-items: center;
-    aspect-ratio: 3 / 1;
-    min-height: 340px;
-    max-height: 560px;
-  }
-
-  .waddah-art {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-  }
-
-  .waddah-art img {
-    height: 100%;
-    object-fit: cover;
-    object-position: left center; /* the student and وضّاح stay in view; only empty paper is cut */
-  }
-
-  .waddah-band-inner {
-    width: 100%;
-    padding-block: var(--space-6);
-  }
-
-  .waddah-band-text {
-    max-width: min(46%, 34rem);
-  }
-
-  /* The paper is on the right in both languages: in English the words keep to it too. */
-  html[dir="ltr"] .waddah-band-text {
-    margin-inline-start: auto;
-  }
-}
-
-.waddah-band .waddah-line {
-  margin-bottom: 0;
+  margin-bottom: calc(var(--space-3) * -1); /* he stands on the cards' top edge */
 }
 
 .waddah-kicker {
   margin: 0 0 var(--space-2);
   font-size: var(--text-sm);
   font-weight: 700;
-  color: #57503f;
+  color: var(--ink-muted);
 }
 
 .waddah-title {
@@ -4975,8 +5016,7 @@ a.uni-name:hover .uni-name-en:only-child {
   gap: var(--space-1) var(--space-3);
   margin: 0 0 var(--space-3);
   font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
-  line-height: 1.4;
-  color: #101713;
+  line-height: 1.3;
 }
 
 .waddah-line {
@@ -4984,7 +5024,226 @@ a.uni-name:hover .uni-name-en:only-child {
   margin: 0 0 var(--space-4);
   font-size: var(--text-md);
   line-height: 1.75;
-  color: #2b2a24;
+}
+
+.preview-steps {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 760px) {
+  .preview-steps {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+
+  .preview-ask {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1100px) {
+  .preview-steps {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) minmax(0, 1.1fr);
+  }
+
+  .preview-ask {
+    grid-column: auto;
+  }
+}
+
+.preview-step {
+  position: relative;
+  padding: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: var(--surface-strong);
+}
+
+.preview-step-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-base);
+  color: var(--ink-muted);
+}
+
+/* The steps are a real sequence (question, shortlist, plan), so they are numbered. */
+.preview-step-n {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+
+.preview-quote {
+  margin: 0;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 3px solid var(--action);
+}
+
+.preview-quote p {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.preview-unis {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preview-uni + .preview-uni {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.preview-uni-name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-weight: 700;
+}
+
+.preview-uni-name .flag {
+  flex: none;
+  align-self: center;
+}
+
+/* Each fact under its own label: the scholarship's list, then the university's own requirement. */
+.preview-facts {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.preview-fact {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.preview-fact dt {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.preview-fact dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+}
+
+.preview-score strong {
+  font-size: var(--text-md);
+}
+
+.preview-score--note {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.preview-note {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+/* The plan: dates in order down a line, the last step (the scholarship) after them. */
+.preview-dates {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preview-date {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  padding-inline-start: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-inline-start: 2px solid var(--line-strong);
+}
+
+.preview-date::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -7px;
+  top: 0.45em;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--action);
+  border-radius: 50%;
+  background: var(--surface-strong);
+}
+
+.preview-date:last-child {
+  padding-bottom: 0;
+  border-inline-start-color: transparent;
+}
+
+.preview-date-day {
+  font-weight: 700;
+}
+
+.preview-date-what {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+/* The hedge stays (the page gives no year) but quietly, under its date, not as a box on every row. */
+.preview-date-hedge {
+  display: block;
+  color: var(--ink-muted);
+}
+
+.preview-try {
+  margin: var(--space-4) 0 0;
+}
+
+/* Two source chips side by side keep a finger's gap between them. */
+.preview-srcs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.preview-foot {
+  max-width: 46em;
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 459px) {
+  .preview-step {
+    padding: var(--space-3);
+  }
+
+  .preview-fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
 }
 
 /* The wordmark: وضّاح's mascot, then the name in Naskh Bold. */
@@ -5001,26 +5260,6 @@ a.uni-name:hover .uni-name-en:only-child {
   width: auto;
   height: 1.7em;
   margin-block: -0.2em;
-}
-
-.waddah-light {
-  flex: none;
-  overflow: visible;
-}
-
-.waddah-light-glow {
-  fill: var(--lime);
-  opacity: 0.18;
-}
-
-.waddah-light-shape {
-  fill: var(--lime);
-  stroke: var(--guide-edge);
-  stroke-width: 1.2;
-}
-
-.stage .waddah-light-shape {
-  stroke: none;
 }
 
 /* The one box's results: the lists first, then the guides. */
@@ -5282,8 +5521,8 @@ a.uni-name:hover .uni-name-en:only-child {
   }
 }
 
-/* One star per university, as on the الرواد chart; a constellation per country, joined by faint lines. */
-.world-stars {
+/* One round light per university, as on the الرواد chart; a constellation per country, joined by faint lines. */
+.world-lights {
   fill: var(--chart-ink);
   filter: drop-shadow(0 0 2px rgba(246, 244, 238, 0.5));
   transition: fill 0.25s ease;
@@ -5307,7 +5546,7 @@ a.uni-name:hover .uni-name-en:only-child {
   opacity: 1;
 }
 
-.world-country.is-active .world-stars {
+.world-country.is-active .world-lights {
   fill: var(--lime);
 }
 
@@ -5363,8 +5602,8 @@ a.uni-name:hover .uni-name-en:only-child {
   border-color: var(--action);
 }
 
-.plan-where {
-  grid-column: 1 / -1;
+.plan-where-wrap {
+  margin-block: var(--space-5) 0;
 }
 
 /* ---------- Narrow phones ---------- */
@@ -5420,7 +5659,7 @@ a.uni-name:hover .uni-name-en:only-child {
   .theme-icon-disc,
   .route-mark,
   .chart-path,
-  .chart-star-shape,
+  .chart-light-shape,
   .rowwad-chart[data-active] .chart-country,
   .world-dot,
   .world-map[data-active] .world-country,

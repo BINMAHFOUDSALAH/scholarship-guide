@@ -1,0 +1,84 @@
+{#
+  وضّاح's preview on the homepage (owner, 2026-11-25; replaces the teaser band of decision 093 and its «قادم في ديسمبر»:
+  the launch dates are dropped). An example of what he will do: a student's question becomes a shortlist and a plan.
+  Only the scenario is ours (data/waddah.json «preview»); every fact is read by waddah_preview() from the same files as
+  the pages, with its source, so the example can't drift from the site. It keeps three things apart that students mix
+  up: the scholarship's list (eligibility), the university's own requirement (admission), and the minimum against the
+  recommended score. It is a picture of the future, not a chat: nothing here answers, nothing to type. وضّاح holds his
+  clipboard beside it (decorative; the words say it all). Nothing moves (design.md: motion answers an action).
+  p = waddah_preview().
+#}
+{% import "partials/uni_macros.html" as um with context %}
+{% macro preview(p) %}
+<section id="waddah" class="waddah-preview" aria-labelledby="waddah-title">
+  <div class="container">
+    <div class="waddah-preview-head">
+      <div class="waddah-preview-intro">
+        <p class="waddah-kicker">{{ waddah.teaser.kicker_ar }}</p>
+        {#- His name only: he stands beside the cards with his clipboard, and appears once on a screen (design.md). #}
+        <h2 id="waddah-title" class="waddah-title"><span class="waddah-mark"><span class="waddah-name">{{ waddah.name_ar }}</span></span> <span class="waddah-title-rest">{{ _("من سؤالك إلى خطتك") }}</span></h2>
+        <p class="waddah-line">{{ _("مثال لما سيفعله وضّاح: يبني قائمتك القصيرة وخطتك من المعلومات الموثّقة في واضح، ويضع مصدر كل رقم بجانبه.") }}</p>
+      </div>
+      <img class="waddah-preview-figure" src="{{ url_for('static', path='img/waddah/clipboard-320.webp') }}" width="320" height="300" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    </div>
+
+    <ol class="preview-steps">
+      {#- 1. The question, as the student would write it. #}
+      <li class="preview-step preview-ask">
+        <h3 class="preview-step-title"><span class="preview-step-n" aria-hidden="true">1</span>{{ _("سؤال الطالب") }}</h3>
+        <blockquote class="preview-quote"><p>{{ p.spec.ask_ar }}</p></blockquote>
+      </li>
+
+      {#- 2. The shortlist: for each university, the scholarship's list and the university's requirement, apart. #}
+      <li class="preview-step preview-list">
+        <h3 class="preview-step-title"><span class="preview-step-n" aria-hidden="true">2</span>{{ _("القائمة القصيرة") }}</h3>
+        <ul class="preview-unis">
+          {% for r in p.rows %}{% set i = r.ielts %}
+          <li class="preview-uni">
+            <p class="preview-uni-name"><img class="flag" src="{{ url_for('static', path='img/flags/' ~ (r.university.country | lower) ~ '.svg') }}" alt="" width="20" height="15" loading="lazy">{{ um.uni_name(r.university) }}</p>
+            <dl class="preview-facts">
+              <div class="preview-fact">
+                <dt>{{ _("الابتعاث") }}</dt>
+                <dd>{% if r.on.track == "arruaad" %}{{ _f("في قائمة {track}، الترتيب {rank}", track=tr(r.on.name_ar), rank=r.on.rank) }}{% else %}{{ _f("في قائمة {track} لمجال {field}، الترتيب {rank}", track=tr(r.on.name_ar), field=tr(r.on.field_ar), rank=r.on.rank) }}{% endif %}</dd>
+              </div>
+              <div class="preview-fact">
+                <dt>{{ _("القبول في الجامعة") }} <bdi lang="en">IELTS</bdi></dt>
+                <dd>
+                  {% if i.min %}<span class="preview-score">{{ _("الحد الأدنى") }} <strong>{{ i.min }}</strong></span>{% endif %}
+                  {% if i.recommended %}<span class="preview-score">{{ _("الموصى به") }} <strong>{{ i.recommended }}</strong></span>{% endif %}
+                  {% if i.each_min %}<span class="preview-score">{{ _("ولكل مهارة") }} <strong>{{ i.each_min }}</strong></span>{% endif %}
+                  {% if i.varies %}<span class="preview-score preview-score--note">{{ _("وقد يكون أعلى حسب البرنامج") }}</span>{% endif %}
+                  <a class="src" href="{{ i.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>
+                </dd>
+              </div>
+            </dl>
+          </li>
+          {% endfor %}
+        </ul>
+        <p class="preview-note">{{ _("قائمة الابتعاث تحدد الجامعات التي يُبتعث إليها، والجامعة وحدها تقرر قبولك. والحد الأدنى أقل درجة تقبلها الجامعة، أما الموصى به فهو ما تنصح به.") }}</p>
+      </li>
+
+      {#- 3. The plan: the universities' deadlines in order, then the scholarship after admission. #}
+      <li class="preview-step preview-plan">
+        <h3 class="preview-step-title"><span class="preview-step-n" aria-hidden="true">3</span>{{ _("الخطة") }}</h3>
+        <ol class="preview-dates">
+          {% for x in p.dates %}
+          <li class="preview-date">
+            <time class="preview-date-day" datetime="{{ x.date }}">{{ x.date | arabic_date }}</time>
+            <span class="preview-date-what">{{ x.university.name_ar or x.university.name_en }}{{ _("،") }} {{ um.date_short(x) }} <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% if not x.year_stated %}<span class="preview-date-hedge">{{ _("السنة غير مذكورة في الصفحة") }}</span>{% endif %}</span>
+          </li>
+          {% endfor %}
+          <li class="preview-date preview-date--then">
+            <span class="preview-date-day">{{ _("بعد القبول") }}</span>
+            <span class="preview-date-what">{{ _("تتقدم على الابتعاث بقبولك من جامعة في قائمة المسار.") }} <span class="preview-srcs">{% for url in p.rule_sources %}<a class="src" href="{{ url }}" target="_blank" rel="noopener">{{ _("شروط الرواد") if loop.first else _("شروط إمداد") }}</a>{% endfor %}</span></span>
+          </li>
+        </ol>
+      </li>
+    </ol>
+
+    {#- What a student can do today, without وضّاح: the same lists the example reads from. #}
+    <p class="preview-try"><a class="btn btn--secondary" href="{{ url_for('universities_page') }}?q={{ tr(p.spec.major_ar) | urlencode }}">{{ _("ابحث عن جامعات تخصصك في القوائم") }}</a></p>
+    <p class="preview-foot">{{ _("وضّاح لم يُطلق بعد، وهذا مثال وليس محادثة. واضح مجاني ومفتوح للجميع دون تسجيل، وسيكون التسجيل بحساب") }} <bdi lang="en">Google</bdi> {{ _("لمن يستخدم وضّاح فقط.") }}</p>
+  </div>
+</section>
+{% endmacro %}

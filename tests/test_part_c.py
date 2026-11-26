@@ -95,9 +95,12 @@ def test_two_dates_on_one_day_are_two_events():
 
 def test_your_constellation_maps_only_your_universities(monkeypatch):
     on(monkeypatch, 2026, 11, 7)
-    hub = client.post("/my-plan", json=PLAN).text.split('<template data-plan-part="hub">')[1].split("</template>")[0]
-    codes = re.findall(r'data-world-chip="([A-Z]{2})"', hub)
+    html = client.post("/my-plan", json=PLAN).text
+    # Since 2026-11-25 the map is its own part, drawn under the rows (the saved items come first).
+    where = html.split('<template data-plan-part="where">')[1].split("</template>")[0]
+    codes = re.findall(r'data-world-chip="([A-Z]{2})"', where)
     assert sorted(codes) == ["GB", "SG", "US"]
+    assert "data-world-chip" not in html.split('<template data-plan-part="hub">')[1].split("</template>")[0]
 
 
 # ---------- the map ----------
@@ -113,7 +116,7 @@ def test_the_homepage_map_has_every_country_with_its_count():
 
 @pytest.mark.parametrize("counts", [None, {"US": 3, "GB": 2, "SG": 1}, {"FR": 1}])
 def test_the_map_is_drawn_like_the_rowwad_chart(counts):
-    """Decision 084: one four-point star per university, a constellation per country under its name, all inside the
+    """Decision 084: one round light per university (the star is gone, 2026-11-25), a constellation per country under its name, all inside the
     frame, and no constellation (with its name) on top of another or of home. counts=None is the homepage's 290."""
     from app.sky import CHART_H, CHART_W, CHAR_W, HOME_BOX, LABEL_GAP, LABEL_H, WORLD_AT, world_chart
     if counts is None:
@@ -122,12 +125,12 @@ def test_the_map_is_drawn_like_the_rowwad_chart(counts):
             counts[u["country"]] = counts.get(u["country"], 0) + 1
     names = {c: main.explorer.countries[c]["name_ar"] for c in counts}
     chart = world_chart(counts, names)
-    assert {k["code"]: len(k["stars"]) for k in chart["countries"]} == counts
-    assert all(k["stars_d"].count("z") == k["count"] for k in chart["countries"])
+    assert {k["code"]: len(k["lights"]) for k in chart["countries"]} == counts
+    assert all(k["lights_d"].count("z") == k["count"] for k in chart["countries"])
     assert set(counts) <= set(WORLD_AT)  # a new country in the lists gets a place chosen for it
     boxes = []
     for k in chart["countries"]:
-        xs, ys = [x for x, _ in k["stars"]], [y for _, y in k["stars"]]
+        xs, ys = [x for x, _ in k["lights"]], [y for _, y in k["lights"]]
         half = len(k["name_ar"]) * CHAR_W / 2
         box = (min(min(xs), k["x"] - half), min(ys), max(max(xs), k["x"] + half), k["label_y"] + 4)
         assert 0 < box[0] and box[2] < CHART_W and 0 < box[1] and box[3] < CHART_H, (k["code"], box)
@@ -151,10 +154,10 @@ def test_the_teaser_waits_for_the_owners_name_check(monkeypatch):
     public, the live site has no band, no /waddah and no sitemap entry; WADIH_SHOW_DRAFTS shows it locally."""
     monkeypatch.setitem(main.waddah, "public", False)
     monkeypatch.setattr(main, "SHOW_DRAFTS", False)
-    assert 'class="waddah-band"' not in client.get("/").text
+    assert 'class="waddah-preview"' not in client.get("/").text
     assert client.get("/waddah").status_code == 404 and client.get("/en/waddah").status_code == 404
     monkeypatch.setattr(main, "SHOW_DRAFTS", True)
-    assert 'class="waddah-band"' in client.get("/").text
+    assert 'class="waddah-preview"' in client.get("/").text
 
 
 @pytest.fixture
@@ -174,24 +177,66 @@ def test_waddah_is_only_a_teaser_until_launch(prefix, teaser_public):
         assert key not in main.waddah
 
 
-@pytest.mark.parametrize("prefix", ["", "/en"])
-def test_the_teaser_band_shows_waddahs_mascot_and_the_picture_of_him_helping(prefix, teaser_public):
-    """Decision 093: وضّاح's identity is the owner's mascot, beside his written name; the band's picture is the owner's
-    paper-cut drawing of وضّاح helping a student, self-hosted, with a phone crop. Still only a teaser (084)."""
+def _preview_html(prefix=""):
     html = client.get(prefix + "/").text
-    band = html.split('class="waddah-band"')[1].split("</section>")[0]
-    assert 'id="waddah"' in html.split('class="waddah-band"')[0][-200:]
-    assert "<a " not in band and '="/waddah' not in band and '="/en/waddah' not in band  # nothing to open yet
-    assert "فيجيبك من المصادر الرسمية" not in band
-    # The mascot is decorative (the name is written beside it); the picture says what it shows.
-    assert '/static/img/waddah/waddah.webp' in band and 'alt="" aria-hidden="true"' in band
-    assert '/static/img/waddah/helps-student.webp' in band and '/static/img/waddah/helps-student-phone.webp' in band
-    for f in ("waddah.webp", "helps-student.webp", "helps-student-phone.webp"):
-        assert (main.APP_DIR / "static" / "img" / "waddah" / f).stat().st_size < 120_000
+    return html.split('class="waddah-preview"')[1].split("</section>")[0]
+
+
+@pytest.mark.parametrize("prefix", ["", "/en"])
+def test_the_preview_is_an_example_not_a_chat(prefix, teaser_public):
+    """Owner, 2026-11-25: the homepage previews وضّاح with an example of a shortlist and a plan. Still no page of his
+    own (084) and nothing to type: it is a picture of what he will do. He appears once (his clipboard pose, decorative),
+    and the section says he hasn't launched, that واضح stays free and open, and that Google sign-in is for him only."""
+    section = _preview_html(prefix)
+    assert 'id="waddah"' in client.get(prefix + "/").text.split('class="waddah-preview"')[0][-200:]
+    assert "<input" not in section and "<textarea" not in section and "<form" not in section
+    # One way to act today: the real lists for the same major.
+    assert prefix + '/universities?q=' in section.split('class="preview-try"')[1]
+    assert '="/waddah' not in section and '="/en/waddah' not in section
+    assert section.count("/static/img/waddah/") == 1 and "clipboard-320.webp" in section
+    assert 'alt="" aria-hidden="true"' in section
+    assert (main.APP_DIR / "static" / "img" / "waddah" / "clipboard-320.webp").stat().st_size < 60_000
+    assert "قادم في ديسمبر" not in section and "December" not in section  # the launch dates are dropped
     if prefix:
-        assert 'alt="Waddah helping a student who is reading a book"' in band and "Waddah" in band
+        assert "this is an example, not a conversation" in section and "only for people who use Waddah" in section
     else:
-        assert 'alt="وضّاح يساعد طالبًا يقرأ كتابًا"' in band and main.waddah["teaser"]["line_ar"] in band
+        assert "وضّاح لم يُطلق بعد، وهذا مثال وليس محادثة" in section and "لمن يستخدم وضّاح فقط" in section
+
+
+def test_the_preview_shows_only_facts_from_the_files_with_their_sources(teaser_public):
+    """Every number in the example is read from the same files as the pages: the list a university is on, its IELTS
+    minimum and recommended score (kept apart), its next deadline; each beside its source. Nothing in the scenario
+    (data/waddah.json) is a fact."""
+    p = main.waddah_preview(today="2026-11-25")
+    section = _preview_html()
+    assert set(main.waddah["preview"]) <= {"_note", "ask_ar", "major_ar", "universities"}
+    assert len(p["rows"]) == 3
+    for r in p["rows"]:
+        uid = r["university"]["id"]
+        ielts = main.explorer.details[uid]["english"]["ielts"]
+        assert any(l["track"] == r["on"]["track"] and l["rank"] == r["on"]["rank"] for l in r["university"]["listings"])
+        assert r["ielts"]["source_url"] == ielts["source_url"] and f'href="{ielts["source_url"]}"' in section
+        if ielts.get("min"):
+            assert r["ielts"]["min"] == main.explorer.english_rows(uid)[0]["min"]
+    gt = next(r for r in p["rows"] if r["university"]["id"] == "georgia-institute-of-technology")
+    assert gt["on"]["track"] == "emdad" and gt["ielts"]["min"] != gt["ielts"]["recommended"]
+    # Minimum and recommended each under its own word, never one bare number.
+    assert "الحد الأدنى <strong>" in section and "الموصى به <strong>" in section
+    # Eligibility (the scholarship's list) and admission (the university's requirement) under separate labels.
+    assert "<dt>الابتعاث</dt>" in section and "<dt>القبول في الجامعة" in section
+    # The plan: dates in order, each with its source; the scholarship comes after admission, with the conditions.
+    days = [x["date"] for x in p["dates"]]
+    assert days == sorted(days) and all(f'href="{x["source_url"]}"' in section for x in p["dates"])
+    assert "conditions/info-6/" in section and "conditions/info-5/" in section
+    # A date kept for one group of applicants only (CMU's drama and music) is not the student's deadline.
+    assert all("فقط" not in (x.get("note_ar") or "") for x in p["dates"])
+
+
+def test_the_preview_drops_dates_that_have_passed():
+    before = main.waddah_preview(today="2026-11-25")
+    after = main.waddah_preview(today="2027-01-05")
+    assert len(after["dates"]) < len(before["dates"]) and all(x["date"] >= "2027-01-05" for x in after["dates"])
+    assert main.waddah_preview(today="2030-01-01")["dates"] == []
 
 
 def test_sign_in_waits_for_its_switch(monkeypatch):
@@ -268,4 +313,4 @@ def test_the_teaser_in_english_is_english(teaser_public):
     """The English homepage's band, checked here whether or not the teaser is public on the live site."""
     html = client.get("/en/").text
     assert not arabic_outside_lang_ar(html), arabic_outside_lang_ar(html)[:5]
-    assert "is coming in December" in html and "ask it about scholarships, universities and tests." in html
+    assert "from your question to your plan" in html and "The shortlist" in html

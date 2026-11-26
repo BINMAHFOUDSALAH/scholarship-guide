@@ -298,6 +298,54 @@ def waddah_public():
     return bool(waddah.get("public")) or SHOW_DRAFTS
 
 
+def waddah_preview(today=None):
+    """وضّاح's preview on the homepage (owner, 2026-11-25): an example of a shortlist and a plan, built from the same
+    verified data as the pages (and, later, وضّاح himself). Only the scenario is ours (data/waddah.json «preview»: the
+    question and which universities); every fact comes from the Ministry's lists and the researched files, with its
+    source. A fact the files don't hold is left out, never filled in; dates drop out as they pass. Returns None when
+    the example no longer has a university with facts to show.
+    """
+    spec = waddah.get("preview")
+    if not spec:
+        return None
+    today = today or date.today().isoformat()
+    tracks = {t["id"]: t for t in paths_by_id["custodian-scholarship"]["tracks"]}
+    fields = {m["track"]: m["field"] for m in explorer.matching_majors(spec["major_ar"])}
+    rows, dates = [], []
+    for uid in spec["universities"]:
+        u = explorer.universities.get(uid)
+        if not u:
+            continue
+        listings = {(l["track"], l.get("field")): l for l in u["listings"]}
+        # Scholarship eligibility: is the university in a track's list (for this major, in إمداد)?
+        on = None
+        if ("arruaad", None) in listings:
+            on = {"track": "arruaad", "rank": listings[("arruaad", None)]["rank"]}
+        elif fields.get("emdad") and ("emdad", fields["emdad"]) in listings:
+            field = explorer.field("emdad", fields["emdad"])
+            on = {"track": "emdad", "rank": listings[("emdad", fields["emdad"])]["rank"], "field_ar": field["name_ar"]}
+        if on:
+            track = tracks[on["track"]]
+            on.update(name_ar=track["name_ar"], source_url=track["facts"][0]["sources"][0]["url"])
+        # University admission: the IELTS row of its researched file (minimum and recommended kept apart).
+        ielts = next((r for r in explorer.english_rows(uid) if r["test"] == "ielts"), None)
+        # The next application deadline that applies to most applicants (not one kept for a single group).
+        upcoming = sorted((x for x in (explorer.details.get(uid) or {}).get("dates") or []
+                           if x.get("date") and x["date"] >= today and not x.get("reference_only")
+                           and x["event_ar"] == "آخر موعد للتقديم" and "فقط" not in (x.get("note_ar") or "")),
+                          key=lambda x: x["date"])
+        if not (on and ielts):
+            continue
+        rows.append({"university": u, "on": on, "ielts": ielts})
+        if upcoming:
+            dates.append({**upcoming[0], "university": u})
+    if not rows:
+        return None
+    dates.sort(key=lambda x: x["date"])
+    return {"spec": spec, "rows": rows, "dates": dates,
+            "rule_sources": [tracks[t]["facts"][0]["sources"][0]["url"] for t in ("arruaad", "emdad")]}
+
+
 def program_slugs():
     """Programs that have their own page: an entry in paths.json plus content/programs/<id>.md."""
     return [slug for slug in list_slugs("programs") if slug in paths_by_id]
@@ -387,6 +435,7 @@ templates.env.globals["waaid_who"] = waaid_who
 templates.env.globals["track_status"] = track_status
 templates.env.globals["waddah"] = waddah
 templates.env.globals["waddah_public"] = waddah_public
+templates.env.globals["waddah_preview"] = waddah_preview
 templates.env.globals["month_names"] = ARABIC_MONTHS
 # The sky drawings (decisions 060, 062): the homepage's night stars and the الرواد chart, computed once.
 templates.env.globals["sky_stars"] = {

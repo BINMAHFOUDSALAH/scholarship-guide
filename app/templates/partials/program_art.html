@@ -5,15 +5,15 @@
   The same on both themes; no text, no script, no outside request.
   Since decision 085 a program with an official logo shows the logo instead (the King scholarship, Aramco, KAUST, a
   واعد company); SDAIA keeps its network over its logo.
-    abroad  the scholarship's destinations: a night with three constellations and the home star (the الرواد chart's)
+    abroad  the scholarship's destinations: a night with three constellations of lights and the home mark (as on the maps)
     sdaia   artificial intelligence: a small neural network over SDAIA's logo
     waaid   training with an employer: two gears and a workshop roof
     aramco  energy: a refinery at dusk over the dunes
     kaust   science by the sea: an atom, a molecule and the Red Sea's waves
 #}
 
-{#- A four-point star (the shape of the الرواد chart's stars). #}
-{% macro star(x, y, s) %}{% set k = (s * 0.16) | round(2) %}<path d="M{{ x }} {{ y - s }}Q{{ x + k }} {{ y - k }} {{ x + s }} {{ y }}Q{{ x + k }} {{ y + k }} {{ x }} {{ y + s }}Q{{ x - k }} {{ y + k }} {{ x - s }} {{ y }}Q{{ x - k }} {{ y - k }} {{ x }} {{ y - s }}Z"/>{% endmacro %}
+{#- A round light (a university, as on the maps). #}
+{% macro light(x, y, s) %}<circle cx="{{ x }}" cy="{{ y }}" r="{{ (s * 0.6) | round(1) }}"/>{% endmacro %}
 
 {#- A gear: a body, teeth drawn as a dashed ring, and a hole. #}
 {% macro gear(x, y, r, teeth, fill, ground) %}{% set ring = r + 2 %}{% set per = (2 * 3.14159 * ring / teeth) | round(3) %}
@@ -46,12 +46,13 @@
     <path d="M22 42L32 28L46 34L42 50L28 54"/><path d="M70 24L84 16L92 30L82 38"/><path d="M124 28L140 22L146 38L134 46"/>
   </g>
   <g fill="#f6f4ee">
-    {{ star(22, 42, 3.4) }}{{ star(32, 28, 3.8) }}{{ star(46, 34, 3.2) }}{{ star(42, 50, 3.4) }}{{ star(28, 54, 3) }}
-    {{ star(70, 24, 3.2) }}{{ star(84, 16, 3.6) }}{{ star(92, 30, 3.4) }}{{ star(82, 38, 3) }}
-    {{ star(124, 28, 3.2) }}{{ star(140, 22, 3.6) }}{{ star(146, 38, 3) }}{{ star(134, 46, 3.4) }}
+    {{ light(22, 42, 3.4) }}{{ light(32, 28, 3.8) }}{{ light(46, 34, 3.2) }}{{ light(42, 50, 3.4) }}{{ light(28, 54, 3) }}
+    {{ light(70, 24, 3.2) }}{{ light(84, 16, 3.6) }}{{ light(92, 30, 3.4) }}{{ light(82, 38, 3) }}
+    {{ light(124, 28, 3.2) }}{{ light(140, 22, 3.6) }}{{ light(146, 38, 3) }}{{ light(134, 46, 3.4) }}
   </g>
-  <circle cx="112" cy="82" r="15" fill="#d8ed9b" opacity=".16"/>
-  <g fill="#d8ed9b">{{ star(112, 82, 7.5) }}</g>
+  {#- Home: the lime light in its ring, "you are here". #}
+  <circle cx="112" cy="82" r="8" fill="none" stroke="#d8ed9b" stroke-width="1.6" stroke-opacity=".75"/>
+  <circle cx="112" cy="82" r="4.2" fill="#d8ed9b"/>
 {% elif name == "sdaia" %}
   <rect width="160" height="112" fill="#0d0e58"/>
   <ellipse cx="80" cy="30" rx="86" ry="44" fill="#2b33a8" opacity=".5"/>

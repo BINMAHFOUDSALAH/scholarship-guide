@@ -95,7 +95,7 @@ def test_homepage_order():
     وضّاح → the guides. The journey, tests, «كيف نعمل», and the decorative drawing are not on the homepage."""
     html = client.get("/").text
     order = ['id="grades"', 'class="hero-search"', 'class="hero-door"', 'id="now"', 'id="programs"',
-             *(['class="waddah-band"'] if main.waddah_public() else []), 'id="guides"']
+             *(['class="waddah-preview"'] if main.waddah_public() else []), 'id="guides"']
     positions = [html.index(x) for x in order]
     assert positions == sorted(positions)
     for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل", "hero-visual"):
@@ -455,7 +455,7 @@ def test_grade_journey_shows_each_years_job_and_marks_the_current_one():
     journey = html.split('class="grade-journey"')[1].split("</nav>")[0]
     assert journey.count("<a ") == 3 and "اكتشف واستعد" in journey and "قدّم وتابع" in journey
     assert journey.count('aria-current="page"') == 1
-    assert re.search(r'aria-current="page">(<svg class="journey-star".*?</svg>)?<span class="grade-journey-name">ثاني ثانوي', journey)
+    assert re.search(r'aria-current="page"><span class="grade-journey-name">ثاني ثانوي', journey)
     assert "ماذا ينتظرك في ثالث ثانوي؟" in html
     assert "ماذا ينتظرك في" not in client.get("/grades/grade-12").text
 
@@ -838,19 +838,14 @@ def test_program_page_leads_with_the_next_step_and_lists_its_sections():
         assert f'href="{anchor}"' in contents, anchor  # test_every_internal_link_works checks they exist
 
 
-def test_owner_x_link_is_in_the_footer_only():
-    """The owner's X account: in the global footer on every page, never in the nav; safe new tab; labelled."""
+@pytest.mark.parametrize("prefix,line", [("", "أحد منتجات فريق نيو هورايزن"), ("/en", "A product of New Horizon Team")])
+def test_footer_names_the_team_and_has_no_personal_link(prefix, line):
+    """Owner, 2026-11-25: the footer says who makes واضح; the feedback invitation and the personal X link are gone."""
     for page in ("/", "/universities", "/universities/harvard-university", "/programs", "/my-plan"):
-        html = client.get(page).text
-        header, footer = html.split("</header>")[0], html.split('<footer class="site-footer">')[1]
-        assert "x.com/salahmetaverse" not in header
-        link = footer.split('class="footer-x no-ext"')[1].split("</a>")[0]
-        assert 'href="https://x.com/salahmetaverse"' in link
-        assert 'target="_blank"' in link and 'rel="noopener noreferrer"' in link
-        assert "عندك ملاحظة أو اقتراح؟ راسلني على X" in link and 'aria-hidden="true"' in link
-        assert "aria-label" not in link  # the visible text is the link's name (WCAG 2.5.3)
-    main_part = client.get("/").text.split('<main id="main"')[1].split('<footer class="site-footer">')[0]
-    assert "salahmetaverse" not in main_part
+        html = client.get(prefix + page).text
+        footer = html.split('<footer class="site-footer">')[1]
+        assert f'<p class="footer-maker">{line}</p>' in footer
+        assert "salahmetaverse" not in html and "footer-x" not in html
 
 
 def test_logo_mark_is_the_same_in_the_header_and_the_favicon():
@@ -954,12 +949,12 @@ def test_rowwad_chart_places_every_university_once():
 
     chart = rowwad_chart(main.explorer)
     listed = {u["id"] for _, u in main.explorer.listings("arruaad")}
-    assert {s["id"] for s in chart["stars"]} == listed
-    assert len(chart["stars"]) == len(listed)
+    assert {s["id"] for s in chart["lights"]} == listed
+    assert len(chart["lights"]) == len(listed)
     assert sum(k["count"] for k in chart["countries"]) == len(listed)
-    for s in chart["stars"]:
+    for s in chart["lights"]:
         assert 20 < s["x"] < chart["w"] - 20 and 20 < s["y"] < chart["h"] - 20, s
-    points = [(s["x"], s["y"]) for s in chart["stars"]]
+    points = [(s["x"], s["y"]) for s in chart["lights"]]
     closest = min(math.dist(a, b) for i, a in enumerate(points) for b in points[i + 1:])
     assert closest > 14, closest  # a star (8 units) never overlaps another
     # A new country in the list would be placed automatically; this flags it so its place can be chosen.

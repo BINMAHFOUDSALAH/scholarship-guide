@@ -32,9 +32,21 @@
     return text.split(" ").filter(Boolean).map((w) => (w.startsWith("ال") && w.length >= 4 ? w.slice(2) : w));
   }
 
+  // A name's word may carry the conjunction «و» (and «وال»), as on the server: «علوم الحاسب» finds «البرمجة وعلوم الحاسب».
+  function wordHits(q, k) {
+    const hits = (w) => w === q || (q.length >= 4 && w.startsWith(q));
+    if (hits(k)) return true;
+    if (k.startsWith("و") && k.length >= 4 && !q.startsWith("و")) {
+      let rest = k.slice(1);
+      if (rest.startsWith("ال") && rest.length >= 4) rest = rest.slice(2);
+      return hits(rest);
+    }
+    return false;
+  }
+
   function wordsMatch(qWords, keyWords) {
     for (let i = 0; i + qWords.length <= keyWords.length; i++) {
-      if (qWords.every((q, j) => keyWords[i + j] === q || (q.length >= 4 && keyWords[i + j].startsWith(q)))) return true;
+      if (qWords.every((q, j) => wordHits(q, keyWords[i + j]))) return true;
     }
     return false;
   }
@@ -462,13 +474,13 @@
         syncRowwad();
         update();
       });
-      // Pointing at a star names it under the chart (the chart's links are for a mouse; the table has them all).
+      // Pointing at a light names it under the chart (the chart's links are for a mouse; the table has them all).
       chart.addEventListener("pointerover", (event) => {
-        const star = event.target.closest(".chart-star");
-        if (star) readout.textContent = star.dataset.rank + ". " + star.dataset.name;
+        const light = event.target.closest(".chart-light");
+        if (light) readout.textContent = light.dataset.rank + ". " + light.dataset.name;
       });
       chart.addEventListener("pointerout", (event) => {
-        if (event.target.closest(".chart-star")) restReadout();
+        if (event.target.closest(".chart-light")) restReadout();
       });
       form.addEventListener("change", syncRowwad);
       results.addEventListener("click", (event) => {
