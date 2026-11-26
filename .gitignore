@@ -8,7 +8,8 @@ __pycache__/
 # Official source files we download to extract from (re-downloadable, not committed)
 data/raw/
 # Ad production media (big files, re-buildable; decision 044)
-marketing/assets/
+marketing/assets/*
+!marketing/assets/waddah/
 marketing/out/
 marketing/.edge-profile/
 

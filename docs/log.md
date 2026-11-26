@@ -49,6 +49,8 @@ Later or optional: an FAQ from real student questions; page-view counts without 
 
 ## 2026-11-25
 
+**2026-11-25 (وضّاح masters, owner):** The owner sent 12 وضّاح renders as the master references for future poses, outfits and scenes. 11 were already in `marketing/assets/waddah/`, byte for byte (search, sources, sorry, unsure, wait, laptop, logo, wave, clipboard, point, cheer); the new one, the paper-plane banner with the wordmark (2000×667), is now `marketing/assets/waddah/banner.webp`. That folder is the masters' home, now kept in git (`.gitignore` still leaves out the rest of `marketing/assets/`); web copies are made from it into `app/static/img/waddah/`. Saved the four-point star the owner wants removed as `references/sparkle.png`; replacing it everywhere is now step 1b of [plan.md](plan.md), the next session's work.
+
 **2026-11-25 (design tools, owner):** Taste (`design-taste-frontend`, tasteskill 2.5.1, installed in the user's `~/.claude/skills/`, not the repo) may now design and review any page, not only review the homepage (replaces that part of decision 076). `design.md` still beats it: never its palette, fonts, starter files or photographs rule. Updated `CLAUDE.md` and `.claude/rules/design.md`.
 
 ## 2026-11-16

@@ -20,7 +20,8 @@ Rules: [.claude/rules/design.md](../.claude/rules/design.md). Each step is one p
 | # | Step | What done looks like | Status |
 |---|---|---|---|
 | 1 | Foundation and homepage | New colours, typeface, buttons, header; وضّاح's question on the homepage; university deadlines in «الآن» | **Done** 2026-11-16 (PR 66) |
-| 2 | «خطتي» as a dated roadmap | The student sees their stage, their next step (specific, not "open the page"), and their dates in order. Needs the owner's answer to decision A | Next |
+| 1b | Replace the four-point sparkle (owner, 2026-11-25) | The four-point star ([references/sparkle.png](../references/sparkle.png)) is gone everywhere on واضح, Arabic and English: templates, CSS, JS, SVGs, icons, data, content, marketing. In its place, a visual specific to واضح and a **different shape**, not a restyled sparkle. Where the sparkle meant a status or an action (new, now, featured, done…), the replacement says that meaning plainly. Search by eye too: it may be drawn in SVG or CSS, not typed as a character. Today `.claude/rules/design.md` makes the star a motif (a destination on the map, «المملكة»): rewrite that rule and its tests with the new shape | Next |
+| 2 | «خطتي» as a dated roadmap | The student sees their stage, their next step (specific, not "open the page"), and their dates in order. Needs the owner's answer to decision A | After 1b |
 | 3 | The university page | The answer first: is it on the list, what it requires, the next date. Details and sources below. Shorter on a phone than today (5,625px) | |
 | 4 | The program page | The steps in order, for that program's sequence. The scholarship page is far shorter than today (13,742px, 67 links) | |
 | 5 | The explorer | Shorter rows; compare up to three universities. The الرواد list is far shorter than today (12,757px) | |
