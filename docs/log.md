@@ -47,6 +47,9 @@ Later or optional: an FAQ from real student questions; page-view counts without 
 - **New rounds on official pages:** KGSP Cohort 19's dates, Aramco's next cycle, Cambridge's next-cycle dates. `/update-site` checks them.
 - **Ask before installing:** `httpx2` (the test client warns that `httpx` with it is deprecated); Playwright in CI for `scripts/check_explorer.mjs`.
 
+## 2026-11-26
+- The footer's team line is now a pill with a lip: «أحد منتجات» above «فريق نيو هورايزن» and @NewHorizon___ with a drawn X mark, linking to https://x.com/NewHorizon___ (owner's ask). Test, English and `design.md` updated.
+
 ## 2026-11-25
 
 **2026-11-25 (redesign pass 1, owner's brief):** Walked three student tasks on the live site (headless Edge, 390 and 1440): choosing a major, checking the scholarship's requirements, saving a university to «خطتي». Stuck points: «علوم الحاسب» returned «لا نتائج» (the Ministry writes «البرمجة وعلوم الحاسب», and the search didn't see past the «و»); after a save, «خطتي» showed the counts, an empty «قريبًا» and the map before the saved university (2+ screens down on a phone); the homepage still said «وضّاح قادم في ديسمبر» though the dates are dropped; the program page is 15.9 phone screens. References read: MIT Engineering, Aalto, Tahatū, Study Australia (stage-based paths, deadlines in plain sentences, requirements split by track). Built on `redesign/v3-pass-1`:

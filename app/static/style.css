@@ -4493,11 +4493,71 @@ a.uni-name:hover .uni-name-en:only-child {
   white-space: nowrap;
 }
 
-/* Who makes it: one quiet line under the promise (owner, 2026-11-25). */
+/* Who makes it: the team, as a pill you can press to its X account (owner, 2026-11-25, 2026-11-26).
+   A pill names a place; it has a lip because it opens something. */
 .footer-maker {
-  margin-top: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  color: var(--ink-muted);
+}
+
+.footer-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding-block: 8px;
+  padding-inline: 8px 20px;
+  border: 2px solid var(--line-strong);
+  border-radius: 999px;
   color: var(--ink);
-  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 var(--lip) 0 var(--line-strong);
+  transition: transform 0.08s var(--ease-out), box-shadow 0.08s var(--ease-out), border-color 0.15s var(--ease-out);
+}
+
+.footer-team:hover {
+  border-color: var(--ink);
+  box-shadow: 0 var(--lip) 0 var(--ink);
+}
+
+.footer-team:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--ink);
+}
+
+.footer-team-x {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--stage);
+}
+
+.footer-team-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.footer-team-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+.footer-team-handle {
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+  text-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-team { transition: none; }
 }
 
 /* Phones: two columns, and the guides' own list in two columns under them, so the footer stays short. */
