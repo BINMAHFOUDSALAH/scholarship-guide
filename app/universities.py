@@ -182,6 +182,22 @@ def words(normalized):
     return [w[2:] if w.startswith("ال") and len(w) >= 4 else w for w in normalized.split()]
 
 
+def _word_hits(q, k):
+    return k == q or (len(q) >= 4 and k.startswith(q))
+
+
+def word_hits(q, k):
+    """One query word against one word of a name. A name's word may carry the conjunction «و» (and «وال»): the
+    Ministry writes «البرمجة وعلوم الحاسب», and a student types «علوم الحاسب» (2026-11-25: that search found nothing)."""
+    if _word_hits(q, k):
+        return True
+    if k.startswith("و") and len(k) >= 4 and not q.startswith("و"):
+        rest = k[1:]
+        rest = rest[2:] if rest.startswith("ال") and len(rest) >= 4 else rest
+        return _word_hits(q, rest)
+    return False
+
+
 def words_match(q_words, key_words):
     """True when the query's words appear in order in the key, each as a whole word (decision 078, A3).
     A query word of 4+ letters may also start a longer word («هندس» → «هندسة», "comput" → "computer"),
@@ -190,7 +206,7 @@ def words_match(q_words, key_words):
     if not n:
         return False
     for i in range(len(key_words) - n + 1):
-        if all(k == q or (len(q) >= 4 and k.startswith(q)) for q, k in zip(q_words, key_words[i:i + n])):
+        if all(word_hits(q, k) for q, k in zip(q_words, key_words[i:i + n])):
             return True
     return False
 

@@ -12,7 +12,7 @@
   2. «الآن»: what is open today, what hasn't opened yet, and the nearest university deadlines, each under its own
      heading (a student's "now" is also the universities' own dates, not only the scholarship windows);
   3. the programs, one card each, by when you apply (the details are on «البرامج»);
-  4. وضّاح's teaser, then the guides.
+  4. وضّاح's preview (an example of a shortlist and a plan, from verified data), then the guides.
   A returning student (a grade or a plan kept on this device) sees it on the start: their grade marked «صفّك», and
   their plan one tap away (mylist.js). Nothing is sent anywhere.
 #}
@@ -167,7 +167,9 @@
 {% endblock %}
 
 {% block after_content %}
-{% if waddah_public() %}{% include "partials/waddah_band.html" %}{% endif %}
+{% import "partials/waddah_preview.html" as wp with context %}
+{% set preview = waddah_preview() %}
+{% if waddah_public() and preview %}{{ wp.preview(preview) }}{% endif %}
 
 {# The guides index (decision 062): before deciding, the tests, the application systems, each in one line (069). #}
 <div class="container">

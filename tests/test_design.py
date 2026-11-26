@@ -94,10 +94,6 @@ def text_pairs(t):
         (t["action"], mix(t["action"], 17, t["paper"]), "the source chip, hovered"),
         (t["paper"], t["ink"], "«اليوم» on the year line"),
         (t["on-lime"], t["lime"], "the current phase on the year line"),
-        # Decision 093: وضّاح's band is his picture's own paper, the same on both themes.
-        ("#101713", "#fae5c5", "وضّاح's title on the teaser's paper"),
-        ("#2b2a24", "#fae5c5", "the teaser's line"),
-        ("#57503f", "#fae5c5", "«قريبًا في واضح» on the teaser's paper"),
     ]
 
 
@@ -168,3 +164,37 @@ def test_no_text_smaller_than_the_scale_floor():
     sizes = re.findall(r"font-size:\s*([0-9.]+)rem", CSS)
     too_small = [s for s in sizes if float(s) < 0.8125]
     assert not too_small, f"font sizes below 0.8125rem: {too_small}"
+
+
+# ---------- The four-point star is gone (plan step 1b, owner 2026-11-25) ----------
+
+ROOT = main.APP_DIR.parent
+# The sparkle's signature in SVG: a tip-to-tip quadratic curve (…Q k k s 0 Q…), the shape every copy of it used.
+STAR_PATH = re.compile(r"[Qq]\s*-?[\d.]+[\s,]+-?[\d.]+[\s,]+-?[\d.]+[\s,]+0\s*[Qq]")
+STAR_CHARS = "✦✧✶✷✸✹⋆★☆✨"
+
+
+def _drawn_files():
+    for folder, patterns in ((main.APP_DIR / "templates", ("*.html",)), (main.APP_DIR / "static", ("*.css", "*.js", "*.svg")),
+                             (ROOT / "content", ("*.md",)), (ROOT / "data", ("*.json",)), (ROOT / "marketing" / "src", ("*.mjs", "*.py"))):
+        for pattern in patterns:
+            yield from folder.rglob(pattern)
+
+
+def test_no_four_point_star_anywhere():
+    """The sparkle (references/sparkle.png) is gone from واضح, Arabic and English: no drawn copy, no typed one."""
+    found = []
+    for f in _drawn_files():
+        text = f.read_text(encoding="utf-8")
+        if STAR_PATH.search(text) or any(ch in text for ch in STAR_CHARS):
+            found.append(str(f.relative_to(ROOT)))
+    assert not found, found
+
+
+@pytest.mark.parametrize("path", ["/", "/en/", "/universities?track=arruaad", "/en/universities?track=arruaad"])
+def test_maps_mark_home_with_a_ring_and_destinations_with_round_lights(path):
+    from fastapi.testclient import TestClient
+    html = TestClient(main.app).get(path).text
+    assert 'class="home-mark-ring"' in html and 'class="home-mark-light"' in html
+    assert "guide-star" not in html and "chart-star" not in html and "world-stars" not in html
+    assert not STAR_PATH.search(html) and not re.search(r"q[\d.]+ -?[\d.]+ -?[\d.]+ -?[\d.]+q", html)  # the maps' old sub-path

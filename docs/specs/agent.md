@@ -101,7 +101,7 @@ Thinking tokens are billed as output, so effort changes these; the eval run meas
   outline only when it doesn't know. Reduced motion: a still icon with a word.
 - The mascot's poses for those states (decision 093; the owner's files in `marketing/assets/waddah/`, not served
   until this page is built): `search` (magnifier) while searching, `sources` (two cards) when answering with sources,
-  `wait` (hourglass) while waiting, `unsure` (shrug) for «لا أعرف». Until launch the site shows only the teaser (084).
+  `wait` (hourglass) while waiting, `unsure` (shrug) for «لا أعرف». Until launch the site shows only the homepage preview (owner, 2026-11-25: an example of a shortlist and a plan, from the same verified data; no chat, nothing to type).
 - «كيف أجبت؟» opens the passages used; a thumbs up/down, no text field.
 - Context: on a university page, «اسأل وضّاح عن <name>» with two suggested questions from the eval seed.
 

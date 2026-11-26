@@ -1,5 +1,5 @@
 {
-  "_note": "وضّاح, the AI guide (decisions 082–084, 093). Drives the homepage's teaser band now (only a teaser: no page of its own until launch, decision 084); in Phase 2 the box («اسأل وضّاح») and the sign-in slot. public = the teaser band is on the live site (the owner checked the name, decision 082), shown locally with WADIH_SHOW_DRAFTS=1; launched = launch day (a switch, never a date); accounts_open = the header shows «دخول».",
+  "_note": "وضّاح, the AI guide (decisions 082–084, 093). Drives the homepage's preview now (owner, 2026-11-25: an example of a shortlist and a plan from verified data; no page of its own until launch, decision 084); in Phase 2 the box («اسأل وضّاح») and the sign-in slot. public = the teaser band is on the live site (the owner checked the name, decision 082), shown locally with WADIH_SHOW_DRAFTS=1; launched = launch day (a switch, never a date); accounts_open = the header shows «دخول».",
   "name_ar": "وضّاح",
   "name_en": "Waddah",
   "public": true,
@@ -7,10 +7,14 @@
   "accounts_open": false,
   "signin_path": "/signin",
   "launch_date": null,
-  "x_url": "https://x.com/salahmetaverse",
   "teaser": {
     "kicker_ar": "قريبًا في واضح",
-    "title_ar": "وضّاح قادم في ديسمبر",
     "line_ar": "دليلك الذكي في واضح: اسأله عن الابتعاث والجامعات والاختبارات."
+  },
+  "preview": {
+    "_note": "The homepage's example (owner, 2026-11-25). Only the scenario is ours: the student's question and which universities وضّاح picks. Every fact shown (the list a university is on, its IELTS scores, its next deadline) is read from data/universities.json and data/university_details/ by waddah_preview() in app/main.py, with its source; nothing here is a fact. Facts checked against their sources on 2026-11-25 (fact-checker): CMU IELTS 7.5 and 4 Jan; Georgia Tech 6 / 6.5 (USG) and 6 Jan; Imperial 6.5 / 7.0 by course; UCAS 13 Jan 2027.",
+    "ask_ar": "أنا في ثالث ثانوي وأريد دراسة علوم الحاسب في أمريكا أو بريطانيا. بأي الجامعات أبدأ، وماذا أفعل أولًا؟",
+    "major_ar": "البرمجة وعلوم الحاسب",
+    "universities": ["carnegie-mellon-university", "georgia-institute-of-technology", "imperial-college-london"]
   }
 }

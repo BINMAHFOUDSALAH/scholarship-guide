@@ -27,9 +27,9 @@ const data = JSON.parse(readFileSync(join(root, "data", "waddah.json"), "utf8"))
 const out = join(root, "marketing", "out");
 mkdirSync(join(out, "frames"), { recursive: true });
 
-const star = "M0 -26 Q4.2 -4.2 26 0 Q4.2 4.2 0 26 Q-4.2 4.2 -26 0 Q-4.2 -4.2 0 -26Z";
 
-// One card: the night, the paper-cut horizon, the light; the name, «قادم في ديسمبر», the line, the address.
+// One card: the night, the paper-cut horizon, the home mark (a lime light in its ring); the name, «قريبًا», the line, the address.
+// (2026-11-25: the launch dates are dropped, so no month; the four-point star is gone.)
 function card(w, h, dawn) {
   const tall = h > w;
   const title = tall ? 190 : 150;
@@ -54,7 +54,7 @@ function card(w, h, dawn) {
   <g transform="translate(0 ${tall ? 2140 : 336})">
     <g transform="translate(330 250)"><g style="transform: translateY(calc((1 - var(--dawn)) * 110px))">
       <circle r="70" fill="#d8ed9b" style="opacity: calc(0.08 + var(--dawn) * 0.25)"/>
-      <path d="${star}" fill="#d8ed9b" transform="scale(1.4)"/></g></g>
+      <circle r="34" fill="none" stroke="#d8ed9b" stroke-width="5" stroke-opacity=".75"/><circle r="18" fill="#d8ed9b"/></g></g>
     <path fill="#245a46" d="M0 330 C180 300 300 318 470 306 C640 294 760 262 940 286 C1110 308 1240 290 1440 300 L1440 420 L0 420Z"/>
     <path fill="#174a39" d="M0 360 C150 340 330 352 520 336 C700 322 860 344 1030 334 C1200 324 1320 344 1440 338 L1440 420 L0 420Z"/>
     <path fill="#0e3125" d="M0 392 C220 378 420 396 640 384 C860 372 1060 394 1260 386 C1350 382 1400 388 1440 386 L1440 420 L0 420Z"/>
@@ -63,7 +63,7 @@ function card(w, h, dawn) {
 <div class="text">
   <p class="kicker">${data.teaser.kicker_ar}</p>
   <p class="name">${data.name_ar}</p>
-  <p class="when">قادم في ديسمبر</p>
+  <p class="when">قريبًا</p>
   <p class="line">${data.teaser.line_ar}</p>
 </div>
 <p class="site">wadihguide.com</p>

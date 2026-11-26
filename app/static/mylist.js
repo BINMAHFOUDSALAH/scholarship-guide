@@ -129,20 +129,24 @@
       return;
     }
     renderButtons();
-    renderHeader();
-    if (!saved) flyToPlan(button);
+    button.classList.toggle("is-just-saved", !saved);
+    // The light carries the item: the header's count changes when it lands, not before it leaves.
+    if (saved || !flyToPlan(button, renderHeader)) renderHeader();
     if (status) status.textContent = t(saved ? "أُزيل من خطتك." : "حُفظ في خطتك على هذا الجهاز.");
   }
 
   // "Light travels" (decision 083): a saved item's light flies to «خطتي» in the header, so the student sees where it
-  // went. Once, short, and not at all with reduced motion or when the header link is out of sight.
-  function flyToPlan(from) {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  // went. Once, short, and not at all with reduced motion or when the header link is out of sight. On landing it calls
+  // arrive() (the header's count) and the count gives a small pop. Returns false when nothing flies.
+  function flyToPlan(from, arrive) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
     const to = [...document.querySelectorAll("[data-mylist-link]")].find((l) => l.offsetParent);
-    if (!to || !from.animate) return;
+    if (!to || !from.animate) return false;
     const a = from.getBoundingClientRect();
     const b = to.getBoundingClientRect();
-    if (b.bottom < 0) return;
+    if (b.bottom < 0) return false;
+    const travel = getComputedStyle(document.documentElement).getPropertyValue("--ease-in-out").trim() || "ease-in-out";
+    const settle = getComputedStyle(document.documentElement).getPropertyValue("--ease-out").trim() || "ease-out";
     const light = document.createElement("span");
     light.className = "plan-light";
     light.setAttribute("aria-hidden", "true");
@@ -155,11 +159,24 @@
       { transform: "translate(0, 0) rotate(45deg) scale(1)", opacity: 1 },
       { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 40}px) rotate(45deg) scale(1.2)`, opacity: 1, offset: 0.5 },
       { transform: `translate(${dx}px, ${dy}px) rotate(45deg) scale(0.5)`, opacity: 0.2 },
-    ], { duration: 650, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }).finished.then(() => {
+    ], { duration: 600, easing: travel }).finished.then(() => {
       light.remove();
+      arrive();
       to.classList.add("is-arrived");
       setTimeout(() => to.classList.remove("is-arrived"), 600);
-    }, () => light.remove());
+      const count = to.querySelector("[data-mylist-count]");
+      if (count && count.animate) {
+        count.animate([
+          { transform: "scale(1)" },
+          { transform: "scale(1.3)", offset: 0.35 },
+          { transform: "scale(1)" },
+        ], { duration: 320, easing: settle });
+      }
+    }, () => {
+      light.remove();
+      arrive();
+    });
+    return true;
   }
 
   // ---------- the student's grade (decision 083) ----------
@@ -219,12 +236,14 @@
     const status = page.querySelector("[data-mylist-status]");
     const heading = page.querySelector("h1");
     const hub = page.querySelector("[data-plan-hub]");
+    const where = page.querySelector("[data-plan-where]");
 
     const showEmpty = () => {
       rows.replaceChildren();
       rows.hidden = true;
       empty.hidden = false;
       if (hub) hub.hidden = true;
+      if (where) where.hidden = true;
     };
 
     if (!canStore) {
@@ -248,14 +267,15 @@
         });
         if (!response.ok) throw new Error("rows " + response.status);
         rows.innerHTML = await response.text();
-        // The hub (the route of statuses, «قريبًا», the calendar file) comes with the rows: move it above them.
-        const part = rows.querySelector('template[data-plan-part="hub"]');
-        if (part) {
-          if (hub) {
-            hub.replaceChildren(part.content.cloneNode(true));
-            hub.hidden = false;
+        // The hub (the route of statuses, «قريبًا», the calendar file) comes with the rows: move it above them; the
+        // map of where the universities are goes under them, so the saved items come first.
+        for (const [name, box] of [["hub", hub], ["where", where]]) {
+          const part = rows.querySelector(`template[data-plan-part="${name}"]`);
+          if (box) {
+            box.replaceChildren(part ? part.content.cloneNode(true) : "");
+            box.hidden = !part;
           }
-          part.remove();
+          if (part) part.remove();
         }
       } catch (e) {
         failed.hidden = false;
