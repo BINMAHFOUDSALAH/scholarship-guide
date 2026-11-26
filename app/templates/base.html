@@ -166,8 +166,18 @@
         {# Independence on every page, because pages show official logos and data (decision 035). #}
         <p class="footer-promise">{{ site.name }} {{ _("دليل طلابي مستقل ومجاني.") }} <a href="{{ url_for('about') }}">{{ _("عن الدليل") }}</a></p>
         {% if is_en() %}<p class="footer-promise">{{ _("هذه الصفحة بالإنجليزية ترجمتنا، والمصدر الرسمي هو المرجع.") }}</p>{% endif %}
-        {# Who makes it (owner, 2026-11-25): the team's name replaces the feedback invitation and the personal X link. #}
-        <p class="footer-maker">{{ _("أحد منتجات فريق نيو هورايزن") }}</p>
+        {# Who makes it (owner, 2026-11-25), linked to the team's X account (owner, 2026-11-26). The X mark is drawn, never typed. #}
+        <p class="footer-maker">
+          <span class="footer-maker-label">{{ _("أحد منتجات") }}</span>
+          <a class="footer-team no-ext" href="https://x.com/NewHorizon___" target="_blank" rel="noopener">
+            <svg class="footer-team-x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span class="footer-team-text">
+              <span class="footer-team-name">{{ _("فريق نيو هورايزن") }}</span>
+              <bdi class="footer-team-handle" lang="en" dir="ltr">@NewHorizon___</bdi>
+            </span>
+            <span class="sr-only">{{ _("(حسابنا على منصة X، يفتح في نافذة جديدة)") }}</span>
+          </a>
+        </p>
       </div>
 
       {# The same grades, programs and guides as the homepage, so the end of any page leads somewhere. #}

@@ -838,14 +838,16 @@ def test_program_page_leads_with_the_next_step_and_lists_its_sections():
         assert f'href="{anchor}"' in contents, anchor  # test_every_internal_link_works checks they exist
 
 
-@pytest.mark.parametrize("prefix,line", [("", "أحد منتجات فريق نيو هورايزن"), ("/en", "A product of New Horizon Team")])
-def test_footer_names_the_team_and_has_no_personal_link(prefix, line):
-    """Owner, 2026-11-25: the footer says who makes واضح; the feedback invitation and the personal X link are gone."""
+@pytest.mark.parametrize("prefix,label,team", [("", "أحد منتجات", "فريق نيو هورايزن"), ("/en", "A product of", "New Horizon Team")])
+def test_footer_names_the_team_and_links_its_x_account(prefix, label, team):
+    """Owner, 2026-11-25: the footer says who makes واضح; 2026-11-26: the team's name links to its X account."""
     for page in ("/", "/universities", "/universities/harvard-university", "/programs", "/my-plan"):
         html = client.get(prefix + page).text
-        footer = html.split('<footer class="site-footer">')[1]
-        assert f'<p class="footer-maker">{line}</p>' in footer
-        assert "salahmetaverse" not in html and "footer-x" not in html
+        maker = html.split('<footer class="site-footer">')[1].split('<p class="footer-maker">')[1].split("</p>")[0]
+        assert label in maker and team in maker
+        assert 'href="https://x.com/NewHorizon___" target="_blank" rel="noopener"' in maker
+        assert "@NewHorizon___" in maker
+        assert "salahmetaverse" not in html
 
 
 def test_logo_mark_is_the_same_in_the_header_and_the_favicon():
