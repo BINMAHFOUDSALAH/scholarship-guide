@@ -15,15 +15,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Docs:** [docs/architecture.md](docs/architecture.md) (how the code fits together), [docs/README.md](docs/README.md) (map of the docs and all script commands). Decision numbers in this file and the code (e.g. "decision 062") point to the old `docs/decisions.md`, removed on 2026-11-16; when the why matters, search it with `git show f7235f0:docs/decisions.md | Select-String "## 062"`, never read it whole (220 KB).
 
 ## Rules
-- A student guide: NOT the Ministry of Education, NOT Safeer, not affiliated with Aramco or KAUST.
 - **Never invent official lists, deadlines, requirements, scores, or quotes.**
   - Research facts only from **official sources**, read directly; link every fact with the date it was read. Never publish from search snippets.
   - A fact with an official source shows its source link. Anything not backed by an official source or the owner's confirmation is **hidden, never stamped** (no «غير مؤكد», decision 028).
   - Research that couldn't be read on the official page stays in a `"draft": true` file (decision 058).
   - If official sources conflict, show both and publish no single answer.
   - Check dates stay in the data (`last_checked`) but aren't shown; the owner's review is `owner_reviewed`. Research notes: `docs/research/`.
-- Every important page shows its official sources.
-- Never collect sensitive data (no national ID, GPA, test scores, passport). Users are mostly minors: privacy and security are requirements. No third-party requests until the user acts (self-hosted fonts, no trackers; the only embed is click-to-play video).
 - Never read, edit, or print `.env` (also enforced by `.claude/settings.json`).
 - Arabic first, RTL, mobile first. The Arabic is the source; `/en/...` is the same site in English (decision 066).
   - **Every Arabic change ships with its English in the same commit:** templates/Python/JS text → `data/i18n/ui.en.json` / `js.en.json`; data → `data.en.json` or `universities.en.json` (keyed by the exact Arabic); a page → `content/en/<section>/<slug>.md` with its new `translated_from`. `tests/test_english.py` fails until it's done.
@@ -33,15 +30,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - **Design tools (decision 076):** `design.md` always beats any design plugin or skill: never apply a plugin's palette, fonts, layouts or starter files. Build with `frontend-design`; review with `web-design-guidelines` (project skill), `design:design-critique` and `design:accessibility-review`. Taste (`design-taste-frontend`) is a review lens for the homepage only.
 - Nothing official is hard-coded in templates: data in `data/`, page text in `content/`.
 
-## How to work with me
-- I'm a beginner. Keep it concise and practical: ship a useful product, avoid overengineering, explain important decisions without overwhelming me. Separate what I must understand deeply from details I can safely delegate.
 - **For each task:**
   1. Implement only what's asked; don't touch unrelated code.
   2. Verify with tests (and the browser for UI); say clearly what's untested.
   3. Report briefly: **what changed**, **how I can test it myself**, **the key concept**.
   4. **Recommend the next step** (fix, commit, push, or move on).
 - The key concept goes in the report itself. At most one short, optional understanding question per feature, with the answer right after; never block the work on it.
-- **Subagents** (decision 037): use them only when they add real value or when I ask, and tell me briefly when and why. Quick lookups and small edits stay in the main session.
+- **Subagents** (decision 037): use them only when they add real value like when we are doing a massive research with new universities when we want to add or update or when I ask, and tell me briefly when and why. Quick lookups and small edits stay in the main session.
   - **Models (decision 077):** `source-researcher` on **Haiku** (bulk reading; the main session checks every quote); `fact-checker` and `reviewer` on **Sonnet** (judgement guards the facts). Aliases, so each always runs the latest version. Set in each agent file; any other subagent defaults to Haiku (`.claude/settings.json`). In cloud sessions settings may not apply: also pass the agent's model (`model: "haiku"` or `"sonnet"`) and ask it to report its model. If a subagent fails or reports a different model, stop and tell me; don't rerun it on another model or do the job silently in the main session.
   - The agents (`.claude/agents/`) are read-only and return results. The main session saves them, validates them with tests, makes the decisions and flags anything an agent couldn't verify.
   - `source-researcher` for new facts (~5 items per agent, in parallel, with a strict schema + a finished example file), `fact-checker` for what's already published, `reviewer` for a big or risky diff. University requirements: the `research-wave` skill. Bringing the site up to date (new announcements, passed deadlines, Aramco/KAUST/SDAIA/الرواد…): the `update-site` skill.
