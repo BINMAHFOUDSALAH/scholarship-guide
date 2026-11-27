@@ -1,0 +1,233 @@
+{#
+  The answer to «أريد دراسة X في Y» (app/answer.py; redesign v3, 2026-11). Shown on the homepage under the question
+  and at the top of the Finder's results.
+
+  The idea every card repeats: a scholarship needs two gates, kept apart (CLAUDE.md, design.md):
+    الابتعاث — is the university on the track's list for your major? (the Ministry's guide; why it is here)
+    القبول — will the university take you? (its own pages: the Saudi certificate, English, the next deadline)
+  A fact we haven't read is said, never guessed. Each value links its official source.
+
+  answer(a, compact): compact = the homepage (fewer cards, «اعرض الإجابة كاملة» opens the Finder).
+#}
+{% import "partials/uni_macros.html" as um with context %}
+
+{% macro gate_label(n, text) %}<span class="gate-label"><span class="gate-num" aria-hidden="true">{{ n }}</span>{{ text }}</span>{% endmacro %}
+
+{#- One university: who it is, gate 1 (its list and place), gate 2 (admission at a glance), and the actions. #}
+{% macro acard(i, back) %}
+{% set u = i.university %}
+<li class="acard" data-acard="{{ u.id }}">
+  <div class="acard-head">
+    {% if i.logo %}<span class="acard-logo"><img src="{{ url_for('static', path=i.logo.file) }}" alt="" width="{{ i.logo.width }}" height="{{ i.logo.height }}" loading="lazy" decoding="async"></span>{% endif %}
+    <div class="acard-name">
+      {{ um.uni_name(u, back=back) }}
+      <span class="acard-place">{{ um.country(u) }}</span>
+    </div>
+  </div>
+  <div class="acard-gates">
+    {#- Gate 1 in one ledger row: the list and the place, at the row's end like every value. #}
+    <p class="acard-gate acard-gate--list">
+      {{ gate_label("1", _("الابتعاث")) }}
+      <span class="acard-list">{% if i.track == "arruaad" %}{{ _("الرواد") }}{% else %}{{ _("إمداد") }}{% endif %}{{ _("،") }} {{ _f("المرتبة {n}", n=i.rank) }}{% if i.masters_only %} <span class="tag tag--warn">{{ _("ماجستير فقط") }}</span>{% endif %}</span>
+    </p>
+    <div class="acard-gate acard-gate--admit">
+      <p class="acard-gate-title">{{ gate_label("2", _("القبول")) }}</p>
+      {% if i.researched %}
+      <dl class="acard-facts">
+        {#- Each row: the label, the value, and its source at the row's end edge (a column of sources, like a ledger). #}
+        {% if i.certificate %}
+        <div class="acard-fact acard-fact--{{ i.certificate.state }}">
+          <dt>{{ _("الثانوية السعودية") }}</dt>
+          <dd><span class="acard-val">{% if i.certificate.state == "yes" %}{{ _("تقبلها للسنة الأولى") }}{% elif i.certificate.state == "no" %}{{ _("لا تكفي وحدها للسنة الأولى") }}{% else %}{{ _("لم نجد حكمها في صفحاتها") }}{% endif %}</span>
+            {%- if i.certificate.source_url %} <a class="src src--tiny" href="{{ i.certificate.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</dd>
+        </div>
+        {% endif %}
+        <div class="acard-fact">
+          <dt><bdi lang="en">IELTS</bdi></dt>
+          <dd><span class="acard-val">{% if i.english %}{{ i.english.text }}{% else %}{{ _("لم نتحقق منه") }}{% endif %}</span>
+            {%- if i.english and i.english.source_url %} <a class="src src--tiny" href="{{ i.english.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</dd>
+        </div>
+        {% if i.sat %}
+        <div class="acard-fact">
+          <dt><bdi lang="en">SAT/ACT</bdi></dt>
+          <dd><span class="acard-val">{{ i.sat }}</span></dd>
+        </div>
+        {% endif %}
+        <div class="acard-fact acard-fact--date{% if i.deadline and i.deadline.state == 'passed' %} acard-fact--passed{% endif %}">
+          <dt>{{ _("آخر موعد للتقديم") }}</dt>
+          <dd><span class="acard-val">{% if i.deadline %}
+            {%- if i.deadline.state == "upcoming" %}<strong><time datetime="{{ i.deadline.date }}">{{ i.deadline.date | arabic_date }}</time></strong>{% if i.deadline.round_ar %} <bdi class="acard-round">{{ i.deadline.round_ar }}</bdi>{% endif %}
+            {%- else %}{{ _f("انتهى لـ{cycle} في", cycle=i.deadline.cycle_ar) }} <time datetime="{{ i.deadline.date }}">{{ i.deadline.date | arabic_date }}</time>{% endif %}
+            {%- else %}{{ _("لا يوجد لدينا موعد مؤكد") }}{% endif %}</span>
+            {%- if i.deadline and i.deadline.source_url %} <a class="src src--tiny" href="{{ i.deadline.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</dd>
+        </div>
+      </dl>
+      {% else %}
+      <p class="acard-unknown">{{ _("لم نجمع متطلباتها بعد. افتح موقعها الرسمي قبل أن تقرر.") }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="acard-actions">
+    {{ um.save_button(u) }}
+    <button class="compare-toggle" type="button" data-compare="{{ u.id }}" data-compare-name="{{ u.name_ar or u.name_en }}" aria-pressed="false" hidden><span data-compare-label>{{ _("قارن") }}</span></button>
+    <a class="acard-more" href="{{ url_for('university_page', uid=u.id) }}{% if back %}?from={{ back | urlencode }}{% endif %}">{{ _("التفاصيل") }}<span class="sr-only">: {{ u.name_ar or u.name_en }}</span></a>
+  </div>
+</li>
+{% endmacro %}
+
+{% macro answer(a, back="", compact=False) %}
+{% set lists_year = explorer.source.academic_year | replace("-", "–") %}
+<section class="answer{% if compact %} answer--compact{% endif %}" aria-labelledby="answer-title" data-answer data-answer-total="{{ a.total }}">
+  <header class="answer-head">
+    <p class="answer-kicker">{{ _f("من قوائم الابتعاث {year}", year=lists_year) }}</p>
+    {% set num, words = a.total | count_split("universities") %}
+    <h2 id="answer-title" class="answer-title">
+      {%- if a.total %}{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }}
+        {%- if a.country %} {{ a.country | in_country }}{% endif %}
+        {%- if a.kind == "country" %} {{ _("في مسار الرواد، لكل التخصصات") }}
+        {%- elif a.major_ar %} {{ _f("لتخصص «{major}»", major=a.major_ar) }}
+        {%- else %} {{ _f("لتخصصات «{q}»", q=a.q) }}{% endif %}
+      {%- elif a.kind == "country" %}{{ _f("لا جامعة في {country} في قائمة الرواد", country=a.country_ar) }}
+      {%- else %}{{ _("لا جامعة تطابق سؤالك") }}{% if a.country %} {{ a.country | in_country }}{% endif %}{% endif -%}
+    </h2>
+    {% if a.groups | length > 1 %}
+    <p class="answer-split">{% for g in a.groups %}<span class="answer-split-part">{{ g.count }} {{ _("في") }} {% if g.track == "arruaad" %}{{ _("الرواد") }}{% else %}{{ _("إمداد") }}{% if a.groups | selectattr("track", "equalto", "emdad") | list | length > 1 %} ({{ g.field.name_ar }}){% endif %}{% endif %}</span>{% endfor %}</p>
+    {% endif %}
+  </header>
+
+  {% if a.total %}
+  {#- The two gates, said once above the cards (the cards keep the numbers 1 and 2). #}
+  <ol class="answer-gates" aria-label="{{ _('كيف تقرأ كل جامعة') }}">
+    <li><span class="gate-num" aria-hidden="true">1</span><span><strong>{{ _("الابتعاث:") }}</strong> {{ _("الجامعة في قائمة المسار لتخصصك.") }}</span></li>
+    <li><span class="gate-num" aria-hidden="true">2</span><span><strong>{{ _("القبول:") }}</strong> {{ _("ما تطلبه الجامعة نفسها. القبول منها شرط قبل التقديم على الابتعاث.") }}</span></li>
+  </ol>
+  {% endif %}
+
+  {% if a.empty and a.country %}
+  <ul class="answer-empty">
+    {% for e in a.empty %}<li>{% if e.track == "arruaad" %}{{ _f("لا جامعة في {country} في قائمة الرواد.", country=a.country_ar) }}{% else %}{{ _f("لا جامعة في {country} في قائمة إمداد لمجال «{field}».", country=a.country_ar, field=e.field.name_ar) }}{% endif %}</li>{% endfor %}
+  </ul>
+  {% endif %}
+
+  {% for g in a.groups %}
+  <section class="answer-group answer-group--{{ g.track }}{% if g.field %} field-tone tone-{{ g.field.id }}{% endif %}" aria-labelledby="answer-group-{{ loop.index }}">
+    <header class="answer-group-head">
+      <h3 class="answer-group-title" id="answer-group-{{ loop.index }}">
+        {%- if g.track == "arruaad" %}{{ _("مسار الرواد") }}{% else %}{{ _("مسار إمداد") }}<span class="answer-group-field">{% if g.field %}<span class="tone-dot" aria-hidden="true"></span>{{ g.field.name_ar }}{% endif %}</span>{% endif -%}
+      </h3>
+      <span class="answer-group-count">{{ g.count | count_ar("universities") }}</span>
+    </header>
+    <p class="answer-why">{{ g.why_ar }}{% if g.source %} <a class="src" href="{{ g.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+    <ul class="answer-cards">
+      {% for i in (g["items"][:3] if compact else g["items"]) %}{{ acard(i, back) }}{% endfor %}
+    </ul>
+    {% set shown = (g["items"][:3] if compact else g["items"]) | length %}
+    {% if shown < g.count and not compact %}
+    <p class="answer-more"><a href="{{ g.more_href }}">{{ _f("اعرض القائمة كاملة ({n})", n=g.count | count_ar("universities")) }}</a></p>
+    {% endif %}
+  </section>
+  {% endfor %}
+
+  {#- A country without a major: إمداد ranks per field, so the next tap is a field. #}
+  {% if a.fields %}
+  <section class="answer-group" aria-labelledby="answer-fields">
+    <header class="answer-group-head">
+      <h3 class="answer-group-title" id="answer-fields">{{ _("مسار إمداد") }}<span class="answer-group-field">{{ _f("في {country}، حسب المجال", country=a.country_ar) }}</span></h3>
+    </header>
+    <p class="answer-why">{{ _("إمداد يرتّب الجامعات داخل كل مجال. اختر مجالًا، أو اكتب تخصصك في السؤال.") }}</p>
+    <ul class="field-picker">
+      {% for f in a.fields %}
+      <li><a class="field-pick field-tone tone-{{ f.field.id }}" href="{{ f.href }}" data-pick-field="{{ f.field.id }}">
+        <span class="field-pick-name"><span class="tone-dot" aria-hidden="true"></span>{{ f.field.name_ar }}</span>
+        <span class="field-pick-count">{{ f.count | count_ar("universities") }}</span>
+      </a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if compact and a.total %}
+  <p class="answer-full"><a class="btn btn--primary" href="/universities?q={{ a.q | urlencode }}{% if a.country %}&amp;country={{ a.country }}{% endif %}">{{ _f("اعرض الإجابة كاملة ({n})", n=a.total | count_ar("universities")) }}</a></p>
+  {% endif %}
+
+  {#- The same major elsewhere: the country chips with their counts (one tap fills «في»). #}
+  {% if a.facets %}
+  <nav class="answer-facets" aria-labelledby="answer-facets-title">
+    <p class="answer-facets-title" id="answer-facets-title">{% if a.country %}{{ _("التخصص نفسه في دول أخرى") }}{% else %}{{ _("ضيّق الإجابة بدولة") }}{% endif %}</p>
+    <ul class="facet-list">
+      {% if a.country %}<li><a class="facet" href="/universities?q={{ a.q | urlencode }}" data-set-country="">{{ _("أي دولة") }}</a></li>{% endif %}
+      {% for f in a.facets if f.code != a.country %}
+      <li><a class="facet" href="/universities?q={{ a.q | urlencode }}&amp;country={{ f.code }}" data-set-country="{{ f.code }}"><img class="facet-flag" src="{{ url_for('static', path='img/flags/' ~ (f.code | lower) ~ '.svg') }}" alt="" width="18" height="13" loading="lazy">{{ f.name_ar }} <span class="facet-count">{{ f.count }}</span></a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+  {% endif %}
+
+  {% if a.total and not compact %}{{ next_step(a) }}{% endif %}
+</section>
+{% endmacro %}
+
+{#
+  What to do next, by the student's grade (GOV.UK's step by step: numbered steps, in the order you do them). A radio
+  group, so it works without JavaScript; ask.js picks the grade this browser keeps («هذا صفّي»).
+#}
+{% macro next_step(a) %}
+<section class="next" aria-labelledby="next-title" data-next>
+  <div class="next-head">
+    <h3 class="next-title" id="next-title">{{ _("خطوتك التالية") }}</h3>
+    <fieldset class="next-grade">
+      <legend class="next-grade-label">{{ _("أنا في") }}</legend>
+      {% for g in grade_links %}
+      <input class="next-grade-input" type="radio" name="next-grade" id="next-{{ g.slug }}" value="{{ g.slug }}" data-next-grade{% if g.slug == "grade-12" %} checked{% endif %}>
+      <label class="next-grade-option" for="next-{{ g.slug }}">{{ g.label_ar }}</label>
+      {% endfor %}
+    </fieldset>
+  </div>
+
+  <div class="next-panel" data-next-panel="grade-12">
+    <ol class="steps">
+      <li class="step">
+        <p class="step-title">{{ _("قدّم على الجامعات أولًا") }}</p>
+        {% if a.soonest %}<p class="step-text">{{ _("أقرب موعد في هذه الإجابة:") }} <strong><time datetime="{{ a.soonest.deadline.date }}">{{ a.soonest.deadline.date | arabic_date }}</time></strong>{{ _("،") }} {{ a.soonest.university.name_ar or a.soonest.university.name_en }}{% if a.soonest.deadline.round_ar %} (<bdi>{{ a.soonest.deadline.round_ar }}</bdi>){% endif %}.</p>
+        {% else %}<p class="step-text">{{ _("لا موعد قادمًا مؤكدًا لهذه الجامعات في بياناتنا، فافتح صفحة كل جامعة.") }}</p>{% endif %}
+        {% if a.foundation and a.prep_fact %}
+        <p class="step-text step-text--warn">{{ _("بعض هذه الجامعات لا تكفيها الثانوية السعودية للسنة الأولى، فتحتاج سنة تأسيسية. والابتعاث يشترط لها معدل 90% فأعلى وآيلتس 5.5 فأعلى.") }} <a class="src" href="{{ a.prep_fact.sources[0].url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
+        {% endif %}
+      </li>
+      <li class="step">
+        <p class="step-title">{{ _("احصل على قبول غير مشروط") }}</p>
+        <p class="step-text">{{ _("الابتعاث يطلب قبولًا نهائيًا من جامعة في قائمة المسار.") }} {% if a.groups %}<a class="src" href="{{ a.groups[0].rule.url if a.groups[0].rule else explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+      </li>
+      <li class="step">
+        <p class="step-title">{{ _("قدّم على الابتعاث بقبولك") }}</p>
+        <p class="step-text"><a href="{{ url_for('program_page', slug='custodian-scholarship') }}#ready">{{ _("خطوات «معي قبول جامعي»") }}</a></p>
+      </li>
+    </ol>
+    <p class="next-link"><a href="{{ url_for('grade_page', slug='grade-12') }}">{{ _("سنة التقديم شهرًا بشهر") }}</a></p>
+  </div>
+
+  <div class="next-panel" data-next-panel="grade-11">
+    <ol class="steps">
+      <li class="step">
+        <p class="step-title">{{ _("سنتك القادمة سنة التقديم") }}</p>
+        <p class="step-text">{% if a.ielts_low %}{{ _f("ابدأ باختبار اللغة: أدنى حد لـ IELTS في هذه الإجابة {score}، وبعضها يطلب أعلى حسب التخصص.", score=a.ielts_low) }}{% else %}{{ _("ابدأ باختبار اللغة، واعرف ما تطلبه كل جامعة من صفحتها.") }}{% endif %}</p>
+      </li>
+      <li class="step">
+        <p class="step-title">{{ _("احفظ ما يناسبك في خطتي") }}</p>
+        <p class="step-text">{{ _("ستجد مواعيدها مرتبة، وتضيفها إلى تقويمك.") }}</p>
+      </li>
+    </ol>
+    <p class="next-link"><a href="{{ url_for('grade_page', slug='grade-11') }}">{{ _("ماذا تفعل في ثاني ثانوي") }}</a></p>
+  </div>
+
+  <div class="next-panel" data-next-panel="grade-10">
+    <ol class="steps">
+      <li class="step">
+        <p class="step-title">{{ _("أمامك وقت لتستكشف") }}</p>
+        <p class="step-text">{{ _("اعرف مسارات الثانوية وما يفتحه كل مسار، وجرّب المجالات قبل أن تقرر.") }}</p>
+      </li>
+    </ol>
+    <p class="next-link"><a href="{{ url_for('grade_page', slug='grade-10') }}">{{ _("ماذا تفعل في أول ثانوي") }}</a>{% if explore_public() %} <a href="{{ url_for('explore_page') }}">{{ _("جرّب قبل أن تقرر") }}</a>{% endif %}</p>
+  </div>
+</section>
+{% endmacro %}

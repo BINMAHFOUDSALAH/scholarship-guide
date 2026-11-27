@@ -25,14 +25,18 @@ def test_home_has_grade_picker_links():
         assert f"/grades/{slug}" in response.text
 
 
-def test_grade_buttons_are_visible_in_the_hero():
-    """The grade question is in the hero itself, no click needed; «حسب صفك» points at it."""
+def test_the_hero_is_the_question_and_the_grades_follow():
+    """Redesign v3: the hero is the question as a sentence with two real fields (it works without JavaScript as a
+    form to the Finder); «في أي صف أنت؟» follows the answer, its three grades one tap each."""
     html = client.get("/").text
-    hero = html.split('<section class="hero')[1].split("</section>")[0]
-    assert 'id="grades"' in hero
-    assert "في أي صف أنت؟" in hero
+    hero = html.split('<section class="stage ask-hero"')[1].split("</section>")[0]
+    assert 'action="http://testserver/universities"' in hero and 'method="get"' in hero
+    assert 'name="q"' in hero and 'name="country"' in hero and "data-ask-live" in hero
+    assert 'id="grades"' not in hero
+    grades = html.split('id="grades"')[1].split("</nav>")[0]
+    assert "في أي صف أنت؟" in grades
     for slug in ("grade-10", "grade-11", "grade-12"):
-        assert f"/grades/{slug}" in hero
+        assert f"/grades/{slug}" in grades
     assert "<details" not in hero
 
 
@@ -91,26 +95,32 @@ def test_footer_says_we_are_independent_and_links_the_image_credits():
 
 
 def test_homepage_order():
-    """Decision 083: the start (grades, then the one box, then the door for the undecided) → «الآن» → the programs →
-    وضّاح → the guides. The journey, tests, «كيف نعمل», and the decorative drawing are not on the homepage."""
+    """Redesign v3: the question (with the door for the undecided) → its answer → «في أي صف أنت؟» → «الآن» → the
+    programs → وضّاح → the guides. The old one box, the world map and the journey are gone from the homepage."""
     html = client.get("/").text
-    order = ['id="grades"', 'class="hero-search"', 'class="hero-door"', 'id="now"', 'id="programs"',
-             *(['class="waddah-preview"'] if main.waddah_public() else []), 'id="guides"']
+    order = ['class="stage ask-hero"', 'class="ask-door"', 'data-answer-target', 'id="grades"', 'id="now"',
+             'id="programs"', *(['class="waddah-preview"'] if main.waddah_public() else []), 'id="guides"']
     positions = [html.index(x) for x in order]
     assert positions == sorted(positions)
-    for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل", "hero-visual"):
+    for gone in ('id="start"', 'id="journey"', "كيف نعمل", "من أين تبدأ؟", "مجاني وبدون تسجيل", "hero-visual",
+                 'class="hero-search"', 'id="where"'):
         assert gone not in html
 
 
-def test_homepage_search_goes_to_the_explorer_with_real_examples():
-    """The one box (decision 083) submits to the site search, which answers from the lists and the guides."""
+def test_homepage_question_opens_on_a_real_answer_with_examples():
+    """Redesign v3: the question opens on data/home.json's example with its real answer under it (the same answer as
+    the Finder's), uses the site's suggestions, and each example fills both slots."""
     html = client.get("/").text
-    hero = html.split('<section class="hero')[1].split("</section>")[0]
-    assert 'action="http://testserver/search"' in hero and 'name="q"' in hero and "data-suggest" in hero
-    assert 'data-suggest="http://testserver/api/suggestions"' in hero
-    assert "/universities/stanford-university" in hero  # an example that opens a university
-    n = len(main.explorer.universities)
-    assert f"{n} جامعة في 15 دولة" in hero
+    hero = html.split('<section class="stage ask-hero"')[1].split("</section>")[0]
+    assert 'data-suggest="http://testserver/api/suggestions"' in hero and 'data-answer-url="http://testserver/answer"' in hero
+    example = main.home_text["ask_example"]
+    assert f'value="{example["q"]}"' in hero and f'<option value="{example["country"]}" selected>' in hero
+    for ex in main.home_text["ask_examples"]:
+        assert f'data-country="{ex["country"]}"' in hero and ex["label_ar"] in hero
+    answer = html.split("data-answer-target")[1].split('id="grades"')[0]
+    a = main.answer_for(main.explorer.search(q=example["q"], country=example["country"]))
+    assert f'<span class="answer-count">{a["total"]}</span>' in answer
+    assert answer.count('class="acard"') == sum(min(3, len(g["items"])) for g in a["groups"])
 
 
 @pytest.mark.parametrize("page", ["/", "/programs/custodian-scholarship", "/grades/grade-10", "/grades/grade-11",
@@ -1019,9 +1029,9 @@ def test_logo_markup_is_exactly_the_favicon():
 
 
 def test_homepage_route_leads_from_the_grades_to_the_programs():
-    """The start (decision 062): one route of four stops, the three grades in order, then the programs."""
-    hero = client.get("/").text.split('<section class="hero')[1].split("</section>")[0]
-    route = hero.split('class="route-stops"')[1].split("</ol>")[0]
+    """The grade route (decision 062): one route of four stops, the three grades in order, then the programs."""
+    grades = client.get("/").text.split('id="grades"')[1].split("</nav>")[0]
+    route = grades.split('class="route-stops"')[1].split("</ol>")[0]
     hrefs = re.findall(r'class="route-link" href="([^"]+)"', route)
     assert hrefs == [f"http://testserver/grades/{g['slug']}" for g in main.home_text["grades"]] + ["http://testserver/programs"]
     assert route.count('class="route-mark" aria-hidden="true"') == 4
@@ -1151,15 +1161,20 @@ def test_sdaia_row_links_to_its_official_list():
     assert sdaia and not sdaia[0]["unis"] and sdaia[0]["list_url"] == pdf
 
 
-def test_the_start_is_waddahs_question_on_one_forest_panel():
-    """Version 3: the mascot stands by the question as decoration (the question is written), and the four stops
-    sit on the one forest panel of the start."""
-    hero = client.get("/").text.split('<section class="hero')[1].split("</section>")[0]
-    assert hero.count('class="route-panel stage"') == 1 and 'class="hero stage"' not in hero
-    mascot = hero.split('<img class="hero-waddah"')[1].split(">")[0]
+def test_waddah_greets_the_question_and_asks_the_grade():
+    """Redesign v3: the mascot is decoration with a job in both places (the words are written beside him): he greets
+    by the question, and asks «في أي صف أنت؟» beside the one forest panel of the four stops."""
+    html = client.get("/").text
+    hero = html.split('<section class="stage ask-hero"')[1].split("</section>")[0]
+    mascot = hero.split('<img class="ask-waddah"')[1].split(">")[0]
     assert 'alt=""' in mascot and 'aria-hidden="true"' in mascot and "/static/img/waddah/wave-520.webp" in mascot
-    assert hero.index("في أي صف أنت؟") < hero.index('class="route-stops"')
-    assert client.get("/static/img/waddah/wave-520.webp").status_code == 200
+    grades = html.split('id="grades"')[1].split("</nav>")[0]
+    assert grades.count('class="route-panel stage"') == 1
+    pointer = grades.split('<img class="hero-waddah"')[1].split(">")[0]
+    assert 'alt=""' in pointer and 'aria-hidden="true"' in pointer and "/static/img/waddah/point-320.webp" in pointer
+    assert grades.index("في أي صف أنت؟") < grades.index('class="route-stops"')
+    for f in ("wave-520.webp", "point-320.webp"):
+        assert client.get(f"/static/img/waddah/{f}").status_code == 200
 
 
 def test_now_lists_the_nearest_university_deadlines():
@@ -1176,7 +1191,7 @@ def test_now_lists_the_nearest_university_deadlines():
     for r in rows:
         assert f'/universities/{r["university"]["id"]}#dates' in block
         assert 'id="dates"' in client.get(f'/universities/{r["university"]["id"]}').text
-    assert html.index('id="now"') < html.index('class="deadline-list"') < html.index('id="where"')
+    assert html.index('id="now"') < html.index('class="deadline-list"') < html.index('id="programs"')
 
 
 def test_plan_keeps_its_name_and_the_menu_holds_the_theme_switch():
@@ -1188,13 +1203,17 @@ def test_plan_keeps_its_name_and_the_menu_holds_the_theme_switch():
     assert header.count('<button class="theme-toggle') == 2
 
 
-def test_one_self_hosted_typeface():
-    """Version 3: one family, Readex Pro, self-hosted with its licence; pages preload only the file they need."""
+def test_two_self_hosted_typefaces():
+    """Redesign v3: Readex Pro for everything you read and press, Markazi Text for the large editorial lines (the
+    question, page titles, the answer's headline). Both self-hosted with their licences; pages preload only the text
+    face's file they need (the display face arrives with font-display: swap)."""
     fonts = client.get("/static/fonts.css").text
-    assert set(re.findall(r'font-family: "([^"]+)"', fonts)) == {"Readex Pro"}
+    assert set(re.findall(r'font-family: "([^"]+)"', fonts)) == {"Readex Pro", "Markazi Text"}
     for file in re.findall(r'url\("(fonts/[^"]+)"\)', fonts):
         assert client.get(f"/static/{file}").status_code == 200, file
-    assert client.get("/static/fonts/LICENSE-readex-pro.txt").status_code == 200
+    for licence in ("LICENSE-readex-pro.txt", "LICENSE-markazi-text.txt"):
+        assert client.get(f"/static/fonts/{licence}").status_code == 200
+    assert fonts.count("font-display: swap") == 4
     assert "fonts/readex-pro-arabic.woff2" in client.get("/").text.split("</head>")[0]
     en_head = client.get("/en/").text.split("</head>")[0]
     assert "fonts/readex-pro-latin.woff2" in en_head and "readex-pro-arabic" not in en_head

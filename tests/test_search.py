@@ -99,8 +99,11 @@ def test_kgsp_is_searchable():
 
 
 def test_guide_search_is_linked_from_home_and_404():
-    """The one box (decision 083): the homepage's search goes to the site search, linked from every header and the 404."""
-    assert 'action="http://testserver/search"' in client.get("/").text
+    """The site search (decision 083) is linked from every header, the homepage's included, and the 404. Redesign v3:
+    the homepage's own box is the question, which opens the Finder."""
+    home = client.get("/").text
+    assert 'class="search-link" href="http://testserver/search"' in home
+    assert 'class="stage ask-hero"' in home and 'action="http://testserver/universities"' in home
     assert 'class="search-link" href="http://testserver/search"' in client.get("/about").text
     assert '/search" role="search"' in client.get("/no-such-page").text
 
@@ -115,6 +118,8 @@ def test_the_one_box_answers_from_the_lists_then_the_guides():
     vague = client.get("/search?q=هندسة").text
     assert "في أسماء" in vague
     assert "/universities?country=GB" in client.get("/search?q=بريطانيا").text
+    question = client.get("/search?q=أريد دراسة علوم الحاسب في بريطانيا").text  # a whole question is read, too
+    assert 'id="lists-title"' in question and "/universities?q=" in question
     assert "التخصصات الصحية في قوائم الابتعاث." in client.get("/search?q=طب").text
     ielts = client.get("/search?q=آيلتس").text
     assert 'id="lists-title"' not in ielts and 'href="/resources/ielts' in ielts

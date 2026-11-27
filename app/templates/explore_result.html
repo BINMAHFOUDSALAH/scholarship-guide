@@ -28,7 +28,8 @@
       <dd>
         {% if v.in_guide %}
         {% if v.guide_only_major %}<p>{{ _f("يذكر دليل الوزارة لقوائم الجامعات من هذا المجال تخصصًا واحدًا: {major}.", major=v.guide_only_major) }}</p>{% endif %}
-        <a href="{{ v.explorer_url }}">{{ _("تخصصاته وجامعاته في مستكشف الجامعات") }}</a>
+{% if v.ask_majors %}<p class="explore-ask">{{ _("اسأل عن تخصص منه:") }} {% for m in v.ask_majors %}<a class="ask-example" href="/universities?q={{ tr(m) | urlencode }}">{{ m }}</a> {% endfor %}</p>{% endif %}
+                <a href="{{ v.explorer_url }}">{{ _("تخصصاته وجامعاته في مستكشف الجامعات") }}</a>
         <span class="summary-sub">{{ _f("اسمه في المستكشف: {name}", name=v.guide_name_ar) }}</span>
         {% else %}
         <p>{{ _("لا يذكر دليل الوزارة لقوائم الجامعات 2026–2027 هذا المجال ضمن مجالاته، فلن تجده في مستكشف الجامعات في واضح. اسأل الموجه الطالبي عن تخصصاته في الجامعات السعودية.") }}</p>

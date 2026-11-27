@@ -1,0 +1,34 @@
+{#
+  The homepage's live answer (GET /answer): the compact answer for a major or a country, or, for anything else, a short
+  line that leads on. ask.js swaps it in as the student edits the question.
+#}
+{% import "partials/answer.html" as ans with context %}
+{% import "partials/uni_macros.html" as um with context %}
+{% set r = result %}
+<div class="answer-live" data-answer-live data-parsed-q="{{ r.q }}" data-parsed-country="{{ r.country }}"{% if r.parsed %} data-parsed{% endif %}>
+{% if a %}
+  {{ ans.answer(a, compact=True) }}
+{% elif r.mode == "name" and r.sections and r.sections[0].universities %}
+  {% set hits = r.sections[0].universities %}
+  <section class="answer answer--compact" aria-labelledby="answer-title">
+    <header class="answer-head">
+      <h2 id="answer-title" class="answer-title answer-title--small">{{ _f("«{q}» في أسماء {n}", q=r.q, n=hits | length | count_ar("universities")) }}</h2>
+    </header>
+    <ul class="answer-names">
+      {% for u in hits[:6] %}<li>{{ um.uni_name(u) }} <span class="answer-names-country">{{ um.country(u) }}</span></li>{% endfor %}
+    </ul>
+    {% if hits | length > 6 %}<p class="answer-full"><a class="btn btn--secondary" href="/universities?q={{ r.q | urlencode }}">{{ _("اعرضها كلها") }}</a></p>{% endif %}
+  </section>
+{% elif r.mode == "health" %}
+  <section class="answer answer--compact" aria-labelledby="answer-title">
+    <h2 id="answer-title" class="answer-title answer-title--small">{{ _("التخصصات الصحية، مثل الطب والتمريض والصيدلة") }}</h2>
+    <p class="answer-why">{{ _("دليل الوزارة لا يذكر مجالًا للصحة في إمداد، ومسار الرواد يقبل كل التخصصات في جامعاته الثلاثين.") }}</p>
+    <p class="answer-full"><a class="btn btn--primary" href="/universities?q={{ r.q | urlencode }}{% if r.country %}&amp;country={{ r.country }}{% endif %}">{{ _("اعرض التفاصيل ومصادرها") }}</a></p>
+  </section>
+{% elif r.q %}
+  <section class="answer answer--compact answer--miss" aria-labelledby="answer-title">
+    <h2 id="answer-title" class="answer-title answer-title--small">{{ _f("لم نجد «{q}» في التخصصات ولا في أسماء الجامعات", q=r.q) }}</h2>
+    <p class="answer-why">{{ _("جرّب اسم التخصص كما يكتبه الدليل، مثل «هندسة البرمجيات»، أو ابحث في الأدلة.") }} <a href="/search?q={{ r.q | urlencode }}">{{ _f("ابحث عن «{q}» في واضح", q=r.q) }}</a></p>
+  </section>
+{% endif %}
+</div>

@@ -30,5 +30,18 @@
  "حُفظ صفّك على هذا الجهاز.": "Your grade is kept on this device.",
  "نُزّل ملف المواعيد. افتحه لتضيفها إلى تقويمك.": "The calendar file has downloaded. Open it to add the dates to your calendar.",
  "تعذّر تجهيز ملف المواعيد. حاول مرة أخرى.": "We couldn’t prepare the calendar file. Try again.",
- "السؤال {n} من {total}": "Question {n} of {total}"
+ "السؤال {n} من {total}": "Question {n} of {total}",
+ "{n} جامعات في المقارنة": "{n} universities to compare",
+ "أُزيلت {name} من المقارنة.": "Removed {name} from the comparison.",
+ "أُضيفت {name} إلى المقارنة.": "Added {name} to the comparison.",
+ "أُفرغت المقارنة.": "The comparison is empty.",
+ "المقارنة": "Comparison",
+ "تعذّر تحديث الإجابة. تحقق من اتصالك، ثم حاول مرة أخرى.": "Couldn't update the answer. Check your connection, then try again.",
+ "جامعة واحدة في المقارنة. اختر أخرى.": "One university to compare. Choose another.",
+ "جامعتان في المقارنة": "Two universities to compare",
+ "قارن الآن": "Compare now",
+ "مسح": "Clear",
+ "يمكنك مقارنة أربع جامعات على الأكثر. أزل واحدة أولًا.": "You can compare four universities at most. Remove one first.",
+ "قارن": "Compare",
+ "في المقارنة": "Comparing"
 }

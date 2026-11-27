@@ -255,9 +255,11 @@
 
   // Search boxes outside the explorer (the homepage's one box, /search): a university opens its page, a major opens
   // its lists in the explorer; anything else typed is submitted to the site search (decision 083).
+  // The homepage's question (ask.js) drives its own box with the same suggestions.
+  window.WadihCombobox = setupCombobox;
   for (const input of document.querySelectorAll("input[data-suggest]")) {
     const form = input.form;
-    if (!form || form.hasAttribute("data-explorer")) continue;
+    if (!form || form.hasAttribute("data-explorer") || form.hasAttribute("data-ask-live")) continue;
     setupCombobox(input,
       (u) => { location.href = universityUrl(u, null); },
       (m) => { location.href = BASE + "/universities?q=" + encodeURIComponent(m.name_ar); });
@@ -275,7 +277,7 @@
     const toggle = form.querySelector("[data-filters-toggle]");
     const panel = document.getElementById("filters-panel");
     const filterCount = form.querySelector("[data-filters-count]");
-    const filterNames = ["track", "field", "country", "lang"];
+    const filterNames = ["track", "field", "lang"]; // the country is part of the question now (ask.html)
     const fieldHint = document.getElementById("field-hint");
 
     // The field list only applies to إمداد and البحث والتطوير: show that track's fields only.

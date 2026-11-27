@@ -1,7 +1,7 @@
 /*
   Self-hosted font (SIL Open Font License, see fonts/LICENSE-readex-pro.txt).
 
-  One family for the whole site: Readex Pro, a variable font (weights 300 to 700 in one file), drawn for easy
+  Readex Pro is the text face, a variable font (weights 300 to 700 in one file), drawn for easy
   reading in Arabic and Latin together. It is split into an Arabic file and a Latin file; "unicode-range" tells
   the browser which characters each file covers, so an Arabic page only downloads the Latin file when it
   actually shows English text.
@@ -25,5 +25,28 @@
   font-weight: 300 700;
   font-display: swap;
   src: url("fonts/readex-pro-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+
+/*
+  The display face (redesign v3, 2026-11): Markazi Text (SIL Open Font License, fonts/LICENSE-markazi-text.txt), a
+  naskh drawn for reading, used only for large editorial lines: the question «أريد دراسة … في …», page titles and the
+  answer's headline. Readex Pro stays the face of everything you read and press. Variable, 400 to 700.
+*/
+@font-face {
+  font-family: "Markazi Text";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/markazi-text-arabic.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+FB50-FDFF, U+FE70-FEFC;
+}
+
+@font-face {
+  font-family: "Markazi Text";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/markazi-text-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
 }

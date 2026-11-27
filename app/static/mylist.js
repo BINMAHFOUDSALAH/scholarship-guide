@@ -237,6 +237,7 @@
     const heading = page.querySelector("h1");
     const hub = page.querySelector("[data-plan-hub]");
     const where = page.querySelector("[data-plan-where]");
+    const datesBox = page.querySelector("[data-plan-dates]");
 
     const showEmpty = () => {
       rows.replaceChildren();
@@ -244,6 +245,7 @@
       empty.hidden = false;
       if (hub) hub.hidden = true;
       if (where) where.hidden = true;
+      if (datesBox) datesBox.hidden = true;
     };
 
     if (!canStore) {
@@ -267,9 +269,9 @@
         });
         if (!response.ok) throw new Error("rows " + response.status);
         rows.innerHTML = await response.text();
-        // The hub (the route of statuses, «قريبًا», the calendar file) comes with the rows: move it above them; the
-        // map of where the universities are goes under them, so the saved items come first.
-        for (const [name, box] of [["hub", hub], ["where", where]]) {
+        // The parts come with the rows: the next step above them; the dates in order, then the map, under them, so
+        // the saved items come first.
+        for (const [name, box] of [["hub", hub], ["dates", datesBox], ["where", where]]) {
           const part = rows.querySelector(`template[data-plan-part="${name}"]`);
           if (box) {
             box.replaceChildren(part ? part.content.cloneNode(true) : "");

@@ -31,10 +31,13 @@
     <p>{{ _("تعذّر عرض خطتك الآن. تحقق من اتصالك ثم أعد تحميل الصفحة. خطتك ما زالت محفوظة.") }}</p>
   </div>
 
-  {#- The hub (route, «قريبًا», the calendar file), drawn with the rows (partials/my_plan_rows.html). #}
+  {#- The next step and the comparison, drawn with the rows (partials/my_plan_rows.html). #}
   <div class="plan-hub-wrap" data-plan-hub data-ics-url="{{ url_for('my_plan_calendar') }}" hidden></div>
 
   <ul class="rows mylist-rows" data-mylist-rows hidden></ul>
+
+  {#- Every upcoming date in order, the calendar file and the route (partials/my_plan_rows.html), under the rows. #}
+  <div class="plan-dates-wrap" data-plan-dates hidden></div>
 
   {#- Where the saved universities are (the map), under the rows. #}
   <div class="plan-where-wrap" data-plan-where hidden></div>

@@ -31,6 +31,7 @@
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.75h8v12.5l-4-3-4 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
         <span data-save-label>{{ _("احفظ في خطتي") }}</span>
       </button>
+      <button class="compare-toggle compare-toggle--page" type="button" data-compare="{{ u.id }}" data-compare-name="{{ u.name_ar or u.name_en }}" aria-pressed="false" hidden><span data-compare-label>{{ _("قارن") }}</span></button>
       <p class="save-note" data-save-note="{{ u.id }}" hidden><span class="icon icon--check" aria-hidden="true"></span> {{ _("محفوظة في") }} <a href="{{ url_for('my_plan') }}">{{ _("خطتي") }}</a> {{ _("على هذا الجهاز.") }}</p>
     </div>
   </header>
@@ -38,7 +39,11 @@
   {# The answers first (decision 035): which lists, which majors, the next deadline, how to apply. #}
   <section class="uni-summary" aria-labelledby="summary-title">
     <h2 id="summary-title" class="uni-summary-title">{{ _("باختصار") }}</h2>
-    <dl class="summary-list">
+    {#- The two gates (redesign v3), as on every answer card: 1 the scholarship's lists, 2 the university's own admission. #}
+    <div class="uni-gates">
+      <div class="uni-gate">
+        <h3 class="uni-gate-title"><span class="gate-num" aria-hidden="true">1</span>{{ _("الابتعاث") }} <span class="uni-gate-sub">{{ _("هل هي في قوائم المسار؟") }}</span></h3>
+        <dl class="summary-list">
       <div class="summary-row">
         <dt>{{ _("قوائم الابتعاث") }}</dt>
         <dd>{{ um.memberships(u) }}</dd>
@@ -51,6 +56,21 @@
           {% if not p.by_track.arruaad and not p.by_track.emdad %}{{ _("في مسار البحث والتطوير فقط (للدكتوراه)،") }} <a href="#lists">{{ _("التفاصيل أدناه") }}</a>.{% endif %}
         </dd>
       </div>
+        </dl>
+      </div>
+      <div class="uni-gate">
+        <h3 class="uni-gate-title"><span class="gate-num" aria-hidden="true">2</span>{{ _("القبول") }} <span class="uni-gate-sub">{{ _("ما تطلبه الجامعة نفسها") }}</span></h3>
+        <dl class="summary-list">
+      {% set cert = answers.certificate(explorer, u) %}
+      {% if cert %}
+      <div class="summary-row summary-row--{{ cert.state }}">
+        <dt>{{ _("الثانوية السعودية للسنة الأولى") }}</dt>
+        <dd>{% if cert.state == "yes" %}{{ _("تقبلها") }}{% elif cert.state == "no" %}<strong class="summary-warn">{{ _("لا تكفي وحدها للسنة الأولى") }}</strong>{% else %}{{ _("لم نجد حكمها في صفحاتها التي قرأناها، فراسل القبول قبل التقديم.") }}{% endif %}
+          {%- if cert.note_ar %}<span class="summary-sub">{{ cert.note_ar }}</span>{% endif %}
+          {%- if cert.source_url %} <a class="src" href="{{ cert.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}
+          {%- if cert.state == "no" and prep_year_fact %}<span class="summary-sub">{{ _("الابتعاث يشترط للسنة التأسيسية معدل 90% فأعلى وآيلتس 5.5 فأعلى.") }} <a class="src" href="{{ prep_year_fact.sources[0].url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></span>{% endif %}</dd>
+      </div>
+      {% endif %}
       <div class="summary-row">
         <dt>{{ _("أقرب موعد في الجامعة") }}</dt>
         <dd>{% if next %}<strong class="summary-date">{{ next.date | arabic_date }}</strong>
@@ -83,7 +103,9 @@
           <span class="summary-sub"><a href="#requirements">{{ _("التفاصيل والمصادر") }}</a></span></dd>
       </div>
       {% endif %}
-    </dl>
+        </dl>
+      </div>
+    </div>
     {% if d and d.admissions_url %}
     <div class="actions">
       <a class="btn btn--primary" href="{{ d.admissions_url }}" target="_blank" rel="noopener">{{ _("صفحة القبول في موقع الجامعة") }}</a>
