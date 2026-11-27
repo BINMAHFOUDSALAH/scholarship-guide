@@ -355,9 +355,7 @@ def test_english_dates_and_counts():
     with i18n.use_lang("en"):
         assert main.arabic_date("2026-10-09") == "9 October 2026"
     home = english_pages()["/en/"].text
-    # Redesign v3: the homepage's answer counts in English («7 universities in the UK»), dates in English months.
-    example = main.home_text["ask_example"]
-    with i18n.use_lang("en"):
-        a = main.answer_for(main.explorer.search(q=main.tr(example["q"]), country=example["country"]))
-    assert f'<span class="answer-count">{a["total"]}</span> universities in' in home
+    # The homepage's opening overview counts in English («290 universities in 15 countries»), dates in English months.
+    n, countries = len(main.explorer.universities), len(main.explorer.country_options())
+    assert f'<span class="answer-count">{n}</span> universities in {countries} countries' in home
     assert re.search(r"\d{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) 20\d\d", home)

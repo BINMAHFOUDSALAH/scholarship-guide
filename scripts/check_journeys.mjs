@@ -30,8 +30,10 @@ page.on("pageerror", (e) => errors.push(e.message));
 await page.goto(base + P + "/", { waitUntil: "networkidle" });
 const q = page.locator("#home-q");
 ok(await q.isVisible(), "the question's first slot is visible on the first screen");
+ok((await q.inputValue()) === "" && (await page.locator("#home-country").inputValue()) === "", "the question starts empty, «أي دولة» (no example country)");
 const firstCount = await page.locator(".answer-count").first().textContent();
-ok(Number(firstCount) > 0, `the example answer shows a count (${firstCount})`);
+ok(Number(firstCount) > 200, `the homepage opens on every university by country (${firstCount})`);
+ok(await page.locator("a[data-set-country]").count() >= 10, "every country is one tap away");
 await q.fill(en ? "I want to study computer science in the UK. Where do I start?" : "أريد دراسة علوم الحاسب في بريطانيا. من أين أبدأ؟");
 await page.waitForResponse((r) => r.url().includes("/answer?"));
 await page.waitForTimeout(300);
@@ -60,6 +62,23 @@ ok(await page.locator(".next").isVisible(), "the Finder's answer ends on the nex
 // The grade radios: «ثاني ثانوي» shows its own steps (CSS :has, no script needed).
 await page.locator('label[for="next-grade-11"]').click();
 ok(await page.locator('[data-next-panel="grade-11"]').isVisible() && !(await page.locator('[data-next-panel="grade-12"]').isVisible()), "the grade switch shows that grade's steps");
+
+// 2b. The country must never be stuck: a filter change keeps it visible as a chip, and its ✕ clears it.
+await page.locator("#track").selectOption("emdad").catch(async () => {
+  await page.locator("[data-filters-toggle]").click();
+  await page.locator("#track").selectOption("emdad");
+});
+await page.waitForResponse((r) => r.url().includes("partial=1"));
+await page.waitForTimeout(200);
+const countryChip = page.locator('a.applied-x[data-remove="country"]');
+ok(await countryChip.isVisible(), "after a filter change, the country shows as a chip with ✕");
+await countryChip.click();
+await page.waitForResponse((r) => r.url().includes("partial=1"));
+await page.waitForTimeout(300);
+ok((await page.locator("#country").inputValue()) === "", "its ✕ clears the country in the sentence too");
+const flags = await page.locator("#results .uni-flag, #results .facet-flag").evaluateAll((els) => new Set(els.map((e) => e.getAttribute("src").split("/").pop())).size);
+ok(flags > 1, `…and the results span several countries again (${flags} flags)`);
+await page.goto(base + P + "/universities?q=" + encodeURIComponent(en ? "computer science" : "علوم الحاسب") + "&country=GB", { waitUntil: "networkidle" });
 
 // 3. Compare two, then differences only.
 const toggles = page.locator("button[data-compare]");

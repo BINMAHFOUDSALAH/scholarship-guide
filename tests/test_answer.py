@@ -199,6 +199,20 @@ def test_the_comparison_page_says_what_to_do_when_empty_or_alone():
     assert client.get("/compare?u=../../etc,<script>").status_code == 200
 
 
+def test_the_finder_shows_the_country_as_a_chip_you_can_remove():
+    """2026-11-27: with the answer showing, «بريطانيا» was only in the sentence; the chip says it and clears it."""
+    html = client.get("/universities", params={"q": "علوم الحاسب", "country": "GB", "track": "emdad"}).text
+    applied = html.split('class="applied"')[1].split("</ul>")[0]
+    assert 'data-remove="country"' in applied and "بريطانيا" in applied
+    assert 'data-remove="q"' in applied and 'data-remove="track field"' in applied
+    assert "مسح الكل" in applied
+
+
+def test_the_homepage_answer_route_starts_with_the_overview():
+    html = client.get("/answer").text
+    assert f'<span class="answer-count">{len(ex.universities)}</span>' in html and 'data-set-country="US"' in html
+
+
 def test_cards_and_the_university_page_offer_compare_and_save():
     html = client.get("/universities", params={"q": "علوم الحاسب", "country": "GB"}).text
     assert html.count('class="compare-toggle"') == 7 and html.count('class="save-mini"') == 7

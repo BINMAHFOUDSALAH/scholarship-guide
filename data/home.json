@@ -92,11 +92,6 @@
       ]
     }
   ],
-  "ask_example": {
-    "q": "علوم الحاسب",
-    "country": "GB",
-    "_note": "The homepage's question opens on this example with its real answer (redesign v3); the student edits it."
-  },
   "ask_examples": [
     {
       "label_ar": "الذكاء الاصطناعي في أمريكا",

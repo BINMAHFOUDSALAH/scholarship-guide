@@ -114,18 +114,17 @@ def test_your_constellation_maps_only_your_universities(monkeypatch):
 
 # ---------- the map ----------
 
-def test_the_homepage_answer_offers_every_country_with_its_count():
-    """Redesign v3: «إلى أين؟» became the answer's country chips: the same major in every country of the lists, with
-    its count (unique universities across الرواد and إمداد), each one tap from refilling «في»."""
+def test_the_homepage_offers_every_country_with_its_count():
+    """«إلى أين؟» lives on as the homepage's opening overview: every country in the lists with its number of
+    universities, each a link to them (and, with JavaScript, a tap that fills «في»)."""
     html = client.get("/").text.split("data-answer-target")[1].split('id="grades"')[0]
-    example = main.home_text["ask_example"]
-    a = main.answer_for(main.explorer.search(q=example["q"], country=example["country"]))
-    assert a["facets"]
-    for f in a["facets"]:
-        if f["code"] == example["country"]:
-            continue
-        assert f'data-set-country="{f["code"]}"' in html, f["code"]
-        assert f'<span class="facet-count">{f["count"]}</span>' in html
+    counts = {}
+    for u in main.explorer.universities.values():
+        counts[u["country"]] = counts.get(u["country"], 0) + 1
+    for code, n in counts.items():
+        assert f'href="/universities?country={code}" data-set-country="{code}"' in html, code
+        chip = html.split(f'data-set-country="{code}"')[1].split("</a>")[0]
+        assert f'<span class="facet-count">{n}</span>' in chip, code
 
 
 @pytest.mark.parametrize("counts", [None, {"US": 3, "GB": 2, "SG": 1}, {"FR": 1}])
