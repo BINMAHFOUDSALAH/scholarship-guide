@@ -1,0 +1,35 @@
+{#
+  «سؤالك» (redesign v3, 2026-11): the question a student actually has, as a sentence they edit.
+  «أريد دراسة [علوم الحاسب] في [بريطانيا]». Each slot is a real field (a text box with our suggestions, a native
+  select), so it works without JavaScript as a plain GET form to /universities, and a phone opens its own picker.
+  A student may also type the whole question into the first slot: app/answer.py reads its major and its country.
+
+  ask_sentence(q, country, prefix): the sentence's two slots. The form around it is the page's (the homepage's
+  live answer, the Finder's form with its filters).
+#}
+{% macro ask_sentence(q, country, prefix, hint=True) %}
+<div class="ask-sentence" data-ask-sentence>
+  <span class="ask-word" aria-hidden="true">{{ _("أريد دراسة") }}</span>
+  <span class="ask-slot ask-slot--q">
+    <label class="sr-only" for="{{ prefix }}q">{{ _("أريد دراسة: تخصص أو جامعة") }}</label>
+    {#- The slot grows with its words (ask.js measures them); without JavaScript it keeps a comfortable width. #}
+    <input class="ask-input" id="{{ prefix }}q" name="q" type="search" value="{{ q }}" autocomplete="off" maxlength="100"
+           spellcheck="false" enterkeyhint="search" placeholder="{{ _('تخصص أو جامعة…') }}"
+           role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="{{ prefix }}q-suggest"
+           {% if hint %}aria-describedby="{{ prefix }}q-hint"{% endif %} data-suggest="{{ url_for('suggestions_api') }}" data-ask-q>
+    <span class="ask-measure" aria-hidden="true" data-ask-measure></span>
+    <div id="{{ prefix }}q-suggest" class="suggest" role="listbox" aria-label="{{ _('اقتراحات') }}" tabindex="-1" hidden></div>
+  </span>
+  <span class="ask-word" aria-hidden="true">{{ _("في") }}</span>
+  <span class="ask-slot ask-slot--country">
+    <label class="sr-only" for="{{ prefix }}country">{{ _("في دولة") }}</label>
+    <select class="ask-select" id="{{ prefix }}country" name="country" data-ask-country>
+      <option value="">{{ _("أي دولة") }}</option>
+      {% for code, info in explorer.country_options() %}
+      <option value="{{ code }}"{% if country == code %} selected{% endif %}>{{ info.name_ar }}</option>
+      {% endfor %}
+    </select>
+  </span>
+</div>
+{% if hint %}<p class="ask-hint" id="{{ prefix }}q-hint">{{ _("اكتب تخصصًا أو اسم جامعة، بالعربية أو الإنجليزية، أو اكتب سؤالك كما هو.") }}</p>{% endif %}
+{% endmacro %}

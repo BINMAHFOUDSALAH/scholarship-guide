@@ -4,31 +4,33 @@
 #}
 {% import "partials/uni_macros.html" as um with context %}
 {% import "partials/world_map.html" as wm with context %}
+{% import "partials/answer.html" as ans with context %}
 {% set r = result %}
 {% set back = view.query %}
 
 {# One line for screen readers, copied into the page's role="status" line after each update (WCAG 4.1.3). #}
-<div class="results-meta" data-summary="{{ view.summary_ar }}" hidden></div>
+<div class="results-meta" data-summary="{{ view.summary_ar }}" data-parsed-q="{{ r.q }}" data-parsed-country="{{ r.country }}"{% if r.parsed %} data-parsed{% endif %} hidden></div>
 
 {#
   The applied filters, each removable on its own, plus «مسح الكل» (decisions 035, 048).
   The chip's text is a label; only its ✕ removes it, with a large target. Plain links, so they work
   without JavaScript; universities.js clears just the fields in data-remove from the live form.
 #}
-{% if view.applied %}
+{% set chips = view.applied | rejectattr("remove", "in", [["q"], ["country"]]) | list if answer else view.applied %}
+{% if chips %}
 <div class="applied">
   <p class="applied-label" id="applied-label">{{ _("تبحث في:") }}</p>
   <ul class="applied-list" aria-labelledby="applied-label">
-    {% for a in view.applied %}
+    {% for a in chips %}
     <li class="applied-chip"><span class="applied-text">{{ a.label_ar }}: <bdi>{{ a.value_ar }}</bdi></span><a class="applied-x" href="{{ a.href }}" data-applied data-remove="{{ a.remove | join(' ') }}" aria-label="{{ _('إزالة') }} {{ a.label_ar }}: {{ a.value_ar }}"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9m0-9l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a></li>
     {% endfor %}
-    {% if view.applied | length > 1 %}<li><a class="applied-clear" href="{{ url_for('universities_page') }}" data-applied data-remove="q track field country lang">{{ _("مسح الكل") }}</a></li>{% endif %}
+    {% if chips | length > 1 %}<li><a class="applied-clear" href="{{ url_for('universities_page') }}" data-applied data-remove="q track field country lang">{{ _("مسح الكل") }}</a></li>{% endif %}
   </ul>
 </div>
 {% endif %}
 
 {# A country typed in the search box (decision 041): offer the country filter. #}
-{% if r.country_match and r.country != r.country_match %}
+{% if r.country_match and r.country != r.country_match and not r.parsed %}
 <p class="notice">{{ _("هل تقصد الدولة «") }}{{ explorer.countries[r.country_match].name_ar }}{{ _("»؟") }} <a href="{{ url_for('universities_page') }}?country={{ r.country_match }}">{{ _("اعرض جامعاتها في القوائم") }}</a></p>
 {% endif %}
 
@@ -43,7 +45,13 @@
 </div>
 {% endif %}
 
-{% if r.mode == "major" %}
+{% if answer %}
+{#- The answer (partials/answer.html): the universities by why they appear, each with both gates. واعد follows below. #}
+{{ ans.answer(answer, back=back) }}
+{% if r.mode == "major" and r.track != "rnd" and (r.majors | selectattr("track", "equalto", "rnd") | list) %}
+<p class="answer-note">{{ _("وللتخصص قائمة في البحث والتطوير (للدكتوراه فقط):") }} <a href="{{ url_for('universities_page') }}?q={{ r.q | urlencode }}&amp;track=rnd">{{ _("اعرضها") }}</a>.</p>
+{% endif %}
+{% elif r.mode == "major" %}
 {#- Each major once, grouped by its field in إمداد. A word like «هندسة» matches dozens of majors: then the summary
     counts them per field and shows a few, instead of one line per major (2026-11-07). #}
 <div class="notice major-summary">
@@ -74,7 +82,7 @@
 {% endif %}
 
 {% set ns = namespace(explained=false) %}
-{% for s in r.sections %}
+{% for s in r.sections if not answer or s.waaid is defined %}
 <section class="result-section" aria-labelledby="result-{{ loop.index }}">
   <header class="result-head">
     <h2 id="result-{{ loop.index }}" class="result-title">

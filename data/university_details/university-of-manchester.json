@@ -55,9 +55,10 @@
   "language_note_ar": null,
   "saudi_certificate": {
     "direct_entry": false,
-    "note_ar": "حامل الثانوية العامة يحتاج دورة تأسيس دولية معتمدة قبل السنة الأولى. في الدورات التي فيها سنة تأسيسية مدمجة تطلب الصفحة نسبًا في الثانوية: 90% للهندسة الفضائية والمدنية والكيميائية والكهربائية والميكاترونية، و91% للعلوم الحيوية، و93% للهندسة الميكانيكية وعلوم الحاسب.",
+    "note_ar": "حامل الثانوية العامة يحتاج دورة تأسيس دولية معتمدة قبل السنة الأولى. في الدورات التي فيها سنة تأسيسية مدمجة تطلب الصفحة من مساري العلوم الطبيعية أو علوم الحاسب والهندسة نسبة عامة، والنسبة نفسها على الأقل في رياضيات وفيزياء السنة الأخيرة: 90% للهندسة الفضائية والمدنية والكيميائية والكهربائية والميكاترونية، و93% للهندسة الميكانيكية وعلوم الحاسب (لعلوم الحاسب: معدل الصفوف من العاشر إلى الثاني عشر، ولا تُقبل مادة ما قبل التفاضل). وللعلوم الحيوية 91% عامة و91% في مواد العلوم.",
     "quote": "Due to differences in the UK and Saudi education systems, students with the Thanaweyyah A’ama/Tawjihi/General Secondary Education Certificate will be required to follow an approved international foundation course.",
-    "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/saudi-arabia/entry-requirements/"
+    "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/saudi-arabia/",
+    "checked": "2026-11-26"
   },
   "not_found_ar": [
     "الحد الأدنى لكل مهارة في IELTS غير مذكور في الصفحة العامة"

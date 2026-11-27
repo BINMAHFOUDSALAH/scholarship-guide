@@ -7,13 +7,60 @@
 {% import "partials/uni_macros.html" as um with context %}
 {% import "partials/world_map.html" as wm with context %}
 {#
-  The hub (decision 083), sent with the rows; mylist.js moves it above them:
-  - the route of statuses: how many items stand at each step, lit up to the furthest one reached;
-  - «قريبًا»: the plan's dates in the next 30 days, each with its official source;
-  - «أضف المواعيد إلى تقويمك»: every upcoming date as an .ics file for the student's own calendar (POST, nothing kept).
+  The parts sent with the rows (decision 083; redesign v3); mylist.js puts each in its place:
+  - hub, above the rows: the student's next step (the soonest dated action) and the comparison of their universities;
+  - dates, under the rows: every upcoming date in order, by month, the .ics file, and the route of statuses;
+  - where, last: the map of the saved universities.
 #}
 {% if progress %}
 <template data-plan-part="hub">
+  {#- Redesign v3: the plan opens on the student's next useful action, the soonest date among what they saved, with its
+      source; then the comparison of their universities, one tap away. Lime is "your next step" (design tokens). #}
+  <section class="plan-next stage" aria-labelledby="plan-next-title">
+    {% if next_up %}
+    {% set days = next_up.days %}
+    <h2 id="plan-next-title" class="plan-next-what"><span class="plan-next-label">{{ _("خطوتك التالية:") }}</span> <a href="{{ next_up.href }}">{{ next_up.name_ar }}</a>{{ _("،") }} {% if next_up.kind == "university" %}{{ um.date_short(next_up.what) }}{% else %}{{ next_up.what_ar }}{% endif %}</h2>
+    <p class="plan-next-when"><time class="plan-next-date" datetime="{{ next_up.date }}">{{ next_up.date | arabic_date }}</time>
+      <span class="plan-next-days">{% if days == 0 %}{{ _("اليوم") }}{% else %}{{ _f("بعد {n}", n=days | count_ar("days")) }}{% endif %}</span>
+      {% if next_up.source_url %}<a class="src" href="{{ next_up.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+    {% elif first_step %}
+    <h2 id="plan-next-title" class="plan-next-what"><span class="plan-next-label">{{ _("خطوتك التالية:") }}</span> {{ first_step.name }}{{ _("،") }} {{ first_step.step.text_ar }}{% if first_step.step.href %} <a href="{{ first_step.step.href }}"{% if first_step.step.external %} target="_blank" rel="noopener"{% endif %}>{{ first_step.step.label_ar }}</a>{% endif %}</h2>
+    {% else %}
+    <h2 id="plan-next-title" class="plan-next-what"><span class="plan-next-label">{{ _("خطوتك التالية:") }}</span> {{ _("لا موعد قادمًا في خطتك. افتح كل جامعة لترى ما تطلبه.") }}</h2>
+    {% endif %}
+    {% if compare_ids | length >= 2 %}
+    <p class="plan-next-compare"><a class="btn btn--small" href="{{ url_for('compare_page') }}?u={{ compare_ids | join(',') }}">{{ _f("قارن جامعات خطتك ({n})", n=compare_ids | length) }}</a></p>
+    {% endif %}
+  </section>
+</template>
+
+{#- Every upcoming date in the plan, in order and by month (the next 30 days marked), then the calendar file and where
+    each item stands. After the saved items, so the plan itself comes first. #}
+<template data-plan-part="dates">
+  <section class="plan-dates" aria-labelledby="plan-dates-title">
+    <h2 id="plan-dates-title" class="plan-hub-title">{{ _("مواعيد خطتك بالترتيب") }}</h2>
+    {% if upcoming %}
+    {% for month, items in upcoming | groupby("month") %}
+    <h3 class="plan-month">{{ items[0].date | arabic_date | replace(items[0].date[8:10] | int ~ " ", "") }}</h3>
+    <ol class="plan-timeline">
+      {% for d in items %}
+      <li class="plan-tl-item{% if d.date <= soon_until %} is-soon{% endif %}">
+        <time class="plan-tl-date" datetime="{{ d.date }}">{{ d.date | arabic_date }}</time>
+        <span class="plan-tl-what"><a href="{{ d.href }}">{{ d.name_ar }}</a>{{ _("،") }} {% if d.kind == "university" %}{{ um.date_short(d.what) }}{% else %}{{ d.what_ar }}{% endif %}</span>
+        {% if d.source_url %}<a class="src" href="{{ d.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+    {% endfor %}
+    <p class="plan-ics">
+      <button class="btn btn--secondary btn--small" type="button" data-plan-ics>{{ _("أضف المواعيد إلى تقويمك") }}</button>
+      <span class="plan-ics-note">{{ _f("كل المواعيد القادمة في خطتك ({n})، مع تذكير قبل كل موعد بثلاثة أيام.", n=upcoming | length) }}</span>
+    </p>
+    {% else %}
+    <p class="plan-soon-empty">{{ _("لا مواعيد قادمة مؤكدة في خطتك.") }}</p>
+    {% endif %}
+  </section>
+
   <section class="plan-hub" aria-labelledby="plan-route-title">
     <h2 id="plan-route-title" class="plan-hub-title">{{ _("أين وصلت") }}</h2>
     <ol class="plan-route">
@@ -27,30 +74,6 @@
     </ol>
     {% if progress.counts.not_accepted %}<p class="plan-route-turn">{{ statuses["not_accepted"] }}: {{ progress.counts.not_accepted }}</p>{% endif %}
   </section>
-
-  <section class="plan-soon" aria-labelledby="plan-soon-title">
-    <h2 id="plan-soon-title" class="plan-hub-title">{{ _("قريبًا") }} <span class="plan-soon-range">{{ _("الثلاثون يومًا القادمة") }}</span></h2>
-    {% if soon %}
-    <ul class="plan-soon-list">
-      {% for d in soon %}
-      <li class="plan-soon-item">
-        <time class="plan-soon-date" datetime="{{ d.date }}">{{ d.date | arabic_date }}</time>
-        <span class="plan-soon-what"><a href="{{ d.href }}">{{ d.name_ar }}</a>{{ _("،") }} {% if d.kind == "university" %}{{ um.date_short(d.what) }}{% else %}{{ d.what_ar }}{% endif %}</span>
-        {% if d.source_url %}<a class="src" href="{{ d.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p class="plan-soon-empty">{{ _("لا مواعيد في خطتك خلال الثلاثين يومًا القادمة.") }}</p>
-    {% endif %}
-    {% if soon or later_count %}
-    <p class="plan-ics">
-      <button class="btn btn--secondary btn--small" type="button" data-plan-ics>{{ _("أضف المواعيد إلى تقويمك") }}</button>
-      <span class="plan-ics-note">{{ _f("كل المواعيد القادمة في خطتك ({n})، مع تذكير قبل كل موعد بثلاثة أيام.", n=soon | length + later_count) }}</span>
-    </p>
-    {% endif %}
-  </section>
-
 </template>
 {#- Your constellation (decision 083): where the universities you saved are, a path of light from home to each. Below
     the rows since 2026-11-25: the walk showed a student who had just saved a university finding the map, not it, on

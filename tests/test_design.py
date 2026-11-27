@@ -191,7 +191,8 @@ def test_no_four_point_star_anywhere():
     assert not found, found
 
 
-@pytest.mark.parametrize("path", ["/", "/en/", "/universities?track=arruaad", "/en/universities?track=arruaad"])
+@pytest.mark.parametrize("path", ["/universities?track=arruaad", "/en/universities?track=arruaad",
+                                  "/universities?track=emdad&field=ict", "/en/universities?track=emdad&field=ict"])
 def test_maps_mark_home_with_a_ring_and_destinations_with_round_lights(path):
     from fastapi.testclient import TestClient
     html = TestClient(main.app).get(path).text

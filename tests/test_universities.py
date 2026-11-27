@@ -625,13 +625,15 @@ def test_a_university_outside_the_filters_is_shown_with_an_explanation():
     assert "خارج الفلاتر التي اخترتها" in html and "لا توجد جامعة بهذا الاسم" not in html
 
 
-def test_a_country_typed_in_the_search_box_offers_the_country_filter():
-    for q in ("Germany", "ألمانيا", "UK"):
+def test_a_country_typed_in_the_search_box_becomes_the_country():
+    """Redesign v3: a country typed in the box is read as «في [الدولة]» (app/answer.py), never "no university by this
+    name": the answer shows الرواد's universities there and إمداد's fields with their counts."""
+    for q, code in (("Germany", "DE"), ("ألمانيا", "DE"), ("UK", "GB"), ("جامعات بريطانيا", "GB")):
         r = ex.search(q=q)
-        assert r["country_match"] in ("DE", "GB"), q
+        assert r["country"] == code and r["q"] == "" and r["parsed"]["from"] == q, q
     html = client.get("/universities?q=Germany").text
-    assert "هل تقصد الدولة «ألمانيا»" in html and "?country=DE" in html
-    assert "لا توجد جامعة بهذا الاسم" not in html
+    assert 'data-parsed-country="DE"' in html and "لا توجد جامعة بهذا الاسم" not in html
+    assert "?track=emdad&amp;field=" in html and "country=DE" in html
 
 
 def test_conflicting_country_and_language_filters_say_why():
@@ -650,7 +652,7 @@ def test_major_search_explains_the_field_list_and_keeps_rawwad_compact():
 def test_finder_labels_are_plain():
     html = client.get("/universities?lang=other").text
     assert "كل اللغات" in html and "لغة الدولة: <bdi>غير الإنجليزية</bdi>" in html
-    assert "<h1>الجامعات في قوائم الابتعاث</h1>" in html
+    assert '<h1 class="explorer-title">الجامعات في قوائم الابتعاث</h1>' in html
     rows = client.get("/universities?track=arruaad").text
     assert "المتطلبات والمواعيد</th>" in rows and '<span class="sr-only">المرتبة </span>' in rows
     # The save button is not inside the row header cell (a cleaner screen-reader row name).

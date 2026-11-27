@@ -147,6 +147,16 @@ def count_ar(n, forms):
     return f"{n} {hundreds}"
 
 
+def count_split(n, forms):
+    """count_ar in two parts for a headline that sets the number large: (number or None, words).
+    1 and 2 have no separate number in Arabic («جامعة واحدة», «جامعتان»), so their number is None."""
+    if i18n.is_english():
+        singular, plural = COUNT_EN[forms[0]]
+        return n, singular if n == 1 else plural
+    text = count_ar(n, forms)
+    return (None, text) if n in (1, 2) else (n, text.split(" ", 1)[1])
+
+
 UNIVERSITIES_AR = ("جامعة واحدة", "جامعتان", "جامعات", "جامعة", "جامعة")
 PROGRAMS_AR = ("برنامج واحد", "برنامجان", "برامج", "برنامجًا", "برنامج")
 FIELDS_AR = ("مجال واحد", "مجالان", "مجالات", "مجالًا", "مجال")
@@ -331,6 +341,19 @@ class Explorer:
         - browse mode: no q → one list (الرواد, or a field in إمداد / البحث والتطوير).
         """
         q = (q or "").strip()
+        # A whole question («أريد دراسة علوم الحاسب في بريطانيا»): read its major and country (app/answer.py).
+        # Only when the text isn't already a major, a university or a health word, so those searches never change.
+        parsed = None
+        nq = normalize(q)
+        # A country's exact name («UK») is a country even when it is part of a university's name («Tsukuba»).
+        if q and not self.matching_majors(q) and not self.is_health_search(q) and (self.country_named(q) or not any(
+                nq in u["search_key"] for u in self.universities.values())):
+            from app.answer import parse  # app.answer imports this module
+            p = parse(q, self)
+            if p:
+                parsed = {"from": q, "q": p["q"], "country": p["country"]}
+                q = p["q"]
+                country = country or p["country"] or ""
         track = track if track in TRACKS else ""
         # A field picked without a track (possible without JavaScript) belongs to إمداد's lists,
         # the ones high-school graduates can use.
@@ -338,7 +361,7 @@ class Explorer:
             track = "emdad"
         keep = lambda u: self._keep(u, country, language)  # noqa: E731
         result = {"q": q, "track": track, "field": field, "country": country, "language": language,
-                  "mode": "browse", "sections": [], "majors": [],
+                  "mode": "browse", "sections": [], "majors": [], "parsed": parsed,
                   "health": bool(q) and self.is_health_search(q)}
 
         if track == "waaid":

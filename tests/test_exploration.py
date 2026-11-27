@@ -235,9 +235,9 @@ def test_live_on_the_site(live):
     assert "/explore</loc>" in client.get("/sitemap.xml").text and "/en/explore</loc>" in client.get("/sitemap.xml").text
     assert 'href="/explore"' in client.get("/resources/undecided").text  # the guide's door
     home = client.get("/").text
-    assert "لم تقرر ماذا تدرس؟" in home and '/explore"' in home  # the homepage's door, under the grades
-    # Decision 083: the grades first, then the one box, then the smaller door for students who haven't decided.
-    assert home.index('id="grades"') < home.index("hero-search") < home.index("hero-door")
+    assert "لم تقرر ماذا تدرس؟" in home and '/explore"' in home  # the homepage's door
+    # Redesign v3: the door sits in the hero, beside the question it answers for students who haven't chosen a major.
+    assert home.index('class="stage ask-hero"') < home.index('class="ask-door"') < home.index("data-answer-target")
     assert 'name="robots" content="noindex"' not in client.get("/explore").text  # public now: search engines may list it
 
 

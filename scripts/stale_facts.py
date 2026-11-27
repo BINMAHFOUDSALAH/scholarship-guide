@@ -83,6 +83,10 @@ def collect():
     for file in sorted((DATA / "university_details").glob("*.json")):
         detail = json.loads(file.read_text(encoding="utf-8"))
         add("data/university_details", detail["id"], detail["checked"], detail.get("admissions_url"))
+        # A fact re-read on its own after the file (redesign v3: the Saudi certificate) keeps its own date.
+        certificate = detail.get("saudi_certificate") or {}
+        if certificate.get("checked"):
+            add("data/university_details", f"{detail['id']}: Saudi certificate", certificate["checked"], certificate.get("source_url"))
 
     for file in sorted((ROOT / "content").glob("*/*.md")):
         meta = frontmatter.load(file).metadata

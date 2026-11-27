@@ -16,12 +16,12 @@ from fastapi.templating import Jinja2Templates
 from jinja2 import pass_context
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app import exploration, i18n, plan
+from app import answer as answers, compare, exploration, i18n, plan
 from app.content import SLUG_PATTERN, english_titles, list_slugs, load_page
 from app.i18n import tf, tr
 from app.search import SiteSearch
 from app.sky import rowwad_chart, star_field, world_chart
-from app.universities import COUNT_FORMS, NOT_LISTED_AR, PROGRAMS_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar
+from app.universities import COUNT_FORMS, NOT_LISTED_AR, PROGRAMS_AR, SAT_POLICY_AR, TRACKS, WAIVER_AR, Explorer, count_ar, count_split
 
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR.parent / "data"
@@ -456,6 +456,20 @@ def world_of(universities):
 
 
 templates.env.globals["world_of"] = world_of
+# Countries whose English name takes "the" («في بريطانيا» → "in the United Kingdom").
+COUNTRIES_WITH_THE = {"US", "GB", "NL"}
+
+
+def in_country(code):
+    """«في بريطانيا» / "in the United Kingdom": a country after "in", with English's article where it needs one."""
+    name = explorer.countries[code]["name_ar"]
+    if i18n.is_english():
+        return f"in {'the ' if code in COUNTRIES_WITH_THE else ''}{tr(name)}"
+    return f"في {name}"
+
+
+templates.env.filters["in_country"] = in_country
+templates.env.globals["answers"] = answers  # the answer's shared pieces (the Saudi certificate, the deadline rule)
 # «جرّب قبل أن تقرر» (decision 069): its door on the «لم تقرر بعد؟» guide shows only while the activity is public.
 templates.env.globals["explore_public"] = lambda: exploration.is_public(SHOW_DRAFTS)
 templates.env.globals["explore_why"] = exploration.why_text
@@ -484,12 +498,18 @@ templates.env.globals["current_year"] = lambda: date.today().year
 templates.env.filters["arabic_date"] = arabic_date
 # {{ 5 | count_ar("universities") }} → «5 جامعات» (Arabic counting rules, see universities.count_ar).
 templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun])
+# {{ 7 | count_split("universities") }} → (7, «جامعات»): a headline sets the number large (1 and 2 have none).
+templates.env.filters["count_split"] = lambda n, noun: count_split(n, COUNT_FORMS[noun])
 
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     show_quote = featured_quote["status"] == "verified" or SHOW_DRAFTS
     board = status_board()
+    # The question opens on an example with its real answer (data/home.json «ask_example»), drawn like /answer.
+    example = home_text.get("ask_example") or {}
+    ask_q, ask_country = tr(example.get("q", "")), example.get("country", "")
+    result = explorer.search(q=ask_q, country=ask_country)
     return render(
         request,
         "home.html",
@@ -505,6 +525,7 @@ def home(request: Request):
             "explorer": explorer,
             # Version 3: the universities' own nearest deadlines sit in «الآن» beside the scholarship windows.
             "deadlines": explorer.upcoming_deadlines(limit=4),
+            "ask_q": ask_q, "ask_country": ask_country, "result": result, "a": answer_for(result),
         },
     )
 
@@ -612,15 +633,42 @@ def waaid_page(request: Request):
     })
 
 
+CUSTODIAN_TRACKS = {t["id"]: t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("id")}
+
+
+def answer_for(result):
+    """The answer for a Finder result (app/answer.py), or None for a university's name or a whole track list."""
+    return answers.build(result, explorer, CUSTODIAN_TRACKS, prep_fact=PREP_YEAR_FACT)
+
+
+@app.get("/answer", response_class=HTMLResponse)
+def answer_partial(request: Request, q: str = "", country: str = ""):
+    """The homepage's live answer: the same answer as the Finder's, compact, drawn as the student edits the question
+    (ask.js). Without JavaScript the question is a plain form to /universities."""
+    result = explorer.search(q=q.strip()[:200], country=country if country in explorer.countries else "")
+    return render(request, "partials/answer_view.html", {"result": result, "a": answer_for(result), "explorer": explorer})
+
+
+@app.get("/api/answer")
+def answer_api(q: str = "", country: str = ""):
+    """The same answer as data, for وضّاح (next milestone) and other agents: every university with why it is on a list,
+    the admission facts with their official sources, and the actions a student can take (open, save, compare)."""
+    result = explorer.search(q=q.strip()[:200], country=country if country in explorer.countries else "")
+    return JSONResponse({"query": {"q": q, "country": country, "read_as": result.get("parsed")},
+                         "answer": answers.as_data(answer_for(result), i18n.prefix())})
+
+
 @app.get("/universities", response_class=HTMLResponse)
 def universities_page(request: Request, q: str = "", track: str = "", field: str = "",
                       country: str = "", lang: str = "", partial: bool = False):
     # Search runs on the server, so the page works without JavaScript; universities.js asks for
     # partial=1 to swap in just the results as the student types.
-    result = explorer.search(q=q[:100], track=track, field=field, country=country, language=lang)
+    result = explorer.search(q=q[:200], track=track, field=field, country=country, language=lang)
     # The King scholarship's tracks (name, who it's for, levels) for «ما الفرق بين المسارات؟».
     scholarship_tracks = [t for t in paths_by_id["custodian-scholarship"]["tracks"] if t.get("id") in TRACKS]
     context = {"result": result, "explorer": explorer, "view": explorer.describe(result),
+               # The answer to «أريد دراسة X في Y» (app/answer.py): a major or a country, with both gates per card.
+               "answer": answer_for(result),
                "scholarship_tracks": scholarship_tracks,
                # The الرواد destination at the top of the page (decision 060).
                "arruaad_track": next(t for t in scholarship_tracks if t["id"] == "arruaad")}
@@ -648,6 +696,15 @@ def university_page(request: Request, uid: str, from_: str | None = Query(None, 
                                                        if t.get("id")},
                                        # Shown where the Saudi certificate isn't enough for year 1 (foundation year).
                                        "prep_year_fact": PREP_YEAR_FACT})
+
+
+@app.get("/compare", response_class=HTMLResponse)
+def compare_page(request: Request, u: str = ""):
+    """«قارن» (app/compare.py): two to four universities side by side, from the address (?u=a,b,c), so the same
+    comparison can be sent to someone else. compare.js keeps the student's picks and builds the address."""
+    uids = compare.ids_from(u[:400], explorer)
+    data = compare.build(uids, explorer, answers, date.today().isoformat()) if uids else None
+    return render(request, "compare.html", {"uids": uids, "c": data, "explorer": explorer})
 
 
 @app.get("/my-list")
@@ -684,11 +741,17 @@ async def my_plan_rows(request: Request):
     items = await posted_plan(request)
     today = date.today()
     soon_until = (today + timedelta(days=plan.SOON_DAYS)).isoformat()
-    upcoming = plan.dates(items, explorer, plan_programs, track_status, today.isoformat())
+    upcoming = [{**d, "month": d["date"][:7], "days": (date.fromisoformat(d["date"]) - today).days}
+                for d in plan.dates(items, explorer, plan_programs, track_status, today.isoformat())]
+    rows = plan.rows(items, explorer, plan_programs, track_status, APPLY_WHEN, program_slugs())
+    # Without a dated action, the first saved item's own next step leads (redesign v3).
+    first = next((r for r in rows if r.get("step")), None)
     return render(request, "partials/my_plan_rows.html", {
-        "rows": plan.rows(items, explorer, plan_programs, track_status, APPLY_WHEN, program_slugs()),
-        "statuses": plan.STATUSES, "explorer": explorer,
-        "soon": [d for d in upcoming if d["date"] <= soon_until], "later_count": len([d for d in upcoming if d["date"] > soon_until]),
+        "rows": rows, "statuses": plan.STATUSES, "explorer": explorer,
+        "upcoming": upcoming, "soon_until": soon_until, "next_up": upcoming[0] if upcoming else None,
+        "first_step": {"name": (first["university"]["name_ar"] or first["university"]["name_en"]) if first.get("university") else first["name_ar"],
+                       "step": first["step"]} if first else None,
+        "compare_ids": [r["id"] for r in rows if r["type"] == "university"][:compare.MAX],
         "progress": plan.progress(items), "route": plan.ROUTE, "today": today.isoformat()})
 
 
@@ -766,8 +829,11 @@ def lists_answer(q):
         return None
     r = explorer.search(q=q)
     hits = next((s["universities"] for s in r["sections"] if "universities" in s and not s.get("outside_filters")), [])
-    answer = {"href": f"/universities?q={quote(q)}", "mode": r["mode"], "universities": hits[:5], "total": len(hits),
-              "majors": r.get("major_names", []), "country": r.get("country_match"), "health": r["health"]}
+    # A typed question comes back read (app/answer.py): «بريطانيا» is the country, «علوم الحاسب في بريطانيا» a major there.
+    country = r.get("country_match") or (r["parsed"] or {}).get("country")
+    href = (f"/universities?country={country}" if country and not r["q"] else f"/universities?q={quote(q)}")
+    answer = {"href": href, "mode": r["mode"], "universities": hits[:5], "total": len(hits),
+              "majors": r.get("major_names", []), "country": country, "health": r["health"]}
     return answer if (hits or answer["majors"] or answer["country"] or answer["health"]) else None
 
 

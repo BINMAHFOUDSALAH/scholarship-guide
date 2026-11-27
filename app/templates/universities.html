@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "partials/ask.html" as ask with context %}
 
 {% block title %}{{ _("الجامعات في قوائم الابتعاث |") }} {{ site.name }}{% endblock %}
 {% block description %}{{ _("ابحث باسم الجامعة أو بالتخصص، واعرف ترتيبها في قوائم مسارات الرواد وإمداد والبحث والتطوير لبرنامج خادم الحرمين الشريفين للابتعاث 2026–2027.") }}{% endblock %}
@@ -17,31 +18,19 @@
   <div class="container">
     <div class="explorer-top page-wide">
       <header class="explorer-header" data-explorer-header{% if r.track == "arruaad" %} hidden{% endif %}>
-        <h1>{{ _("الجامعات في قوائم الابتعاث") }}</h1>
-        <p class="lead">{{ _("هل الجامعة في قوائم برنامج خادم الحرمين الشريفين للابتعاث؟ وماذا تطلب للقبول؟") }}</p>
+        <h1 class="explorer-title">{{ _("الجامعات في قوائم الابتعاث") }}</h1>
       </header>
 
       <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" aria-label="{{ _('البحث في الجامعات') }}" data-explorer>
-        <div class="search-field">
-          <label class="field-label" for="q">{{ _("ابحث باسم جامعة أو تخصص") }}</label>
-          {# Examples are visible text, not a placeholder: placeholders vanish when you type. #}
-          <p class="field-hint" id="q-hint">{{ _("بالعربية أو الإنجليزية، مثل: الذكاء الاصطناعي، Stanford، هندسة البرمجيات.") }}</p>
-          <div class="search-box">
-            {# A combobox: universities.js shows our own suggestions (universities, then majors by field).
-               Without JavaScript it's a plain search field. #}
-            <input class="input" id="q" name="q" type="search" value="{{ r.q }}" autocomplete="off"
-                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="q-suggest"
-                   aria-describedby="q-hint" data-suggest="{{ url_for('suggestions_api') }}">
-            <button class="btn btn--primary search-submit" type="submit">{{ _("ابحث") }}</button>
-            <div id="q-suggest" class="suggest" role="listbox" aria-label="{{ _('اقتراحات') }}" tabindex="-1" hidden></div>
-          </div>
-        </div>
+        {#- The question as a sentence (partials/ask.html): «أريد دراسة [تخصص] في [دولة]». The filters below refine it. #}
+        {{ ask.ask_sentence(r.q, r.country, "") }}
+        <button class="btn btn--primary ask-submit" type="submit">{{ _("اعرض الجامعات") }}</button>
 
         {# On phones (with JavaScript) the filters fold behind «الفلاتر»; the active ones stay visible as tags above the results. #}
         <button class="btn btn--secondary filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel" hidden data-filters-toggle>
           <span class="filters-toggle-label">{{ _("الفلاتر") }} <span class="filters-count" data-filters-count></span></span>
           {# Says what the filters do, so students know they can narrow the lists (owner, 2026-10-12). #}
-          <span class="filters-toggle-hint">{{ _("المسار، المجال، الدولة، اللغة") }}</span>
+          <span class="filters-toggle-hint">{{ _("المسار، المجال، اللغة") }}</span>
         </button>
         <fieldset class="filters" id="filters-panel">
           <legend class="sr-only">{{ _("تصفية النتائج") }}</legend>
@@ -68,16 +57,6 @@
               {% endfor %}
             </select>
             <p class="field-hint filter-hint" id="field-hint">{{ _("اختر في «المسار» إمداد أو البحث والتطوير أولًا.") }}</p>
-          </div>
-
-          <div class="filter">
-            <label class="field-label" for="country">{{ _("الدولة") }}</label>
-            <select class="select" id="country" name="country">
-              <option value="">{{ _("كل الدول") }}</option>
-              {% for code, info in explorer.country_options() %}
-              <option value="{{ code }}"{% if r.country == code %} selected{% endif %}>{{ info.name_ar }}</option>
-              {% endfor %}
-            </select>
           </div>
 
           <div class="filter">
@@ -124,4 +103,5 @@
 {% endblock %}
 
 {% block scripts %}<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>
+<script src="{{ url_for('static', path='ask.js') }}?v={{ asset_version('ask.js') }}" defer></script>
 <script src="{{ url_for('static', path='map.js') }}?v={{ asset_version('map.js') }}" defer></script>{% endblock %}

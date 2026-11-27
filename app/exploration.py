@@ -151,6 +151,10 @@ def field_view(fid, explorer, school_tracks):
         listed = guide_majors(explorer, guide)
         view["guide_only_major"] = listed[0] if len(listed) == 1 else None  # the card's examples go beyond the guide
         view["explorer_url"] = f"/universities?track=emdad&field={guide}"
+        # Redesign v3: a few of the field's majors from the guide, each opening the question «أريد دراسة …» with its
+        # answer (the universities by list, both gates). Bachelor's majors first; master's-only ones aren't asked here.
+        emdad = (explorer.field("emdad", guide) or {}).get("majors", [])
+        view["ask_majors"] = [m["name_ar"] for m in emdad if not m.get("masters_only")][:3]
     by_name = {t["name_ar"]: t for t in school_tracks["tracks"]}
     view["tracks"] = [by_name[name] for name in f["tracks"]]
     return view

@@ -91,5 +91,32 @@
         }
       ]
     }
+  ],
+  "ask_example": {
+    "q": "علوم الحاسب",
+    "country": "GB",
+    "_note": "The homepage's question opens on this example with its real answer (redesign v3); the student edits it."
+  },
+  "ask_examples": [
+    {
+      "label_ar": "الذكاء الاصطناعي في أمريكا",
+      "q": "الذكاء الاصطناعي",
+      "country": "US"
+    },
+    {
+      "label_ar": "الهندسة في ألمانيا",
+      "q": "هندسة",
+      "country": "DE"
+    },
+    {
+      "label_ar": "القانون في أستراليا",
+      "q": "القانون",
+      "country": "AU"
+    },
+    {
+      "label_ar": "أي تخصص في بريطانيا",
+      "q": "",
+      "country": "GB"
+    }
   ]
 }

@@ -35,13 +35,17 @@ def on(monkeypatch, y, m, d):
 def test_the_hub_counts_each_step_and_lights_the_furthest(monkeypatch):
     on(monkeypatch, 2026, 11, 7)
     html = client.post("/my-plan", json=PLAN).text
-    hub = html.split('<template data-plan-part="hub">')[1].split("</template>")[0]
-    counts = re.findall(r'class="plan-route-count">(\d+)<', hub)
+    # Redesign v3: the route of statuses sits with the dates, under the saved items.
+    part = html.split('<template data-plan-part="dates">')[1].split("</template>")[0]
+    counts = re.findall(r'class="plan-route-count">(\d+)<', part)
     assert counts == ["1", "1", "1", "1"]  # أفكّر، أستعد، قدّمت، قُبلت
-    assert hub.count("is-reached") == 4 and hub.count("is-here") == 1
+    assert part.count("is-reached") == 4 and part.count("is-here") == 1
 
 
-def test_soon_lists_the_next_30_days_with_sources_and_skips_finished_items(monkeypatch):
+def test_the_plan_leads_with_the_next_step_then_lists_every_date_in_order(monkeypatch):
+    """Redesign v3: «خطتي» opens on the student's next step (the soonest date among what they saved, with its source),
+    then, under the saved items, every upcoming date in order by month, the next 30 days marked. Finished items
+    («قُبلت») add no dates, and a date without its official source is never shown."""
     on(monkeypatch, 2026, 11, 7)
     items = plan.clean(PLAN, main.explorer.universities, main.plan_programs)
     dates = plan.dates(items, main.explorer, main.plan_programs, main.track_status, "2026-11-07")
@@ -49,10 +53,15 @@ def test_soon_lists_the_next_30_days_with_sources_and_skips_finished_items(monke
     assert all(d["source_url"] for d in dates)
     assert not any(d.get("university", {}).get("id") == "national-university-of-singapore-nus" for d in dates)  # «قُبلت»
     html = client.post("/my-plan", json=PLAN).text
-    soon = html.split('id="plan-soon-title"')[1].split("</section>")[0]
-    assert "مسار الرواد" in soon and "15 نوفمبر 2026" in soon  # الرواد's deadline, from its sourced status_until
-    for d in re.findall(r'datetime="(\d{4}-\d{2}-\d{2})"', soon):
-        assert "2026-11-07" <= d <= "2026-12-07"
+    hub = html.split('<template data-plan-part="hub">')[1].split("</template>")[0]
+    assert f'datetime="{dates[0]["date"]}"' in hub and 'class="src"' in hub
+    timeline = html.split('id="plan-dates-title"')[1].split("</section>")[0]
+    shown = re.findall(r'<time class="plan-tl-date" datetime="(\d{4}-\d{2}-\d{2})"', timeline)
+    assert shown == [d["date"] for d in dates]
+    assert "مسار الرواد" in timeline and "15 نوفمبر 2026" in timeline  # الرواد's deadline, from its sourced status_until
+    soon = re.findall(r'class="plan-tl-item is-soon">\s*<time class="plan-tl-date" datetime="([0-9-]+)"', timeline)
+    assert soon and all(d <= "2026-12-07" for d in soon)
+    assert len(soon) == sum(1 for d in dates if d["date"] <= "2026-12-07")
 
 
 def test_the_calendar_file_is_valid_and_holds_no_personal_data(monkeypatch):
@@ -105,13 +114,18 @@ def test_your_constellation_maps_only_your_universities(monkeypatch):
 
 # ---------- the map ----------
 
-def test_the_homepage_map_has_every_country_with_its_count():
-    html = client.get("/").text.split('id="where"')[1].split("</section>")[0]
-    for code, info in main.explorer.countries.items():
-        n = sum(1 for u in main.explorer.universities.values() if u["country"] == code)
-        if n:
-            assert f'country={code}" data-world-chip="{code}"' in html, code
-    assert 'aria-hidden="true" focusable="false"' in html  # the drawing is a picture; the chips are the list
+def test_the_homepage_answer_offers_every_country_with_its_count():
+    """Redesign v3: «إلى أين؟» became the answer's country chips: the same major in every country of the lists, with
+    its count (unique universities across الرواد and إمداد), each one tap from refilling «في»."""
+    html = client.get("/").text.split("data-answer-target")[1].split('id="grades"')[0]
+    example = main.home_text["ask_example"]
+    a = main.answer_for(main.explorer.search(q=example["q"], country=example["country"]))
+    assert a["facets"]
+    for f in a["facets"]:
+        if f["code"] == example["country"]:
+            continue
+        assert f'data-set-country="{f["code"]}"' in html, f["code"]
+        assert f'<span class="facet-count">{f["count"]}</span>' in html
 
 
 @pytest.mark.parametrize("counts", [None, {"US": 3, "GB": 2, "SG": 1}, {"FR": 1}])
