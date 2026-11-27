@@ -1,80 +1,27 @@
-# Accounts: sign-in for students who choose وضّاح (Phase 2 spec)
+# Wadih accounts
 
-**Status:** written in Phase 1 Part C (C6, 2026-11-07), built in Phase 2 (from 2026-11-25). Decisions 014–016, 078, 082, 083.
-The answer engine: [agent.md](agent.md).
+Accounts give students access to وضّاح, an editable profile, and a place to save the next steps they choose. Build this after the redesign, alongside the [agent](agent.md). See the [roadmap](../plan.md) for rollout.
 
-## 1. The rule
+## Sign-in experience
 
-**The site stays fully usable without an account.** Every page, the explorer, «جرّب قبل أن تقرر», «السنة في سطر» and
-«خطتي» on the device work as they do today. An account exists for one reason now: to use وضّاح. A second benefit comes
-with it: the plan on every device.
+- Keep Wadih’s public guides, University Finder, and exploration tools free to browse.
+- Offer Google sign-in when a student chooses to use وضّاح. Explain the benefit in clear Arabic: «سجّل الدخول لاستخدام وضّاح وحفظ خطواتك في خطتي.»
+- After sign-in, return students to the page or agent task they started. Each new account starts with a fresh «خطتي».
 
-## 2. The moment of sign-in
+## Authentication and access
 
-- Shown only when a student asks وضّاح something, or taps «دخول» (the header slot behind `accounts_open` in
-  `data/waddah.json`, already in `base.html`).
-- The sheet says why, as a benefit, in one line: «احفظ خطتك على كل أجهزتك، واسأل وضّاح.», then what we keep (§4) and
-  what we never ask for. Then email + password. No social sign-in in v1 (decision 078).
-- Never a wall in front of content; never a pop-up on arrival.
+- Verify Google sign-in on the server. Link the Wadih account to Google’s stable `sub` identifier. Request only the sign-in information Wadih needs.
+- Use an expiring, revocable server-side session with a secure, HTTP-only cookie. Apply CSRF protection to requests that change account data.
+- Identify the student from the verified session. Check ownership on every profile and plan operation, including actions requested by وضّاح.
 
-## 3. Sign-in
+## What students can save and control
 
-- **Email + password.** Passwords hashed with a slow, salted algorithm (Argon2id, or bcrypt if the host can't run it);
-  at least 10 characters; checked against a short list of common passwords. No password rules beyond that.
-- **Email verification** before وضّاح answers (one link, valid 24 hours).
-- **Password reset** by email (one link, valid 1 hour, single use).
-- **Sessions:** a server-side session id in a `Secure; HttpOnly; SameSite=Lax` cookie, 30 days, rotated at sign-in;
-  sign out everywhere from the account page.
-- **CSRF:** a token on every POST form; `SameSite=Lax` as a second layer.
-- **Rate limits:** sign-in and reset by email and by IP (e.g. 5 tries in 15 minutes), with a neutral message that never
-  says whether an email has an account.
+- Let students add or edit their school year, interests, intended destinations, and optional test scores. Ask for those details when they help answer a question. Make it clear when a detail will be saved to the profile.
+- Store saved universities, tasks, and application progress under the student’s account. Use the same server operations for website buttons and وضّاح.
+- Add email reminders after the core pilot. Let students opt in, choose which saved universities to follow, and turn reminders off.
+- Let students download or delete their account data. On deletion, revoke active sessions and cancel pending reminders.
+- Before public rollout, document what Wadih stores, what its providers process, and how consent applies for the students it serves. Test with synthetic accounts in staging.
 
-## 4. What we keep (and nothing else)
+## Verification
 
-| Kept | Why |
-|---|---|
-| Email address | sign-in, verification, reset |
-| Password hash | sign-in |
-| Created / last sign-in dates | security, deleting stale accounts |
-| The plan: `{"v": 1, "items": [{type, id, status, updated}]}` | the same JSON as `localStorage["wadih:plan"]` (`app/plan.py`) |
-| The grade slug (optional) | «صفّك» on every device, like `wadih:grade` today |
-| Counts of questions asked (per day) | the rate limit and the daily cap |
-
-**Never:** name, national ID, phone, grades, scores, passport, school, the questions or the answers. The plan holds no
-grades or IDs by design, so plan-aware answers can't leak them.
-
-## 5. The plan moves in
-
-- At first sign-in, if this browser holds a plan, offer once: «انقل خطتك من هذا الجهاز إلى حسابك» (merge, newest status
-  wins per item, `plan.clean()` on the server, ≤ 100 items).
-- Signed in, the page reads and writes the account's plan (the same POST rows, `.ics` and hub); the device copy stays
-  as a cache.
-- Signed out, nothing changes from today.
-
-## 6. Deletion and export
-
-- «احذف حسابي» on the account page: deletes the account, its plan and its sessions at once (no 30-day limbo); the
-  confirmation email is the last message we send.
-- «نزّل بياناتي»: the email, dates and plan as JSON.
-- Accounts with no sign-in for 24 months are deleted after one email warning.
-
-## 7. Minors and the PDPL (owner's review, before any data is collected)
-
-- Most users are under 18. Before launch, the owner reviews the Personal Data Protection Law and its regulations for:
-  consent for minors (whether a guardian's consent is needed and how it's recorded); transfer outside the Kingdom
-  (the host in Frankfurt, Anthropic's processing); a privacy notice in Arabic and English; the breach notice duty.
-- Until that review is done and written into this spec, accounts stay off (`accounts_open: false`).
-
-## 8. Infrastructure (ask before spending, CLAUDE.md)
-
-- **Database:** Postgres (the host's managed instance, or SQLite on a persistent disk for the first weeks if the owner
-  prefers $0); migrations with Alembic. Three tables: `users`, `plans` (user id → plan JSON, updated), `sessions`.
-- **Email:** a transactional service with a free tier, sending only verification, reset and the deletion receipt; an
-  SPF/DKIM-signed sender on wadihguide.com. No marketing email.
-- **Secrets:** the host's environment variables; never in the repo; `.env` stays unread (CLAUDE.md).
-
-## 9. Tests (Phase 2)
-
-Sign-up, verify, sign-in, sign-out-everywhere, reset, rate limits, CSRF rejection, the plan merge (newest wins, junk
-dropped), deletion removes every row, export matches what's stored, and the whole site still passes its tests with
-accounts off.
+Test guest access, Google sign-in and cancellation, sign-out, session expiry, profile edits, and account deletion. Use two test accounts to verify that each can access and change only its own records. Complete one Arabic browser journey from sign-in through an action in «خطتي». When reminders are enabled, verify that turning them off prevents future sends.

@@ -79,11 +79,6 @@ The instructions given to research subagents, with what each batch saved and wha
 - University requirements: [UK](research/emdad-wave-2-uk-brief.md), [Australia, Canada, Singapore](research/emdad-wave-3-brief.md), [other US + India](research/emdad-wave-4-brief.md), [Europe](research/emdad-wave-5-eu-brief.md)
 - Re-checks: [English tests + US essays](research/english-essays-recheck-brief.md), [الرواد + US tests](research/rowwad-us-tests-recheck-brief.md)
 
-## Working with Claude Code
-
-- [claude-workflow-guide.md](claude-workflow-guide.md): which Claude Code feature to use when
-- [project-files-guide.md](project-files-guide.md): what each special project file does, and when to add one
-
 ## Elsewhere in the repository
 
 - [`marketing/`](../marketing/README.md): the launch ad's guide and build scripts (paused)

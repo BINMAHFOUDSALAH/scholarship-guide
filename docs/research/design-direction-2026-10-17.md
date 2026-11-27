@@ -1,5 +1,5 @@
 # Design direction and redesign (2026-10-17, decision 062)
-
+> Historical record of the October 17 redesign. For current design guidance, see [design.md](../../.claude/rules/design.md). For upcoming work, see [plan.md](../plan.md).
 **Brief (owner, 2026-10-17):** a substantial UI/UX redesign: study the live site and nine references, choose a direction that is Wadih's own, redesign every page type and the footer (with a copyright line), keep the logo exactly as it is, and inspect the rendered result. Palette and typography were open.
 
 **How it was done:** the site rendered locally in Chromium (Playwright) at 320, 390, 768, 1024, 1280 and 1440px, light and dark, every page type; the code and data read; the references opened in the same browser through the session proxy (desktop and phone screenshots) and their guidance pages read. **Not done:** no students talked to, no analytics, no real phone (Safari), no screen reader. **[V]** = seen on the rendered site or in the code.
