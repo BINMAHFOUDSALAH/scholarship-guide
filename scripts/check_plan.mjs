@@ -139,6 +139,26 @@ await page.goto(base + "/");
 check("an empty plan hides the return strip", !(await page.locator("[data-plan-strip]").isVisible()));
 check("the old address goes to the plan", (await (await page.goto(base + "/my-list")).url()).endsWith("/my-plan"));
 
+// 5. A slow connection (2026-11-27, seen on the live site): three removals tapped quickly while every redraw takes
+// 1.5s. A late redraw must not bring back a row already removed.
+await page.evaluate(() => localStorage.setItem("wadih:plan", JSON.stringify({ v: 1, items: [
+  { type: "university", id: "university-of-oxford", status: "thinking" },
+  { type: "university", id: "harvard-university", status: "thinking" },
+  { type: "university", id: "stanford-university", status: "thinking" }] })));
+await page.goto(base + "/my-plan");
+await page.waitForSelector("[data-mylist-rows]:not([hidden]) button[data-remove]");
+await page.route("**/my-plan", async (route) => {
+  if (route.request().method() === "POST") await new Promise((r) => setTimeout(r, 1500));
+  await route.continue();
+});
+for (let i = 0; i < 3; i++) { await page.locator("button[data-remove]").first().tap(); await page.waitForTimeout(150); }
+await page.waitForTimeout(4000);
+const slow = await page.evaluate(() => ({ rows: document.querySelectorAll("[data-mylist-item]").length,
+  empty: !document.querySelector("[data-mylist-empty]").hidden, items: JSON.parse(localStorage.getItem("wadih:plan")).items.length }));
+check("quick removals on a slow connection leave the plan empty, with no row coming back",
+  slow.rows === 0 && slow.empty && slow.items === 0, JSON.stringify(slow));
+await page.unroute("**/my-plan");
+
 check("no JavaScript errors", errors.length === 0, errors.join(" | "));
 await browser.close();
 

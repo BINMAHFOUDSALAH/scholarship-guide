@@ -239,7 +239,13 @@
     const where = page.querySelector("[data-plan-where]");
     const datesBox = page.querySelector("[data-plan-dates]");
 
+    // Each redraw has a ticket: only the latest may touch the page. Removing items quickly on a slow connection
+    // started several redraws; an older one arriving last brought back rows already removed (2026-11-27, live site).
+    let drawTicket = 0;
+
     const showEmpty = () => {
+      drawTicket++; // nothing in flight may redraw an emptied plan
+      loading.hidden = true;
       rows.replaceChildren();
       rows.hidden = true;
       empty.hidden = false;
@@ -261,6 +267,7 @@
         return;
       }
       const first = !rows.children.length;
+      const ticket = ++drawTicket;
       if (first) loading.hidden = false;
       try {
         const response = await fetch(page.dataset.rowsUrl, {
@@ -268,7 +275,9 @@
           body: JSON.stringify({ v: 1, items }),
         });
         if (!response.ok) throw new Error("rows " + response.status);
-        rows.innerHTML = await response.text();
+        const html = await response.text();
+        if (ticket !== drawTicket) return; // a newer redraw (or an emptied plan) replaced this one
+        rows.innerHTML = html;
         // The parts come with the rows: the next step above them; the dates in order, then the map, under them, so
         // the saved items come first.
         for (const [name, box] of [["hub", hub], ["dates", datesBox], ["where", where]]) {
@@ -280,10 +289,10 @@
           if (part) part.remove();
         }
       } catch (e) {
-        failed.hidden = false;
+        if (ticket === drawTicket) failed.hidden = false;
         return;
       } finally {
-        loading.hidden = true;
+        if (ticket === drawTicket) loading.hidden = true;
       }
       failed.hidden = true;
       // Items the server didn't recognise (e.g. a university no longer in the lists) are dropped quietly.
