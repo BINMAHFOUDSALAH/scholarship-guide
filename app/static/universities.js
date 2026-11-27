@@ -340,10 +340,20 @@
     async function update() {
       countFilters();
       const query = formQuery(form);
+      // A country chip (a flag) asks for a new step in history, so Back returns to the previous results instead of
+      // leaving the Finder (owner, 2026-11-27). Typing and the filters only update the current step.
+      const push = form.dataset.pushNext === "1";
+      delete form.dataset.pushNext;
       if (query === lastQuery) return;
       lastQuery = query;
       // Keep the address in sync, so Back, reload, and sharing show the same results.
-      history.replaceState(null, "", query ? "?" + query : location.pathname);
+      const address = query ? "?" + query : location.pathname;
+      if (push) {
+        history.replaceState({ ...(history.state || {}), y: window.scrollY }, "");
+        history.pushState(null, "", address);
+      } else {
+        history.replaceState(history.state && typeof history.state.y === "number" ? { y: history.state.y } : null, "", address);
+      }
       const ticket = ++latest;
       results.setAttribute("aria-busy", "true");
       try {
@@ -474,6 +484,7 @@
         country.value = country.value === code ? "" : code;
         syncFields();
         syncRowwad();
+        form.dataset.pushNext = "1";
         update();
       });
       // Pointing at a light names it under the chart (the chart's links are for a mouse; the table has them all).
@@ -495,6 +506,20 @@
     layout();
     lastQuery = formQuery(form);
     syncRowwad();
+
+    // Back and Forward between the steps a flag made: the address holds the search, so the form follows it.
+    window.addEventListener("popstate", (event) => {
+      const params = new URLSearchParams(location.search);
+      input.value = params.get("q") || "";
+      for (const name of ["country", "track", "lang"]) if (form.elements[name]) form.elements[name].value = params.get(name) || "";
+      syncFields();
+      field.value = params.get("field") || "";
+      syncFields();
+      if (form.elements.country) form.elements.country.dispatchEvent(new Event("input", { bubbles: true })); // «في» refits (ask.js)
+      syncRowwad();
+      const y = event.state && event.state.y;
+      update().then(() => { if (typeof y === "number") window.scrollTo(0, y); });
+    });
   }
 
   // ---------- 3. back to results ----------
