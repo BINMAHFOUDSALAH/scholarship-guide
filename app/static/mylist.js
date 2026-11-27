@@ -320,7 +320,8 @@
     });
 
     // «أضف المواعيد إلى تقويمك»: the server turns the plan into an .ics file and forgets it; the phone opens it.
-    if (hub) hub.addEventListener("click", async (event) => {
+    // The button sits with the dates, under the rows (redesign v3), so the whole page listens.
+    if (hub) page.addEventListener("click", async (event) => {
       const button = event.target.closest("[data-plan-ics]");
       if (!button) return;
       button.disabled = true;

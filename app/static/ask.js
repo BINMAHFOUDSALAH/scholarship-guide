@@ -17,7 +17,7 @@
     const measure = slot.querySelector("[data-ask-measure]") || slot.appendChild(Object.assign(document.createElement("span"), { className: "ask-measure" }));
     let text = field.tagName === "SELECT" ? (field.selectedOptions[0] || {}).text || "" : field.value || field.placeholder || "";
     measure.textContent = text;
-    const extra = field.tagName === "SELECT" ? 1.05 : 0.5; // the chevron, the caret
+    const extra = field.tagName === "SELECT" ? 1.05 : 0.3; // the chevron, the caret
     const em = parseFloat(getComputedStyle(field).fontSize) || 16;
     const max = slot.closest("[data-ask-sentence]").clientWidth;
     field.style.width = Math.min(max, Math.ceil(measure.offsetWidth + extra * em)) + "px";

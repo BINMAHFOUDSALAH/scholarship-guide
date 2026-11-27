@@ -17,17 +17,16 @@
   {#- Redesign v3: the plan opens on the student's next useful action, the soonest date among what they saved, with its
       source; then the comparison of their universities, one tap away. Lime is "your next step" (design tokens). #}
   <section class="plan-next stage" aria-labelledby="plan-next-title">
-    <h2 id="plan-next-title" class="plan-next-kicker">{{ _("خطوتك التالية") }}</h2>
     {% if next_up %}
     {% set days = next_up.days %}
-    <p class="plan-next-what"><a href="{{ next_up.href }}">{{ next_up.name_ar }}</a>{{ _("،") }} {% if next_up.kind == "university" %}{{ um.date_short(next_up.what) }}{% else %}{{ next_up.what_ar }}{% endif %}</p>
+    <h2 id="plan-next-title" class="plan-next-what"><span class="plan-next-label">{{ _("خطوتك التالية:") }}</span> <a href="{{ next_up.href }}">{{ next_up.name_ar }}</a>{{ _("،") }} {% if next_up.kind == "university" %}{{ um.date_short(next_up.what) }}{% else %}{{ next_up.what_ar }}{% endif %}</h2>
     <p class="plan-next-when"><time class="plan-next-date" datetime="{{ next_up.date }}">{{ next_up.date | arabic_date }}</time>
       <span class="plan-next-days">{% if days == 0 %}{{ _("اليوم") }}{% else %}{{ _f("بعد {n}", n=days | count_ar("days")) }}{% endif %}</span>
       {% if next_up.source_url %}<a class="src" href="{{ next_up.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
     {% elif first_step %}
-    <p class="plan-next-what">{{ first_step.name }}{{ _("،") }} {{ first_step.step.text_ar }}{% if first_step.step.href %} <a href="{{ first_step.step.href }}"{% if first_step.step.external %} target="_blank" rel="noopener"{% endif %}>{{ first_step.step.label_ar }}</a>{% endif %}</p>
+    <h2 id="plan-next-title" class="plan-next-what"><span class="plan-next-label">{{ _("خطوتك التالية:") }}</span> {{ first_step.name }}{{ _("،") }} {{ first_step.step.text_ar }}{% if first_step.step.href %} <a href="{{ first_step.step.href }}"{% if first_step.step.external %} target="_blank" rel="noopener"{% endif %}>{{ first_step.step.label_ar }}</a>{% endif %}</h2>
     {% else %}
-    <p class="plan-next-what">{{ _("لا موعد قادمًا في خطتك. افتح كل جامعة لترى ما تطلبه.") }}</p>
+    <h2 id="plan-next-title" class="plan-next-what"><span class="plan-next-label">{{ _("خطوتك التالية:") }}</span> {{ _("لا موعد قادمًا في خطتك. افتح كل جامعة لترى ما تطلبه.") }}</h2>
     {% endif %}
     {% if compare_ids | length >= 2 %}
     <p class="plan-next-compare"><a class="btn btn--small" href="{{ url_for('compare_page') }}?u={{ compare_ids | join(',') }}">{{ _f("قارن جامعات خطتك ({n})", n=compare_ids | length) }}</a></p>

@@ -23,6 +23,7 @@ python scripts/stale_facts.py --as-of 2026-12-09 --days 45   # facts to re-check
 python scripts/check_quote.py URL "quote"       # does an official page really say this?
 python scripts/check_sources.py                 # every university fact still on its cited page?
 python scripts/watch.py                         # what needs updating: new واعد programs, passed deadlines, broken pages (--offline: no internet)
+node scripts/check_journeys.mjs http://127.0.0.1:8000   # the main journeys on an emulated iPhone: the question, its answer, compare, «خطتي», keyboard, reduced motion, errors (add --en, --desktop)
 node scripts/check_explorer.mjs                 # the explorer's JavaScript in a browser (needs Playwright)
 node scripts/check_explorer.mjs http://127.0.0.1:8000 --en   # the same flows on the English pages
 node scripts/check_plan.mjs                     # «خطتي» on an emulated iPhone: old saves move in, save, status, the hub, the .ics, «هذا صفّي», reload, remove (add --en)

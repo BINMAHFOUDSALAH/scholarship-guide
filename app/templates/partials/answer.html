@@ -79,7 +79,6 @@
 {% set lists_year = explorer.source.academic_year | replace("-", "–") %}
 <section class="answer{% if compact %} answer--compact{% endif %}" aria-labelledby="answer-title" data-answer data-answer-total="{{ a.total }}">
   <header class="answer-head">
-    <p class="answer-kicker">{{ _f("من قوائم الابتعاث {year}", year=lists_year) }}</p>
     {% set num, words = a.total | count_split("universities") %}
     <h2 id="answer-title" class="answer-title">
       {%- if a.total %}{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }}
@@ -90,6 +89,7 @@
       {%- elif a.kind == "country" %}{{ _f("لا جامعة في {country} في قائمة الرواد", country=a.country_ar) }}
       {%- else %}{{ _("لا جامعة تطابق سؤالك") }}{% if a.country %} {{ a.country | in_country }}{% endif %}{% endif -%}
     </h2>
+    <p class="answer-source">{{ _f("من قوائم الابتعاث {year}", year=lists_year) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
     {% if a.groups | length > 1 %}
     <p class="answer-split">{% for g in a.groups %}<span class="answer-split-part">{{ g.count }} {{ _("في") }} {% if g.track == "arruaad" %}{{ _("الرواد") }}{% else %}{{ _("إمداد") }}{% if a.groups | selectattr("track", "equalto", "emdad") | list | length > 1 %} ({{ g.field.name_ar }}){% endif %}{% endif %}</span>{% endfor %}</p>
     {% endif %}
@@ -177,10 +177,12 @@
     <h3 class="next-title" id="next-title">{{ _("خطوتك التالية") }}</h3>
     <fieldset class="next-grade">
       <legend class="next-grade-label">{{ _("أنا في") }}</legend>
-      {% for g in grade_links %}
-      <input class="next-grade-input" type="radio" name="next-grade" id="next-{{ g.slug }}" value="{{ g.slug }}" data-next-grade{% if g.slug == "grade-12" %} checked{% endif %}>
-      <label class="next-grade-option" for="next-{{ g.slug }}">{{ g.label_ar }}</label>
-      {% endfor %}
+      <div class="next-grade-options">
+        {% for g in grade_links %}
+        <input class="next-grade-input" type="radio" name="next-grade" id="next-{{ g.slug }}" value="{{ g.slug }}" data-next-grade{% if g.slug == "grade-12" %} checked{% endif %}>
+        <label class="next-grade-option" for="next-{{ g.slug }}">{{ g.label_ar }}</label>
+        {% endfor %}
+      </div>
     </fieldset>
   </div>
 

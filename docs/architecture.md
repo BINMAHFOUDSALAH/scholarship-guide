@@ -9,7 +9,9 @@ See [`CLAUDE.md`](../CLAUDE.md) for project workflow, [design guidance](../.clau
 | Area | Start here |
 | --- | --- |
 | Routes and page rendering | `app/main.py`, `app/templates/` |
+| The question «أريد دراسة … في …» and its answer | `app/answer.py`, `app/templates/partials/ask.html`, `app/templates/partials/answer.html`, `app/static/ask.js` |
 | University Finder and profiles | `app/universities.py`, `app/static/universities.js` |
+| «قارن» (comparing universities) | `app/compare.py`, `app/templates/compare.html`, `app/static/compare.js` |
 | Site search and guide retrieval | `app/search.py` |
 | Saved choices and calendar export | `app/plan.py`, `app/static/mylist.js` |
 | «جرّب قبل أن تقرر» | `app/exploration.py`, `data/exploration.json`, `app/static/explore.js` |
@@ -33,6 +35,8 @@ See [`CLAUDE.md`](../CLAUDE.md) for project workflow, [design guidance](../.clau
 ## Search and وضّاح
 
 `app/search.py` builds an in-memory SQLite FTS5 index from published guides and facts. `retrieve()` provides an existing way to find passages for explanations. University lists, admission requirements, and deadlines can be looked up from the records already used by the Finder.
+
+`app/answer.py` turns a typed question into a major and a country, and a search result into an answer: the universities grouped by why they appear (the track's list), each with the university's own admission facts and their sources. The homepage, the Finder, and `/api/answer` share it; the API returns plain data with the actions a student can take on each university (open, save to «خطتي», compare), so وضّاح can use the same records and actions. `/compare?u=a,b,c` draws a comparison from its address.
 
 The homepage currently shows a sourced example of what وضّاح could do. Google sign-in and the live agent are the next milestone after the redesign. Keep implementation decisions in [the agent spec](specs/agent.md) and [the accounts spec](specs/accounts.md).
 

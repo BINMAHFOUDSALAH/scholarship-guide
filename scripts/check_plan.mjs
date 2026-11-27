@@ -54,8 +54,10 @@ check("the old key is removed", (await page.evaluate(() => localStorage.getItem(
 check("the homepage's return strip shows", await page.locator("[data-plan-strip]").isVisible());
 check("the header count shows 2", (await page.locator("[data-mylist-count]").first().innerText()) === "2");
 
-// 2. Save a program track from the homepage, and a university from the results.
-const arruaad = page.locator('button[data-save="arruaad"][data-save-type="program"]');
+// 2. Save a program track from «البرامج» (the homepage lists a track only while it's open or opening), and a
+//    university from the results.
+await page.goto(base + "/programs");
+const arruaad = page.locator('button[data-save="arruaad"][data-save-type="program"]').first();
 await arruaad.scrollIntoViewIfNeeded();
 await arruaad.tap();
 check("«احفظ» on الرواد marks it saved", (await arruaad.innerText()).trim() === L.saved);
@@ -89,12 +91,20 @@ await page.reload();
 await page.waitForSelector("[data-mylist-rows]:not([hidden])");
 check("a reload keeps the status", (await page.locator('select[data-status="university:stanford-university"]').inputValue()) === "applied");
 
-// 3b. The hub (decision 083): the route of statuses, «قريبًا», the calendar file.
-const hub = page.locator("[data-plan-hub]");
-check("the hub shows above the rows", await hub.isVisible() && await page.evaluate(() => {
-  const h = document.querySelector("[data-plan-hub]"), r = document.querySelector("[data-mylist-rows]");
-  return h.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING;
+// 3b. Redesign v3: the next step above the rows; under them every date in order, the calendar file and the route.
+const lead = page.locator("[data-plan-hub]");
+check("the next step shows above the rows", await lead.isVisible() && await lead.locator(".plan-next-what").isVisible()
+  && await page.evaluate(() => {
+    const h = document.querySelector("[data-plan-hub]"), r = document.querySelector("[data-mylist-rows]");
+    return h.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING;
+  }));
+const hub = page.locator("[data-plan-dates]");
+check("the dates and the route show under the rows", await hub.isVisible() && await page.evaluate(() => {
+  const d = document.querySelector("[data-plan-dates]"), r = document.querySelector("[data-mylist-rows]");
+  return r.compareDocumentPosition(d) & Node.DOCUMENT_POSITION_FOLLOWING;
 }));
+const shownDates = await hub.locator(".plan-tl-date").evaluateAll((els) => els.map((e) => e.getAttribute("datetime")));
+check("the plan's dates are in order", shownDates.length > 0 && shownDates.join() === [...shownDates].sort().join(), shownDates.join(" "));
 check("the route counts one item applied, lit to that step", (await hub.locator(".plan-route-stop.is-here .plan-route-count").innerText()) === "1"
   && (await hub.locator(".plan-route-stop.is-reached").count()) === 3);
 check("no template is left in the rows", (await page.locator("[data-mylist-rows] template").count()) === 0);

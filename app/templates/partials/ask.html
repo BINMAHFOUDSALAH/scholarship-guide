@@ -14,7 +14,7 @@
     <label class="sr-only" for="{{ prefix }}q">{{ _("أريد دراسة: تخصص أو جامعة") }}</label>
     {#- The slot grows with its words (ask.js measures them); without JavaScript it keeps a comfortable width. #}
     <input class="ask-input" id="{{ prefix }}q" name="q" type="search" value="{{ q }}" autocomplete="off" maxlength="100"
-           spellcheck="false" enterkeyhint="search"
+           spellcheck="false" enterkeyhint="search" placeholder="{{ _('تخصص أو جامعة…') }}"
            role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="{{ prefix }}q-suggest"
            {% if hint %}aria-describedby="{{ prefix }}q-hint"{% endif %} data-suggest="{{ url_for('suggestions_api') }}" data-ask-q>
     <span class="ask-measure" aria-hidden="true" data-ask-measure></span>

@@ -54,6 +54,7 @@
     if (page) return; // the page is the comparison
     if (!ids.length) {
       if (tray) tray.hidden = true;
+      clearance(0);
       return;
     }
     if (!tray) {
@@ -80,6 +81,14 @@
     open.textContent = t("قارن الآن");
     open.href = BASE + "/compare?u=" + ids.join(",");
     open.hidden = n < 2;
+    clearance(tray.offsetHeight + 24);
+  }
+
+  // The tray is fixed at the bottom: keep the page's last controls clear of it, and make a control focused by Tab
+  // scroll above it, never under it.
+  function clearance(px) {
+    document.documentElement.style.scrollPaddingBottom = px ? px + "px" : "";
+    document.body.style.paddingBottom = px ? px + "px" : "";
   }
 
   document.addEventListener("click", (event) => {
