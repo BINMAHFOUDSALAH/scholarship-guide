@@ -260,7 +260,29 @@
     }
 
     // Draw every row from the server; `focusKey` puts the keyboard back on that row's status after a redraw.
-    async function draw(focusKey) {
+    // The parts of a row that follow its status: the program's state, the date the status changed, the next step.
+    const ROW_PARTS = [".plan-program", ".plan-date", ".plan-step"];
+
+    // A status just changed in `keepKey`'s row: update that row's parts in place and keep its select, so the select
+    // the student is using stays where it is. (2026-11-27: the whole list was redrawn and focus put on the new
+    // select; on an iPhone, focusing a select opens its picker, so the picker came back after every choice and the
+    // student couldn't tell it had been saved.)
+    function patchRow(old, fresh) {
+      for (const sel of ROW_PARTS) {
+        const was = old.querySelector(sel);
+        const now = fresh.querySelector(sel);
+        if (was && now) was.replaceWith(now);
+        else if (was) was.remove();
+        else if (now) {
+          if (sel === ".plan-date") old.querySelector(".plan-status").append(now);
+          else if (sel === ".plan-step") old.querySelector(".plan-status").after(now);
+          else old.querySelector(".plan-name").after(now);
+        }
+      }
+    }
+
+    // Draw every row from the server. `keepKey`: the row whose status the student just changed (patched in place).
+    async function draw(keepKey) {
       const items = read();
       if (!items.length) {
         showEmpty();
@@ -269,6 +291,7 @@
       const first = !rows.children.length;
       const ticket = ++drawTicket;
       if (first) loading.hidden = false;
+      const fresh = document.createElement("template");
       try {
         const response = await fetch(page.dataset.rowsUrl, {
           method: "POST", headers: { "Content-Type": "application/json" },
@@ -277,16 +300,28 @@
         if (!response.ok) throw new Error("rows " + response.status);
         const html = await response.text();
         if (ticket !== drawTicket) return; // a newer redraw (or an emptied plan) replaced this one
-        rows.innerHTML = html;
+        fresh.innerHTML = html;
         // The parts come with the rows: the next step above them; the dates in order, then the map, under them, so
         // the saved items come first.
         for (const [name, box] of [["hub", hub], ["dates", datesBox], ["where", where]]) {
-          const part = rows.querySelector(`template[data-plan-part="${name}"]`);
+          const part = fresh.content.querySelector(`template[data-plan-part="${name}"]`);
           if (box) {
             box.replaceChildren(part ? part.content.cloneNode(true) : "");
             box.hidden = !part;
           }
           if (part) part.remove();
+        }
+        const freshRows = [...fresh.content.querySelectorAll("[data-mylist-item]")];
+        const oldRows = [...rows.querySelectorAll("[data-mylist-item]")];
+        const sameRows = keepKey && freshRows.length === oldRows.length
+          && freshRows.every((li, i) => li.dataset.mylistItem === oldRows[i].dataset.mylistItem);
+        if (sameRows) {
+          freshRows.forEach((li, i) => {
+            if (li.dataset.mylistItem === keepKey) patchRow(oldRows[i], li);
+            else oldRows[i].replaceWith(li);
+          });
+        } else {
+          rows.replaceChildren(fresh.content);
         }
       } catch (e) {
         if (ticket === drawTicket) failed.hidden = false;
@@ -304,10 +339,17 @@
         return;
       }
       rows.hidden = false;
-      if (focusKey) {
-        const select = rows.querySelector('select[data-status="' + focusKey + '"]');
-        if (select) select.focus();
-      }
+    }
+
+    // «حُفظ» beside the select, so a sighted student sees the choice was kept (the status line says it for screen
+    // readers). It stays until the next change.
+    function showSaved(select) {
+      for (const old of rows.querySelectorAll(".plan-saved")) old.remove();
+      const note = document.createElement("span");
+      note.className = "plan-saved";
+      note.setAttribute("aria-hidden", "true");
+      note.textContent = t("حُفظ");
+      select.after(note);
     }
 
     rows.addEventListener("change", (event) => {
@@ -320,6 +362,7 @@
         return;
       }
       status.textContent = t("حُفظ: {status}.").replace("{status}", select.options[select.selectedIndex].text);
+      showSaved(select);
       // The next step and the date follow the new status. «قُبلت» lights the row once (decision 083).
       draw(key).then(() => {
         if (select.value !== "accepted") return;

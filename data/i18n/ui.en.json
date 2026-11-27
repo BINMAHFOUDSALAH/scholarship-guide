@@ -781,5 +781,12 @@
  "«{q}» من برامج الابتعاث": "“{q}” is a scholarship program",
  "برنامج ابتعاث": "Scholarship program",
  "له صفحته: من يتقدم، ومتى، وحالة التقديم الآن.": "It has its own page: who can apply, when, and whether applications are open now.",
- "احفظ أو قارن": "Save or compare"
+ "احفظ أو قارن": "Save or compare",
+ "اختر «أين وصلت؟» لكل جامعة أو برنامج، فتتغير خطوتك التالية بحسب اختيارك. وتبقى مواعيده في خطتك وتقويمك حتى تختار «قُبلت» أو «لم أُقبل».": "Choose “Where are you?” for each university or program, and your next step changes with your choice. Its dates stay in your plan and calendar until you choose “Accepted” or “Not accepted”.",
+ "التقديم مفتوح الآن.": "Applications are open now.",
+ "اقرأ شروطه وتأكد أنها تناسبك. {when}.": "Read its requirements and check they fit you. {when}.",
+ "اقرأ شروطه وتأكد أنها تناسبك.": "Read its requirements and check they fit you.",
+ "التقديم مفتوح الآن. {when}.": "Applications are open now. {when}.",
+ "جهّز ما يطلبه، وتابع موعد فتح التقديم. {when}.": "Prepare what it asks for, and watch for applications to open. {when}.",
+ "جهّز ما يطلبه، وتابع موعد فتح التقديم.": "Prepare what it asks for, and watch for applications to open."
 }
