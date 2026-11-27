@@ -53,6 +53,14 @@ await page.waitForTimeout(200);
 ok((await page.locator("#home-country").inputValue()) === "US", "a country chip refills «في»");
 ok(await page.evaluate(() => document.activeElement && document.activeElement.id !== "home-country" && document.activeElement.classList.contains("answer-title")),
   "…and focus lands on the new answer, not on «في» (a focused <select> opens the picker on iOS)");
+// Back (owner, 2026-11-27): a flag is a step, so Back returns to the previous answer instead of leaving the site.
+await page.goBack();
+await page.waitForTimeout(600);
+ok(page.url() === base + P + "/" && (await page.locator("#home-country").inputValue()) === "GB",
+  "Back after a flag stays on the homepage with the previous answer");
+await page.goForward();
+await page.waitForTimeout(600);
+ok((await page.locator("#home-country").inputValue()) === "US", "…and Forward brings the flag's answer back");
 await page.locator("#home-country").selectOption("GB");
 await page.waitForResponse((r) => r.url().includes("country=GB"));
 await page.waitForTimeout(200);
@@ -60,6 +68,21 @@ await page.locator(".answer-full a").click();
 await page.waitForLoadState("networkidle");
 ok(page.url().includes("/universities") && page.url().includes("country=GB"), "«اعرض الإجابة كاملة» opens the Finder with the same question");
 ok(await page.locator(".acard").count() === 7, "the Finder shows all 7 cards");
+// A flag in the Finder is a step too: Back returns to the previous results, still in the Finder.
+{
+  const before = page.url();
+  const chip = page.locator('#results a[data-set-country]:not([data-set-country="GB"]):not([data-set-country=""])').first();
+  if (await chip.count()) {
+    await chip.click();
+    await page.waitForTimeout(800);
+    const after = page.url();
+    await page.goBack();
+    await page.waitForTimeout(800);
+    const same = (a, b) => new URL(a).searchParams.toString() === new URL(b).searchParams.toString();
+    ok(!same(after, before) && same(page.url(), before) && (await page.locator("form[data-explorer] [name=country]").inputValue()) === "GB",
+      "Back after a flag in the Finder returns to the previous results");
+  }
+}
 ok(await page.locator(".next").isVisible(), "the Finder's answer ends on the next step");
 // The grade radios: «ثاني ثانوي» shows its own steps (CSS :has, no script needed).
 await page.locator('label[for="next-grade-11"]').click();

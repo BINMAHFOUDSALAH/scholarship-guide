@@ -85,6 +85,7 @@
       event.preventDefault();
       finder.elements.country.value = chip.dataset.setCountry;
       fitAll(finder);
+      finder.dataset.pushNext = "1"; // a step Back can undo (universities.js)
       finder.elements.country.dispatchEvent(new Event("change", { bubbles: true }));
       results.focus();
     });
@@ -100,6 +101,32 @@
     let timer = null;
     let latest = 0;
     let last = new URLSearchParams(new FormData(live)).toString();
+
+    // History (owner, 2026-11-27): a flag, an example, a country or a major picked is a step, so Back on a phone
+    // (iOS swipe or button) returns to the previous answer instead of leaving the site. Typing only updates the
+    // current step. The URL stays "/": the question lives in history.state, which also brings the answer back when
+    // the browser reloads the homepage on Back from a university page.
+    const asked = () => ({ q: q.value || "", country: live.elements.country.value || "" });
+    const sameAsk = (a, b) => a.q === b.q && a.country === b.country;
+    function record(push) {
+      const state = history.state || {};
+      try {
+        if (push && state.ask && !sameAsk(state.ask, asked())) {
+          history.replaceState({ ...state, y: window.scrollY }, "");
+          history.pushState({ ask: asked() }, "");
+        } else {
+          history.replaceState({ ...state, ask: asked() }, "");
+        }
+      } catch (e) { /* history blocked: the answer still updates */ }
+    }
+    function restore(state, scroll) {
+      q.value = state.ask.q;
+      live.elements.country.value = state.ask.country;
+      fitAll(live);
+      return update().then(() => {
+        if (scroll && typeof state.y === "number") window.scrollTo(0, state.y);
+      });
+    }
 
     async function update(force) {
       const params = new URLSearchParams(new FormData(live));
@@ -143,14 +170,15 @@
     if (window.WadihCombobox) {
       const combobox = window.WadihCombobox(q,
         (u) => { location.href = BASE + "/universities/" + encodeURIComponent(u.id); },
-        (m) => { q.value = m.name_ar; combobox.close(); fitAll(live); update(); });
+        (m) => { q.value = m.name_ar; combobox.close(); fitAll(live); record(true); update(); });
     }
-    q.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(update, 350); });
-    live.addEventListener("change", (event) => { if (event.target !== q) update(); });
+    q.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(() => { record(false); update(); }, 350); });
+    live.addEventListener("change", (event) => { if (event.target !== q) { record(true); update(); } });
     live.addEventListener("submit", (event) => {
       // «اعرض الجامعات» opens the full answer in the Finder (the form's own action); Enter in the box just refreshes.
       if (event.submitter) return;
       event.preventDefault();
+      record(false);
       update(true);
     });
     // An example under the question fills both slots.
@@ -161,6 +189,7 @@
       q.value = ex.dataset.q || "";
       live.elements.country.value = ex.dataset.country || "";
       fitAll(live);
+      record(true);
       update();
     });
     // The answer's country chips refill «في» on the homepage too.
@@ -170,6 +199,7 @@
       event.preventDefault();
       live.elements.country.value = chip.dataset.setCountry;
       fitAll(live);
+      record(true);
       // Focus moves to the new answer's title, not to «في»: focusing a <select> opens the native picker on iOS,
       // which then covered the answer the student had just asked for.
       update().then(() => {
@@ -179,6 +209,25 @@
         head.focus();
       });
     });
+
+    // A university opened from the answer: remember where the student was, for the way back.
+    target.addEventListener("click", (event) => {
+      if (!event.target.closest('a[href*="/universities/"]')) return;
+      try { history.replaceState({ ...(history.state || {}), ask: asked(), y: window.scrollY }, ""); } catch (e) { /* not needed to work */ }
+    });
+
+    // Back and Forward between answers on this page. We place the page ourselves once the answer is drawn.
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.addEventListener("popstate", (event) => {
+      if (event.state && event.state.ask) restore(event.state, true);
+    });
+
+    // The first step. If the browser reloaded the homepage on Back (no instant Back) or on reload, the question it
+    // kept comes back. A fresh visit (the logo, a link to "/") starts empty even where the browser kept the old state.
+    const kept = history.state && history.state.ask;
+    const nav = ((performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {}).type;
+    if (kept && (nav === "back_forward" || nav === "reload") && !sameAsk(kept, asked())) restore(history.state, true);
+    else record(false);
   }
 
   // ---------- small touches ----------
