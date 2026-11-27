@@ -17,6 +17,7 @@ paths:
 
 - Use the existing Wadih logo and وضّاح mascot assets. Save new mascot poses as separate files. Give the mascot a purpose wherever it appears, and label agent previews as examples.
 - Choose photography, illustration, diagrams, or 3D based on what each page needs. Use original or appropriately licensed assets and credit them where applicable. Use clear status labels and avoid decorative four-point sparkles.
+- Footer (owner, 2026-11-26): «أحد منتجات فريق نيو هورايزن», with the team's name as a pill linking to its X account @NewHorizon___ and a «راسلنا بالبريد» pill opening an email to newhorizonteam10@gmail.com. Draw the X mark and envelope as icons.
 
 ## Design skills
 
