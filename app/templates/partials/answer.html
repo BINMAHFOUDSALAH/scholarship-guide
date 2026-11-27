@@ -7,7 +7,7 @@
     القبول — will the university take you? (its own pages: the Saudi certificate, English, the next deadline)
   A fact we haven't read is said, never guessed. Each value links its official source.
 
-  answer(a, compact): compact = the homepage (fewer cards, «اعرض الإجابة كاملة» opens the Finder).
+  answer(a, compact): compact = the homepage (fewer cards, «اعرض باقي…» opens the Finder).
 #}
 {% import "partials/uni_macros.html" as um with context %}
 
@@ -146,8 +146,17 @@
   </section>
   {% endif %}
 
+  {#- The homepage shows 3 cards a group; the button names what is left (one track's rest, or the rest of all). #}
   {% if compact and a.total %}
-  <p class="answer-full"><a class="btn btn--primary" href="/universities?q={{ a.q | urlencode }}{% if a.country %}&amp;country={{ a.country }}{% endif %}">{{ _f("اعرض الإجابة كاملة ({n})", n=a.total | count_ar("universities")) }}</a></p>
+  {% set rest = a.groups | selectattr("count", "gt", 3) | list %}
+  {% set left = (rest | sum(attribute="count")) - 3 * (rest | length) %}
+  {% endif %}
+  {% if compact and a.total and left > 0 %}
+  <p class="answer-full"><a class="btn btn--primary" href="/universities?q={{ a.q | urlencode }}{% if a.country %}&amp;country={{ a.country }}{% endif %}">
+    {%- if rest | length == 1 and rest[0].track == "arruaad" %}{{ _f("اعرض باقي جامعات الرواد ({n})", n=left) }}
+    {%- elif rest | length == 1 %}{{ _f("اعرض باقي جامعات إمداد ({n})", n=left) }}
+    {%- else %}{{ _f("اعرض باقي الجامعات ({n})", n=left) }}{% endif -%}
+  </a></p>
   {% endif %}
 
   {#- The same major elsewhere: the country chips with their counts (one tap fills «في»). #}
