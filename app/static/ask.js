@@ -170,8 +170,14 @@
       event.preventDefault();
       live.elements.country.value = chip.dataset.setCountry;
       fitAll(live);
-      update();
-      live.elements.country.focus();
+      // Focus moves to the new answer's title, not to «في»: focusing a <select> opens the native picker on iOS,
+      // which then covered the answer the student had just asked for.
+      update().then(() => {
+        const head = target.querySelector(".answer-title");
+        if (!head) return;
+        head.setAttribute("tabindex", "-1");
+        head.focus();
+      });
     });
   }
 

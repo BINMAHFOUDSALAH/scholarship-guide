@@ -51,6 +51,8 @@ await page.locator('a[data-set-country="US"]').first().click();
 await page.waitForResponse((r) => r.url().includes("/answer?") && r.url().includes("country=US"));
 await page.waitForTimeout(200);
 ok((await page.locator("#home-country").inputValue()) === "US", "a country chip refills «في»");
+ok(await page.evaluate(() => document.activeElement && document.activeElement.id !== "home-country" && document.activeElement.classList.contains("answer-title")),
+  "…and focus lands on the new answer, not on «في» (a focused <select> opens the picker on iOS)");
 await page.locator("#home-country").selectOption("GB");
 await page.waitForResponse((r) => r.url().includes("country=GB"));
 await page.waitForTimeout(200);

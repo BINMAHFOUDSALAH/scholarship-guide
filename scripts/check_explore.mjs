@@ -154,7 +154,7 @@ for (let i = 0; i < 14; i++) {
   }
   if (i < 13 && (await counter()) === before) { check(`activity ${i + 1} moved on`, false, before); break; }
 }
-await tapNext(); // subjects: skipped
+// The subjects (question 15) are left unanswered; it is the last question.
 // The last question: its button goes straight to the result; there is no page in between.
 check("the last question has no next step, only the result's button", await page.locator("[data-submit]").isVisible()
   && !(await page.locator("[data-next]").isVisible()) && (await page.locator("[data-review]").count()) === 0);
@@ -163,9 +163,11 @@ await Promise.all([page.waitForNavigation(), page.locator("[data-submit]").tap()
 check("the answers never appear in the address", !page.url().includes("?"), page.url());
 const reasons = await page.locator(".explore-why li").evaluateAll((items) => items.map((li) =>
   [li.querySelector(".explore-why-activity").textContent.trim(), li.querySelector(".explore-answer").textContent.trim()]));
+// An activity counts for 1-3 fields (decision 087), so the same reason can appear on more than one card.
+const reasonActivities = new Set(reasons.map(([q]) => q));
 check("the result's reasons are exactly what was tapped",
-  reasons.length === Object.keys(tapped).length && reasons.every(([q, a]) => tapped[q] === a),
-  `${reasons.length} reasons, ${Object.keys(tapped).length} tapped`);
+  reasons.every(([q, a]) => tapped[q] === a) && Object.keys(tapped).every((q) => reasonActivities.has(q)),
+  `${reasonActivities.size} distinct reasons (${reasons.length} on cards), ${Object.keys(tapped).length} tapped`);
 
 // The result: what a student sees, and the one action on a card.
 const cards = page.locator(".explore-band .explore-field");
@@ -234,8 +236,10 @@ check("Enter moves on, and fast key presses all count", (await counter()) === L.
 // The guard's own job: a tap on an answer right after moving on (the second tap of a double tap) is ignored.
 await page.goto(url);
 await page.waitForTimeout(450);
-const nextAt = await page.locator("[data-next]").boundingBox();
+// Both spots are measured once the button is on screen (on the English page it starts just below the fold).
+await page.locator("[data-next]").scrollIntoViewIfNeeded();
 const answerAt = await spot("ok"); // the answers sit in the same place on the next question
+const nextAt = await page.locator("[data-next]").boundingBox();
 await page.touchscreen.tap(nextAt.x + nextAt.width / 2, nextAt.y + nextAt.height / 2); // skip activity 1: moves to activity 2 and starts the guard
 await fingerTap(answerAt); // at once: the accidental second tap
 await page.waitForTimeout(100);
