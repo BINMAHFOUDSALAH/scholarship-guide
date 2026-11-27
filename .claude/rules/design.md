@@ -20,10 +20,10 @@ paths:
 
 ## Design skills
 
-Start with Taste and Impeccable for substantial redesigns. Use the other available skills where they help.
+Start with Taste for substantial redesigns, plus Impeccable when it is installed. Use the other available skills where they help.
 
 - **Taste (`design-taste-frontend`)** develops the visual direction, typography, imagery, and interactions.
-- **Impeccable (`impeccable`)** critiques the rendered pages and helps refine hierarchy, spacing, copy, and mobile behavior.
+- **Impeccable (`impeccable`)**, when installed locally (it is not in the repository), critiques the rendered pages and helps refine hierarchy, spacing, copy, and mobile behavior.
 - **Animate (`animate`)** helps when motion explains a change or guides the student’s attention.
 - **3D tools** are useful when depth or interaction makes something easier to understand. Check mobile performance, touch controls, and the fallback.
 - **`web-design-guidelines`** helps review accessibility and usability. Verify findings in the browser.
