@@ -110,19 +110,23 @@
   {% if closed or board.recent %}
   <section class="section board-closed" aria-labelledby="closed-title">
     <h2 id="closed-title" class="section-title">{{ _("مغلق الآن") }}</h2>
+    {#- Most closed items are واعد announcements from the same Ministry page: one named link for them (2026-11-27). #}
+    {% set from_waaid = (closed + board.recent) | selectattr("source_url", "equalto", waaid_source) | list %}
+    {% set group_waaid = from_waaid | length > 1 %}
+    {% if group_waaid %}<p class="result-note">{{ _("مواعيد إغلاق برامج واعد أدناه من") }} <a class="src src--named" href="{{ waaid_source }}" target="_blank" rel="noopener">{{ _("صفحة مسار واعد") }}</a></p>{% endif %}
     <ul class="closed-list">
       {% for item in closed %}
       <li class="closed-item">
         <p class="closed-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
         {% if item.program_ar != item.title_ar %}<p class="closed-program">{{ item.program_ar }}</p>{% endif %}
-        <p class="closed-when">{{ c.status_tag(item.status) }}{% if item.closed_on %} <span class="board-date">{{ _f("في {date}", date=item.closed_on | arabic_date) }}</span>{% endif %}{% if item.source_url %} <a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+        <p class="closed-when">{{ c.status_tag(item.status) }}{% if item.closed_on %} <span class="board-date">{{ _f("في {date}", date=item.closed_on | arabic_date) }}</span>{% endif %}{% if item.source_url and not (group_waaid and item.source_url == waaid_source) %} <a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
       </li>
       {% endfor %}
       {% for item in board.recent %}
       <li class="closed-item">
         <p class="closed-name">{% if item.page %}<a href="{{ item.page }}">{{ item.title_ar }}</a>{% else %}{{ item.title_ar }}{% endif %}</p>
         {% if item.program_ar != item.title_ar %}<p class="closed-program">{{ item.program_ar }}</p>{% endif %}
-        <p class="closed-when"><span class="board-date">{{ _("أُغلق في") }} <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time></span>{% if item.source_url %} <a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+        <p class="closed-when"><span class="board-date">{{ _("أُغلق في") }} <time datetime="{{ item.closed_on }}">{{ item.closed_on | arabic_date }}</time></span>{% if item.source_url and not (group_waaid and item.source_url == waaid_source) %} <a class="src" href="{{ item.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
       </li>
       {% endfor %}
     </ul>

@@ -20,6 +20,12 @@
 #}
 {% macro save_button(u) %}<button class="save-mini" type="button" data-save="{{ u.id }}" data-save-name="{{ u.name_ar or u.name_en }}" data-pending tabindex="-1"><span data-save-label>{{ _("احفظ") }}</span></button>{% endmacro %}
 
+{#
+  «قارن» beside «احفظ» (2026-11-27): adds the university to the comparison this browser keeps (compare.js, at most four).
+  Hidden until compare.js knows the browser can keep the picks.
+#}
+{% macro compare_button(u) %}<button class="compare-toggle" type="button" data-compare="{{ u.id }}" data-compare-name="{{ u.name_ar or u.name_en }}" aria-pressed="false" hidden><span data-compare-label>{{ _("قارن") }}</span></button>{% endmacro %}
+
 {# The same for a program track in «خطتي» (decision 078, Part B); pid from plan.program_targets. #}
 {% macro save_program(pid, name) %}<button class="save-mini" type="button" data-save="{{ pid }}" data-save-type="program" data-save-name="{{ name }}" data-pending tabindex="-1"><span data-save-label>{{ _("احفظ") }}</span></button>{% endmacro %}
 
@@ -128,4 +134,16 @@
   {% if em %}<span class="tag">{{ _("إمداد:") }} {{ em | length | count_ar("fields") }}</span>{% endif %}
   {% if rd %}<span class="tag">{{ _("البحث والتطوير (دكتوراه):") }} {{ rd | length | count_ar("fields") }}</span>{% endif %}
 </span>
+{% endmacro %}
+
+{#
+  A scholarship program's name typed in a search (2026-11-27): «كاوست» is a program, not a university or a major, so
+  the answer leads to its page. data-program-match lets the search box open it when the name is submitted as it is.
+#}
+{% macro program_match(prog) %}
+<div class="notice program-match" data-program-match="{{ prog.href }}">
+  <p class="program-match-kicker">{{ _("برنامج ابتعاث") }}</p>
+  <p class="program-match-name"><a href="{{ prog.href }}">{{ prog.name_ar }}</a>{% if prog.name_en %} <bdi class="program-match-en" lang="en">{{ prog.name_en }}</bdi>{% endif %}</p>
+  <p class="program-match-hint">{{ _("له صفحته: من يتقدم، ومتى، وحالة التقديم الآن.") }}</p>
+</div>
 {% endmacro %}

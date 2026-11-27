@@ -34,7 +34,9 @@
             data-ask-live data-answer-url="{{ url_for('answer_partial') }}">
         {{ ask.ask_sentence(ask_q, ask_country, "home-") }}
         <div class="ask-actions">
-          <button class="btn btn--primary" type="submit">{{ _("اعرض الجامعات") }}</button>
+          <button class="btn btn--lime" type="submit">{{ _("اعرض الجامعات") }}</button>
+          {#- Reopens the comparison this browser keeps, or opens the page to choose universities (compare.js). #}
+          <a class="ask-compare" href="{{ url_for('compare_page') }}" data-compare-entry>{{ _("قارن الجامعات") }}</a>
           {% if explore_public() %}
           <p class="ask-door"><span>{{ _("لم تقرر ماذا تدرس؟") }}</span> <a class="ask-door-link" href="{{ url_for('explore_page') }}">{{ _("جرّب قبل أن تقرر") }}</a></p>
           {% endif %}
@@ -85,7 +87,7 @@
       </a></li>
     </ol>
     {#- A returning student's plan, one line (decision 080), only while this browser holds one (mylist.js). #}
-    <p class="hero-plan" data-plan-strip hidden><span class="diamond" aria-hidden="true"></span>{{ _("لديك خطة محفوظة على هذا الجهاز.") }} <a href="{{ url_for('my_plan') }}">{{ _("تابع خطتك") }}</a></p>
+    <p class="hero-plan" data-plan-strip hidden><span class="mark-dot" aria-hidden="true"></span>{{ _("لديك خطة محفوظة على هذا الجهاز.") }} <a href="{{ url_for('my_plan') }}">{{ _("تابع خطتك") }}</a></p>
   </div>
 </nav>
 

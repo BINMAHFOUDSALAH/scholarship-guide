@@ -24,7 +24,7 @@
       <form class="explorer-form" method="get" action="{{ url_for('universities_page') }}" role="search" aria-label="{{ _('البحث في الجامعات') }}" data-explorer>
         {#- The question as a sentence (partials/ask.html): «أريد دراسة [تخصص] في [دولة]». The filters below refine it. #}
         {{ ask.ask_sentence(r.q, r.country, "") }}
-        <button class="btn btn--primary ask-submit" type="submit">{{ _("اعرض الجامعات") }}</button>
+        <button class="btn btn--lime ask-submit" type="submit">{{ _("اعرض الجامعات") }}</button>
 
         {# On phones (with JavaScript) the filters fold behind «الفلاتر»; the active ones stay visible as tags above the results. #}
         <button class="btn btn--secondary filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel" hidden data-filters-toggle>

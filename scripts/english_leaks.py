@@ -85,7 +85,10 @@ def english_urls(client):
              "/universities?lang=other", "/universities?lang=english", "/universities?q=germany",
              "/universities?track=emdad&field=1", "/universities?track=rnd&field=1", "/universities?track=arruaad&partial=1",
              "/universities?q=zzzz", "/universities?country=DE&lang=english", "/universities?track=emdad&country=US",
-             "/universities?q=harvard&track=rnd"]
+             "/universities?q=harvard&track=rnd",
+             "/compare?u=university-of-oxford,harvard-university,massachusetts-institute-of-technology-mit,ucl-university-college-london",
+             "/compare?u=technical-university-of-munich,university-of-toronto,the-university-of-edinburgh,university-of-california-los-angeles-ucla",
+             "/compare", "/compare?u=university-of-oxford", "/programs/kaust-kgsp"]
     return urls + ["/en" + u for u in extra]
 
 

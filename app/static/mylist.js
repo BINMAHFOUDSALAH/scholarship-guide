@@ -156,9 +156,9 @@
     const dx = b.left + b.width / 2 - (a.left + a.width / 2);
     const dy = b.top + b.height / 2 - (a.top + a.height / 2);
     light.animate([
-      { transform: "translate(0, 0) rotate(45deg) scale(1)", opacity: 1 },
-      { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 40}px) rotate(45deg) scale(1.2)`, opacity: 1, offset: 0.5 },
-      { transform: `translate(${dx}px, ${dy}px) rotate(45deg) scale(0.5)`, opacity: 0.2 },
+      { transform: "translate(0, 0) scale(1)", opacity: 1 },
+      { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 40}px) scale(1.2)`, opacity: 1, offset: 0.5 },
+      { transform: `translate(${dx}px, ${dy}px) scale(0.5)`, opacity: 0.2 },
     ], { duration: 600, easing: travel }).finished.then(() => {
       light.remove();
       arrive();

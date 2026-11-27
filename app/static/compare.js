@@ -27,6 +27,10 @@
     }
   }
 
+  // The names bar works even where the browser keeps nothing.
+  const comparePage = document.querySelector("[data-compare-page]");
+  if (comparePage) stickyNames(comparePage);
+
   if (!write(read())) return; // storage blocked: no picks, the toggles stay hidden
 
   const say = (text) => {
@@ -38,6 +42,41 @@
   const page = document.querySelector("[data-compare-page]");
   if (page) write((page.dataset.compareIds || "").split(",").filter((id) => ID.test(id)));
 
+  // Several screens down a phone, the student still sees whose column is whose: once the table's own header has
+  // scrolled away, a thin bar with the names stays at the top, its columns over the table's (and following it when
+  // the table scrolls sideways with three or four universities). Hidden from screen readers: the table's headers
+  // already name every value.
+  function stickyNames(root) {
+    const bar = root.querySelector("[data-compare-stick]");
+    const row = root.querySelector("[data-compare-stick-row]");
+    const head = root.querySelector("[data-compare-head]");
+    const scroller = root.querySelector("[data-compare-scroll]");
+    const table = scroller && scroller.querySelector("table");
+    if (!bar || !row || !head || !table) return;
+    let frame = 0;
+    function place() {
+      frame = 0;
+      const headBox = head.getBoundingClientRect();
+      const tableBox = table.getBoundingClientRect();
+      // Shown between the header leaving the screen and the table's last rows.
+      const show = headBox.bottom < 0 && tableBox.bottom > 80;
+      bar.hidden = !show;
+      if (!show) return;
+      // Measured from where the row sits untransformed, so it lines up in RTL and LTR alike.
+      row.style.width = tableBox.width + "px";
+      row.style.transform = "none";
+      const rowBox = row.getBoundingClientRect();
+      row.style.transform = "translateX(" + (tableBox.left - rowBox.left) + "px)";
+    }
+    const later = () => { if (!frame) frame = requestAnimationFrame(place); };
+    window.addEventListener("scroll", later, { passive: true });
+    window.addEventListener("resize", later);
+    scroller.addEventListener("scroll", later, { passive: true });
+    // «الفروق فقط» changes the table's height.
+    root.addEventListener("change", later);
+    place();
+  }
+
   function render(root) {
     const ids = read();
     for (const button of (root || document).querySelectorAll("button[data-compare]")) {
@@ -47,6 +86,7 @@
       button.hidden = false;
     }
     renderTray(ids);
+    renderEntries(ids);
   }
 
   let tray = null;
@@ -109,6 +149,40 @@
     }
     render();
   });
+
+  // «قارن الجامعات» beside the homepage's question: it reopens the comparison the student already has, or opens the
+  // page where they choose universities.
+  function renderEntries(ids) {
+    for (const link of document.querySelectorAll("a[data-compare-entry]")) {
+      link.href = BASE + "/compare" + (ids.length ? "?u=" + ids.join(",") : "");
+    }
+  }
+
+  // The comparison page's picker: a university chosen from the suggestions joins the comparison; a major opens its
+  // universities in the Finder, where each has «قارن». universities.js provides the suggestions (loaded after us).
+  function setupPicker() {
+    const input = document.querySelector("input[data-compare-pick]");
+    if (!input || !window.WadihCombobox) return;
+    const combobox = window.WadihCombobox(input,
+      (u) => {
+        const ids = read();
+        if (!ids.includes(u.id)) {
+          if (ids.length >= MAX) {
+            combobox.close();
+            say(t("يمكنك مقارنة أربع جامعات على الأكثر. أزل واحدة أولًا."));
+            return;
+          }
+          ids.push(u.id);
+        }
+        write(ids);
+        location.href = BASE + "/compare?u=" + ids.join(",");
+      },
+      (m) => { location.href = BASE + "/universities?q=" + encodeURIComponent(m.name_ar); },
+      { universitiesTitle: t("جامعات: تُضاف إلى المقارنة") });
+  }
+  // Deferred scripts run in order before DOMContentLoaded, so universities.js has run by then.
+  if (window.WadihCombobox || document.readyState === "complete") setupPicker();
+  else document.addEventListener("DOMContentLoaded", setupPicker);
 
   document.addEventListener("wadih:results", (event) => render(event.detail.root));
   window.addEventListener("storage", (event) => { if (event.key === KEY) render(); });

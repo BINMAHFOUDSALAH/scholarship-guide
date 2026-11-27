@@ -134,15 +134,31 @@ def card(explorer, u, listing, today):
     if u["country"] in SAT_COUNTRIES and d is not None:
         policy = (d.get("sat_act") or {}).get("policy")
         sat = SAT_POLICY_AR.get(policy, SAT_POLICY_AR["unknown"]) if policy else SAT_UNVERIFIED_AR
+    cert = certificate(explorer, u)
+    dl = deadline(explorer, u["id"], today) if d else None
+    # The card's sources (2026-11-27): one line under its facts instead of a «المصدر» pill beside each, one link per
+    # page, named by the facts it supports («IELTS، الموعد»), so a deadline or a requirement is still one tap away.
+    sources = []
+    for fact, url in (("الثانوية السعودية", (cert or {}).get("source_url")), ("IELTS", (english or {}).get("source_url")),
+                      ("الموعد", (dl or {}).get("source_url"))):
+        if not url:
+            continue
+        same = next((x for x in sources if x["url"] == url), None)
+        if same:
+            same["facts"].append(fact)
+        else:
+            sources.append({"url": url, "facts": [fact]})
     return {
+        "sources": sources,
         "university": u, "id": u["id"], "rank": listing["rank"], "track": listing["track"], "field": listing.get("field"),
+        "field_ar": (explorer.fields.get((listing["track"], listing.get("field"))) or {}).get("name_ar"),
         "masters_only": bool(listing.get("masters_only")), "logo": explorer.logos.get(u["id"]),
         "researched": d is not None,
-        "certificate": certificate(explorer, u),
+        "certificate": cert,
         "english": {"text": english_compact("ielts", english), "varies": bool(english.get("varies")),
                     "source_url": english.get("source_url")} if english else None,
         "sat": sat,
-        "deadline": deadline(explorer, u["id"], today) if d else None,
+        "deadline": dl,
         "admissions_url": (d or {}).get("admissions_url"),
     }
 
@@ -206,7 +222,9 @@ def build(result, explorer, scholarship_tracks, prep_fact=None, today=None):
             empty.append({"track": s["track"], "field": s.get("field")})
             continue
         if s["track"] == "arruaad":
-            why = "يقبل كل التخصصات في جامعاته الثلاثين."
+            # Why each university is here, and what is not checked yet: the list covers every major, but we hold no
+            # university's own program list, so the exact degree title is the student's to confirm.
+            why = "يقبل كل التخصصات في جامعاته الثلاثين. لم نتحقق من اسم البرنامج في كل جامعة، فتأكد منه في موقعها."
             source = rule_source("arruaad")
         else:
             names = list(dict.fromkeys(m["name_ar"] for m in s.get("matched_majors", [])))

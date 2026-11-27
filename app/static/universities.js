@@ -60,11 +60,14 @@
     if (!response.ok) throw new Error("suggestions " + response.status);
     data = await response.json();
     for (const g of data.fields) for (const m of g.majors) m.words = words(normalize(m.name_ar + " " + m.name_en));
-    for (const u of data.universities) u.key = normalize((u.name_ar || "") + " " + u.name_en);
+    for (const u of data.universities) u.key = normalize((u.name_ar || "") + " " + u.name_en + " " + (u.alias || ""));
+    data.programs = data.programs || [];
     return data;
   }
 
-  function setupCombobox(input, onUniversity, onMajor) {
+  // config.universitiesTitle: what choosing a university does here (the comparison's picker adds it instead).
+  function setupCombobox(input, onUniversity, onMajor, config) {
+    const universitiesTitle = (config && config.universitiesTitle) || t("جامعات: تفتح صفحة الجامعة");
     const panel = document.getElementById(input.getAttribute("aria-controls"));
     if (!panel) return { close() {} };
     let options = [];
@@ -131,9 +134,16 @@
       groupCount = 0;
 
       if (q) {
+        // «برامج الابتعاث» (2026-11-27): a program typed by any of its names («كاوست», "KAUST", "KGSP") opens its
+        // page. First, because a program's name is short and specific; a university or a major stays below it.
+        const programs = d.programs.filter((p) => q.length >= 2 && p.keys.some((k) => k.startsWith(q) || (q.length >= 3 && k.includes(q))));
+        if (programs.length) {
+          panel.append(group(t("برامج الابتعاث: تفتح صفحة البرنامج"), programs.map((p) =>
+            option(p.name_ar, p.name_en, "", () => { location.href = p.href; }))));
+        }
         const unis = d.universities.filter((u) => u.key.includes(q)).slice(0, 6);
         if (unis.length) {
-          panel.append(group(t("جامعات: تفتح صفحة الجامعة"), unis.map((u) =>
+          panel.append(group(universitiesTitle, unis.map((u) =>
             option(u.name_ar || u.name_en, u.name_ar ? u.name_en : "", u.country_ar, () => onUniversity(u)))));
         }
       }
@@ -259,7 +269,8 @@
   window.WadihCombobox = setupCombobox;
   for (const input of document.querySelectorAll("input[data-suggest]")) {
     const form = input.form;
-    if (!form || form.hasAttribute("data-explorer") || form.hasAttribute("data-ask-live")) continue;
+    // The comparison's picker (compare.js) chooses universities for the comparison instead of opening them.
+    if (!form || form.hasAttribute("data-explorer") || form.hasAttribute("data-ask-live") || input.hasAttribute("data-compare-pick")) continue;
     setupCombobox(input,
       (u) => { location.href = universityUrl(u, null); },
       (m) => { location.href = BASE + "/universities?q=" + encodeURIComponent(m.name_ar); });
@@ -390,7 +401,11 @@
       event.preventDefault();
       combobox.close();
       lastQuery = null; // pressing «ابحث» always refreshes
-      update();
+      update().then(() => {
+        // A program's name submitted as it is («كاوست»): the results lead to its page, so open it.
+        const program = results.querySelector("[data-program-match]");
+        if (program) location.href = program.dataset.programMatch;
+      });
     });
 
     // Removing a filter (its ✕, or «مسح الكل»): clear only the fields the link names (data-remove)
@@ -597,7 +612,10 @@
   if (back && document.referrer && history.length > 1) {
     let from = null;
     try { from = new URL(document.referrer); } catch (e) { from = null; }
-    if (from && from.origin === location.origin && from.pathname === BASE + "/universities") {
+    // The page the student came from holds their search: the Finder (in its address) or the homepage's question
+    // (in its history state, ask.js). Back there brings the same answer and the same place, not a fresh page.
+    const homes = [BASE + "/", BASE || "/"];
+    if (from && from.origin === location.origin && (from.pathname === BASE + "/universities" || homes.includes(from.pathname))) {
       back.addEventListener("click", (event) => {
         event.preventDefault();
         history.back(); // the browser restores the list and the scroll position

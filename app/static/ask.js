@@ -18,9 +18,16 @@
     let text = field.tagName === "SELECT" ? (field.selectedOptions[0] || {}).text || "" : field.value || field.placeholder || "";
     measure.textContent = text;
     const extra = field.tagName === "SELECT" ? 1.05 : 0.3; // the chevron, the caret
+    field.style.fontSize = "";
     const em = parseFloat(getComputedStyle(field).fontSize) || 16;
-    const max = slot.closest("[data-ask-sentence]").clientWidth;
-    field.style.width = Math.min(max, Math.ceil(measure.offsetWidth + extra * em)) + "px";
+    // The room the sentence has: its container's, never its own width (the sentence grows with its slots, so
+    // measuring it let a long country, «الولايات المتحدة الأمريكية», push the page wider than a phone).
+    const sentence = slot.closest("[data-ask-sentence]");
+    const max = (sentence.parentElement || sentence).clientWidth;
+    const needed = Math.ceil(measure.offsetWidth + extra * em);
+    // A choice longer than the line gets a slightly smaller face instead of being cut off.
+    if (field.tagName === "SELECT" && needed > max) field.style.fontSize = Math.max(0.6, max / needed) * em + "px";
+    field.style.width = Math.min(max, needed) + "px";
   }
 
   function fitAll(root) {
@@ -179,7 +186,11 @@
       if (event.submitter) return;
       event.preventDefault();
       record(false);
-      update(true);
+      update(true).then(() => {
+        // A scholarship program's name («كاوست», "KGSP"): the answer is its page, so Enter opens it.
+        const program = target.querySelector("[data-program-match]");
+        if (program) location.href = program.dataset.programMatch;
+      });
     });
     // An example under the question fills both slots.
     live.addEventListener("click", (event) => {

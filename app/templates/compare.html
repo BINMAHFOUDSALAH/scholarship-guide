@@ -14,31 +14,69 @@
 <div class="compare-page page-wide" data-compare-page data-compare-ids="{{ uids | join(',') }}">
   <header class="compare-header">
     <h1 class="page-display-title">{{ _("قارن الجامعات") }}</h1>
-    {% if c %}<p class="lead">{{ _("الصف نفسه لكل جامعة، فترى الفرق بنظرة. كل قيمة بجانبها مصدرها.") }}</p>{% endif %}
+    {% if c %}<p class="lead">{{ _("الصف نفسه لكل جامعة، فترى الفرق بنظرة.") }}</p>{% endif %}
   </header>
+
+  {#- Choosing universities here (2026-11-27): «قارن الجامعات» on the homepage lands on this page. A university picked
+      from the suggestions joins the comparison (compare.js); a major opens its universities, each with «قارن».
+      Without JavaScript the box is a name search in the Finder, whose rows carry «قارن» too. #}
+  {% macro picker(title, hint) %}
+  <form class="compare-pick" method="get" action="{{ url_for('universities_page') }}" role="search" aria-labelledby="compare-pick-title" data-compare-pick-form>
+    <h2 class="compare-pick-title" id="compare-pick-title">{{ title }}</h2>
+    <p class="compare-pick-hint" id="compare-pick-hint">{{ hint }}</p>
+    <div class="compare-pick-field">
+      <label class="sr-only" for="compare-pick-q">{{ _("اسم جامعة أو تخصص") }}</label>
+      <span class="compare-pick-box">
+      <input class="input compare-pick-input" id="compare-pick-q" name="q" type="search" autocomplete="off" maxlength="100" spellcheck="false"
+             enterkeyhint="search" placeholder="{{ _('اسم جامعة أو تخصص…') }}" role="combobox" aria-autocomplete="list" aria-expanded="false"
+             aria-controls="compare-pick-q-suggest" aria-describedby="compare-pick-hint" data-suggest="{{ url_for('suggestions_api') }}" data-compare-pick>
+      <div id="compare-pick-q-suggest" class="suggest" role="listbox" aria-label="{{ _('اقتراحات') }}" tabindex="-1" hidden></div>
+      </span>
+      <button class="btn btn--primary" type="submit">{{ _("ابحث") }}</button>
+    </div>
+    <p class="compare-pick-or"><a href="{{ url_for('universities_page') }}">{{ _("أو تصفح الجامعات حسب المسار والدولة") }}</a></p>
+  </form>
+  {% endmacro %}
 
   {% if not uids %}
   <div class="compare-empty">
-    <p class="compare-empty-title">{{ _("لم تختر جامعات بعد.") }}</p>
-    <p>{{ _("اضغط «قارن» على بطاقة أي جامعة في نتائج سؤالك، حتى أربع جامعات.") }}</p>
-    <p class="actions"><a class="btn btn--primary" href="{{ url_for('universities_page') }}">{{ _("ابحث في الجامعات") }}</a></p>
+    {{ picker(_("اختر جامعتين للمقارنة"), _("اكتب اسم جامعة بالعربية أو الإنجليزية واخترها من القائمة، حتى أربع جامعات. أو اضغط «قارن» على أي جامعة في نتائج البحث.")) }}
   </div>
   {% else %}
 
   {% if uids | length == 1 %}
-  <p class="notice">{{ _("أضف جامعة أخرى على الأقل لتقارن بينهما.") }} <a href="{{ url_for('universities_page') }}">{{ _("ابحث في الجامعات") }}</a></p>
+  <div class="compare-empty">
+    {{ picker(_("أضف جامعة أخرى للمقارنة"), _("اكتب اسم جامعة بالعربية أو الإنجليزية واخترها من القائمة.")) }}
+  </div>
   {% endif %}
 
+  {#- Two switches that work together, both plain checkboxes read by CSS (so they work without JavaScript):
+      «الفروق فقط» hides the rows where every university agrees, «عرض المصادر» shows each value's official link. #}
   <div class="compare-tools">
-    <input class="compare-diff-input" type="checkbox" id="compare-diff" data-compare-diff>
-    <label class="compare-diff" for="compare-diff">{{ _("الفروق فقط") }}</label>
+    <input class="compare-switch-input compare-diff-input" type="checkbox" id="compare-diff" data-compare-diff>
+    <label class="compare-switch compare-diff" for="compare-diff">{{ _("الفروق فقط") }}</label>
+    <input class="compare-switch-input compare-sources-input" type="checkbox" id="compare-sources" data-compare-sources aria-describedby="compare-sources-hint">
+    <label class="compare-switch compare-sources" for="compare-sources">{{ _("عرض المصادر") }}</label>
     <a class="compare-share" href="{{ url_for('compare_page') }}?u={{ uids | join(',') }}" data-compare-share>{{ _("رابط هذه المقارنة") }}</a>
   </div>
+  <p class="compare-sources-hint" id="compare-sources-hint">{{ _("كل قيمة من مصدر رسمي. اعرض المصادر لترى رابط كل قيمة بجانبها.") }}</p>
 
-  <div class="compare-scroll" tabindex="0" role="region" aria-label="{{ _('جدول المقارنة') }}">
+  {#- The universities' names, kept in view while the student scrolls a long table on a phone (compare.js shows it
+      once the table's own header has scrolled away). Only for the eye: the table's headers name every value for a
+      screen reader. #}
+  <div class="compare-frame" data-compare-frame>
+  <div class="compare-stick" aria-hidden="true">
+    <div class="compare-stick-bar" data-compare-stick hidden>
+      <div class="compare-stick-row" style="--n: {{ uids | length }}" data-compare-stick-row>
+        {% for u in c.universities %}<span class="compare-stick-name">{% if u.name_ar and not is_en() %}{{ u.name_ar }}{% else %}<bdi lang="en">{{ u.name_en }}</bdi>{% endif %}</span>{% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-scroll" tabindex="0" role="region" aria-label="{{ _('جدول المقارنة') }}" data-compare-scroll>
     <table class="compare-table" style="--n: {{ uids | length }}">
       <caption class="sr-only">{{ _("مقارنة الجامعات") }}</caption>
-      <thead>
+      <thead data-compare-head>
         <tr class="compare-names">
           {% for u in c.universities %}
           <th scope="col" class="compare-name" id="col-{{ u.id }}">
@@ -55,25 +93,40 @@
         </tr>
       </thead>
       {#- Each row's label is its own row above the values (on every width, so a phone keeps two universities side by
-          side); each value names its label and its university through headers="…". #}
+          side); each value names its label and its university through headers="…". A source every university shares
+          sits once beside the label; any other source sits under its own value, named by its site. #}
       {% for g in c.groups %}
       <tbody class="compare-group">
         <tr class="compare-group-row">
-          <th colspan="{{ uids | length }}" id="cg-{{ g.id }}" class="compare-group-title">{% if g.gate %}<span class="gate-num" aria-hidden="true">{{ g.gate }}</span>{% endif %}{{ g.title_ar }}</th>
+          <th colspan="{{ uids | length }}" id="cg-{{ g.id }}" class="compare-group-title"><span class="compare-group-name">{% if g.gate %}<span class="gate-num" aria-hidden="true">{{ g.gate }}</span>{% endif %}{{ _(g.title_ar) }}</span></th>
         </tr>
         {% for r in g.rows %}
         {% set rid = "r-" ~ g.id ~ "-" ~ loop.index %}
         <tr class="compare-label-row"{% if r.same %} data-same{% endif %}>
-          <th colspan="{{ uids | length }}" id="{{ rid }}" class="compare-label">{% if r.label_ar in ("IELTS", "TOEFL iBT", "Duolingo", "SAT/ACT") %}<bdi lang="en">{{ r.label_ar }}</bdi>{% else %}{{ r.label_ar }}{% endif %}</th>
+          {% set label = r.label_ar if r.label_ar in ("IELTS", "TOEFL iBT", "Duolingo", "SAT/ACT") else _(r.label_ar) %}
+          <th colspan="{{ uids | length }}" id="{{ rid }}" class="compare-label">
+            <span class="compare-label-text">{% if r.label_ar in ("IELTS", "TOEFL iBT", "Duolingo", "SAT/ACT") %}<bdi lang="en">{{ label }}</bdi>{% else %}{{ label }}{% endif %}</span>
+            {%- if r.source %} <a class="compare-src compare-src--row" href="{{ r.source.url }}" target="_blank" rel="noopener"><span class="compare-src-label">{{ _("المصدر لكل الجامعات:") }}</span> <span class="compare-src-name">{% if "." in r.source.label %}<bdi lang="en">{{ r.source.label }}</bdi>{% else %}{{ r.source.label }}{% endif %}</span><span class="sr-only"> {{ _("(يفتح في نافذة جديدة)") }}</span></a>{% endif %}
+          </th>
         </tr>
         <tr class="compare-row"{% if r.same %} data-same{% endif %}>
           {% for cell in r.cells %}
-          <td class="compare-cell{% if cell.state %} compare-cell--{{ cell.state }}{% endif %}" headers="cg-{{ g.id }} {{ rid }} col-{{ c.universities[loop.index0].id }}">
-            {%- if cell.deadline %}
-              {%- if cell.deadline.state == "upcoming" %}<strong><time datetime="{{ cell.deadline.date }}">{{ cell.deadline.date | arabic_date }}</time></strong>{% if cell.deadline.round_ar %} <bdi class="acard-round">{{ cell.deadline.round_ar }}</bdi>{% endif %}
-              {%- else %}{{ _f("انتهى لـ{cycle} في", cycle=cell.deadline.cycle_ar) }} <time datetime="{{ cell.deadline.date }}">{{ cell.deadline.date | arabic_date }}</time>{% endif %}
-            {%- else %}{{ cell.text }}{% endif %}
-            {%- if cell.source %} <a class="src src--tiny" href="{{ cell.source }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif -%}
+          {% set u = c.universities[loop.index0] %}
+          <td class="compare-cell{% if cell.state %} compare-cell--{{ cell.state }}{% endif %}{% if cell.plain %} compare-cell--plain{% endif %}" headers="cg-{{ g.id }} {{ rid }} col-{{ u.id }}">
+            <span class="compare-value">
+            {%- if cell.deadline %}<time datetime="{{ cell.deadline.date }}">{{ cell.deadline.date | arabic_date }}</time>
+            {%- else %}{{ cell.value }}{% endif -%}
+            </span>
+            {%- if cell.deadline and cell.deadline.state == "upcoming" and cell.deadline.round_ar %}<span class="compare-qual"><bdi>{{ cell.deadline.round_ar }}</bdi></span>
+            {%- elif cell.deadline and cell.deadline.state == "passed" %}<span class="compare-qual">{{ _f("انتهى موعد {cycle}", cycle=cell.deadline.cycle_ar) }}</span>
+            {%- elif cell.note %}<span class="compare-qual">{{ cell.note }}</span>{% endif %}
+            {%- if cell.sources and not r.source %}
+            <span class="compare-src-list">
+              {%- for s in cell.sources %}
+              <a class="compare-src" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ _f('مصدر «{fact}» لـ{name}: {site} (يفتح في نافذة جديدة)', fact=(_(s.what) ~ _('، ') ~ label) if s.what else label, name=(u.name_en if is_en() else (u.name_ar or u.name_en)), site=s.site) }}">{% if s.what %}<span class="compare-src-label">{{ _(s.what) }}:</span> {% endif %}<bdi class="compare-src-name"{% if "." in s.site %} lang="en"{% endif %}>{{ s.site }}</bdi></a>
+              {%- endfor %}
+            </span>
+            {%- endif %}
           </td>
           {% endfor %}
         </tr>
@@ -82,7 +135,10 @@
       {% endfor %}
     </table>
   </div>
+  </div>
   <p class="compare-note">{{ _("القوائم من دليل الوزارة، وشروط القبول من صفحات الجامعات الرسمية. افتح المصدر قبل أي قرار.") }}</p>
   {% endif %}
 </div>
 {% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>{% endblock %}
