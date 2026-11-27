@@ -1,12 +1,13 @@
 import hashlib
 import json
 import os
+import re
 from functools import cache
 from datetime import datetime, timedelta, timezone
 
 from app.clock import date
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exception_handlers import http_exception_handler
@@ -496,6 +497,9 @@ templates.env.globals["guide_groups"] = [
 # The copyright line runs from the first year of publication to this year, so it updates itself.
 templates.env.globals["current_year"] = lambda: date.today().year
 templates.env.filters["arabic_date"] = arabic_date
+# {{ url | site }} → «ox.ac.uk»: the official site a source is on, to name a link that stands for several facts.
+templates.env.filters["site"] = compare.site_of
+templates.env.filters["tr"] = tr  # {{ names | map("tr") }}
 # {{ 5 | count_ar("universities") }} → «5 جامعات» (Arabic counting rules, see universities.count_ar).
 templates.env.filters["count_ar"] = lambda n, noun: count_ar(n, COUNT_FORMS[noun])
 # {{ 7 | count_split("universities") }} → (7, «جامعات»): a headline sets the number large (1 and 2 have none).
@@ -526,7 +530,7 @@ def home(request: Request):
             "explorer": explorer,
             # Version 3: the universities' own nearest deadlines sit in «الآن» beside the scholarship windows.
             "deadlines": explorer.upcoming_deadlines(limit=4),
-            "ask_q": ask_q, "ask_country": ask_country, "result": result, "a": answer_for(result),
+            "ask_q": ask_q, "ask_country": ask_country, "result": result, "a": answer_for(result), "back": "",
         },
     )
 
@@ -539,6 +543,7 @@ def programs_index(request: Request):
     return render(request, "programs.html", {
         "board": board, "now": now_board(board), "program_groups": programs_by_when(),
         "announcements": news, "path_names": path_names, "program_pages": program_slugs(),
+        "waaid_source": waaid_data["source_url"],
     })
 
 
@@ -647,7 +652,11 @@ def answer_partial(request: Request, q: str = "", country: str = ""):
     """The homepage's live answer: the same answer as the Finder's, compact, drawn as the student edits the question
     (ask.js). Without JavaScript the question is a plain form to /universities."""
     result = explorer.search(q=q.strip()[:200], country=country if country in explorer.countries else "")
-    return render(request, "partials/answer_view.html", {"result": result, "a": answer_for(result), "explorer": explorer})
+    # The question as the Finder reads it (the major, the country), carried on each university link as `from`, so the
+    # profile's «الرجوع إلى نتائج البحث» returns to this search, never to an empty Finder.
+    back = urlencode(explorer.result_params(result))
+    return render(request, "partials/answer_view.html", {"result": result, "a": answer_for(result), "explorer": explorer,
+                                                         "back": back, "program": program_named(q)})
 
 
 @app.get("/api/answer")
@@ -662,6 +671,11 @@ def answer_api(q: str = "", country: str = ""):
 @app.get("/universities", response_class=HTMLResponse)
 def universities_page(request: Request, q: str = "", track: str = "", field: str = "",
                       country: str = "", lang: str = "", partial: bool = False):
+    # A scholarship program's name submitted as it is («كاوست», "KGSP" from the homepage's question) opens that
+    # program's page: it isn't a university or a major. A university of the same name keeps its own result.
+    prog = program_named(q) if not partial and not (track or field or lang) else None
+    if prog and not university_named(q):
+        return RedirectResponse(prog["href"], status_code=303)
     # Search runs on the server, so the page works without JavaScript; universities.js asks for
     # partial=1 to swap in just the results as the student types.
     result = explorer.search(q=q[:200], track=track, field=field, country=country, language=lang)
@@ -670,6 +684,8 @@ def universities_page(request: Request, q: str = "", track: str = "", field: str
     context = {"result": result, "explorer": explorer, "view": explorer.describe(result),
                # The answer to «أريد دراسة X في Y» (app/answer.py): a major or a country, with both gates per card.
                "answer": answer_for(result),
+               # A scholarship program's name («كاوست»): a link to its page above the results.
+               "program": program_named(q) if not university_named(q) else None,
                "scholarship_tracks": scholarship_tracks,
                # The الرواد destination at the top of the page (decision 060).
                "arruaad_track": next(t for t in scholarship_tracks if t["id"] == "arruaad")}
@@ -853,10 +869,50 @@ def search_api(q: str = ""):
     return JSONResponse({"query": q, "results": [{**r, "url": i18n.prefix() + r["url"]} for r in current_search().search(q)] if q else []})
 
 
+ARABIC_LETTER = re.compile(r"[\u0600-\u06FF]")
+
+
+def program_entries(every_name=False):
+    """The scholarship programs a student can look up by name (2026-11-27): each program with its own page, the
+    names it goes by («كاوست», "KAUST", "KGSP": its `aliases` in paths.json) and its page. One list for the search
+    box's «برامج الابتعاث» group and for a typed name submitted as it is. On English pages the box shows and matches
+    the English names (as it does for universities); every_name keeps the Arabic ones too, to read a typed name."""
+    from app.universities import normalize
+    english = i18n.is_english()
+    out = []
+    for slug in program_slugs():
+        prog = paths_by_id[slug]
+        single = len(prog.get("tracks", [])) == 1 and prog["tracks"][0].get("name_ar")
+        names = [prog["name_ar"], prog.get("name_en") or "", *prog.get("aliases", []), single or ""]
+        keys = sorted({normalize(n) for n in names if n and normalize(n)
+                       and (every_name or not english or not ARABIC_LETTER.search(n))})
+        title = single or prog["name_ar"]
+        out.append({"slug": slug, "name_ar": prog.get("name_en") if english else title,
+                    "name_en": "" if english else prog.get("name_en") or "", "keys": keys,
+                    "href": f"{i18n.prefix()}/programs/{slug}"})
+    return out
+
+
+def program_named(q):
+    """The program whose name (or one of its names) the student typed exactly, or None. «كاوست» → kaust-kgsp."""
+    from app.universities import normalize
+    key = normalize(q or "")
+    if len(key) < 3:
+        return None
+    return next((p for p in program_entries(every_name=True) if key in p["keys"]), None)
+
+
+def university_named(q):
+    """True when the text finds a university by its name (Georgia Tech keeps its own result, whatever else matches)."""
+    r = explorer.search(q=(q or "")[:200])
+    return r["mode"] == "name" and bool(r["sections"] and r["sections"][0].get("universities"))
+
+
 @app.get("/api/suggestions")
 def suggestions_api():
-    # Majors grouped by field + university names, loaded by the search box the first time it's used.
-    return JSONResponse(explorer.suggestions())
+    # Majors grouped by field + university names + the scholarship programs, loaded by the search box the first time
+    # it's used.
+    return JSONResponse({**explorer.suggestions(), "programs": program_entries()})
 
 
 @app.get("/api/universities")

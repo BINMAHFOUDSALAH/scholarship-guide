@@ -31,6 +31,8 @@
 </div>
 {% endif %}
 
+{% if program %}{{ um.program_match(program) }}{% endif %}
+
 {# A country typed in the search box (decision 041): offer the country filter. #}
 {% if r.country_match and r.country != r.country_match and not r.parsed %}
 <p class="notice">{{ _("هل تقصد الدولة «") }}{{ explorer.countries[r.country_match].name_ar }}{{ _("»؟") }} <a href="{{ url_for('universities_page') }}?country={{ r.country_match }}">{{ _("اعرض جامعاتها في القوائم") }}</a></p>
@@ -122,7 +124,7 @@
     {# The first ten here; all 30, with requirements and dates, one tap away. #}
     <ol class="compact-list">
       {% for l, u in s.rows[:10] %}
-      <li><span class="compact-rank">{{ l.rank }}</span> {{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</li>
+      <li><span class="compact-rank">{{ l.rank }}</span> {{ um.uni_name(u, back=back) }} <span class="row-actions">{{ um.save_button(u) }}{{ um.compare_button(u) }}</span></li>
       {% endfor %}
     </ol>
     <p class="section-link"><a href="{{ s.full_href }}">{{ _f("اعرض القائمة كاملة ({n})", n=s.rows | length | count_ar("universities")) }}</a></p>
@@ -135,7 +137,7 @@
     {% set shown = s.rows[:s.preview] if s.preview else s.rows %}
     <table class="uni-table">
       <caption class="sr-only">{{ tracks[s.track].name_ar }}{% if s.field %}: {{ s.field.name_ar }}{% endif %}</caption>
-      <thead><tr><th scope="col">{{ _("الترتيب") }}</th><th scope="col">{{ _("الجامعة") }}</th><th scope="col">{{ _("الدولة") }}</th><th scope="col">{{ _("المتطلبات والمواعيد") }}</th><th scope="col"><span class="sr-only">{{ _("خطتي") }}</span></th></tr></thead>
+      <thead><tr><th scope="col">{{ _("الترتيب") }}</th><th scope="col">{{ _("الجامعة") }}</th><th scope="col">{{ _("الدولة") }}</th><th scope="col">{{ _("المتطلبات والمواعيد") }}</th><th scope="col"><span class="sr-only">{{ _("احفظ أو قارن") }}</span></th></tr></thead>
       <tbody>
         {% for l, u in shown %}
         <tr>
@@ -143,7 +145,7 @@
           <th scope="row">{{ um.uni_name(u, back=back) }}</th>
           <td class="uni-cell-country">{{ um.country(u) }}</td>
           <td class="uni-cell-notes">{% set notes = um.listing_notes(l) %}{% if notes | trim %}<span class="tags">{{ notes }}</span>{% endif %}{{ um.key_facts(u, quiet=True, link=False) }}{{ um.admissions_link(u) }}</td>
-          <td class="uni-cell-save">{{ um.save_button(u) }}</td>
+          <td class="uni-cell-save"><span class="row-actions">{{ um.save_button(u) }}{{ um.compare_button(u) }}</span></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -170,7 +172,7 @@
     <ul class="uni-list">
       {% for u in s.universities %}
       <li class="uni-item">
-        <div class="uni-item-name">{{ um.uni_name(u, back=back) }} {{ um.save_button(u) }}</div>
+        <div class="uni-item-name">{{ um.uni_name(u, back=back) }} <span class="row-actions">{{ um.save_button(u) }}{{ um.compare_button(u) }}</span></div>
         <div class="uni-item-meta">{{ um.country(u) }} {{ um.memberships(u) }}</div>
         {{ um.key_facts(u, quiet=True) }}
       </li>

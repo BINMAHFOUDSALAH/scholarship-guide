@@ -60,7 +60,7 @@
 {# The one place lime is used: what the student should do next. #}
 {% macro next_step(text, link_text=None, link_url=None, label="الخطوة التالية") %}
 <aside class="next-step" aria-label="{{ label }}">
-  <p class="next-step-label"><span class="diamond" aria-hidden="true"></span>{{ label }}</p>
+  <p class="next-step-label"><span class="mark-dot" aria-hidden="true"></span>{{ label }}</p>
   <p class="next-step-text">{{ text }}</p>
   {% if link_url %}<a class="next-step-link" href="{{ link_url }}">{{ link_text }}</a>{% endif %}
 </aside>

@@ -14,7 +14,7 @@
     <header class="answer-head">
       {% set num, words = total | count_split("universities") %}
       <h2 id="answer-title" class="answer-title">{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }} {{ _f("في {countries} في قوائم الابتعاث", countries=ov | length | count_ar("countries")) }}</h2>
-      <p class="answer-source">{{ _f("من قوائم الابتعاث {year}", year=explorer.source.academic_year | replace("-", "–")) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
+      <p class="answer-source">{{ _("من") }} <a class="src src--named" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _f("دليل الوزارة لقوائم الجامعات {year}", year=explorer.source.academic_year | replace("-", "–")) }}</a></p>
     </header>
     <p class="answer-why">{{ _("اكتب تخصصك أو اختر دولة: ترى الجامعات التي تناسبك، ولماذا تظهر كل جامعة، وما تطلبه للقبول.") }}</p>
     <nav class="answer-facets" aria-labelledby="answer-facets-title">
@@ -26,8 +26,13 @@
       </ul>
     </nav>
   </section>
+{% elif program and not (r.mode == "name" and r.sections and r.sections[0].universities) %}
+  <section class="answer answer--compact" aria-labelledby="answer-title">
+    <h2 id="answer-title" class="answer-title answer-title--small">{{ _f("«{q}» من برامج الابتعاث", q=r.q) }}</h2>
+    {{ um.program_match(program) }}
+  </section>
 {% elif a %}
-  {{ ans.answer(a, compact=True) }}
+  {{ ans.answer(a, back=back, compact=True) }}
 {% elif r.mode == "name" and r.sections and r.sections[0].universities %}
   {% set hits = r.sections[0].universities %}
   <section class="answer answer--compact" aria-labelledby="answer-title">
@@ -35,7 +40,7 @@
       <h2 id="answer-title" class="answer-title answer-title--small">{{ _f("«{q}» في أسماء {n}", q=r.q, n=hits | length | count_ar("universities")) }}</h2>
     </header>
     <ul class="answer-names">
-      {% for u in hits[:6] %}<li>{{ um.uni_name(u) }} <span class="answer-names-country">{{ um.country(u) }}</span></li>{% endfor %}
+      {% for u in hits[:6] %}<li>{{ um.uni_name(u, back=back or none) }} <span class="answer-names-country">{{ um.country(u) }}</span></li>{% endfor %}
     </ul>
     {% if hits | length > 6 %}<p class="answer-full"><a class="btn btn--secondary" href="/universities?q={{ r.q | urlencode }}">{{ _("اعرضها كلها") }}</a></p>{% endif %}
   </section>

@@ -20,15 +20,17 @@
   <div class="acard-head">
     {% if i.logo %}<span class="acard-logo"><img src="{{ url_for('static', path=i.logo.file) }}" alt="" width="{{ i.logo.width }}" height="{{ i.logo.height }}" loading="lazy" decoding="async"></span>{% endif %}
     <div class="acard-name">
-      {{ um.uni_name(u, back=back) }}
+      {{ um.uni_name(u, back=back or none) }}
       <span class="acard-place">{{ um.country(u) }}</span>
     </div>
   </div>
   <div class="acard-gates">
     {#- Gate 1 in one ledger row: the list and the place, at the row's end like every value. #}
+    {#- Why it is in this answer (2026-11-27): the list it is on, its place, and what that list covers for the major. #}
     <p class="acard-gate acard-gate--list">
       {{ gate_label("1", _("الابتعاث")) }}
-      <span class="acard-list">{% if i.track == "arruaad" %}{{ _("الرواد") }}{% else %}{{ _("إمداد") }}{% endif %}{{ _("،") }} {{ _f("المرتبة {n}", n=i.rank) }}{% if i.masters_only %} <span class="tag tag--warn">{{ _("ماجستير فقط") }}</span>{% endif %}</span>
+      <span class="acard-list">{% if i.track == "arruaad" %}{{ _f("ضمن قائمة الرواد، المرتبة {n}", n=i.rank) }}{% else %}{{ _f("ضمن قائمة إمداد، المرتبة {n}", n=i.rank) }}{% endif %}{% if i.masters_only %} <span class="tag tag--warn">{{ _("ماجستير فقط") }}</span>{% endif %}</span>
+      <span class="acard-why">{% if i.track == "arruaad" %}{{ _("والمسار يشمل جميع التخصصات") }}{% elif i.field_ar %}{{ _f("ترتيب مجال «{field}» كله، لا التخصص وحده", field=i.field_ar) }}{% endif %}</span>
     </p>
     <div class="acard-gate acard-gate--admit">
       <p class="acard-gate-title">{{ gate_label("2", _("القبول")) }}</p>
@@ -39,13 +41,13 @@
         <div class="acard-fact acard-fact--{{ i.certificate.state }}">
           <dt>{{ _("الثانوية السعودية") }}</dt>
           <dd><span class="acard-val">{% if i.certificate.state == "yes" %}{{ _("تقبلها للسنة الأولى") }}{% elif i.certificate.state == "no" %}{{ _("لا تكفي وحدها للسنة الأولى") }}{% else %}{{ _("لم نجد حكمها في صفحاتها") }}{% endif %}</span>
-            {%- if i.certificate.source_url %} <a class="src src--tiny" href="{{ i.certificate.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</dd>
+</dd>
         </div>
         {% endif %}
         <div class="acard-fact">
           <dt><bdi lang="en">IELTS</bdi></dt>
           <dd><span class="acard-val">{% if i.english %}{{ i.english.text }}{% else %}{{ _("لم نتحقق منه") }}{% endif %}</span>
-            {%- if i.english and i.english.source_url %} <a class="src src--tiny" href="{{ i.english.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</dd>
+</dd>
         </div>
         {% if i.sat %}
         <div class="acard-fact">
@@ -59,9 +61,13 @@
             {%- if i.deadline.state == "upcoming" %}<strong><time datetime="{{ i.deadline.date }}">{{ i.deadline.date | arabic_date }}</time></strong>{% if i.deadline.round_ar %} <bdi class="acard-round">{{ i.deadline.round_ar }}</bdi>{% endif %}
             {%- else %}{{ _f("انتهى لـ{cycle} في", cycle=i.deadline.cycle_ar) }} <time datetime="{{ i.deadline.date }}">{{ i.deadline.date | arabic_date }}</time>{% endif %}
             {%- else %}{{ _("لا يوجد لدينا موعد مؤكد") }}{% endif %}</span>
-            {%- if i.deadline and i.deadline.source_url %} <a class="src src--tiny" href="{{ i.deadline.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</dd>
+</dd>
         </div>
       </dl>
+      {% if i.sources %}
+      <p class="acard-sources"><span class="acard-sources-label">{{ _("المصادر:") }}</span>
+        {%- for s in i.sources %} <a class="acard-source" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ _f('مصدر {facts} لـ{name}: {site} (يفتح في نافذة جديدة)', facts=s.facts | map('tr') | join(_('، ')), name=u.name_en if is_en() else (u.name_ar or u.name_en), site=s.url | site) }}">{% for f in s.facts %}{% if not loop.first %}{{ _("، ") }}{% endif %}{% if f == "IELTS" %}<bdi lang="en">IELTS</bdi>{% else %}{{ _(f) }}{% endif %}{% endfor %}</a>{% if not loop.last %}<span class="acard-source-sep" aria-hidden="true">·</span>{% endif %}{% endfor %}</p>
+      {% endif %}
       {% else %}
       <p class="acard-unknown">{{ _("لم نجمع متطلباتها بعد. افتح موقعها الرسمي قبل أن تقرر.") }}</p>
       {% endif %}
@@ -69,7 +75,7 @@
   </div>
   <div class="acard-actions">
     {{ um.save_button(u) }}
-    <button class="compare-toggle" type="button" data-compare="{{ u.id }}" data-compare-name="{{ u.name_ar or u.name_en }}" aria-pressed="false" hidden><span data-compare-label>{{ _("قارن") }}</span></button>
+    {{ um.compare_button(u) }}
     <a class="acard-more" href="{{ url_for('university_page', uid=u.id) }}{% if back %}?from={{ back | urlencode }}{% endif %}">{{ _("التفاصيل") }}<span class="sr-only">: {{ u.name_ar or u.name_en }}</span></a>
   </div>
 </li>
@@ -89,9 +95,10 @@
       {%- elif a.kind == "country" %}{{ _f("لا جامعة في {country} في قائمة الرواد", country=a.country_ar) }}
       {%- else %}{{ _("لا جامعة تطابق سؤالك") }}{% if a.country %} {{ a.country | in_country }}{% endif %}{% endif -%}
     </h2>
-    <p class="answer-source">{{ _f("من قوائم الابتعاث {year}", year=lists_year) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
-    {% if a.groups | length > 1 %}
-    <p class="answer-split">{% for g in a.groups %}<span class="answer-split-part">{{ g.count }} {{ _("في") }} {% if g.track == "arruaad" %}{{ _("الرواد") }}{% else %}{{ _("إمداد") }}{% if a.groups | selectattr("track", "equalto", "emdad") | list | length > 1 %} ({{ g.field.name_ar }}){% endif %}{% endif %}</span>{% endfor %}</p>
+    <p class="answer-source">{{ _("من") }} <a class="src src--named" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _f("دليل الوزارة لقوائم الجامعات {year}", year=lists_year) }}</a></p>
+    {% if a.groups %}
+    {#- Why they match, in the heading's own words: الرواد takes every major; إمداد lists the major's field. #}
+    <p class="answer-split">{% for g in a.groups %}<span class="answer-split-part">{% if g.track == "arruaad" %}{{ _f("{n} في الرواد، لكل التخصصات", n=g.count) }}{% else %}{{ _f("{n} في إمداد، مجال «{field}»", n=g.count, field=g.field.name_ar) }}{% endif %}</span>{% endfor %}</p>
     {% endif %}
   </header>
 
@@ -117,7 +124,8 @@
       </h3>
       <span class="answer-group-count">{{ g.count | count_ar("universities") }}</span>
     </header>
-    <p class="answer-why">{{ g.why_ar }}{% if g.source %} <a class="src" href="{{ g.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+    {#- The guide is named once in the header; a group's rule from another page keeps its own link. #}
+    <p class="answer-why">{{ g.why_ar }}{% if g.source and g.source.url != explorer.source.url %} <a class="src" href="{{ g.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
     <ul class="answer-cards">
       {% for i in (g["items"][:3] if compact else g["items"]) %}{{ acard(i, back) }}{% endfor %}
     </ul>

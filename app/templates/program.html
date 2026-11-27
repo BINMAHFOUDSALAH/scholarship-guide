@@ -18,6 +18,24 @@
     <p class="lead">{{ program.summary_ar }}</p>
     {% if program.not_standalone_ar %}<aside class="notice notice--warn" role="note"><p><strong>{{ program.not_standalone_ar }}</strong></p></aside>{% endif %}
 
+    {#- Where the student can apply, said right above the official link (2026-11-27): each tracked status from
+        paths.json through track_status(), so the label changes the day the status (or its deadline) does. A status
+        we don't follow is said, never guessed. #}
+    {% if program.apply_url %}
+    {% set followed = [] %}{% for t in program.tracks %}{% set st = track_status(t) %}{% if st and (t.status_source or t.owner_confirmed or t.latest_programs) %}{% set _x = followed.append((t, st)) %}{% endif %}{% endfor %}
+    <div class="apply-status" role="group" aria-labelledby="apply-status-title">
+      <p class="apply-status-title" id="apply-status-title">{{ _("حالة التقديم الآن") }}</p>
+      {% if followed | length == 1 and program.tracks | length == 1 %}
+      <p class="apply-status-one">{{ c.status_tag(followed[0][1], followed[0][0].status_until) }}</p>
+      {% elif followed %}
+      <ul class="apply-status-list">
+        {% for t, st in followed %}<li><span class="apply-status-track">{{ t.name_ar }}</span> {{ c.status_tag(st, t.status_until) }}</li>{% endfor %}
+      </ul>
+      {% else %}
+      <p class="apply-status-one"><span class="track-note">{{ _("لا نتابع حالته في هذا الدليل") }}</span></p>
+      {% endif %}
+    </div>
+    {% endif %}
     {# The main next step first (decision 035): for list-based programs, find your university in the lists. #}
     {% if program.universities_guide_url or program.apply_url %}
     <div class="actions">

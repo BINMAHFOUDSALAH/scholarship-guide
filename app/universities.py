@@ -641,7 +641,13 @@ class Explorer:
         doctorate = majors_of(rnd, masters=False)
         if doctorate:
             groups.append({"title_ar": tr("تخصصات الدكتوراه فقط (البحث والتطوير)"), "title_en": "Doctorate only", "majors": doctorate})
-        unis = [{"id": u["id"], "name_ar": None, "name_en": u["name_en"], "country_ar": tr(u["country_info"]["name_ar"])}
+        # The short Latin name our Arabic name carries («معهد جورجيا للتقنية (Georgia Tech)» → "Georgia Tech"), so an
+        # English box finds a university by the name students use, not only its official one.
+        def alias(u):
+            m = re.search(r"\(([A-Za-z][A-Za-z .&'-]*)\)", u.get("name_ar") or "")
+            return m.group(1) if m and m.group(1).lower() not in u["name_en"].lower() else None
+        unis = [{"id": u["id"], "name_ar": None, "name_en": u["name_en"], "country_ar": tr(u["country_info"]["name_ar"]),
+                 **({"alias": alias(u)} if alias(u) else {})}
                 for u in sorted(self.universities.values(), key=lambda u: u["name_en"].lower())]
         return {"fields": groups, "universities": unis}
 

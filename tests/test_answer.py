@@ -187,15 +187,20 @@ def test_the_comparison_keeps_the_two_gates_and_every_source():
         for r in g["rows"]:
             assert len(r["cells"]) == 3
     html = client.get("/compare?u=" + ",".join(uids)).text
-    assert html.count('scope="col"') == 3 and "data-same" in html and 'class="compare-diff-input"' in html
+    assert html.count('scope="col"') == 3 and "data-same" in html and "compare-diff-input" in html
     # Each value names its row and its university for screen readers.
     assert re.search(r'headers="cg-admission r-admission-\d+ col-imperial-college-london"', html)
     assert 'name="robots" content="noindex"' in html
 
 
 def test_the_comparison_page_says_what_to_do_when_empty_or_alone():
-    assert "لم تختر جامعات بعد." in client.get("/compare").text
-    assert "أضف جامعة أخرى على الأقل" in client.get("/compare?u=university-of-oxford").text
+    """2026-11-27: with nothing chosen, the page is where a student chooses: a name box with the site's suggestions
+    (compare.js adds the university), which without JavaScript searches the Finder."""
+    empty = client.get("/compare").text
+    assert "اختر جامعتين للمقارنة" in empty and "data-compare-pick" in empty
+    assert 'action="http://testserver/universities"' in empty or 'action="/universities"' in empty
+    alone = client.get("/compare?u=university-of-oxford").text
+    assert "أضف جامعة أخرى للمقارنة" in alone and "data-compare-pick" in alone
     assert client.get("/compare?u=../../etc,<script>").status_code == 200
 
 
@@ -234,3 +239,157 @@ def test_explore_results_ask_the_question_for_a_major():
     if view is None or not view.get("ask_majors"):
         pytest.skip("no ICT field in the activity")
     assert all(ex.matching_majors(m) for m in view["ask_majors"])
+
+
+# ---------- 2026-11-27: the search kept, the comparison readable, programs found by name ----------
+
+AI = "الذكاء الاصطناعي"
+
+
+def test_a_university_opened_from_the_homepage_answer_leads_back_to_the_same_search():
+    """The owner chose «الذكاء الاصطناعي في أمريكا», opened Harvard and pressed «الرجوع إلى نتائج البحث»: the link carried
+    an empty `from`, so the Finder opened empty. Every university link in the live answer now carries the question."""
+    html = client.get("/answer", params={"q": AI, "country": "US"}).text
+    links = re.findall(r'href="[^"]*/universities/harvard-university(\?[^"]*)?"', html)
+    assert links and all(l.startswith("?from=") and l != "?from=" for l in links)
+    raw = re.search(r'/universities/harvard-university\?from=([^"]+)"', html).group(1)
+    page = client.get("/universities/harvard-university?from=" + raw).text
+    back = re.search(r'<a class="back-link" href="([^"]+)" data-back-link>', page).group(1)
+    assert back.startswith("/universities?") and "country=US" in back
+    assert "%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1" in back  # the major, as the Finder reads it
+    assert "الرجوع إلى نتائج البحث" in page
+
+
+def test_the_finder_links_keep_the_major_the_country_and_the_filters():
+    html = client.get("/universities", params={"q": "علوم الحاسب", "country": "GB", "track": "emdad"}).text
+    m = re.search(r'class="uni-name" href="http://testserver(/universities/[a-z0-9-]+\?from=[^"]+)"', html)
+    page = client.get(m.group(1).replace("&amp;", "&")).text
+    back = re.search(r'<a class="back-link" href="([^"]+)" data-back-link>', page).group(1)
+    assert "country=GB" in back and "track=emdad" in back and "q=" in back
+
+
+def cell_of(c, label, uid):
+    row = next(r for g in c["groups"] for r in g["rows"] if r["label_ar"] == label)
+    return row, row["cells"][[u["id"] for u in c["universities"]].index(uid)]
+
+
+def test_the_comparison_leads_with_the_figure_and_keeps_its_conditions():
+    c = compare.build(["university-of-oxford", "harvard-university", "cornell-university"], ex, answer, "2026-11-27")
+    _, ox = cell_of(c, "IELTS", "university-of-oxford")
+    assert ox["value"] == "7.5" and ox["note"] == "لا تقل أي مهارة عن 7.0" and ox["state"] is None
+    _, harvard = cell_of(c, "IELTS", "harvard-university")
+    assert harvard["value"] == "لا يوجد حد أدنى منشور" and harvard["state"] == "nomin"
+    # A recommended score is never set as a minimum.
+    _, cornell = cell_of(c, "IELTS", "cornell-university")
+    assert cornell["value"] == "لا يوجد حد أدنى منشور" and cornell["note"] == "الموصى به 7.5"
+    # Oxford isn't in the SAT/ACT countries: it says so, apart from a fact we haven't checked.
+    _, sat = cell_of(c, "SAT/ACT", "university-of-oxford")
+    assert sat["value"] == "لا ينطبق" and sat["state"] == "none"
+
+
+def test_a_rank_says_what_it_measures_and_one_ministry_document_is_cited_once():
+    c = compare.build(["university-of-oxford", "harvard-university"], ex, answer, "2026-11-27")
+    row, ox = cell_of(c, "المرتبة في قائمة الرواد", "university-of-oxford")
+    assert ox["value"] == "6" and cell_of(c, "المرتبة في قائمة الرواد", "harvard-university")[1]["value"] == "1"
+    assert row["source"] == {"url": ex.source["url"], "label": "دليل الوزارة لقوائم الجامعات"}
+    html = client.get("/compare?u=university-of-oxford,harvard-university").text
+    label_row = html.split("المرتبة في قائمة الرواد")[1].split("</tr>")[0]
+    assert ex.source["url"] in label_row and "compare-src--row" in label_row
+
+
+def test_each_university_keeps_its_own_source():
+    uids = ["university-of-oxford", "harvard-university"]
+    c = compare.build(uids, ex, answer, "2026-11-27")
+    row, ox = cell_of(c, "IELTS", "university-of-oxford")
+    _, harvard = cell_of(c, "IELTS", "harvard-university")
+    assert row["source"] is None
+    assert [s["url"] for s in ox["sources"]] == [ex.details["university-of-oxford"]["english"]["ielts"]["source_url"]]
+    assert [s["url"] for s in harvard["sources"]] == [ex.details["harvard-university"]["english"]["ielts"]["source_url"]]
+    assert ox["sources"][0]["site"] == "ox.ac.uk" and harvard["sources"][0]["site"] == "harvard.edu"
+    html = client.get("/compare?u=" + ",".join(uids)).text
+    # The link sits in the cell headed by its own university, named for screen readers.
+    cell = re.search(r'<td[^>]*headers="cg-admission r-admission-\d+ col-university-of-oxford"[^>]*>((?:(?!</td>).)*ox\.ac\.uk(?:(?!</td>).)*)</td>', html, re.S)
+    assert cell and "harvard.edu" not in cell.group(1) and "جامعة أكسفورد" in cell.group(1)
+    # Sources start hidden, behind one switch beside «الفروق فقط»; the names stay in view on a long table.
+    assert 'id="compare-sources"' in html and 'id="compare-diff"' in html and "data-compare-stick" in html
+    css = (main.APP_DIR / "static" / "style.css").read_text(encoding="utf-8")
+    assert ".compare-src,\n.compare-src-list {\n  display: none;" in css
+    assert ".compare-page:has(.compare-sources-input:checked) .compare-src" in css
+
+
+def test_a_source_on_a_file_host_is_named_by_what_it_is():
+    assert compare.site_of("https://www.ox.ac.uk/admissions") == "ox.ac.uk"
+    assert compare.site_of("https://teamdynamix.umich.edu/x") == "umich.edu"
+    assert compare.site_of("https://www.nus.edu.sg/a.pdf") == "nus.edu.sg"
+    assert compare.site_of("https://edge.sitecorecloud.io/msu/cds.pdf") == "ملف PDF"
+
+
+def test_answer_cards_group_their_sources_under_the_facts():
+    html = client.get("/universities", params={"q": AI, "country": "US"}).text
+    assert "src--tiny" not in html
+    card = html.split('data-acard="harvard-university"')[1].split("</li>")[0]
+    assert card.count('class="acard-source"') == 2 and "مصدر الموعد لـجامعة هارفارد" in card
+    # Why it is here: its list, its place, and what that list covers.
+    assert "ضمن قائمة الرواد، المرتبة 1" in card and "والمسار يشمل جميع التخصصات" in card
+    assert "في الرواد، لكل التخصصات" in html and "في إمداد، مجال «" in html
+
+
+def test_finder_rows_offer_compare_beside_save():
+    html = client.get("/universities", params={"track": "emdad", "field": "ict"}).text
+    rows = html.split('<table class="uni-table">')[1].split("</table>")[0]
+    assert rows.count('class="save-mini"') == rows.count('class="compare-toggle"') > 0
+
+
+def test_the_homepage_offers_the_comparison_beside_the_question():
+    html = client.get("/").text
+    actions = html.split('class="ask-actions"')[1].split("</div>")[0]
+    assert 'class="btn btn--lime"' in actions and "data-compare-entry" in actions and "قارن الجامعات" in actions
+    assert 'class="ask-door-link"' in actions
+
+
+@pytest.mark.parametrize("q", ["كاوست", "KAUST", "KGSP", "kgsp"])
+def test_kaust_by_any_of_its_names(q):
+    r = client.get("/universities", params={"q": q}, follow_redirects=False)
+    assert r.status_code == 303 and r.headers["location"] == "/programs/kaust-kgsp"
+    assert 'data-program-match="/programs/kaust-kgsp"' in client.get("/answer", params={"q": q}).text
+    names = next(p for p in client.get("/api/suggestions").json()["programs"] if p["slug"] == "kaust-kgsp")
+    assert any(k.startswith(q.lower()) for k in names["keys"])
+
+
+def test_georgia_tech_and_majors_keep_their_own_results():
+    r = client.get("/universities", params={"q": "Georgia Tech"}, follow_redirects=False)
+    assert r.status_code == 200 and "georgia-institute-of-technology" in r.text and "data-program-match" not in r.text
+    assert client.get("/universities", params={"q": AI}, follow_redirects=False).status_code == 200
+    assert client.get("/en/universities", params={"q": "KAUST"}, follow_redirects=False).headers["location"] == "/en/programs/kaust-kgsp"
+
+
+def test_a_program_page_says_its_status_above_the_official_link():
+    html = client.get("/programs/kaust-kgsp").text
+    head = html.split('class="program-header')[1].split("</header>")[0]
+    status, link = head.index('class="apply-status"'), head.index("صفحة التقديم الرسمية")
+    assert status < link and main.TRACK_STATUS_LABELS[main.track_status(main.paths_by_id["kaust-kgsp"]["tracks"][0])] in head
+
+
+def test_the_university_page_puts_the_deadline_and_tests_before_the_fee():
+    html = client.get("/universities/harvard-university").text
+    gate = html.split("ما تطلبه الجامعة نفسها")[1].split("</dl>")[0]
+    assert gate.index("أقرب موعد في الجامعة") < gate.index("اختبارات الإنجليزية") < gate.index("رسوم التقديم")
+    # Every date from one page: one named link for the list.
+    assert "مصدر كل المواعيد: harvard.edu" in html
+
+
+def test_no_decorative_diamonds_are_left():
+    css = (main.APP_DIR / "static" / "style.css").read_text(encoding="utf-8")
+    js = (main.APP_DIR / "static" / "mylist.js").read_text(encoding="utf-8")
+    assert "rotate(45deg)" not in css and "rotate(45deg)" not in js
+    assert 'class="diamond"' not in client.get("/").text
+    # The logo keeps its own drawing (its lime dot included): tests/test_pages.py checks it against favicon.svg.
+    assert 'class="brand-mark"' in client.get("/").text
+
+
+def test_english_suggestions_know_georgia_tech_and_kaust_by_short_names():
+    data = client.get("/en/api/suggestions").json()
+    gt = next(u for u in data["universities"] if u["id"] == "georgia-institute-of-technology")
+    assert gt.get("alias") == "Georgia Tech"
+    kaust = next(p for p in data["programs"] if p["slug"] == "kaust-kgsp")
+    assert {"kaust", "kgsp"} <= set(kaust["keys"]) and kaust["href"] == "/en/programs/kaust-kgsp"
