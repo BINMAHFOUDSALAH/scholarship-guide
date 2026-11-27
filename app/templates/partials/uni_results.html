@@ -16,7 +16,9 @@
   The chip's text is a label; only its ✕ removes it, with a large target. Plain links, so they work
   without JavaScript; universities.js clears just the fields in data-remove from the live form.
 #}
-{% set chips = view.applied | rejectattr("remove", "in", [["q"], ["country"]]) | list if answer else view.applied %}
+{#- Every applied search as a chip with ✕, the country and the major included: the sentence holds them too, but the
+    chip says what is narrowing the list and clears it in one tap (2026-11-27: «بريطانيا» stayed with no way out). #}
+{% set chips = view.applied %}
 {% if chips %}
 <div class="applied">
   <p class="applied-label" id="applied-label">{{ _("تبحث في:") }}</p>

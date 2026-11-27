@@ -107,20 +107,19 @@ def test_homepage_order():
         assert gone not in html
 
 
-def test_homepage_question_opens_on_a_real_answer_with_examples():
-    """Redesign v3: the question opens on data/home.json's example with its real answer under it (the same answer as
-    the Finder's), uses the site's suggestions, and each example fills both slots."""
+def test_homepage_question_starts_empty_with_every_university_by_country():
+    """2026-11-27: the question starts empty (an example «… في بريطانيا» read as a filter). Under it, every university
+    in the lists by country, each country one tap from «في»; the examples fill both slots; suggestions come from the site."""
     html = client.get("/").text
     hero = html.split('<section class="stage ask-hero"')[1].split("</section>")[0]
     assert 'data-suggest="http://testserver/api/suggestions"' in hero and 'data-answer-url="http://testserver/answer"' in hero
-    example = main.home_text["ask_example"]
-    assert f'value="{example["q"]}"' in hero and f'<option value="{example["country"]}" selected>' in hero
+    assert 'value=""' in hero and " selected>" not in hero  # nothing pre-filled, «أي دولة»
     for ex in main.home_text["ask_examples"]:
         assert f'data-country="{ex["country"]}"' in hero and ex["label_ar"] in hero
-    answer = html.split("data-answer-target")[1].split('id="grades"')[0]
-    a = main.answer_for(main.explorer.search(q=example["q"], country=example["country"]))
-    assert f'<span class="answer-count">{a["total"]}</span>' in answer
-    assert answer.count('class="acard"') == sum(min(3, len(g["items"])) for g in a["groups"])
+    overview = html.split("data-answer-target")[1].split('id="grades"')[0]
+    n = len(main.explorer.universities)
+    assert f'<span class="answer-count">{n}</span>' in overview and 'class="acard"' not in overview
+    assert "ask_example" not in main.home_text
 
 
 @pytest.mark.parametrize("page", ["/", "/programs/custodian-scholarship", "/grades/grade-10", "/grades/grade-11",

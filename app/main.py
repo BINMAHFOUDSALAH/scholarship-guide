@@ -506,10 +506,11 @@ templates.env.filters["count_split"] = lambda n, noun: count_split(n, COUNT_FORM
 def home(request: Request):
     show_quote = featured_quote["status"] == "verified" or SHOW_DRAFTS
     board = status_board()
-    # The question opens on an example with its real answer (data/home.json «ask_example»), drawn like /answer.
-    example = home_text.get("ask_example") or {}
-    ask_q, ask_country = tr(example.get("q", "")), example.get("country", "")
-    result = explorer.search(q=ask_q, country=ask_country)
+    # The question starts empty, with every university by country under it (partials/answer_view.html); the answer
+    # appears once the student types a major or picks a country. 2026-11-27: opening on an example («… في بريطانيا»)
+    # read as a filter, and its country followed students into the Finder.
+    ask_q, ask_country = "", ""
+    result = explorer.search()
     return render(
         request,
         "home.html",

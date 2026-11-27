@@ -255,6 +255,16 @@ def build(result, explorer, scholarship_tracks, prep_fact=None, today=None):
     }
 
 
+def overview(explorer):
+    """Every university in the lists, counted by country, most first: what the homepage shows before the student
+    asks (2026-11-27: an example answer opened on «في بريطانيا» and read as a filter, so the page now starts open)."""
+    counts = {}
+    for u in explorer.universities.values():
+        counts[u["country"]] = counts.get(u["country"], 0) + 1
+    return [{"code": c, "name_ar": explorer.countries[c]["name_ar"], "count": n}
+            for c, n in sorted(counts.items(), key=lambda kv: (-kv[1], tr(explorer.countries[kv[0]]["name_ar"])))]
+
+
 def as_data(answer, prefix=""):
     """The answer as plain JSON for /api/answer and وضّاح: ids, facts with their sources, and the actions a student
     can take on each university. No HTML, no translated layout."""

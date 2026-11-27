@@ -6,7 +6,27 @@
 {% import "partials/uni_macros.html" as um with context %}
 {% set r = result %}
 <div class="answer-live" data-answer-live data-parsed-q="{{ r.q }}" data-parsed-country="{{ r.country }}"{% if r.parsed %} data-parsed{% endif %}>
-{% if a %}
+{% if not r.q and not r.country %}
+  {#- Nothing asked yet: every university in the lists by country; a country fills «في», typing a major answers it. #}
+  {% set ov = answers.overview(explorer) %}
+  {% set total = explorer.universities | length %}
+  <section class="answer answer--compact answer--overview" aria-labelledby="answer-title">
+    <header class="answer-head">
+      {% set num, words = total | count_split("universities") %}
+      <h2 id="answer-title" class="answer-title">{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }} {{ _f("في {countries} في قوائم الابتعاث", countries=ov | length | count_ar("countries")) }}</h2>
+      <p class="answer-source">{{ _f("من قوائم الابتعاث {year}", year=explorer.source.academic_year | replace("-", "–")) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
+    </header>
+    <p class="answer-why">{{ _("اكتب تخصصك أو اختر دولة: ترى الجامعات التي تناسبك، ولماذا تظهر كل جامعة، وما تطلبه للقبول.") }}</p>
+    <nav class="answer-facets" aria-labelledby="answer-facets-title">
+      <p class="answer-facets-title" id="answer-facets-title">{{ _("الجامعات حسب الدولة") }}</p>
+      <ul class="facet-list">
+        {% for f in ov %}
+        <li><a class="facet" href="/universities?country={{ f.code }}" data-set-country="{{ f.code }}"><img class="facet-flag" src="{{ url_for('static', path='img/flags/' ~ (f.code | lower) ~ '.svg') }}" alt="" width="18" height="13" loading="lazy">{{ f.name_ar }} <span class="facet-count">{{ f.count }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </section>
+{% elif a %}
   {{ ans.answer(a, compact=True) }}
 {% elif r.mode == "name" and r.sections and r.sections[0].universities %}
   {% set hits = r.sections[0].universities %}

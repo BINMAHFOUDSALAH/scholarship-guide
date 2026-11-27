@@ -21,9 +21,9 @@
 {% block hero %}
 {#
   Redesign v3 (2026-11): the homepage opens on the question a student actually has, as a sentence they edit
-  («أريد دراسة [علوم الحاسب] في [بريطانيا]»), with its real answer right under it (partials/answer_view.html). It opens
-  on an example, so a first visit already shows what واضح does with the official lists; every edit redraws the answer
-  (ask.js, GET /answer). Without JavaScript the form opens the same answer in the Finder.
+  («أريد دراسة [تخصص] في [دولة]»). It starts empty, with every university in the lists by country under it; typing a
+  major or picking a country draws the answer there (ask.js, GET /answer). Without JavaScript the form opens the same
+  answer in the Finder. (It opened on an example until 2026-11-27, which read as a filter.)
   The student who hasn't chosen a major has their own door beside it («جرّب قبل أن تقرر»).
 #}
 <section class="stage ask-hero" aria-labelledby="hero-title">
