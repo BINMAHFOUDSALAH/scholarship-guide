@@ -7787,8 +7787,8 @@ a.uni-name:hover .uni-name-en:only-child {
 
   /* The answer arriving: its cards rise in, one after the other, once (never on scroll). */
   .is-new .acard {
-    animation: card-in 0.32s var(--ease-out) both;
-    animation-delay: calc(var(--i, 0) * 40ms);
+    animation: card-in 0.22s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 30ms);
   }
 
   @keyframes card-in {

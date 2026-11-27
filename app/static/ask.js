@@ -177,11 +177,18 @@
 
   // ---------- small touches ----------
 
-  // Cards arrive one after the other (CSS, once; nothing with reduced motion).
+  // When the answer holds different universities, its cards arrive one after the other (CSS, short; nothing with
+  // reduced motion). The same universities redrawn (a keystroke that changes nothing) stay still, so a frequent
+  // action stays immediate and the facts don't move while the student reads them.
+  let lastCards = null;
   function stagger(root) {
     const host = root.closest(".answer-live") || root.querySelector(".answer-live") || root;
+    const cards = [...host.querySelectorAll(".acard")];
+    const ids = cards.map((c) => c.dataset.acard).join(",");
     host.classList.remove("is-new");
-    host.querySelectorAll(".acard").forEach((card, i) => card.style.setProperty("--i", Math.min(i, 8)));
+    if (ids === lastCards) return;
+    lastCards = ids;
+    cards.forEach((card, i) => card.style.setProperty("--i", Math.min(i, 5)));
     void host.offsetWidth;
     host.classList.add("is-new");
   }
