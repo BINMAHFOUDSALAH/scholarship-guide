@@ -7,7 +7,7 @@
   ask_sentence(q, country, prefix): the sentence's two slots. The form around it is the page's (the homepage's
   live answer, the Finder's form with its filters).
 #}
-{% macro ask_sentence(q, country, prefix, hint=True) %}
+{% macro ask_sentence(q, country, prefix) %}
 <div class="ask-sentence" data-ask-sentence>
   <span class="ask-word" aria-hidden="true">{{ _("أريد دراسة") }}</span>
   <span class="ask-slot ask-slot--q">
@@ -16,7 +16,7 @@
     <input class="ask-input" id="{{ prefix }}q" name="q" type="search" value="{{ q }}" autocomplete="off" maxlength="100"
            spellcheck="false" enterkeyhint="search" placeholder="{{ _('تخصص أو جامعة…') }}"
            role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="{{ prefix }}q-suggest"
-           {% if hint %}aria-describedby="{{ prefix }}q-hint"{% endif %} data-suggest="{{ url_for('suggestions_api') }}" data-ask-q>
+           data-suggest="{{ url_for('suggestions_api') }}" data-ask-q>
     <span class="ask-measure" aria-hidden="true" data-ask-measure></span>
     <div id="{{ prefix }}q-suggest" class="suggest" role="listbox" aria-label="{{ _('اقتراحات') }}" tabindex="-1" hidden></div>
   </span>
@@ -31,5 +31,4 @@
     </select>
   </span>
 </div>
-{% if hint %}<p class="ask-hint" id="{{ prefix }}q-hint">{{ _("اكتب تخصصًا أو اسم جامعة، بالعربية أو الإنجليزية، أو اكتب سؤالك كما هو.") }}</p>{% endif %}
 {% endmacro %}

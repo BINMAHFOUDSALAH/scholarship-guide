@@ -79,6 +79,7 @@ check("the plan page draws the known items (an unknown one is dropped)", keys.jo
   === "university:stanford-university program:arruaad university:harvard-university", keys.join(" "));
 check("the dropped item leaves the stored plan", (await stored()).items.length === 3);
 const select = page.locator('select[data-status="university:stanford-university"]');
+await select.focus(); // as a student's tap or Tab does; the page itself never moves focus onto a select
 await select.selectOption("applied");
 await page.waitForFunction(() => document.querySelector('[data-mylist-item="university:stanford-university"] .plan-date'));
 const row = page.locator('[data-mylist-item="university:stanford-university"]');
@@ -115,6 +116,22 @@ check("the calendar file is an .ics with the plan's dates", download.suggestedFi
   && ics.startsWith("BEGIN:VCALENDAR") && ics.includes("DTSTART;VALUE=DATE:") && ics.includes("TRIGGER:-P3D"), ics.slice(0, 80));
 check("the calendar file holds no name or address", !/ATTENDEE|ORGANIZER|MAILTO/i.test(ics));
 const accepted = page.locator('select[data-status="program:arruaad"]');
+// 2026-11-27 (iPhone): the list used to be redrawn and focus put on a new select, which reopened the picker after every
+// choice. The select the student used must stay the same element, keep the keyboard, and say «حُفظ».
+await accepted.evaluate((el) => { el.dataset.mark = "same"; el.focus(); });
+const stepBefore = await page.locator('[data-mylist-item="program:arruaad"] .plan-step').innerText();
+await page.keyboard.press("ArrowDown"); // أفكّر → أستعد, as a keyboard does it
+await page.waitForFunction((before) => {
+  const step = document.querySelector('[data-mylist-item="program:arruaad"] .plan-step');
+  return step && step.innerText !== before;
+}, stepBefore);
+const kept = await page.evaluate(() => {
+  const el = document.querySelector('select[data-status="program:arruaad"]');
+  return { same: el.dataset.mark === "same", focused: document.activeElement === el, value: el.value,
+           saved: !!el.closest("li").querySelector(".plan-saved") };
+});
+check("a status change keeps the same select, its focus and «حُفظ», and updates the next step",
+  kept.same && kept.focused && kept.value === "preparing" && kept.saved, JSON.stringify(kept));
 await accepted.selectOption("accepted");
 await page.waitForFunction(() => document.querySelector('[data-mylist-item="program:arruaad"].is-accepted'));
 check("«قُبلت» lights its row and the route reaches it", (await hub.locator(".plan-route-stop.is-here .plan-route-name").innerText()) === (english ? "Accepted" : "قُبلت"));
@@ -138,6 +155,26 @@ check("removing the last item shows the empty state", await page.locator("[data-
 await page.goto(base + "/");
 check("an empty plan hides the return strip", !(await page.locator("[data-plan-strip]").isVisible()));
 check("the old address goes to the plan", (await (await page.goto(base + "/my-list")).url()).endsWith("/my-plan"));
+
+// 5. A slow connection (2026-11-27, seen on the live site): three removals tapped quickly while every redraw takes
+// 1.5s. A late redraw must not bring back a row already removed.
+await page.evaluate(() => localStorage.setItem("wadih:plan", JSON.stringify({ v: 1, items: [
+  { type: "university", id: "university-of-oxford", status: "thinking" },
+  { type: "university", id: "harvard-university", status: "thinking" },
+  { type: "university", id: "stanford-university", status: "thinking" }] })));
+await page.goto(base + "/my-plan");
+await page.waitForSelector("[data-mylist-rows]:not([hidden]) button[data-remove]");
+await page.route("**/my-plan", async (route) => {
+  if (route.request().method() === "POST") await new Promise((r) => setTimeout(r, 1500));
+  await route.continue();
+});
+for (let i = 0; i < 3; i++) { await page.locator("button[data-remove]").first().tap(); await page.waitForTimeout(150); }
+await page.waitForTimeout(4000);
+const slow = await page.evaluate(() => ({ rows: document.querySelectorAll("[data-mylist-item]").length,
+  empty: !document.querySelector("[data-mylist-empty]").hidden, items: JSON.parse(localStorage.getItem("wadih:plan")).items.length }));
+check("quick removals on a slow connection leave the plan empty, with no row coming back",
+  slow.rows === 0 && slow.empty && slow.items === 0, JSON.stringify(slow));
+await page.unroute("**/my-plan");
 
 check("no JavaScript errors", errors.length === 0, errors.join(" | "));
 await browser.close();

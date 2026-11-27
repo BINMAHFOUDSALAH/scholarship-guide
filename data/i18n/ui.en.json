@@ -397,7 +397,6 @@
  "موعد التقديم يُعلن كل سنة.": "The application date is announced every year.",
  "موعد رسمي": "Official date",
  "نتائج البحث": "Search results",
- "نحن لا نراقب المواقع الرسمية آليًا، فقد تتغير معلومة بعد أن نشرناها.": "We don't monitor official websites automatically, so a piece of information may change after we publish it.",
  "نسبة القبول": "Acceptance rate",
  "هذا التخصص ليس في قائمة تخصصات إمداد، لكن الرواد يشمل كل التخصصات.": "This major isn't in the Emdad list of majors, but Arruaad covers all majors.",
  "هذا ترتيب مجال «{field}» كله في الدليل، وليس قائمة بتخصص «{major}» وحده. تأكد أن الجامعة تدرّس التخصص من موقعها.": "This is the ranking of the whole field “{field}” in the official guide, not a list for the major “{major}” alone. Check on the university's website that it teaches the major.",
@@ -659,7 +658,6 @@
  "اعرض جامعاتها في إمداد ({n})": "See its universities in Emdad ({n})",
  "اعرضها كلها": "See them all",
  "اعرف مسارات الثانوية وما يفتحه كل مسار، وجرّب المجالات قبل أن تقرر.": "Learn the high school tracks and what each one opens, and try fields before you decide.",
- "اكتب تخصصًا أو اسم جامعة، بالعربية أو الإنجليزية، أو اكتب سؤالك كما هو.": "Type a major or a university's name, in Arabic or English, or type your question as it is.",
  "الابتعاث يشترط للسنة التأسيسية معدل 90% فأعلى وآيلتس 5.5 فأعلى.": "For a foundation year, the scholarship requires a 90% average or higher and IELTS 5.5 or higher.",
  "الابتعاث يطلب قبولًا نهائيًا من جامعة في قائمة المسار.": "The scholarship asks for a final offer from a university on the track's list.",
  "الابتعاث:": "Scholarship:",
@@ -782,5 +780,12 @@
  "«{q}» من برامج الابتعاث": "“{q}” is a scholarship program",
  "برنامج ابتعاث": "Scholarship program",
  "له صفحته: من يتقدم، ومتى، وحالة التقديم الآن.": "It has its own page: who can apply, when, and whether applications are open now.",
- "احفظ أو قارن": "Save or compare"
+ "احفظ أو قارن": "Save or compare",
+ "اختر «أين وصلت؟» لكل جامعة أو برنامج، فتتغير خطوتك التالية بحسب اختيارك. وتبقى مواعيده في خطتك وتقويمك حتى تختار «قُبلت» أو «لم أُقبل».": "Choose “Where are you?” for each university or program, and your next step changes with your choice. Its dates stay in your plan and calendar until you choose “Accepted” or “Not accepted”.",
+ "التقديم مفتوح الآن.": "Applications are open now.",
+ "اقرأ شروطه وتأكد أنها تناسبك. {when}.": "Read its requirements and check they fit you. {when}.",
+ "اقرأ شروطه وتأكد أنها تناسبك.": "Read its requirements and check they fit you.",
+ "التقديم مفتوح الآن. {when}.": "Applications are open now. {when}.",
+ "جهّز ما يطلبه، وتابع موعد فتح التقديم. {when}.": "Prepare what it asks for, and watch for applications to open. {when}.",
+ "جهّز ما يطلبه، وتابع موعد فتح التقديم.": "Prepare what it asks for, and watch for applications to open."
 }

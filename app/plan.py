@@ -11,6 +11,8 @@ shape per account.
 """
 import re
 
+from app.i18n import tf
+
 MAX_ITEMS = 100
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID = re.compile(r"^[a-z0-9-]{1,80}$")
@@ -91,12 +93,21 @@ def program_step(item, path, track, status_now, apply_when_ar, has_page):
     """The next step for a program track, by the student's status and the track's status today."""
     page = f"/programs/{path['id']}" if has_page else None
     official = {"href": path["official_url"], "label_ar": "الموقع الرسمي", "external": True}
+    details = {"href": page, "label_ar": "الشروط والتفاصيل"} if page else official
     status = item["status"]
+    # Each step is something to do (2026-11-27: «أفكّر» on a program showed only when you apply, «تتقدم بعد التخرج من
+    # الثانوية», which read as a fact rather than a step). When the student applies stays in the sentence.
     if status in ("thinking", "preparing"):
         if status_now == "open" and track.get("apply_url") and track.get("apply_when") == "in_school":
-            return {"text_ar": "مفتوح الآن.", "href": track["apply_url"], "label_ar": "تقدم الآن", "external": True}
-        step = {"text_ar": apply_when_ar}
-        return {**step, "href": page, "label_ar": "الشروط والتفاصيل"} if page else {**step, **official}
+            return {"text_ar": "التقديم مفتوح الآن.", "href": track["apply_url"], "label_ar": "تقدم الآن", "external": True}
+        if status == "thinking":
+            return {"text_ar": tf("اقرأ شروطه وتأكد أنها تناسبك. {when}.", when=apply_when_ar) if apply_when_ar
+                    else "اقرأ شروطه وتأكد أنها تناسبك.", **details}
+        if status_now == "open":
+            return {"text_ar": tf("التقديم مفتوح الآن. {when}.", when=apply_when_ar) if apply_when_ar
+                    else "التقديم مفتوح الآن.", **details}
+        return {"text_ar": tf("جهّز ما يطلبه، وتابع موعد فتح التقديم. {when}.", when=apply_when_ar) if apply_when_ar
+                else "جهّز ما يطلبه، وتابع موعد فتح التقديم.", **details}
     if status == "applied":
         return {"text_ar": "تابع حالة طلبك في الموقع الرسمي.", **official}
     if status == "accepted":

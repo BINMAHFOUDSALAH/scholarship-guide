@@ -4389,6 +4389,25 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink-muted);
 }
 
+/* «حُفظ» beside the select after a change: the choice was kept. */
+.plan-saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--action);
+}
+
+.plan-saved::before {
+  content: "✓";
+}
+
+.mylist-how {
+  max-width: 44em;
+  margin-block: var(--space-2) 0;
+}
+
 .plan-step {
   font-size: var(--text-sm);
 }
@@ -7029,12 +7048,6 @@ a.uni-name:hover .uni-name-en:only-child {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
-}
-
-.ask-hint {
-  margin: var(--space-2) 0 0;
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
 }
 
 .ask-actions {
