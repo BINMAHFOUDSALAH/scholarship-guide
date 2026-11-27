@@ -7031,12 +7031,6 @@ a.uni-name:hover .uni-name-en:only-child {
   line-height: 1.6;
 }
 
-.ask-hint {
-  margin: var(--space-2) 0 0;
-  font-size: var(--text-sm);
-  color: var(--ink-muted);
-}
-
 .ask-actions {
   display: flex;
   flex-wrap: wrap;
