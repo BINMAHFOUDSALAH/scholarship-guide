@@ -12,14 +12,6 @@ A free, Arabic-first guide for Saudi high school students: the programs open to 
 
 ![The واضح homepage: a route through the three secondary school grades, and a search of the scholarship lists](docs/images/home.png)
 
-> **Independent.** واضح is a student guide. It is not the Ministry of Education or Safeer, and it is not affiliated with Aramco, KAUST or SDAIA.
-
-## Principles
-
-- **Official sources only.** A fact links to the official page it came from. Anything not backed by an official source or the owner's confirmation stays hidden, not guessed.
-- **Help first.** Everything is public: no account and no sign-up.
-- **Private by default.** No trackers, and no third-party requests until a student acts (fonts are self-hosted; the only embed is a click-to-play video). Never asks for sensitive data such as a national ID, GPA or test scores.
-
 ## How it works
 
 ```mermaid

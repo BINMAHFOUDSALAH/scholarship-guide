@@ -1,31 +1,23 @@
-# Search and the road to «اسأل واضح» (decision 045)
+# Search and retrieval
 
-## Why
-Students ask questions in their own words. Retrieval, finding the right verified passage, is the foundation of the future RAG chatbot, and it's useful on its own as site search.
+Wadih’s public search helps students find guides and sourced facts. وضّاح uses the same published material for explanations and structured university records for exact answers. See [agent.md](agent.md) for answer behavior and [accounts.md](accounts.md) for sign-in.
 
-## How RAG will work here
-1. **Ingest (ahead of time):** read the owner's chosen official sources and the guide's own pages; the owner reviews them; split them into chunks; store each chunk with its link and date.
-2. **Retrieve (per question):** find the few chunks most related to the question.
-3. **Generate:** the model answers only from those chunks, cites them, and says it doesn't know when nothing fits.
+## Public search contract
 
-Nothing is fetched from the internet while a student waits.
+- `GET /search?q=…` renders results as a page, works without JavaScript, and uses `noindex`.
+- `GET /api/search?q=…` returns `query` and `results`. Each result has `title`, `heading`, `url`, `snippet`, and `sources` with `title` and `url`.
+- An empty query returns no results. Queries are capped at 200 characters and responses return up to 10 results.
+- The SQLite FTS5 index uses published guide sections, sourced program facts, documented source conflicts, and sourced rows from `test_needs.json`. Each indexed result links to its Wadih page and official sources. Keep drafts out of the published index.
 
-## Steps
-| # | Step | Status |
-|---|---|---|
-| 1 | Keyword search: `/search`, `/api/search` (SQLite FTS5) | done |
-| 2 | Chunks with full source tracking (`last_checked`, `owner_reviewed` per chunk) | next |
-| 3 | Search by meaning: embeddings + vector index, combined with keywords (hybrid) | |
-| 4 | Eval set: ~50 real student questions, each with its expected chunk; a test scores retrieval | |
-| 5 | وضّاح (was «اسأل واضح»): answers only from retrieved chunks, with citations; refuses when unsure. Spec: [agent.md](agent.md); `retrieve()` and the eval seed are in place (C6) | Phase 2, ask first (paid API) |
-| 6 | Operations: rate limits, daily spend cap, caching, logs without personal data | |
-| 7 | Update-monitor agent: watches official pages, drafts changes, waits for the owner's approval | |
+## Retrieval for وضّاح
 
-## Step 1 contract
-- `GET /api/search?q=…` → `{"query": "…", "results": [{"title", "heading", "url", "snippet", "sources": [{"title", "url"}]}]}`. Empty `q` → no results. At most 10 results; `q` is cut to 200 characters.
-- `GET /search?q=…`: the same results as a page (works without JavaScript), `noindex`.
-- What's indexed: guide pages with `status: sourced` and sources (one chunk per h2 section, plus the intro); program facts with status `sourced`/`conflict` (link: `/programs/<id>#fact-<fact id>`); `test_needs.json` rows with an official source.
-- Every result has at least one official (`https://`) source.
+- Use `SiteSearch.retrieve()` in `app/search.py` to find relevant guide passages for explanations. Use the records and logic behind the University Finder for exact scores, deadlines, and list membership.
+- Keep source links and verification metadata with the underlying records. Preserve the applicable institution, program, applicant type, and admissions cycle where relevant.
+- Serve questions from Wadih’s prepared data and guides. Use the site’s source-checking workflow to refresh records when official information changes.
+- Send private agent questions in the request body and keep raw questions out of application logs.
 
-## Privacy
-The app doesn't store queries. But `/search?q=…` is a normal web address, so Render's access logs record it, like every page address. That's acceptable for short search words. The chatbot, where students type longer questions, must send them in the request body (POST) so they stay out of the logs. The chatbot (step 5, وضّاح) follows the same rule: POST, a notice not to type personal data, personal data stripped before sending, no question or answer text stored. Since decisions 078 and 082 it needs an account (email + password, [accounts.md](accounts.md)); the site itself never does.
+## How to improve it
+
+- Use [eval-seed.json](eval-seed.json) to check whether the expected guide section or record appears among the top results. Include Arabic spelling variants, student phrasing, and English university names.
+- Diagnose misses before changing the search stack. If a record is missing or stale, fix the data. If a relevant record exists but is hard to find, improve aliases, indexing, or ranking.
+- Consider embeddings or hybrid search when the same test cases show that they improve retrieval. Compare relevance, response time, and cost against the existing search.

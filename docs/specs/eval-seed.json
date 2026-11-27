@@ -1,5 +1,5 @@
 {
-  "_note": "The eval seed for وضّاح (decision 083, docs/specs/agent.md §8). Real-shaped student questions (some in dialect: that's how students type; the answers are in فصحى), each with the page sections that must answer it. kind: answer = must answer from one of expected (cited); explorer = the answer is a university's requirement file or a list, reached through the explorer; no_date = must say no date is announced and cite the status; unknown = the site doesn't cover it: must say «لا أعرف» and route; refuse = outside its limits: must decline and route. tests/test_part_c.py checks that every expected page and anchor exists. Add the questions from the teaser's X replies under source: x_replies (questions only, never names or handles).",
+  "_note": "Arabic retrieval and answer cases for Waddah. The expected paths identify relevant Wadih pages or records. Check the answer separately for accuracy, applicability, and official sources. Use fixed test data for missing or time-sensitive information.",
   "version": 1,
   "questions": [
     {"id": "arruaad-grade12", "source": "guides", "kind": "answer", "q_ar": "هل أستطيع التقديم على مسار الرواد وأنا في ثالث ثانوي؟", "expected": ["/programs/custodian-scholarship#fact-arruaad-rule", "/programs/custodian-scholarship#admission-vs-scholarship"], "must_include_ar": ["قبول"]},
