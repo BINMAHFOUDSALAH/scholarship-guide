@@ -296,14 +296,14 @@ def ranks_of(c, track):
     return rows[start:end]
 
 
-def test_rankings_show_the_exact_rank_its_page_and_the_list_length():
+def test_rankings_show_the_exact_rank_with_its_page_as_the_source():
     """ترتيب الجامعة حسب المجال (owner, 2026-11-27): the rank from the Ministry's guide, its page linked, and «من 30»."""
     c = compare.build(["university-of-oxford", "harvard-university"], ex, answer, "2026-11-27")
     group = next(g for g in c["groups"] if g["id"] == "lists")
     assert group["title_ar"] == "ترتيب الجامعة حسب المجال" and group["gate"] == 1
     row, ox = cell_of(c, "الترتيب في قائمة الرواد", "university-of-oxford")
     assert ox["value"] == "6" and cell_of(c, "الترتيب في قائمة الرواد", "harvard-university")[1]["value"] == "1"
-    assert ox["note"] == "من 30، ص 5 في دليل الوزارة"
+    assert ox["note"] is None  # the guide is named once, above the section (owner, 2026-11-27)
     assert ox["sources"] == [{"url": ex.source["url"] + "#page=5", "what": None, "site": "دليل الوزارة، ص 5"}]
     # Every track has its heading, in the order a high-school student needs them.
     assert [r["track"]["id"] for r in group["rows"] if r.get("track")] == ["arruaad", "emdad", "rnd"]
@@ -319,24 +319,17 @@ def test_rankings_have_a_row_for_every_field_any_university_is_listed_in():
         for uid, cell in zip(uids, r["cells"]):
             own = [l for l in ex.universities[uid]["listings"] if l["track"] == "emdad" and l["field"] == r["field"]]
             if own:
-                assert cell["value"] == str(own[0]["rank"]) and f"ص {own[0]['pdf_page']}" in cell["note"]
+                assert cell["value"] == str(own[0]["rank"]) and cell["note"] is None
                 assert cell["sources"][0]["url"].endswith(f"#page={own[0]['pdf_page']}")
             else:  # the guide is the whole list: not there is a confirmed absence, with the list's pages
                 assert cell["value"] == "غير مدرجة في هذا المجال" and cell["state"] == "none"
                 assert cell["sources"][0]["url"].startswith(ex.source["url"] + "#page=")
 
 
-def test_rankings_keep_degree_limits_and_a_list_with_a_gap_has_no_length():
+def test_rankings_keep_degree_limits():
     c = compare.build(["complutense-university-of-madrid", "digipen-institute-of-technology"], ex, answer, "2026-11-27")
     arts = next(r for r in ranks_of(c, "emdad") if r["field"] == "arts-humanities")
     assert arts["cells"][0]["tags"] == ["ماجستير فقط"] and arts["cells"][1]["tags"] == ["بكالوريوس في تخصصات محددة"]
-    # The guide's doctorate ICT list itself jumps from 90 to 100: no «من 164» there.
-    uid = next(u for u, x in ex.universities.items()
-               if any(l["track"] == "rnd" and l["field"] == "ict" for l in x["listings"]))
-    c = compare.build([uid, "university-of-oxford"], ex, answer, "2026-11-27")
-    ict = next(r for r in ranks_of(c, "rnd") if r["field"] == "ict")
-    listed = next(cell for cell in ict["cells"] if cell.get("rank"))
-    assert not listed["note"].startswith("من ")
 
 
 def test_rankings_are_there_for_any_combination_even_with_no_rank():
@@ -487,3 +480,14 @@ def test_english_suggestions_know_georgia_tech_and_kaust_by_short_names():
     assert gt.get("alias") == "Georgia Tech"
     kaust = next(p for p in data["programs"] if p["slug"] == "kaust-kgsp")
     assert {"kaust", "kgsp"} <= set(kaust["keys"]) and kaust["href"] == "/en/programs/kaust-kgsp"
+
+
+def test_the_comparison_says_its_source_once_and_nothing_twice():
+    """Owner, 2026-11-27: no lead under the title, no hint under the switches, no «رابط هذه المقارنة» (it only reloaded
+    the page), and no source note in every rank: the rankings name the Ministry's 2026–2027 guide once, at their top."""
+    html = client.get("/compare?u=university-of-oxford,harvard-university").text
+    for gone in ("الصف نفسه لكل جامعة", "كل قيمة من مصدر رسمي", "رابط هذه المقارنة", "في دليل الوزارة", "compare-sources-hint"):
+        assert gone not in html
+    note = html.split('class="compare-group-note"')[1].split("</span></th>")[0]
+    assert "الدليل الاسترشادي لقوائم الجامعات 2026–2027" in note and ex.source["url"] in note
+    assert html.count('class="compare-group-note"') == 1
