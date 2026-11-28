@@ -2,7 +2,8 @@
   وضّاح's preview on the homepage (owner, 2026-11-25; replaces the teaser band of decision 093 and its «قادم في ديسمبر»:
   the launch dates are dropped). An example of what he will do: a student's question becomes a shortlist and a plan.
   Only the scenario is ours (data/waddah.json «preview»); every fact is read by waddah_preview() from the same files as
-  the pages, with its source, so the example can't drift from the site. It keeps three things apart that students mix
+  the pages, so the example can't drift from the site. No «المصدر» chips or year hedges here (owner, 2026-11-27): it
+  is a picture; the university pages carry the sources. It keeps three things apart that students mix
   up: the scholarship's list (eligibility), the university's own requirement (admission), and the minimum against the
   recommended score. It is a picture of the future, not a chat: nothing here answers, nothing to type. وضّاح holds his
   clipboard beside it (decorative; the words say it all). Nothing moves (design.md: motion answers an action).
@@ -17,7 +18,7 @@
         <p class="waddah-kicker">{{ waddah.teaser.kicker_ar }}</p>
         {#- His name only: he stands beside the cards with his clipboard, and appears once on a screen (design.md). #}
         <h2 id="waddah-title" class="waddah-title"><span class="waddah-mark"><span class="waddah-name">{{ waddah.name_ar }}</span></span> <span class="waddah-title-rest">{{ _("من سؤالك إلى خطتك") }}</span></h2>
-        <p class="waddah-line">{{ _("مثال لما سيفعله وضّاح: يبني قائمتك القصيرة وخطتك من المعلومات الموثّقة في واضح، ويضع مصدر كل رقم بجانبه.") }}</p>
+        <p class="waddah-line">{{ _("مثال لما سيفعله وضّاح.") }}</p>
       </div>
       <img class="waddah-preview-figure" src="{{ url_for('static', path='img/waddah/clipboard-320.webp') }}" width="320" height="300" alt="" aria-hidden="true" loading="lazy" decoding="async">
     </div>
@@ -48,7 +49,6 @@
                   {% if i.recommended %}<span class="preview-score">{{ _("الموصى به") }} <strong>{{ i.recommended }}</strong></span>{% endif %}
                   {% if i.each_min %}<span class="preview-score">{{ _("ولكل مهارة") }} <strong>{{ i.each_min }}</strong></span>{% endif %}
                   {% if i.varies %}<span class="preview-score preview-score--note">{{ _("وقد يكون أعلى حسب البرنامج") }}</span>{% endif %}
-                  <a class="src" href="{{ i.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>
                 </dd>
               </div>
             </dl>
@@ -64,7 +64,7 @@
           {% for x in p.dates %}
           <li class="preview-date">
             <time class="preview-date-day" datetime="{{ x.date }}">{{ x.date | arabic_date }}</time>
-            <span class="preview-date-what">{{ x.university.name_ar or x.university.name_en }}{{ _("،") }} {{ um.date_short(x) }} <a class="src" href="{{ x.source_url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% if not x.year_stated %}<span class="preview-date-hedge">{{ _("السنة غير مذكورة في الصفحة") }}</span>{% endif %}</span>
+            <span class="preview-date-what">{{ x.university.name_ar or x.university.name_en }}{{ _("،") }} {{ um.date_short(x) }}</span>
           </li>
           {% endfor %}
           <li class="preview-date preview-date--then">

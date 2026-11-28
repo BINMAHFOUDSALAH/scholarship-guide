@@ -212,13 +212,17 @@ def test_the_preview_is_an_example_not_a_chat(prefix, teaser_public):
     assert "قادم في ديسمبر" not in section and "December" not in section  # the launch dates are dropped
     # The closing note and the list/admission note are gone (owner, 2026-11-27); the opening line still says «مثال».
     assert "preview-foot" not in section and "preview-note" not in section
-    assert ("An example of what Waddah" if prefix else "مثال لما سيفعله وضّاح") in section
+    assert ("An example of what Waddah will do." if prefix else "مثال لما سيفعله وضّاح.") in section
+    # Owner, 2026-11-27: no «المصدر» chips, no year hedge, no «يبني قائمتك…» line in the example.
+    assert "المصدر" not in section and ">Source<" not in section
+    assert "السنة غير مذكورة" not in section and "Year not stated" not in section
+    assert "يبني قائمتك" not in section and "builds your shortlist" not in section
 
 
-def test_the_preview_shows_only_facts_from_the_files_with_their_sources(teaser_public):
+def test_the_preview_shows_only_facts_from_the_files(teaser_public):
     """Every number in the example is read from the same files as the pages: the list a university is on, its IELTS
-    minimum and recommended score (kept apart), its next deadline; each beside its source. Nothing in the scenario
-    (data/waddah.json) is a fact."""
+    minimum and recommended score (kept apart), its next deadline. Nothing in the scenario (data/waddah.json) is a
+    fact. The source chips are gone from the example (owner, 2026-11-27); the sources stay in the data."""
     p = main.waddah_preview(today="2026-11-25")
     section = _preview_html()
     assert set(main.waddah["preview"]) <= {"_note", "ask_ar", "major_ar", "universities"}
@@ -227,7 +231,7 @@ def test_the_preview_shows_only_facts_from_the_files_with_their_sources(teaser_p
         uid = r["university"]["id"]
         ielts = main.explorer.details[uid]["english"]["ielts"]
         assert any(l["track"] == r["on"]["track"] and l["rank"] == r["on"]["rank"] for l in r["university"]["listings"])
-        assert r["ielts"]["source_url"] == ielts["source_url"] and f'href="{ielts["source_url"]}"' in section
+        assert r["ielts"]["source_url"] == ielts["source_url"]
         if ielts.get("min"):
             assert r["ielts"]["min"] == main.explorer.english_rows(uid)[0]["min"]
     gt = next(r for r in p["rows"] if r["university"]["id"] == "georgia-institute-of-technology")
@@ -236,9 +240,9 @@ def test_the_preview_shows_only_facts_from_the_files_with_their_sources(teaser_p
     assert "الحد الأدنى <strong>" in section and "الموصى به <strong>" in section
     # Eligibility (the scholarship's list) and admission (the university's requirement) under separate labels.
     assert "<dt>الابتعاث</dt>" in section and "<dt>القبول في الجامعة" in section
-    # The plan: dates in order, each with its source; the scholarship comes after admission, with the conditions.
+    # The plan: dates in order; the scholarship comes after admission, with the conditions.
     days = [x["date"] for x in p["dates"]]
-    assert days == sorted(days) and all(f'href="{x["source_url"]}"' in section for x in p["dates"])
+    assert days == sorted(days) and all(x["source_url"] for x in p["dates"])
     assert "conditions/info-6/" in section and "conditions/info-5/" in section
     # A date kept for one group of applicants only (CMU's drama and music) is not the student's deadline.
     assert all("فقط" not in (x.get("note_ar") or "") for x in p["dates"])
