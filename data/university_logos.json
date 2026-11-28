@@ -1,6 +1,42 @@
 {
   "_note": "Official university logos, shown only on each university's own page (decision 049). Keyed by university id. file: path under app/static/ (SVG or PNG, self-hosted); source_url: the page where the logo was found (the university's own site or its Wikimedia Commons file page); asset_url: the file downloaded; licence: as stated on the source (Commons licence, or 'official website, trademark'); retrieved: date downloaded. A university with no entry shows no logo.",
   "logos": {
+    "adelaide-university": {
+      "file": "img/universities/adelaide-university.png",
+      "width": 220,
+      "height": 52,
+      "source_url": "https://adelaide.edu.au/",
+      "asset_url": "https://adelaide.edu.au/content/dam/adelaideuniversity/images/global/logos/au-logo-dark-blue-horizontal.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "albert-ludwigs-universitaet-freiburg": {
+      "file": "img/universities/albert-ludwigs-universitaet-freiburg.png",
+      "width": 220,
+      "height": 24,
+      "source_url": "https://uni-freiburg.de/",
+      "asset_url": "https://uni-freiburg.de/ (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "alma-mater-studiorum-university-of-bologna": {
+      "file": "img/universities/alma-mater-studiorum-university-of-bologna.png",
+      "width": 87,
+      "height": 64,
+      "source_url": "https://www.unibo.it/en",
+      "asset_url": "https://www.unibo.it/en/++theme++unibotheme.portale/img/header/sigillo1x_xl.png?v=2",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "amity-university": {
+      "file": "img/universities/amity-university.png",
+      "width": 132,
+      "height": 36,
+      "source_url": "https://www.amity.edu/",
+      "asset_url": "https://amity.edu/images/logo-amity.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "arizona-state-university": {
       "file": "img/universities/arizona-state-university.png",
       "width": 220,
@@ -11,6 +47,52 @@
       "wikidata": "https://www.wikidata.org/wiki/Q670897",
       "retrieved": "2026-10-12"
     },
+    "australian-national-university": {
+      "file": "img/universities/australian-national-university.png",
+      "width": 182,
+      "height": 64,
+      "source_url": "https://www.anu.edu.au/",
+      "asset_url": "https://d1blp3aor2iuhp.cloudfront.net/images/logos/logo-ANU-black.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "babson-college": {
+      "file": "img/universities/babson-college.png",
+      "width": 220,
+      "height": 28,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo-Babson-College-Horizontal-RGB_(2).svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Logo-Babson-College-Horizontal-RGB_%282%29.svg/960px-Logo-Babson-College-Horizontal-RGB_%282%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "retrieved": "2026-11-27"
+    },
+    "bangor-university": {
+      "file": "img/universities/bangor-university.png",
+      "width": 220,
+      "height": 62,
+      "source_url": "https://www.bangor.ac.uk/",
+      "asset_url": "https://www.bangor.ac.uk/themes/custom/bangor/images/logo-black.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "beihang-university-former-buaa": {
+      "file": "img/universities/beihang-university-former-buaa.png",
+      "width": 120,
+      "height": 64,
+      "source_url": "https://ev.buaa.edu.cn/",
+      "asset_url": "https://ev.buaa.edu.cn/image/logo364.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "beijing-institute-of-technology": {
+      "file": "img/universities/beijing-institute-of-technology.png",
+      "width": 110,
+      "height": 22,
+      "source_url": "https://english.bit.edu.cn/",
+      "asset_url": "https://subsites.chinadaily.com.cn/enbit/att/6913.files/images/BIT_Logo.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "boston-university": {
       "file": "img/universities/boston-university.png",
       "width": 142,
@@ -20,6 +102,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q49110",
       "retrieved": "2026-10-12"
+    },
+    "bournemouth-university": {
+      "file": "img/universities/bournemouth-university.png",
+      "width": 220,
+      "height": 34,
+      "source_url": "https://www.bournemouth.ac.uk/",
+      "asset_url": "https://www.bournemouth.ac.uk/sites/all/themes/bournemouth/assets/images/logo-horizontal.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "brown-university": {
       "file": "img/universities/brown-university.png",
@@ -80,6 +171,33 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q1047060",
       "retrieved": "2026-10-12"
+    },
+    "central-south-university": {
+      "file": "img/universities/central-south-university.png",
+      "width": 150,
+      "height": 41,
+      "source_url": "https://en.csu.edu.cn/",
+      "asset_url": "https://en.csu.edu.cn/images/logo1.jpg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "christian-albrechts-university-zu-kiel": {
+      "file": "img/universities/christian-albrechts-university-zu-kiel.png",
+      "width": 192,
+      "height": 64,
+      "source_url": "https://www.uni-kiel.de/en/",
+      "asset_url": "https://www.uni-kiel.de/_assets/301b85a34578de69188331f40130a52f/Images/Logo/cau-norm-EN-lilagrey-rgb.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "city-university-of-hong-kong": {
+      "file": "img/universities/city-university-of-hong-kong.png",
+      "width": 220,
+      "height": 38,
+      "source_url": "https://www.cityu.edu.hk/",
+      "asset_url": "https://template.cityu.edu.hk/template/logo/CityU/CityU_Horizontal_Logo_CMYK.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "colorado-school-of-mines": {
       "file": "img/universities/colorado-school-of-mines.png",
@@ -171,6 +289,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q168751",
       "retrieved": "2026-10-12"
     },
+    "eberhard-karls-universitat-tubingen": {
+      "file": "img/universities/eberhard-karls-universitat-tubingen.png",
+      "width": 220,
+      "height": 56,
+      "source_url": "https://uni-tuebingen.de/en/",
+      "asset_url": "https://uni-tuebingen.de/_assets/7d66ab3e4599366251c5af46f0e770b9/Images/Logo_Universitaet_Tuebingen.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "eindhoven-university-of-technology": {
       "file": "img/universities/eindhoven-university-of-technology.png",
       "width": 192,
@@ -180,6 +307,24 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q280824",
       "retrieved": "2026-10-12"
+    },
+    "emory-university": {
+      "file": "img/universities/emory-university.png",
+      "width": 220,
+      "height": 56,
+      "source_url": "https://www.emory.edu/",
+      "asset_url": "https://www.emory.edu/sites/emorymain/files/logos/logo-dark.svg?1785786799",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "epfl": {
+      "file": "img/universities/epfl.png",
+      "width": 220,
+      "height": 64,
+      "source_url": "https://www.epfl.ch/en/",
+      "asset_url": "https://www.epfl.ch/wp-content/themes/wp-theme-2018/assets/svg/epfl-logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "erasmus-university-rotterdam": {
       "file": "img/universities/erasmus-university-rotterdam.png",
@@ -271,6 +416,24 @@
       "wikidata": "https://www.wikidata.org/wiki/Q864855",
       "retrieved": "2026-10-12"
     },
+    "griffith-university": {
+      "file": "img/universities/griffith-university.png",
+      "width": 220,
+      "height": 46,
+      "source_url": "https://www.griffith.edu.au/",
+      "asset_url": "https://www.griffith.edu.au/__data/assets/file/0047/1899488/grififth-logo-red.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "harbin-institute-of-technology": {
+      "file": "img/universities/harbin-institute-of-technology.png",
+      "width": 208,
+      "height": 48,
+      "source_url": "https://en.hit.edu.cn/",
+      "asset_url": "https://en.hit.edu.cn/_upload/tpl/02/f8/760/template760/image/logo.jpg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "harvard-university": {
       "file": "img/universities/harvard-university.png",
       "width": 220,
@@ -290,6 +453,26 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q1057199",
       "retrieved": "2026-10-12"
+    },
+    "huazhong-agricultural-university": {
+      "file": "img/universities/huazhong-agricultural-university.png",
+      "width": 128,
+      "height": 29,
+      "source_url": "https://en.hzau.edu.cn/",
+      "asset_url": "https://en.hzau.edu.cn/images/LOGO.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
+    "huazhong-university-of-science-and-technology": {
+      "file": "img/universities/huazhong-university-of-science-and-technology.png",
+      "width": 208,
+      "height": 45,
+      "source_url": "https://english.hust.edu.cn/",
+      "asset_url": "https://english.hust.edu.cn/img/logo.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
     },
     "humboldt-universitat-zu-berlin": {
       "file": "img/universities/humboldt-universitat-zu-berlin.png",
@@ -311,6 +494,25 @@
       "wikidata": "https://www.wikidata.org/wiki/Q189022",
       "retrieved": "2026-10-12"
     },
+    "indian-institute-of-science": {
+      "file": "img/universities/indian-institute-of-science.png",
+      "width": 220,
+      "height": 39,
+      "source_url": "https://www.iisc.ac.in/",
+      "asset_url": "https://www.iisc.ac.in/wp-content/uploads/2016/06/logo-iisc.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
+    "indian-institute-of-technology-delhi-iitd": {
+      "file": "img/universities/indian-institute-of-technology-delhi-iitd.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://home.iitd.ac.in/",
+      "asset_url": "https://home.iitd.ac.in/images/preloaders/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "indian-institute-of-technology-madras-iitm": {
       "file": "img/universities/indian-institute-of-technology-madras-iitm.png",
       "width": 64,
@@ -331,6 +533,24 @@
       "wikidata": "https://www.wikidata.org/wiki/Q1079140",
       "retrieved": "2026-10-12"
     },
+    "institut-polytechnique-de-paris": {
+      "file": "img/universities/institut-polytechnique-de-paris.png",
+      "width": 88,
+      "height": 22,
+      "source_url": "https://www.ip-paris.fr/en",
+      "asset_url": "https://www.ip-paris.fr/sites/default/files/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "institute-of-science-tokyo": {
+      "file": "img/universities/institute-of-science-tokyo.png",
+      "width": 220,
+      "height": 45,
+      "source_url": "https://www.isct.ac.jp/en",
+      "asset_url": "https://www.isct.ac.jp/en (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "iowa-state-university": {
       "file": "img/universities/iowa-state-university.png",
       "width": 194,
@@ -350,6 +570,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q193727",
       "retrieved": "2026-10-12"
+    },
+    "justus-liebig-university-giessen": {
+      "file": "img/universities/justus-liebig-university-giessen.png",
+      "width": 75,
+      "height": 27,
+      "source_url": "https://www.uni-giessen.de/en",
+      "asset_url": "https://www.uni-giessen.de/++theme++jlu-giessen-plone-6-theme/++theme++jlu-giessen-plone-6-theme/images/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "kansas-state-university": {
       "file": "img/universities/kansas-state-university.png",
@@ -411,6 +640,25 @@
       "wikidata": "https://www.wikidata.org/wiki/Q336264",
       "retrieved": "2026-10-12"
     },
+    "l-institut-agro-l-institut-agro-dijon-l-institut-agro-montpellier-l-institut-agro-rennes-angers": {
+      "file": "img/universities/l-institut-agro-l-institut-agro-dijon-l-institut-agro-montpellier-l-institut-agro-rennes-angers.png",
+      "width": 100,
+      "height": 32,
+      "source_url": "https://www.institut-agro.fr/en",
+      "asset_url": "https://www.institut-agro.fr/files/images/logos/footer/logo-institut-agro-blanc.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
+    "lancaster-university": {
+      "file": "img/universities/lancaster-university.png",
+      "width": 203,
+      "height": 64,
+      "source_url": "https://www.lancaster.ac.uk/",
+      "asset_url": "https://www.lancaster.ac.uk/media/wdp/style-assets/images/logos/lu-logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "leiden-university": {
       "file": "img/universities/leiden-university.png",
       "width": 144,
@@ -471,6 +719,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q201492",
       "retrieved": "2026-10-12"
     },
+    "mcmaster-university": {
+      "file": "img/universities/mcmaster-university.png",
+      "width": 120,
+      "height": 64,
+      "source_url": "https://www.mcmaster.ca/",
+      "asset_url": "https://www.mcmaster.ca/wp-content/uploads/2024/07/m24-col.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "michigan-state-university": {
       "file": "img/universities/michigan-state-university.png",
       "width": 220,
@@ -500,6 +757,43 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q1191132",
       "retrieved": "2026-10-12"
+    },
+    "nanjing-agricultural-university": {
+      "file": "img/universities/nanjing-agricultural-university.png",
+      "width": 220,
+      "height": 32,
+      "source_url": "https://english.njau.edu.cn/",
+      "asset_url": "https://english.njau.edu.cn/_upload/site/00/07/7/logo.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
+    "nanjing-university": {
+      "file": "img/universities/nanjing-university.png",
+      "width": 220,
+      "height": 54,
+      "source_url": "https://www.nju.edu.cn/en/",
+      "asset_url": "https://www.nju.edu.cn/en/images/logoz.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "nankai-university": {
+      "file": "img/universities/nankai-university.png",
+      "width": 113,
+      "height": 36,
+      "source_url": "https://en.nankai.edu.cn/",
+      "asset_url": "https://en.nankai.edu.cn/_upload/tpl/02/df/735/template735/images/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "nanyang-technological-university-singapore-ntu": {
+      "file": "img/universities/nanyang-technological-university-singapore-ntu.png",
+      "width": 178,
+      "height": 64,
+      "source_url": "https://www.ntu.edu.sg/",
+      "asset_url": "https://www.ntu.edu.sg/ResourcePackages/NTU/assets/images/NTU_Logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "new-york-university-nyu": {
       "file": "img/universities/new-york-university-nyu.png",
@@ -531,6 +825,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q37548",
       "retrieved": "2026-10-12"
     },
+    "northwest-agriculture-and-forestry-university": {
+      "file": "img/universities/northwest-agriculture-and-forestry-university.png",
+      "width": 220,
+      "height": 30,
+      "source_url": "https://en.nwafu.edu.cn/",
+      "asset_url": "https://en.nwafu.edu.cn/images/logo.jpg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "northwestern-university": {
       "file": "img/universities/northwestern-university.png",
       "width": 64,
@@ -551,6 +854,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q861888",
       "retrieved": "2026-10-12"
     },
+    "peking-university": {
+      "file": "img/universities/peking-university.png",
+      "width": 220,
+      "height": 62,
+      "source_url": "https://english.pku.edu.cn/",
+      "asset_url": "https://english.pku.edu.cn/Uploads/Bden/Picture/2020/11/25/s5fbdbf048bc00.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "pennsylvania-state-university": {
       "file": "img/universities/pennsylvania-state-university.png",
       "width": 220,
@@ -570,6 +882,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q40018",
       "retrieved": "2026-10-12"
+    },
+    "politecnico-di-milano": {
+      "file": "img/universities/politecnico-di-milano.png",
+      "width": 198,
+      "height": 64,
+      "source_url": "https://www.polimi.it/en",
+      "asset_url": "https://www.polimi.it/_assets/4b51f00386267395f41e0940abbcd656/Images/logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "princeton-university": {
       "file": "img/universities/princeton-university.png",
@@ -601,6 +922,25 @@
       "wikidata": "https://www.wikidata.org/wiki/Q195668",
       "retrieved": "2026-10-12"
     },
+    "radboud-university": {
+      "file": "img/universities/radboud-university.png",
+      "width": 220,
+      "height": 47,
+      "source_url": "https://www.ru.nl/en",
+      "asset_url": "https://www.ru.nl/themes/custom/ru/logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "renmin-peoples-university-of-china": {
+      "file": "img/universities/renmin-peoples-university-of-china.png",
+      "width": 120,
+      "height": 24,
+      "source_url": "https://en.ruc.edu.cn/",
+      "asset_url": "https://en.ruc.edu.cn/att/26.files/images/RUC_Logo.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "rheinische-friedrich-wilhelms-universitat-bonn": {
       "file": "img/universities/rheinische-friedrich-wilhelms-universitat-bonn.png",
       "width": 165,
@@ -630,6 +970,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q1057890",
       "retrieved": "2026-10-12"
+    },
+    "ruprecht-karls-universitat-heidelberg": {
+      "file": "img/universities/ruprecht-karls-universitat-heidelberg.png",
+      "width": 122,
+      "height": 64,
+      "source_url": "https://www.uni-heidelberg.de/en",
+      "asset_url": "https://backend.uni-heidelberg.de/sites/default/files/site_logo/icon-symbol-uh-logo-black_1_0.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "rutgers-universitynew-brunswick": {
       "file": "img/universities/rutgers-universitynew-brunswick.png",
@@ -661,6 +1010,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q209344",
       "retrieved": "2026-10-12"
     },
+    "sciences-po": {
+      "file": "img/universities/sciences-po.png",
+      "width": 220,
+      "height": 34,
+      "source_url": "https://www.sciencespo.fr/en/",
+      "asset_url": "https://www.sciencespo.fr/en/static/4e8c8b615cdf25da682418334c3751b6/sciencespo_logo_rouge_176c18a710.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "sejong-university": {
       "file": "img/universities/sejong-university.png",
       "width": 166,
@@ -681,6 +1039,16 @@
       "wikidata": "https://www.wikidata.org/wiki/Q39913",
       "retrieved": "2026-10-12"
     },
+    "shanghai-jiao-tong-university": {
+      "file": "img/universities/shanghai-jiao-tong-university.png",
+      "width": 220,
+      "height": 34,
+      "source_url": "https://en.sjtu.edu.cn/",
+      "asset_url": "https://global.sjtu.edu.cn/en/assets/images/logo_white_130.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "sorbonne-university": {
       "file": "img/universities/sorbonne-university.png",
       "width": 158,
@@ -700,6 +1068,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q3551770",
       "retrieved": "2026-10-12"
+    },
+    "southern-university-of-science-and-technology": {
+      "file": "img/universities/southern-university-of-science-and-technology.png",
+      "width": 220,
+      "height": 60,
+      "source_url": "https://www.sustech.edu.cn/en/",
+      "asset_url": "https://www.sustech.edu.cn/en/ (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "stanford-university": {
       "file": "img/universities/stanford-university.png",
@@ -771,6 +1148,42 @@
       "wikidata": "https://www.wikidata.org/wiki/Q49212",
       "retrieved": "2026-10-12"
     },
+    "the-chinese-university-of-hong-kong-cuhk": {
+      "file": "img/universities/the-chinese-university-of-hong-kong-cuhk.png",
+      "width": 220,
+      "height": 39,
+      "source_url": "https://www.cuhk.edu.hk/english/",
+      "asset_url": "https://www.cuhk.edu.hk/english/images/cuhk_logo_2x.png?20221027",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "the-hong-kong-polytechnic-university": {
+      "file": "img/universities/the-hong-kong-polytechnic-university.png",
+      "width": 167,
+      "height": 32,
+      "source_url": "https://www.polyu.edu.hk/",
+      "asset_url": "https://www.polyu.edu.hk/assets/img/main-logo-1x.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "the-hong-kong-university-of-science-and-technology": {
+      "file": "img/universities/the-hong-kong-university-of-science-and-technology.png",
+      "width": 200,
+      "height": 64,
+      "source_url": "https://hkust.edu.hk/",
+      "asset_url": "https://hkust.edu.hk/sites/default/files/2024-03/HKUST_logo_1.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "the-london-school-of-economics-and-political-science-lse": {
+      "file": "img/universities/the-london-school-of-economics-and-political-science-lse.png",
+      "width": 188,
+      "height": 64,
+      "source_url": "https://www.lse.ac.uk/",
+      "asset_url": "https://www.lse.ac.uk/_mClaLQ_e4b00b7b-d288-4944-b6ff-37ee587bb3e3/static/assets/LSE_logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "the-ohio-state-university": {
       "file": "img/universities/the-ohio-state-university.png",
       "width": 220,
@@ -791,6 +1204,33 @@
       "wikidata": "https://www.wikidata.org/wiki/Q15574",
       "retrieved": "2026-10-12"
     },
+    "the-university-of-edinburgh": {
+      "file": "img/universities/the-university-of-edinburgh.png",
+      "width": 220,
+      "height": 52,
+      "source_url": "https://www.ed.ac.uk/",
+      "asset_url": "https://www.ed.ac.uk/themes/upstream/wpp_theme/images/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "the-university-of-hong-kong": {
+      "file": "img/universities/the-university-of-hong-kong.png",
+      "width": 220,
+      "height": 58,
+      "source_url": "https://www.hku.hk/",
+      "asset_url": "https://www.hku.hk/adobe/dynamicmedia/deliver/dm-aid--afc8d43c-587a-43f0-b93c-26f8bd397e0e/logo-hku.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "the-university-of-new-south-wales-unsw-sydney": {
+      "file": "img/universities/the-university-of-new-south-wales-unsw-sydney.png",
+      "width": 153,
+      "height": 64,
+      "source_url": "https://www.unsw.edu.au/",
+      "asset_url": "https://www.unsw.edu.au/content/dam/images/graphics/logos/unsw/unsw_0.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "the-university-of-osaka": {
       "file": "img/universities/the-university-of-osaka.png",
       "width": 220,
@@ -800,6 +1240,15 @@
       "licence": "CC BY-SA 3.0",
       "wikidata": "https://www.wikidata.org/wiki/Q651233",
       "retrieved": "2026-10-12"
+    },
+    "the-university-of-queensland": {
+      "file": "img/universities/the-university-of-queensland.png",
+      "width": 220,
+      "height": 58,
+      "source_url": "https://uq.edu.au/",
+      "asset_url": "https://static.uq.net.au/v11/logos/corporate/uq-logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "the-university-of-sheffield": {
       "file": "img/universities/the-university-of-sheffield.png",
@@ -811,6 +1260,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q823917",
       "retrieved": "2026-10-12"
     },
+    "the-university-of-sydney": {
+      "file": "img/universities/the-university-of-sydney.png",
+      "width": 186,
+      "height": 64,
+      "source_url": "https://www.sydney.edu.au/",
+      "asset_url": "https://www.sydney.edu.au/content/dam/icons/logos/logo-usyd-dark.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "the-university-of-tokyo": {
       "file": "img/universities/the-university-of-tokyo.png",
       "width": 220,
@@ -820,6 +1278,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q7842",
       "retrieved": "2026-10-12"
+    },
+    "the-university-of-warwick": {
+      "file": "img/universities/the-university-of-warwick.png",
+      "width": 220,
+      "height": 58,
+      "source_url": "https://warwick.ac.uk/",
+      "asset_url": "https://d36jn9qou1tztq.cloudfront.net/static_war/render/id7/images/wordmark.svg.136055278947",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "tilburg-university": {
       "file": "img/universities/tilburg-university.png",
@@ -831,6 +1298,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q595668",
       "retrieved": "2026-10-12"
     },
+    "tohoku-university": {
+      "file": "img/universities/tohoku-university.png",
+      "width": 48,
+      "height": 64,
+      "source_url": "https://www.tohoku.ac.jp/en/",
+      "asset_url": "https://www.tohoku.ac.jp/assets/img/svgs/logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "tokyo-institute-of-technology-tokyo-tech": {
       "file": "img/universities/tokyo-institute-of-technology-tokyo-tech.png",
       "width": 220,
@@ -841,6 +1317,25 @@
       "wikidata": "https://www.wikidata.org/wiki/Q587326",
       "retrieved": "2026-10-12"
     },
+    "tsinghua-university": {
+      "file": "img/universities/tsinghua-university.png",
+      "width": 80,
+      "height": 25,
+      "source_url": "https://www.tsinghua.edu.cn/en/",
+      "asset_url": "https://www.tsinghua.edu.cn/en/image/logo159.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
+    "ucl-university-college-london": {
+      "file": "img/universities/ucl-university-college-london.png",
+      "width": 220,
+      "height": 62,
+      "source_url": "https://www.ucl.ac.uk/",
+      "asset_url": "https://cdn.ucl.ac.uk/logos/ucl/ucl-logo--primary.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "universidad-politecnica-de-madrid": {
       "file": "img/universities/universidad-politecnica-de-madrid.png",
       "width": 81,
@@ -849,6 +1344,34 @@
       "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Logo_Universidad_Polit%C3%A9cnica_de_Madrid.svg/960px-Logo_Universidad_Polit%C3%A9cnica_de_Madrid.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "licence": "CC BY-SA 4.0",
       "wikidata": "https://www.wikidata.org/wiki/Q25864",
+      "retrieved": "2026-11-27"
+    },
+    "universita-cattolica-del-sacro-cuore": {
+      "file": "img/universities/universita-cattolica-del-sacro-cuore.png",
+      "width": 156,
+      "height": 64,
+      "source_url": "https://www.unicatt.it/",
+      "asset_url": "https://www.unicatt.it/content/dam/siti-web/unicatt/it/logo-unicatt.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "universita-commerciale-luigi-bocconi-bocconi-university": {
+      "file": "img/universities/universita-commerciale-luigi-bocconi-bocconi-university.png",
+      "width": 220,
+      "height": 47,
+      "source_url": "https://www.unibocconi.it/en",
+      "asset_url": "https://www.unibocconi.it/en (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "universita-di-padova": {
+      "file": "img/universities/universita-di-padova.png",
+      "width": 198,
+      "height": 64,
+      "source_url": "https://www.unipd.it/en",
+      "asset_url": "https://wwwassets.unipd.it/sites/default/files/media/2025-09/Marchio%20STD%20WHITE.svg",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
       "retrieved": "2026-11-27"
     },
     "universitat-autonoma-de-barcelona": {
@@ -901,6 +1424,33 @@
       "wikidata": "https://www.wikidata.org/wiki/Q317070",
       "retrieved": "2026-10-12"
     },
+    "universitat-pompeu-fabra-barcelona": {
+      "file": "img/universities/universitat-pompeu-fabra-barcelona.png",
+      "width": 167,
+      "height": 58,
+      "source_url": "https://www.upf.edu/web/universitat",
+      "asset_url": "https://www.upf.edu/o/upf-2016-theme/images/upf/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "universitat-ramon-llull": {
+      "file": "img/universities/universitat-ramon-llull.png",
+      "width": 93,
+      "height": 31,
+      "source_url": "https://www.url.edu/en",
+      "asset_url": "https://www.url.edu/themes/custom/url_corporativo/images/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "universite-de-montpellier": {
+      "file": "img/universities/universite-de-montpellier.png",
+      "width": 100,
+      "height": 36,
+      "source_url": "https://www.umontpellier.fr/en/",
+      "asset_url": "https://www.umontpellier.fr/wp-content/uploads/2025/12/logo_um_2022_rouge_h73.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "universite-de-montreal": {
       "file": "img/universities/universite-de-montreal.png",
       "width": 165,
@@ -910,6 +1460,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q392189",
       "retrieved": "2026-10-12"
+    },
+    "universite-laval": {
+      "file": "img/universities/universite-laval.png",
+      "width": 156,
+      "height": 64,
+      "source_url": "https://www.ulaval.ca/en",
+      "asset_url": "https://www.ulaval.ca/en (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "universite-paris-1-pantheon-sorbonne": {
       "file": "img/universities/universite-paris-1-pantheon-sorbonne.png",
@@ -991,6 +1550,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q659080",
       "retrieved": "2026-10-12"
     },
+    "university-of-birmingham": {
+      "file": "img/universities/university-of-birmingham.png",
+      "width": 220,
+      "height": 55,
+      "source_url": "https://www.birmingham.ac.uk/",
+      "asset_url": "https://www.birmingham.ac.uk/Images/logos/uob/uob-uk-logo-light.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "university-of-bordeaux": {
       "file": "img/universities/university-of-bordeaux.png",
       "width": 183,
@@ -1001,6 +1569,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q13344",
       "retrieved": "2026-10-12"
     },
+    "university-of-bristol": {
+      "file": "img/universities/university-of-bristol.png",
+      "width": 220,
+      "height": 64,
+      "source_url": "https://www.bristol.ac.uk/",
+      "asset_url": "https://www.bristol.ac.uk/assets/responsive-web-project/2.7.8/images/logos/uob-logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "university-of-british-columbia": {
       "file": "img/universities/university-of-british-columbia.png",
       "width": 220,
@@ -1010,6 +1587,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q391028",
       "retrieved": "2026-10-12"
+    },
+    "university-of-calgary": {
+      "file": "img/universities/university-of-calgary.png",
+      "width": 220,
+      "height": 60,
+      "source_url": "https://www.ucalgary.ca/",
+      "asset_url": "https://www.ucalgary.ca/themes/ucalgary/ucws_theme/images/UCalgary.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "university-of-california-berkeley-ucb": {
       "file": "img/universities/university-of-california-berkeley-ucb.png",
@@ -1101,6 +1687,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q131252",
       "retrieved": "2026-10-12"
     },
+    "university-of-chinese-academy-of-sciences": {
+      "file": "img/universities/university-of-chinese-academy-of-sciences.png",
+      "width": 158,
+      "height": 34,
+      "source_url": "https://english.ucas.ac.cn/",
+      "asset_url": "https://english.ucas.ac.cn/images/home/logo_ucas5.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "university-of-cologne": {
       "file": "img/universities/university-of-cologne.png",
       "width": 64,
@@ -1131,6 +1726,26 @@
       "wikidata": "https://www.wikidata.org/wiki/Q1068072",
       "retrieved": "2026-10-12"
     },
+    "university-of-derby": {
+      "file": "img/universities/university-of-derby.png",
+      "width": 220,
+      "height": 46,
+      "source_url": "https://www.derby.ac.uk/",
+      "asset_url": "https://www.derby.ac.uk/ (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-electronic-science-and-technology-of-china": {
+      "file": "img/universities/university-of-electronic-science-and-technology-of-china.png",
+      "width": 170,
+      "height": 38,
+      "source_url": "https://en.uestc.edu.cn/",
+      "asset_url": "https://en.uestc.edu.cn/images/logo.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "university-of-essex": {
       "file": "img/universities/university-of-essex.png",
       "width": 126,
@@ -1140,6 +1755,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q1075104",
       "retrieved": "2026-10-12"
+    },
+    "university-of-florence": {
+      "file": "img/universities/university-of-florence.png",
+      "width": 162,
+      "height": 64,
+      "source_url": "https://www.unifi.it/en",
+      "asset_url": "https://www.unifi.it/sites/default/files/Logo%20Unifi_positivo_nomargini.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "university-of-florida": {
       "file": "img/universities/university-of-florida.png",
@@ -1161,6 +1785,16 @@
       "wikidata": "https://www.wikidata.org/wiki/Q503473",
       "retrieved": "2026-10-12"
     },
+    "university-of-glasgow": {
+      "file": "img/universities/university-of-glasgow.png",
+      "width": 220,
+      "height": 25,
+      "source_url": "https://www.gla.ac.uk/",
+      "asset_url": "https://www.gla.ac.uk/3t4/img/ug-keyline.svg",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "university-of-gottingen": {
       "file": "img/universities/university-of-gottingen.png",
       "width": 220,
@@ -1170,6 +1804,34 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q152838",
       "retrieved": "2026-10-12"
+    },
+    "university-of-granada": {
+      "file": "img/universities/university-of-granada.png",
+      "width": 68,
+      "height": 64,
+      "source_url": "https://www.ugr.es/en",
+      "asset_url": "https://www.ugr.es/themes/custom/ugr/logo-footer.svg",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-greenwich": {
+      "file": "img/universities/university-of-greenwich.png",
+      "width": 209,
+      "height": 64,
+      "source_url": "https://www.gre.ac.uk/",
+      "asset_url": "https://www.gre.ac.uk/__data/assets/image/0035/265688/logo_final_on_white.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-groningen": {
+      "file": "img/universities/university-of-groningen.png",
+      "width": 220,
+      "height": 62,
+      "source_url": "https://www.rug.nl/",
+      "asset_url": "https://www.rug.nl/_definition/shared/images/logo--en.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "university-of-guelph": {
       "file": "img/universities/university-of-guelph.png",
@@ -1221,6 +1883,24 @@
       "wikidata": "https://www.wikidata.org/wiki/Q658975",
       "retrieved": "2026-10-12"
     },
+    "university-of-leeds": {
+      "file": "img/universities/university-of-leeds.png",
+      "width": 220,
+      "height": 44,
+      "source_url": "https://www.leeds.ac.uk/",
+      "asset_url": "https://www.leeds.ac.uk/ (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-liverpool": {
+      "file": "img/universities/university-of-liverpool.png",
+      "width": 220,
+      "height": 56,
+      "source_url": "https://www.liverpool.ac.uk/",
+      "asset_url": "https://www.liverpool.ac.uk/ (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "university-of-macau": {
       "file": "img/universities/university-of-macau.png",
       "width": 64,
@@ -1261,6 +1941,24 @@
       "wikidata": "https://www.wikidata.org/wiki/Q15142",
       "retrieved": "2026-10-12"
     },
+    "university-of-milan": {
+      "file": "img/universities/university-of-milan.png",
+      "width": 190,
+      "height": 64,
+      "source_url": "https://www.unimi.it/en",
+      "asset_url": "https://www.unimi.it/sites/default/files/2019-05/LogoFooter_a9f0c3692bf29c71609e5f204522c5d4_0.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-minnesota-twin-cities": {
+      "file": "img/universities/university-of-minnesota-twin-cities.png",
+      "width": 220,
+      "height": 18,
+      "source_url": "https://twin-cities.umn.edu/",
+      "asset_url": "https://twin-cities.umn.edu/ (inline SVG in page header)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "university-of-missouri-columbia": {
       "file": "img/universities/university-of-missouri-columbia.png",
       "width": 54,
@@ -1269,6 +1967,34 @@
       "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/University_of_Missouri_logo.svg/960px-University_of_Missouri_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q579968",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-north-carolina-at-chapel-hill": {
+      "file": "img/universities/university-of-north-carolina-at-chapel-hill.png",
+      "width": 206,
+      "height": 64,
+      "source_url": "https://www.unc.edu/",
+      "asset_url": "https://www.unc.edu/wp-content/uploads/2025/11/University_Signature_White_Navy_rgb_h.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-notre-dame": {
+      "file": "img/universities/university-of-notre-dame.png",
+      "width": 220,
+      "height": 52,
+      "source_url": "https://www.nd.edu/",
+      "asset_url": "https://www.nd.edu/ (inline SVG symbol #academic-mark in page header; colours from /assets/css/ndt.css)",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-nottingham": {
+      "file": "img/universities/university-of-nottingham.png",
+      "width": 175,
+      "height": 64,
+      "source_url": "https://www.nottingham.ac.uk/",
+      "asset_url": "https://www.nottingham.ac.uk/etc.clientlibs/uon/clientlibs/clientlib-v2/resources/images/UoN-Logo-Dark.svg",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
       "retrieved": "2026-11-27"
     },
     "university-of-oxford": {
@@ -1331,6 +2057,25 @@
       "wikidata": "https://www.wikidata.org/wiki/Q149990",
       "retrieved": "2026-10-12"
     },
+    "university-of-saskatchewan": {
+      "file": "img/universities/university-of-saskatchewan.png",
+      "width": 220,
+      "height": 50,
+      "source_url": "https://www.usask.ca/",
+      "asset_url": "https://www.usask.ca/_images/logos/usask-logo-lg.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-science-and-technology-beijing": {
+      "file": "img/universities/university-of-science-and-technology-beijing.png",
+      "width": 155,
+      "height": 30,
+      "source_url": "https://en.ustb.edu.cn/",
+      "asset_url": "https://en.ustb.edu.cn/images/h-logo1.png",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "university-of-south-carolina": {
       "file": "img/universities/university-of-south-carolina.png",
       "width": 220,
@@ -1371,6 +2116,15 @@
       "wikidata": "https://www.wikidata.org/wiki/Q4614",
       "retrieved": "2026-10-12"
     },
+    "university-of-st-andrews": {
+      "file": "img/universities/university-of-st-andrews.png",
+      "width": 42,
+      "height": 64,
+      "source_url": "https://www.st-andrews.ac.uk/",
+      "asset_url": "https://www.st-andrews.ac.uk/php/meta/university-of-st-andrews-logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
     "university-of-st-gallen-hsg": {
       "file": "img/universities/university-of-st-gallen-hsg.png",
       "width": 220,
@@ -1381,6 +2135,25 @@
       "wikidata": "https://www.wikidata.org/wiki/Q673354",
       "retrieved": "2026-10-12"
     },
+    "university-of-strathclyde": {
+      "file": "img/universities/university-of-strathclyde.png",
+      "width": 200,
+      "height": 60,
+      "source_url": "https://www.strath.ac.uk/",
+      "asset_url": "https://www.strath.ac.uk/media/strathwebui/logos/strath-logo-420x132.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "university-of-surrey": {
+      "file": "img/universities/university-of-surrey.png",
+      "width": 220,
+      "height": 56,
+      "source_url": "https://www.surrey.ac.uk/",
+      "asset_url": "https://www.surrey.ac.uk/themes/custom/surrey_2024/dist/images/uos-logo.svg",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "university-of-sussex": {
       "file": "img/universities/university-of-sussex.png",
       "width": 64,
@@ -1390,6 +2163,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q1161297",
       "retrieved": "2026-10-12"
+    },
+    "university-of-tasmania": {
+      "file": "img/universities/university-of-tasmania.png",
+      "width": 220,
+      "height": 46,
+      "source_url": "https://www.utas.edu.au/",
+      "asset_url": "https://www.utas.edu.au/__data/assets/git_bridge/0012/1368768/dist/mysource_files/logo.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "university-of-texas-at-austin": {
       "file": "img/universities/university-of-texas-at-austin.png",
@@ -1451,6 +2233,16 @@
       "wikidata": "https://www.wikidata.org/wiki/Q838330",
       "retrieved": "2026-10-12"
     },
+    "university-of-york": {
+      "file": "img/universities/university-of-york.png",
+      "width": 166,
+      "height": 64,
+      "source_url": "https://www.york.ac.uk/",
+      "asset_url": "https://www.york.ac.uk/static/2/images/uoy_logo_white.svg",
+      "licence": "official website, trademark",
+      "note": "The site header shows a white version; its white pixels are recoloured to dark ink for the white tile.",
+      "retrieved": "2026-11-27"
+    },
     "university-of-zurich": {
       "file": "img/universities/university-of-zurich.png",
       "width": 142,
@@ -1489,6 +2281,24 @@
       "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Virginia_Tech_logo.svg/960px-Virginia_Tech_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q65379",
+      "retrieved": "2026-11-27"
+    },
+    "vrije-universiteit-amsterdam": {
+      "file": "img/universities/vrije-universiteit-amsterdam.png",
+      "width": 220,
+      "height": 53,
+      "source_url": "https://vu.nl/en",
+      "asset_url": "https://vu.nl/assets/images/VU-logo-nobg.svg",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
+    },
+    "wageningen-university-research": {
+      "file": "img/universities/wageningen-university-research.png",
+      "width": 220,
+      "height": 42,
+      "source_url": "https://www.wur.nl/en.htm",
+      "asset_url": "https://www.wur.nl/wurds/images/logos/Wageningen-Universiteit-en-Research.svg",
+      "licence": "official website, trademark",
       "retrieved": "2026-11-27"
     },
     "washington-university-in-st-louis": {
@@ -1530,6 +2340,15 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q1153539",
       "retrieved": "2026-10-12"
+    },
+    "xian-jiaotong-university": {
+      "file": "img/universities/xian-jiaotong-university.png",
+      "width": 162,
+      "height": 42,
+      "source_url": "https://en.xjtu.edu.cn/",
+      "asset_url": "https://subsites.chinadaily.com.cn/xjtu/att/4759.files/i/logo.png",
+      "licence": "official website, trademark",
+      "retrieved": "2026-11-27"
     },
     "yale-university": {
       "file": "img/universities/yale-university.png",
