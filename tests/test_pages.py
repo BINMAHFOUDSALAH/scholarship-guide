@@ -177,15 +177,34 @@ def test_share_preview_and_description_tags():
     base = main.site["base_url"]
     assert '<meta name="description"' in html
     assert f'<link rel="canonical" href="{base}/grades/grade-10">' in html
-    # The preview WhatsApp and X show (owner, 2026-11-27): one 1200x630 image at its full public address, for both.
-    assert f'<meta property="og:image" content="{base}/static/img/share-wadih.png">' in html
-    assert f'<meta name="twitter:image" content="{base}/static/img/share-wadih.png">' in html
+    # The preview WhatsApp, Telegram and X show (owner, 2026-11-27): one 1200x630 image per language at its full
+    # public address, for both og: and twitter:.
+    assert f'<meta property="og:image" content="{base}/static/img/share-wadih-programs.png">' in html
+    assert f'<meta name="twitter:image" content="{base}/static/img/share-wadih-programs.png">' in html
     assert '<meta property="og:title" content="أول ثانوي: اكتشف واستعد | واضح">' in html
-    image = client.get("/static/img/share-wadih.png")
-    assert image.status_code == 200
+    en = client.get("/en/grades/grade-10").text
+    assert f'<meta property="og:image" content="{base}/static/img/share-wadih-programs-en.png">' in en
+    assert f'<meta name="twitter:image" content="{base}/static/img/share-wadih-programs-en.png">' in en
     from PIL import Image
     import io
-    assert Image.open(io.BytesIO(image.content)).size == (1200, 630)
+    for name in ("share-wadih-programs.png", "share-wadih-programs-en.png"):
+        image = client.get(f"/static/img/{name}")
+        assert image.status_code == 200
+        assert Image.open(io.BytesIO(image.content)).size == (1200, 630)
+
+
+def test_homepage_share_title_and_description():
+    html = client.get("/").text
+    assert "<title>واضح | دليل الابتعاث</title>" in html
+    assert '<meta property="og:title" content="واضح | دليل الابتعاث">' in html
+    desc = "تصفّح برامج الابتعاث وشروطها ومواعيد التقديم، وقارن الجامعات في قوائم الابتعاث."
+    assert f'<meta property="og:description" content="{desc}">' in html
+    assert f'<meta name="description" content="{desc}">' in html
+    en = client.get("/en/").text
+    assert '<meta property="og:title" content="Wadih | Scholarship guide">' in en
+    assert ('<meta property="og:description" content="Browse scholarship programs, their requirements and application '
+            'dates, and compare universities on the scholarship lists.">') in en
+    assert '<meta property="og:locale" content="en_US">' in en
 
 
 def test_robots_txt_points_to_sitemap():
