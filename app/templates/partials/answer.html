@@ -157,7 +157,7 @@
     <header class="answer-group-head">
       <h3 class="answer-group-title" id="answer-fields">{{ _("مسار إمداد") }}<span class="answer-group-field">{{ _f("في {country}، حسب المجال", country=a.country_ar) }}</span></h3>
     </header>
-    <p class="answer-why">{{ _("إمداد يرتّب الجامعات داخل كل مجال. اختر مجالًا، أو اكتب تخصصك في السؤال.") }}</p>
+    <p class="answer-why">{{ _("إمداد يرتّب الجامعات داخل كل مجال.") }}</p>
     <ul class="field-picker">
       {% for f in a.fields %}
       <li><a class="field-pick field-tone tone-{{ f.field.id }}" href="{{ f.href }}" data-pick-field="{{ f.field.id }}">
