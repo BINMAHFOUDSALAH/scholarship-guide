@@ -1,14 +1,14 @@
 // The search-and-compare journey (2026-11-27), end to end in a real browser:
-//   node scripts/check_compare.mjs [base] [--en] [--desktop] [--dark]
+//   node scripts/check_compare.mjs [base] [--en] [--desktop] [--dark] [--webkit]
 // A major in a country on the homepage, «احفظ», two universities chosen with «قارن» (one by keyboard), the comparison
 // with its sources hidden then shown (Space on the switch), «الفروق فقط» with sources still on, every per-university
 // source in its own column, the names kept in view down the table, «قارن الجامعات» reopening it from the homepage,
 // «الرجوع إلى نتائج البحث» keeping the search (homepage and Finder), and the chooser when nothing is picked.
-import { chromium, devices } from "playwright";
+import { chromium, webkit, devices } from "playwright";
 const en = process.argv.includes('--en'), desk = process.argv.includes('--desktop'), dark = process.argv.includes('--dark');
 const base = process.argv.slice(2).find((a) => a.startsWith('http')) || 'http://127.0.0.1:8000';
 const B = base + (en ? '/en' : '');
-const b = await chromium.launch();
+const b = await (process.argv.includes("--webkit") ? webkit : chromium).launch(); // --webkit: Safari's engine
 const ctx = await b.newContext({ ...(desk ? { viewport: { width: 1280, height: 900 } } : devices['iPhone 13']), colorScheme: dark ? 'dark' : 'light' });
 const p = await ctx.newPage();
 const errors = []; p.on('pageerror', e => errors.push(e.message));
