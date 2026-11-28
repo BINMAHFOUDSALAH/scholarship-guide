@@ -321,9 +321,50 @@ def test_rankings_have_a_row_for_every_field_any_university_is_listed_in():
             if own:
                 assert cell["value"] == str(own[0]["rank"]) and cell["note"] is None
                 assert cell["sources"][0]["url"].endswith(f"#page={own[0]['pdf_page']}")
+            elif any(l["track"] == "arruaad" for l in ex.universities[uid]["listings"]):
+                assert cell["value"] == "ضمن الرواد" and cell["state"] == "via"
             else:  # the guide is the whole list: not there is a confirmed absence, with the list's pages
                 assert cell["value"] == "غير مدرجة في هذا المجال" and cell["state"] == "none"
                 assert cell["sources"][0]["url"].startswith(ex.source["url"] + "#page=")
+
+
+def test_a_ruwwad_university_reads_covered_in_emdad_fields_not_absent():
+    """Owner, 2026-11-27 (Tsinghua and Georgia Tech): «غير مدرجة في هذا المجال» beside Tsinghua read as "it doesn't
+    teach science". الرواد covers every field for the bachelor's and master's, so its universities say so in إمداد's
+    rows. البحث والتطوير is the doctorate, which الرواد doesn't cover: an absence there stays an absence."""
+    uids = ["tsinghua-university", "georgia-institute-of-technology"]
+    c = compare.build(uids, ex, answer, "2026-11-27")
+    ts = ex.universities["tsinghua-university"]
+    assert any(l["track"] == "arruaad" for l in ts["listings"])
+    emdad = ranks_of(c, "emdad")
+    assert emdad
+    for r in emdad:
+        own = [l for l in ts["listings"] if l["track"] == "emdad" and l["field"] == r["field"]]
+        cell = r["cells"][0]
+        if own:
+            assert cell["value"] == str(own[0]["rank"])
+        else:
+            assert cell["value"] == "ضمن الرواد" and cell["state"] == "via" and "كل التخصصات" in cell["note"]
+            assert cell["sources"][0]["url"].endswith("path-arruaad/")
+    for r in ranks_of(c, "rnd"):
+        if not any(l["track"] == "rnd" and l["field"] == r["field"] for l in ts["listings"]):
+            assert r["cells"][0]["value"] == "غير مدرجة في هذا المجال"
+    # Georgia Tech isn't on الرواد's list: its absence there is a fact, and its إمداد ranks are its own.
+    assert cell_of(c, "الترتيب في قائمة الرواد", "georgia-institute-of-technology")[1]["value"] == "غير مدرجة في هذا المجال"
+    html = client.get("/compare?u=" + ",".join(uids)).text
+    assert "compare-cell--via" in html and "ضمن الرواد" in html
+    en = client.get("/en/compare?u=" + ",".join(uids)).text
+    assert "Covered by Arruaad" in en
+
+
+def test_two_ruwwad_universities_with_no_emdad_listing_read_covered():
+    """Even when neither is in any إمداد field, the track's one row says الرواد covers them."""
+    ruwwad = [uid for uid, u in ex.universities.items()
+              if {l["track"] for l in u["listings"]} & {"arruaad", "emdad"} == {"arruaad"}][:2]
+    if len(ruwwad) < 2:
+        return
+    c = compare.build(ruwwad, ex, answer, "2026-11-27")
+    assert [x["value"] for x in ranks_of(c, "emdad")[0]["cells"]] == ["ضمن الرواد"] * 2
 
 
 def test_rankings_keep_degree_limits():

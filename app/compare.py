@@ -25,6 +25,11 @@ NO_MIN_AR = "لا يوجد حد أدنى منشور"
 NOT_IN_FIELD_AR = "غير مدرجة في هذا المجال"
 NOT_IN_TRACK_AR = "غير مدرجة في هذا المسار"
 RANK_UNKNOWN_AR = "الترتيب غير متوفر"
+# A university on Al-Ruwwad's list, in an إمداد field it isn't listed in (owner, 2026-11-27): «غير مدرجة» read as
+# "it doesn't teach this field", when الرواد already covers every field for the bachelor's and the master's.
+VIA_ARRUAAD_AR = "ضمن الرواد"
+VIA_ARRUAAD_NOTE_AR = "يشمل كل التخصصات"
+ARRUAAD_PAGE = "https://sites.moe.gov.sa/scholarship-program/paths/path-arruaad/"
 # The Ministry's guide, named as a student would look for it (its full title is long and says the year twice).
 GUIDE_LABEL_AR = "دليل الوزارة لقوائم الجامعات"
 
@@ -189,10 +194,25 @@ def rankings(explorer, unis):
     confirmed absence («غير مدرجة في هذا المجال»): the guide is the whole list. A listing without a rank or page is a gap
     in our data («الترتيب غير متوفر»), never a guess. A track none of them is in still has its row, so the section is
     there for every combination.
+
+    Al-Ruwwad covers every field for the bachelor's and the master's, the degrees إمداد's lists are for. So a university
+    on Al-Ruwwad's list reads «ضمن الرواد» in an إمداد field it isn't listed in, not «غير مدرجة», which a student takes
+    as "it doesn't teach this field". Not in البحث والتطوير: that track is the doctorate, which الرواد doesn't cover.
     """
+    def via_arruaad(u):
+        ruwwad = [l for l in u["listings"] if l["track"] == "arruaad"]
+        if not ruwwad:
+            return None
+        src = [_src(ARRUAAD_PAGE, site=tr("صفحة مسار الرواد"))]
+        if ruwwad[0].get("pdf_page"):
+            src.append(_guide_src(explorer, ruwwad[0]["pdf_page"]))
+        return _cell(tr(VIA_ARRUAAD_AR), tr(VIA_ARRUAAD_NOTE_AR), src, "via", tags=_listing_tags(ruwwad[0]))
+
     def cell(track, fid, u):
         found = [l for l in u["listings"] if l["track"] == track and l["field"] == fid]
         if not found:
+            if track == "emdad" and via_arruaad(u):
+                return via_arruaad(u)
             pages = (explorer.fields.get((track, fid)) or {}).get("list_pages") or []
             src = []
             if pages:
@@ -220,8 +240,9 @@ def rankings(explorer, unis):
                 rows.append((f["name_ar"], [cell(track, f["id"], u) for u in unis], f["id"]))
             if not listed:
                 rows.append(("في قوائم هذا المسار", [
-                    _cell(tr(NOT_IN_TRACK_AR), None, [_src(explorer.source["url"], site=tr(GUIDE_LABEL_AR))], "none")
-                    for _ in unis], None))
+                    (track == "emdad" and via_arruaad(u))
+                    or _cell(tr(NOT_IN_TRACK_AR), None, [_src(explorer.source["url"], site=tr(GUIDE_LABEL_AR))], "none")
+                    for u in unis], None))
         tracks.append({"id": track, "title_ar": TRACKS[track]["name_ar"], "sub_ar": sub, "rows": rows})
     return tracks
 

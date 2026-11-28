@@ -8651,6 +8651,15 @@ a.uni-name:hover .uni-name-en:only-child {
   line-height: 1.55;
 }
 
+/* Covered by Al-Ruwwad in an إمداد field it isn't listed in: a fact in the student's favour, in ink and the brand
+   green, never muted like an absence. */
+.compare-cell--via .compare-value {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.55;
+  color: var(--brand);
+}
+
 .compare-cell--none .compare-value,
 .compare-cell--passed .compare-value {
   font-size: var(--text-sm);
@@ -8863,10 +8872,10 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 /* ---------- وضّاح beside «بوضوح» (homepage, Arabic; waddah-hero.js) ----------
-   He leans on the end of the tagline with a laptop. Once (one repeat at most), for about four seconds: he squints at
-   the screen, a small bulb lights, he lowers the laptop, looks at the search field and points to it once, then leans
-   again. His feet stay where they are: every turn pivots on them (the stage's 180,334). Decoration only: no taps, no
-   reading order; reduced motion keeps the still lean. */
+   He stands at the end of the tagline, thinking. Once (one repeat at most), for about four and a half seconds: two taps
+   on the chin, a bulb and a smile, a hop with both arms up, then he lands leaning toward the search field with a hand
+   open to it, winks, and goes back to thinking. His feet stay where they land: every lean pivots on them (the stage's
+   180,334). Decoration only: no taps, no reading order; reduced motion keeps the still thinking pose. */
 .ask-kicker-row {
   position: relative;
   width: fit-content;
@@ -8881,7 +8890,7 @@ a.uni-name:hover .uni-name-en:only-child {
 
 .waddah-hero {
   position: absolute;
-  inset-inline-start: calc(100% - 4px);  /* just past «بوضوح», leaning on it */
+  inset-inline-start: calc(100% + 2px);  /* just past «بوضوح» */
   bottom: 1px;
   width: 96px;
   pointer-events: none;
@@ -8894,26 +8903,119 @@ a.uni-name:hover .uni-name-en:only-child {
   overflow: visible;
 }
 
-.wh-lean,
-.wh-point {
+/* The figure (partials/waddah_hero.html): drawn facing the viewer's left; --wh-face (1 or -1, waddah-hero.js) turns him
+   toward the search field, and --wh-aim (degrees below level) aims the open hand at it. Each pose is a set of joint
+   angles; the still pose (no animation, reduced motion) is thinking: a hand at his chin, the other on his hip, eyes up. */
+.wh-dir,
+.wh-fig,
+.wh-shadow {
   transform-box: view-box;
   transform-origin: 180px 334px;  /* his feet */
 }
 
-/* The still lean: a few degrees toward the word. */
-.wh-lean {
-  transform: rotate(5deg);
+.wh-dir {
+  transform: scaleX(var(--wh-face, 1));
 }
 
-.wh-point {
-  opacity: 0;
-  transform: rotate(var(--wh-aim, -12deg)) scaleX(var(--wh-face, 1));
+.wh-shadow {
+  fill: #000;
+  opacity: 0.1;
+}
+
+.wh-up,
+.wh-fore {
+  transform-box: view-box;
+  transform-origin: 0 0;           /* the shoulder */
+}
+
+.wh-fore {
+  transform-origin: 0 30px;        /* the elbow */
+}
+
+.wh-near-up { transform: rotate(57deg); }     /* on the hip */
+.wh-near-fore { transform: rotate(-88deg); }
+.wh-far-up { transform: rotate(54deg); }      /* across the chest, the hand under the visor */
+.wh-far-fore { transform: rotate(115deg); }
+
+.wh-skin {
+  fill: url(#wh-clay);
+  stroke: rgba(122, 86, 56, 0.32);
+  stroke-width: 1.5;
+}
+
+.wh-crease {
+  fill: none;
+  stroke: rgba(122, 86, 56, 0.35);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.wh-cloth {
+  fill: url(#wh-weave);
+}
+
+.wh-cloth-shade {
+  fill: url(#wh-fold);
+}
+
+.wh-hem,
+.wh-brim {
+  fill: none;
+  stroke: #b81d25;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.wh-hem--thin {
+  stroke-width: 2;
+}
+
+.wh-brim {
+  stroke-width: 4;
+}
+
+.wh-brim--light {
+  stroke: #fbf1ec;
+  stroke-width: 2;
+}
+
+.wh-ring {
+  fill: none;
+  stroke: url(#wh-ring);
+  stroke-width: 10;
+}
+
+.wh-ring-shine {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 2;
+}
+
+.wh-visor {
+  fill: url(#wh-visor-fill);
+}
+
+.wh-visor-shine {
+  fill: #fff;
+  opacity: 0.12;
+}
+
+.wh-eyes {
+  transform: translate(4px, -6px);   /* looking up, away: thinking */
 }
 
 .wh-eye {
-  fill: #e0f275;
+  fill: #e0f26c;
   transform-box: fill-box;
   transform-origin: center;
+}
+
+.wh-arc {
+  fill: none;
+  stroke: #e0f26c;
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: 0;
 }
 
 .wh-bulb-inner {
@@ -8961,74 +9063,137 @@ a.uni-name:hover .uni-name-en:only-child {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .waddah-hero.is-playing .wh-lean {
-    animation: wh-lean 4s linear both;
-  }
-
-  .waddah-hero.is-playing .wh-point {
-    animation: wh-point 4s linear both;
-  }
-
-  .waddah-hero.is-playing .wh-eye {
-    animation: wh-squint 4s linear both;
-  }
-
-  .waddah-hero.is-playing .wh-bulb-inner {
-    animation: wh-bulb 4s linear both;
-  }
-
-  .waddah-hero.is-playing .wh-bulb-glow {
-    animation: wh-bulb-glow 4s linear both;
-  }
-
-  .waddah-hero.is-playing .wh-bulb-glass {
-    animation: wh-bulb-glass 4s linear both;
-  }
+  .waddah-hero.is-playing .wh-fig { animation: wh-fig 4.4s linear both; }
+  .waddah-hero.is-playing .wh-shadow { animation: wh-shadow 4.4s linear both; }
+  .waddah-hero.is-playing .wh-near-up { animation: wh-near-up 4.4s linear both; }
+  .waddah-hero.is-playing .wh-near-fore { animation: wh-near-fore 4.4s linear both; }
+  .waddah-hero.is-playing .wh-far-up { animation: wh-far-up 4.4s linear both; }
+  .waddah-hero.is-playing .wh-far-fore { animation: wh-far-fore 4.4s linear both; }
+  .waddah-hero.is-playing .wh-eyes { animation: wh-eyes 4.4s linear both; }
+  .waddah-hero.is-playing .wh-eye-l { animation: wh-eye-l 4.4s linear both; }
+  .waddah-hero.is-playing .wh-eye-r { animation: wh-eye-r 4.4s linear both; }
+  .waddah-hero.is-playing .wh-arc-l { animation: wh-arc-l 4.4s linear both; }
+  .waddah-hero.is-playing .wh-arc-r { animation: wh-arc-r 4.4s linear both; }
+  .waddah-hero.is-playing .wh-bulb-inner { animation: wh-bulb 4.4s linear both; }
+  .waddah-hero.is-playing .wh-bulb-glow { animation: wh-bulb-glow 4.4s linear both; }
+  .waddah-hero.is-playing .wh-bulb-glass { animation: wh-bulb-glass 4.4s linear both; }
 }
 
-/* 0–0.3s still; 0.3–1.0s leans in and squints; 0.9–1.7s the bulb; 1.6–1.95s lowers the laptop (the poses cross);
-   1.95–3.1s looks and points once; 3.1–3.8s back to the lean, then still. */
-@keyframes wh-lean {
-  0%, 8% { transform: rotate(5deg); opacity: 1; animation-timing-function: var(--ease-out); }
-  22%, 40% { transform: rotate(7deg); opacity: 1; animation-timing-function: var(--ease-in-out); }
-  /* lowers the laptop: straightens, and the point pose takes over in a short cross (about 0.12s) */
-  46% { transform: rotate(1deg); opacity: 1; }
-  49% { transform: rotate(0deg); opacity: 0; }
-  83% { transform: rotate(2deg); opacity: 0; }
-  86% { transform: rotate(3deg); opacity: 1; animation-timing-function: var(--ease-out); }
-  94%, 100% { transform: rotate(5deg); opacity: 1; }
+/* 4.4s. 0–0.35s still, thinking; 0.35–1.05s two taps on the chin, eyes glancing; 1.05–1.4s the bulb and a smile;
+   1.4–1.6s a crouch; 1.6–2.15s a hop, both arms up; 2.15–2.6s lands leaning toward the field, a hand open to it and
+   the other up; 2.6–3.5s holds, a small sweep of the hand and a wink; 3.5–4.05s back to thinking, then still. */
+@keyframes wh-fig {
+  0%, 24% { transform: none; animation-timing-function: var(--ease-out); }
+  29% { transform: translateY(-5px); animation-timing-function: var(--ease-in-out); }
+  36% { transform: scale(1.07, 0.89); animation-timing-function: var(--ease-out); }
+  43% { transform: translateY(-46px) scale(0.95, 1.07); animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.4); }
+  49% { transform: scale(1.08, 0.88); animation-timing-function: var(--ease-out); }
+  55% { transform: rotate(-9deg) scale(0.98, 1.03); animation-timing-function: var(--ease-in-out); }
+  60%, 80% { transform: rotate(-8deg); animation-timing-function: var(--ease-in-out); }
+  92%, 100% { transform: none; }
 }
 
-@keyframes wh-point {
-  0%, 46% { opacity: 0; transform: rotate(0deg) scaleX(var(--wh-face, 1)); }
-  49% { opacity: 1; transform: rotate(calc(var(--wh-aim, -12deg) * 0.15)) scaleX(var(--wh-face, 1)); animation-timing-function: var(--ease-out); }
-  60% { opacity: 1; transform: rotate(var(--wh-aim, -12deg)) scaleX(var(--wh-face, 1)); animation-timing-function: var(--ease-out); }
-  /* the one point: a short reach toward the field and back */
-  65% { transform: rotate(calc(var(--wh-aim, -12deg) * 1.15)) scaleX(var(--wh-face, 1)); animation-timing-function: var(--ease-out); }
-  71%, 78% { opacity: 1; transform: rotate(var(--wh-aim, -12deg)) scaleX(var(--wh-face, 1)); animation-timing-function: var(--ease-in-out); }
-  83% { opacity: 1; transform: rotate(2deg) scaleX(var(--wh-face, 1)); }
-  86%, 100% { opacity: 0; transform: rotate(3deg) scaleX(var(--wh-face, 1)); }
+@keyframes wh-shadow {
+  0%, 36% { transform: none; opacity: 0.1; animation-timing-function: var(--ease-out); }
+  43% { transform: scale(0.6, 0.7); opacity: 0.05; animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.4); }
+  49%, 100% { transform: none; opacity: 0.1; }
 }
 
-@keyframes wh-squint {
-  0%, 9% { transform: scaleY(1); animation-timing-function: var(--ease-out); }
-  16%, 25% { transform: scaleY(0.3); animation-timing-function: var(--ease-out); }
-  30% { transform: scaleY(1.1); }
-  36%, 100% { transform: scaleY(1); }
+@keyframes wh-near-up {
+  0%, 29% { transform: rotate(57deg); animation-timing-function: var(--ease-in-out); }
+  36% { transform: rotate(18deg); animation-timing-function: var(--ease-out); }
+  43% { transform: rotate(146deg); animation-timing-function: var(--ease-in-out); }
+  49% { transform: rotate(70deg); animation-timing-function: var(--ease-out); }
+  56% { transform: rotate(calc(90deg - var(--wh-aim, 25deg))); animation-timing-function: var(--ease-in-out); }
+  64% { transform: rotate(calc(96deg - var(--wh-aim, 25deg))); animation-timing-function: var(--ease-in-out); }
+  71%, 80% { transform: rotate(calc(90deg - var(--wh-aim, 25deg))); animation-timing-function: var(--ease-in-out); }
+  92%, 100% { transform: rotate(57deg); }
+}
+
+@keyframes wh-near-fore {
+  0%, 29% { transform: rotate(-88deg); animation-timing-function: var(--ease-in-out); }
+  36% { transform: rotate(0deg); }
+  43% { transform: rotate(14deg); }
+  49% { transform: rotate(0deg); animation-timing-function: var(--ease-out); }
+  56%, 80% { transform: rotate(-22deg); animation-timing-function: var(--ease-in-out); }
+  92%, 100% { transform: rotate(-88deg); }
+}
+
+@keyframes wh-far-up {
+  0%, 29% { transform: rotate(54deg); animation-timing-function: var(--ease-in-out); }
+  36% { transform: rotate(-18deg); animation-timing-function: var(--ease-out); }
+  43% { transform: rotate(-146deg); animation-timing-function: var(--ease-in-out); }
+  49% { transform: rotate(-70deg); animation-timing-function: var(--ease-out); }
+  56%, 80% { transform: rotate(-128deg); animation-timing-function: var(--ease-in-out); }
+  92%, 100% { transform: rotate(54deg); }
+}
+
+/* the two taps: the forearm drops a little and comes back to the chin */
+@keyframes wh-far-fore {
+  0%, 8% { transform: rotate(115deg); animation-timing-function: var(--ease-out); }
+  11.5% { transform: rotate(103deg); animation-timing-function: var(--ease-in-out); }
+  15% { transform: rotate(115deg); animation-timing-function: var(--ease-out); }
+  18.5% { transform: rotate(103deg); animation-timing-function: var(--ease-in-out); }
+  22%, 29% { transform: rotate(115deg); animation-timing-function: var(--ease-in-out); }
+  36% { transform: rotate(0deg); }
+  43% { transform: rotate(-14deg); }
+  49% { transform: rotate(0deg); animation-timing-function: var(--ease-out); }
+  56%, 80% { transform: rotate(-34deg); animation-timing-function: var(--ease-in-out); }
+  92%, 100% { transform: rotate(115deg); }
+}
+
+@keyframes wh-eyes {
+  0%, 8% { transform: translate(4px, -6px); animation-timing-function: var(--ease-in-out); }
+  13% { transform: translate(-4px, -6px); animation-timing-function: var(--ease-in-out); }
+  18% { transform: translate(5px, -6px); animation-timing-function: var(--ease-in-out); }
+  23% { transform: translate(0, -4px); animation-timing-function: var(--ease-out); }
+  27%, 49% { transform: none; animation-timing-function: var(--ease-out); }
+  56%, 80% { transform: translate(-9px, 5px); animation-timing-function: var(--ease-in-out); }
+  92%, 100% { transform: translate(4px, -6px); }
+}
+
+/* a smile from the bulb to the landing: the lights close to arcs */
+@keyframes wh-eye-l {
+  0%, 24% { transform: none; }
+  26.5%, 46% { transform: scaleY(0.06); }
+  50%, 100% { transform: none; }
+}
+
+@keyframes wh-arc-l {
+  0%, 24% { opacity: 0; }
+  26%, 46% { opacity: 1; }
+  48.5%, 100% { opacity: 0; }
+}
+
+/* the same smile, then the wink */
+@keyframes wh-eye-r {
+  0%, 24% { transform: none; }
+  26.5%, 46% { transform: scaleY(0.06); }
+  50%, 63% { transform: none; }
+  65.5%, 71% { transform: scaleY(0.06); }
+  74%, 100% { transform: none; }
+}
+
+@keyframes wh-arc-r {
+  0%, 24% { opacity: 0; }
+  26%, 46% { opacity: 1; }
+  48.5%, 63.5% { opacity: 0; }
+  65%, 71.5% { opacity: 1; }
+  73.5%, 100% { opacity: 0; }
 }
 
 @keyframes wh-bulb {
-  0%, 22% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-out); }
-  27% { opacity: 1; transform: scale(1.1); }
-  31%, 42% { opacity: 1; transform: scale(1); animation-timing-function: var(--ease-in-out); }
-  50%, 100% { opacity: 0; transform: scale(0.85) translateY(-6px); }
+  0%, 23% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-out); }
+  27% { opacity: 1; transform: scale(1.12); }
+  31%, 37% { opacity: 1; transform: scale(1); animation-timing-function: var(--ease-in-out); }
+  44%, 100% { opacity: 0; transform: scale(0.85) translateY(-8px); }
 }
 
 @keyframes wh-bulb-glow {
   0%, 26% { opacity: 0; }
   29% { opacity: 1; }
-  33%, 42% { opacity: 0.8; }
-  50%, 100% { opacity: 0; }
+  33%, 37% { opacity: 0.8; }
+  44%, 100% { opacity: 0; }
 }
 
 @keyframes wh-bulb-glass {
