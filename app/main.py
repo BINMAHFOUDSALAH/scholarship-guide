@@ -893,6 +893,34 @@ def program_entries(every_name=False):
     return out
 
 
+_guide_entries = {}
+
+
+def guide_entries():
+    """The guides a student can open from the search box (2026-11-27): each published grade and resource guide by its
+    title, then each section of a guide or program page by its heading («القبول المشروط: متى يُقبل؟»). Only pages the
+    site search indexes (sourced, with sources), in the page's language. Built once per language: pages change on deploy."""
+    from app.universities import normalize
+    lang = "en" if i18n.is_english() else "ar"
+    if lang in _guide_entries:
+        return _guide_entries[lang]
+    pages = ([("grades", s) for s in list_slugs("grades")] + [("resources", s) for s in list_slugs("resources")]
+             + [("programs", s) for s in program_slugs()])
+    titles, sections = [], []
+    for section, slug in pages:
+        page = load_page(section, slug)
+        if not page or page.get("status") != "sourced" or not page.get("sources"):
+            continue
+        href = f"{i18n.prefix()}/{section}/{slug}"
+        if section != "programs":  # a program's own page is in the «برامج الابتعاث» group
+            titles.append({"title": page["title"], "heading": "", "href": href, "key": normalize(page["title"])})
+        for h in page["contents"]:
+            sections.append({"title": page["title"], "heading": h["title"], "href": f"{href}#{h['id']}",
+                             "key": normalize(h["title"])})
+    _guide_entries[lang] = titles + sections
+    return _guide_entries[lang]
+
+
 def program_named(q):
     """The program whose name (or one of its names) the student typed exactly, or None. «كاوست» → kaust-kgsp."""
     from app.universities import normalize
@@ -910,9 +938,9 @@ def university_named(q):
 
 @app.get("/api/suggestions")
 def suggestions_api():
-    # Majors grouped by field + university names + the scholarship programs, loaded by the search box the first time
-    # it's used.
-    return JSONResponse({**explorer.suggestions(), "programs": program_entries()})
+    # Majors grouped by field + university names + the scholarship programs + the guides, loaded by the search box the
+    # first time it's used.
+    return JSONResponse({**explorer.suggestions(), "programs": program_entries(), "guides": guide_entries()})
 
 
 @app.get("/api/universities")

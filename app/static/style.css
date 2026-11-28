@@ -1561,6 +1561,13 @@ main:has(> .hero:first-child) {
   cursor: pointer;
 }
 
+/* «ابحث عن "…" في كل واضح»: the full search, first in the list, set apart from the suggestions under it. */
+.suggest-option--all {
+  border-bottom: 1px solid color-mix(in srgb, var(--field-muted) 25%, var(--field-bg));
+  color: var(--brand);
+  font-weight: 600;
+}
+
 .suggest-option small {
   font-size: var(--text-xs);
   color: var(--field-muted);
