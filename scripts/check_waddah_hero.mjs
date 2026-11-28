@@ -1,106 +1,109 @@
 // وضّاح beside «بوضوح» (owner, 2026-11-27), checked in a real browser:
-//   node scripts/check_waddah_hero.mjs [base] [--frames dir] [--video dir] [--browser chromium|webkit]
-// On a laptop and a narrow phone: he plays once by himself, the headline and the search stay readable and usable
-// (nothing of his is on top of the field or takes a tap), he turns toward the field, the repeat waits for an
-// untouched form, reduced motion keeps the still pose, and the English homepage has no animation.
-// --frames saves the scene paused at moments through its four and a half seconds; --video records the pages.
+//   node scripts/check_waddah_hero.mjs [base] [--frames dir] [--browser chromium|webkit]
+// On a laptop and a narrow phone: he is his own renders, he plays his scene by himself (unsure → cheer → point → wave
+// → resting), the headline and the search stay readable and usable (nothing of his is on top of the field), he points
+// toward the field, the field shows his magnifier, the pointer on him gets a wave, reduced motion still changes poses
+// (by fading) without moving him, and the English homepage has no animation.
+// --frames saves a screenshot of the hero at each pose of the scene.
 import { chromium, webkit, devices } from "playwright";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 
 const arg = (name) => { const i = process.argv.indexOf(name); return i > 0 ? process.argv[i + 1] : null; };
 const base = process.argv.slice(2).find((a) => a.startsWith("http")) || "http://127.0.0.1:8000";
-const framesDir = arg("--frames"), videoDir = arg("--video");
+const framesDir = arg("--frames");
 const engine = arg("--browser") === "webkit" ? webkit : chromium;
 let fails = 0; const ok = (c, m) => { console.log((c ? "ok   " : "FAIL ") + m); if (!c) fails++; };
 
 const browser = await engine.launch();
 const sizes = [
-  ["desktop", { viewport: { width: 1280, height: 800 } }],
+  ["laptop", { viewport: { width: 1366, height: 680 } }],
   ["phone", { ...devices["iPhone SE"], viewport: { width: 360, height: 740 } }],
 ];
-const MOMENTS = [0, 0.5, 0.8, 1.2, 1.55, 1.9, 2.15, 2.6, 2.95, 3.3, 3.7, 4.2];
+const pose = (p) => p.evaluate(() => document.querySelector("[data-waddah-hero]").dataset.pose);
+const visible = (p) => p.evaluate(() => [...document.querySelectorAll("[data-waddah-hero] .wh-pose")]
+  .filter((i) => getComputedStyle(i).opacity !== "0").map((i) => i.dataset.poseImg));
 
 for (const [name, opts] of sizes) {
-  const ctx = await browser.newContext({ ...opts, ...(videoDir ? { recordVideo: { dir: path.join(videoDir, name), size: opts.viewport } } : {}) });
+  const ctx = await browser.newContext({ ...opts, reducedMotion: "no-preference" });
   const p = await ctx.newPage();
   const errors = []; p.on("pageerror", (e) => errors.push(e.message));
-  await p.goto(base + "/"); await p.waitForLoadState("networkidle");
+  // Record each pose as it shows.
+  await p.addInitScript(() => {
+    window.__poses = [];
+    document.addEventListener("DOMContentLoaded", () => {
+      const r = document.querySelector("[data-waddah-hero]");
+      if (r) new MutationObserver(() => { if (window.__poses.at(-1) !== r.dataset.pose) window.__poses.push(r.dataset.pose); })
+        .observe(r, { attributes: true, attributeFilter: ["data-pose"] });
+    });
+  });
+  await p.goto(base + "/", { waitUntil: "domcontentloaded" });
+  ok((await visible(p)).join() === "logo", `${name}: resting pose on load (${await visible(p)})`);  // before the scene starts
   const hero = p.locator("[data-waddah-hero]");
   ok(await hero.count() === 1, `${name}: وضّاح is beside the tagline`);
   ok(await hero.getAttribute("aria-hidden") === "true", `${name}: hidden from screen readers`);
-  // Plays once by himself.
-  await p.waitForSelector("[data-waddah-hero].is-playing", { timeout: 4000 }).then(() => ok(true, `${name}: plays once when the hero is on screen`), () => ok(false, `${name}: plays once`));
-  // The search works while he plays: the field takes focus and text, and nothing of his is on top of it.
-  const onTop = await p.evaluate(() => {
-    const f = document.getElementById("home-q").getBoundingClientRect();
-    const el = document.elementFromPoint(f.left + f.width / 2, f.top + f.height / 2);
-    return el && el.id;
-  });
-  ok(onTop === "home-q", `${name}: the search field is the thing under a tap (${onTop})`);
-  const overlap = await p.evaluate(() => {
-    const w = document.querySelector("[data-waddah-hero]").getBoundingClientRect();
-    const r = (s) => document.querySelector(s).getBoundingClientRect();
-    const hit = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
-    return { title: hit(w, r("#hero-title")), field: hit(w, r("#home-q")) };
-  });
-  ok(!overlap.field, `${name}: he never covers the search field`);
-  const dir = await p.evaluate(() => ({ face: getComputedStyle(document.querySelector("[data-waddah-hero]")).getPropertyValue("--wh-face").trim(),
-    aim: getComputedStyle(document.querySelector("[data-waddah-hero]")).getPropertyValue("--wh-aim").trim() }));
-  console.log(`     ${name}: faces ${dir.face === "1" ? "left" : "right"}, opens his hand ${dir.aim} below level toward the field`);
-  await p.waitForFunction(() => !document.querySelector("[data-waddah-hero]").classList.contains("is-playing"), null, { timeout: 6000 });
-  ok(true, `${name}: back to the still pose after the scene`);
-  ok(await p.evaluate(() => getComputedStyle(document.documentElement).overflowX !== "scroll" && document.documentElement.scrollWidth <= innerWidth), `${name}: no sideways scroll`);
+  ok((await p.locator("[data-waddah-hero] img.wh-pose").count()) === 7 && !(await p.locator("[data-waddah-hero] svg").count()),
+    `${name}: his own renders (7 poses), no drawing`);
 
+  const shots = [];
   if (framesDir) {
     mkdirSync(framesDir, { recursive: true });
     const box = await p.evaluate(() => {
       const h = document.querySelector(".ask-hero").getBoundingClientRect();
       const f = document.getElementById("home-q").getBoundingClientRect();
-      return { x: Math.max(0, h.left), y: Math.max(0, h.top), width: Math.min(h.width, innerWidth), height: Math.min(f.bottom - h.top + 30, 460) };
+      return { x: Math.max(0, h.left), y: Math.max(0, h.top), width: Math.min(h.width, innerWidth), height: Math.min(f.bottom - h.top + 24, 420) };
     });
-    await p.evaluate(() => document.querySelector("[data-waddah-hero]").classList.add("is-playing"));
-    for (const t of MOMENTS) {
-      await p.evaluate((ms) => { for (const a of document.querySelector("[data-waddah-hero]").getAnimations({ subtree: true })) { a.pause(); a.currentTime = ms; } }, t * 1000);
-      await p.screenshot({ path: path.join(framesDir, `${name}-${String(Math.round(t * 100)).padStart(3, "0")}.png`), clip: box });
-    }
-    await p.evaluate(() => document.querySelector("[data-waddah-hero]").classList.remove("is-playing"));
+    p.on("console", () => {});
+    await p.exposeFunction("__shot", async (label) => { shots.push(p.screenshot({ path: path.join(framesDir, `${name}-${shots.length}-${label}.png`), clip: box })); });
+    await p.evaluate(() => new MutationObserver(() => setTimeout(() => window.__shot(document.querySelector("[data-waddah-hero]").dataset.pose), 380))
+      .observe(document.querySelector("[data-waddah-hero]"), { attributes: true, attributeFilter: ["data-pose"] }));
   }
+  await p.waitForTimeout(6800);
+  await Promise.all(shots);
+  const seen = await p.evaluate(() => window.__poses);
+  ok(seen.slice(0, 5).join(" → ") === "unsure → cheer → point → wave → logo", `${name}: the scene plays by itself (${seen.join(" → ")})`);
+
+  const overlap = await p.evaluate(() => {
+    const w = document.querySelector("[data-waddah-hero]").getBoundingClientRect();
+    const f = document.getElementById("home-q").getBoundingClientRect();
+    return w.left < f.right && f.left < w.right && w.top < f.bottom && f.top < w.bottom;
+  });
+  ok(!overlap, `${name}: he never covers the search field`);
+  const face = await p.evaluate(() => {
+    const w = document.querySelector("[data-waddah-hero]").getBoundingClientRect();
+    const f = document.getElementById("home-q").getBoundingClientRect();
+    return { face: document.querySelector("[data-waddah-hero]").dataset.face, left: f.left + f.width / 2 < w.left + w.width / 2 };
+  });
+  ok(face.face === (face.left ? "left" : "right"), `${name}: points toward the field (${face.face})`);
+
+  await p.focus("#home-q"); await p.waitForTimeout(300);
+  ok(await pose(p) === "search", `${name}: the field focused → his magnifier`);
+  const onTop = await p.evaluate(() => {
+    const f = document.getElementById("home-q").getBoundingClientRect();
+    return document.elementFromPoint(f.left + f.width / 2, f.top + f.height / 2)?.id;
+  });
+  ok(onTop === "home-q", `${name}: the search field is the thing under a tap (${onTop})`);
+  await p.locator("#hero-title").click(); await p.waitForTimeout(300);
+  ok(await pose(p) === "logo", `${name}: leaving the field → resting`);
+  if (name === "laptop") {
+    await p.mouse.move(0, 0); const b = await hero.boundingBox(); await p.mouse.move(b.x + b.width / 2, b.y + b.height / 2); await p.waitForTimeout(250);
+    ok(await pose(p) === "wave", "laptop: the pointer on him → a wave");
+  }
+  ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${name}: no sideways scroll`);
   ok(!errors.length, `${name}: no script errors ${errors.join(" | ")}`);
   await ctx.close();
 }
 
-// The repeat waits for an untouched form: typing before it means no second play.
+// Reduced motion (Windows with «Animation effects» off): the scene still changes poses, by fading, and nothing moves.
 {
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const ctx = await browser.newContext({ viewport: { width: 1366, height: 680 }, reducedMotion: "reduce" });
   const p = await ctx.newPage();
   await p.goto(base + "/");
-  await p.waitForSelector("[data-waddah-hero].is-playing", { timeout: 4000 });
-  await p.fill("#home-q", "هندسة");
-  await p.waitForFunction(() => !document.querySelector("[data-waddah-hero]").classList.contains("is-playing"), null, { timeout: 6000 });
-  await p.waitForTimeout(14500);
-  ok(!(await p.evaluate(() => document.querySelector("[data-waddah-hero]").classList.contains("is-playing"))), "no repeat after the student types");
-  await ctx.close();
-}
-// Untouched and still on screen: one repeat, and only one.
-{
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-  const p = await ctx.newPage();
-  await p.goto(base + "/");
-  await p.evaluate(() => { window.__plays = 0; new MutationObserver(() => { if (document.querySelector("[data-waddah-hero]").classList.contains("is-playing")) window.__plays++; }).observe(document.querySelector("[data-waddah-hero]"), { attributes: true }); });
-  await p.waitForTimeout(4600 + 13000 + 4500 + 14000);
-  const plays = await p.evaluate(() => window.__plays);
-  ok(plays === 2, `untouched and on screen: played ${plays} times (once, then one repeat), never a third`);
-  await ctx.close();
-}
-// Reduced motion: the still thinking pose, nothing plays.
-{
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: "reduce" });
-  const p = await ctx.newPage();
-  await p.goto(base + "/"); await p.waitForTimeout(2500);
-  const st = await p.evaluate(() => ({ playing: document.querySelector("[data-waddah-hero]").classList.contains("is-playing"),
-    anims: document.querySelector("[data-waddah-hero]").getAnimations({ subtree: true }).length }));
-  ok(!st.playing && st.anims === 0, "reduced motion: the still thinking pose");
+  await p.waitForFunction(() => document.querySelector("[data-waddah-hero]").dataset.pose !== "logo", null, { timeout: 4000 })
+    .then(() => ok(true, "reduced motion: the poses still change"), () => ok(false, "reduced motion: the poses still change"));
+  const moving = await p.evaluate(() => document.querySelector("[data-waddah-hero]").getAnimations({ subtree: true })
+    .filter((a) => a.animationName).map((a) => a.animationName));
+  ok(!moving.length, `reduced motion: no movement (${moving.join(", ") || "none"})`);
   await ctx.close();
 }
 // English: the homepage keeps its own wave, no animation.

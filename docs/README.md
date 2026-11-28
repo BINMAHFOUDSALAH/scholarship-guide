@@ -32,7 +32,8 @@ node scripts/check_explore.mjs                  # «جرّب قبل أن تقر�
 node marketing/src/waddah_cards.mjs             # وضّاح's share image, 9:16 still and dawn clip into marketing/out/ (needs ffmpeg; --no-clip)
 python scripts/logo_thumbs.py                   # small university logos for «الآن» (after adding logos)
 node scripts/share_image.mjs                    # the WhatsApp/X link preview, app/static/img/share-wadih.png (1200x630)
-node scripts/check_waddah_hero.mjs http://127.0.0.1:8000   # وضّاح beside «بوضوح»: plays once, opens a hand toward the field, the repeat, reduced motion (add --frames DIR, --browser webkit)
+node scripts/check_waddah_hero.mjs http://127.0.0.1:8000   # وضّاح beside «بوضوح»: his renders, the scene, pointing at the field, the magnifier, reduced motion (add --frames DIR, --browser webkit)
+python scripts/build_waddah_poses.py                       # recut his hero poses from marketing/assets/waddah/
 ```
 
 ## Feature specs
