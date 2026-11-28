@@ -26,10 +26,40 @@
   answer in the Finder. (It opened on an example until 2026-11-27, which read as a filter.)
   The student who hasn't chosen a major has their own door beside it («جرّب قبل أن تقرر»).
 #}
-<section class="stage ask-hero" aria-labelledby="hero-title">
+<section class="stage ask-hero" aria-labelledby="hero-title"{% if not is_en() %} data-hero-waddah{% endif %}>
   <div class="container ask-hero-inner">
     <div class="ask-hero-main">
+      {% if is_en() %}
       <h1 id="hero-title" class="ask-kicker">{{ site.tagline }}</h1>
+      {% else %}
+      {#- وضّاح beside «بوضوح» (owner, 2026-11-27): leaning on the word with a laptop, he squints, gets an idea, lowers
+          the laptop, looks at the search field below and points to it once, then leans again (waddah-hero.js, about
+          four seconds, once; one repeat at most). Drawn from the existing renders (scripts/waddah_rig.py): the two poses
+          share their feet, and the eyes are their own layer. Decoration only: hidden from screen readers, never in the
+          way of a tap, and a still lean for reduced motion. #}
+      <div class="ask-kicker-row">
+        <h1 id="hero-title" class="ask-kicker">{{ site.tagline }}</h1>
+        <div class="waddah-hero" data-waddah-hero aria-hidden="true">
+          <svg class="waddah-hero-svg" viewBox="0 -44 360 384" focusable="false">
+            <g class="wh-lean">
+              <image href="{{ url_for('static', path='img/waddah/hero/lean-laptop.webp') }}" width="360" height="340"/>
+              <ellipse class="wh-eye" cx="146.1" cy="159.2" rx="9.9" ry="18.6"/>
+              <ellipse class="wh-eye" cx="185.3" cy="156.3" rx="8.8" ry="18.5"/>
+            </g>
+            <g class="wh-point">
+              <image href="{{ url_for('static', path='img/waddah/hero/point.webp') }}" width="360" height="340"/>
+            </g>
+            <defs><radialGradient id="wh-glow"><stop offset="0" stop-color="#ffd84d" stop-opacity="0.8"/><stop offset="1" stop-color="#ffd84d" stop-opacity="0"/></radialGradient></defs>
+            <g transform="translate(230 -6) scale(1.9)"><g class="wh-bulb-inner">
+              <circle class="wh-bulb-glow" r="30"/>
+              <path class="wh-bulb-glass" d="M0 -17a14 14 0 0 1 8.4 25.2c-2.2 1.7-3.4 3.6-3.4 5.8h-10c0-2.2-1.2-4.1-3.4-5.8A14 14 0 0 1 0 -17z"/>
+              <path class="wh-bulb-wire" d="M-3.5 13.5v-6l3.5-4 3.5 4v6"/>
+              <rect class="wh-bulb-base" x="-5.5" y="15" width="11" height="7" rx="2"/>
+            </g></g>
+          </svg>
+        </div>
+      </div>
+      {% endif %}
       <form class="ask-form" method="get" action="{{ url_for('universities_page') }}" role="search" aria-labelledby="hero-title"
             data-ask-live data-answer-url="{{ url_for('answer_partial') }}">
         {{ ask.ask_sentence(ask_q, ask_country, "home-") }}
@@ -46,7 +76,7 @@
         </p>
       </form>
     </div>
-    <img class="ask-waddah" src="{{ url_for('static', path='img/waddah/wave-520.webp') }}" width="520" height="473" alt="" aria-hidden="true" decoding="async" fetchpriority="high">
+    {% if is_en() %}<img class="ask-waddah" src="{{ url_for('static', path='img/waddah/wave-520.webp') }}" width="520" height="473" alt="" aria-hidden="true" decoding="async" fetchpriority="high">{% endif %}
   </div>
 </section>
 {% endblock %}
@@ -168,5 +198,6 @@
 {% block scripts %}
 <script src="{{ url_for('static', path='universities.js') }}?v={{ asset_version('universities.js') }}" defer></script>
 <script src="{{ url_for('static', path='ask.js') }}?v={{ asset_version('ask.js') }}" defer></script>
+{% if not is_en() %}<script src="{{ url_for('static', path='waddah-hero.js') }}?v={{ asset_version('waddah-hero.js') }}" defer></script>{% endif %}
 {% if quote and quote.youtube_id %}<script src="{{ url_for('static', path='video.js') }}?v={{ asset_version('video.js') }}" defer></script>{% endif %}
 {% endblock %}

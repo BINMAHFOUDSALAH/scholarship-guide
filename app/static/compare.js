@@ -29,7 +29,20 @@
 
   // The names bar works even where the browser keeps nothing.
   const comparePage = document.querySelector("[data-compare-page]");
-  if (comparePage) stickyNames(comparePage);
+  if (comparePage) {
+    stickyNames(comparePage);
+    logoFallback(comparePage);
+  }
+
+  // A logo file that fails to load shows the university's initials instead, in the same tile, so the names below
+  // stay level with their neighbours'.
+  function logoFallback(root) {
+    for (const img of root.querySelectorAll("[data-compare-logo] img")) {
+      const miss = () => img.closest("[data-compare-logo]").classList.add("is-missing");
+      if (img.complete && img.naturalWidth === 0) miss();
+      else img.addEventListener("error", miss, { once: true });
+    }
+  }
 
   if (!write(read())) return; // storage blocked: no picks, the toggles stay hidden
 

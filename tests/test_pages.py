@@ -177,9 +177,15 @@ def test_share_preview_and_description_tags():
     base = main.site["base_url"]
     assert '<meta name="description"' in html
     assert f'<link rel="canonical" href="{base}/grades/grade-10">' in html
-    assert f'<meta property="og:image" content="{base}/static/img/og-image.png">' in html
+    # The preview WhatsApp and X show (owner, 2026-11-27): one 1200x630 image at its full public address, for both.
+    assert f'<meta property="og:image" content="{base}/static/img/share-wadih.png">' in html
+    assert f'<meta name="twitter:image" content="{base}/static/img/share-wadih.png">' in html
     assert '<meta property="og:title" content="أول ثانوي: اكتشف واستعد | واضح">' in html
-    assert client.get("/static/img/og-image.png").status_code == 200
+    image = client.get("/static/img/share-wadih.png")
+    assert image.status_code == 200
+    from PIL import Image
+    import io
+    assert Image.open(io.BytesIO(image.content)).size == (1200, 630)
 
 
 def test_robots_txt_points_to_sitemap():
@@ -859,15 +865,23 @@ def test_footer_names_the_team_and_links_its_x_account(prefix, label, team):
         assert "salahmetaverse" not in html
 
 
-def test_logo_mark_is_the_same_in_the_header_and_the_favicon():
-    """Decision 036: one drawing (ض with a lime diamond dot on a forest tile) in the header and favicon.svg."""
-    header = client.get("/about").text.split("</header>")[0]
+def test_logo_is_the_folded_ticket_without_a_repeated_name():
+    """The logo (owner, 2026-11-27): the folded ticket, which already says واضح, so no text name sits beside it.
+    The browser tab uses the small favicon drawn from the same ticket."""
+    for path in ("/about", "/en/about"):
+        html = client.get(path).text
+        header = html.split("</header>")[0]
+        brand = header.split('class="brand"')[1].split("</a>")[0]
+        assert 'class="brand-logo" src="http://testserver/static/img/brand/wadih-logo.svg' in brand
+        assert "brand-name" not in brand and ">واضح<" not in brand
+        footer = html.split('<footer class="site-footer">')[1]
+        assert 'class="footer-logo" src="http://testserver/static/img/brand/wadih-logo.svg' in footer
+        assert 'rel="icon" href="http://testserver/static/favicon.svg' in html
+    logo = client.get("/static/img/brand/wadih-logo.svg").text
     favicon = client.get("/static/favicon.svg").text
-    mark = header.split('<svg class="brand-mark"')[1].split("</svg>")[0]
-    for colour in ("#184b3a", "#f6f4ee", "#d8ed9b"):
-        assert colour in mark and colour in favicon
-    glyph = mark.split('<path d="')[1].split('"')[0]
-    assert glyph in favicon
+    for colour in ("#00483A", "#82DE9F", "#F4AA11"):  # forest ticket, mint fold, gold tassel
+        assert colour in logo and colour in favicon
+    assert "<script" not in logo and "<script" not in favicon
 
 
 # ---------- ثالث ثانوي month by month (decision 040) ----------
@@ -1018,15 +1032,6 @@ def test_copyright_line_ends_every_footer_and_updates_itself(monkeypatch):
             assert footer.index('class="footer-legal"') > footer.index('class="footer-nav"')  # the very end
 
 
-def test_logo_markup_is_exactly_the_favicon():
-    """The logo never changes (owner, 2026-10-17): the header draws the favicon's own tile, letter and diamond."""
-    header = client.get("/").text.split("</header>")[0]
-    favicon = client.get("/static/favicon.svg").text
-    mark = header.split('<svg class="brand-mark"')[1].split(">", 1)[1].split("</svg>")[0]
-    drawing = favicon.split("-->", 1)[1].split("</svg>")[0].strip()
-    assert mark == drawing
-
-
 def test_homepage_route_leads_from_the_grades_to_the_programs():
     """The grade route (decision 062): one route of four stops, the three grades in order, then the programs."""
     grades = client.get("/").text.split('id="grades"')[1].split("</nav>")[0]
@@ -1164,9 +1169,12 @@ def test_waddah_greets_the_question_and_asks_the_grade():
     """Redesign v3: the mascot is decoration with a job in both places (the words are written beside him): he greets
     by the question, and asks «في أي صف أنت؟» beside the one forest panel of the four stops."""
     html = client.get("/").text
-    hero = html.split('<section class="stage ask-hero"')[1].split("</section>")[0]
+    # By the question: on the Arabic homepage he leans beside «بوضوح» (test_waddah_leans_beside_the_tagline_...);
+    # the English homepage keeps him waving.
+    hero = client.get("/en/").text.split('<section class="stage ask-hero"')[1].split("</section>")[0]
     mascot = hero.split('<img class="ask-waddah"')[1].split(">")[0]
     assert 'alt=""' in mascot and 'aria-hidden="true"' in mascot and "/static/img/waddah/wave-520.webp" in mascot
+    assert 'data-waddah-hero aria-hidden="true"' in html.split('<section class="stage ask-hero"')[1].split("</section>")[0]
     grades = html.split('id="grades"')[1].split("</nav>")[0]
     assert grades.count('class="route-panel stage"') == 1
     pointer = grades.split('<img class="hero-waddah"')[1].split(">")[0]
@@ -1216,3 +1224,20 @@ def test_two_self_hosted_typefaces():
     assert "fonts/readex-pro-arabic.woff2" in client.get("/").text.split("</head>")[0]
     en_head = client.get("/en/").text.split("</head>")[0]
     assert "fonts/readex-pro-latin.woff2" in en_head and "readex-pro-arabic" not in en_head
+
+def test_waddah_leans_beside_the_tagline_on_the_arabic_homepage_only():
+    """وضّاح beside «بوضوح» (owner, 2026-11-27): decoration only, drawn from the existing renders, self-hosted, with a
+    still lean for reduced motion (the scene only runs under no-preference). The English homepage keeps its wave."""
+    html = client.get("/").text
+    row = html.split('class="ask-kicker-row"')[1].split('<form')[0]
+    assert f'<h1 id="hero-title" class="ask-kicker">{main.site["tagline"]}</h1>' in row
+    assert 'data-waddah-hero aria-hidden="true"' in row
+    for layer in ("img/waddah/hero/lean-laptop.webp", "img/waddah/hero/point.webp"):
+        assert layer in row and client.get("/static/" + layer).status_code == 200
+    assert "waddah-hero.js" in html and "https://" not in row
+    css = (main.APP_DIR / "static" / "style.css").read_text(encoding="utf-8")
+    scene = css.split("@media (prefers-reduced-motion: no-preference) {\n  .waddah-hero.is-playing")[1].split("\n}\n")[0]
+    assert "animation: wh-lean 4s" in scene
+    assert ".waddah-hero {\n  position: absolute;" in css and "pointer-events: none;" in css.split(".waddah-hero {")[1].split("}")[0]
+    english = client.get("/en/").text
+    assert "data-waddah-hero" not in english and "waddah-hero.js" not in english and 'class="ask-waddah"' in english
