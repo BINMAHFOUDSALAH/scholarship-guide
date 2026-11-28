@@ -378,7 +378,7 @@ def test_the_guide_is_public_and_routes_onward(live):
     for href in ("/grades/grade-10#tracks", "/universities?track=emdad&amp;field=ict", "#family"):
         assert href in r.text, href
     assert "moe.gov.sa" in r.text  # the official handbook and track pages
-    assert '/resources/undecided"' in client.get("/").text  # in the homepage's guides (absolute links there)
+    # No longer in the guides index (owner, 2026-11-27); the grade pages still link it.
     assert 'href="/resources/undecided"' in client.get("/grades/grade-10").text
 
 

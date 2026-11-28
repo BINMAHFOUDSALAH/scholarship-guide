@@ -238,8 +238,17 @@ def build(result, explorer, scholarship_tracks, prep_fact=None, today=None):
             "more_href": _full_href(s["track"], (s.get("field") or {}).get("id"), country) if len(rows) > preview else None,
         })
 
-    fields = []
+    fields, tracks_in_country, country_total = [], [], None
     if kind == "country":
+        # The overview first (2026-11-27): the homepage's chip says «الصين 45», every list counted once per
+        # university (overview() below), so the heading says the same number, then what each track holds there.
+        country_total = country_count(explorer, country)
+        for t in ("arruaad", "emdad", "rnd"):
+            n = len({u["id"] for u in explorer.universities.values() if u["country"] == country
+                     and any(l["track"] == t for l in u["listings"])})
+            tracks_in_country.append({"track": t, "count": n,
+                                      "href": {"arruaad": "#answer-group-1", "emdad": "#answer-fields"}.get(t)
+                                      or _full_href(t, None, country)})
         # A country without a major: الرواد's universities there (every major), then إمداد's fields with their
         # counts, so the next tap is a field (a list is ranked per field).
         for (t, fid), f in sorted(explorer.fields.items(), key=lambda kv: min(kv[1]["list_pages"])):
@@ -262,6 +271,7 @@ def build(result, explorer, scholarship_tracks, prep_fact=None, today=None):
         "major_ar": major_names[0] if len(major_names) == 1 else None,
         "major_fields": result.get("major_fields") or [],
         "total": total, "groups": groups, "fields": fields, "empty": empty,
+        "country_total": country_total, "tracks_in_country": tracks_in_country,
         "facets": _facets(explorer, result["q"]) if kind == "major" else [],
         "soonest": upcoming[0] if upcoming else None,
         "ielts_low": ielts[0] if ielts else None,
@@ -271,6 +281,11 @@ def build(result, explorer, scholarship_tracks, prep_fact=None, today=None):
         "unresearched": sum(1 for i in items if not i["researched"]),
         "health": result.get("health"),
     }
+
+
+def country_count(explorer, code):
+    """Universities in a country across every list, each counted once: the homepage chip's number."""
+    return sum(1 for u in explorer.universities.values() if u["country"] == code)
 
 
 def overview(explorer):
@@ -308,6 +323,10 @@ def as_data(answer, prefix=""):
 
     return {
         "kind": answer["kind"], "q": answer["q"], "country": answer["country"], "total": answer["total"],
+        "country_total": answer["country_total"],
+        "tracks_in_country": [{"track": t["track"], "count": t["count"],
+                               "href": t["href"] if t["href"].startswith("#") else prefix + t["href"]}
+                              for t in answer["tracks_in_country"]],
         "groups": [{"track": g["track"], "field": (g["field"] or {}).get("id"), "why_ar": g["why_ar"],
                     "source": g["source"], "rule_source": g["rule"], "count": g["count"],
                     "items": [item(i) for i in g["items"]],

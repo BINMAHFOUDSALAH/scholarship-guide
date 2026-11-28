@@ -85,18 +85,33 @@
 {% set lists_year = explorer.source.academic_year | replace("-", "–") %}
 <section class="answer{% if compact %} answer--compact{% endif %}" aria-labelledby="answer-title" data-answer data-answer-total="{{ a.total }}">
   <header class="answer-head">
-    {% set num, words = a.total | count_split("universities") %}
+    {#- A country alone (2026-11-27): the number first is the homepage chip's (every list, each university once); what
+        each track holds there follows, labeled, so «الصين 45» never opens on «3 جامعات». #}
+    {% set head_n = a.country_total if a.kind == "country" else a.total %}
+    {% set num, words = head_n | count_split("universities") %}
     <h2 id="answer-title" class="answer-title">
-      {%- if a.total %}{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }}
+      {%- if a.kind == "country" %}{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }} {{ a.country | in_country }} {{ _("في قوائم الابتعاث") }}
+      {%- elif a.total %}{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }}
         {%- if a.country %} {{ a.country | in_country }}{% endif %}
-        {%- if a.kind == "country" %} {{ _("في مسار الرواد، لكل التخصصات") }}
-        {%- elif a.major_ar %} {{ _f("لتخصص «{major}»", major=a.major_ar) }}
+        {%- if a.major_ar %} {{ _f("لتخصص «{major}»", major=a.major_ar) }}
         {%- else %} {{ _f("لتخصصات «{q}»", q=a.q) }}{% endif %}
-      {%- elif a.kind == "country" %}{{ _f("لا جامعة في {country} في قائمة الرواد", country=a.country_ar) }}
       {%- else %}{{ _("لا جامعة تطابق سؤالك") }}{% if a.country %} {{ a.country | in_country }}{% endif %}{% endif -%}
     </h2>
-    <p class="answer-source">{{ _("من") }} <a class="src src--named" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _f("دليل الوزارة لقوائم الجامعات {year}", year=lists_year) }}</a></p>
-    {% if a.groups %}
+    <p class="answer-source">{{ _("من") }} <a class="src src--named" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _f("دليل الوزارة لقوائم الجامعات {year}", year=lists_year) }} <span class="src-kind">PDF</span></a></p>
+    {% if a.kind == "country" %}
+    {#- Each track's count in the country, a link to its part (الرواد's cards, إمداد's fields, البحث والتطوير's list). #}
+    <ul class="answer-split" aria-label="{{ _f('عدد الجامعات {country} في كل مسار', country=a.country | in_country) }}">
+      {% for t in a.tracks_in_country %}
+      <li>{% if t.count %}<a class="answer-split-part answer-split-part--link" href="{{ t.href }}">
+        {%- if t.track == "arruaad" %}{{ _f("{n} في الرواد، لكل التخصصات", n=t.count) }}
+        {%- elif t.track == "emdad" %}{{ _f("{n} في إمداد، حسب المجال", n=t.count) }}
+        {%- else %}{{ _f("{n} في البحث والتطوير، للدكتوراه", n=t.count) }}{% endif %}</a>
+      {%- else %}<span class="answer-split-part answer-split-part--none">
+        {%- if t.track == "arruaad" %}{{ _("لا جامعة في الرواد") }}{% elif t.track == "emdad" %}{{ _("لا جامعة في إمداد") }}{% else %}{{ _("لا جامعة في البحث والتطوير") }}{% endif %}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    <p class="answer-split-note">{{ _("قد تكون الجامعة في أكثر من مسار، فتُحسب مرة واحدة في المجموع.") }}</p>
+    {% elif a.groups %}
     {#- Why they match, in the heading's own words: الرواد takes every major; إمداد lists the major's field. #}
     <p class="answer-split">{% for g in a.groups %}<span class="answer-split-part">{% if g.track == "arruaad" %}{{ _f("{n} في الرواد، لكل التخصصات", n=g.count) }}{% else %}{{ _f("{n} في إمداد، مجال «{field}»", n=g.count, field=g.field.name_ar) }}{% endif %}</span>{% endfor %}</p>
     {% endif %}
@@ -110,7 +125,7 @@
   </ol>
   {% endif %}
 
-  {% if a.empty and a.country %}
+  {% if a.empty and a.country and a.kind != "country" %}
   <ul class="answer-empty">
     {% for e in a.empty %}<li>{% if e.track == "arruaad" %}{{ _f("لا جامعة في {country} في قائمة الرواد.", country=a.country_ar) }}{% else %}{{ _f("لا جامعة في {country} في قائمة إمداد لمجال «{field}».", country=a.country_ar, field=e.field.name_ar) }}{% endif %}</li>{% endfor %}
   </ul>
@@ -125,7 +140,7 @@
       <span class="answer-group-count">{{ g.count | count_ar("universities") }}</span>
     </header>
     {#- The guide is named once in the header; a group's rule from another page keeps its own link. #}
-    <p class="answer-why">{{ g.why_ar }}{% if g.source and g.source.url != explorer.source.url %} <a class="src" href="{{ g.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+    <p class="answer-why">{{ g.why_ar }}{% if g.source and g.source.url != explorer.source.url %} <a class="src" href="{{ g.source.url }}" target="_blank" rel="noopener">{{ _("شروط الرواد") if g.track == "arruaad" else _("المصدر") }}</a>{% endif %}</p>
     <ul class="answer-cards">
       {% for i in (g["items"][:3] if compact else g["items"]) %}{{ acard(i, back) }}{% endfor %}
     </ul>
@@ -210,12 +225,12 @@
         {% if a.soonest %}<p class="step-text">{{ _("أقرب موعد في هذه الإجابة:") }} <strong><time datetime="{{ a.soonest.deadline.date }}">{{ a.soonest.deadline.date | arabic_date }}</time></strong>{{ _("،") }} {{ a.soonest.university.name_ar or a.soonest.university.name_en }}{% if a.soonest.deadline.round_ar %} (<bdi>{{ a.soonest.deadline.round_ar }}</bdi>){% endif %}.</p>
         {% else %}<p class="step-text">{{ _("لا موعد قادمًا مؤكدًا لهذه الجامعات في بياناتنا، فافتح صفحة كل جامعة.") }}</p>{% endif %}
         {% if a.foundation and a.prep_fact %}
-        <p class="step-text step-text--warn">{{ _("بعض هذه الجامعات لا تكفيها الثانوية السعودية للسنة الأولى، فتحتاج سنة تأسيسية. والابتعاث يشترط لها معدل 90% فأعلى وآيلتس 5.5 فأعلى.") }} <a class="src" href="{{ a.prep_fact.sources[0].url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></p>
+        <p class="step-text step-text--warn">{{ _("بعض هذه الجامعات لا تكفيها الثانوية السعودية للسنة الأولى، فتحتاج سنة تأسيسية. والابتعاث يشترط لها معدل 90% فأعلى وآيلتس 5.5 فأعلى.") }} <a class="src" href="{{ a.prep_fact.sources[0].url }}" target="_blank" rel="noopener">{{ _("شروط السنة التأسيسية") }}</a></p>
         {% endif %}
       </li>
       <li class="step">
         <p class="step-title">{{ _("احصل على قبول غير مشروط") }}</p>
-        <p class="step-text">{{ _("الابتعاث يطلب قبولًا نهائيًا من جامعة في قائمة المسار.") }} {% if a.groups %}<a class="src" href="{{ a.groups[0].rule.url if a.groups[0].rule else explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a>{% endif %}</p>
+        <p class="step-text">{{ _("الابتعاث يطلب قبولًا نهائيًا من جامعة في قائمة المسار.") }} {% if a.groups %}<a class="src" href="{{ a.groups[0].rule.url if a.groups[0].rule else explorer.source.url }}" target="_blank" rel="noopener">{{ _("شروط المسار") }}</a>{% endif %}</p>
       </li>
       <li class="step">
         <p class="step-title">{{ _("قدّم على الابتعاث بقبولك") }}</p>

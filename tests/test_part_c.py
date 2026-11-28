@@ -210,10 +210,9 @@ def test_the_preview_is_an_example_not_a_chat(prefix, teaser_public):
     assert 'alt="" aria-hidden="true"' in section
     assert (main.APP_DIR / "static" / "img" / "waddah" / "clipboard-320.webp").stat().st_size < 60_000
     assert "قادم في ديسمبر" not in section and "December" not in section  # the launch dates are dropped
-    if prefix:
-        assert "this is an example, not a conversation" in section and "only for people who use Waddah" in section
-    else:
-        assert "وضّاح لم يُطلق بعد، وهذا مثال وليس محادثة" in section and "لمن يستخدم وضّاح فقط" in section
+    # The closing note and the list/admission note are gone (owner, 2026-11-27); the opening line still says «مثال».
+    assert "preview-foot" not in section and "preview-note" not in section
+    assert ("An example of what Waddah" if prefix else "مثال لما سيفعله وضّاح") in section
 
 
 def test_the_preview_shows_only_facts_from_the_files_with_their_sources(teaser_public):

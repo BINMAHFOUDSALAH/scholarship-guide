@@ -128,6 +128,38 @@ def test_a_country_alone_shows_rawwad_there_and_emdads_fields():
     assert a["fields"] and all(f["count"] and "country=GB" in f["href"] for f in a["fields"])
 
 
+@pytest.mark.parametrize("code", ["CN", "DE", "US", "JP"])
+def test_a_country_opens_on_the_homepage_chips_number_then_each_track(code):
+    """2026-11-27: the homepage said «الصين 45» and the answer opened on «3 جامعات في الصين في مسار الرواد». The heading
+    now gives the chip's number (every list, each university once), then what each track holds there, labeled."""
+    a = build("", code)
+    chip = next(c["count"] for c in answer.overview(ex) if c["code"] == code)
+    assert a["country_total"] == chip
+    unis = [u for u in ex.universities.values() if u["country"] == code]
+    for t in a["tracks_in_country"]:
+        assert t["count"] == sum(1 for u in unis if any(l["track"] == t["track"] for l in u["listings"]))
+    assert [t["track"] for t in a["tracks_in_country"]] == ["arruaad", "emdad", "rnd"]
+    rnd = a["tracks_in_country"][2]
+    assert rnd["href"] == f"/universities?track=rnd&country={code}"  # the shortcut keeps the country
+    head = client.get("/universities", params={"country": code}).text.split('id="answer-title"')[1].split("</header>")[0]
+    assert f'<span class="answer-count">{chip}</span>' in head and "في قوائم الابتعاث" in head
+    assert "في مسار الرواد، لكل التخصصات" not in head
+    en = client.get("/en/universities", params={"country": code}).text.split('id="answer-title"')[1].split("</header>")[0]
+    assert "on the scholarship lists" in en and ">PDF<" in en
+
+
+def test_a_country_without_rawwad_says_so_in_its_count():
+    a = build("", "DE")
+    assert a["tracks_in_country"][0]["count"] == 0 and a["country_total"] == 20
+    head = client.get("/universities", params={"country": "DE"}).text.split('id="answer-title"')[1].split("</header>")[0]
+    assert "لا جامعة في الرواد" in head and "17 في إمداد، حسب المجال" in head
+
+
+def test_a_filtered_list_says_where_it_counts():
+    html = client.get("/universities", params={"country": "CN", "track": "emdad", "field": "ict"}).text
+    assert "17 جامعة في الصين" in html
+
+
 @pytest.mark.parametrize("params", [{"q": "Stanford"}, {"track": "arruaad"}, {"track": "waaid"},
                                     {"country": "GB", "lang": "other"}])
 def test_other_searches_keep_their_own_views(params):
