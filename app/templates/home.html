@@ -32,11 +32,11 @@
       {% if is_en() %}
       <h1 id="hero-title" class="ask-kicker">{{ site.tagline }}</h1>
       {% else %}
-      {#- وضّاح beside «بوضوح» (owner, 2026-11-27): standing at the end of the tagline, thinking with a hand at his chin.
-          Once (one repeat at most), for about four and a half seconds: two taps on the chin, a bulb and a smile, a hop
-          with both arms up, then he lands leaning toward the search field, opens a hand to it and winks, and goes back to
-          thinking (waddah-hero.js). New poses on a vector figure drawn from his own shapes (partials/waddah_hero.html).
-          Decoration only: hidden from screen readers, never in the way of a tap, and the still pose for reduced motion. #}
+      {#- وضّاح beside «بوضوح» (owner, 2026-11-27): his own renders, standing at the end of the tagline with a hand at
+          his chin. A short scene when the hero comes into view («hmm», a cheering hop, a lean pointing at the search
+          field, a wave), small moments after it, and answers to the student (the field → his magnifier, the pointer → a
+          wave). The poses are partials/waddah_hero.html, the timing waddah-hero.js. Decoration only: hidden from screen
+          readers, never over the field; with reduced motion the poses only fade. #}
       <div class="ask-kicker-row">
         <h1 id="hero-title" class="ask-kicker">{{ site.tagline }}</h1>
         {% include "partials/waddah_hero.html" %}

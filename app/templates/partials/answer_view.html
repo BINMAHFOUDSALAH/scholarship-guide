@@ -16,7 +16,6 @@
       <h2 id="answer-title" class="answer-title">{% if num %}<span class="answer-count">{{ num }}</span> {% endif %}{{ words }} {{ _f("في {countries} في قوائم الابتعاث", countries=ov | length | count_ar("countries")) }}</h2>
       <p class="answer-source">{{ _("من") }} <a class="src src--named" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _f("دليل الوزارة لقوائم الجامعات {year}", year=explorer.source.academic_year | replace("-", "–")) }}</a></p>
     </header>
-    <p class="answer-why">{{ _("اكتب تخصصك أو اختر دولة: ترى الجامعات التي تناسبك، ولماذا تظهر كل جامعة، وما تطلبه للقبول.") }}</p>
     <nav class="answer-facets" aria-labelledby="answer-facets-title">
       <p class="answer-facets-title" id="answer-facets-title">{{ _("الجامعات حسب الدولة") }}</p>
       <ul class="facet-list">

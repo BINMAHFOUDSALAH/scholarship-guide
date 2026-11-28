@@ -1,84 +1,111 @@
-// وضّاح beside «بوضوح» on the Arabic homepage (owner, 2026-11-27). The figure is a vector drawing of his own shapes
-// (partials/waddah_hero.html) and the poses are CSS (style.css, «wh-» keyframes, about four and a half seconds); this
-// decides when he plays and which way he turns:
-// - once, when the hero is on screen and the page is in front, unless the student has already started on the form;
-// - at most one repeat, 13 seconds after the first ends, only if the hero is still on screen and the form untouched;
-// - never with reduced motion (the still thinking pose stays);
-// - he faces the real search field («تخصص أو جامعة…»), measured on the page, and his open hand is aimed at it, so the
-//   gesture lands on it on a laptop and on a phone alike. His feet stay put: the lean pivots on them.
+// وضّاح beside «بوضوح» on the Arabic homepage (owner, 2026-11-27). He is his own renders (partials/waddah_hero.html):
+// one pose shows at a time, and this decides which, and when. style.css moves him between poses (a squash, a hop, a
+// lean toward the field) and keeps him breathing while he rests.
+//
+// - The scene, once the hero is on screen and the page is in front: «hmm…» (unsure), «got it!» (a hop, cheering), a
+//   lean pointing at the search field, a wave, then back to resting with a hand at his chin (about five seconds).
+// - Small moments after that, every 9 to 15 seconds while the hero is on screen: a wave, a look in a book, a cheer…
+//   at most MAX_MOMENTS of them, and never while the student is in the search field.
+// - He answers the student: the search field focused → his magnifier; the pointer on him → a wave; a tap → a cheer.
+// - He points at the real search field, measured on the page, so on a laptop and a phone alike.
+// - Reduced motion (on many Windows laptops, where «Animation effects» is off): no hops, leans or breathing. The poses
+//   only fade from one to the next, the scene plays once and he still answers the field and the pointer.
 (function () {
   const root = document.querySelector("[data-waddah-hero]");
   if (!root) return;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   const hero = root.closest(".ask-hero");
   const form = hero && hero.querySelector("form");
   const field = document.getElementById("home-q");
   if (!hero || !form || !field) return;
+  const body = root.querySelector(".wh-body");
+  const imgs = {};
+  for (const img of root.querySelectorAll("[data-pose-img]")) imgs[img.dataset.poseImg] = img;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  const REPEAT_AFTER = 13000;
-  // On the 360-wide stage (viewBox from y = -44): his feet, and the shoulder of the arm on the side he faces as drawn.
-  const FEET_X = 180, SHOULDER_X = 122, SHOULDER_Y = 208, TOP = -44, VIEW_W = 360;
-  let touched = false, onScreen = false, plays = 0, timer = 0, waiting = false;
+  const REST = "logo";
+  const SCENE = [["unsure", 950, "pop"], ["cheer", 900, "hop"], ["point", 1500, "lean"], ["wave", 1100, "pop"]];
+  const MOMENTS = [["wave", 1300, "pop"], ["read", 1900, "pop"], ["cheer", 900, "hop"], ["unsure", 1200, "pop"],
+                   ["point", 1500, "lean"], ["search", 1600, "pop"]];
+  const MAX_MOMENTS = 8;
+  let pose = REST, busy = false, onScreen = false, played = false, moments = 0, timer = 0, run = 0, inField = false, touched = false;
 
-  for (const type of ["focusin", "pointerdown", "input", "keydown", "change"]) {
-    form.addEventListener(type, () => { touched = true; clearTimeout(timer); }, { passive: true });
+  // The other poses load once the page is idle, so the first paint only waits for the resting one.
+  function preload() {
+    for (const img of Object.values(imgs)) if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
   }
+  if ("requestIdleCallback" in window) requestIdleCallback(preload, { timeout: 1500 }); else setTimeout(preload, 600);
 
+  // Which way the field is from him: the point pose (drawn pointing to the viewer's right) turns to face it.
   function aim() {
-    const box = root.getBoundingClientRect();
-    if (!box.width) return;
-    const s = box.width / VIEW_W;
-    const f = field.getBoundingClientRect();
-    const target = { x: f.left + f.width / 2, y: f.top + f.height / 2 };
-    const face = target.x <= box.left + FEET_X * s ? 1 : -1;     // 1: facing the viewer's left, as drawn
-    const x = box.left + (face === 1 ? SHOULDER_X : VIEW_W - SHOULDER_X) * s;
-    const y = box.top + (SHOULDER_Y - TOP) * s;
-    const down = Math.atan2(target.y - y, Math.max(Math.abs(target.x - x), 1)) * 180 / Math.PI;
-    // The body leans 8° toward the field as he opens his hand, so the arm makes up the rest; kept to a gesture.
-    const angle = Math.max(4, Math.min(48, down - 8));
-    root.style.setProperty("--wh-face", face);
-    root.style.setProperty("--wh-aim", angle.toFixed(1) + "deg");
+    const me = root.getBoundingClientRect(), f = field.getBoundingClientRect();
+    const left = f.left + f.width / 2 < me.left + me.width / 2;
+    root.dataset.face = left ? "left" : "right";
   }
 
-  aim();
-  let resizeFrame = 0;
-  window.addEventListener("resize", () => {
-    cancelAnimationFrame(resizeFrame);
-    resizeFrame = requestAnimationFrame(() => { if (!root.classList.contains("is-playing")) aim(); });
-  }, { passive: true });
-  if (!("IntersectionObserver" in window)) return;
-
-  function play() {
-    if (reduce.matches || plays >= 2) return;
-    plays += 1;
-    aim();
-    root.classList.remove("is-playing");
-    void root.offsetWidth; // restart the keyframes
-    root.classList.add("is-playing");
+  async function show(next, move) {
+    const img = imgs[next];
+    if (!img) return;
+    if (img.dataset.src) preload();
+    try { await img.decode(); } catch (e) { if (!img.complete) return; }
+    if (next === "point") aim();
+    for (const [name, el] of Object.entries(imgs)) el.classList.toggle("is-on", name === next);
+    root.dataset.pose = pose = next;
+    body.classList.remove("wh-pop", "wh-hop", "wh-lean");
+    if (move && !reduce.matches) {
+      void body.offsetWidth; // restart the movement
+      body.classList.add("wh-" + move);
+    }
   }
 
-  root.addEventListener("animationend", (event) => {
-    if (event.animationName !== "wh-fig") return;
-    root.classList.remove("is-playing"); // the resting state is the same thinking pose
-    if (plays < 2) timer = setTimeout(() => {
-      if (onScreen && !touched && document.visibilityState === "visible") play();
-    }, REPEAT_AFTER);
-  });
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  // A run of poses, then back to resting (or to the magnifier, if the student is in the field by then). A newer run,
+  // or the student entering the field, ends it.
+  async function play(steps) {
+    const id = ++run;
+    busy = true;
+    for (const [p, ms, move] of steps) {
+      if (id !== run || inField) break;
+      await show(p, move);
+      await wait(ms);
+    }
+    if (id !== run) return;
+    busy = false;
+    await show(inField ? "search" : REST, "pop");
+    schedule();
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (reduce.matches || moments >= MAX_MOMENTS) return;
+    timer = setTimeout(() => {
+      if (busy || inField || !onScreen || document.visibilityState !== "visible") return schedule();
+      // Once the student has used the form, he no longer points them to it.
+      const choices = MOMENTS.filter(([p]) => !(touched && p === "point") && p !== pose);
+      moments += 1;
+      play([choices[Math.floor(Math.random() * choices.length)]]);
+    }, 9000 + Math.random() * 6000);
+  }
 
   function first() {
-    if (plays || waiting || touched || !onScreen || document.visibilityState !== "visible") return;
-    waiting = true;
-    setTimeout(() => {
-      waiting = false;
-      if (!plays && !touched && onScreen && document.visibilityState === "visible") play();
-    }, 600);
+    if (played || !onScreen || document.visibilityState !== "visible") return;
+    played = true;
+    setTimeout(() => { if (!inField) play(SCENE); else schedule(); }, 600);
   }
 
+  field.addEventListener("focus", () => { inField = true; touched = true; run++; busy = false; show("search", "pop"); });
+  field.addEventListener("blur", () => { inField = false; if (!busy) show(REST, "pop"); schedule(); });
+  form.addEventListener("input", () => { touched = true; }, { passive: true });
+
+  // The pointer on him: a wave. A tap or a click: a cheer. Neither interrupts the student's search.
+  root.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && !busy && !inField) play([["wave", 1300, "pop"]]); });
+  root.addEventListener("click", () => { if (!inField) play([["cheer", 900, "hop"]]); });
+
+  window.addEventListener("resize", () => { if (pose === "point") aim(); }, { passive: true });
+  if (!("IntersectionObserver" in window)) return;
   new IntersectionObserver((entries) => {
     onScreen = entries[entries.length - 1].isIntersecting;
-    if (!onScreen) clearTimeout(timer);
     first();
-  }, { threshold: 0.6 }).observe(hero);
+  }, { threshold: 0.4 }).observe(hero);
   document.addEventListener("visibilitychange", first);
-  reduce.addEventListener && reduce.addEventListener("change", () => { if (reduce.matches) root.classList.remove("is-playing"); });
 })();

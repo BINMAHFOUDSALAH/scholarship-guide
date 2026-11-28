@@ -1,92 +1,17 @@
 {#-
-  وضّاح beside «بوضوح» (owner, 2026-11-27): a vector figure drawn from his renders' own shapes (the clay body with its
-  three-point hem, the red shemagh, the double agal, the dark-green visor and its two lime lights), so his arms, eyes and
-  body can move into poses the renders don't have. The poses and their timing are CSS (style.css, «wh-» keyframes);
-  waddah-hero.js decides when he plays and turns him toward the search field.
-
-  Drawn facing the viewer's left on a 360-wide stage, feet at 180,334. Each arm (shoulders at 122,208 and 238,208) is a shoulder group (wh-*-up) with a
-  nested elbow (wh-*-fore), drawn hanging down: positive turns swing the hand toward the viewer's left. "near" is the arm
-  on the side he faces. Decoration only: hidden from screen readers, never in the way of a tap.
+  وضّاح beside «بوضوح» (owner, 2026-11-27): his own renders, never a redrawing. Each pose is one of the original images
+  (marketing/assets/waddah/), cut by scripts/build_waddah_poses.py to the same scale, with his agal and feet in the same
+  place, so a change of pose never makes him jump or resize. One pose shows at a time; waddah-hero.js chooses which and
+  style.css moves him between them. The resting pose (logo: a hand at his chin, the other open) is the only one that
+  loads with the page; the others load once the page is idle (data-src), before he first plays.
+  Decoration only: hidden from screen readers, and his box never covers the search field.
 -#}
-{% macro arm(side, x) -%}
-<g transform="translate({{ x }} 208)"><g class="wh-up wh-{{ side }}-up">
-  <path class="wh-skin" d="M-15.5 0a15.5 15.5 0 0 1 31 0v30a15.5 15.5 0 0 1-31 0z"/>
-  <g class="wh-fore wh-{{ side }}-fore">
-    <path class="wh-skin" d="M-14.5 30a14.5 14.5 0 0 1 29 0v26a14.5 14.5 0 0 1-29 0z"/>
-    <ellipse class="wh-skin wh-hand" cx="0" cy="61" rx="18" ry="16.5"/>
-    <path class="wh-crease" d="M-8 67q8 4 16 0"/>
-  </g>
-</g></g>
-{%- endmacro %}
-<div class="waddah-hero" data-waddah-hero aria-hidden="true">
-  <svg class="waddah-hero-svg" viewBox="0 -44 360 384" focusable="false">
-    <defs>
-      <radialGradient id="wh-clay" cx="0.36" cy="0.28" r="0.85">
-        <stop offset="0" stop-color="#fdf4e9"/><stop offset="0.55" stop-color="#efdcc8"/><stop offset="1" stop-color="#d6bba1"/>
-      </radialGradient>
-      <radialGradient id="wh-visor-fill" cx="0.34" cy="0.26" r="0.9">
-        <stop offset="0" stop-color="#2b6d4f"/><stop offset="0.5" stop-color="#164a34"/><stop offset="1" stop-color="#0c3123"/>
-      </radialGradient>
-      <linearGradient id="wh-fold" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#5a0f12" stop-opacity="0"/><stop offset="1" stop-color="#5a0f12" stop-opacity="0.32"/>
-      </linearGradient>
-      <linearGradient id="wh-ring" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#4a4541"/><stop offset="0.5" stop-color="#1f1c1a"/><stop offset="1" stop-color="#0f0d0c"/>
-      </linearGradient>
-      {#- The shemagh: red squares with white crossings, like the renders' weave. #}
-      <pattern id="wh-weave" width="8" height="8" patternUnits="userSpaceOnUse">
-        <rect width="8" height="8" fill="#d4262d"/>
-        <path d="M0 3.4h8v1.2H0zM3.4 0h1.2v8H3.4z" fill="#fbefe9"/>
-        <rect x="2.6" y="2.6" width="2.8" height="2.8" fill="#fbefe9"/>
-        <rect x="3.5" y="3.5" width="1" height="1" fill="#d4262d"/>
-      </pattern>
-      <mask id="wh-face-cut" maskUnits="userSpaceOnUse" x="0" y="-44" width="360" height="384">
-        <rect x="0" y="-44" width="360" height="384" fill="#fff"/>
-        <path d="M102 156C102 106 136 82 180 82C224 82 258 106 258 156L262 400H98Z" fill="#000"/>
-      </mask>
-      <radialGradient id="wh-glow"><stop offset="0" stop-color="#ffd84d" stop-opacity="0.8"/><stop offset="1" stop-color="#ffd84d" stop-opacity="0"/></radialGradient>
-    </defs>
-    <g class="wh-dir">
-      <ellipse class="wh-shadow" cx="180" cy="334" rx="74" ry="7"/>
-      <g class="wh-fig">
-        {#- The shemagh's back: falls behind him and hangs past his sides, its ends striped. #}
-        <path class="wh-cloth" d="M180 14C254 14 286 74 290 140C294 200 304 240 314 274C296 292 268 294 250 282L110 282C92 294 64 292 46 274C56 240 66 200 70 140C74 74 106 14 180 14Z"/>
-        <path class="wh-cloth-shade" d="M180 14C254 14 286 74 290 140C294 200 304 240 314 274C296 292 268 294 250 282L110 282C92 294 64 292 46 274C56 240 66 200 70 140C74 74 106 14 180 14Z"/>
-        <path class="wh-hem" d="M50 263C68 278 92 280 110 270M310 263C292 278 268 280 250 270"/>
-        <path class="wh-hem wh-hem--thin" d="M52 253C70 267 92 269 110 260M308 253C290 267 268 269 250 260"/>
-        {#- The body: a soft column with a three-point hem. #}
-        <path class="wh-skin wh-body" d="M180 64C233 64 251 104 253 162C255 222 261 270 263 305C264 323 249 327 237 317L229 310C215 299 203 334 181 334C159 334 147 299 133 310L125 317C112 327 96 323 97 305C99 270 105 222 107 162C109 104 127 64 180 64Z"/>
-        <g mask="url(#wh-face-cut)">
-          <path class="wh-cloth" d="M180 12C250 12 282 72 284 140C286 190 280 224 270 250C256 246 248 236 244 222L116 222C112 236 104 246 90 250C80 224 74 190 76 140C78 72 110 12 180 12Z"/>
-          <path class="wh-cloth-shade" d="M180 12C250 12 282 72 284 140C286 190 280 224 270 250C256 246 248 236 244 222L116 222C112 236 104 246 90 250C80 224 74 190 76 140C78 72 110 12 180 12Z"/>
-        </g>
-        <path class="wh-brim" d="M100 220C98 170 100 108 136 90C156 80 204 80 224 90C260 108 262 170 260 220"/>
-        <path class="wh-brim wh-brim--light" d="M95 222C93 170 95 104 133 85C154 75 206 75 227 85C265 104 267 170 265 222"/>
-        {#- The agal: two black rings on the crown. #}
-        <ellipse class="wh-ring" cx="180" cy="46" rx="60" ry="12"/>
-        <ellipse class="wh-ring" cx="180" cy="59" rx="66" ry="13.5"/>
-        <ellipse class="wh-ring-shine" cx="180" cy="56" rx="62" ry="11"/>
-        {#- The visor and its lights. The eyes look about as a group; each closes on its own (a blink, a wink), and
-            a smile is drawn as two arcs. #}
-        <path class="wh-visor" d="M120 120C120 100 146 93 180 93C214 93 240 100 240 120L238 154C236 180 213 190 180 190C147 190 124 180 122 154Z"/>
-        <ellipse class="wh-visor-shine" cx="150" cy="108" rx="20" ry="6.5"/>
-        <g class="wh-eyes">
-          <ellipse class="wh-eye wh-eye-l" cx="158" cy="141" rx="9.5" ry="17.5"/>
-          <ellipse class="wh-eye wh-eye-r" cx="202" cy="141" rx="9.5" ry="17.5"/>
-          <path class="wh-arc wh-arc-l" d="M147 146Q158 128 169 146"/>
-          <path class="wh-arc wh-arc-r" d="M191 146Q202 128 213 146"/>
-        </g>
-        {#- Both arms in front of everything, so a raised hand never disappears behind the shemagh. #}
-        {{ arm("far", 238) }}
-        {{ arm("near", 122) }}
-        {#- The idea: a small bulb above his head. #}
-        <g transform="translate(262 -8) scale(1.7)"><g class="wh-bulb-inner">
-          <circle class="wh-bulb-glow" r="30"/>
-          <path class="wh-bulb-glass" d="M0 -17a14 14 0 0 1 8.4 25.2c-2.2 1.7-3.4 3.6-3.4 5.8h-10c0-2.2-1.2-4.1-3.4-5.8A14 14 0 0 1 0 -17z"/>
-          <path class="wh-bulb-wire" d="M-3.5 13.5v-6l3.5-4 3.5 4v6"/>
-          <rect class="wh-bulb-base" x="-5.5" y="15" width="11" height="7" rx="2"/>
-        </g></g>
-      </g>
-    </g>
-  </svg>
+{%- set poses = ["logo", "unsure", "cheer", "point", "wave", "search", "read"] -%}
+<div class="waddah-hero" data-waddah-hero aria-hidden="true" data-pose="logo">
+  <div class="wh-body">
+    {%- for pose in poses %}
+    {%- set src = url_for('static', path='img/waddah/poses/' ~ pose ~ '.webp') ~ '?v=' ~ asset_version('img/waddah/poses/' ~ pose ~ '.webp') %}
+    <img class="wh-pose" data-pose-img="{{ pose }}" {% if loop.first %}src="{{ src }}" fetchpriority="high"{% else %}data-src="{{ src }}"{% endif %} width="344" height="300" alt="" decoding="async" draggable="false">
+    {%- endfor %}
+  </div>
 </div>
