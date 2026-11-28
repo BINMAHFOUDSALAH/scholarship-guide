@@ -43,8 +43,8 @@
 <div class="notice major-summary" data-health-answer>
   <p class="notice-title">{{ _("التخصصات الصحية، مثل الطب والتمريض والصيدلة") }}</p>
   <ul class="major-summary-list">
-    <li>{{ _f("دليل الوزارة لقوائم الجامعات {year} لا يذكر مجالًا للصحة، فلا قائمة لها في إمداد.", year=explorer.source.academic_year | replace("-", "–")) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("المصدر") }}</a></li>
-    <li>{{ _("مسار الرواد يقبل كل التخصصات في جامعاته الثلاثين، فتأكد من موقع الجامعة أنها تدرّس التخصص.") }} <a class="src" href="https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" target="_blank" rel="noopener">{{ _("المصدر") }}</a></li>
+    <li>{{ _f("دليل الوزارة لقوائم الجامعات {year} لا يذكر مجالًا للصحة، فلا قائمة لها في إمداد.", year=explorer.source.academic_year | replace("-", "–")) }} <a class="src" href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("دليل الوزارة") }} <span class="src-kind">PDF</span></a></li>
+    <li>{{ _("مسار الرواد يقبل كل التخصصات في جامعاته الثلاثين، فتأكد من موقع الجامعة أنها تدرّس التخصص.") }} <a class="src" href="https://sites.moe.gov.sa/scholarship-program/conditions/info-6/" target="_blank" rel="noopener">{{ _("شروط الرواد") }}</a></li>
   </ul>
 </div>
 {% endif %}
@@ -96,7 +96,8 @@
     <p class="result-count">
       {#- No bare «0 جامعة» (decision 078, A5): an empty section says why in its own line below. #}
       {%- set n = (s.waaid if s.waaid is defined else s.rows if s.rows is defined else s.universities) | length %}
-      {% if n %}{{ n | count_ar("programs" if s.waaid is defined else "universities") }}{% endif %}
+      {#- With a country chosen, the count says where it counts (2026-11-27): «40 جامعة في الصين». #}
+      {% if n %}{{ n | count_ar("programs" if s.waaid is defined else "universities") }}{% if r.country and s.waaid is not defined %} {{ r.country | in_country }}{% endif %}{% endif %}
       {% if s.track == "rnd" %}{{ _("، للدكتوراه فقط") }}{% endif %}
     </p>
   </header>

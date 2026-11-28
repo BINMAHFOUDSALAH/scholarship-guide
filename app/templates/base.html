@@ -166,7 +166,7 @@
       <div class="footer-about">
         <p class="footer-brand"><img class="footer-logo" src="{{ url_for('static', path='img/brand/wadih-logo.svg') }}?v={{ asset_version('img/brand/wadih-logo.svg') }}" alt="{{ site.name }}" width="448" height="245" loading="lazy"></p>
         {# Independence on every page, because pages show official logos and data (decision 035). #}
-        <p class="footer-promise">{{ site.name }} {{ _("دليل طلابي مستقل ومجاني.") }} <a href="{{ url_for('about') }}">{{ _("عن الدليل") }}</a></p>
+        <p class="footer-promise">{{ site.name }} {{ _("دليل طلابي مستقل ومجاني.") }}</p>
         {% if is_en() %}<p class="footer-promise">{{ _("هذه الصفحة بالإنجليزية ترجمتنا، والمصدر الرسمي هو المرجع.") }}</p>{% endif %}
         {# Who makes it (owner, 2026-11-25), linked to the team's X account and email (owner, 2026-11-26). The X mark is drawn, never typed. #}
         <p class="footer-maker">

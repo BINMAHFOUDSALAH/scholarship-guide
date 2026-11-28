@@ -1047,7 +1047,9 @@ def test_every_guide_is_in_the_homepage_index_and_the_footer():
     from app.content import list_slugs, load_page
 
     listed = [item["slug"] for group in main.home_text["guides"] for item in group["items"]]
-    assert sorted(listed) == list_slugs("resources")
+    # «لم تقرر بعد؟» left the index (owner, 2026-11-27); the grade 10 and 12 pages still link it.
+    assert sorted(listed + ["undecided"]) == list_slugs("resources")
+    assert 'href="/resources/undecided"' in client.get("/grades/grade-10").text
     home = client.get("/").text
     guides = home.split('id="guides"')[1].split("</section>")[0]
     footer = client.get("/about").text.split('<footer class="site-footer">')[1]

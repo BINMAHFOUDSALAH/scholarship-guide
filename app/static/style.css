@@ -1365,6 +1365,20 @@ main:has(> .hero:first-child) {
   border-radius: 10px;
 }
 
+/* The file type inside a source pill («PDF»): said, so a student knows a document opens. */
+.src-kind {
+  display: inline-block;
+  margin-inline-start: 4px;
+  padding: 0 5px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  vertical-align: 0.05em;
+}
+
 .src:hover {
   background: color-mix(in srgb, var(--action) 17%, transparent);
 }
@@ -5285,15 +5299,6 @@ a.uni-name:hover .uni-name-en:only-child {
   color: var(--ink-muted);
 }
 
-.preview-note {
-  margin: var(--space-3) 0 0;
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--line);
-  font-size: var(--text-sm);
-  line-height: 1.7;
-  color: var(--ink-muted);
-}
-
 /* The plan: dates in order down a line, the last step (the scholarship) after them. */
 .preview-dates {
   margin: 0;
@@ -5352,14 +5357,6 @@ a.uni-name:hover .uni-name-en:only-child {
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-3);
   margin-top: var(--space-2);
-}
-
-.preview-foot {
-  max-width: 46em;
-  margin: var(--space-3) 0 0;
-  font-size: var(--text-sm);
-  line-height: 1.7;
-  color: var(--ink-muted);
 }
 
 @media (max-width: 459px) {
@@ -7161,6 +7158,37 @@ a.uni-name:hover .uni-name-en:only-child {
   border-radius: 999px;
   font-size: var(--text-sm);
   font-weight: 600;
+}
+
+ul.answer-split {
+  padding: 0;
+  list-style: none;
+}
+
+/* A country's tracks: each count opens its part, underlined like every link on the page. */
+.answer-split-part--link {
+  display: inline-block;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.answer-split-part--link:hover {
+  border-color: var(--action);
+  color: var(--action);
+}
+
+.answer-split-part--none {
+  display: inline-block;
+  border-style: dashed;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+.answer-split-note {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
 }
 
 /* The two gates, once above the cards. */

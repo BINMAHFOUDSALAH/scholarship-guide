@@ -55,7 +55,6 @@
           </li>
           {% endfor %}
         </ul>
-        <p class="preview-note">{{ _("قائمة الابتعاث تحدد الجامعات التي يُبتعث إليها، والجامعة وحدها تقرر قبولك. والحد الأدنى أقل درجة تقبلها الجامعة، أما الموصى به فهو ما تنصح به.") }}</p>
       </li>
 
       {#- 3. The plan: the universities' deadlines in order, then the scholarship after admission. #}
@@ -78,7 +77,6 @@
 
     {#- What a student can do today, without وضّاح: the same lists the example reads from. #}
     <p class="preview-try"><a class="btn btn--secondary" href="{{ url_for('universities_page') }}?q={{ tr(p.spec.major_ar) | urlencode }}">{{ _("ابحث عن جامعات تخصصك في القوائم") }}</a></p>
-    <p class="preview-foot">{{ _("وضّاح لم يُطلق بعد، وهذا مثال وليس محادثة. واضح مجاني ومفتوح للجميع دون تسجيل، وسيكون التسجيل بحساب") }} <bdi lang="en">Google</bdi> {{ _("لمن يستخدم وضّاح فقط.") }}</p>
   </div>
 </section>
 {% endmacro %}
