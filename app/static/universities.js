@@ -60,14 +60,34 @@
     if (!response.ok) throw new Error("suggestions " + response.status);
     data = await response.json();
     for (const g of data.fields) for (const m of g.majors) m.words = words(normalize(m.name_ar + " " + m.name_en));
-    for (const u of data.universities) u.key = normalize((u.name_ar || "") + " " + u.name_en + " " + (u.alias || ""));
+    for (const u of data.universities) {
+      u.key = normalize((u.name_ar || "") + " " + u.name_en + " " + (u.alias || ""));
+      u.starts = u.key.split(" ");
+    }
     data.programs = data.programs || [];
+    data.guides = data.guides || [];
+    for (const g of data.guides) g.words = words(g.key);
     return data;
   }
 
+  // A guide matches when every typed word starts one of its title's words: «اي» finds «آيلتس», «القبول المشر»
+  // finds «القبول المشروط: متى يُقبل؟».
+  function guideMatches(qWords, g) {
+    return qWords.every((q) => g.words.some((w) => w.startsWith(q)));
+  }
+
+  // One or two letters match the start of a university's name words only: «اي» found «أديلايد» and «أريزونا» in the
+  // middle of their names, and nothing a student meant. From three letters, anywhere in the name («ford» → Stanford).
+  function universityMatches(q, u) {
+    return q.length >= 3 ? u.key.includes(q) : u.starts.some((w) => w.startsWith(q));
+  }
+
   // config.universitiesTitle: what choosing a university does here (the comparison's picker adds it instead).
+  // config.siteSearch: the box searches the whole site (/search, the header's «ابحث»), so it also suggests the guides
+  // and always offers the full search for the text as typed. The explorer, the question and the picker leave it off.
   function setupCombobox(input, onUniversity, onMajor, config) {
     const universitiesTitle = (config && config.universitiesTitle) || t("جامعات: تفتح صفحة الجامعة");
+    const siteSearch = Boolean(config && config.siteSearch);
     const panel = document.getElementById(input.getAttribute("aria-controls"));
     if (!panel) return { close() {} };
     let options = [];
@@ -133,6 +153,13 @@
       active = -1;
       groupCount = 0;
 
+      if (q && siteSearch) {
+        // First, and always there: the full search for the text as typed, so a topic the lists below don't name
+        // («آيلتس للتخصصات الصحية») is one tap away, not only behind the «ابحث» button.
+        const all = option(t("ابحث عن «{q}» في كل واضح").replace("{q}", input.value.trim()), "", "", () => input.form.requestSubmit());
+        all.classList.add("suggest-option--all");
+        panel.append(all);
+      }
       if (q) {
         // «برامج الابتعاث» (2026-11-27): a program typed by any of its names («كاوست», "KAUST", "KGSP") opens its
         // page. First, because a program's name is short and specific; a university or a major stays below it.
@@ -141,7 +168,13 @@
           panel.append(group(t("برامج الابتعاث: تفتح صفحة البرنامج"), programs.map((p) =>
             option(p.name_ar, p.name_en, "", () => { location.href = p.href; }))));
         }
-        const unis = d.universities.filter((u) => u.key.includes(q)).slice(0, 6);
+        // The guides: a test, a grade or a section of a guide («القبول المشروط»). At most 4, guide titles before sections.
+        const guides = siteSearch ? d.guides.filter((g) => qWords.length && guideMatches(qWords, g)).slice(0, 4) : [];
+        if (guides.length) {
+          panel.append(group(t("الأدلة: تفتح الصفحة"), guides.map((g) =>
+            option(g.heading || g.title, "", g.heading ? g.title : "", () => { location.href = g.href; }))));
+        }
+        const unis = d.universities.filter((u) => universityMatches(q, u)).slice(0, 6);
         if (unis.length) {
           panel.append(group(universitiesTitle, unis.map((u) =>
             option(u.name_ar || u.name_en, u.name_ar ? u.name_en : "", u.country_ar, () => onUniversity(u)))));
@@ -273,7 +306,8 @@
     if (!form || form.hasAttribute("data-explorer") || form.hasAttribute("data-ask-live") || input.hasAttribute("data-compare-pick")) continue;
     setupCombobox(input,
       (u) => { location.href = universityUrl(u, null); },
-      (m) => { location.href = BASE + "/universities?q=" + encodeURIComponent(m.name_ar); });
+      (m) => { location.href = BASE + "/universities?q=" + encodeURIComponent(m.name_ar); },
+      { siteSearch: true });
   }
 
   // ---------- 2. the explorer ----------

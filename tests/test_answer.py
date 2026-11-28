@@ -532,3 +532,16 @@ def test_the_comparison_says_its_source_once_and_nothing_twice():
     note = html.split('class="compare-group-note"')[1].split("</span></th>")[0]
     assert "الدليل الاسترشادي لقوائم الجامعات 2026–2027" in note and ex.source["url"] in note
     assert html.count('class="compare-group-note"') == 1
+
+
+def test_the_search_box_suggests_the_guides_and_their_sections():
+    """2026-11-27: the hint under /search's box names «آيلتس» and «القبول المشروط», but the suggestions held only programs,
+    universities and majors. They carry the published guides now, each title and each section, linked to the page."""
+    guides = client.get("/api/suggestions").json()["guides"]
+    ielts = next(g for g in guides if g["href"] == "/resources/ielts")
+    assert ielts["heading"] == "" and ielts["key"].startswith("ايلتس")
+    conditional = next(g for g in guides if g["href"] == "/programs/custodian-scholarship#conditional")
+    assert conditional["heading"].startswith("القبول المشروط") and conditional["title"] == "برنامج خادم الحرمين الشريفين للابتعاث"
+    assert not any(g["href"] == "/programs/custodian-scholarship" for g in guides)  # the program itself: its own group
+    english = client.get("/en/api/suggestions").json()["guides"]
+    assert next(g for g in english if g["href"] == "/en/resources/ielts")["key"].startswith("ielts")

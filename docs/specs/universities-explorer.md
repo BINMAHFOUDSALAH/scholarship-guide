@@ -102,6 +102,8 @@ Rules:
 - **Since decision 035:**
   - Applied filters are shown as removable tags + «مسح الكل», drawn by the server.
   - Choosing a university in the suggestions opens its page.
+  - One or two typed letters match the start of a university's name words only; three or more match anywhere in the name (2026-11-27).
+  - On `/search` only, the suggestions also list the guides (each guide title and each section heading of a guide or program page, from `/api/suggestions`'s `guides`) and start with «ابحث عن "…" في كل واضح», which runs the full site search (2026-11-27).
   - Result links carry `from=<search>`, and the university page links back to the same results (only known parameters and values).
   - The rank is explained as the position in the list, not a world ranking.
   - The university's own next deadline is labelled as such.
