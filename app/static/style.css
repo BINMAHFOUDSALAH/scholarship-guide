@@ -5341,12 +5341,6 @@ a.uni-name:hover .uni-name-en:only-child {
   line-height: 1.7;
 }
 
-/* The hedge stays (the page gives no year) but quietly, under its date, not as a box on every row. */
-.preview-date-hedge {
-  display: block;
-  color: var(--ink-muted);
-}
-
 .preview-try {
   margin: var(--space-4) 0 0;
 }
