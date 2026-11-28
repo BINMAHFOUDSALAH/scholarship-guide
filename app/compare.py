@@ -184,21 +184,12 @@ def rankings(explorer, unis):
     """ترتيب الجامعة حسب المجال (owner, 2026-11-27): for every track, one row per field any of these universities is
     listed in, one column per university, from the same records as each university's page.
 
-    A listed university shows its exact rank in the Ministry's guide, out of how many the list has, the guide's page,
-    and any limit (master's only, named bachelor's majors). A university the guide doesn't list in that field is a
+    A listed university shows its exact rank in the Ministry's guide and any limit (master's only, named bachelor's
+    majors); the guide is named once above the section, and each rank's page is its link under «عرض المصادر». A university the guide doesn't list in that field is a
     confirmed absence («غير مدرجة في هذا المجال»): the guide is the whole list. A listing without a rank or page is a gap
     in our data («الترتيب غير متوفر»), never a guess. A track none of them is in still has its row, so the section is
     there for every combination.
     """
-    # «من 69»: how long the list is, said only where its numbers run 1 to N without a gap. The guide's own doctorate
-    # ICT list jumps from 90 (page 22) to 100 (page 23), so there the rank stands alone.
-    ranks = {}
-    for u in explorer.universities.values():
-        for l in u["listings"]:
-            if l.get("rank"):
-                ranks.setdefault((l["track"], l["field"]), set()).add(l["rank"])
-    totals = {key: max(r) for key, r in ranks.items() if r == set(range(1, max(r) + 1))}
-
     def cell(track, fid, u):
         found = [l for l in u["listings"] if l["track"] == track and l["field"] == fid]
         if not found:
@@ -211,12 +202,7 @@ def rankings(explorer, unis):
         l = found[0]
         if not l.get("rank") or not l.get("pdf_page"):
             return _cell(tr(RANK_UNKNOWN_AR), None, [], "unknown")
-        total = totals.get((track, fid))
-        if total:
-            note = tf("من {total}، ص {page} في دليل الوزارة", total=total, page=l["pdf_page"])
-        else:
-            note = tf("ص {page} في دليل الوزارة", page=l["pdf_page"])
-        c = _cell(str(l["rank"]), note, [_guide_src(explorer, l["pdf_page"])], tags=_listing_tags(l))
+        c = _cell(str(l["rank"]), None, [_guide_src(explorer, l["pdf_page"])], tags=_listing_tags(l))
         c["rank"] = l["rank"]
         return c
 

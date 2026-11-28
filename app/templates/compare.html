@@ -14,7 +14,6 @@
 <div class="compare-page page-wide" data-compare-page data-compare-ids="{{ uids | join(',') }}">
   <header class="compare-header">
     <h1 class="page-display-title">{{ _("قارن الجامعات") }}</h1>
-    {% if c %}<p class="lead">{{ _("الصف نفسه لكل جامعة، فترى الفرق بنظرة.") }}</p>{% endif %}
   </header>
 
   {#- Choosing universities here (2026-11-27): «قارن الجامعات» on the homepage lands on this page. A university picked
@@ -55,11 +54,9 @@
   <div class="compare-tools">
     <input class="compare-switch-input compare-diff-input" type="checkbox" id="compare-diff" data-compare-diff>
     <label class="compare-switch compare-diff" for="compare-diff">{{ _("الفروق فقط") }}</label>
-    <input class="compare-switch-input compare-sources-input" type="checkbox" id="compare-sources" data-compare-sources aria-describedby="compare-sources-hint">
+    <input class="compare-switch-input compare-sources-input" type="checkbox" id="compare-sources" data-compare-sources>
     <label class="compare-switch compare-sources" for="compare-sources">{{ _("عرض المصادر") }}</label>
-    <a class="compare-share" href="{{ url_for('compare_page') }}?u={{ uids | join(',') }}" data-compare-share>{{ _("رابط هذه المقارنة") }}</a>
   </div>
-  <p class="compare-sources-hint" id="compare-sources-hint">{{ _("كل قيمة من مصدر رسمي. اعرض المصادر لترى رابط كل قيمة بجانبها.") }}</p>
 
   {#- The universities' names, kept in view while the student scrolls a long table on a phone (compare.js shows it
       once the table's own header has scrolled away). Only for the eye: the table's headers name every value for a
@@ -113,7 +110,8 @@
       {% for g in c.groups %}
       <tbody class="compare-group compare-group--{{ g.id }}" role="rowgroup">
         <tr class="compare-group-row" role="row">
-          <th colspan="{{ uids | length + 1 }}" id="cg-{{ g.id }}" class="compare-group-title" scope="colgroup" role="columnheader"><span class="compare-group-name">{% if g.gate %}<span class="gate-num" aria-hidden="true">{{ g.gate }}</span>{% endif %}{{ _(g.title_ar) }}</span></th>
+          <th colspan="{{ uids | length + 1 }}" id="cg-{{ g.id }}" class="compare-group-title" scope="colgroup" role="columnheader"><span class="compare-group-name">{% if g.gate %}<span class="gate-num" aria-hidden="true">{{ g.gate }}</span>{% endif %}{{ _(g.title_ar) }}</span>
+            {%- if g.id == "lists" %}<span class="compare-group-note">{{ _("الترتيب من") }} <a href="{{ explorer.source.url }}" target="_blank" rel="noopener">{{ _("الدليل الاسترشادي لقوائم الجامعات 2026–2027") }}<span class="sr-only"> {{ _("(يفتح في نافذة جديدة)") }}</span></a> {{ _("(وزارة التعليم)") }}</span>{% endif %}</th>
         </tr>
         {% set ns = namespace(track="") %}
         {% for r in g.rows %}

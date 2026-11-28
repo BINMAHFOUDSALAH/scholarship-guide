@@ -680,7 +680,6 @@
  "جدول المقارنة": "Comparison table",
  "جرّب اسم التخصص كما يكتبه الدليل، مثل «هندسة البرمجيات»، أو ابحث في الأدلة.": "Try the major's name as the guide writes it, such as “Software Engineering”, or search the guides.",
  "دليل الوزارة لا يذكر مجالًا للصحة في إمداد، ومسار الرواد يقبل كل التخصصات في جامعاته الثلاثين.": "The Ministry's guide has no health field in Emdad, and the Arruaad track accepts every major at its thirty universities.",
- "رابط هذه المقارنة": "Link to this comparison",
  "ستجد مواعيدها مرتبة، وتضيفها إلى تقويمك.": "You'll find their dates in order, and can add them to your calendar.",
  "سنتك القادمة سنة التقديم": "Next year is your application year",
  "ضيّق الإجابة بدولة": "Narrow the answer by country",
@@ -733,9 +732,7 @@
  "في {countries} في قوائم الابتعاث": "in {countries} in the scholarship lists",
  "اكتب تخصصك أو اختر دولة: ترى الجامعات التي تناسبك، ولماذا تظهر كل جامعة، وما تطلبه للقبول.": "Type your major or choose a country: you'll see the universities that fit, why each one appears, and what it asks for admission.",
  "الجامعات حسب الدولة": "Universities by country",
- "الصف نفسه لكل جامعة، فترى الفرق بنظرة.": "The same row for every university, so you see the difference at a glance.",
  "عرض المصادر": "Show sources",
- "كل قيمة من مصدر رسمي. اعرض المصادر لترى رابط كل قيمة بجانبها.": "Every value comes from an official source. Show sources to see each value's link beside it.",
  "المصدر لكل الجامعات:": "Source for every university:",
  "(يفتح في نافذة جديدة)": "(opens in a new tab)",
  "مصدر «{fact}» لـ{name}: {site} (يفتح في نافذة جديدة)": "Source for “{fact}”, {name}: {site} (opens in a new tab)",
@@ -788,11 +785,12 @@
  "غير مدرجة في هذا المسار": "Not listed in this track",
  "الترتيب غير متوفر": "Rank not available",
  "دليل الوزارة، ص {page}": "Ministry guide, p. {page}",
- "من {total}، ص {page} في دليل الوزارة": "of {total}, p. {page} of the Ministry guide",
- "ص {page} في دليل الوزارة": "p. {page} of the Ministry guide",
  "كل التخصصات، للبكالوريوس والماجستير": "all majors, bachelor's and master's",
  "الترتيب في قائمة الرواد": "Rank in the Arruaad list",
  "في قوائم هذا المسار": "In this track's lists",
  "من {top}": "out of {top}",
- "لدورة {cycle}": "for {cycle}"
+ "لدورة {cycle}": "for {cycle}",
+ "الترتيب من": "Ranks from",
+ "الدليل الاسترشادي لقوائم الجامعات 2026–2027": "the Ministry's 2026–2027 guide to the university lists",
+ "(وزارة التعليم)": "(Ministry of Education)"
 }
