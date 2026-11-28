@@ -122,7 +122,7 @@ const rowsAfter = await page.locator(".compare-row:visible").count();
 ok(rowsAfter < rowsBefore && rowsAfter > 0, `«الفروق فقط» hides the rows that agree (${rowsBefore} → ${rowsAfter})`);
 
 // 4. Save, then «خطتي».
-await page.locator(".compare-name button[data-save]").first().click();
+await page.locator(".compare-name-actions button[data-save]").first().click();
 await page.goto(base + P + "/my-plan", { waitUntil: "networkidle" });
 await page.waitForSelector("[data-mylist-item]");
 ok(await page.locator(".plan-next").isVisible(), "«خطتي» opens on the next step");

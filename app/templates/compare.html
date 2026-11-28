@@ -8,7 +8,7 @@
 {#
   «قارن» (redesign v3; app/compare.py). Drawn from the address (/compare?u=a,b,c), so it can be sent to a counsellor.
   A real table: the names are its column headers, and each value names its row label and university (headers="…"), so a
-  screen reader reads "IELTS, Imperial: 6.5". Each label sits above its values, like Apple's comparison on a phone.
+  screen reader reads "IELTS, Imperial: 6.5". On a desktop each label sits beside its values; on a phone above them.
 #}
 {% block content %}
 <div class="compare-page page-wide" data-compare-page data-compare-ids="{{ uids | join(',') }}">
@@ -68,58 +68,83 @@
   <div class="compare-stick" aria-hidden="true">
     <div class="compare-stick-bar" data-compare-stick hidden>
       <div class="compare-stick-row" style="--n: {{ uids | length }}" data-compare-stick-row>
+        <span class="compare-stick-corner"></span>
         {% for u in c.universities %}<span class="compare-stick-name">{% if u.name_ar and not is_en() %}{{ u.name_ar }}{% else %}<bdi lang="en">{{ u.name_en }}</bdi>{% endif %}</span>{% endfor %}
       </div>
     </div>
   </div>
 
   <div class="compare-scroll" tabindex="0" role="region" aria-label="{{ _('جدول المقارنة') }}" data-compare-scroll>
-    <table class="compare-table" style="--n: {{ uids | length }}">
+    {#- A real table (explicit roles too, because phones lay its rows out as grids, and some browsers then forget it is
+        a table). On a desktop each row's label is its first cell, beside the values; on a phone the label spans the
+        row above its values, so two universities keep their columns side by side. #}
+    <table class="compare-table" style="--n: {{ uids | length }}" role="table">
       <caption class="sr-only">{{ _("مقارنة الجامعات") }}</caption>
-      <thead data-compare-head>
-        <tr class="compare-names">
+      <thead data-compare-head role="rowgroup">
+        {#- Logo, names, then the actions in a row of their own, so every university's buttons sit on one line however
+            long its name is. A university without a logo file (or one that fails to load) shows its initials. #}
+        <tr class="compare-names" role="row">
+          <td class="compare-corner" role="cell"></td>
           {% for u in c.universities %}
-          <th scope="col" class="compare-name" id="col-{{ u.id }}">
+          <th scope="col" class="compare-name" id="col-{{ u.id }}" role="columnheader">
             {% set logo = explorer.logos.get(u.id) %}
-            {% if logo %}<span class="acard-logo compare-logo"><img src="{{ url_for('static', path=logo.file) }}" alt="" width="{{ logo.width }}" height="{{ logo.height }}" loading="lazy"></span>{% endif %}
-            {{ um.uni_name(u) }}
-            <span class="compare-name-actions">
-              {{ um.save_button(u) }}
-              {% set rest = uids | reject("equalto", u.id) | list %}
-              <a class="compare-remove" href="{{ url_for('compare_page') }}{% if rest %}?u={{ rest | join(',') }}{% endif %}" aria-label="{{ _f('أزل {name} من المقارنة', name=u.name_ar or u.name_en) }}">{{ _("أزل") }}</a>
+            <span class="compare-logo{% if not logo %} is-missing{% endif %}" data-compare-logo>
+              {% if logo %}<img src="{{ url_for('static', path=logo.file) }}" alt="" width="{{ logo.width }}" height="{{ logo.height }}" loading="lazy" decoding="async">{% endif %}
+              <span class="compare-logo-mark" aria-hidden="true" lang="en">{{ c.marks[loop.index0] }}</span>
             </span>
+            {{ um.uni_name(u) }}
           </th>
           {% endfor %}
         </tr>
-      </thead>
-      {#- Each row's label is its own row above the values (on every width, so a phone keeps two universities side by
-          side); each value names its label and its university through headers="…". A source every university shares
-          sits once beside the label; any other source sits under its own value, named by its site. #}
-      {% for g in c.groups %}
-      <tbody class="compare-group">
-        <tr class="compare-group-row">
-          <th colspan="{{ uids | length }}" id="cg-{{ g.id }}" class="compare-group-title"><span class="compare-group-name">{% if g.gate %}<span class="gate-num" aria-hidden="true">{{ g.gate }}</span>{% endif %}{{ _(g.title_ar) }}</span></th>
+        <tr class="compare-actions" role="row">
+          <td class="compare-corner" role="cell"></td>
+          {% for u in c.universities %}
+          <td role="cell"><span class="compare-name-actions">
+            {{ um.save_button(u) }}
+            {% set rest = uids | reject("equalto", u.id) | list %}
+            <a class="compare-remove" href="{{ url_for('compare_page') }}{% if rest %}?u={{ rest | join(',') }}{% endif %}" aria-label="{{ _f('أزل {name} من المقارنة', name=u.name_ar or u.name_en) }}">{{ _("أزل") }}</a>
+          </span></td>
+          {% endfor %}
         </tr>
+      </thead>
+      {#- Each value names its group, its row and its university through headers="…", so a screen reader says
+          "IELTS, Imperial: 6.5". A source every university shares sits once with the label; any other source sits
+          under its own value, named by where it is. #}
+      {% for g in c.groups %}
+      <tbody class="compare-group compare-group--{{ g.id }}" role="rowgroup">
+        <tr class="compare-group-row" role="row">
+          <th colspan="{{ uids | length + 1 }}" id="cg-{{ g.id }}" class="compare-group-title" scope="colgroup" role="columnheader"><span class="compare-group-name">{% if g.gate %}<span class="gate-num" aria-hidden="true">{{ g.gate }}</span>{% endif %}{{ _(g.title_ar) }}</span></th>
+        </tr>
+        {% set ns = namespace(track="") %}
         {% for r in g.rows %}
         {% set rid = "r-" ~ g.id ~ "-" ~ loop.index %}
-        <tr class="compare-label-row"{% if r.same %} data-same{% endif %}>
-          {% set label = r.label_ar if r.label_ar in ("IELTS", "TOEFL iBT", "Duolingo", "SAT/ACT") else _(r.label_ar) %}
-          <th colspan="{{ uids | length }}" id="{{ rid }}" class="compare-label">
-            <span class="compare-label-text">{% if r.label_ar in ("IELTS", "TOEFL iBT", "Duolingo", "SAT/ACT") %}<bdi lang="en">{{ label }}</bdi>{% else %}{{ label }}{% endif %}</span>
+        {% if r.track %}
+        {% set tid = "t-" ~ r.track.id %}{% set ns.track = tid %}
+        <tr class="compare-track-row" role="row"{% if r.track.same %} data-same{% endif %}>
+          <th colspan="{{ uids | length + 1 }}" id="{{ tid }}" class="compare-track" scope="colgroup" role="columnheader"><span class="compare-track-name">{{ _(r.track.title_ar) }}{% if r.track.sub_ar %} <span class="compare-track-sub">{{ _(r.track.sub_ar) }}</span>{% endif %}</span></th>
+        </tr>
+        {% endif %}
+        {% set english_label = r.label_ar in ("IELTS", "TOEFL iBT", "Duolingo", "SAT/ACT") %}
+        {% set label = r.label_ar if english_label else _(r.label_ar) %}
+        <tr class="compare-row{% if r.field %} field-tone tone-{{ r.field }}{% endif %}" role="row"{% if r.same %} data-same{% endif %}>
+          <th scope="row" id="{{ rid }}" class="compare-label" role="rowheader">
+            <span class="compare-label-text">{% if r.field %}<span class="tone-dot" aria-hidden="true"></span>{% endif %}{% if english_label %}<bdi lang="en">{{ label }}</bdi>{% else %}{{ label }}{% endif %}</span>
             {%- if r.source %} <a class="compare-src compare-src--row" href="{{ r.source.url }}" target="_blank" rel="noopener"><span class="compare-src-label">{{ _("المصدر لكل الجامعات:") }}</span> <span class="compare-src-name">{% if "." in r.source.label %}<bdi lang="en">{{ r.source.label }}</bdi>{% else %}{{ r.source.label }}{% endif %}</span><span class="sr-only"> {{ _("(يفتح في نافذة جديدة)") }}</span></a>{% endif %}
           </th>
-        </tr>
-        <tr class="compare-row"{% if r.same %} data-same{% endif %}>
           {% for cell in r.cells %}
           {% set u = c.universities[loop.index0] %}
-          <td class="compare-cell{% if cell.state %} compare-cell--{{ cell.state }}{% endif %}{% if cell.plain %} compare-cell--plain{% endif %}" headers="cg-{{ g.id }} {{ rid }} col-{{ u.id }}">
+          <td class="compare-cell{% if cell.state %} compare-cell--{{ cell.state }}{% endif %}{% if cell.plain %} compare-cell--plain{% endif %}{% if cell.rank %} compare-cell--rank{% endif %}" role="cell" headers="cg-{{ g.id }}{% if ns.track %} {{ ns.track }}{% endif %} {{ rid }} col-{{ u.id }}">
             <span class="compare-value">
             {%- if cell.deadline %}<time datetime="{{ cell.deadline.date }}">{{ cell.deadline.date | arabic_date }}</time>
             {%- else %}{{ cell.value }}{% endif -%}
+            {%- if cell.scale %} <span class="compare-scale">{{ cell.scale }}</span>{% endif -%}
             </span>
-            {%- if cell.deadline and cell.deadline.state == "upcoming" and cell.deadline.round_ar %}<span class="compare-qual"><bdi>{{ cell.deadline.round_ar }}</bdi></span>
-            {%- elif cell.deadline and cell.deadline.state == "passed" %}<span class="compare-qual">{{ _f("انتهى موعد {cycle}", cycle=cell.deadline.cycle_ar) }}</span>
+            {%- if cell.deadline %}<span class="compare-qual compare-deadline-label">
+              {%- if cell.deadline.state == "passed" %}{{ _f("انتهى موعد {cycle}", cycle=cell.deadline.cycle_ar) }}{% if cell.deadline.round_ar %} (<bdi>{{ cell.deadline.round_ar }}</bdi>){% endif %}
+              {%- else %}{% if cell.deadline.round_ar %}<bdi>{{ cell.deadline.round_ar }}</bdi>{{ _("، ") }}{% endif %}{{ _f("لدورة {cycle}", cycle=cell.deadline.cycle_ar) }}{% endif -%}
+            </span>{% if cell.deadline.note_ar %}<span class="compare-qual">{{ cell.deadline.note_ar }}</span>{% endif %}
             {%- elif cell.note %}<span class="compare-qual">{{ cell.note }}</span>{% endif %}
+            {%- if cell.tags %}<span class="compare-tags">{% for tag in cell.tags %}<span class="tag tag--warn">{{ tag }}</span>{% endfor %}</span>{% endif %}
             {%- if cell.sources and not r.source %}
             <span class="compare-src-list">
               {%- for s in cell.sources %}

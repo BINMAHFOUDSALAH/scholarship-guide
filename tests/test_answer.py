@@ -190,6 +190,7 @@ def test_the_comparison_keeps_the_two_gates_and_every_source():
     assert html.count('scope="col"') == 3 and "data-same" in html and "compare-diff-input" in html
     # Each value names its row and its university for screen readers.
     assert re.search(r'headers="cg-admission r-admission-\d+ col-imperial-college-london"', html)
+    assert re.search(r'headers="cg-lists t-emdad r-lists-\d+ col-imperial-college-london"', html)
     assert 'name="robots" content="noindex"' in html
 
 
@@ -287,14 +288,107 @@ def test_the_comparison_leads_with_the_figure_and_keeps_its_conditions():
     assert sat["value"] == "لا ينطبق" and sat["state"] == "none"
 
 
-def test_a_rank_says_what_it_measures_and_one_ministry_document_is_cited_once():
+def ranks_of(c, track):
+    """The rankings rows of one track, from its heading row to the next track's."""
+    rows = next(g for g in c["groups"] if g["id"] == "lists")["rows"]
+    start = next(i for i, r in enumerate(rows) if (r.get("track") or {}).get("id") == track)
+    end = next((i for i, r in enumerate(rows) if i > start and r.get("track")), len(rows))
+    return rows[start:end]
+
+
+def test_rankings_show_the_exact_rank_its_page_and_the_list_length():
+    """ترتيب الجامعة حسب المجال (owner, 2026-11-27): the rank from the Ministry's guide, its page linked, and «من 30»."""
     c = compare.build(["university-of-oxford", "harvard-university"], ex, answer, "2026-11-27")
-    row, ox = cell_of(c, "المرتبة في قائمة الرواد", "university-of-oxford")
-    assert ox["value"] == "6" and cell_of(c, "المرتبة في قائمة الرواد", "harvard-university")[1]["value"] == "1"
-    assert row["source"] == {"url": ex.source["url"], "label": "دليل الوزارة لقوائم الجامعات"}
-    html = client.get("/compare?u=university-of-oxford,harvard-university").text
-    label_row = html.split("المرتبة في قائمة الرواد")[1].split("</tr>")[0]
-    assert ex.source["url"] in label_row and "compare-src--row" in label_row
+    group = next(g for g in c["groups"] if g["id"] == "lists")
+    assert group["title_ar"] == "ترتيب الجامعة حسب المجال" and group["gate"] == 1
+    row, ox = cell_of(c, "الترتيب في قائمة الرواد", "university-of-oxford")
+    assert ox["value"] == "6" and cell_of(c, "الترتيب في قائمة الرواد", "harvard-university")[1]["value"] == "1"
+    assert ox["note"] == "من 30، ص 5 في دليل الوزارة"
+    assert ox["sources"] == [{"url": ex.source["url"] + "#page=5", "what": None, "site": "دليل الوزارة، ص 5"}]
+    # Every track has its heading, in the order a high-school student needs them.
+    assert [r["track"]["id"] for r in group["rows"] if r.get("track")] == ["arruaad", "emdad", "rnd"]
+
+
+def test_rankings_have_a_row_for_every_field_any_university_is_listed_in():
+    uids = ["university-of-minnesota-twin-cities", "pennsylvania-state-university", "imperial-college-london"]
+    c = compare.build(uids, ex, answer, "2026-11-27")
+    emdad = ranks_of(c, "emdad")
+    listed = {l["field"] for uid in uids for l in ex.universities[uid]["listings"] if l["track"] == "emdad"}
+    assert {r["field"] for r in emdad} == listed
+    for r in emdad:
+        for uid, cell in zip(uids, r["cells"]):
+            own = [l for l in ex.universities[uid]["listings"] if l["track"] == "emdad" and l["field"] == r["field"]]
+            if own:
+                assert cell["value"] == str(own[0]["rank"]) and f"ص {own[0]['pdf_page']}" in cell["note"]
+                assert cell["sources"][0]["url"].endswith(f"#page={own[0]['pdf_page']}")
+            else:  # the guide is the whole list: not there is a confirmed absence, with the list's pages
+                assert cell["value"] == "غير مدرجة في هذا المجال" and cell["state"] == "none"
+                assert cell["sources"][0]["url"].startswith(ex.source["url"] + "#page=")
+
+
+def test_rankings_keep_degree_limits_and_a_list_with_a_gap_has_no_length():
+    c = compare.build(["complutense-university-of-madrid", "digipen-institute-of-technology"], ex, answer, "2026-11-27")
+    arts = next(r for r in ranks_of(c, "emdad") if r["field"] == "arts-humanities")
+    assert arts["cells"][0]["tags"] == ["ماجستير فقط"] and arts["cells"][1]["tags"] == ["بكالوريوس في تخصصات محددة"]
+    # The guide's doctorate ICT list itself jumps from 90 to 100: no «من 164» there.
+    uid = next(u for u, x in ex.universities.items()
+               if any(l["track"] == "rnd" and l["field"] == "ict" for l in x["listings"]))
+    c = compare.build([uid, "university-of-oxford"], ex, answer, "2026-11-27")
+    ict = next(r for r in ranks_of(c, "rnd") if r["field"] == "ict")
+    listed = next(cell for cell in ict["cells"] if cell.get("rank"))
+    assert not listed["note"].startswith("من ")
+
+
+def test_rankings_are_there_for_any_combination_even_with_no_rank():
+    """Always drawn, for universities added later too: a track none of them is in still has its row, and a
+    listing without a rank says so instead of guessing."""
+    import random
+    ids = sorted(ex.universities)
+    rng = random.Random(7)
+    for _ in range(40):
+        uids = rng.sample(ids, rng.randint(2, 4))
+        c = compare.build(uids, ex, answer, "2026-11-27")
+        rows = next(g for g in c["groups"] if g["id"] == "lists")["rows"]
+        assert [r["track"]["id"] for r in rows if r.get("track")] == ["arruaad", "emdad", "rnd"]
+        assert all(len(r["cells"]) == len(uids) for r in rows)
+        for uid in uids:
+            for l in ex.universities[uid]["listings"]:
+                label = "الترتيب في قائمة الرواد" if l["track"] == "arruaad" else ex.fields[(l["track"], l["field"])]["name_ar"]
+                r = next(r for r in ranks_of(c, l["track"]) if r["label_ar"] == label)
+                assert r["cells"][uids.index(uid)]["value"] == str(l["rank"])
+    # Two universities with no doctorate listing: the track is there, saying so.
+    pair = ["adelaide-university", "digipen-institute-of-technology"]
+    c = compare.build(pair, ex, answer, "2026-11-27")
+    if not any(l["track"] == "rnd" for u in pair for l in ex.universities[u]["listings"]):
+        assert [x["value"] for x in ranks_of(c, "rnd")[0]["cells"]] == ["غير مدرجة في هذا المسار"] * 2
+    # A listing whose rank we don't have is a gap, never «غير مدرجة».
+    u = ex.universities["adelaide-university"]
+    saved = u["listings"]
+    u["listings"] = [{**saved[0], "rank": None}] + saved[1:]
+    try:
+        c = compare.build(pair, ex, answer, "2026-11-27")
+        cell = next(r for r in ranks_of(c, "emdad") if r["field"] == saved[0]["field"])["cells"][0]
+        assert cell["value"] == "الترتيب غير متوفر" and cell["state"] == "unknown"
+    finally:
+        u["listings"] = saved
+
+
+def test_the_comparison_table_puts_labels_beside_values_and_aligns_the_names():
+    uids = ["university-of-minnesota-twin-cities", "pennsylvania-state-university"]
+    html = client.get("/compare?u=" + ",".join(uids)).text
+    table = html.split('<table class="compare-table"')[1].split("</table>")[0]
+    # Every value row starts with its label (a row header), so a desktop shows them side by side.
+    rows = re.findall(r'<tr class="compare-row[^"]*" role="row"[^>]*>\s*<th scope="row"', table)
+    assert len(rows) == table.count('<tr class="compare-row')
+    assert "ترتيب الجامعة حسب المجال" in table and "غير مدرجة في هذا المجال" in table
+    # The buttons are a row of their own; a university without a logo file shows its initials in the same tile.
+    assert 'class="compare-actions"' in table
+    assert ("university-of-minnesota-twin-cities" in ex.logos) or "compare-logo is-missing" in table
+    assert compare.initials("University of Minnesota Twin Cities") == "MT"
+    assert compare.initials("Massachusetts Institute of Technology (MIT)") == "MIT"
+    # English test figures say what they're out of, so TOEFL's 1–6 never reads as a low score out of 120.
+    assert compare.scale_of("toefl_ibt", 4.5) == "من 6" and compare.scale_of("toefl_ibt", 90) == "من 120"
+    assert compare.scale_of("ielts", 6.5) == "من 9" and compare.scale_of("duolingo", 120) == "من 160"
 
 
 def test_each_university_keeps_its_own_source():
@@ -383,8 +477,8 @@ def test_no_decorative_diamonds_are_left():
     js = (main.APP_DIR / "static" / "mylist.js").read_text(encoding="utf-8")
     assert "rotate(45deg)" not in css and "rotate(45deg)" not in js
     assert 'class="diamond"' not in client.get("/").text
-    # The logo keeps its own drawing (its lime dot included): tests/test_pages.py checks it against favicon.svg.
-    assert 'class="brand-mark"' in client.get("/").text
+    # The logo is the folded ticket (tests/test_pages.py checks it).
+    assert 'class="brand-logo"' in client.get("/").text
 
 
 def test_english_suggestions_know_georgia_tech_and_kaust_by_short_names():

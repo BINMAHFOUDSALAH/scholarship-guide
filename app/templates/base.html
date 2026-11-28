@@ -20,11 +20,13 @@
   <meta property="og:title" content="{{ self.title() }}">
   <meta property="og:description" content="{{ self.description() }}">
   <meta property="og:url" content="{{ site.base_url }}{{ links.en_path if is_en() else links.ar_path }}">
-  <meta property="og:image" content="{{ site.base_url }}/static/img/{% block og_image %}og-image.png{% endblock %}">
+  <meta property="og:image" content="{{ site.base_url }}/static/img/{% block og_image %}share-wadih.png{% endblock %}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="{% block og_image_alt %}{{ site.name }}: {{ site.tagline }}{% endblock %}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ site.base_url }}/static/img/{{ self.og_image() }}">
+  <meta name="twitter:image:alt" content="{{ self.og_image_alt() }}">
 
   <meta name="theme-color" content="#F8F1E4">
   <script>
@@ -39,7 +41,7 @@
       }
     } catch (e) {}
   </script>
-  <link rel="icon" href="{{ url_for('static', path='favicon.svg') }}" type="image/svg+xml">
+  <link rel="icon" href="{{ url_for('static', path='favicon.svg') }}?v={{ asset_version('favicon.svg') }}" type="image/svg+xml">
   {% if is_en() %}<link rel="preload" href="{{ url_for('static', path='fonts/readex-pro-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
   <script>window.WADIH_I18N = {{ js_strings() | tojson }};</script>{% else %}<link rel="preload" href="{{ url_for('static', path='fonts/readex-pro-arabic.woff2') }}" as="font" type="font/woff2" crossorigin>{% endif %}
   <link rel="stylesheet" href="{{ url_for('static', path='fonts.css') }}?v={{ asset_version('fonts.css') }}">
@@ -80,10 +82,10 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="{{ url_for('home') }}" aria-label="{{ site.name }}: {{ _('الصفحة الرئيسية') }}">
-        {# The mark (decision 036): ض with its dot as a lime diamond, "your next step". Same drawing as favicon.svg. #}
-        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#184b3a"/><g transform="translate(9 9) scale(0.72)"><path d="M13.48 57.77Q8.38 57.77 5.69 54.76Q3 51.75 3 46.03Q3 45.05 3.14 43.82Q3.29 42.59 3.63 41.05Q3.97 39.5 4.43 37.73L6.95 38.36Q6.15 41.05 6.15 42.94Q6.15 47 7.98 49Q9.81 51.01 13.65 51.01Q16.68 51.01 19.06 50.49Q21.44 49.98 23.5 48.86Q25.56 47.75 27.56 45.91Q25.56 42.13 24.13 39.41Q22.7 36.69 22.7 35.09Q22.7 32.92 24.1 31.11Q25.5 29.31 28.48 27.88Q28.48 27.93 28.79 29.94Q29.11 31.94 29.68 35.09L31.23 35.61Q36.95 27.99 41.5 24.21Q46.06 20.43 49.38 20.43Q50.81 20.43 52.5 21.24Q54.19 22.04 55.88 23.35Q57.56 24.67 58.94 26.33Q61 28.74 61 30.4Q61 34.12 58.6 37.04Q56.19 39.96 51.44 41.62Q46.63 43.34 41.53 43.34Q38.9 43.34 36.21 42.99Q33.52 42.65 30.65 42.02Q30.65 42.42 30.68 42.85Q30.71 43.28 30.71 43.74Q30.71 47.57 28.42 50.84Q26.13 54.1 22.18 55.93Q20.23 56.85 18.03 57.31Q15.83 57.77 13.48 57.77ZM42.11 37.04Q46.23 37.04 49.84 36.07Q53.44 35.09 57.62 33.09Q55.1 30.11 52.67 28.65Q50.24 27.19 48 27.19Q46 27.19 43.68 28.59Q41.36 30 39.13 32.11Q36.9 34.23 34.95 36.47Q37.07 36.69 38.87 36.87Q40.67 37.04 42.11 37.04Z" fill="#f6f4ee"/><path d="M41.65 6.23 L47.37 11.96 L41.65 17.69 L35.92 11.96 Z" fill="#d8ed9b"/></g></svg>
+        {#- The logo (owner, 2026-11-27): the folded ticket with واضح written on it and a graduation tassel. The ticket
+            already says the name, so no text name sits beside it; the link's label names the site for screen readers. #}
+        <img class="brand-logo" src="{{ url_for('static', path='img/brand/wadih-logo.svg') }}?v={{ asset_version('img/brand/wadih-logo.svg') }}" alt="" width="448" height="245">
         <span class="brand-text">
-          <span class="brand-name">{{ site.name }}</span>
           <span class="brand-descriptor">{{ site.descriptor }}</span>
         </span>
       </a>
@@ -162,7 +164,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-about">
-        <p class="footer-brand">{{ site.name }}</p>
+        <p class="footer-brand"><img class="footer-logo" src="{{ url_for('static', path='img/brand/wadih-logo.svg') }}?v={{ asset_version('img/brand/wadih-logo.svg') }}" alt="{{ site.name }}" width="448" height="245" loading="lazy"></p>
         {# Independence on every page, because pages show official logos and data (decision 035). #}
         <p class="footer-promise">{{ site.name }} {{ _("دليل طلابي مستقل ومجاني.") }} <a href="{{ url_for('about') }}">{{ _("عن الدليل") }}</a></p>
         {% if is_en() %}<p class="footer-promise">{{ _("هذه الصفحة بالإنجليزية ترجمتنا، والمصدر الرسمي هو المرجع.") }}</p>{% endif %}

@@ -15,15 +15,36 @@ named by the site it comes from, so a source never drifts to the wrong universit
 from urllib.parse import urlsplit
 
 from app.i18n import tf, tr
-from app.universities import (ENGLISH_TESTS, FIELDS_AR, SAT_COUNTRIES, SAT_POLICY_AR, SAT_UNVERIFIED_AR, WAIVER_AR,
-                              count_ar, no_score_ar, score_text)
+from app.universities import (ENGLISH_TESTS, SAT_COUNTRIES, SAT_POLICY_AR, SAT_UNVERIFIED_AR, TRACKS, WAIVER_AR,
+                              no_score_ar, score_text, toefl_scale)
 
 MAX = 4
 UNKNOWN_AR = "لم نتحقق منه"
 NO_MIN_AR = "لا يوجد حد أدنى منشور"
-NOT_ON_LIST_AR = "ليست في القائمة"
+# The rankings (owner, 2026-11-27): a confirmed absence is a fact read in the guide; a missing rank is a gap in our data.
+NOT_IN_FIELD_AR = "غير مدرجة في هذا المجال"
+NOT_IN_TRACK_AR = "غير مدرجة في هذا المسار"
+RANK_UNKNOWN_AR = "الترتيب غير متوفر"
 # The Ministry's guide, named as a student would look for it (its full title is long and says the year twice).
 GUIDE_LABEL_AR = "دليل الوزارة لقوائم الجامعات"
+
+
+# Words that don't tell universities apart, left out of the initials shown when a logo is missing.
+_GENERIC = {"university", "universitat", "universität", "universite", "université", "universidad", "universita",
+            "università", "universiteit", "college", "institute", "institut", "school", "of", "the", "and", "at", "de",
+            "du", "des", "la", "le", "di", "der", "zu", "in", "for", "&", "-", "–"}
+
+
+def initials(name_en):
+    """Two letters for a university with no logo file: «University of Minnesota Twin Cities» → «MT». A short name in
+    parentheses is the university's own («... (MIT)» → «MIT»)."""
+    if "(" in name_en and name_en.rstrip().endswith(")"):
+        inner = name_en.rsplit("(", 1)[1].rstrip(") ").strip()
+        if inner.isupper() and 2 <= len(inner) <= 5:
+            return inner
+    words = [w for w in name_en.replace("–", " ").replace("-", " ").split() if w.lower() not in _GENERIC]
+    letters = "".join(w[0] for w in words if w[0].isalpha())[:2].upper()
+    return letters or name_en[:1].upper()
 
 
 def ids_from(raw, explorer):
@@ -58,7 +79,7 @@ def site_of(url):
     return ".".join(parts[-keep:])
 
 
-def _cell(value, note=None, sources=(), state=None, plain=False):
+def _cell(value, note=None, sources=(), state=None, plain=False, scale=None, tags=()):
     """One university's answer to a row.
 
     value: what answers the row, set strongest. note: what qualifies it, beside or under it.
@@ -66,13 +87,15 @@ def _cell(value, note=None, sources=(), state=None, plain=False):
     state: the kind of answer when it is not a fact we read: "unknown" (we haven't checked), "nomin" (the university
     publishes no minimum: a fact), "none" (doesn't apply, or not on the list), "no" (a limit), "passed".
     plain: a sentence rather than a figure (essays), so it reads at body weight.
+    scale: what the figure is out of («من 9»), set small beside it. tags: limits that come with it («ماجستير فقط»).
     """
-    return {"value": value, "note": note, "state": state, "plain": plain,
-            "sources": [{"url": s["url"], "what": s.get("what"), "site": site_of(s["url"])} for s in sources if s.get("url")]}
+    return {"value": value, "note": note, "state": state, "plain": plain, "scale": scale, "tags": list(tags),
+            "sources": [{"url": s["url"], "what": s.get("what"), "site": s.get("site") or site_of(s["url"])}
+                        for s in sources if s.get("url")]}
 
 
-def _src(url, what=None):
-    return {"url": url, "what": what}
+def _src(url, what=None, site=None):
+    return {"url": url, "what": what, "site": site}
 
 
 def _split(text, limit=40):
@@ -92,9 +115,24 @@ def _split(text, limit=40):
     return text[:i], rest or None
 
 
+def scale_of(test, value):
+    """What a test's figure is out of, so «4.5» on TOEFL's 1–6 scale never reads as a failing 4.5 of 120."""
+    if value is None:
+        return None
+    top = {"ielts": "9", "duolingo": "160"}.get(test) or ("6" if toefl_scale(value) == "1–6" else "120")
+    return tf("من {top}", top=top)
+
+
 def english_cell(test, item):
     """An English test as a figure and its conditions, keeping the distinctions english_compact keeps: a hard minimum,
     a recommended score (never shown as a minimum), a level that depends on the program, a per-skill minimum."""
+    cell = _english_cell(test, item)
+    if cell["state"] is None and item and item.get("min") is not None:
+        cell["scale"] = scale_of(test, item["min"])
+    return cell
+
+
+def _english_cell(test, item):
     if not item:
         return _cell(tr(UNKNOWN_AR), state="unknown")
     sources = [_src(item.get("source_url"))]
@@ -125,35 +163,84 @@ def english_cell(test, item):
     return _cell(tr(said), None, sources if said == NO_MIN_AR else [], "nomin" if said == NO_MIN_AR else "unknown")
 
 
-def _lists(explorer, unis):
-    """The scholarship's lists, one row per list, so a rank is read as the rank it is («المرتبة في قائمة الرواد»)."""
-    guide = explorer.source["url"]
-    rows = []
-    ar = [[l for l in u["listings"] if l["track"] == "arruaad"] for u in unis]
-    if any(ar):
-        rows.append(("المرتبة في قائمة الرواد", [
-            _cell(str(a[0]["rank"]), None, [_src(guide)]) if a else _cell(tr(NOT_ON_LIST_AR), None, [_src(guide)], "none")
-            for a in ar]))
-    em = [[l for l in u["listings"] if l["track"] == "emdad"] for u in unis]
-    if any(em):
-        cells = []
-        for e in em:
-            if not e:
-                cells.append(_cell(tr(NOT_ON_LIST_AR), None, [_src(guide)], "none"))
-                continue
-            names = list(dict.fromkeys(tr(explorer.fields[("emdad", l["field"])]["name_ar"]) for l in e
-                                       if ("emdad", l["field"]) in explorer.fields))
-            cells.append(_cell(count_ar(len(e), FIELDS_AR), tr("، ").join(names) if len(names) <= 3 else None, [_src(guide)]))
-        rows.append(("مجالاتها في قائمة إمداد", cells))
-    rnd = [any(l["track"] == "rnd" for l in u["listings"]) for u in unis]
-    if any(rnd):
-        rows.append(("في قائمة البحث والتطوير (دكتوراه فقط)",
-                     [_cell(tr("نعم"), None, [_src(guide)]) if r else _cell(tr("لا"), None, [_src(guide)], "none")
-                      for r in rnd]))
-    return rows
+def _guide_src(explorer, page, label_page=None):
+    """The Ministry's guide at the page that says it, named so the student can find it: «دليل الوزارة، ص 66»."""
+    return _src(f"{explorer.source['url']}#page={page}", site=tf("دليل الوزارة، ص {page}", page=label_page or page))
 
 
-def _row(label, cells, explorer):
+def _listing_tags(l):
+    """A listing's limits, as the university's own page names them (uni_macros.listing_notes)."""
+    tags = []
+    if l.get("masters_only"):
+        tags.append(tr("ماجستير فقط"))
+    if l.get("bachelors_only_majors"):
+        tags.append(tr("بكالوريوس في تخصصات محددة"))
+    if l.get("hearing_impaired_only"):
+        tags.append(tr("لذوي الإعاقة السمعية"))
+    return tags
+
+
+def rankings(explorer, unis):
+    """ترتيب الجامعة حسب المجال (owner, 2026-11-27): for every track, one row per field any of these universities is
+    listed in, one column per university, from the same records as each university's page.
+
+    A listed university shows its exact rank in the Ministry's guide, out of how many the list has, the guide's page,
+    and any limit (master's only, named bachelor's majors). A university the guide doesn't list in that field is a
+    confirmed absence («غير مدرجة في هذا المجال»): the guide is the whole list. A listing without a rank or page is a gap
+    in our data («الترتيب غير متوفر»), never a guess. A track none of them is in still has its row, so the section is
+    there for every combination.
+    """
+    # «من 69»: how long the list is, said only where its numbers run 1 to N without a gap. The guide's own doctorate
+    # ICT list jumps from 90 (page 22) to 100 (page 23), so there the rank stands alone.
+    ranks = {}
+    for u in explorer.universities.values():
+        for l in u["listings"]:
+            if l.get("rank"):
+                ranks.setdefault((l["track"], l["field"]), set()).add(l["rank"])
+    totals = {key: max(r) for key, r in ranks.items() if r == set(range(1, max(r) + 1))}
+
+    def cell(track, fid, u):
+        found = [l for l in u["listings"] if l["track"] == track and l["field"] == fid]
+        if not found:
+            pages = (explorer.fields.get((track, fid)) or {}).get("list_pages") or []
+            src = []
+            if pages:
+                span = f"{pages[0]}–{pages[-1]}" if len(pages) > 1 else pages[0]
+                src = [_guide_src(explorer, pages[0], span)]
+            return _cell(tr(NOT_IN_FIELD_AR), None, src, "none")
+        l = found[0]
+        if not l.get("rank") or not l.get("pdf_page"):
+            return _cell(tr(RANK_UNKNOWN_AR), None, [], "unknown")
+        total = totals.get((track, fid))
+        if total:
+            note = tf("من {total}، ص {page} في دليل الوزارة", total=total, page=l["pdf_page"])
+        else:
+            note = tf("ص {page} في دليل الوزارة", page=l["pdf_page"])
+        c = _cell(str(l["rank"]), note, [_guide_src(explorer, l["pdf_page"])], tags=_listing_tags(l))
+        c["rank"] = l["rank"]
+        return c
+
+    tracks = []
+    for track, sub in (("arruaad", "كل التخصصات، للبكالوريوس والماجستير"), ("emdad", None), ("rnd", "للدكتوراه فقط")):
+        rows = []
+        if track == "arruaad":
+            # Al-Ruwwad ranks whole universities, not fields: one row.
+            rows.append(("الترتيب في قائمة الرواد", [cell("arruaad", None, u) for u in unis], None))
+        else:
+            order = sorted((f for (t, _), f in explorer.fields.items() if t == track), key=lambda f: min(f["list_pages"]))
+            listed = [f for f in order
+                      if any(l["track"] == track and l["field"] == f["id"] for u in unis for l in u["listings"])]
+            for f in listed:
+                rows.append((f["name_ar"], [cell(track, f["id"], u) for u in unis], f["id"]))
+            if not listed:
+                rows.append(("في قوائم هذا المسار", [
+                    _cell(tr(NOT_IN_TRACK_AR), None, [_src(explorer.source["url"], site=tr(GUIDE_LABEL_AR))], "none")
+                    for _ in unis], None))
+        tracks.append({"id": track, "title_ar": TRACKS[track]["name_ar"], "sub_ar": sub, "rows": rows})
+    return tracks
+
+
+def _row(label, cells, explorer, field=None):
     """A row: its label, its cells, whether they all agree (for «الفروق فقط»), and its one source when every value
     comes from the same document (shown once for the row instead of under each value)."""
     texts = [(c["value"], c["note"]) for c in cells]
@@ -162,7 +249,7 @@ def _row(label, cells, explorer):
     if len(cells) > 1 and all(len(u) == 1 for u in urls) and len(set(urls)) == 1:
         url = urls[0][0]
         shared = {"url": url, "label": tr(GUIDE_LABEL_AR) if url == explorer.source["url"] else site_of(url)}
-    return {"label_ar": label, "cells": cells, "same": len(set(texts)) == 1, "source": shared}
+    return {"label_ar": label, "cells": cells, "same": len(set(texts)) == 1, "source": shared, "field": field}
 
 
 def build(uids, explorer, answer, today):
@@ -174,8 +261,14 @@ def build(uids, explorer, answer, today):
     def row(label, cells):
         return _row(label, cells, explorer)
 
-    groups.append({"id": "lists", "gate": 1, "title_ar": "الابتعاث",
-                   "rows": [row(label, cells) for label, cells in _lists(explorer, unis)]})
+    # Gate 1, the scholarship: each university's rank in every list, track by track. Drawn for any combination.
+    rows = []
+    for t in rankings(explorer, unis):
+        built = [_row(label, cells, explorer, field) for label, cells, field in t["rows"]]
+        built[0]["track"] = {"id": t["id"], "title_ar": t["title_ar"], "sub_ar": t["sub_ar"],
+                             "same": all(r["same"] for r in built)}
+        rows.extend(built)
+    groups.append({"id": "lists", "gate": 1, "title_ar": "ترتيب الجامعة حسب المجال", "rows": rows})
 
     rows = []
     certs = [answer.certificate(explorer, u) for u in unis]
@@ -253,4 +346,5 @@ def build(uids, explorer, answer, today):
         row("لغة الدولة الرسمية", [_cell(tr("الإنجليزية") if u["country_info"]["english"] else tr(u["country_info"]["language_ar"]))
                                    for u in unis]),
     ]})
-    return {"universities": unis, "groups": groups, "researched": [bool(d) for d in details]}
+    return {"universities": unis, "groups": groups, "researched": [bool(d) for d in details],
+            "marks": [initials(u["name_en"]) for u in unis]}

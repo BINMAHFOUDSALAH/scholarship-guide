@@ -381,6 +381,16 @@
       "wikidata": "https://www.wikidata.org/wiki/Q245247",
       "retrieved": "2026-10-12"
     },
+    "korea-advanced-institute-of-science-and-technology-kaist": {
+      "file": "img/universities/korea-advanced-institute-of-science-and-technology-kaist.png",
+      "width": 64,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:KAIST_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/KAIST_logo.svg/960px-KAIST_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q39949",
+      "retrieved": "2026-11-27"
+    },
     "korea-university": {
       "file": "img/universities/korea-university.png",
       "width": 141,
@@ -591,6 +601,16 @@
       "wikidata": "https://www.wikidata.org/wiki/Q195668",
       "retrieved": "2026-10-12"
     },
+    "rheinische-friedrich-wilhelms-universitat-bonn": {
+      "file": "img/universities/rheinische-friedrich-wilhelms-universitat-bonn.png",
+      "width": 165,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Bonn.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Universit%C3%A4t_Bonn.svg/960px-Universit%C3%A4t_Bonn.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q152171",
+      "retrieved": "2026-11-27"
+    },
     "rice-university": {
       "file": "img/universities/rice-university.png",
       "width": 126,
@@ -721,6 +741,16 @@
       "wikidata": "https://www.wikidata.org/wiki/Q51985",
       "retrieved": "2026-10-12"
     },
+    "technische-universitat-dresden": {
+      "file": "img/universities/technische-universitat-dresden.png",
+      "width": 220,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_TU_Dresden.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Logo_TU_Dresden.svg/960px-Logo_TU_Dresden.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q158158",
+      "retrieved": "2026-11-27"
+    },
     "temple-university": {
       "file": "img/universities/temple-university.png",
       "width": 220,
@@ -810,6 +840,26 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q587326",
       "retrieved": "2026-10-12"
+    },
+    "universidad-politecnica-de-madrid": {
+      "file": "img/universities/universidad-politecnica-de-madrid.png",
+      "width": 81,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Logo_Universidad_Polit%C3%A9cnica_de_Madrid.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Logo_Universidad_Polit%C3%A9cnica_de_Madrid.svg/960px-Logo_Universidad_Polit%C3%A9cnica_de_Madrid.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "CC BY-SA 4.0",
+      "wikidata": "https://www.wikidata.org/wiki/Q25864",
+      "retrieved": "2026-11-27"
+    },
+    "universitat-autonoma-de-barcelona": {
+      "file": "img/universities/universitat-autonoma-de-barcelona.png",
+      "width": 170,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Autonome_Universit%C3%A4t_Barcelona_Logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Autonome_Universit%C3%A4t_Barcelona_Logo.svg/960px-Autonome_Universit%C3%A4t_Barcelona_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q43452",
+      "retrieved": "2026-11-27"
     },
     "universitat-de-barcelona": {
       "file": "img/universities/universitat-de-barcelona.png",
@@ -1191,6 +1241,16 @@
       "wikidata": "https://www.wikidata.org/wiki/Q230899",
       "retrieved": "2026-10-12"
     },
+    "university-of-maryland-college-park": {
+      "file": "img/universities/university-of-maryland-college-park.png",
+      "width": 220,
+      "height": 42,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Maryland_wordmark.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/University_of_Maryland_wordmark.svg/960px-University_of_Maryland_wordmark.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q503415",
+      "retrieved": "2026-11-27"
+    },
     "university-of-massachusetts-amherst": {
       "file": "img/universities/university-of-massachusetts-amherst.png",
       "width": 220,
@@ -1200,6 +1260,16 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q15142",
       "retrieved": "2026-10-12"
+    },
+    "university-of-missouri-columbia": {
+      "file": "img/universities/university-of-missouri-columbia.png",
+      "width": 54,
+      "height": 64,
+      "source_url": "https://commons.wikimedia.org/wiki/File:University_of_Missouri_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/University_of_Missouri_logo.svg/960px-University_of_Missouri_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q579968",
+      "retrieved": "2026-11-27"
     },
     "university-of-oxford": {
       "file": "img/universities/university-of-oxford.png",
@@ -1410,6 +1480,16 @@
       "licence": "Public domain",
       "wikidata": "https://www.wikidata.org/wiki/Q29052",
       "retrieved": "2026-10-12"
+    },
+    "virginia-polytechnic-institute-and-state-university": {
+      "file": "img/universities/virginia-polytechnic-institute-and-state-university.png",
+      "width": 220,
+      "height": 41,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Virginia_Tech_logo.svg",
+      "asset_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Virginia_Tech_logo.svg/960px-Virginia_Tech_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "licence": "Public domain",
+      "wikidata": "https://www.wikidata.org/wiki/Q65379",
+      "retrieved": "2026-11-27"
     },
     "washington-university-in-st-louis": {
       "file": "img/universities/washington-university-in-st-louis.png",
