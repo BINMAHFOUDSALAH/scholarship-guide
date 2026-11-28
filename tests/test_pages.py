@@ -1225,19 +1225,25 @@ def test_two_self_hosted_typefaces():
     en_head = client.get("/en/").text.split("</head>")[0]
     assert "fonts/readex-pro-latin.woff2" in en_head and "readex-pro-arabic" not in en_head
 
-def test_waddah_leans_beside_the_tagline_on_the_arabic_homepage_only():
-    """وضّاح beside «بوضوح» (owner, 2026-11-27): decoration only, drawn from the existing renders, self-hosted, with a
-    still lean for reduced motion (the scene only runs under no-preference). The English homepage keeps its wave."""
+def test_waddah_stands_beside_the_tagline_on_the_arabic_homepage_only():
+    """وضّاح beside «بوضوح» (owner, 2026-11-27): decoration only, self-hosted, with a still pose for reduced motion (the
+    scene only runs under no-preference). The English homepage keeps its wave.
+
+    Owner, 2026-11-27: the poses are new, not the existing renders. He is a vector figure drawn from his own shapes
+    (shemagh, double agal, the visor and its two lime lights), with jointed arms the poses turn."""
     html = client.get("/").text
     row = html.split('class="ask-kicker-row"')[1].split('<form')[0]
     assert f'<h1 id="hero-title" class="ask-kicker">{main.site["tagline"]}</h1>' in row
     assert 'data-waddah-hero aria-hidden="true"' in row
-    for layer in ("img/waddah/hero/lean-laptop.webp", "img/waddah/hero/point.webp"):
-        assert layer in row and client.get("/static/" + layer).status_code == 200
+    assert "<image" not in row and ".webp" not in row  # no render reused
+    for part in ("wh-visor", "wh-eye-l", "wh-eye-r", "wh-ring", "wh-near-up", "wh-near-fore", "wh-far-up", "wh-far-fore"):
+        assert part in row
     assert "waddah-hero.js" in html and "https://" not in row
     css = (main.APP_DIR / "static" / "style.css").read_text(encoding="utf-8")
     scene = css.split("@media (prefers-reduced-motion: no-preference) {\n  .waddah-hero.is-playing")[1].split("\n}\n")[0]
-    assert "animation: wh-lean 4s" in scene
+    assert "animation: wh-fig 4.4s" in scene and "animation: wh-near-up 4.4s" in scene
+    # The open hand is aimed at the field (waddah-hero.js sets --wh-aim and --wh-face).
+    assert "var(--wh-aim" in css and "scaleX(var(--wh-face, 1))" in css
     assert ".waddah-hero {\n  position: absolute;" in css and "pointer-events: none;" in css.split(".waddah-hero {")[1].split("}")[0]
     english = client.get("/en/").text
     assert "data-waddah-hero" not in english and "waddah-hero.js" not in english and 'class="ask-waddah"' in english

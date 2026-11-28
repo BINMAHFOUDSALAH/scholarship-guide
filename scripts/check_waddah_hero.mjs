@@ -1,9 +1,9 @@
 // وضّاح beside «بوضوح» (owner, 2026-11-27), checked in a real browser:
 //   node scripts/check_waddah_hero.mjs [base] [--frames dir] [--video dir] [--browser chromium|webkit]
 // On a laptop and a narrow phone: he plays once by himself, the headline and the search stay readable and usable
-// (nothing of his is on top of the field or takes a tap), he points toward the field, the repeat waits for an
-// untouched form, reduced motion keeps the still lean, and the English homepage has no animation.
-// --frames saves the scene paused at moments through its four seconds; --video records the pages.
+// (nothing of his is on top of the field or takes a tap), he turns toward the field, the repeat waits for an
+// untouched form, reduced motion keeps the still pose, and the English homepage has no animation.
+// --frames saves the scene paused at moments through its four and a half seconds; --video records the pages.
 import { chromium, webkit, devices } from "playwright";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
@@ -19,7 +19,7 @@ const sizes = [
   ["desktop", { viewport: { width: 1280, height: 800 } }],
   ["phone", { ...devices["iPhone SE"], viewport: { width: 360, height: 740 } }],
 ];
-const MOMENTS = [0, 0.6, 0.9, 1.2, 1.5, 1.9, 2.4, 2.6, 3.0, 3.3, 3.5, 4.0];
+const MOMENTS = [0, 0.5, 0.8, 1.2, 1.55, 1.9, 2.15, 2.6, 2.95, 3.3, 3.7, 4.2];
 
 for (const [name, opts] of sizes) {
   const ctx = await browser.newContext({ ...opts, ...(videoDir ? { recordVideo: { dir: path.join(videoDir, name), size: opts.viewport } } : {}) });
@@ -47,9 +47,9 @@ for (const [name, opts] of sizes) {
   ok(!overlap.field, `${name}: he never covers the search field`);
   const dir = await p.evaluate(() => ({ face: getComputedStyle(document.querySelector("[data-waddah-hero]")).getPropertyValue("--wh-face").trim(),
     aim: getComputedStyle(document.querySelector("[data-waddah-hero]")).getPropertyValue("--wh-aim").trim() }));
-  console.log(`     ${name}: faces ${dir.face === "1" ? "left" : "right"}, tilts ${dir.aim} toward the field`);
+  console.log(`     ${name}: faces ${dir.face === "1" ? "left" : "right"}, opens his hand ${dir.aim} below level toward the field`);
   await p.waitForFunction(() => !document.querySelector("[data-waddah-hero]").classList.contains("is-playing"), null, { timeout: 6000 });
-  ok(true, `${name}: back to the still lean after the scene`);
+  ok(true, `${name}: back to the still pose after the scene`);
   ok(await p.evaluate(() => getComputedStyle(document.documentElement).overflowX !== "scroll" && document.documentElement.scrollWidth <= innerWidth), `${name}: no sideways scroll`);
 
   if (framesDir) {
@@ -93,14 +93,14 @@ for (const [name, opts] of sizes) {
   ok(plays === 2, `untouched and on screen: played ${plays} times (once, then one repeat), never a third`);
   await ctx.close();
 }
-// Reduced motion: the still lean, nothing plays.
+// Reduced motion: the still thinking pose, nothing plays.
 {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: "reduce" });
   const p = await ctx.newPage();
   await p.goto(base + "/"); await p.waitForTimeout(2500);
   const st = await p.evaluate(() => ({ playing: document.querySelector("[data-waddah-hero]").classList.contains("is-playing"),
-    lean: getComputedStyle(document.querySelector(".wh-lean")).opacity, point: getComputedStyle(document.querySelector(".wh-point")).opacity }));
-  ok(!st.playing && st.lean === "1" && st.point === "0", "reduced motion: the still lean");
+    anims: document.querySelector("[data-waddah-hero]").getAnimations({ subtree: true }).length }));
+  ok(!st.playing && st.anims === 0, "reduced motion: the still thinking pose");
   await ctx.close();
 }
 // English: the homepage keeps its own wave, no animation.
