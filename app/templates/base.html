@@ -13,17 +13,18 @@
   <link rel="alternate" hreflang="en" href="{{ site.base_url }}{{ links.en_path }}">
   <link rel="alternate" hreflang="x-default" href="{{ site.base_url }}{{ links.ar_path }}">
 
-  {# Share preview: what WhatsApp, X, and other apps show when someone shares a link. #}
+  {# Share preview: what WhatsApp, Telegram, X, and other apps show when someone shares a link. One image per language
+     (owner, 2026-11-27); scripts/share_image.mjs draws both. A redrawn image gets a new file name, so apps drop their cache. #}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{{ site.name }}">
   <meta property="og:locale" content="{{ 'en_US' if is_en() else 'ar_SA' }}">
   <meta property="og:title" content="{{ self.title() }}">
   <meta property="og:description" content="{{ self.description() }}">
   <meta property="og:url" content="{{ site.base_url }}{{ links.en_path if is_en() else links.ar_path }}">
-  <meta property="og:image" content="{{ site.base_url }}/static/img/{% block og_image %}share-wadih.png{% endblock %}">
+  <meta property="og:image" content="{{ site.base_url }}/static/img/{% block og_image %}{{ 'share-wadih-programs-en.png' if is_en() else 'share-wadih-programs.png' }}{% endblock %}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{% block og_image_alt %}{{ site.name }}: {{ site.tagline }}{% endblock %}">
+  <meta property="og:image:alt" content="{% block og_image_alt %}{{ _("شعار واضح، وتحته: برامج الابتعاث، الشروط والمواعيد والجامعات") }}{% endblock %}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{{ site.base_url }}/static/img/{{ self.og_image() }}">
   <meta name="twitter:image:alt" content="{{ self.og_image_alt() }}">
